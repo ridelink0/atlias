@@ -647,6 +647,31 @@ suite('bounded writes expert', 'bounded writes', () => {
   check('what lands on disk is one parseable line', lines.length === 1 && JSON.parse(lines[0]).kind === 'edit', { happened: lines.length + ' line(s)', why: 'The whole point is that a reader never meets half an event.', fix: 'recordEvent must pass the event through trimEvent.' });
 });
 
+suite('idle turn expert', 'turns that did nothing', () => {
+  const s = sid('idleturn');
+  router.prompt({ session_id: s, cwd: PROJECT, prompt: 'please change this file for me' });
+  track.postTool({ session_id: s, cwd: PROJECT, tool_name: 'Write', tool_input: { file_path: path.join(PROJECT, 'ok.mjs') } });
+  gate.stop({ session_id: s, cwd: PROJECT, last_assistant_message: 'Pass 1: checked. Pass 2: adversarial read done.' });
+  const noteAfterWork = fs.readFileSync(progress.notePath(PROJECT), 'utf8');
+  check('a turn that changed something writes the note', /ok\.mjs/.test(noteAfterWork), { happened: noteAfterWork.slice(0, 160), why: 'The note is the whole point of surviving a compaction.', fix: 'Check the worthNoting condition in gate.stop.' });
+  const before = fs.statSync(progress.notePath(PROJECT)).mtimeMs;
+  const q = sid('question');
+  router.prompt({ session_id: q, cwd: PROJECT, prompt: 'what does this project do in general' });
+  const answered = gate.stop({ session_id: q, cwd: PROJECT, last_assistant_message: 'It is a harness.' });
+  const after = fs.statSync(progress.notePath(PROJECT)).mtimeMs;
+  check('a question-only turn is silent', answered === null, { happened: JSON.stringify(answered), why: 'Holding a reply that changed nothing is noise the user pays for.', fix: 'Return null when nothing changed.' });
+  check('and it does not overwrite the note from the turn that worked', after === before && /ok\.mjs/.test(fs.readFileSync(progress.notePath(PROJECT), 'utf8')), { happened: 'note mtime moved: ' + (after !== before), why: 'Rewriting the note on an idle turn replaces a handoff that had content with one that has none, which is worse than not writing it at all.', fix: 'Only update the note when the turn changed a file or ran a command.' });
+  let ran = 0;
+  const counting = () => { ran++; return { status: 0, stdout: ' M x.mjs\n', stderr: '', error: null }; };
+  core.clearGitMemo();
+  const a1 = core.gitStatusShort(PROJECT, { run: counting, now: 1000 });
+  const a2 = core.gitStatusShort(PROJECT, { run: counting, now: 1500 });
+  check('git status runs once for the two callers that want it', ran === 1 && a1 === a2, { happened: 'git ran ' + ran + ' time(s)', why: 'The note and the search for shell edits both want the same status, in the same process, milliseconds apart.', fix: 'Check the memo window in gitStatusShort.' });
+  const a3 = core.gitStatusShort(PROJECT, { run: counting, now: 9000 });
+  check('and it runs again once the answer is stale', ran === 2 && a3 !== undefined, { happened: 'git ran ' + ran + ' time(s)', why: 'A memo that never expires reports yesterday.', fix: 'Keep the two second window.' });
+  core.clearGitMemo();
+});
+
 let failed = 0;
 for (const r of results) {
   const ok = r.failed.length === 0;

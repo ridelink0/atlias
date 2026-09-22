@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.4 (2026-09-22)
+
+Stop paying for a turn that did nothing. The handoff note was rewritten at the end of every reply, including one that only answered a question, which cost a file write and a git process for a turn with nothing to hand off, and replaced a note from a turn that did have something to say with one that does not. The note is now written only when the turn changed a file or ran a command. And within a single reply git status ran twice, once for the note and once to find edits made outside the tools; one memo now serves both, and expires after two seconds so it never reports yesterday.
+
 ## 2.1.3 (2026-09-22)
 
 Three unbounded things, bounded. Event lines are appended by several processes at once, a hook for this turn, a subagent’s hook, a second session in the same project, and a write under about four kilobytes lands atomically while a longer one can interleave with another and corrupt both; a patch touching forty files was already capable of producing one, so an event is now trimmed to fit and says how many entries it dropped. One bench call could read four megabytes from each of twenty session logs to print a summary of them, and now reads a bounded sample. And the MCP server buffered incoming bytes with no ceiling while waiting for a newline, so a client that never sent one grew the buffer until the process died.
