@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.6 (2026-09-22)
+
+The doctor checks the launcher. Host configs point at ~/.atlias/server.mjs, and if that file is deleted every one of them loses its tools in silence: the server never starts and no host says why. The doctor now reports it, and reports whether the launcher can still find an installed copy to run. The README also catches up: forty suites, the launcher, and the two newest refusals, a memory name that would destroy the index and a write outside the project.
+
 ## 2.2.5 (2026-09-22)
 
 A write outside the project is a decision, not a detail. The terminal agent guarded shell commands and let the file tools write anywhere, so a local model that resolved a path badly, or followed an instruction from a file it had just read, could overwrite something in the home directory with nobody asked. Writing outside the directory the agent was started in now asks, treats no answer as no, and says what to do instead; a write inside the project is untouched, because that is the work.

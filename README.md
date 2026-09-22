@@ -88,7 +88,7 @@ Companions: [graphify](https://pypi.org/project/graphifyy/) for the knowledge gr
 node test/run.mjs
 ```
 
-Twenty suites, each written from one expert's point of view: payload shapes, cache and token efficiency, guards, the verification gate, the handoff note, memory and Dream, host integration, the end-to-end dispatcher, the MCP server, the logo, the regular agent, the agent runtime, the extra harnesses, hook budgets, measurement, platform assumptions, verification honesty, stale answers, configuration, and long sessions. A failure prints three lines: what happened, why it matters, how to fix it. That is the format the gate and the guard use too, so a model reading any atlias message knows what to do next.
+Forty suites, each written from one expert's point of view, covering payload shapes, cache and token efficiency, the guards, the verification gate, the handoff note, memory and Dream, host integration, the dispatcher, the MCP server, the logo, the agent and its runtime, the extra harnesses, hook budgets, measurement, platform assumptions, verification honesty, stale answers, configuration, long sessions, bounded writes, idle turns, release numbering, durable host paths, index safety, leaks, and the blast radius of a write. A failure prints three lines: what happened, why it matters, how to fix it. That is the format the gate and the guard use too, so a model reading any atlias message knows what to do next.
 
 ## What it refuses to pretend
 
@@ -97,6 +97,8 @@ Four places where the harness could have flattered itself, and does not:
 - **It names what it did not check.** atlias parses JavaScript, JSON and Python. Handed a TypeScript, Go or Swift file it says so, names the files, and tells you to run the project's own check, rather than reporting that everything parses.
 - **It marks a stale graph.** When files have changed since the graph was built, an injected answer carries a line saying parts of it may be out of date. The mark clears itself when the graph is rebuilt.
 - **It shows the caveat with the number.** The bench reports what a graph answer replaced as an upper bound, because it assumes every file named would otherwise have been read in full.
+- **It refuses a name that would destroy the index.** A memory called "memory" would overwrite MEMORY.md on a case-insensitive filesystem, so that name is refused before anything is written.
+- **It asks before writing outside the project.** The terminal agent treats a write beyond the directory it was started in the way it treats an irreversible shell command.
 - **It says what it has not measured.** Whether the guard and the gate change how often a task actually succeeds is untested, and both the bench output and this README say so.
 
 ## Configuration
@@ -112,6 +114,10 @@ Four places where the harness could have flattered itself, and does not:
 State lives under `~/.atlias/` (override with `ATLIAS_HOME`).
 
 Two things are kept fast on purpose, and tested for it. The work a hook does is bounded so it cannot outlast the timeout it declares: the interpreter search is time-boxed and remembers a miss, the directory walk has a wall clock, and the hub lookup is skipped rather than allowed to overrun. And the guard reads only the tail of the session log rather than all of it, so a long session does not get slower with every tool call.
+
+## Surviving an update
+
+A host config must never contain a path with a version number in it, because the next update deletes that directory and the harness disappears one update after the install. When atlias runs from an installed plugin it writes a launcher to `~/.atlias/server.mjs` and points every host at that; the launcher resolves the newest installed copy at run time, falls back to the copy that wrote it, and its own path never changes. `atlias doctor` checks it is still there, because if it is deleted every host loses its tools in silence.
 
 ## Versioning
 

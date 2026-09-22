@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
   "name": "atlias",
-  "version": "2.2.5",
+  "version": "2.2.6",
   "description": "atlias. A sub-harness that links itself to Claude Code, Codex, Antigravity and Gemini CLI the moment a session opens and makes the model working inside them smarter: one shared memory across every host with NanoBot-style layered history and Dream consolidation, a graphify knowledge graph that answers codebase questions before a single file is read, a stable session brief that keeps the prompt prefix cacheable, a guard that stops repeated identical tool calls and destructive commands, a verification gate that syntax-checks every changed file and enforces a two-pass bug check before a reply may end, handoff notes written before compaction and restored after, and companion routing to Ultimate Frontend Skills and the usage-limits plugin.",
   "author": {
     "name": "Gev",
