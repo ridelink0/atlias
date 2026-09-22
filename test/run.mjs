@@ -754,6 +754,20 @@ suite('small edges expert', 'small edges', () => {
   check('--version and --help are treated as commands', /'--version': 'version'/.test(cliSource) && /'-h': 'help'/.test(cliSource), { happened: cliSource.split('\n').filter((l) => /FLAG_COMMANDS/.test(l)).join(' | '), why: 'Everyone types the flag before the subcommand, and printing the help in answer to --version looks broken.', fix: 'Map the flags onto the commands before dispatch.' });
 });
 
+suite('durable path expert', 'host configs survive an update', () => {
+  check('a versioned install path is recognised as one that expires', core.isVersionedPath(path.join('C:', 'Users', 'x', '.claude', 'plugins', 'cache', 'atlias', 'atlias', '2.1.8')) && core.isVersionedPath('/home/x/.claude/plugins/cache/atlias/atlias/2.1.8'), { happened: 'a cache path was treated as durable', why: 'That directory is removed by the next update, so every host config pointing into it breaks one update after the install, which is the hardest failure to trace back to its cause.', fix: 'Check the pattern in isVersionedPath.' });
+  check('a plain checkout path is not', !core.isVersionedPath(path.join('C:', 'Users', 'x', 'atlias')) && !core.isVersionedPath('/home/x/src/atlias'), { happened: 'a checkout was treated as versioned', why: 'A checkout keeps its path, and routing through a launcher would add a hop for nothing.', fix: 'Only match a path segment that is exactly a version number.' });
+  const launcher = core.writeLauncher(ROOT);
+  check('the launcher lives in the state directory, which never moves', launcher.startsWith(process.env.ATLIAS_HOME) && fs.existsSync(launcher), { happened: launcher, why: 'The whole point is a path that outlives the copy it launches.', fix: 'Check writeLauncher.' });
+  const record = JSON.parse(fs.readFileSync(path.join(process.env.ATLIAS_HOME, 'root.json'), 'utf8'));
+  check('and it records which copy wrote it', record.root === ROOT && record.version === core.VERSION, { happened: JSON.stringify(record), why: 'When the plugin cache is empty, the recorded root is the only way back to a working copy.', fix: 'writeLauncher writes root.json beside the launcher.' });
+  const roots = core.installedRoots();
+  check('every root it offers actually has a server in it', roots.length > 0 && roots.every((r) => fs.existsSync(path.join(r, 'mcp', 'server.mjs'))), { happened: roots.join(' | '), why: 'Offering a path that was removed is the bug being fixed, not a fix for it.', fix: 'Filter installedRoots by the file existing.' });
+  const checked = spawnSync(process.execPath, ['--check', launcher], { encoding: 'utf8' });
+  check('the launcher is valid JavaScript', checked.status === 0, { happened: (checked.stderr || '').slice(0, 200) || 'ok', why: 'It is generated code that nobody reads until a host fails to start.', fix: 'Check the template in writeLauncher.' });
+  check('a checkout still points hosts straight at the file', hosts.serverPathForConfig() === hosts.SERVER_MJS, { happened: hosts.serverPathForConfig(), why: 'Tests run from a checkout, and the extra hop would be pure cost there.', fix: 'serverPathForConfig returns SERVER_MJS when the path is not versioned.' });
+});
+
 let failed = 0;
 for (const r of results) {
   const ok = r.failed.length === 0;

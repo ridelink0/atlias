@@ -1,20 +1,20 @@
 {
   ".claude-plugin/marketplace.json": {
-    "mtime": 1790079150.6792088,
-    "seen": 1790079188.7309988,
-    "ast_hash": "3a94d1fc9653de939f2bc2c030af89f8",
+    "mtime": 1790079303.9610043,
+    "seen": 1790079359.1325662,
+    "ast_hash": "84db9c6a346436aad23894127ac7ae5e",
     "semantic_hash": ""
   },
   ".claude-plugin/plugin.json": {
-    "mtime": 1790079150.6792088,
-    "seen": 1790079188.731004,
-    "ast_hash": "cc3971f63a008079d595484e86a3d705",
+    "mtime": 1790079303.9600022,
+    "seen": 1790079359.132572,
+    "ast_hash": "c0319bad38901c3c417eb947c4682f90",
     "semantic_hash": ""
   },
   "bin/atlias.mjs": {
-    "mtime": 1790078605.0216458,
-    "seen": 1790078660.3097672,
-    "ast_hash": "37a1bd1802d2e263a8e23e70e86eaf6d",
+    "mtime": 1790079303.9590023,
+    "seen": 1790079359.1325746,
+    "ast_hash": "c3525cfd773ee8e11e65acbe12d74884",
     "semantic_hash": ""
   },
   "hooks/hooks.json": {
@@ -24,9 +24,9 @@
     "semantic_hash": ""
   },
   "lib/agent.mjs": {
-    "mtime": 1790077232.8230207,
-    "seen": 1790077286.5157955,
-    "ast_hash": "a825e24da5f2589f8f5131ab401264c3",
+    "mtime": 1790079303.9579985,
+    "seen": 1790079359.1329384,
+    "ast_hash": "a4c9e1fd76015bbe15b2ba64533704bc",
     "semantic_hash": ""
   },
   "lib/brief.mjs": {
@@ -36,9 +36,9 @@
     "semantic_hash": ""
   },
   "lib/core.mjs": {
-    "mtime": 1790079150.6802065,
-    "seen": 1790079188.7317595,
-    "ast_hash": "636edeaf288c730a59a5501070dd59f6",
+    "mtime": 1790079303.9610043,
+    "seen": 1790079359.1332622,
+    "ast_hash": "e254788f41092947c3983d16e8724c49",
     "semantic_hash": ""
   },
   "lib/dream.mjs": {
@@ -120,21 +120,21 @@
     "semantic_hash": ""
   },
   "package.json": {
-    "mtime": 1790079150.6782067,
-    "seen": 1790079188.734295,
-    "ast_hash": "1ba6b58c8269d40acd052fcd48ad6683",
+    "mtime": 1790079303.9590023,
+    "seen": 1790079359.135696,
+    "ast_hash": "7d917bc880005a3cfdf282ce436dc95b",
     "semantic_hash": ""
   },
   "test/run.mjs": {
-    "mtime": 1790079150.681208,
-    "seen": 1790079188.7342975,
-    "ast_hash": "d450d9df49bc2ecee33555b03104c2b4",
+    "mtime": 1790079303.964,
+    "seen": 1790079359.1357,
+    "ast_hash": "e813a915b795bad8682ea7a4c3e8a2bf",
     "semantic_hash": ""
   },
   "CHANGELOG.md": {
-    "mtime": 1790079150.6822102,
-    "seen": 1790079188.7343001,
-    "ast_hash": "98513ae54b6ac091e8e46b893660d1f9",
+    "mtime": 1790079303.964,
+    "seen": 1790079359.135703,
+    "ast_hash": "53afc644e9271c37c56298cf361ffa6c",
     "semantic_hash": ""
   },
   "README.md": {

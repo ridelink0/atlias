@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.0 (2026-09-22)
+
+Host configs stop pointing at a directory that will not exist. The installer wrote the absolute path of the running copy into Codex, Antigravity, Gemini and every extra harness, and when atlias runs as an installed plugin that path contains the version number. The next update writes the new version beside it and removes the old one, so every one of those configs is left pointing at a directory that is gone, and the failure shows up one update after the install, which is the hardest kind to connect to its cause. When the running copy sits at a versioned path the installer now writes a launcher into the state directory and points the hosts at that instead; the launcher resolves the newest installed copy at run time, falls back to the one that wrote it, and its own path never changes.
+
 ## 2.1.8 (2026-09-22)
 
 Three small ones that each waste somebody’s afternoon. The Ollama client always used the http module, so pointing it at a remote instance over https failed on every turn with a protocol error that named nothing useful; the transport and the port now follow the url, for the health probe as well as the chat. Switching engine mid-session left the resume flag and the old system prompt in place, so the new engine was asked to continue a conversation it had never had. And atlias --version printed the help, which is what everybody types first.
