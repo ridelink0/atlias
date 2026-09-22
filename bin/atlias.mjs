@@ -44,7 +44,27 @@ switch (cmd) {
   case 'logo': say(logo()); break;
   case 'bench': say(bench.report(cwd, argv.slice(1).filter((a) => !a.startsWith('--')))); break;
   case 'chooser': process.exitCode = await agent.chooser(); break;
-  case 'agent': case 'run': case 'fly': process.exitCode = await agent.repl({ engine: after('--engine'), once: after('--once') }); break;
+  case 'agent': case 'run': case 'fly': {
+    const r = after('--resume');
+    process.exitCode = await agent.repl({ engine: after('--engine'), once: after('--once'), resume: flag('--resume') ? (r && !r.startsWith('--') ? r : 'last') : null });
+    break;
+  }
+  case 'resume': process.exitCode = await agent.repl({ engine: after('--engine'), resume: argv[1] && !argv[1].startsWith('--') ? argv[1] : 'last' }); break;
+  case 'exec': {
+    // The prompt is every word that is not a flag or a flag's value; - or a
+    // pipe reads it from stdin, as codex exec does.
+    const valued = new Set(['--engine', '--resume']);
+    const words = [];
+    for (let i = 1; i < argv.length; i++) { if (valued.has(argv[i])) { i++; continue; } if (!argv[i].startsWith('--')) words.push(argv[i]); }
+    let prompt = words.join(' ').trim();
+    if (prompt === '-' || (!prompt && !process.stdin.isTTY)) { prompt = ''; for await (const chunk of process.stdin) prompt += chunk; prompt = prompt.trim(); }
+    if (!prompt) { say('usage: atlias exec "<prompt>" [--engine claude|codex|openai|ollama|echo] [--resume [id]] [--json]   (or pipe the prompt in)'); process.exitCode = 2; break; }
+    const rs = after('--resume');
+    const res = await agent.runOnce({ engine: after('--engine'), prompt, resume: flag('--resume') ? (rs && !rs.startsWith('--') ? rs : 'last') : null });
+    say(flag('--json') ? JSON.stringify(res.json) : res.text);
+    process.exitCode = res.code;
+    break;
+  }
   case 'version': say(`atlias ${VERSION}`); break;
   case 'install': {
     const all = flag('--all') || !argv.slice(1).some((a) => a.startsWith('--'));
@@ -146,5 +166,5 @@ switch (cmd) {
     break;
   }
   default:
-    say([logo(), '', 'atlias                             by mode: ask (both), status (sub), the agent (standalone)', 'agent [--engine claude|codex|openai|ollama|echo] [--once "<prompt>"]', 'mode [both|sub|standalone]         what atlias is on this machine', 'settings [list]                    every option, with what it does', 'install [--all|--codex|--antigravity|--gemini [--gemini-hooks]|--claude|--extras [ids]|--companions|--shortcut]', 'uninstall [--all|--codex|--antigravity|--gemini|--extras|--shortcut]', 'shortcut [install|uninstall|status]  the atlias command in any terminal', 'doctor | status | brief [--host codex] | test | bench [question...] | version | logo', 'recall <query> | remember <name> <type> <description> -- <body>', 'progress [set <next step>] | dream [ack|distil <session>] | graph query|affected|explain|update <arg>', 'config [set <section.key> <value>]']);
+    say([logo(), '', 'atlias                             by mode: ask (both), status (sub), the agent (standalone)', 'agent [--engine claude|codex|openai|ollama|echo] [--once "<prompt>"] [--resume [id]]', 'exec "<prompt>" [--engine e] [--resume [id]] [--json]   one prompt, no questions; - or a pipe reads stdin', 'resume [id]                        carry on the last agent session in this folder', 'mode [both|sub|standalone]         what atlias is on this machine', 'settings [list]                    every option, with what it does', 'install [--all|--codex|--antigravity|--gemini [--gemini-hooks]|--claude|--extras [ids]|--companions|--shortcut]', 'uninstall [--all|--codex|--antigravity|--gemini|--extras|--shortcut]', 'shortcut [install|uninstall|status]  the atlias command in any terminal', 'doctor | status | brief [--host codex] | test | bench [question...] | version | logo', 'recall <query> | remember <name> <type> <description> -- <body>', 'progress [set <next step>] | dream [ack|distil <session>] | graph query|affected|explain|update <arg>', 'config [set <section.key> <value>]']);
 }

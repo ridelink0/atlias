@@ -9,6 +9,7 @@ import * as guard from '../lib/guard.mjs';
 import * as track from '../lib/track.mjs';
 import * as integrity from '../lib/integrity.mjs';
 import * as hooksMod from '../lib/hooks.mjs';
+import * as settings from '../lib/settings.mjs';
 
 export default async function hostSuites({ suite, check, PROJECT }) {
   const NL = String.fromCharCode(10);
@@ -30,6 +31,25 @@ export default async function hostSuites({ suite, check, PROJECT }) {
     check('a Codex test run with no exit code is still read as failed from its text', sh && sh.verify && sh.outcome === 'fail', { happened: JSON.stringify(sh), why: 'Codex sends only the output string; the failure text is all there is to go on.', fix: 'integrity.verdict falls back to FAIL_RE.' });
     const quiet = integrity.verdict({ tool_response: 'all good' });
     check('and one with no failure text is unknown, never a pass', quiet.outcome === 'unknown', { happened: JSON.stringify(quiet), why: 'Without an exit code, silence is not proof.', fix: 'Only code 0 is a pass.' });
+  });
+
+  suite('stuck pattern expert', 'two calls taking turns are stopped in every host', () => {
+    const sid = 'alternating-host';
+    const A = { session_id: sid, cwd: PROJECT, tool_name: 'Read', tool_input: { file_path: 'a.js' } };
+    const B = { session_id: sid, cwd: PROJECT, tool_name: 'Grep', tool_input: { pattern: 'x' } };
+    const answers = [A, B, A, B, A, B].map((p) => guard.preTool(p, 'claude'));
+    check('the sixth call of an A B A B A B run is denied', answers.slice(0, 5).every((r) => r === null) && answers[5] && answers[5].hookSpecificOutput.permissionDecision === 'deny' && /back and forth/.test(answers[5].hookSpecificOutput.permissionDecisionReason), { happened: JSON.stringify(answers.map((r) => r && r.hookSpecificOutput.permissionDecision)), why: 'Counting identical calls never sees a loop made of two different ones.', fix: 'Check the keys test in guard.preTool.' });
+    // A seventh A is its fourth identical call, which the repeat guard rightly
+    // stops; raise that threshold to see the alternating reset on its own.
+    settings.set('guard.loopThreshold', '20');
+    const s2 = 'alternating-reset';
+    const A2 = { ...A, session_id: s2 };
+    const B2 = { ...B, session_id: s2 };
+    [A2, B2, A2, B2, A2].forEach((p) => guard.preTool(p, 'claude'));
+    const sixth = guard.preTool(B2, 'claude');
+    const seventh = guard.preTool(A2, 'claude');
+    settings.reset('guard.loopThreshold');
+    check('after the denial the pattern starts over, as the message says', sixth && sixth.hookSpecificOutput.permissionDecision === 'deny' && seventh === null, { happened: JSON.stringify([sixth && sixth.hookSpecificOutput.permissionDecision, seventh && seventh.hookSpecificOutput.permissionDecision]), why: 'A guard that keeps denying after promising a reset is a guard people turn off.', fix: 'Scan only after the last alternating deny.' });
   });
 
   suite('approval expert', 'destructive commands on hosts that cannot ask', () => {
