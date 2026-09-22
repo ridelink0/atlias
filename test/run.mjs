@@ -396,6 +396,14 @@ suite('measurement expert', 'bench', () => {
   check('the report says plainly what it does not measure', /Not measured here/.test(text) && /has not been done/.test(text), { happened: text.slice(-200), why: 'The open question is whether the guard and the gate raise task success; the bench must not imply it answered that.', fix: 'Keep the closing paragraph in report().' });
   const counted = benchMod.interventions(PROJECT);
   check('intervention counts come from real digests and add up', counted.sessions >= 0 && counted.toolCalls >= 0 && counted.spoke === counted.guard + counted.gate, { happened: JSON.stringify(counted), why: 'These are the only numbers here taken from real runs rather than derived, so they have to add up.', fix: 'Check interventions() against the history.jsonl row shape.' });
+  const loud = sid('loud');
+  router.prompt({ session_id: loud, cwd: PROJECT, prompt: 'a'.repeat(400) });
+  for (let i = 0; i < 40; i++) track.postTool({ session_id: loud, cwd: PROJECT, tool_name: 'Write', tool_input: { file_path: path.join(PROJECT, 'deep', 'nested', 'file-' + i + '.mjs') } });
+  progress.setNext(PROJECT, 'x'.repeat(300));
+  progress.update(PROJECT, loud, 'y'.repeat(3000));
+  const loudBrief = benchMod.briefCost(PROJECT);
+  check('a noisy session cannot inflate the brief without bound', loudBrief.chars < 4200, { happened: loudBrief.chars + ' characters after forty edits and a long reply', why: 'The brief is paid once per session whatever else happens; a handoff note that grows with the session turns the cheapest part of the harness into the most expensive.', fix: 'Lower brief.progressChars, or trim what progress.build puts in the note.' });
+  check('the note still says how much it left out', /and \d+ more earlier in the session/.test(progress.read(PROJECT)) , { happened: (progress.read(PROJECT) || '').slice(0, 200), why: 'Silent truncation reads as "these are all the files", which is worse than a longer note.', fix: 'Keep the and N more line in progress.build.' });
   const cost = benchMod.briefCost(PROJECT);
   check('the brief cost is measured, not guessed', cost.chars > 0 && cost.tokens === Math.ceil(cost.chars / 4), { happened: JSON.stringify(cost), why: 'The one cost atlias imposes on every session should be the number it is most precise about.', fix: 'briefCost builds the real brief and counts it.' });
 });
