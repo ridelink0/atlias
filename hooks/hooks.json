@@ -4,14 +4,22 @@
     "SessionStart": [
       {
         "hooks": [
-          { "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/lib/hooks.mjs\" session-start", "timeout": 45 }
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/lib/hooks.mjs\" session-start",
+            "timeout": 45
+          }
         ]
       }
     ],
     "UserPromptSubmit": [
       {
         "hooks": [
-          { "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/lib/hooks.mjs\" prompt", "timeout": 15 }
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/lib/hooks.mjs\" prompt",
+            "timeout": 15
+          }
         ]
       }
     ],
@@ -19,7 +27,11 @@
       {
         "matcher": ".*",
         "hooks": [
-          { "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/lib/hooks.mjs\" pre-tool", "timeout": 8 }
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/lib/hooks.mjs\" pre-tool",
+            "timeout": 8
+          }
         ]
       }
     ],
@@ -27,42 +39,78 @@
       {
         "matcher": ".*",
         "hooks": [
-          { "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/lib/hooks.mjs\" post-tool", "timeout": 8 }
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/lib/hooks.mjs\" post-tool",
+            "timeout": 8
+          }
+        ]
+      }
+    ],
+    "PostToolUseFailure": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/lib/hooks.mjs\" post-tool-failure",
+            "timeout": 8
+          }
         ]
       }
     ],
     "PreCompact": [
       {
         "hooks": [
-          { "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/lib/hooks.mjs\" pre-compact", "timeout": 15 }
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/lib/hooks.mjs\" pre-compact",
+            "timeout": 15
+          }
         ]
       }
     ],
     "PostCompact": [
       {
         "hooks": [
-          { "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/lib/hooks.mjs\" post-compact", "timeout": 10 }
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/lib/hooks.mjs\" post-compact",
+            "timeout": 10
+          }
         ]
       }
     ],
     "Stop": [
       {
         "hooks": [
-          { "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/lib/hooks.mjs\" stop", "timeout": 30 }
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/lib/hooks.mjs\" stop",
+            "timeout": 30
+          }
         ]
       }
     ],
     "SubagentStop": [
       {
         "hooks": [
-          { "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/lib/hooks.mjs\" subagent-stop", "timeout": 8 }
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/lib/hooks.mjs\" subagent-stop",
+            "timeout": 8
+          }
         ]
       }
     ],
     "SessionEnd": [
       {
         "hooks": [
-          { "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/lib/hooks.mjs\" session-end", "timeout": 5 }
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/lib/hooks.mjs\" session-end",
+            "timeout": 5
+          }
         ]
       }
     ]

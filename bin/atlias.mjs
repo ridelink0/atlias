@@ -3,13 +3,14 @@
 //   atlias install [--all|--codex|--antigravity|--gemini [--gemini-hooks]|--claude|--companions]
 //   atlias uninstall [--all|--codex|--antigravity|--gemini]
 //   atlias doctor | status | brief [--host codex] | test | version
+//   atlias shortcut [install|uninstall|status]   the atlias command in any terminal
 //   atlias recall <query> | remember <name> <type> <description> -- <body>
 //   atlias progress [set <text>] | dream [show|ack|distil <session-id> [transcript]]
 //   atlias graph query|affected|explain|update <arg> | config [set <section.key> <value>]
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
-import { VERSION, STATE_DIR, ROOT, readJson, writeJson, DEFAULTS, config, parseSetting } from '../lib/core.mjs';
+import { VERSION, STATE_DIR, ROOT, readJson, writeJson, DEFAULTS, config, parseSetting, writeLauncher } from '../lib/core.mjs';
 import * as hosts from '../lib/hosts.mjs';
 import * as brief from '../lib/brief.mjs';
 import * as progress from '../lib/progress.mjs';
@@ -19,6 +20,7 @@ import * as agent from '../lib/agent.mjs';
 import * as extra from '../lib/hosts-extra.mjs';
 import { logo } from '../lib/logo.mjs';
 import * as bench from '../lib/bench.mjs';
+import * as shortcut from '../lib/shortcut.mjs';
 import { recall, remember } from '../mcp/tools.mjs';
 
 const argv = process.argv.slice(2);
@@ -31,6 +33,10 @@ const after = (f) => (argv.includes(f) ? argv[argv.indexOf(f) + 1] : undefined);
 const cwd = process.cwd();
 const say = (x) => process.stdout.write((Array.isArray(x) ? x.join('\n') : String(x)) + '\n');
 const readOr = (p, fallback) => { try { return fs.readFileSync(p, 'utf8'); } catch { return fallback; } };
+// The terminal command. Records this copy first, so a checkout or an npm
+// install that is not in the plugin cache can still be found by the launcher.
+const shortcutInstall = () => { writeLauncher(ROOT); return shortcut.installShortcut().lines; };
+const shortcutUninstall = () => { const r = shortcut.uninstallShortcut(); return r.length ? r.map((f) => `removed ${f}`) : ['terminal command: nothing of ours to remove']; };
 
 switch (cmd) {
   case 'logo': say(logo()); break;
@@ -47,6 +53,7 @@ switch (cmd) {
     if (all || flag('--gemini')) out.push(...hosts.installGemini(flag('--gemini-hooks')));
     if (all || flag('--extras')) out.push(...extra.installAll(extraIds()));
     if (all || flag('--companions')) out.push(...hosts.installCompanions());
+    if (all || flag('--shortcut')) out.push(...shortcutInstall());
     say(out); break;
   }
   case 'uninstall': {
@@ -56,8 +63,21 @@ switch (cmd) {
     if (all || flag('--antigravity')) out.push(...hosts.uninstallAntigravity());
     if (all || flag('--gemini')) out.push(...hosts.uninstallGemini());
     if (all || flag('--extras')) out.push(...extra.uninstallAll(extraIds()));
+    if (all || flag('--shortcut')) out.push(...shortcutUninstall());
     out.push('claude code: /plugin uninstall atlias@atlias inside Claude Code');
     say(out); break;
+  }
+  case 'shortcut': {
+    const sub = argv[1] || 'status';
+    if (sub === 'install') say(shortcutInstall());
+    else if (sub === 'uninstall' || sub === 'remove') say(shortcutUninstall());
+    else if (sub === 'status') {
+      const s = shortcut.shortcutStatus();
+      const hit = shortcut.whichAtlias();
+      say([`launcher: ${s.launcher || 'not written'}`, ...s.shims.map((x) => `command: ${x.file}${x.onPath ? '' : ' (folder not on PATH)'}`), `typing atlias runs: ${hit || 'nothing yet; run atlias shortcut install'}`]);
+      process.exitCode = hit ? 0 : 1;
+    } else { say('usage: atlias shortcut [install|uninstall|status]'); process.exitCode = 2; }
+    break;
   }
   case 'doctor': { const c = hosts.doctor(cwd).concat(extra.doctorRows()); say(hosts.formatDoctor(c)); process.exitCode = c.every((x) => x.ok) ? 0 : 1; break; }
   case 'status': {
@@ -110,5 +130,5 @@ switch (cmd) {
     break;
   }
   default:
-    say([logo(), '', 'atlias                             choose: sub-harness or regular agent', 'agent [--engine claude|codex|ollama|echo] [--once "<prompt>"]', 'install [--all|--codex|--antigravity|--gemini [--gemini-hooks]|--claude|--extras [ids]|--companions]', 'uninstall [--all|--codex|--antigravity|--gemini]', 'doctor | status | brief [--host codex] | test | bench [question...] | version | logo', 'recall <query> | remember <name> <type> <description> -- <body>', 'progress [set <next step>] | dream [ack|distil <session>] | graph query|affected|explain|update <arg>', 'config [set <section.key> <value>]']);
+    say([logo(), '', 'atlias                             choose: sub-harness or regular agent', 'agent [--engine claude|codex|ollama|echo] [--once "<prompt>"]', 'install [--all|--codex|--antigravity|--gemini [--gemini-hooks]|--claude|--extras [ids]|--companions|--shortcut]', 'uninstall [--all|--codex|--antigravity|--gemini|--extras|--shortcut]', 'shortcut [install|uninstall|status]  the atlias command in any terminal', 'doctor | status | brief [--host codex] | test | bench [question...] | version | logo', 'recall <query> | remember <name> <type> <description> -- <body>', 'progress [set <next step>] | dream [ack|distil <session>] | graph query|affected|explain|update <arg>', 'config [set <section.key> <value>]']);
 }

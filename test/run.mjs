@@ -133,13 +133,13 @@ suite('gate expert', 'verification gate', () => {
   check('stop blocks once on a syntax failure', b1 && b1.decision === 'block' && /syntax/.test(b1.reason), { happened: JSON.stringify(b1), why: 'The cheapest check of all was skipped and the reply was about to end.', fix: 'gate.stop must run syntaxCheck on files edited since the last prompt.' });
   check('syntax block explains what, why and fix', b1 && /What went wrong/.test(b1.reason) && /Fix:/.test(b1.reason), { happened: b1 && b1.reason, why: 'A bare "blocked" teaches nothing.', fix: 'Keep the three-part message.' });
   fs.writeFileSync(badFile, 'export const a = 2;\n');
+  check('one block carries every finding at once', b1 && /second pass/.test(b1.reason) && /syntax/.test(b1.reason), { happened: JSON.stringify(b1).slice(0, 300), why: 'After a Stop hook blocks, the host continues with stop_hook_active set and the gate never speaks again in that chain, so a finding held back for a later block would never be heard.', fix: 'Collect every section into the one block in gate.stop.' });
   const b2 = gate.stop({ session_id: s, cwd: PROJECT, last_assistant_message: 'Fixed and done.' });
-  check('after syntax passes the gate asks for the second pass once', b2 && b2.decision === 'block' && /second pass/.test(b2.reason), { happened: JSON.stringify(b2), why: 'Code changed and only one check is named; the adversarial pass is the standing rule.', fix: 'gate.stop must block when PASS_RE does not match last_assistant_message and the double flag is unset.' });
-  const b3 = gate.stop({ session_id: s, cwd: PROJECT, last_assistant_message: 'Still done.' });
-  check('the gate never blocks a third time for the same prompt', b3 === null, { happened: JSON.stringify(b3), why: 'An unbounded gate is an infinite loop that burns the whole budget.', fix: 'Set per-prompt flags in session meta and honour them.' });
+  check('the gate never blocks twice for the same prompt', b2 === null, { happened: JSON.stringify(b2), why: 'An unbounded gate is an infinite loop that burns the whole budget.', fix: 'Set per-prompt flags in session meta and honour them.' });
   const s2 = sid('gate2');
   router.prompt({ session_id: s2, cwd: PROJECT, prompt: 'another change please now' });
   track.postTool({ session_id: s2, cwd: PROJECT, tool_name: 'Edit', tool_input: { file_path: okFile } });
+  track.postTool({ session_id: s2, cwd: PROJECT, tool_name: 'Bash', tool_input: { command: 'node --check ok.mjs' }, tool_response: { stdout: '', stderr: '', exit_code: 0 } });
   const passed = gate.stop({ session_id: s2, cwd: PROJECT, last_assistant_message: 'Pass 1: node --check passed. Pass 2: adversarial re-read found nothing.' });
   check('a reply naming both passes is not blocked', passed === null, { happened: JSON.stringify(passed), why: 'The gate must reward the behaviour it asks for.', fix: 'PASS_RE must match "Pass 2".' });
   const active = gate.stop({ session_id: s2, cwd: PROJECT, last_assistant_message: 'Done.', stop_hook_active: true });
@@ -480,7 +480,7 @@ suite('configuration expert', 'configuration respected', () => {
     fs.writeFileSync(f, 'export const a = ;');
     track.postTool({ session_id: s, cwd: PROJECT, tool_name: 'Write', tool_input: { file_path: f } });
   }
-  fs.writeFileSync(cfgPath, JSON.stringify({ verify: { syntax: false, doublePass: false } }));
+  fs.writeFileSync(cfgPath, JSON.stringify({ verify: { syntax: false, doublePass: false, integrity: false } }));
   const t0 = Date.now();
   const off = gate.stop({ session_id: s, cwd: PROJECT, last_assistant_message: 'Done.' });
   const ms = Date.now() - t0;
@@ -498,7 +498,11 @@ suite('long session expert', 'long sessions', () => {
   const evPath = path.join(process.env.ATLIAS_HOME, 'sessions', core.safeId(s) + '.jsonl');
   fs.mkdirSync(path.dirname(evPath), { recursive: true });
   const filler = [];
-  for (let i = 0; i < 20000; i++) filler.push(JSON.stringify({ t: Date.now() - 100000 + i, kind: 'tool', tool: 'Read', key: 'k' + i, files: ['f' + i + '.mjs'] }));
+  for (let i = 0; i < 20000; i++) {
+    // One prompt near the end, the way a real session has one per reply.
+    if (i === 19900) filler.push(JSON.stringify({ t: Date.now() - 100000 + i, kind: 'prompt', prompt_id: 'p-long', text: 'x' }));
+    filler.push(JSON.stringify({ t: Date.now() - 100000 + i, kind: 'tool', tool: 'Read', key: 'k' + i, files: ['f' + i + '.mjs'] }));
+  }
   fs.writeFileSync(evPath, filler.join('\n') + '\n');
   const bytes = fs.statSync(evPath).size;
   check('the fixture really is a long session', bytes > 1500000, { happened: bytes + ' bytes', why: 'A performance test on a small file proves nothing.', fix: 'Raise the number of filler events.' });
@@ -510,8 +514,8 @@ suite('long session expert', 'long sessions', () => {
   const ms = Date.now() - t0;
   check('five guard calls on a long session stay well under a second', ms < 1000, { happened: ms + 'ms across a ' + Math.round(bytes / 1024) + ' KB log', why: 'The guard runs before every tool call. If it scales with session length the harness gets slower exactly as the session gets long, which is when it matters most.', fix: 'guard.preTool must read the tail, not the whole log.' });
   const t1 = Date.now();
-  gate.turnEvents(s);
-  check('the gate reads its turn from the tail too', Date.now() - t1 < 800, { happened: (Date.now() - t1) + 'ms', why: 'The gate runs at the end of every reply.', fix: 'turnEvents uses eventsTail with the larger turn budget.' });
+  const te = gate.turnEvents(s);
+  check('the gate reads its turn from the tail too', !te.truncated && te.promptId === 'p-long' && Date.now() - t1 < 800, { happened: (Date.now() - t1) + 'ms, prompt ' + te.promptId, why: 'The gate runs at the end of every reply.', fix: 'turnEvents uses eventsTail with the larger turn budget.' });
   check('reading the tail of a file that is not there is empty, not an error', core.readTail(path.join(TMP, 'nope.jsonl'), 1024) === '' && core.eventsTail('no-such-session').length === 0, { happened: 'readTail threw', why: 'The first tool call of a session happens before the log exists.', fix: 'Swallow the open error and return empty.' });
 });
 
@@ -889,6 +893,9 @@ suite('proof expert', 'the doctor proves what it reports', () => {
   const quiet = hosts.probeServer(silent, 4000);
   check('a server that answers nothing is not reported as fine', !quiet.ok, { happened: JSON.stringify(quiet), why: 'Silence is the most common failure and the easiest to mistake for success.', fix: 'Require a serverInfo line in the answer.' });
 });
+
+await (await import('./integrity-suites.mjs')).default({ suite, check, core, gate, track, router, PROJECT, TMP, ROOT, spawnSync, fs, path });
+await (await import('./shortcut-suites.mjs')).default({ suite, check, TMP, ROOT, spawnSync, fs, path });
 
 let failed = 0;
 for (const r of results) {

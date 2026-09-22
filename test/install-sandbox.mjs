@@ -28,6 +28,9 @@ const env = {
   ATLIAS_HOME: path.join(HOME, '.atlias'),
   XDG_CONFIG_HOME: path.join(HOME, '.config'),
   APPDATA: path.join(HOME, 'AppData', 'Roaming'),
+  // The terminal command writes under LOCALAPPDATA on Windows; left unset it
+  // would land in the real WindowsApps folder.
+  LOCALAPPDATA: path.join(HOME, 'AppData', 'Local'),
 };
 
 const failures = [];
@@ -116,6 +119,14 @@ for (const f of [path.join(HOME, '.codex', 'AGENTS.md'), path.join(HOME, '.curso
   const text = fs.existsSync(f) ? fs.readFileSync(f, 'utf8') : '';
   check(`${path.relative(HOME, f)} has no atlias block left`, !text.includes('atlias:start'), text.slice(0, 160));
 }
+
+// The terminal command, installed and removed inside the sandbox only.
+const sc = atlias('install', '--shortcut');
+const written = ((sc.stdout || '').match(/^command: (.+)$/gm) || []).map((l) => l.slice(9));
+check('the terminal command installs', sc.status === 0 && written.length > 0, `exit ${sc.status}: ${(sc.stdout || '') + (sc.stderr || '')}`.slice(0, 300));
+check('and only inside the sandbox home', written.length > 0 && written.every((f) => path.resolve(f).startsWith(HOME)), written.join(', '));
+const unsc = atlias('uninstall', '--shortcut');
+check('uninstall removes the terminal command', unsc.status === 0 && written.every((f) => !fs.existsSync(f)), (unsc.stdout || '').slice(0, 300));
 
 const passed = checks.filter((c) => c.ok).length;
 process.stdout.write(`\n${passed}/${checks.length} install checks passed in a sandbox home\n`);
