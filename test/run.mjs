@@ -795,6 +795,22 @@ suite('long turn expert', 'a turn longer than the window', () => {
   check('a short turn still answers from the tail alone', gate.turnEvents(sid('gate2')).promptId !== undefined, { happened: 'the short path threw', why: 'The common case must not pay for the rare one.', fix: 'Only read the whole log when the tail has no marker.' });
 });
 
+suite('index safety expert', 'the memory index cannot be overwritten', () => {
+  const memDir = core.claudeMemoryDir(PROJECT);
+  fs.mkdirSync(memDir, { recursive: true });
+  const indexPath = path.join(memDir, 'MEMORY.md');
+  tools.remember(PROJECT, { name: 'a-real-memory', type: 'project', description: 'something worth keeping', body: 'the body' });
+  const before = fs.readFileSync(indexPath, 'utf8');
+  check('the index has lines to lose', /a-real-memory/.test(before), { happened: before.slice(0, 120), why: 'The test is meaningless against an empty index.', fix: 'Check remember().' });
+  for (const bad of ['memory', 'MEMORY', 'Memory', 'index', 'README']) {
+    const answer = tools.remember(PROJECT, { name: bad, type: 'project', description: 'anything at all', body: 'x' });
+    check('the name ' + bad + ' is refused', /reserved/.test(answer), { happened: answer, why: 'On a case-insensitive filesystem that file is the index, and writing a memory body over it destroys every line, which is the whole memory of the project.', fix: 'Check RESERVED_NAMES in remember().' });
+  }
+  check('and the index survived every attempt', fs.readFileSync(indexPath, 'utf8') === before, { happened: fs.readFileSync(indexPath, 'utf8').slice(0, 160), why: 'That is the damage being prevented.', fix: 'Refuse before writing anything.' });
+  check('the refusal suggests a name that works', /-notes/.test(tools.remember(PROJECT, { name: 'memory', type: 'project', description: 'd' })), { happened: tools.remember(PROJECT, { name: 'memory', type: 'project', description: 'd' }), why: 'A refusal that does not say what to do instead gets retried with another reserved name.', fix: 'Keep the suggestion in the message.' });
+  check('an ordinary name is still accepted', /saved|updated/.test(tools.remember(PROJECT, { name: 'memory-notes', type: 'project', description: 'a note about memory', body: 'fine' })), { happened: tools.remember(PROJECT, { name: 'memory-notes', type: 'project', description: 'a note about memory', body: 'fine' }), why: 'The guard must not block the obvious alternative it just suggested.', fix: 'Only the exact reserved names are refused.' });
+});
+
 let failed = 0;
 for (const r of results) {
   const ok = r.failed.length === 0;

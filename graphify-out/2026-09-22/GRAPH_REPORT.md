@@ -1,12 +1,12 @@
 # Graph Report - atlias  (2026-09-22)
 
 ## Corpus Check
-- 28 files · ~36,697 words
+- 28 files · ~37,516 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 2 file(s) not represented in the graph (top: (none) 2)
 
 ## Summary
-- 368 nodes · 1036 edges · 15 communities
+- 376 nodes · 1058 edges · 15 communities
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 13 edges (avg confidence: 0.87)
 - Token cost: 0 input · 0 output
 
@@ -34,13 +34,13 @@
 
 ## God Nodes (most connected - your core abstractions)
 1. `clip()` - 34 edges
-2. `config()` - 30 edges
-3. `exists()` - 29 edges
-4. `readJson()` - 27 edges
-5. `readText()` - 23 edges
-6. `Changelog` - 23 edges
-7. `writeText()` - 21 edges
-8. `writeJson()` - 19 edges
+2. `exists()` - 30 edges
+3. `config()` - 30 edges
+4. `readJson()` - 28 edges
+5. `Changelog` - 24 edges
+6. `readText()` - 23 edges
+7. `writeText()` - 22 edges
+8. `writeJson()` - 20 edges
 9. `projectDir()` - 18 edges
 10. `log()` - 17 edges
 
@@ -49,11 +49,11 @@
   README.md → lib/graph.mjs
 - `Install` --references--> `uninstall()`  [INFERRED]
   README.md → lib/hosts-extra.mjs
+- `repl()` --calls--> `recall()`  [EXTRACTED]
+  lib/agent.mjs → mcp/tools.mjs
 - `remember()` --calls--> `ensureDir()`  [EXTRACTED]
   mcp/tools.mjs → lib/core.mjs
 - `callTool()` --calls--> `readText()`  [EXTRACTED]
-  mcp/tools.mjs → lib/core.mjs
-- `recall()` --calls--> `readText()`  [EXTRACTED]
   mcp/tools.mjs → lib/core.mjs
 
 ## Import Cycles
@@ -62,36 +62,36 @@
 ## Communities (15 total, 0 thin omitted)
 
 ### Community 0 - "graph.mjs"
-Cohesion: 0.12
-Nodes (37): BRIEF_BUDGET_MS, build(), companions(), fitLines(), RULES, sessionStart(), CLAUDE_DIR, claudeMemoryDir() (+29 more)
+Cohesion: 0.15
+Nodes (34): BRIEF_BUDGET_MS, build(), companions(), fitLines(), RULES, sessionStart(), clip(), exists() (+26 more)
 
 ### Community 1 - "hosts.mjs"
 Cohesion: 0.10
-Nodes (48): findPython(), HOME, readJson(), readText(), run(), START_MARK, writeJson(), writeText() (+40 more)
+Nodes (49): isVersionedPath(), readJson(), readText(), START_MARK, writeJson(), writeLauncher(), writeText(), CODEX_EVENTS (+41 more)
 
 ### Community 2 - "agent.mjs"
 Cohesion: 0.12
-Nodes (41): b(), c(), chooser(), claudeArgs(), claudeTurn(), cli(), codexTurn(), d() (+33 more)
+Nodes (37): b(), c(), chooser(), claudeArgs(), claudeTurn(), cli(), codexTurn(), d() (+29 more)
 
 ### Community 3 - "run.mjs"
 Cohesion: 0.11
 Nodes (14): ref_node_os, ref_node_url, check(), DANGER, mcpSuite(), only, PROJECT, results (+6 more)
 
 ### Community 4 - "gate.mjs"
-Cohesion: 0.17
-Nodes (22): gitStatusShort(), isCodeFile(), TURN_TAIL, block(), changedFiles(), PARSEABLE, parseGitStatus(), PASS_RE (+14 more)
+Cohesion: 0.16
+Nodes (24): gitStatusShort(), isCodeFile(), run(), TURN_TAIL, block(), changedFiles(), PARSEABLE, parseGitStatus() (+16 more)
 
 ### Community 5 - "core.mjs"
-Cohesion: 0.10
-Nodes (34): CODE_EXT, CODEX_DIR, commandFromTool(), detectHost(), emit(), END_MARK, EVENT_MAX, eventsTail() (+26 more)
+Cohesion: 0.08
+Nodes (40): CLAUDE_DIR, CODE_EXT, CODEX_DIR, commandFromTool(), detectHost(), emit(), END_MARK, EVENT_MAX (+32 more)
 
 ### Community 6 - "package.json"
 Cohesion: 0.11
 Nodes (17): author, bin, atlias, description, engines, node, keywords, license (+9 more)
 
 ### Community 8 - "dream.mjs"
-Cohesion: 0.15
-Nodes (33): briefCost(), estimateTokens(), graphVsFiles(), interventions(), liveSessions(), report(), appendLine(), detach() (+25 more)
+Cohesion: 0.19
+Nodes (27): appendLine(), detach(), ensureDir(), events(), projectDir(), readJsonl(), readLines(), safeId() (+19 more)
 
 ### Community 9 - "plugin.json"
 Cohesion: 0.17
@@ -115,15 +115,15 @@ Nodes (4): atlias, Memory discipline (from NanoBot's Dream, kept), Reach for the
 
 ### Community 15 - "Changelog"
 Cohesion: 0.08
-Nodes (23): 1.0.0 (2026-09-21), 1.2.0 (2026-09-22), 1.3.0 (2026-09-22), 1.4.0 (2026-09-22), 1.4.1 (2026-09-22), 1.5.0 (2026-09-22), 1.5.1 (2026-09-22), 1.6.0 (2026-09-22) (+15 more)
+Nodes (24): 1.0.0 (2026-09-21), 1.2.0 (2026-09-22), 1.3.0 (2026-09-22), 1.4.0 (2026-09-22), 1.4.1 (2026-09-22), 1.5.0 (2026-09-22), 1.5.1 (2026-09-22), 1.6.0 (2026-09-22) (+16 more)
 
 ### Community 16 - "atlias.mjs"
-Cohesion: 0.11
-Nodes (19): argv, cwd, FLAG_COMMANDS, DEFAULTS, ROOT, STATE_DIR, VERSION, syntaxReport() (+11 more)
+Cohesion: 0.09
+Nodes (31): argv, cwd, FLAG_COMMANDS, runTool(), briefCost(), estimateTokens(), graphVsFiles(), interventions() (+23 more)
 
 ## Knowledge Gaps
-- **114 isolated node(s):** `$schema`, `name`, `description`, `name`, `email` (+109 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 135 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **118 isolated node(s):** `$schema`, `name`, `description`, `name`, `email` (+113 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 138 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
@@ -133,12 +133,12 @@ _Questions this graph is uniquely positioned to answer:_
 - **Why does `godNodes()` connect `graph.mjs` to `dream.mjs`, `hosts.mjs`, `atlias`?**
   _High betweenness centrality (0.031) - this node is a cross-community bridge._
 - **What connects `$schema`, `name`, `description` to the rest of the system?**
-  _114 weakly-connected nodes found - possible documentation gaps or missing edges._
-- **Should `graph.mjs` be split into smaller, more focused modules?**
-  _Cohesion score 0.11923076923076924 - nodes in this community are weakly interconnected._
+  _118 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `hosts.mjs` be split into smaller, more focused modules?**
-  _Cohesion score 0.10407239819004525 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.1048265460030166 - nodes in this community are weakly interconnected._
 - **Should `agent.mjs` be split into smaller, more focused modules?**
-  _Cohesion score 0.12181616832779624 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.11740890688259109 - nodes in this community are weakly interconnected._
 - **Should `run.mjs` be split into smaller, more focused modules?**
   _Cohesion score 0.10526315789473684 - nodes in this community are weakly interconnected._
+- **Should `core.mjs` be split into smaller, more focused modules?**
+  _Cohesion score 0.07922705314009662 - nodes in this community are weakly interconnected._

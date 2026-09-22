@@ -4,88 +4,16 @@
   "graph": {},
   "nodes": [
     {
-      "id": "lib_brief_build",
-      "label": "build()",
+      "id": "lib_core_detach",
+      "label": "detach()",
       "_callable": true,
       "_origin": "ast",
       "community": 0,
       "community_name": "graph.mjs",
       "file_type": "code",
-      "norm_label": "build()",
-      "source_file": "lib/brief.mjs",
-      "source_location": "L47"
-    },
-    {
-      "id": "lib_brief_companions",
-      "label": "companions()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "graph.mjs",
-      "file_type": "code",
-      "norm_label": "companions()",
-      "source_file": "lib/brief.mjs",
-      "source_location": "L10"
-    },
-    {
-      "id": "lib_brief_fitlines",
-      "label": "fitLines()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "graph.mjs",
-      "file_type": "code",
-      "norm_label": "fitlines()",
-      "source_file": "lib/brief.mjs",
-      "source_location": "L33"
-    },
-    {
-      "id": "lib_brief_sessionstart",
-      "label": "sessionStart()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "graph.mjs",
-      "file_type": "code",
-      "norm_label": "sessionstart()",
-      "source_file": "lib/brief.mjs",
-      "source_location": "L104"
-    },
-    {
-      "id": "lib_core_clip",
-      "label": "clip()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "graph.mjs",
-      "file_type": "code",
-      "norm_label": "clip()",
+      "norm_label": "detach()",
       "source_file": "lib/core.mjs",
-      "source_location": "L57"
-    },
-    {
-      "id": "lib_core_exists",
-      "label": "exists()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "graph.mjs",
-      "file_type": "code",
-      "norm_label": "exists()",
-      "source_file": "lib/core.mjs",
-      "source_location": "L55"
-    },
-    {
-      "id": "lib_core_findpython",
-      "label": "findPython()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "graph.mjs",
-      "file_type": "code",
-      "norm_label": "findpython()",
-      "source_file": "lib/core.mjs",
-      "source_location": "L250"
+      "source_location": "L247"
     },
     {
       "id": "lib_core_graphify",
@@ -97,7 +25,7 @@
       "file_type": "code",
       "norm_label": "graphify()",
       "source_file": "lib/core.mjs",
-      "source_location": "L278"
+      "source_location": "L300"
     },
     {
       "id": "lib_core_graphpath",
@@ -109,7 +37,7 @@
       "file_type": "code",
       "norm_label": "graphpath()",
       "source_file": "lib/core.mjs",
-      "source_location": "L283"
+      "source_location": "L305"
     },
     {
       "id": "lib_core_log",
@@ -121,7 +49,7 @@
       "file_type": "code",
       "norm_label": "log()",
       "source_file": "lib/core.mjs",
-      "source_location": "L66"
+      "source_location": "L88"
     },
     {
       "id": "lib_core_mtime",
@@ -136,28 +64,40 @@
       "source_location": "L54"
     },
     {
-      "id": "lib_core_savesessionmeta",
-      "label": "saveSessionMeta()",
+      "id": "lib_core_trylock",
+      "label": "tryLock()",
       "_callable": true,
       "_origin": "ast",
       "community": 0,
       "community_name": "graph.mjs",
       "file_type": "code",
-      "norm_label": "savesessionmeta()",
+      "norm_label": "trylock()",
       "source_file": "lib/core.mjs",
-      "source_location": "L82"
+      "source_location": "L255"
     },
     {
-      "id": "lib_core_sessionmeta",
-      "label": "sessionMeta()",
+      "id": "lib_core_unlock",
+      "label": "unlock()",
       "_callable": true,
       "_origin": "ast",
       "community": 0,
       "community_name": "graph.mjs",
       "file_type": "code",
-      "norm_label": "sessionmeta()",
+      "norm_label": "unlock()",
       "source_file": "lib/core.mjs",
-      "source_location": "L81"
+      "source_location": "L263"
+    },
+    {
+      "id": "lib_dream_sessionend",
+      "label": "sessionEnd()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "graph.mjs",
+      "file_type": "code",
+      "norm_label": "sessionend()",
+      "source_file": "lib/dream.mjs",
+      "source_location": "L24"
     },
     {
       "id": "lib_graph_age",
@@ -244,6 +184,18 @@
       "source_location": "L73"
     },
     {
+      "id": "lib_graph_scheduleupdate",
+      "label": "scheduleUpdate()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "graph.mjs",
+      "file_type": "code",
+      "norm_label": "scheduleupdate()",
+      "source_file": "lib/graph.mjs",
+      "source_location": "L96"
+    },
+    {
       "id": "lib_graph_status",
       "label": "status()",
       "_callable": true,
@@ -292,40 +244,52 @@
       "source_location": "L110"
     },
     {
-      "id": "lib_router_classify",
-      "label": "classify()",
+      "id": "lib_core_claudememorydir",
+      "label": "claudeMemoryDir()",
       "_callable": true,
       "_origin": "ast",
-      "community": 0,
-      "community_name": "graph.mjs",
+      "community": 1,
+      "community_name": "hosts.mjs",
       "file_type": "code",
-      "norm_label": "classify()",
-      "source_file": "lib/router.mjs",
-      "source_location": "L11"
+      "norm_label": "claudememorydir()",
+      "source_file": "lib/core.mjs",
+      "source_location": "L162"
     },
     {
-      "id": "lib_router_prompt",
-      "label": "prompt()",
+      "id": "lib_core_exists",
+      "label": "exists()",
       "_callable": true,
       "_origin": "ast",
-      "community": 0,
-      "community_name": "graph.mjs",
+      "community": 1,
+      "community_name": "hosts.mjs",
       "file_type": "code",
-      "norm_label": "prompt()",
-      "source_file": "lib/router.mjs",
-      "source_location": "L30"
+      "norm_label": "exists()",
+      "source_file": "lib/core.mjs",
+      "source_location": "L55"
     },
     {
-      "id": "lib_router_stalenote",
-      "label": "staleNote()",
+      "id": "lib_core_findpython",
+      "label": "findPython()",
       "_callable": true,
       "_origin": "ast",
-      "community": 0,
-      "community_name": "graph.mjs",
+      "community": 1,
+      "community_name": "hosts.mjs",
       "file_type": "code",
-      "norm_label": "stalenote()",
-      "source_file": "lib/router.mjs",
-      "source_location": "L22"
+      "norm_label": "findpython()",
+      "source_file": "lib/core.mjs",
+      "source_location": "L272"
+    },
+    {
+      "id": "lib_core_installedroots",
+      "label": "installedRoots()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "hosts.mjs",
+      "file_type": "code",
+      "norm_label": "installedroots()",
+      "source_file": "lib/core.mjs",
+      "source_location": "L200"
     },
     {
       "id": "lib_core_isversionedpath",
@@ -337,7 +301,7 @@
       "file_type": "code",
       "norm_label": "isversionedpath()",
       "source_file": "lib/core.mjs",
-      "source_location": "L174"
+      "source_location": "L196"
     },
     {
       "id": "lib_core_readjson",
@@ -385,7 +349,7 @@
       "file_type": "code",
       "norm_label": "writelauncher()",
       "source_file": "lib/core.mjs",
-      "source_location": "L196"
+      "source_location": "L218"
     },
     {
       "id": "lib_core_writetext",
@@ -554,6 +518,18 @@
       "norm_label": "uninstallall()",
       "source_file": "lib/hosts-extra.mjs",
       "source_location": "L99"
+    },
+    {
+      "id": "lib_hosts_formatdoctor",
+      "label": "formatDoctor()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "hosts.mjs",
+      "file_type": "code",
+      "norm_label": "formatdoctor()",
+      "source_file": "lib/hosts.mjs",
+      "source_location": "L237"
     },
     {
       "id": "lib_hosts_hookcommand",
@@ -820,6 +796,42 @@
       "source_location": "L173"
     },
     {
+      "id": "mcp_tools_calltool",
+      "label": "callTool()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "hosts.mjs",
+      "file_type": "code",
+      "norm_label": "calltool()",
+      "source_file": "mcp/tools.mjs",
+      "source_location": "L106"
+    },
+    {
+      "id": "mcp_tools_remember",
+      "label": "remember()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "hosts.mjs",
+      "file_type": "code",
+      "norm_label": "remember()",
+      "source_file": "mcp/tools.mjs",
+      "source_location": "L57"
+    },
+    {
+      "id": "mcp_tools_verifytext",
+      "label": "verifyText()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "hosts.mjs",
+      "file_type": "code",
+      "norm_label": "verifytext()",
+      "source_file": "mcp/tools.mjs",
+      "source_location": "L73"
+    },
+    {
       "id": "bin_atlias_after",
       "label": "after()",
       "_callable": true,
@@ -880,136 +892,16 @@
       "source_location": "L32"
     },
     {
-      "id": "lib_agent_runtool",
-      "label": "runTool()",
+      "id": "lib_core_parsesetting",
+      "label": "parseSetting()",
       "_callable": true,
       "_origin": "ast",
       "community": 16,
       "community_name": "atlias.mjs",
       "file_type": "code",
-      "norm_label": "runtool()",
-      "source_file": "lib/agent.mjs",
-      "source_location": "L110"
-    },
-    {
-      "id": "lib_bench_briefcost",
-      "label": "briefCost()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "atlias.mjs",
-      "file_type": "code",
-      "norm_label": "briefcost()",
-      "source_file": "lib/bench.mjs",
-      "source_location": "L19"
-    },
-    {
-      "id": "lib_bench_estimatetokens",
-      "label": "estimateTokens()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "atlias.mjs",
-      "file_type": "code",
-      "norm_label": "estimatetokens()",
-      "source_file": "lib/bench.mjs",
-      "source_location": "L14"
-    },
-    {
-      "id": "lib_bench_graphvsfiles",
-      "label": "graphVsFiles()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "atlias.mjs",
-      "file_type": "code",
-      "norm_label": "graphvsfiles()",
-      "source_file": "lib/bench.mjs",
-      "source_location": "L27"
-    },
-    {
-      "id": "lib_bench_interventions",
-      "label": "interventions()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "atlias.mjs",
-      "file_type": "code",
-      "norm_label": "interventions()",
-      "source_file": "lib/bench.mjs",
-      "source_location": "L45"
-    },
-    {
-      "id": "lib_bench_livesessions",
-      "label": "liveSessions()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "atlias.mjs",
-      "file_type": "code",
-      "norm_label": "livesessions()",
-      "source_file": "lib/bench.mjs",
-      "source_location": "L62"
-    },
-    {
-      "id": "lib_bench_report",
-      "label": "report()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "atlias.mjs",
-      "file_type": "code",
-      "norm_label": "report()",
-      "source_file": "lib/bench.mjs",
-      "source_location": "L83"
-    },
-    {
-      "id": "lib_core_claudememorydir",
-      "label": "claudeMemoryDir()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "atlias.mjs",
-      "file_type": "code",
-      "norm_label": "claudememorydir()",
+      "norm_label": "parsesetting()",
       "source_file": "lib/core.mjs",
-      "source_location": "L140"
-    },
-    {
-      "id": "lib_core_config",
-      "label": "config()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "atlias.mjs",
-      "file_type": "code",
-      "norm_label": "config()",
-      "source_file": "lib/core.mjs",
-      "source_location": "L60"
-    },
-    {
-      "id": "lib_core_slug",
-      "label": "slug()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "atlias.mjs",
-      "file_type": "code",
-      "norm_label": "slug()",
-      "source_file": "lib/core.mjs",
-      "source_location": "L76"
-    },
-    {
-      "id": "lib_hosts_formatdoctor",
-      "label": "formatDoctor()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "atlias.mjs",
-      "file_type": "code",
-      "norm_label": "formatdoctor()",
-      "source_file": "lib/hosts.mjs",
-      "source_location": "L235"
+      "source_location": "L68"
     },
     {
       "id": "mcp_server_fail",
@@ -1058,54 +950,6 @@
       "norm_label": "send()",
       "source_file": "mcp/server.mjs",
       "source_location": "L12"
-    },
-    {
-      "id": "mcp_tools_calltool",
-      "label": "callTool()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "atlias.mjs",
-      "file_type": "code",
-      "norm_label": "calltool()",
-      "source_file": "mcp/tools.mjs",
-      "source_location": "L106"
-    },
-    {
-      "id": "mcp_tools_recall",
-      "label": "recall()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "atlias.mjs",
-      "file_type": "code",
-      "norm_label": "recall()",
-      "source_file": "mcp/tools.mjs",
-      "source_location": "L15"
-    },
-    {
-      "id": "mcp_tools_remember",
-      "label": "remember()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "atlias.mjs",
-      "file_type": "code",
-      "norm_label": "remember()",
-      "source_file": "mcp/tools.mjs",
-      "source_location": "L57"
-    },
-    {
-      "id": "mcp_tools_verifytext",
-      "label": "verifyText()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "atlias.mjs",
-      "file_type": "code",
-      "norm_label": "verifytext()",
-      "source_file": "mcp/tools.mjs",
-      "source_location": "L73"
     },
     {
       "id": "lib_agent_b",
@@ -1312,6 +1156,18 @@
       "source_location": "L204"
     },
     {
+      "id": "lib_agent_runtool",
+      "label": "runTool()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "agent.mjs",
+      "file_type": "code",
+      "norm_label": "runtool()",
+      "source_file": "lib/agent.mjs",
+      "source_location": "L110"
+    },
+    {
       "id": "lib_agent_systemprompt",
       "label": "systemPrompt()",
       "_callable": true,
@@ -1346,6 +1202,30 @@
       "norm_label": "turn()",
       "source_file": "lib/agent.mjs",
       "source_location": "L176"
+    },
+    {
+      "id": "lib_core_clip",
+      "label": "clip()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "agent.mjs",
+      "file_type": "code",
+      "norm_label": "clip()",
+      "source_file": "lib/core.mjs",
+      "source_location": "L57"
+    },
+    {
+      "id": "lib_core_config",
+      "label": "config()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "agent.mjs",
+      "file_type": "code",
+      "norm_label": "config()",
+      "source_file": "lib/core.mjs",
+      "source_location": "L60"
     },
     {
       "id": "lib_logo_accent",
@@ -1444,6 +1324,18 @@
       "source_location": "L42"
     },
     {
+      "id": "mcp_tools_recall",
+      "label": "recall()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "agent.mjs",
+      "file_type": "code",
+      "norm_label": "recall()",
+      "source_file": "mcp/tools.mjs",
+      "source_location": "L15"
+    },
+    {
       "id": "test_run_ch",
       "label": "ch()",
       "_callable": true,
@@ -1537,19 +1429,7 @@
       "file_type": "code",
       "norm_label": "gitstatusshort()",
       "source_file": "lib/core.mjs",
-      "source_location": "L288"
-    },
-    {
-      "id": "lib_core_iscodefile",
-      "label": "isCodeFile()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "gate.mjs",
-      "file_type": "code",
-      "norm_label": "iscodefile()",
-      "source_file": "lib/core.mjs",
-      "source_location": "L305"
+      "source_location": "L310"
     },
     {
       "id": "lib_core_run",
@@ -1561,7 +1441,7 @@
       "file_type": "code",
       "norm_label": "run()",
       "source_file": "lib/core.mjs",
-      "source_location": "L217"
+      "source_location": "L239"
     },
     {
       "id": "lib_gate_block",
@@ -1573,7 +1453,7 @@
       "file_type": "code",
       "norm_label": "block()",
       "source_file": "lib/gate.mjs",
-      "source_location": "L95"
+      "source_location": "L107"
     },
     {
       "id": "lib_gate_changedfiles",
@@ -1585,7 +1465,19 @@
       "file_type": "code",
       "norm_label": "changedfiles()",
       "source_file": "lib/gate.mjs",
-      "source_location": "L56"
+      "source_location": "L68"
+    },
+    {
+      "id": "lib_gate_lastprompt",
+      "label": "lastPrompt()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "gate.mjs",
+      "file_type": "code",
+      "norm_label": "lastprompt()",
+      "source_file": "lib/gate.mjs",
+      "source_location": "L11"
     },
     {
       "id": "lib_gate_parsegitstatus",
@@ -1597,7 +1489,7 @@
       "file_type": "code",
       "norm_label": "parsegitstatus()",
       "source_file": "lib/gate.mjs",
-      "source_location": "L24"
+      "source_location": "L36"
     },
     {
       "id": "lib_gate_shellchangedfiles",
@@ -1609,7 +1501,7 @@
       "file_type": "code",
       "norm_label": "shellchangedfiles()",
       "source_file": "lib/gate.mjs",
-      "source_location": "L43"
+      "source_location": "L55"
     },
     {
       "id": "lib_gate_stop",
@@ -1621,7 +1513,7 @@
       "file_type": "code",
       "norm_label": "stop()",
       "source_file": "lib/gate.mjs",
-      "source_location": "L97"
+      "source_location": "L109"
     },
     {
       "id": "lib_gate_syntaxcheck",
@@ -1633,7 +1525,7 @@
       "file_type": "code",
       "norm_label": "syntaxcheck()",
       "source_file": "lib/gate.mjs",
-      "source_location": "L69"
+      "source_location": "L81"
     },
     {
       "id": "lib_gate_syntaxcheckdetailed",
@@ -1645,7 +1537,7 @@
       "file_type": "code",
       "norm_label": "syntaxcheckdetailed()",
       "source_file": "lib/gate.mjs",
-      "source_location": "L70"
+      "source_location": "L82"
     },
     {
       "id": "lib_gate_syntaxreport",
@@ -1657,7 +1549,7 @@
       "file_type": "code",
       "norm_label": "syntaxreport()",
       "source_file": "lib/gate.mjs",
-      "source_location": "L65"
+      "source_location": "L77"
     },
     {
       "id": "lib_gate_turnevents",
@@ -1669,7 +1561,7 @@
       "file_type": "code",
       "norm_label": "turnevents()",
       "source_file": "lib/gate.mjs",
-      "source_location": "L11"
+      "source_location": "L15"
     },
     {
       "id": "lib_progress_applynext",
@@ -1789,7 +1681,7 @@
       "file_type": "code",
       "norm_label": "cleargitmemo()",
       "source_file": "lib/core.mjs",
-      "source_location": "L301"
+      "source_location": "L323"
     },
     {
       "id": "lib_core_commandfromtool",
@@ -1801,7 +1693,7 @@
       "file_type": "code",
       "norm_label": "commandfromtool()",
       "source_file": "lib/core.mjs",
-      "source_location": "L316"
+      "source_location": "L338"
     },
     {
       "id": "lib_core_contextoutput",
@@ -1813,7 +1705,7 @@
       "file_type": "code",
       "norm_label": "contextoutput()",
       "source_file": "lib/core.mjs",
-      "source_location": "L152"
+      "source_location": "L174"
     },
     {
       "id": "lib_core_detecthost",
@@ -1825,7 +1717,7 @@
       "file_type": "code",
       "norm_label": "detecthost()",
       "source_file": "lib/core.mjs",
-      "source_location": "L158"
+      "source_location": "L180"
     },
     {
       "id": "lib_core_emit",
@@ -1837,19 +1729,7 @@
       "file_type": "code",
       "norm_label": "emit()",
       "source_file": "lib/core.mjs",
-      "source_location": "L151"
-    },
-    {
-      "id": "lib_core_eventstail",
-      "label": "eventsTail()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "core.mjs",
-      "file_type": "code",
-      "norm_label": "eventstail()",
-      "source_file": "lib/core.mjs",
-      "source_location": "L131"
+      "source_location": "L173"
     },
     {
       "id": "lib_core_filesfromtool",
@@ -1861,19 +1741,19 @@
       "file_type": "code",
       "norm_label": "filesfromtool()",
       "source_file": "lib/core.mjs",
-      "source_location": "L306"
+      "source_location": "L328"
     },
     {
-      "id": "lib_core_installedroots",
-      "label": "installedRoots()",
+      "id": "lib_core_iscodefile",
+      "label": "isCodeFile()",
       "_callable": true,
       "_origin": "ast",
       "community": 5,
       "community_name": "core.mjs",
       "file_type": "code",
-      "norm_label": "installedroots()",
+      "norm_label": "iscodefile()",
       "source_file": "lib/core.mjs",
-      "source_location": "L178"
+      "source_location": "L327"
     },
     {
       "id": "lib_core_isedittool",
@@ -1885,7 +1765,7 @@
       "file_type": "code",
       "norm_label": "isedittool()",
       "source_file": "lib/core.mjs",
-      "source_location": "L322"
+      "source_location": "L344"
     },
     {
       "id": "lib_core_isshelltool",
@@ -1897,7 +1777,7 @@
       "file_type": "code",
       "norm_label": "isshelltool()",
       "source_file": "lib/core.mjs",
-      "source_location": "L323"
+      "source_location": "L345"
     },
     {
       "id": "lib_core_lookslikeverification",
@@ -1909,7 +1789,7 @@
       "file_type": "code",
       "norm_label": "lookslikeverification()",
       "source_file": "lib/core.mjs",
-      "source_location": "L324"
+      "source_location": "L346"
     },
     {
       "id": "lib_core_pathtofileurl",
@@ -1921,7 +1801,7 @@
       "file_type": "code",
       "norm_label": "pathtofileurl()",
       "source_file": "lib/core.mjs",
-      "source_location": "L214"
+      "source_location": "L236"
     },
     {
       "id": "lib_core_readstdin",
@@ -1933,19 +1813,7 @@
       "file_type": "code",
       "norm_label": "readstdin()",
       "source_file": "lib/core.mjs",
-      "source_location": "L143"
-    },
-    {
-      "id": "lib_core_readtail",
-      "label": "readTail()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "core.mjs",
-      "file_type": "code",
-      "norm_label": "readtail()",
-      "source_file": "lib/core.mjs",
-      "source_location": "L111"
+      "source_location": "L165"
     },
     {
       "id": "lib_core_recordevent",
@@ -1957,7 +1825,7 @@
       "file_type": "code",
       "norm_label": "recordevent()",
       "source_file": "lib/core.mjs",
-      "source_location": "L107"
+      "source_location": "L129"
     },
     {
       "id": "lib_core_sha",
@@ -1972,6 +1840,18 @@
       "source_location": "L56"
     },
     {
+      "id": "lib_core_slug",
+      "label": "slug()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "core.mjs",
+      "file_type": "code",
+      "norm_label": "slug()",
+      "source_file": "lib/core.mjs",
+      "source_location": "L98"
+    },
+    {
       "id": "lib_core_trimevent",
       "label": "trimEvent()",
       "_callable": true,
@@ -1981,7 +1861,7 @@
       "file_type": "code",
       "norm_label": "trimevent()",
       "source_file": "lib/core.mjs",
-      "source_location": "L89"
+      "source_location": "L111"
     },
     {
       "id": "lib_guard_destructivereason",
@@ -2068,6 +1948,198 @@
       "source_location": "L26"
     },
     {
+      "id": "lib_brief_build",
+      "label": "build()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "brief.mjs",
+      "file_type": "code",
+      "norm_label": "build()",
+      "source_file": "lib/brief.mjs",
+      "source_location": "L47"
+    },
+    {
+      "id": "lib_brief_companions",
+      "label": "companions()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "brief.mjs",
+      "file_type": "code",
+      "norm_label": "companions()",
+      "source_file": "lib/brief.mjs",
+      "source_location": "L10"
+    },
+    {
+      "id": "lib_brief_fitlines",
+      "label": "fitLines()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "brief.mjs",
+      "file_type": "code",
+      "norm_label": "fitlines()",
+      "source_file": "lib/brief.mjs",
+      "source_location": "L33"
+    },
+    {
+      "id": "lib_brief_sessionstart",
+      "label": "sessionStart()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "brief.mjs",
+      "file_type": "code",
+      "norm_label": "sessionstart()",
+      "source_file": "lib/brief.mjs",
+      "source_location": "L104"
+    },
+    {
+      "id": "lib_core_savesessionmeta",
+      "label": "saveSessionMeta()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "brief.mjs",
+      "file_type": "code",
+      "norm_label": "savesessionmeta()",
+      "source_file": "lib/core.mjs",
+      "source_location": "L104"
+    },
+    {
+      "id": "lib_core_sessionmeta",
+      "label": "sessionMeta()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "brief.mjs",
+      "file_type": "code",
+      "norm_label": "sessionmeta()",
+      "source_file": "lib/core.mjs",
+      "source_location": "L103"
+    },
+    {
+      "id": "lib_core_sessionmetapath",
+      "label": "sessionMetaPath()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "brief.mjs",
+      "file_type": "code",
+      "norm_label": "sessionmetapath()",
+      "source_file": "lib/core.mjs",
+      "source_location": "L102"
+    },
+    {
+      "id": "lib_router_classify",
+      "label": "classify()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "brief.mjs",
+      "file_type": "code",
+      "norm_label": "classify()",
+      "source_file": "lib/router.mjs",
+      "source_location": "L11"
+    },
+    {
+      "id": "lib_router_prompt",
+      "label": "prompt()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "brief.mjs",
+      "file_type": "code",
+      "norm_label": "prompt()",
+      "source_file": "lib/router.mjs",
+      "source_location": "L30"
+    },
+    {
+      "id": "lib_router_stalenote",
+      "label": "staleNote()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "brief.mjs",
+      "file_type": "code",
+      "norm_label": "stalenote()",
+      "source_file": "lib/router.mjs",
+      "source_location": "L22"
+    },
+    {
+      "id": "lib_bench_briefcost",
+      "label": "briefCost()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "dream.mjs",
+      "file_type": "code",
+      "norm_label": "briefcost()",
+      "source_file": "lib/bench.mjs",
+      "source_location": "L19"
+    },
+    {
+      "id": "lib_bench_estimatetokens",
+      "label": "estimateTokens()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "dream.mjs",
+      "file_type": "code",
+      "norm_label": "estimatetokens()",
+      "source_file": "lib/bench.mjs",
+      "source_location": "L14"
+    },
+    {
+      "id": "lib_bench_graphvsfiles",
+      "label": "graphVsFiles()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "dream.mjs",
+      "file_type": "code",
+      "norm_label": "graphvsfiles()",
+      "source_file": "lib/bench.mjs",
+      "source_location": "L27"
+    },
+    {
+      "id": "lib_bench_interventions",
+      "label": "interventions()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "dream.mjs",
+      "file_type": "code",
+      "norm_label": "interventions()",
+      "source_file": "lib/bench.mjs",
+      "source_location": "L45"
+    },
+    {
+      "id": "lib_bench_livesessions",
+      "label": "liveSessions()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "dream.mjs",
+      "file_type": "code",
+      "norm_label": "livesessions()",
+      "source_file": "lib/bench.mjs",
+      "source_location": "L62"
+    },
+    {
+      "id": "lib_bench_report",
+      "label": "report()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "dream.mjs",
+      "file_type": "code",
+      "norm_label": "report()",
+      "source_file": "lib/bench.mjs",
+      "source_location": "L83"
+    },
+    {
       "id": "lib_core_appendline",
       "label": "appendLine()",
       "_callable": true,
@@ -2078,18 +2150,6 @@
       "norm_label": "appendline()",
       "source_file": "lib/core.mjs",
       "source_location": "L47"
-    },
-    {
-      "id": "lib_core_detach",
-      "label": "detach()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "dream.mjs",
-      "file_type": "code",
-      "norm_label": "detach()",
-      "source_file": "lib/core.mjs",
-      "source_location": "L225"
     },
     {
       "id": "lib_core_ensuredir",
@@ -2113,7 +2173,19 @@
       "file_type": "code",
       "norm_label": "events()",
       "source_file": "lib/core.mjs",
-      "source_location": "L108"
+      "source_location": "L130"
+    },
+    {
+      "id": "lib_core_eventstail",
+      "label": "eventsTail()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "dream.mjs",
+      "file_type": "code",
+      "norm_label": "eventstail()",
+      "source_file": "lib/core.mjs",
+      "source_location": "L153"
     },
     {
       "id": "lib_core_projectdir",
@@ -2125,7 +2197,7 @@
       "file_type": "code",
       "norm_label": "projectdir()",
       "source_file": "lib/core.mjs",
-      "source_location": "L77"
+      "source_location": "L99"
     },
     {
       "id": "lib_core_readjsonl",
@@ -2152,6 +2224,18 @@
       "source_location": "L48"
     },
     {
+      "id": "lib_core_readtail",
+      "label": "readTail()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "dream.mjs",
+      "file_type": "code",
+      "norm_label": "readtail()",
+      "source_file": "lib/core.mjs",
+      "source_location": "L133"
+    },
+    {
       "id": "lib_core_safeid",
       "label": "safeId()",
       "_callable": true,
@@ -2161,7 +2245,7 @@
       "file_type": "code",
       "norm_label": "safeid()",
       "source_file": "lib/core.mjs",
-      "source_location": "L83"
+      "source_location": "L105"
     },
     {
       "id": "lib_core_sessiondir",
@@ -2173,7 +2257,7 @@
       "file_type": "code",
       "norm_label": "sessiondir()",
       "source_file": "lib/core.mjs",
-      "source_location": "L78"
+      "source_location": "L100"
     },
     {
       "id": "lib_core_sessionevents",
@@ -2185,43 +2269,7 @@
       "file_type": "code",
       "norm_label": "sessionevents()",
       "source_file": "lib/core.mjs",
-      "source_location": "L79"
-    },
-    {
-      "id": "lib_core_sessionmetapath",
-      "label": "sessionMetaPath()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "dream.mjs",
-      "file_type": "code",
-      "norm_label": "sessionmetapath()",
-      "source_file": "lib/core.mjs",
-      "source_location": "L80"
-    },
-    {
-      "id": "lib_core_trylock",
-      "label": "tryLock()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "dream.mjs",
-      "file_type": "code",
-      "norm_label": "trylock()",
-      "source_file": "lib/core.mjs",
-      "source_location": "L233"
-    },
-    {
-      "id": "lib_core_unlock",
-      "label": "unlock()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "dream.mjs",
-      "file_type": "code",
-      "norm_label": "unlock()",
-      "source_file": "lib/core.mjs",
-      "source_location": "L241"
+      "source_location": "L101"
     },
     {
       "id": "lib_dream_ack",
@@ -2344,18 +2392,6 @@
       "source_location": "L33"
     },
     {
-      "id": "lib_dream_sessionend",
-      "label": "sessionEnd()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "dream.mjs",
-      "file_type": "code",
-      "norm_label": "sessionend()",
-      "source_file": "lib/dream.mjs",
-      "source_location": "L24"
-    },
-    {
       "id": "lib_dream_worker",
       "label": "worker()",
       "_callable": true,
@@ -2366,51 +2402,6 @@
       "norm_label": "worker()",
       "source_file": "lib/dream.mjs",
       "source_location": "L119"
-    },
-    {
-      "id": "lib_graph_scheduleupdate",
-      "label": "scheduleUpdate()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "dream.mjs",
-      "file_type": "code",
-      "norm_label": "scheduleupdate()",
-      "source_file": "lib/graph.mjs",
-      "source_location": "L96"
-    },
-    {
-      "id": "lib_brief",
-      "label": "brief.mjs",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "graph.mjs",
-      "file_type": "code",
-      "norm_label": "brief.mjs",
-      "source_file": "lib/brief.mjs",
-      "source_location": "L1"
-    },
-    {
-      "id": "lib_brief_brief_budget_ms",
-      "label": "BRIEF_BUDGET_MS",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "graph.mjs",
-      "file_type": "code",
-      "norm_label": "brief_budget_ms",
-      "source_file": "lib/brief.mjs",
-      "source_location": "L46"
-    },
-    {
-      "id": "lib_brief_rules",
-      "label": "RULES",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "graph.mjs",
-      "file_type": "code",
-      "norm_label": "rules",
-      "source_file": "lib/brief.mjs",
-      "source_location": "L22"
     },
     {
       "id": "lib_graph",
@@ -2455,39 +2446,6 @@
       "norm_label": "skip",
       "source_file": "lib/graph.mjs",
       "source_location": "L11"
-    },
-    {
-      "id": "lib_router",
-      "label": "router.mjs",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "graph.mjs",
-      "file_type": "code",
-      "norm_label": "router.mjs",
-      "source_file": "lib/router.mjs",
-      "source_location": "L1"
-    },
-    {
-      "id": "lib_router_codebase_re",
-      "label": "CODEBASE_RE",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "graph.mjs",
-      "file_type": "code",
-      "norm_label": "codebase_re",
-      "source_file": "lib/router.mjs",
-      "source_location": "L8"
-    },
-    {
-      "id": "lib_router_frontend_re",
-      "label": "FRONTEND_RE",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "graph.mjs",
-      "file_type": "code",
-      "norm_label": "frontend_re",
-      "source_file": "lib/router.mjs",
-      "source_location": "L9"
     },
     {
       "id": "lib_core_start_mark",
@@ -2609,6 +2567,28 @@
       "norm_label": "server_mjs",
       "source_file": "lib/hosts.mjs",
       "source_location": "L8"
+    },
+    {
+      "id": "mcp_tools",
+      "label": "tools.mjs",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "hosts.mjs",
+      "file_type": "code",
+      "norm_label": "tools.mjs",
+      "source_file": "mcp/tools.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "mcp_tools_types",
+      "label": "TYPES",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "hosts.mjs",
+      "file_type": "code",
+      "norm_label": "types",
+      "source_file": "mcp/tools.mjs",
+      "source_location": "L13"
     },
     {
       "id": "readme",
@@ -3028,7 +3008,7 @@
       "node_kind": "heading",
       "norm_label": "1.0.0 (2026-09-21)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L93"
+      "source_location": "L101"
     },
     {
       "id": "changelog_1_2_0_2026_09_22",
@@ -3040,7 +3020,7 @@
       "node_kind": "heading",
       "norm_label": "1.2.0 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L89"
+      "source_location": "L97"
     },
     {
       "id": "changelog_1_3_0_2026_09_22",
@@ -3052,7 +3032,7 @@
       "node_kind": "heading",
       "norm_label": "1.3.0 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L85"
+      "source_location": "L93"
     },
     {
       "id": "changelog_1_4_0_2026_09_22",
@@ -3064,7 +3044,7 @@
       "node_kind": "heading",
       "norm_label": "1.4.0 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L81"
+      "source_location": "L89"
     },
     {
       "id": "changelog_1_4_1_2026_09_22",
@@ -3076,7 +3056,7 @@
       "node_kind": "heading",
       "norm_label": "1.4.1 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L77"
+      "source_location": "L85"
     },
     {
       "id": "changelog_1_5_0_2026_09_22",
@@ -3088,7 +3068,7 @@
       "node_kind": "heading",
       "norm_label": "1.5.0 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L73"
+      "source_location": "L81"
     },
     {
       "id": "changelog_1_5_1_2026_09_22",
@@ -3100,7 +3080,7 @@
       "node_kind": "heading",
       "norm_label": "1.5.1 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L69"
+      "source_location": "L77"
     },
     {
       "id": "changelog_1_6_0_2026_09_22",
@@ -3112,7 +3092,7 @@
       "node_kind": "heading",
       "norm_label": "1.6.0 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L65"
+      "source_location": "L73"
     },
     {
       "id": "changelog_1_7_0_2026_09_22",
@@ -3124,7 +3104,7 @@
       "node_kind": "heading",
       "norm_label": "1.7.0 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L61"
+      "source_location": "L69"
     },
     {
       "id": "changelog_1_8_0_2026_09_22",
@@ -3136,7 +3116,7 @@
       "node_kind": "heading",
       "norm_label": "1.8.0 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L57"
+      "source_location": "L65"
     },
     {
       "id": "changelog_1_9_0_2026_09_22",
@@ -3148,7 +3128,7 @@
       "node_kind": "heading",
       "norm_label": "1.9.0 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L53"
+      "source_location": "L61"
     },
     {
       "id": "changelog_1_9_1_2026_09_22",
@@ -3160,7 +3140,7 @@
       "node_kind": "heading",
       "norm_label": "1.9.1 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L49"
+      "source_location": "L57"
     },
     {
       "id": "changelog_2_0_0_2026_09_22",
@@ -3172,7 +3152,7 @@
       "node_kind": "heading",
       "norm_label": "2.0.0 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L45"
+      "source_location": "L53"
     },
     {
       "id": "changelog_2_1_0_2026_09_22",
@@ -3184,7 +3164,7 @@
       "node_kind": "heading",
       "norm_label": "2.1.0 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L39"
+      "source_location": "L47"
     },
     {
       "id": "changelog_2_1_1_2026_09_22",
@@ -3196,7 +3176,7 @@
       "node_kind": "heading",
       "norm_label": "2.1.1 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L35"
+      "source_location": "L43"
     },
     {
       "id": "changelog_2_1_2_2026_09_22",
@@ -3208,7 +3188,7 @@
       "node_kind": "heading",
       "norm_label": "2.1.2 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L31"
+      "source_location": "L39"
     },
     {
       "id": "changelog_2_1_3_2026_09_22",
@@ -3220,7 +3200,7 @@
       "node_kind": "heading",
       "norm_label": "2.1.3 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L27"
+      "source_location": "L35"
     },
     {
       "id": "changelog_2_1_4_2026_09_22",
@@ -3232,7 +3212,7 @@
       "node_kind": "heading",
       "norm_label": "2.1.4 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L23"
+      "source_location": "L31"
     },
     {
       "id": "changelog_2_1_5_2026_09_22",
@@ -3244,7 +3224,7 @@
       "node_kind": "heading",
       "norm_label": "2.1.5 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L19"
+      "source_location": "L27"
     },
     {
       "id": "changelog_2_1_6_2026_09_22",
@@ -3256,7 +3236,7 @@
       "node_kind": "heading",
       "norm_label": "2.1.6 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L15"
+      "source_location": "L23"
     },
     {
       "id": "changelog_2_1_7_2026_09_22",
@@ -3268,7 +3248,7 @@
       "node_kind": "heading",
       "norm_label": "2.1.7 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L11"
+      "source_location": "L19"
     },
     {
       "id": "changelog_2_1_8_2026_09_22",
@@ -3280,7 +3260,7 @@
       "node_kind": "heading",
       "norm_label": "2.1.8 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L7"
+      "source_location": "L15"
     },
     {
       "id": "changelog_2_2_0_2026_09_22",
@@ -3291,6 +3271,30 @@
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "2.2.0 (2026-09-22)",
+      "source_file": "CHANGELOG.md",
+      "source_location": "L11"
+    },
+    {
+      "id": "changelog_2_2_1_2026_09_22",
+      "label": "2.2.1 (2026-09-22)",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "Changelog",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "2.2.1 (2026-09-22)",
+      "source_file": "CHANGELOG.md",
+      "source_location": "L7"
+    },
+    {
+      "id": "changelog_2_2_2_2026_09_22",
+      "label": "2.2.2 (2026-09-22)",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "Changelog",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "2.2.2 (2026-09-22)",
       "source_file": "CHANGELOG.md",
       "source_location": "L3"
     },
@@ -3351,17 +3355,6 @@
       "source_location": "L26"
     },
     {
-      "id": "lib_bench",
-      "label": "bench.mjs",
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "atlias.mjs",
-      "file_type": "code",
-      "norm_label": "bench.mjs",
-      "source_file": "lib/bench.mjs",
-      "source_location": "L1"
-    },
-    {
       "id": "lib_core_defaults",
       "label": "DEFAULTS",
       "_origin": "ast",
@@ -3417,17 +3410,6 @@
       "source_location": "L1"
     },
     {
-      "id": "mcp_tools",
-      "label": "tools.mjs",
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "atlias.mjs",
-      "file_type": "code",
-      "norm_label": "tools.mjs",
-      "source_file": "mcp/tools.mjs",
-      "source_location": "L1"
-    },
-    {
       "id": "mcp_tools_tools",
       "label": "TOOLS",
       "_origin": "ast",
@@ -3437,17 +3419,6 @@
       "norm_label": "tools",
       "source_file": "mcp/tools.mjs",
       "source_location": "L93"
-    },
-    {
-      "id": "mcp_tools_types",
-      "label": "TYPES",
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "atlias.mjs",
-      "file_type": "code",
-      "norm_label": "types",
-      "source_file": "mcp/tools.mjs",
-      "source_location": "L13"
     },
     {
       "id": "lib_agent",
@@ -3634,7 +3605,7 @@
       "file_type": "code",
       "norm_label": "total",
       "source_file": "test/run.mjs",
-      "source_location": "L780"
+      "source_location": "L807"
     },
     {
       "id": "test_run_unixpath",
@@ -3656,7 +3627,7 @@
       "file_type": "code",
       "norm_label": "turn_tail",
       "source_file": "lib/core.mjs",
-      "source_location": "L130"
+      "source_location": "L152"
     },
     {
       "id": "lib_gate",
@@ -3678,7 +3649,7 @@
       "file_type": "code",
       "norm_label": "parseable",
       "source_file": "lib/gate.mjs",
-      "source_location": "L64"
+      "source_location": "L76"
     },
     {
       "id": "lib_gate_pass_re",
@@ -3714,17 +3685,6 @@
       "source_location": "L1"
     },
     {
-      "id": "lib_core_claude_dir",
-      "label": "CLAUDE_DIR",
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "core.mjs",
-      "file_type": "code",
-      "norm_label": "claude_dir",
-      "source_file": "lib/core.mjs",
-      "source_location": "L15"
-    },
-    {
       "id": "lib_core_code_ext",
       "label": "CODE_EXT",
       "_origin": "ast",
@@ -3733,7 +3693,7 @@
       "file_type": "code",
       "norm_label": "code_ext",
       "source_file": "lib/core.mjs",
-      "source_location": "L304"
+      "source_location": "L326"
     },
     {
       "id": "lib_core_codex_dir",
@@ -3766,7 +3726,7 @@
       "file_type": "code",
       "norm_label": "event_max",
       "source_file": "lib/core.mjs",
-      "source_location": "L88"
+      "source_location": "L110"
     },
     {
       "id": "lib_core_gemini_dir",
@@ -3788,7 +3748,7 @@
       "file_type": "code",
       "norm_label": "gitmemo",
       "source_file": "lib/core.mjs",
-      "source_location": "L287"
+      "source_location": "L309"
     },
     {
       "id": "lib_core_guard_tail",
@@ -3799,7 +3759,7 @@
       "file_type": "code",
       "norm_label": "guard_tail",
       "source_file": "lib/core.mjs",
-      "source_location": "L129"
+      "source_location": "L151"
     },
     {
       "id": "lib_core_home",
@@ -3813,17 +3773,6 @@
       "source_location": "L12"
     },
     {
-      "id": "lib_core_host_label",
-      "label": "HOST_LABEL",
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "core.mjs",
-      "file_type": "code",
-      "norm_label": "host_label",
-      "source_file": "lib/core.mjs",
-      "source_location": "L166"
-    },
-    {
       "id": "lib_core_launcher",
       "label": "LAUNCHER",
       "_origin": "ast",
@@ -3832,7 +3781,7 @@
       "file_type": "code",
       "norm_label": "launcher",
       "source_file": "lib/core.mjs",
-      "source_location": "L172"
+      "source_location": "L194"
     },
     {
       "id": "lib_core_miss_cache_ms",
@@ -3843,7 +3792,7 @@
       "file_type": "code",
       "norm_label": "miss_cache_ms",
       "source_file": "lib/core.mjs",
-      "source_location": "L249"
+      "source_location": "L271"
     },
     {
       "id": "lib_core_name",
@@ -3865,7 +3814,7 @@
       "file_type": "code",
       "norm_label": "probe_budget_ms",
       "source_file": "lib/core.mjs",
-      "source_location": "L248"
+      "source_location": "L270"
     },
     {
       "id": "lib_core_probe_ms",
@@ -3876,7 +3825,7 @@
       "file_type": "code",
       "norm_label": "probe_ms",
       "source_file": "lib/core.mjs",
-      "source_location": "L247"
+      "source_location": "L269"
     },
     {
       "id": "lib_core_root_record",
@@ -3887,7 +3836,7 @@
       "file_type": "code",
       "norm_label": "root_record",
       "source_file": "lib/core.mjs",
-      "source_location": "L173"
+      "source_location": "L195"
     },
     {
       "id": "lib_guard",
@@ -4143,6 +4092,105 @@
       "source_location": "L3"
     },
     {
+      "id": "lib_brief",
+      "label": "brief.mjs",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "brief.mjs",
+      "file_type": "code",
+      "norm_label": "brief.mjs",
+      "source_file": "lib/brief.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "lib_brief_brief_budget_ms",
+      "label": "BRIEF_BUDGET_MS",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "brief.mjs",
+      "file_type": "code",
+      "norm_label": "brief_budget_ms",
+      "source_file": "lib/brief.mjs",
+      "source_location": "L46"
+    },
+    {
+      "id": "lib_brief_rules",
+      "label": "RULES",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "brief.mjs",
+      "file_type": "code",
+      "norm_label": "rules",
+      "source_file": "lib/brief.mjs",
+      "source_location": "L22"
+    },
+    {
+      "id": "lib_core_claude_dir",
+      "label": "CLAUDE_DIR",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "brief.mjs",
+      "file_type": "code",
+      "norm_label": "claude_dir",
+      "source_file": "lib/core.mjs",
+      "source_location": "L15"
+    },
+    {
+      "id": "lib_core_host_label",
+      "label": "HOST_LABEL",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "brief.mjs",
+      "file_type": "code",
+      "norm_label": "host_label",
+      "source_file": "lib/core.mjs",
+      "source_location": "L188"
+    },
+    {
+      "id": "lib_router",
+      "label": "router.mjs",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "brief.mjs",
+      "file_type": "code",
+      "norm_label": "router.mjs",
+      "source_file": "lib/router.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "lib_router_codebase_re",
+      "label": "CODEBASE_RE",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "brief.mjs",
+      "file_type": "code",
+      "norm_label": "codebase_re",
+      "source_file": "lib/router.mjs",
+      "source_location": "L8"
+    },
+    {
+      "id": "lib_router_frontend_re",
+      "label": "FRONTEND_RE",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "brief.mjs",
+      "file_type": "code",
+      "norm_label": "frontend_re",
+      "source_file": "lib/router.mjs",
+      "source_location": "L9"
+    },
+    {
+      "id": "lib_bench",
+      "label": "bench.mjs",
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "dream.mjs",
+      "file_type": "code",
+      "norm_label": "bench.mjs",
+      "source_file": "lib/bench.mjs",
+      "source_location": "L1"
+    },
+    {
       "id": "lib_dream",
       "label": "dream.mjs",
       "_origin": "ast",
@@ -4297,18 +4345,6 @@
       "source_location": "L4"
     },
     {
-      "id": "ref_node_child_process",
-      "label": "ref_node_child_process",
-      "_origin": "semantic",
-      "community": 16,
-      "community_name": "atlias.mjs",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "ref_node_child_process",
-      "source_file": "",
-      "type": "external"
-    },
-    {
       "id": "ref_node_fs",
       "label": "ref_node_fs",
       "_origin": "semantic",
@@ -4317,30 +4353,6 @@
       "external": true,
       "file_type": "concept",
       "norm_label": "ref_node_fs",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "ref_node_path",
-      "label": "ref_node_path",
-      "_origin": "semantic",
-      "community": 16,
-      "community_name": "atlias.mjs",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "ref_node_path",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "ref_node_crypto",
-      "label": "ref_node_crypto",
-      "_origin": "semantic",
-      "community": 2,
-      "community_name": "agent.mjs",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "ref_node_crypto",
       "source_file": "",
       "type": "external"
     },
@@ -4381,6 +4393,18 @@
       "type": "external"
     },
     {
+      "id": "ref_node_child_process",
+      "label": "ref_node_child_process",
+      "_origin": "semantic",
+      "community": 3,
+      "community_name": "run.mjs",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "ref_node_child_process",
+      "source_file": "",
+      "type": "external"
+    },
+    {
       "id": "ref_node_os",
       "label": "ref_node_os",
       "_origin": "semantic",
@@ -4401,6 +4425,30 @@
       "external": true,
       "file_type": "concept",
       "norm_label": "ref_node_url",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "ref_node_crypto",
+      "label": "ref_node_crypto",
+      "_origin": "semantic",
+      "community": 5,
+      "community_name": "core.mjs",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "ref_node_crypto",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "ref_node_path",
+      "label": "ref_node_path",
+      "_origin": "semantic",
+      "community": 7,
+      "community_name": "brief.mjs",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "ref_node_path",
       "source_file": "",
       "type": "external"
     }
@@ -5435,7 +5483,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/core.mjs",
-      "source_location": "L140",
+      "source_location": "L162",
       "weight": 1.0
     },
     {
@@ -5459,7 +5507,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/core.mjs",
-      "source_location": "L230",
+      "source_location": "L252",
       "weight": 1.0
     },
     {
@@ -5471,7 +5519,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/core.mjs",
-      "source_location": "L108",
+      "source_location": "L130",
       "weight": 1.0
     },
     {
@@ -5483,7 +5531,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/core.mjs",
-      "source_location": "L108",
+      "source_location": "L130",
       "weight": 1.0
     },
     {
@@ -5495,7 +5543,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/core.mjs",
-      "source_location": "L133",
+      "source_location": "L155",
       "weight": 1.0
     },
     {
@@ -5507,7 +5555,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/core.mjs",
-      "source_location": "L133",
+      "source_location": "L155",
       "weight": 1.0
     },
     {
@@ -5519,7 +5567,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/core.mjs",
-      "source_location": "L252",
+      "source_location": "L274",
       "weight": 1.0
     },
     {
@@ -5531,7 +5579,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/core.mjs",
-      "source_location": "L253",
+      "source_location": "L275",
       "weight": 1.0
     },
     {
@@ -5543,7 +5591,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/core.mjs",
-      "source_location": "L268",
+      "source_location": "L290",
       "weight": 1.0
     },
     {
@@ -5555,7 +5603,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/core.mjs",
-      "source_location": "L271",
+      "source_location": "L293",
       "weight": 1.0
     },
     {
@@ -5567,7 +5615,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/core.mjs",
-      "source_location": "L295",
+      "source_location": "L317",
       "weight": 1.0
     },
     {
@@ -5579,7 +5627,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/core.mjs",
-      "source_location": "L279",
+      "source_location": "L301",
       "weight": 1.0
     },
     {
@@ -5591,7 +5639,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/core.mjs",
-      "source_location": "L281",
+      "source_location": "L303",
       "weight": 1.0
     },
     {
@@ -5603,7 +5651,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/core.mjs",
-      "source_location": "L181",
+      "source_location": "L203",
       "weight": 1.0
     },
     {
@@ -5615,7 +5663,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/core.mjs",
-      "source_location": "L194",
+      "source_location": "L216",
       "weight": 1.0
     },
     {
@@ -5627,7 +5675,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/core.mjs",
-      "source_location": "L69",
+      "source_location": "L91",
       "weight": 1.0
     },
     {
@@ -5639,7 +5687,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/core.mjs",
-      "source_location": "L70",
+      "source_location": "L92",
       "weight": 1.0
     },
     {
@@ -5651,7 +5699,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/core.mjs",
-      "source_location": "L77",
+      "source_location": "L99",
       "weight": 1.0
     },
     {
@@ -5663,7 +5711,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/core.mjs",
-      "source_location": "L77",
+      "source_location": "L99",
       "weight": 1.0
     },
     {
@@ -5711,7 +5759,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/core.mjs",
-      "source_location": "L107",
+      "source_location": "L129",
       "weight": 1.0
     },
     {
@@ -5723,7 +5771,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/core.mjs",
-      "source_location": "L107",
+      "source_location": "L129",
       "weight": 1.0
     },
     {
@@ -5735,7 +5783,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/core.mjs",
-      "source_location": "L107",
+      "source_location": "L129",
       "weight": 1.0
     },
     {
@@ -5747,7 +5795,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/core.mjs",
-      "source_location": "L82",
+      "source_location": "L104",
       "weight": 1.0
     },
     {
@@ -5759,7 +5807,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/core.mjs",
-      "source_location": "L82",
+      "source_location": "L104",
       "weight": 1.0
     },
     {
@@ -5771,7 +5819,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/core.mjs",
-      "source_location": "L78",
+      "source_location": "L100",
       "weight": 1.0
     },
     {
@@ -5783,7 +5831,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/core.mjs",
-      "source_location": "L79",
+      "source_location": "L101",
       "weight": 1.0
     },
     {
@@ -5795,7 +5843,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/core.mjs",
-      "source_location": "L79",
+      "source_location": "L101",
       "weight": 1.0
     },
     {
@@ -5807,7 +5855,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/core.mjs",
-      "source_location": "L81",
+      "source_location": "L103",
       "weight": 1.0
     },
     {
@@ -5819,7 +5867,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/core.mjs",
-      "source_location": "L81",
+      "source_location": "L103",
       "weight": 1.0
     },
     {
@@ -5831,7 +5879,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/core.mjs",
-      "source_location": "L80",
+      "source_location": "L102",
       "weight": 1.0
     },
     {
@@ -5843,7 +5891,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/core.mjs",
-      "source_location": "L80",
+      "source_location": "L102",
       "weight": 1.0
     },
     {
@@ -5867,7 +5915,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/core.mjs",
-      "source_location": "L197",
+      "source_location": "L219",
       "weight": 1.0
     },
     {
@@ -5879,7 +5927,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/core.mjs",
-      "source_location": "L198",
+      "source_location": "L220",
       "weight": 1.0
     },
     {
@@ -5891,7 +5939,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/core.mjs",
-      "source_location": "L203",
+      "source_location": "L225",
       "weight": 1.0
     },
     {
@@ -5903,7 +5951,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/core.mjs",
-      "source_location": "L211",
+      "source_location": "L233",
       "weight": 1.0
     },
     {
@@ -6479,7 +6527,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/gate.mjs",
-      "source_location": "L45",
+      "source_location": "L57",
       "weight": 1.0
     },
     {
@@ -6491,7 +6539,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/gate.mjs",
-      "source_location": "L48",
+      "source_location": "L60",
       "weight": 1.0
     },
     {
@@ -6503,91 +6551,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/gate.mjs",
-      "source_location": "L50",
-      "weight": 1.0
-    },
-    {
-      "source": "lib_gate_stop",
-      "target": "lib_gate_turnevents",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "lib/gate.mjs",
-      "source_location": "L102",
-      "weight": 1.0
-    },
-    {
-      "source": "lib_gate_stop",
-      "target": "lib_gate_changedfiles",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "lib/gate.mjs",
-      "source_location": "L103",
-      "weight": 1.0
-    },
-    {
-      "source": "lib_gate_stop",
-      "target": "lib_gate_shellchangedfiles",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "lib/gate.mjs",
-      "source_location": "L106",
-      "weight": 1.0
-    },
-    {
-      "source": "lib_gate_stop",
-      "target": "lib_core_sessionmeta",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "lib/gate.mjs",
-      "source_location": "L115",
-      "weight": 1.0
-    },
-    {
-      "source": "lib_gate_stop",
-      "target": "lib_core_savesessionmeta",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "lib/gate.mjs",
-      "source_location": "L117",
-      "weight": 1.0
-    },
-    {
-      "source": "lib_gate_stop",
-      "target": "lib_gate_syntaxcheckdetailed",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "lib/gate.mjs",
-      "source_location": "L122",
-      "weight": 1.0
-    },
-    {
-      "source": "lib_gate_stop",
-      "target": "lib_gate_block",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "lib/gate.mjs",
-      "source_location": "L128",
+      "source_location": "L62",
       "weight": 1.0
     },
     {
@@ -6599,7 +6563,91 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/gate.mjs",
-      "source_location": "L98",
+      "source_location": "L110",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_gate_stop",
+      "target": "lib_gate_turnevents",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "lib/gate.mjs",
+      "source_location": "L114",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_gate_stop",
+      "target": "lib_gate_changedfiles",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "lib/gate.mjs",
+      "source_location": "L115",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_gate_stop",
+      "target": "lib_gate_shellchangedfiles",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "lib/gate.mjs",
+      "source_location": "L118",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_gate_stop",
+      "target": "lib_core_sessionmeta",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "lib/gate.mjs",
+      "source_location": "L127",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_gate_stop",
+      "target": "lib_core_savesessionmeta",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "lib/gate.mjs",
+      "source_location": "L129",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_gate_stop",
+      "target": "lib_gate_syntaxcheckdetailed",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "lib/gate.mjs",
+      "source_location": "L134",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_gate_stop",
+      "target": "lib_gate_block",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "lib/gate.mjs",
+      "source_location": "L140",
       "weight": 1.0
     },
     {
@@ -6611,7 +6659,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/gate.mjs",
-      "source_location": "L69",
+      "source_location": "L81",
       "weight": 1.0
     },
     {
@@ -6623,7 +6671,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/gate.mjs",
-      "source_location": "L77",
+      "source_location": "L89",
       "weight": 1.0
     },
     {
@@ -6635,7 +6683,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/gate.mjs",
-      "source_location": "L82",
+      "source_location": "L94",
       "weight": 1.0
     },
     {
@@ -6647,7 +6695,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/gate.mjs",
-      "source_location": "L83",
+      "source_location": "L95",
       "weight": 1.0
     },
     {
@@ -6659,7 +6707,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/gate.mjs",
-      "source_location": "L87",
+      "source_location": "L99",
       "weight": 1.0
     },
     {
@@ -6671,7 +6719,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/gate.mjs",
-      "source_location": "L66",
+      "source_location": "L78",
       "weight": 1.0
     },
     {
@@ -6683,7 +6731,31 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/gate.mjs",
-      "source_location": "L12",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_gate_turnevents",
+      "target": "lib_gate_lastprompt",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "lib/gate.mjs",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_gate_turnevents",
+      "target": "lib_core_events",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "lib/gate.mjs",
+      "source_location": "L23",
       "weight": 1.0
     },
     {
@@ -7403,7 +7475,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/hosts.mjs",
-      "source_location": "L220",
+      "source_location": "L222",
       "weight": 1.0
     },
     {
@@ -7415,7 +7487,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/hosts.mjs",
-      "source_location": "L227",
+      "source_location": "L229",
       "weight": 1.0
     },
     {
@@ -7427,7 +7499,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/hosts.mjs",
-      "source_location": "L231",
+      "source_location": "L233",
       "weight": 1.0
     },
     {
@@ -9436,6 +9508,18 @@
     },
     {
       "source": "bin_atlias",
+      "target": "lib_core_parsesetting",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "bin/atlias.mjs",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "bin_atlias",
       "target": "lib_core_readjson",
       "relation": "imports",
       "_origin": "ast",
@@ -10205,6 +10289,18 @@
     {
       "source": "lib_gate",
       "target": "lib_core_config",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "lib/gate.mjs",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_gate",
+      "target": "lib_core_events",
       "relation": "imports",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -12859,57 +12955,13 @@
     },
     {
       "source": "changelog_changelog",
-      "target": "changelog_2_1_7_2026_09_22",
+      "target": "changelog_1_0_0_2026_09_21",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "CHANGELOG.md",
-      "source_location": "L11",
-      "weight": 1.0
-    },
-    {
-      "source": "changelog_changelog",
-      "target": "changelog_2_1_6_2026_09_22",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "CHANGELOG.md",
-      "source_location": "L15",
-      "weight": 1.0
-    },
-    {
-      "source": "changelog_changelog",
-      "target": "changelog_2_1_5_2026_09_22",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "CHANGELOG.md",
-      "source_location": "L19",
-      "weight": 1.0
-    },
-    {
-      "source": "changelog_changelog",
-      "target": "changelog_2_1_4_2026_09_22",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "CHANGELOG.md",
-      "source_location": "L23",
-      "weight": 1.0
-    },
-    {
-      "source": "changelog_changelog",
-      "target": "changelog_2_1_3_2026_09_22",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "CHANGELOG.md",
-      "source_location": "L27",
+      "source_location": "L101",
       "weight": 1.0
     },
     {
@@ -12920,117 +12972,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "CHANGELOG.md",
-      "source_location": "L3",
-      "weight": 1.0
-    },
-    {
-      "source": "changelog_changelog",
-      "target": "changelog_2_1_2_2026_09_22",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "CHANGELOG.md",
-      "source_location": "L31",
-      "weight": 1.0
-    },
-    {
-      "source": "changelog_changelog",
-      "target": "changelog_2_1_1_2026_09_22",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "CHANGELOG.md",
-      "source_location": "L35",
-      "weight": 1.0
-    },
-    {
-      "source": "changelog_changelog",
-      "target": "changelog_2_1_0_2026_09_22",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "CHANGELOG.md",
-      "source_location": "L39",
-      "weight": 1.0
-    },
-    {
-      "source": "changelog_changelog",
-      "target": "changelog_2_0_0_2026_09_22",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "CHANGELOG.md",
-      "source_location": "L45",
-      "weight": 1.0
-    },
-    {
-      "source": "changelog_changelog",
-      "target": "changelog_1_9_1_2026_09_22",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "CHANGELOG.md",
-      "source_location": "L49",
-      "weight": 1.0
-    },
-    {
-      "source": "changelog_changelog",
-      "target": "changelog_1_9_0_2026_09_22",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "CHANGELOG.md",
-      "source_location": "L53",
-      "weight": 1.0
-    },
-    {
-      "source": "changelog_changelog",
-      "target": "changelog_1_8_0_2026_09_22",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "CHANGELOG.md",
-      "source_location": "L57",
-      "weight": 1.0
-    },
-    {
-      "source": "changelog_changelog",
-      "target": "changelog_1_7_0_2026_09_22",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "CHANGELOG.md",
-      "source_location": "L61",
-      "weight": 1.0
-    },
-    {
-      "source": "changelog_changelog",
-      "target": "changelog_1_6_0_2026_09_22",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "CHANGELOG.md",
-      "source_location": "L65",
-      "weight": 1.0
-    },
-    {
-      "source": "changelog_changelog",
-      "target": "changelog_1_5_1_2026_09_22",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "CHANGELOG.md",
-      "source_location": "L69",
+      "source_location": "L11",
       "weight": 1.0
     },
     {
@@ -13041,12 +12983,177 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "CHANGELOG.md",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "changelog_changelog",
+      "target": "changelog_2_1_7_2026_09_22",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CHANGELOG.md",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "changelog_changelog",
+      "target": "changelog_2_1_6_2026_09_22",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CHANGELOG.md",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "changelog_changelog",
+      "target": "changelog_2_1_5_2026_09_22",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CHANGELOG.md",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "changelog_changelog",
+      "target": "changelog_2_2_2_2026_09_22",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CHANGELOG.md",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "changelog_changelog",
+      "target": "changelog_2_1_4_2026_09_22",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CHANGELOG.md",
+      "source_location": "L31",
+      "weight": 1.0
+    },
+    {
+      "source": "changelog_changelog",
+      "target": "changelog_2_1_3_2026_09_22",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CHANGELOG.md",
+      "source_location": "L35",
+      "weight": 1.0
+    },
+    {
+      "source": "changelog_changelog",
+      "target": "changelog_2_1_2_2026_09_22",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CHANGELOG.md",
+      "source_location": "L39",
+      "weight": 1.0
+    },
+    {
+      "source": "changelog_changelog",
+      "target": "changelog_2_1_1_2026_09_22",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CHANGELOG.md",
+      "source_location": "L43",
+      "weight": 1.0
+    },
+    {
+      "source": "changelog_changelog",
+      "target": "changelog_2_1_0_2026_09_22",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CHANGELOG.md",
+      "source_location": "L47",
+      "weight": 1.0
+    },
+    {
+      "source": "changelog_changelog",
+      "target": "changelog_2_0_0_2026_09_22",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CHANGELOG.md",
+      "source_location": "L53",
+      "weight": 1.0
+    },
+    {
+      "source": "changelog_changelog",
+      "target": "changelog_1_9_1_2026_09_22",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CHANGELOG.md",
+      "source_location": "L57",
+      "weight": 1.0
+    },
+    {
+      "source": "changelog_changelog",
+      "target": "changelog_1_9_0_2026_09_22",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CHANGELOG.md",
+      "source_location": "L61",
+      "weight": 1.0
+    },
+    {
+      "source": "changelog_changelog",
+      "target": "changelog_1_8_0_2026_09_22",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CHANGELOG.md",
+      "source_location": "L65",
+      "weight": 1.0
+    },
+    {
+      "source": "changelog_changelog",
+      "target": "changelog_1_7_0_2026_09_22",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CHANGELOG.md",
+      "source_location": "L69",
+      "weight": 1.0
+    },
+    {
+      "source": "changelog_changelog",
+      "target": "changelog_2_2_1_2026_09_22",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CHANGELOG.md",
       "source_location": "L7",
       "weight": 1.0
     },
     {
       "source": "changelog_changelog",
-      "target": "changelog_1_5_0_2026_09_22",
+      "target": "changelog_1_6_0_2026_09_22",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -13057,7 +13164,7 @@
     },
     {
       "source": "changelog_changelog",
-      "target": "changelog_1_4_1_2026_09_22",
+      "target": "changelog_1_5_1_2026_09_22",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -13068,7 +13175,7 @@
     },
     {
       "source": "changelog_changelog",
-      "target": "changelog_1_4_0_2026_09_22",
+      "target": "changelog_1_5_0_2026_09_22",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -13079,7 +13186,7 @@
     },
     {
       "source": "changelog_changelog",
-      "target": "changelog_1_3_0_2026_09_22",
+      "target": "changelog_1_4_1_2026_09_22",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -13090,7 +13197,7 @@
     },
     {
       "source": "changelog_changelog",
-      "target": "changelog_1_2_0_2026_09_22",
+      "target": "changelog_1_4_0_2026_09_22",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -13101,13 +13208,24 @@
     },
     {
       "source": "changelog_changelog",
-      "target": "changelog_1_0_0_2026_09_21",
+      "target": "changelog_1_3_0_2026_09_22",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "CHANGELOG.md",
       "source_location": "L93",
+      "weight": 1.0
+    },
+    {
+      "source": "changelog_changelog",
+      "target": "changelog_1_2_0_2026_09_22",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CHANGELOG.md",
+      "source_location": "L97",
       "weight": 1.0
     },
     {
@@ -13706,24 +13824,68 @@
     },
     {
       "source": "lib_core",
-      "target": "lib_core_recordevent",
+      "target": "lib_core_sessiondir",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/core.mjs",
-      "source_location": "L107",
+      "source_location": "L100",
       "weight": 1.0
     },
     {
       "source": "lib_core",
-      "target": "lib_core_events",
+      "target": "lib_core_sessionevents",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/core.mjs",
-      "source_location": "L108",
+      "source_location": "L101",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_core",
+      "target": "lib_core_sessionmetapath",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib/core.mjs",
+      "source_location": "L102",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_core",
+      "target": "lib_core_sessionmeta",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib/core.mjs",
+      "source_location": "L103",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_core",
+      "target": "lib_core_savesessionmeta",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib/core.mjs",
+      "source_location": "L104",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_core",
+      "target": "lib_core_safeid",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib/core.mjs",
+      "source_location": "L105",
       "weight": 1.0
     },
     {
@@ -13739,7 +13901,18 @@
     },
     {
       "source": "lib_core",
-      "target": "lib_core_readtail",
+      "target": "lib_core_event_max",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib/core.mjs",
+      "source_location": "L110",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_core",
+      "target": "lib_core_trimevent",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -13761,7 +13934,7 @@
     },
     {
       "source": "lib_core",
-      "target": "lib_core_guard_tail",
+      "target": "lib_core_recordevent",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -13783,7 +13956,7 @@
     },
     {
       "source": "lib_core",
-      "target": "lib_core_turn_tail",
+      "target": "lib_core_events",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -13794,13 +13967,13 @@
     },
     {
       "source": "lib_core",
-      "target": "lib_core_eventstail",
+      "target": "lib_core_readtail",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/core.mjs",
-      "source_location": "L131",
+      "source_location": "L133",
       "weight": 1.0
     },
     {
@@ -13816,28 +13989,6 @@
     },
     {
       "source": "lib_core",
-      "target": "lib_core_claudememorydir",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "lib/core.mjs",
-      "source_location": "L140",
-      "weight": 1.0
-    },
-    {
-      "source": "lib_core",
-      "target": "lib_core_readstdin",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "lib/core.mjs",
-      "source_location": "L143",
-      "weight": 1.0
-    },
-    {
-      "source": "lib_core",
       "target": "lib_core_claude_dir",
       "relation": "contains",
       "_origin": "ast",
@@ -13849,7 +14000,7 @@
     },
     {
       "source": "lib_core",
-      "target": "lib_core_emit",
+      "target": "lib_core_guard_tail",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -13860,7 +14011,7 @@
     },
     {
       "source": "lib_core",
-      "target": "lib_core_contextoutput",
+      "target": "lib_core_turn_tail",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -13871,13 +14022,13 @@
     },
     {
       "source": "lib_core",
-      "target": "lib_core_detecthost",
+      "target": "lib_core_eventstail",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/core.mjs",
-      "source_location": "L158",
+      "source_location": "L153",
       "weight": 1.0
     },
     {
@@ -13893,13 +14044,24 @@
     },
     {
       "source": "lib_core",
-      "target": "lib_core_host_label",
+      "target": "lib_core_claudememorydir",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/core.mjs",
-      "source_location": "L166",
+      "source_location": "L162",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_core",
+      "target": "lib_core_readstdin",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib/core.mjs",
+      "source_location": "L165",
       "weight": 1.0
     },
     {
@@ -13915,18 +14077,7 @@
     },
     {
       "source": "lib_core",
-      "target": "lib_core_launcher",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "lib/core.mjs",
-      "source_location": "L172",
-      "weight": 1.0
-    },
-    {
-      "source": "lib_core",
-      "target": "lib_core_root_record",
+      "target": "lib_core_emit",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -13937,24 +14088,13 @@
     },
     {
       "source": "lib_core",
-      "target": "lib_core_isversionedpath",
+      "target": "lib_core_contextoutput",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/core.mjs",
       "source_location": "L174",
-      "weight": 1.0
-    },
-    {
-      "source": "lib_core",
-      "target": "lib_core_installedroots",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "lib/core.mjs",
-      "source_location": "L178",
       "weight": 1.0
     },
     {
@@ -13970,6 +14110,28 @@
     },
     {
       "source": "lib_core",
+      "target": "lib_core_detecthost",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib/core.mjs",
+      "source_location": "L180",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_core",
+      "target": "lib_core_host_label",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib/core.mjs",
+      "source_location": "L188",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_core",
       "target": "lib_core_end_mark",
       "relation": "contains",
       "_origin": "ast",
@@ -13981,13 +14143,46 @@
     },
     {
       "source": "lib_core",
-      "target": "lib_core_writelauncher",
+      "target": "lib_core_launcher",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib/core.mjs",
+      "source_location": "L194",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_core",
+      "target": "lib_core_root_record",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib/core.mjs",
+      "source_location": "L195",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_core",
+      "target": "lib_core_isversionedpath",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/core.mjs",
       "source_location": "L196",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_core",
+      "target": "lib_core_installedroots",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib/core.mjs",
+      "source_location": "L200",
       "weight": 1.0
     },
     {
@@ -14003,13 +14198,24 @@
     },
     {
       "source": "lib_core",
+      "target": "lib_core_writelauncher",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib/core.mjs",
+      "source_location": "L218",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_core",
       "target": "lib_core_pathtofileurl",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/core.mjs",
-      "source_location": "L214",
+      "source_location": "L236",
       "weight": 1.0
     },
     {
@@ -14020,7 +14226,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/core.mjs",
-      "source_location": "L217",
+      "source_location": "L239",
       "weight": 1.0
     },
     {
@@ -14031,7 +14237,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/core.mjs",
-      "source_location": "L225",
+      "source_location": "L247",
       "weight": 1.0
     },
     {
@@ -14042,7 +14248,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/core.mjs",
-      "source_location": "L233",
+      "source_location": "L255",
       "weight": 1.0
     },
     {
@@ -14053,7 +14259,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/core.mjs",
-      "source_location": "L241",
+      "source_location": "L263",
       "weight": 1.0
     },
     {
@@ -14064,7 +14270,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/core.mjs",
-      "source_location": "L247",
+      "source_location": "L269",
       "weight": 1.0
     },
     {
@@ -14075,7 +14281,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/core.mjs",
-      "source_location": "L248",
+      "source_location": "L270",
       "weight": 1.0
     },
     {
@@ -14086,7 +14292,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/core.mjs",
-      "source_location": "L249",
+      "source_location": "L271",
       "weight": 1.0
     },
     {
@@ -14097,7 +14303,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/core.mjs",
-      "source_location": "L250",
+      "source_location": "L272",
       "weight": 1.0
     },
     {
@@ -14108,7 +14314,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/core.mjs",
-      "source_location": "L278",
+      "source_location": "L300",
       "weight": 1.0
     },
     {
@@ -14119,7 +14325,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/core.mjs",
-      "source_location": "L283",
+      "source_location": "L305",
       "weight": 1.0
     },
     {
@@ -14130,7 +14336,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/core.mjs",
-      "source_location": "L287",
+      "source_location": "L309",
       "weight": 1.0
     },
     {
@@ -14141,7 +14347,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/core.mjs",
-      "source_location": "L288",
+      "source_location": "L310",
       "weight": 1.0
     },
     {
@@ -14152,7 +14358,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/core.mjs",
-      "source_location": "L301",
+      "source_location": "L323",
       "weight": 1.0
     },
     {
@@ -14163,7 +14369,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/core.mjs",
-      "source_location": "L304",
+      "source_location": "L326",
       "weight": 1.0
     },
     {
@@ -14174,7 +14380,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/core.mjs",
-      "source_location": "L305",
+      "source_location": "L327",
       "weight": 1.0
     },
     {
@@ -14185,51 +14391,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/core.mjs",
-      "source_location": "L306",
-      "weight": 1.0
-    },
-    {
-      "source": "lib_core",
-      "target": "lib_core_commandfromtool",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "lib/core.mjs",
-      "source_location": "L316",
-      "weight": 1.0
-    },
-    {
-      "source": "lib_core",
-      "target": "lib_core_isedittool",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "lib/core.mjs",
-      "source_location": "L322",
-      "weight": 1.0
-    },
-    {
-      "source": "lib_core",
-      "target": "lib_core_isshelltool",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "lib/core.mjs",
-      "source_location": "L323",
-      "weight": 1.0
-    },
-    {
-      "source": "lib_core",
-      "target": "lib_core_lookslikeverification",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "lib/core.mjs",
-      "source_location": "L324",
+      "source_location": "L328",
       "weight": 1.0
     },
     {
@@ -14245,6 +14407,17 @@
     },
     {
       "source": "lib_core",
+      "target": "lib_core_commandfromtool",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib/core.mjs",
+      "source_location": "L338",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_core",
       "target": "lib_core_readtext",
       "relation": "contains",
       "_origin": "ast",
@@ -14252,6 +14425,39 @@
       "confidence_score": 1.0,
       "source_file": "lib/core.mjs",
       "source_location": "L34",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_core",
+      "target": "lib_core_isedittool",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib/core.mjs",
+      "source_location": "L344",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_core",
+      "target": "lib_core_isshelltool",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib/core.mjs",
+      "source_location": "L345",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_core",
+      "target": "lib_core_lookslikeverification",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib/core.mjs",
+      "source_location": "L346",
       "weight": 1.0
     },
     {
@@ -14377,106 +14583,18 @@
     },
     {
       "source": "lib_core",
+      "target": "lib_core_parsesetting",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib/core.mjs",
+      "source_location": "L68",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_core",
       "target": "lib_core_log",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "lib/core.mjs",
-      "source_location": "L66",
-      "weight": 1.0
-    },
-    {
-      "source": "lib_core",
-      "target": "lib_core_slug",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "lib/core.mjs",
-      "source_location": "L76",
-      "weight": 1.0
-    },
-    {
-      "source": "lib_core",
-      "target": "lib_core_projectdir",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "lib/core.mjs",
-      "source_location": "L77",
-      "weight": 1.0
-    },
-    {
-      "source": "lib_core",
-      "target": "lib_core_sessiondir",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "lib/core.mjs",
-      "source_location": "L78",
-      "weight": 1.0
-    },
-    {
-      "source": "lib_core",
-      "target": "lib_core_sessionevents",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "lib/core.mjs",
-      "source_location": "L79",
-      "weight": 1.0
-    },
-    {
-      "source": "lib_core",
-      "target": "lib_core_sessionmetapath",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "lib/core.mjs",
-      "source_location": "L80",
-      "weight": 1.0
-    },
-    {
-      "source": "lib_core",
-      "target": "lib_core_sessionmeta",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "lib/core.mjs",
-      "source_location": "L81",
-      "weight": 1.0
-    },
-    {
-      "source": "lib_core",
-      "target": "lib_core_savesessionmeta",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "lib/core.mjs",
-      "source_location": "L82",
-      "weight": 1.0
-    },
-    {
-      "source": "lib_core",
-      "target": "lib_core_safeid",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "lib/core.mjs",
-      "source_location": "L83",
-      "weight": 1.0
-    },
-    {
-      "source": "lib_core",
-      "target": "lib_core_event_max",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -14487,13 +14605,24 @@
     },
     {
       "source": "lib_core",
-      "target": "lib_core_trimevent",
+      "target": "lib_core_slug",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/core.mjs",
-      "source_location": "L89",
+      "source_location": "L98",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_core",
+      "target": "lib_core_projectdir",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib/core.mjs",
+      "source_location": "L99",
       "weight": 1.0
     },
     {
@@ -14641,7 +14770,29 @@
     },
     {
       "source": "lib_gate",
-      "target": "lib_gate_turnevents",
+      "target": "lib_gate_block",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib/gate.mjs",
+      "source_location": "L107",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_gate",
+      "target": "lib_gate_stop",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib/gate.mjs",
+      "source_location": "L109",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_gate",
+      "target": "lib_gate_lastprompt",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -14652,13 +14803,24 @@
     },
     {
       "source": "lib_gate",
+      "target": "lib_gate_turnevents",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib/gate.mjs",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "lib_gate",
       "target": "lib_gate_parsegitstatus",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/gate.mjs",
-      "source_location": "L24",
+      "source_location": "L36",
       "weight": 1.0
     },
     {
@@ -14669,7 +14831,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/gate.mjs",
-      "source_location": "L43",
+      "source_location": "L55",
       "weight": 1.0
     },
     {
@@ -14680,7 +14842,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/gate.mjs",
-      "source_location": "L56",
+      "source_location": "L68",
       "weight": 1.0
     },
     {
@@ -14691,7 +14853,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/gate.mjs",
-      "source_location": "L64",
+      "source_location": "L76",
       "weight": 1.0
     },
     {
@@ -14702,7 +14864,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/gate.mjs",
-      "source_location": "L65",
+      "source_location": "L77",
       "weight": 1.0
     },
     {
@@ -14713,7 +14875,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/gate.mjs",
-      "source_location": "L69",
+      "source_location": "L81",
       "weight": 1.0
     },
     {
@@ -14724,7 +14886,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/gate.mjs",
-      "source_location": "L70",
+      "source_location": "L82",
       "weight": 1.0
     },
     {
@@ -14736,28 +14898,6 @@
       "confidence_score": 1.0,
       "source_file": "lib/gate.mjs",
       "source_location": "L9",
-      "weight": 1.0
-    },
-    {
-      "source": "lib_gate",
-      "target": "lib_gate_block",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "lib/gate.mjs",
-      "source_location": "L95",
-      "weight": 1.0
-    },
-    {
-      "source": "lib_gate",
-      "target": "lib_gate_stop",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "lib/gate.mjs",
-      "source_location": "L97",
       "weight": 1.0
     },
     {
@@ -15197,7 +15337,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/hosts.mjs",
-      "source_location": "L235",
+      "source_location": "L237",
       "weight": 1.0
     },
     {
@@ -16418,7 +16558,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "test/run.mjs",
-      "source_location": "L780",
+      "source_location": "L807",
       "weight": 1.0
     },
     {
@@ -16574,7 +16714,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "lib/gate.mjs",
-      "source_location": "L132",
+      "source_location": "L144",
       "weight": 1.0
     },
     {
@@ -16586,7 +16726,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "lib/hosts.mjs",
-      "source_location": "L225",
+      "source_location": "L227",
       "weight": 1.0
     },
     {
@@ -16723,5 +16863,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "62a9c9d2c0ae8897de3655dd7e0e96ab00a1ecda"
+  "built_at_commit": "8ce81026e65846ee16b9f9c760f1e9f964022494"
 }

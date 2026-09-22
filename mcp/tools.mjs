@@ -11,6 +11,10 @@ import * as bench from '../lib/bench.mjs';
 import { doctorRows } from '../lib/hosts-extra.mjs';
 
 const TYPES = new Set(['user', 'feedback', 'project', 'reference']);
+// Names that would collide with the index itself. The filesystem is
+// case-insensitive on Windows and macOS, so memory.md and MEMORY.md are one
+// file, and writing a memory body over the index destroys every line in it.
+export const RESERVED_NAMES = new Set(['memory', 'index', 'readme']);
 
 export function recall(cwd, query, limit = 8) {
   const terms = String(query || '').toLowerCase().split(/[^a-z0-9_]+/).filter((t) => t.length > 2);
@@ -56,6 +60,7 @@ export function recall(cwd, query, limit = 8) {
 
 export function remember(cwd, { name, type, description, body }) {
   if (!name || !/^[a-z0-9][a-z0-9_-]{1,60}$/i.test(name)) return 'remember: name must be a short kebab-case slug (letters, digits, dashes).';
+  if (RESERVED_NAMES.has(String(name).toLowerCase())) return `remember: "${name}" is reserved. On Windows and macOS that file is the memory index itself, and writing to it would destroy every memory line for this project. Choose a name for the fact, such as ${String(name).toLowerCase()}-notes.`;
   if (!TYPES.has(type)) return `remember: type must be one of ${[...TYPES].join(', ')}.`;
   if (!description) return 'remember: description is required; it is what recall matches on.';
   const memDir = ensureDir(claudeMemoryDir(cwd));
