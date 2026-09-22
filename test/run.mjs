@@ -34,6 +34,7 @@ const tools = await import('../mcp/tools.mjs');
 const logoMod = await import('../lib/logo.mjs');
 const agentMod = await import('../lib/agent.mjs');
 const extras = await import('../lib/hosts-extra.mjs');
+const graphMod = await import('../lib/graph.mjs');
 
 const only = process.argv.slice(2);
 const results = [];
@@ -356,6 +357,30 @@ suite('extra harness expert', 'extra harnesses', () => {
   check('the Amp and Zed shapes use their own keys', amp['amp.mcpServers'].atlias && zed.context_servers.atlias.source === 'custom', { happened: JSON.stringify([amp, zed]), why: 'Writing mcpServers into Zed would do nothing at all, silently.', fix: 'Check SHAPES.ampSettings and SHAPES.zed.' });
   check('every listed harness has a directory, an instructions file and an id', extras.EXTRAS.length >= 8 && extras.EXTRAS.every((h) => h.id && h.dir && h.docs), { happened: extras.EXTRAS.length + ' harnesses', why: 'The table is the feature: adding a harness should be one row.', fix: 'Fill in the missing field on the offending row.' });
   check('the harness ids are unique', new Set(extras.EXTRAS.map((h) => h.id)).size === extras.EXTRAS.length, { happened: extras.EXTRAS.map((h) => h.id).join(','), why: 'A duplicate id makes --extras <id> ambiguous.', fix: 'Rename the duplicate.' });
+});
+
+
+suite('reliability expert', 'hook budgets', () => {
+  const hooksJson = JSON.parse(fs.readFileSync(path.join(ROOT, 'hooks', 'hooks.json'), 'utf8'));
+  const sessionStart = hooksJson.hooks.SessionStart[0].hooks[0].timeout;
+  const worst = (core.PROBE_BUDGET_MS + graphMod.GODNODES_MS) / 1000;
+  check('the brief cannot outlast the timeout it declares', sessionStart > worst + 5, { happened: 'SessionStart declares ' + sessionStart + 's, worst case inside is about ' + worst + 's', why: 'A SessionStart hook that times out gives the user no brief at all, on a fresh machine, every session. This is the defect that shipped in 1.2.0.', fix: 'Lower PROBE_BUDGET_MS or GODNODES_MS, or raise the timeout in hooks/hooks.json and CODEX_EVENTS together.' });
+  check('the Codex hook declares the same budget as the plugin', hosts.CODEX_EVENTS.find((e) => e[0] === 'SessionStart')[2] === sessionStart, { happened: 'codex ' + hosts.CODEX_EVENTS.find((e) => e[0] === 'SessionStart')[2] + 's vs plugin ' + sessionStart + 's', why: 'The same code runs in both; a tighter budget in one host fails only there, which is the hardest kind of bug to see.', fix: 'Keep the SessionStart timeout in hooks/hooks.json and CODEX_EVENTS in step.' });
+  check('one interpreter probe is short', core.PROBE_MS <= 5000 && core.PROBE_BUDGET_MS <= 10000, { happened: 'probe ' + core.PROBE_MS + 'ms, budget ' + core.PROBE_BUDGET_MS + 'ms', why: 'On Windows a bare python stub can stall; six of those at fifteen seconds is a minute and a half.', fix: 'Keep PROBE_MS and PROBE_BUDGET_MS small.' });
+  const cachePath = path.join(process.env.ATLIAS_HOME, 'python.json');
+  const saved = fs.existsSync(cachePath) ? fs.readFileSync(cachePath, 'utf8') : null;
+  fs.writeFileSync(cachePath, JSON.stringify({ path: null, checked: Date.now() }));
+  const t0 = Date.now();
+  const miss = core.findPython();
+  const elapsed = Date.now() - t0;
+  check('a remembered miss costs nothing', miss === null && elapsed < 150, { happened: 'returned ' + miss + ' in ' + elapsed + 'ms', why: 'Without a negative cache every session on a machine without graphify re-runs the whole search.', fix: 'findPython returns early when the cached path is null and the miss is fresh.' });
+  if (saved) fs.writeFileSync(cachePath, saved); else fs.unlinkSync(cachePath);
+  check('counting files survives a directory that is not there', graphMod.countCodeFiles(path.join(TMP, 'no-such-dir'), 10) === 0, { happened: String(graphMod.countCodeFiles(path.join(TMP, 'no-such-dir'), 10)), why: 'A cwd can disappear between the hook firing and the walk starting.', fix: 'The walk swallows readdir errors and moves on.' });
+  check('counting files honours its own wall clock', graphMod.countCodeFiles(ROOT, 100000, 0) <= 100000, { happened: 'walk ignored a zero budget', why: 'On a monorepo an unbounded walk stalls the brief that the host is waiting for.', fix: 'Check the deadline at the top of the loop in countCodeFiles.' });
+  const b0 = Date.now();
+  brief.build({ cwd: PROJECT, session_id: sid('budget'), source: 'startup' }, 'claude');
+  const bms = Date.now() - b0;
+  check('a warm brief is built in well under a second', bms < 1000, { happened: bms + 'ms', why: 'The brief runs before the user can type; it is the first thing that makes the harness feel slow or fast.', fix: 'Check what in brief.build is spawning a process on the warm path.' });
 });
 
 let failed = 0;
