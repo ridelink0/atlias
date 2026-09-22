@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.1 (2026-09-22)
+
+Two bugs that destroyed work rather than merely annoying. Recording the next step with harness_progress rebuilt the entire handoff note under a placeholder session id, so the one tool whose job is to preserve state across a compaction was wiping the files, checks and prompts the Stop hook had written into it; it now rewrites only the Next section and leaves the rest alone. And when two sessions for the same project ended at the same moment, the second took the Dream lock, failed, and returned without writing anything, losing that session entirely; the digest row is now appended before the lock is taken, with only the tidying serialised, because a skipped prune costs nothing and a lost session costs everything.
+
 ## 2.1.0 (2026-09-22)
 
 The gate stops trusting only its own event log. It knew a file had changed because it saw an edit tool touch it, so anything written another way was invisible: a heredoc, sed in place, a generator, a formatter, a script the model ran. Those are precisely the edits nobody reviews. In a git repository the gate now asks git what actually changed since this turn began, adds what it did not already know, and names those files separately in its message, because they are the ones that went through no review at all. Files dirty from before the turn are left alone.

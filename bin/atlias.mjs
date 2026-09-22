@@ -75,7 +75,7 @@ switch (cmd) {
     break;
   }
   case 'progress': {
-    if (argv[1] === 'set') { progress.setNext(cwd, argv.slice(2).join(' ')); say(progress.update(cwd, 'cli', null)); }
+    if (argv[1] === 'set') { const m = progress.applyNext(cwd, argv.slice(2).join(' ')); say(m || 'next step recorded; no handoff note yet.'); }
     else say(progress.read(cwd) || 'no handoff note yet');
     break;
   }

@@ -110,7 +110,10 @@ export function callTool(name, args = {}) {
     case 'harness_recall': return recall(cwd, args.query, args.limit);
     case 'harness_remember': return remember(cwd, args);
     case 'harness_progress':
-      if (args.action === 'set') { progress.setNext(cwd, args.text || ''); return `next step recorded:\n${progress.update(cwd, 'mcp', null)}`; }
+      if (args.action === 'set') {
+        const merged = progress.applyNext(cwd, args.text || '');
+        return merged ? `next step recorded, the rest of the note kept:\n${merged}` : `next step recorded. There is no handoff note yet; the next reply that changes a file will write one.`;
+      }
       return progress.read(cwd) || 'no handoff note yet for this project.';
     case 'harness_verify': return verifyText(cwd, args.paths);
     case 'harness_digest':

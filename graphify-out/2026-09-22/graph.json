@@ -4,168 +4,12 @@
   "graph": {},
   "nodes": [
     {
-      "id": "bin_atlias_after",
-      "label": "after()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "tools.mjs",
-      "file_type": "code",
-      "norm_label": "after()",
-      "source_file": "bin/atlias.mjs",
-      "source_location": "L28"
-    },
-    {
-      "id": "bin_atlias_extraids",
-      "label": "extraIds()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "tools.mjs",
-      "file_type": "code",
-      "norm_label": "extraids()",
-      "source_file": "bin/atlias.mjs",
-      "source_location": "L26"
-    },
-    {
-      "id": "bin_atlias_flag",
-      "label": "flag()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "tools.mjs",
-      "file_type": "code",
-      "norm_label": "flag()",
-      "source_file": "bin/atlias.mjs",
-      "source_location": "L27"
-    },
-    {
-      "id": "bin_atlias_reador",
-      "label": "readOr()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "tools.mjs",
-      "file_type": "code",
-      "norm_label": "reador()",
-      "source_file": "bin/atlias.mjs",
-      "source_location": "L31"
-    },
-    {
-      "id": "bin_atlias_say",
-      "label": "say()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "tools.mjs",
-      "file_type": "code",
-      "norm_label": "say()",
-      "source_file": "bin/atlias.mjs",
-      "source_location": "L30"
-    },
-    {
-      "id": "lib_brief_build",
-      "label": "build()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "tools.mjs",
-      "file_type": "code",
-      "norm_label": "build()",
-      "source_file": "lib/brief.mjs",
-      "source_location": "L32"
-    },
-    {
-      "id": "lib_brief_companions",
-      "label": "companions()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "tools.mjs",
-      "file_type": "code",
-      "norm_label": "companions()",
-      "source_file": "lib/brief.mjs",
-      "source_location": "L10"
-    },
-    {
-      "id": "lib_core_claudememorydir",
-      "label": "claudeMemoryDir()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "tools.mjs",
-      "file_type": "code",
-      "norm_label": "claudememorydir()",
-      "source_file": "lib/core.mjs",
-      "source_location": "L117"
-    },
-    {
-      "id": "lib_core_exists",
-      "label": "exists()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "tools.mjs",
-      "file_type": "code",
-      "norm_label": "exists()",
-      "source_file": "lib/core.mjs",
-      "source_location": "L55"
-    },
-    {
-      "id": "lib_core_readlines",
-      "label": "readLines()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "tools.mjs",
-      "file_type": "code",
-      "norm_label": "readlines()",
-      "source_file": "lib/core.mjs",
-      "source_location": "L48"
-    },
-    {
-      "id": "lib_dream_readtranscript",
-      "label": "readTranscript()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "tools.mjs",
-      "file_type": "code",
-      "norm_label": "readtranscript()",
-      "source_file": "lib/dream.mjs",
-      "source_location": "L33"
-    },
-    {
-      "id": "lib_hosts_doctor",
-      "label": "doctor()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "tools.mjs",
-      "file_type": "code",
-      "norm_label": "doctor()",
-      "source_file": "lib/hosts.mjs",
-      "source_location": "L201"
-    },
-    {
-      "id": "lib_hosts_formatdoctor",
-      "label": "formatDoctor()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "tools.mjs",
-      "file_type": "code",
-      "norm_label": "formatdoctor()",
-      "source_file": "lib/hosts.mjs",
-      "source_location": "L225"
-    },
-    {
       "id": "mcp_server_fail",
       "label": "fail()",
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "tools.mjs",
+      "community_name": "server.mjs",
       "file_type": "code",
       "norm_label": "fail()",
       "source_file": "mcp/server.mjs",
@@ -177,7 +21,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "tools.mjs",
+      "community_name": "server.mjs",
       "file_type": "code",
       "norm_label": "handle()",
       "source_file": "mcp/server.mjs",
@@ -189,7 +33,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "tools.mjs",
+      "community_name": "server.mjs",
       "file_type": "code",
       "norm_label": "reply()",
       "source_file": "mcp/server.mjs",
@@ -201,59 +45,47 @@
       "_callable": true,
       "_origin": "ast",
       "community": 0,
-      "community_name": "tools.mjs",
+      "community_name": "server.mjs",
       "file_type": "code",
       "norm_label": "send()",
       "source_file": "mcp/server.mjs",
       "source_location": "L9"
     },
     {
-      "id": "mcp_tools_calltool",
-      "label": "callTool()",
+      "id": "lib_brief_build",
+      "label": "build()",
       "_callable": true,
       "_origin": "ast",
-      "community": 0,
-      "community_name": "tools.mjs",
+      "community": 1,
+      "community_name": "hosts.mjs",
       "file_type": "code",
-      "norm_label": "calltool()",
-      "source_file": "mcp/tools.mjs",
-      "source_location": "L106"
+      "norm_label": "build()",
+      "source_file": "lib/brief.mjs",
+      "source_location": "L32"
     },
     {
-      "id": "mcp_tools_recall",
-      "label": "recall()",
+      "id": "lib_core_claudememorydir",
+      "label": "claudeMemoryDir()",
       "_callable": true,
       "_origin": "ast",
-      "community": 0,
-      "community_name": "tools.mjs",
+      "community": 1,
+      "community_name": "hosts.mjs",
       "file_type": "code",
-      "norm_label": "recall()",
-      "source_file": "mcp/tools.mjs",
-      "source_location": "L15"
+      "norm_label": "claudememorydir()",
+      "source_file": "lib/core.mjs",
+      "source_location": "L117"
     },
     {
-      "id": "mcp_tools_remember",
-      "label": "remember()",
+      "id": "lib_core_exists",
+      "label": "exists()",
       "_callable": true,
       "_origin": "ast",
-      "community": 0,
-      "community_name": "tools.mjs",
+      "community": 1,
+      "community_name": "hosts.mjs",
       "file_type": "code",
-      "norm_label": "remember()",
-      "source_file": "mcp/tools.mjs",
-      "source_location": "L57"
-    },
-    {
-      "id": "mcp_tools_verifytext",
-      "label": "verifyText()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "tools.mjs",
-      "file_type": "code",
-      "norm_label": "verifytext()",
-      "source_file": "mcp/tools.mjs",
-      "source_location": "L73"
+      "norm_label": "exists()",
+      "source_file": "lib/core.mjs",
+      "source_location": "L55"
     },
     {
       "id": "lib_core_readjson",
@@ -266,6 +98,18 @@
       "norm_label": "readjson()",
       "source_file": "lib/core.mjs",
       "source_location": "L35"
+    },
+    {
+      "id": "lib_core_readlines",
+      "label": "readLines()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "hosts.mjs",
+      "file_type": "code",
+      "norm_label": "readlines()",
+      "source_file": "lib/core.mjs",
+      "source_location": "L48"
     },
     {
       "id": "lib_core_readtext",
@@ -302,6 +146,18 @@
       "norm_label": "writetext()",
       "source_file": "lib/core.mjs",
       "source_location": "L40"
+    },
+    {
+      "id": "lib_hosts_doctor",
+      "label": "doctor()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "hosts.mjs",
+      "file_type": "code",
+      "norm_label": "doctor()",
+      "source_file": "lib/hosts.mjs",
+      "source_location": "L201"
     },
     {
       "id": "lib_hosts_dropatliastables",
@@ -446,6 +302,18 @@
       "norm_label": "uninstallall()",
       "source_file": "lib/hosts-extra.mjs",
       "source_location": "L93"
+    },
+    {
+      "id": "lib_hosts_formatdoctor",
+      "label": "formatDoctor()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "hosts.mjs",
+      "file_type": "code",
+      "norm_label": "formatdoctor()",
+      "source_file": "lib/hosts.mjs",
+      "source_location": "L225"
     },
     {
       "id": "lib_hosts_hookcommand",
@@ -688,6 +556,42 @@
       "source_location": "L163"
     },
     {
+      "id": "mcp_tools_calltool",
+      "label": "callTool()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "hosts.mjs",
+      "file_type": "code",
+      "norm_label": "calltool()",
+      "source_file": "mcp/tools.mjs",
+      "source_location": "L106"
+    },
+    {
+      "id": "mcp_tools_remember",
+      "label": "remember()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "hosts.mjs",
+      "file_type": "code",
+      "norm_label": "remember()",
+      "source_file": "mcp/tools.mjs",
+      "source_location": "L57"
+    },
+    {
+      "id": "mcp_tools_verifytext",
+      "label": "verifyText()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "hosts.mjs",
+      "file_type": "code",
+      "norm_label": "verifytext()",
+      "source_file": "mcp/tools.mjs",
+      "source_location": "L73"
+    },
+    {
       "id": "lib_agent_b",
       "label": "b()",
       "_callable": true,
@@ -928,6 +832,18 @@
       "source_location": "L57"
     },
     {
+      "id": "lib_core_config",
+      "label": "config()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "agent.mjs",
+      "file_type": "code",
+      "norm_label": "config()",
+      "source_file": "lib/core.mjs",
+      "source_location": "L60"
+    },
+    {
       "id": "lib_logo_accent",
       "label": "accent()",
       "_callable": true,
@@ -1024,76 +940,16 @@
       "source_location": "L42"
     },
     {
-      "id": "lib_bench_briefcost",
-      "label": "briefCost()",
+      "id": "mcp_tools_recall",
+      "label": "recall()",
       "_callable": true,
       "_origin": "ast",
-      "community": 3,
-      "community_name": "run.mjs",
+      "community": 2,
+      "community_name": "agent.mjs",
       "file_type": "code",
-      "norm_label": "briefcost()",
-      "source_file": "lib/bench.mjs",
-      "source_location": "L19"
-    },
-    {
-      "id": "lib_bench_estimatetokens",
-      "label": "estimateTokens()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "run.mjs",
-      "file_type": "code",
-      "norm_label": "estimatetokens()",
-      "source_file": "lib/bench.mjs",
-      "source_location": "L14"
-    },
-    {
-      "id": "lib_bench_graphvsfiles",
-      "label": "graphVsFiles()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "run.mjs",
-      "file_type": "code",
-      "norm_label": "graphvsfiles()",
-      "source_file": "lib/bench.mjs",
-      "source_location": "L27"
-    },
-    {
-      "id": "lib_bench_interventions",
-      "label": "interventions()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "run.mjs",
-      "file_type": "code",
-      "norm_label": "interventions()",
-      "source_file": "lib/bench.mjs",
-      "source_location": "L45"
-    },
-    {
-      "id": "lib_bench_livesessions",
-      "label": "liveSessions()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "run.mjs",
-      "file_type": "code",
-      "norm_label": "livesessions()",
-      "source_file": "lib/bench.mjs",
-      "source_location": "L62"
-    },
-    {
-      "id": "lib_bench_report",
-      "label": "report()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "run.mjs",
-      "file_type": "code",
-      "norm_label": "report()",
-      "source_file": "lib/bench.mjs",
-      "source_location": "L83"
+      "norm_label": "recall()",
+      "source_file": "mcp/tools.mjs",
+      "source_location": "L15"
     },
     {
       "id": "test_run_ch",
@@ -1180,18 +1036,6 @@
       "source_location": "L44"
     },
     {
-      "id": "lib_brief_sessionstart",
-      "label": "sessionStart()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "gate.mjs",
-      "file_type": "code",
-      "norm_label": "sessionstart()",
-      "source_file": "lib/brief.mjs",
-      "source_location": "L85"
-    },
-    {
       "id": "lib_core_eventstail",
       "label": "eventsTail()",
       "_callable": true,
@@ -1228,18 +1072,6 @@
       "source_location": "L207"
     },
     {
-      "id": "lib_core_iscodefile",
-      "label": "isCodeFile()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "gate.mjs",
-      "file_type": "code",
-      "norm_label": "iscodefile()",
-      "source_file": "lib/core.mjs",
-      "source_location": "L216"
-    },
-    {
       "id": "lib_core_readtail",
       "label": "readTail()",
       "_callable": true,
@@ -1262,42 +1094,6 @@
       "norm_label": "run()",
       "source_file": "lib/core.mjs",
       "source_location": "L146"
-    },
-    {
-      "id": "lib_core_savesessionmeta",
-      "label": "saveSessionMeta()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "gate.mjs",
-      "file_type": "code",
-      "norm_label": "savesessionmeta()",
-      "source_file": "lib/core.mjs",
-      "source_location": "L82"
-    },
-    {
-      "id": "lib_core_sessionmeta",
-      "label": "sessionMeta()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "gate.mjs",
-      "file_type": "code",
-      "norm_label": "sessionmeta()",
-      "source_file": "lib/core.mjs",
-      "source_location": "L81"
-    },
-    {
-      "id": "lib_core_sessionmetapath",
-      "label": "sessionMetaPath()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "gate.mjs",
-      "file_type": "code",
-      "norm_label": "sessionmetapath()",
-      "source_file": "lib/core.mjs",
-      "source_location": "L80"
     },
     {
       "id": "lib_gate_block",
@@ -1504,28 +1300,76 @@
       "source_location": "L39"
     },
     {
-      "id": "lib_core_commandfromtool",
-      "label": "commandFromTool()",
+      "id": "bin_atlias_after",
+      "label": "after()",
       "_callable": true,
       "_origin": "ast",
       "community": 5,
       "community_name": "core.mjs",
       "file_type": "code",
-      "norm_label": "commandfromtool()",
-      "source_file": "lib/core.mjs",
-      "source_location": "L227"
+      "norm_label": "after()",
+      "source_file": "bin/atlias.mjs",
+      "source_location": "L28"
     },
     {
-      "id": "lib_core_config",
-      "label": "config()",
+      "id": "bin_atlias_extraids",
+      "label": "extraIds()",
       "_callable": true,
       "_origin": "ast",
       "community": 5,
       "community_name": "core.mjs",
       "file_type": "code",
-      "norm_label": "config()",
-      "source_file": "lib/core.mjs",
-      "source_location": "L60"
+      "norm_label": "extraids()",
+      "source_file": "bin/atlias.mjs",
+      "source_location": "L26"
+    },
+    {
+      "id": "bin_atlias_flag",
+      "label": "flag()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "core.mjs",
+      "file_type": "code",
+      "norm_label": "flag()",
+      "source_file": "bin/atlias.mjs",
+      "source_location": "L27"
+    },
+    {
+      "id": "bin_atlias_reador",
+      "label": "readOr()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "core.mjs",
+      "file_type": "code",
+      "norm_label": "reador()",
+      "source_file": "bin/atlias.mjs",
+      "source_location": "L31"
+    },
+    {
+      "id": "bin_atlias_say",
+      "label": "say()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "core.mjs",
+      "file_type": "code",
+      "norm_label": "say()",
+      "source_file": "bin/atlias.mjs",
+      "source_location": "L30"
+    },
+    {
+      "id": "lib_brief_sessionstart",
+      "label": "sessionStart()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "core.mjs",
+      "file_type": "code",
+      "norm_label": "sessionstart()",
+      "source_file": "lib/brief.mjs",
+      "source_location": "L85"
     },
     {
       "id": "lib_core_contextoutput",
@@ -1564,66 +1408,6 @@
       "source_location": "L128"
     },
     {
-      "id": "lib_core_filesfromtool",
-      "label": "filesFromTool()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "core.mjs",
-      "file_type": "code",
-      "norm_label": "filesfromtool()",
-      "source_file": "lib/core.mjs",
-      "source_location": "L217"
-    },
-    {
-      "id": "lib_core_graphpath",
-      "label": "graphPath()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "core.mjs",
-      "file_type": "code",
-      "norm_label": "graphpath()",
-      "source_file": "lib/core.mjs",
-      "source_location": "L212"
-    },
-    {
-      "id": "lib_core_isedittool",
-      "label": "isEditTool()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "core.mjs",
-      "file_type": "code",
-      "norm_label": "isedittool()",
-      "source_file": "lib/core.mjs",
-      "source_location": "L233"
-    },
-    {
-      "id": "lib_core_isshelltool",
-      "label": "isShellTool()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "core.mjs",
-      "file_type": "code",
-      "norm_label": "isshelltool()",
-      "source_file": "lib/core.mjs",
-      "source_location": "L234"
-    },
-    {
-      "id": "lib_core_lookslikeverification",
-      "label": "looksLikeVerification()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "core.mjs",
-      "file_type": "code",
-      "norm_label": "lookslikeverification()",
-      "source_file": "lib/core.mjs",
-      "source_location": "L235"
-    },
-    {
       "id": "lib_core_readstdin",
       "label": "readStdin()",
       "_callable": true,
@@ -1636,28 +1420,64 @@
       "source_location": "L120"
     },
     {
-      "id": "lib_core_recordevent",
-      "label": "recordEvent()",
+      "id": "lib_core_safeid",
+      "label": "safeId()",
       "_callable": true,
       "_origin": "ast",
       "community": 5,
       "community_name": "core.mjs",
       "file_type": "code",
-      "norm_label": "recordevent()",
+      "norm_label": "safeid()",
       "source_file": "lib/core.mjs",
-      "source_location": "L84"
+      "source_location": "L83"
     },
     {
-      "id": "lib_core_sha",
-      "label": "sha()",
+      "id": "lib_core_savesessionmeta",
+      "label": "saveSessionMeta()",
       "_callable": true,
       "_origin": "ast",
       "community": 5,
       "community_name": "core.mjs",
       "file_type": "code",
-      "norm_label": "sha()",
+      "norm_label": "savesessionmeta()",
       "source_file": "lib/core.mjs",
-      "source_location": "L56"
+      "source_location": "L82"
+    },
+    {
+      "id": "lib_core_sessionevents",
+      "label": "sessionEvents()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "core.mjs",
+      "file_type": "code",
+      "norm_label": "sessionevents()",
+      "source_file": "lib/core.mjs",
+      "source_location": "L79"
+    },
+    {
+      "id": "lib_core_sessionmeta",
+      "label": "sessionMeta()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "core.mjs",
+      "file_type": "code",
+      "norm_label": "sessionmeta()",
+      "source_file": "lib/core.mjs",
+      "source_location": "L81"
+    },
+    {
+      "id": "lib_core_sessionmetapath",
+      "label": "sessionMetaPath()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "core.mjs",
+      "file_type": "code",
+      "norm_label": "sessionmetapath()",
+      "source_file": "lib/core.mjs",
+      "source_location": "L80"
     },
     {
       "id": "lib_core_slug",
@@ -1670,30 +1490,6 @@
       "norm_label": "slug()",
       "source_file": "lib/core.mjs",
       "source_location": "L76"
-    },
-    {
-      "id": "lib_guard_destructivereason",
-      "label": "destructiveReason()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "core.mjs",
-      "file_type": "code",
-      "norm_label": "destructivereason()",
-      "source_file": "lib/guard.mjs",
-      "source_location": "L21"
-    },
-    {
-      "id": "lib_guard_pretool",
-      "label": "preTool()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "core.mjs",
-      "file_type": "code",
-      "norm_label": "pretool()",
-      "source_file": "lib/guard.mjs",
-      "source_location": "L27"
     },
     {
       "id": "lib_hooks_dispatch",
@@ -1732,12 +1528,156 @@
       "source_location": "L23"
     },
     {
+      "id": "lib_brief_companions",
+      "label": "companions()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "router.mjs",
+      "file_type": "code",
+      "norm_label": "companions()",
+      "source_file": "lib/brief.mjs",
+      "source_location": "L10"
+    },
+    {
+      "id": "lib_core_commandfromtool",
+      "label": "commandFromTool()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "router.mjs",
+      "file_type": "code",
+      "norm_label": "commandfromtool()",
+      "source_file": "lib/core.mjs",
+      "source_location": "L227"
+    },
+    {
+      "id": "lib_core_filesfromtool",
+      "label": "filesFromTool()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "router.mjs",
+      "file_type": "code",
+      "norm_label": "filesfromtool()",
+      "source_file": "lib/core.mjs",
+      "source_location": "L217"
+    },
+    {
+      "id": "lib_core_graphpath",
+      "label": "graphPath()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "router.mjs",
+      "file_type": "code",
+      "norm_label": "graphpath()",
+      "source_file": "lib/core.mjs",
+      "source_location": "L212"
+    },
+    {
+      "id": "lib_core_iscodefile",
+      "label": "isCodeFile()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "router.mjs",
+      "file_type": "code",
+      "norm_label": "iscodefile()",
+      "source_file": "lib/core.mjs",
+      "source_location": "L216"
+    },
+    {
+      "id": "lib_core_isedittool",
+      "label": "isEditTool()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "router.mjs",
+      "file_type": "code",
+      "norm_label": "isedittool()",
+      "source_file": "lib/core.mjs",
+      "source_location": "L233"
+    },
+    {
+      "id": "lib_core_isshelltool",
+      "label": "isShellTool()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "router.mjs",
+      "file_type": "code",
+      "norm_label": "isshelltool()",
+      "source_file": "lib/core.mjs",
+      "source_location": "L234"
+    },
+    {
+      "id": "lib_core_lookslikeverification",
+      "label": "looksLikeVerification()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "router.mjs",
+      "file_type": "code",
+      "norm_label": "lookslikeverification()",
+      "source_file": "lib/core.mjs",
+      "source_location": "L235"
+    },
+    {
+      "id": "lib_core_recordevent",
+      "label": "recordEvent()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "router.mjs",
+      "file_type": "code",
+      "norm_label": "recordevent()",
+      "source_file": "lib/core.mjs",
+      "source_location": "L84"
+    },
+    {
+      "id": "lib_core_sha",
+      "label": "sha()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "router.mjs",
+      "file_type": "code",
+      "norm_label": "sha()",
+      "source_file": "lib/core.mjs",
+      "source_location": "L56"
+    },
+    {
+      "id": "lib_guard_destructivereason",
+      "label": "destructiveReason()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "router.mjs",
+      "file_type": "code",
+      "norm_label": "destructivereason()",
+      "source_file": "lib/guard.mjs",
+      "source_location": "L21"
+    },
+    {
+      "id": "lib_guard_pretool",
+      "label": "preTool()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "router.mjs",
+      "file_type": "code",
+      "norm_label": "pretool()",
+      "source_file": "lib/guard.mjs",
+      "source_location": "L27"
+    },
+    {
       "id": "lib_router_classify",
       "label": "classify()",
       "_callable": true,
       "_origin": "ast",
-      "community": 5,
-      "community_name": "core.mjs",
+      "community": 7,
+      "community_name": "router.mjs",
       "file_type": "code",
       "norm_label": "classify()",
       "source_file": "lib/router.mjs",
@@ -1748,8 +1688,8 @@
       "label": "prompt()",
       "_callable": true,
       "_origin": "ast",
-      "community": 5,
-      "community_name": "core.mjs",
+      "community": 7,
+      "community_name": "router.mjs",
       "file_type": "code",
       "norm_label": "prompt()",
       "source_file": "lib/router.mjs",
@@ -1760,8 +1700,8 @@
       "label": "staleNote()",
       "_callable": true,
       "_origin": "ast",
-      "community": 5,
-      "community_name": "core.mjs",
+      "community": 7,
+      "community_name": "router.mjs",
       "file_type": "code",
       "norm_label": "stalenote()",
       "source_file": "lib/router.mjs",
@@ -1772,8 +1712,8 @@
       "label": "postTool()",
       "_callable": true,
       "_origin": "ast",
-      "community": 5,
-      "community_name": "core.mjs",
+      "community": 7,
+      "community_name": "router.mjs",
       "file_type": "code",
       "norm_label": "posttool()",
       "source_file": "lib/track.mjs",
@@ -1784,12 +1724,84 @@
       "label": "subagentStop()",
       "_callable": true,
       "_origin": "ast",
-      "community": 5,
-      "community_name": "core.mjs",
+      "community": 7,
+      "community_name": "router.mjs",
       "file_type": "code",
       "norm_label": "subagentstop()",
       "source_file": "lib/track.mjs",
       "source_location": "L26"
+    },
+    {
+      "id": "lib_bench_briefcost",
+      "label": "briefCost()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "graph.mjs",
+      "file_type": "code",
+      "norm_label": "briefcost()",
+      "source_file": "lib/bench.mjs",
+      "source_location": "L19"
+    },
+    {
+      "id": "lib_bench_estimatetokens",
+      "label": "estimateTokens()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "graph.mjs",
+      "file_type": "code",
+      "norm_label": "estimatetokens()",
+      "source_file": "lib/bench.mjs",
+      "source_location": "L14"
+    },
+    {
+      "id": "lib_bench_graphvsfiles",
+      "label": "graphVsFiles()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "graph.mjs",
+      "file_type": "code",
+      "norm_label": "graphvsfiles()",
+      "source_file": "lib/bench.mjs",
+      "source_location": "L27"
+    },
+    {
+      "id": "lib_bench_interventions",
+      "label": "interventions()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "graph.mjs",
+      "file_type": "code",
+      "norm_label": "interventions()",
+      "source_file": "lib/bench.mjs",
+      "source_location": "L45"
+    },
+    {
+      "id": "lib_bench_livesessions",
+      "label": "liveSessions()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "graph.mjs",
+      "file_type": "code",
+      "norm_label": "livesessions()",
+      "source_file": "lib/bench.mjs",
+      "source_location": "L62"
+    },
+    {
+      "id": "lib_bench_report",
+      "label": "report()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "graph.mjs",
+      "file_type": "code",
+      "norm_label": "report()",
+      "source_file": "lib/bench.mjs",
+      "source_location": "L83"
     },
     {
       "id": "lib_core_appendline",
@@ -1888,18 +1900,6 @@
       "source_location": "L49"
     },
     {
-      "id": "lib_core_safeid",
-      "label": "safeId()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "graph.mjs",
-      "file_type": "code",
-      "norm_label": "safeid()",
-      "source_file": "lib/core.mjs",
-      "source_location": "L83"
-    },
-    {
       "id": "lib_core_sessiondir",
       "label": "sessionDir()",
       "_callable": true,
@@ -1910,18 +1910,6 @@
       "norm_label": "sessiondir()",
       "source_file": "lib/core.mjs",
       "source_location": "L78"
-    },
-    {
-      "id": "lib_core_sessionevents",
-      "label": "sessionEvents()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "graph.mjs",
-      "file_type": "code",
-      "norm_label": "sessionevents()",
-      "source_file": "lib/core.mjs",
-      "source_location": "L79"
     },
     {
       "id": "lib_core_trylock",
@@ -2042,6 +2030,18 @@
       "norm_label": "pending()",
       "source_file": "lib/dream.mjs",
       "source_location": "L19"
+    },
+    {
+      "id": "lib_dream_readtranscript",
+      "label": "readTranscript()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "graph.mjs",
+      "file_type": "code",
+      "norm_label": "readtranscript()",
+      "source_file": "lib/dream.mjs",
+      "source_location": "L33"
     },
     {
       "id": "lib_dream_sessionend",
@@ -2200,157 +2200,14 @@
       "source_location": "L110"
     },
     {
-      "id": "bin_atlias",
-      "label": "atlias.mjs",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "tools.mjs",
-      "file_type": "code",
-      "norm_label": "atlias.mjs",
-      "source_file": "bin/atlias.mjs",
-      "source_location": "L1"
-    },
-    {
-      "id": "bin_atlias_argv",
-      "label": "argv",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "tools.mjs",
-      "file_type": "code",
-      "norm_label": "argv",
-      "source_file": "bin/atlias.mjs",
-      "source_location": "L24"
-    },
-    {
-      "id": "bin_atlias_cwd",
-      "label": "cwd",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "tools.mjs",
-      "file_type": "code",
-      "norm_label": "cwd",
-      "source_file": "bin/atlias.mjs",
-      "source_location": "L29"
-    },
-    {
-      "id": "lib_brief",
-      "label": "brief.mjs",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "tools.mjs",
-      "file_type": "code",
-      "norm_label": "brief.mjs",
-      "source_file": "lib/brief.mjs",
-      "source_location": "L1"
-    },
-    {
-      "id": "lib_brief_brief_budget_ms",
-      "label": "BRIEF_BUDGET_MS",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "tools.mjs",
-      "file_type": "code",
-      "norm_label": "brief_budget_ms",
-      "source_file": "lib/brief.mjs",
-      "source_location": "L31"
-    },
-    {
-      "id": "lib_brief_rules",
-      "label": "RULES",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "tools.mjs",
-      "file_type": "code",
-      "norm_label": "rules",
-      "source_file": "lib/brief.mjs",
-      "source_location": "L22"
-    },
-    {
-      "id": "lib_core_claude_dir",
-      "label": "CLAUDE_DIR",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "tools.mjs",
-      "file_type": "code",
-      "norm_label": "claude_dir",
-      "source_file": "lib/core.mjs",
-      "source_location": "L15"
-    },
-    {
-      "id": "lib_core_defaults",
-      "label": "DEFAULTS",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "tools.mjs",
-      "file_type": "code",
-      "norm_label": "defaults",
-      "source_file": "lib/core.mjs",
-      "source_location": "L21"
-    },
-    {
-      "id": "lib_core_host_label",
-      "label": "HOST_LABEL",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "tools.mjs",
-      "file_type": "code",
-      "norm_label": "host_label",
-      "source_file": "lib/core.mjs",
-      "source_location": "L143"
-    },
-    {
-      "id": "lib_core_root",
-      "label": "ROOT",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "tools.mjs",
-      "file_type": "code",
-      "norm_label": "root",
-      "source_file": "lib/core.mjs",
-      "source_location": "L13"
-    },
-    {
-      "id": "lib_core_state_dir",
-      "label": "STATE_DIR",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "tools.mjs",
-      "file_type": "code",
-      "norm_label": "state_dir",
-      "source_file": "lib/core.mjs",
-      "source_location": "L14"
-    },
-    {
-      "id": "lib_core_version",
-      "label": "VERSION",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "tools.mjs",
-      "file_type": "code",
-      "norm_label": "version",
-      "source_file": "lib/core.mjs",
-      "source_location": "L10"
-    },
-    {
       "id": "mcp_server",
       "label": "server.mjs",
       "_origin": "ast",
       "community": 0,
-      "community_name": "tools.mjs",
+      "community_name": "server.mjs",
       "file_type": "code",
       "norm_label": "server.mjs",
       "source_file": "mcp/server.mjs",
-      "source_location": "L1"
-    },
-    {
-      "id": "mcp_tools",
-      "label": "tools.mjs",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "tools.mjs",
-      "file_type": "code",
-      "norm_label": "tools.mjs",
-      "source_file": "mcp/tools.mjs",
       "source_location": "L1"
     },
     {
@@ -2358,33 +2215,11 @@
       "label": "TOOLS",
       "_origin": "ast",
       "community": 0,
-      "community_name": "tools.mjs",
+      "community_name": "server.mjs",
       "file_type": "code",
       "norm_label": "tools",
       "source_file": "mcp/tools.mjs",
       "source_location": "L93"
-    },
-    {
-      "id": "mcp_tools_types",
-      "label": "TYPES",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "tools.mjs",
-      "file_type": "code",
-      "norm_label": "types",
-      "source_file": "mcp/tools.mjs",
-      "source_location": "L13"
-    },
-    {
-      "id": "lib_core_home",
-      "label": "HOME",
-      "_origin": "ast",
-      "community": 1,
-      "community_name": "hosts.mjs",
-      "file_type": "code",
-      "norm_label": "home",
-      "source_file": "lib/core.mjs",
-      "source_location": "L12"
     },
     {
       "id": "lib_core_start_mark",
@@ -2486,6 +2321,28 @@
       "source_location": "L8"
     },
     {
+      "id": "mcp_tools",
+      "label": "tools.mjs",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "hosts.mjs",
+      "file_type": "code",
+      "norm_label": "tools.mjs",
+      "source_file": "mcp/tools.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "mcp_tools_types",
+      "label": "TYPES",
+      "_origin": "ast",
+      "community": 1,
+      "community_name": "hosts.mjs",
+      "file_type": "code",
+      "norm_label": "types",
+      "source_file": "mcp/tools.mjs",
+      "source_location": "L13"
+    },
+    {
       "id": "readme",
       "label": "README.md",
       "_origin": "ast",
@@ -2555,7 +2412,7 @@
       "node_kind": "heading",
       "norm_label": "known limits",
       "source_file": "README.md",
-      "source_location": "L116"
+      "source_location": "L120"
     },
     {
       "id": "readme_sources",
@@ -2567,7 +2424,7 @@
       "node_kind": "heading",
       "norm_label": "sources",
       "source_file": "README.md",
-      "source_location": "L123"
+      "source_location": "L127"
     },
     {
       "id": "readme_tests_that_teach",
@@ -2604,6 +2461,18 @@
       "norm_label": "two ways to fly",
       "source_file": "README.md",
       "source_location": "L30"
+    },
+    {
+      "id": "readme_versioning",
+      "label": "Versioning",
+      "_origin": "ast",
+      "community": 10,
+      "community_name": "atlias",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "versioning",
+      "source_file": "README.md",
+      "source_location": "L116"
     },
     {
       "id": "readme_what_happens_in_a_session",
@@ -2891,7 +2760,7 @@
       "node_kind": "heading",
       "norm_label": "1.0.0 (2026-09-21)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L47"
+      "source_location": "L53"
     },
     {
       "id": "changelog_1_2_0_2026_09_22",
@@ -2903,7 +2772,7 @@
       "node_kind": "heading",
       "norm_label": "1.2.0 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L43"
+      "source_location": "L49"
     },
     {
       "id": "changelog_1_3_0_2026_09_22",
@@ -2915,7 +2784,7 @@
       "node_kind": "heading",
       "norm_label": "1.3.0 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L39"
+      "source_location": "L45"
     },
     {
       "id": "changelog_1_4_0_2026_09_22",
@@ -2927,7 +2796,7 @@
       "node_kind": "heading",
       "norm_label": "1.4.0 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L35"
+      "source_location": "L41"
     },
     {
       "id": "changelog_1_4_1_2026_09_22",
@@ -2939,7 +2808,7 @@
       "node_kind": "heading",
       "norm_label": "1.4.1 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L31"
+      "source_location": "L37"
     },
     {
       "id": "changelog_1_5_0_2026_09_22",
@@ -2951,7 +2820,7 @@
       "node_kind": "heading",
       "norm_label": "1.5.0 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L27"
+      "source_location": "L33"
     },
     {
       "id": "changelog_1_5_1_2026_09_22",
@@ -2963,7 +2832,7 @@
       "node_kind": "heading",
       "norm_label": "1.5.1 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L23"
+      "source_location": "L29"
     },
     {
       "id": "changelog_1_6_0_2026_09_22",
@@ -2975,7 +2844,7 @@
       "node_kind": "heading",
       "norm_label": "1.6.0 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L19"
+      "source_location": "L25"
     },
     {
       "id": "changelog_1_7_0_2026_09_22",
@@ -2987,7 +2856,7 @@
       "node_kind": "heading",
       "norm_label": "1.7.0 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L15"
+      "source_location": "L21"
     },
     {
       "id": "changelog_1_8_0_2026_09_22",
@@ -2999,7 +2868,7 @@
       "node_kind": "heading",
       "norm_label": "1.8.0 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L11"
+      "source_location": "L17"
     },
     {
       "id": "changelog_1_9_0_2026_09_22",
@@ -3011,7 +2880,7 @@
       "node_kind": "heading",
       "norm_label": "1.9.0 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L7"
+      "source_location": "L13"
     },
     {
       "id": "changelog_1_9_1_2026_09_22",
@@ -3023,7 +2892,19 @@
       "node_kind": "heading",
       "norm_label": "1.9.1 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L3"
+      "source_location": "L9"
+    },
+    {
+      "id": "changelog_2_0_0_2026_09_22",
+      "label": "2.0.0 (2026-09-22)",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "Changelog",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "2.0.0 (2026-09-22)",
+      "source_file": "CHANGELOG.md",
+      "source_location": "L5"
     },
     {
       "id": "changelog_changelog",
@@ -3113,17 +2994,6 @@
       "norm_label": "ship",
       "source_file": "lib/logo.mjs",
       "source_location": "L15"
-    },
-    {
-      "id": "lib_bench",
-      "label": "bench.mjs",
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "run.mjs",
-      "file_type": "code",
-      "norm_label": "bench.mjs",
-      "source_file": "lib/bench.mjs",
-      "source_location": "L1"
     },
     {
       "id": "test_run",
@@ -3233,7 +3103,7 @@
       "file_type": "code",
       "norm_label": "total",
       "source_file": "test/run.mjs",
-      "source_location": "L557"
+      "source_location": "L571"
     },
     {
       "id": "test_run_unixpath",
@@ -3302,6 +3172,72 @@
       "source_location": "L1"
     },
     {
+      "id": "bin_atlias",
+      "label": "atlias.mjs",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "core.mjs",
+      "file_type": "code",
+      "norm_label": "atlias.mjs",
+      "source_file": "bin/atlias.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "bin_atlias_argv",
+      "label": "argv",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "core.mjs",
+      "file_type": "code",
+      "norm_label": "argv",
+      "source_file": "bin/atlias.mjs",
+      "source_location": "L24"
+    },
+    {
+      "id": "bin_atlias_cwd",
+      "label": "cwd",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "core.mjs",
+      "file_type": "code",
+      "norm_label": "cwd",
+      "source_file": "bin/atlias.mjs",
+      "source_location": "L29"
+    },
+    {
+      "id": "lib_brief",
+      "label": "brief.mjs",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "core.mjs",
+      "file_type": "code",
+      "norm_label": "brief.mjs",
+      "source_file": "lib/brief.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "lib_brief_brief_budget_ms",
+      "label": "BRIEF_BUDGET_MS",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "core.mjs",
+      "file_type": "code",
+      "norm_label": "brief_budget_ms",
+      "source_file": "lib/brief.mjs",
+      "source_location": "L31"
+    },
+    {
+      "id": "lib_brief_rules",
+      "label": "RULES",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "core.mjs",
+      "file_type": "code",
+      "norm_label": "rules",
+      "source_file": "lib/brief.mjs",
+      "source_location": "L22"
+    },
+    {
       "id": "lib_core",
       "label": "core.mjs",
       "_origin": "ast",
@@ -3311,6 +3247,17 @@
       "norm_label": "core.mjs",
       "source_file": "lib/core.mjs",
       "source_location": "L1"
+    },
+    {
+      "id": "lib_core_claude_dir",
+      "label": "CLAUDE_DIR",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "core.mjs",
+      "file_type": "code",
+      "norm_label": "claude_dir",
+      "source_file": "lib/core.mjs",
+      "source_location": "L15"
     },
     {
       "id": "lib_core_code_ext",
@@ -3333,6 +3280,17 @@
       "norm_label": "codex_dir",
       "source_file": "lib/core.mjs",
       "source_location": "L16"
+    },
+    {
+      "id": "lib_core_defaults",
+      "label": "DEFAULTS",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "core.mjs",
+      "file_type": "code",
+      "norm_label": "defaults",
+      "source_file": "lib/core.mjs",
+      "source_location": "L21"
     },
     {
       "id": "lib_core_end_mark",
@@ -3366,6 +3324,28 @@
       "norm_label": "guard_tail",
       "source_file": "lib/core.mjs",
       "source_location": "L106"
+    },
+    {
+      "id": "lib_core_home",
+      "label": "HOME",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "core.mjs",
+      "file_type": "code",
+      "norm_label": "home",
+      "source_file": "lib/core.mjs",
+      "source_location": "L12"
+    },
+    {
+      "id": "lib_core_host_label",
+      "label": "HOST_LABEL",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "core.mjs",
+      "file_type": "code",
+      "norm_label": "host_label",
+      "source_file": "lib/core.mjs",
+      "source_location": "L143"
     },
     {
       "id": "lib_core_miss_cache_ms",
@@ -3412,26 +3392,37 @@
       "source_location": "L176"
     },
     {
-      "id": "lib_guard",
-      "label": "guard.mjs",
+      "id": "lib_core_root",
+      "label": "ROOT",
       "_origin": "ast",
       "community": 5,
       "community_name": "core.mjs",
       "file_type": "code",
-      "norm_label": "guard.mjs",
-      "source_file": "lib/guard.mjs",
-      "source_location": "L1"
+      "norm_label": "root",
+      "source_file": "lib/core.mjs",
+      "source_location": "L13"
     },
     {
-      "id": "lib_guard_destructive",
-      "label": "DESTRUCTIVE",
+      "id": "lib_core_state_dir",
+      "label": "STATE_DIR",
       "_origin": "ast",
       "community": 5,
       "community_name": "core.mjs",
       "file_type": "code",
-      "norm_label": "destructive",
-      "source_file": "lib/guard.mjs",
-      "source_location": "L11"
+      "norm_label": "state_dir",
+      "source_file": "lib/core.mjs",
+      "source_location": "L14"
+    },
+    {
+      "id": "lib_core_version",
+      "label": "VERSION",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "core.mjs",
+      "file_type": "code",
+      "norm_label": "version",
+      "source_file": "lib/core.mjs",
+      "source_location": "L10"
     },
     {
       "id": "lib_hooks",
@@ -3454,50 +3445,6 @@
       "norm_label": "host",
       "source_file": "lib/hooks.mjs",
       "source_location": "L18"
-    },
-    {
-      "id": "lib_router",
-      "label": "router.mjs",
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "core.mjs",
-      "file_type": "code",
-      "norm_label": "router.mjs",
-      "source_file": "lib/router.mjs",
-      "source_location": "L1"
-    },
-    {
-      "id": "lib_router_codebase_re",
-      "label": "CODEBASE_RE",
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "core.mjs",
-      "file_type": "code",
-      "norm_label": "codebase_re",
-      "source_file": "lib/router.mjs",
-      "source_location": "L8"
-    },
-    {
-      "id": "lib_router_frontend_re",
-      "label": "FRONTEND_RE",
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "core.mjs",
-      "file_type": "code",
-      "norm_label": "frontend_re",
-      "source_file": "lib/router.mjs",
-      "source_location": "L9"
-    },
-    {
-      "id": "lib_track",
-      "label": "track.mjs",
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "core.mjs",
-      "file_type": "code",
-      "norm_label": "track.mjs",
-      "source_file": "lib/track.mjs",
-      "source_location": "L1"
     },
     {
       "id": "package",
@@ -3698,6 +3645,83 @@
       "source_location": "L3"
     },
     {
+      "id": "lib_guard",
+      "label": "guard.mjs",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "router.mjs",
+      "file_type": "code",
+      "norm_label": "guard.mjs",
+      "source_file": "lib/guard.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "lib_guard_destructive",
+      "label": "DESTRUCTIVE",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "router.mjs",
+      "file_type": "code",
+      "norm_label": "destructive",
+      "source_file": "lib/guard.mjs",
+      "source_location": "L11"
+    },
+    {
+      "id": "lib_router",
+      "label": "router.mjs",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "router.mjs",
+      "file_type": "code",
+      "norm_label": "router.mjs",
+      "source_file": "lib/router.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "lib_router_codebase_re",
+      "label": "CODEBASE_RE",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "router.mjs",
+      "file_type": "code",
+      "norm_label": "codebase_re",
+      "source_file": "lib/router.mjs",
+      "source_location": "L8"
+    },
+    {
+      "id": "lib_router_frontend_re",
+      "label": "FRONTEND_RE",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "router.mjs",
+      "file_type": "code",
+      "norm_label": "frontend_re",
+      "source_file": "lib/router.mjs",
+      "source_location": "L9"
+    },
+    {
+      "id": "lib_track",
+      "label": "track.mjs",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "router.mjs",
+      "file_type": "code",
+      "norm_label": "track.mjs",
+      "source_file": "lib/track.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "lib_bench",
+      "label": "bench.mjs",
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "graph.mjs",
+      "file_type": "code",
+      "norm_label": "bench.mjs",
+      "source_file": "lib/bench.mjs",
+      "source_location": "L1"
+    },
+    {
       "id": "lib_dream",
       "label": "dream.mjs",
       "_origin": "ast",
@@ -3896,30 +3920,6 @@
       "source_location": "L4"
     },
     {
-      "id": "ref_node_child_process",
-      "label": "ref_node_child_process",
-      "_origin": "semantic",
-      "community": 0,
-      "community_name": "tools.mjs",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "ref_node_child_process",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "ref_node_path",
-      "label": "ref_node_path",
-      "_origin": "semantic",
-      "community": 0,
-      "community_name": "tools.mjs",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "ref_node_path",
-      "source_file": "",
-      "type": "external"
-    },
-    {
       "id": "ref_node_http",
       "label": "ref_node_http",
       "_origin": "semantic",
@@ -3944,18 +3944,6 @@
       "type": "external"
     },
     {
-      "id": "ref_node_fs",
-      "label": "ref_node_fs",
-      "_origin": "semantic",
-      "community": 3,
-      "community_name": "run.mjs",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "ref_node_fs",
-      "source_file": "",
-      "type": "external"
-    },
-    {
       "id": "ref_node_os",
       "label": "ref_node_os",
       "_origin": "semantic",
@@ -3968,6 +3956,30 @@
       "type": "external"
     },
     {
+      "id": "ref_node_fs",
+      "label": "ref_node_fs",
+      "_origin": "semantic",
+      "community": 4,
+      "community_name": "gate.mjs",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "ref_node_fs",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "ref_node_child_process",
+      "label": "ref_node_child_process",
+      "_origin": "semantic",
+      "community": 5,
+      "community_name": "core.mjs",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "ref_node_child_process",
+      "source_file": "",
+      "type": "external"
+    },
+    {
       "id": "ref_node_crypto",
       "label": "ref_node_crypto",
       "_origin": "semantic",
@@ -3976,6 +3988,18 @@
       "external": true,
       "file_type": "concept",
       "norm_label": "ref_node_crypto",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "ref_node_path",
+      "label": "ref_node_path",
+      "_origin": "semantic",
+      "community": 5,
+      "community_name": "core.mjs",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "ref_node_path",
       "source_file": "",
       "type": "external"
     },
@@ -12063,13 +12087,24 @@
     },
     {
       "source": "changelog_changelog",
+      "target": "changelog_1_9_0_2026_09_22",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CHANGELOG.md",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "changelog_changelog",
       "target": "changelog_1_8_0_2026_09_22",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "CHANGELOG.md",
-      "source_location": "L11",
+      "source_location": "L17",
       "weight": 1.0
     },
     {
@@ -12080,7 +12115,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "CHANGELOG.md",
-      "source_location": "L15",
+      "source_location": "L21",
       "weight": 1.0
     },
     {
@@ -12091,7 +12126,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "CHANGELOG.md",
-      "source_location": "L19",
+      "source_location": "L25",
       "weight": 1.0
     },
     {
@@ -12102,7 +12137,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "CHANGELOG.md",
-      "source_location": "L23",
+      "source_location": "L29",
       "weight": 1.0
     },
     {
@@ -12113,18 +12148,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "CHANGELOG.md",
-      "source_location": "L27",
-      "weight": 1.0
-    },
-    {
-      "source": "changelog_changelog",
-      "target": "changelog_1_9_1_2026_09_22",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "CHANGELOG.md",
-      "source_location": "L3",
+      "source_location": "L33",
       "weight": 1.0
     },
     {
@@ -12135,7 +12159,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "CHANGELOG.md",
-      "source_location": "L31",
+      "source_location": "L37",
       "weight": 1.0
     },
     {
@@ -12146,7 +12170,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "CHANGELOG.md",
-      "source_location": "L35",
+      "source_location": "L41",
       "weight": 1.0
     },
     {
@@ -12157,7 +12181,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "CHANGELOG.md",
-      "source_location": "L39",
+      "source_location": "L45",
       "weight": 1.0
     },
     {
@@ -12168,7 +12192,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "CHANGELOG.md",
-      "source_location": "L43",
+      "source_location": "L49",
+      "weight": 1.0
+    },
+    {
+      "source": "changelog_changelog",
+      "target": "changelog_2_0_0_2026_09_22",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CHANGELOG.md",
+      "source_location": "L5",
       "weight": 1.0
     },
     {
@@ -12179,18 +12214,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "CHANGELOG.md",
-      "source_location": "L47",
+      "source_location": "L53",
       "weight": 1.0
     },
     {
       "source": "changelog_changelog",
-      "target": "changelog_1_9_0_2026_09_22",
+      "target": "changelog_1_9_1_2026_09_22",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "CHANGELOG.md",
-      "source_location": "L7",
+      "source_location": "L9",
       "weight": 1.0
     },
     {
@@ -14923,7 +14958,7 @@
     },
     {
       "source": "readme_atlias",
-      "target": "readme_known_limits",
+      "target": "readme_versioning",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -14934,13 +14969,24 @@
     },
     {
       "source": "readme_atlias",
+      "target": "readme_known_limits",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L120",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_atlias",
       "target": "readme_sources",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L123",
+      "source_location": "L127",
       "weight": 1.0
     },
     {
@@ -15215,7 +15261,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "test/run.mjs",
-      "source_location": "L557",
+      "source_location": "L571",
       "weight": 1.0
     },
     {
@@ -15564,5 +15610,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "383b183a9ff356e2aef777e1ff5d9a6af8efd705"
+  "built_at_commit": "d66cb6a94aa6f9fad41d8e2b476c0468f905abd9"
 }

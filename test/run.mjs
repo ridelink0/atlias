@@ -574,6 +574,44 @@ suite('shell edit expert', 'edits made outside the tools', () => {
   check('a project that is not a git repository is simply skipped', gate.shellChangedFiles(path.join(TMP, 'not-a-repo'), now).length === 0, { happened: 'it tried anyway', why: 'Most scratch directories are not repositories and running git in them is noise.', fix: 'Check for the .git directory first.' });
 });
 
+suite('state preservation expert', 'state preservation', () => {
+  const s = sid('preserve');
+  router.prompt({ session_id: s, cwd: PROJECT, prompt: 'work on the parser for a while' });
+  track.postTool({ session_id: s, cwd: PROJECT, tool_name: 'Write', tool_input: { file_path: path.join(PROJECT, 'parser.mjs') } });
+  track.postTool({ session_id: s, cwd: PROJECT, tool_name: 'Bash', tool_input: { command: 'npm test' } });
+  progress.update(PROJECT, s, 'the parser now handles nested groups');
+  const before = progress.read(PROJECT);
+  check('the note starts out knowing the session', /parser\.mjs/.test(before) && /npm test/.test(before) && /work on the parser/.test(before), { happened: before.slice(0, 200), why: 'The rest of the test is meaningless if the note was empty to begin with.', fix: 'Check progress.build.' });
+  const merged = tools.callTool('harness_progress', { action: 'set', text: 'rotate the staging key before the next run', cwd: PROJECT });
+  const after = progress.read(PROJECT);
+  check('recording the next step keeps the files, checks and prompts', /parser\.mjs/.test(after) && /npm test/.test(after) && /work on the parser/.test(after), { happened: after, why: 'The tool whose job is to preserve state across a compaction was erasing it, because it rebuilt the note under a session id that had no events.', fix: 'applyNext rewrites only the Next section when a note already exists.' });
+  check('and it records the next step', /rotate the staging key/.test(after) && /rotate the staging key/.test(merged), { happened: after.slice(-200), why: 'Preserving everything and saving nothing is the other failure.', fix: 'Check the Next section rewrite.' });
+  check('exactly one Next section survives', (after.match(/^## Next$/gm) || []).length === 1, { happened: (after.match(/^## Next$/gm) || []).length + ' sections', why: 'A note with two Next sections tells the next session two different things.', fix: 'Cut at the first Next heading and append one.' });
+  const fresh = path.join(TMP, 'fresh-project');
+  fs.mkdirSync(fresh, { recursive: true });
+  check('with no note yet it says so rather than writing an empty one', /no handoff note yet/.test(tools.callTool('harness_progress', { action: 'set', text: 'first step', cwd: fresh })), { happened: tools.callTool('harness_progress', { action: 'set', text: 'first step', cwd: fresh }), why: 'An empty note that claims nothing changed is worse than no note.', fix: 'Return null from applyNext when there is nothing to merge into.' });
+});
+
+suite('concurrency expert', 'two sessions ending at once', () => {
+  const cwd = path.join(TMP, 'concurrent-project');
+  fs.mkdirSync(cwd, { recursive: true });
+  const a = sid('endA');
+  const b = sid('endB');
+  for (const s of [a, b]) {
+    core.saveSessionMeta(s, { host: 'claude', cwd });
+    core.recordEvent(s, { kind: 'prompt', prompt_id: 'p', text: 'session ' + s });
+    core.recordEvent(s, { kind: 'edit', tool: 'Write', files: [path.join(cwd, s + '.mjs')] });
+  }
+  dream.worker([a, '', cwd]);
+  // The second session ends while the first still holds the lock.
+  fs.writeFileSync(path.join(core.projectDir(cwd), '.dream.lock'), '99999');
+  const second = dream.worker([b, '', cwd]);
+  const rows = core.readJsonl(dream.historyPath(cwd));
+  check('both sessions are remembered', rows.length === 2 && rows[0].cursor === 1 && rows[1].cursor === 2, { happened: rows.length + ' row(s): ' + rows.map((r) => r.cursor).join(','), why: 'A lock meant to serialise tidying was dropping an entire session of history when two ended together.', fix: 'Append the row before taking the lock; the lock covers only prune and digest.' });
+  check('the blocked worker still reports what it wrote', second && second.cursor === 2, { happened: JSON.stringify(second), why: 'A caller that cannot tell whether its work was saved will either retry and duplicate, or assume and lose.', fix: 'Return the row from worker even when the lock was not taken.' });
+  check('the cursors stay unique', new Set(rows.map((r) => r.cursor)).size === rows.length, { happened: rows.map((r) => r.cursor).join(','), why: 'Two rows with the same cursor make ack skip one of them forever.', fix: 'Compute the next cursor from the max in the file.' });
+});
+
 let failed = 0;
 for (const r of results) {
   const ok = r.failed.length === 0;

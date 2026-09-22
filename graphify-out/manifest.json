@@ -1,14 +1,14 @@
 {
   ".claude-plugin/marketplace.json": {
-    "mtime": 1790078392.98543,
-    "seen": 1790078447.071255,
-    "ast_hash": "93df76d15bdb6f448a62cf5da9c5e195",
+    "mtime": 1790078498.7520647,
+    "seen": 1790078548.6096442,
+    "ast_hash": "d8c26a1affb2acc2ee2600402f8cc7a9",
     "semantic_hash": ""
   },
   ".claude-plugin/plugin.json": {
-    "mtime": 1790078392.9844294,
-    "seen": 1790078447.0712671,
-    "ast_hash": "2d04c603771e8a7d37a71c406d7e6aab",
+    "mtime": 1790078498.750526,
+    "seen": 1790078548.6096556,
+    "ast_hash": "768e7ed43449d2c3b7086e86a4d04a40",
     "semantic_hash": ""
   },
   "bin/atlias.mjs": {
@@ -36,9 +36,9 @@
     "semantic_hash": ""
   },
   "lib/core.mjs": {
-    "mtime": 1790078392.9864292,
-    "seen": 1790078447.0742068,
-    "ast_hash": "bb792ca5a02c876fc51da1342b8b8b66",
+    "mtime": 1790078498.7520647,
+    "seen": 1790078548.61124,
+    "ast_hash": "3a8c3deaff341f9089fd07af6361d17a",
     "semantic_hash": ""
   },
   "lib/dream.mjs": {
@@ -48,9 +48,9 @@
     "semantic_hash": ""
   },
   "lib/gate.mjs": {
-    "mtime": 1790078063.641989,
-    "seen": 1790078119.4183726,
-    "ast_hash": "8eac1ecaf0f5757e5618989671cce1ef",
+    "mtime": 1790078498.7474775,
+    "seen": 1790078548.6114264,
+    "ast_hash": "d7777c3acb36ce84d88691af11df83b7",
     "semantic_hash": ""
   },
   "lib/graph.mjs": {
@@ -120,21 +120,21 @@
     "semantic_hash": ""
   },
   "package.json": {
-    "mtime": 1790078392.9834216,
-    "seen": 1790078447.0782816,
-    "ast_hash": "96b9f4e00c3c9454e0c526ea4572fc32",
+    "mtime": 1790078498.7489977,
+    "seen": 1790078548.6144326,
+    "ast_hash": "9771e1159b599af68983dd6987eb96c6",
     "semantic_hash": ""
   },
   "test/run.mjs": {
-    "mtime": 1790078392.988432,
-    "seen": 1790078447.0782862,
-    "ast_hash": "878439afeedc4ed3dc625d8220c40d7c",
+    "mtime": 1790078498.7474775,
+    "seen": 1790078548.6144345,
+    "ast_hash": "2da01b94e22ccd482d1d9d0bfec594a2",
     "semantic_hash": ""
   },
   "CHANGELOG.md": {
-    "mtime": 1790078392.9864292,
-    "seen": 1790078447.0782886,
-    "ast_hash": "63364d7bfd1afd3a51f00d661b7d740c",
+    "mtime": 1790078498.7535987,
+    "seen": 1790078548.6144366,
+    "ast_hash": "77cb2a92b372e45dae330975851cb473",
     "semantic_hash": ""
   },
   "README.md": {
