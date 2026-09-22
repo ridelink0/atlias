@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.3.1 (2026-09-22)
+
+What can be verified about the host configs now is. The shapes stay marked UNVERIFIED, because nobody here has those tools installed and claiming otherwise would be the pretending this harness exists to stop, but that was never a reason to leave the files unchecked. A new sandbox install runs on all three platforms in CI: it installs into a throwaway home, parses the config.toml it produced with a real TOML parser and every JSON file with a real JSON parser, proves that installing twice changes nothing at all, and proves that uninstalling removes the atlias entry while another server’s entry beside it survives.
+
 ## 2.3.0 (2026-09-22)
 
 The platform gap closes by evidence. Everything here was written and run on Windows, the platform assumptions were reasoned about rather than observed, and the last two platform bugs came from exactly that. The whole suite, the command line, the logo, the agent, the bench and an MCP handshake now run on Linux, macOS and Windows across Node 18, 20 and 22 on every push.

@@ -88,6 +88,18 @@
       "source_location": "L47"
     },
     {
+      "id": "lib_core_detach",
+      "label": "detach()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "dream.mjs",
+      "file_type": "code",
+      "norm_label": "detach()",
+      "source_file": "lib/core.mjs",
+      "source_location": "L237"
+    },
+    {
       "id": "lib_core_ensuredir",
       "label": "ensureDir()",
       "_callable": true,
@@ -182,6 +194,30 @@
       "norm_label": "sessionevents()",
       "source_file": "lib/core.mjs",
       "source_location": "L101"
+    },
+    {
+      "id": "lib_core_trylock",
+      "label": "tryLock()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "dream.mjs",
+      "file_type": "code",
+      "norm_label": "trylock()",
+      "source_file": "lib/core.mjs",
+      "source_location": "L245"
+    },
+    {
+      "id": "lib_core_unlock",
+      "label": "unlock()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "dream.mjs",
+      "file_type": "code",
+      "norm_label": "unlock()",
+      "source_file": "lib/core.mjs",
+      "source_location": "L253"
     },
     {
       "id": "lib_dream_ack",
@@ -304,6 +340,18 @@
       "source_location": "L33"
     },
     {
+      "id": "lib_dream_sessionend",
+      "label": "sessionEnd()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "dream.mjs",
+      "file_type": "code",
+      "norm_label": "sessionend()",
+      "source_file": "lib/dream.mjs",
+      "source_location": "L24"
+    },
+    {
       "id": "lib_dream_worker",
       "label": "worker()",
       "_callable": true,
@@ -314,6 +362,18 @@
       "norm_label": "worker()",
       "source_file": "lib/dream.mjs",
       "source_location": "L119"
+    },
+    {
+      "id": "lib_graph_scheduleupdate",
+      "label": "scheduleUpdate()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "dream.mjs",
+      "file_type": "code",
+      "norm_label": "scheduleupdate()",
+      "source_file": "lib/graph.mjs",
+      "source_location": "L96"
     },
     {
       "id": "lib_core_exists",
@@ -868,6 +928,114 @@
       "source_location": "L173"
     },
     {
+      "id": "bin_atlias_after",
+      "label": "after()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 16,
+      "community_name": "core.mjs",
+      "file_type": "code",
+      "norm_label": "after()",
+      "source_file": "bin/atlias.mjs",
+      "source_location": "L30"
+    },
+    {
+      "id": "bin_atlias_extraids",
+      "label": "extraIds()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 16,
+      "community_name": "core.mjs",
+      "file_type": "code",
+      "norm_label": "extraids()",
+      "source_file": "bin/atlias.mjs",
+      "source_location": "L28"
+    },
+    {
+      "id": "bin_atlias_flag",
+      "label": "flag()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 16,
+      "community_name": "core.mjs",
+      "file_type": "code",
+      "norm_label": "flag()",
+      "source_file": "bin/atlias.mjs",
+      "source_location": "L29"
+    },
+    {
+      "id": "bin_atlias_reador",
+      "label": "readOr()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 16,
+      "community_name": "core.mjs",
+      "file_type": "code",
+      "norm_label": "reador()",
+      "source_file": "bin/atlias.mjs",
+      "source_location": "L33"
+    },
+    {
+      "id": "bin_atlias_say",
+      "label": "say()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 16,
+      "community_name": "core.mjs",
+      "file_type": "code",
+      "norm_label": "say()",
+      "source_file": "bin/atlias.mjs",
+      "source_location": "L32"
+    },
+    {
+      "id": "lib_brief_build",
+      "label": "build()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 16,
+      "community_name": "core.mjs",
+      "file_type": "code",
+      "norm_label": "build()",
+      "source_file": "lib/brief.mjs",
+      "source_location": "L47"
+    },
+    {
+      "id": "lib_brief_fitlines",
+      "label": "fitLines()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 16,
+      "community_name": "core.mjs",
+      "file_type": "code",
+      "norm_label": "fitlines()",
+      "source_file": "lib/brief.mjs",
+      "source_location": "L33"
+    },
+    {
+      "id": "lib_brief_sessionstart",
+      "label": "sessionStart()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 16,
+      "community_name": "core.mjs",
+      "file_type": "code",
+      "norm_label": "sessionstart()",
+      "source_file": "lib/brief.mjs",
+      "source_location": "L104"
+    },
+    {
+      "id": "lib_core_claudememorydir",
+      "label": "claudeMemoryDir()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 16,
+      "community_name": "core.mjs",
+      "file_type": "code",
+      "norm_label": "claudememorydir()",
+      "source_file": "lib/core.mjs",
+      "source_location": "L162"
+    },
+    {
       "id": "lib_core_cleargitmemo",
       "label": "clearGitMemo()",
       "_callable": true,
@@ -878,18 +1046,6 @@
       "norm_label": "cleargitmemo()",
       "source_file": "lib/core.mjs",
       "source_location": "L313"
-    },
-    {
-      "id": "lib_core_commandfromtool",
-      "label": "commandFromTool()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "core.mjs",
-      "file_type": "code",
-      "norm_label": "commandfromtool()",
-      "source_file": "lib/core.mjs",
-      "source_location": "L328"
     },
     {
       "id": "lib_core_contextoutput",
@@ -928,76 +1084,16 @@
       "source_location": "L173"
     },
     {
-      "id": "lib_core_eventstail",
-      "label": "eventsTail()",
+      "id": "lib_core_parsesetting",
+      "label": "parseSetting()",
       "_callable": true,
       "_origin": "ast",
       "community": 16,
       "community_name": "core.mjs",
       "file_type": "code",
-      "norm_label": "eventstail()",
+      "norm_label": "parsesetting()",
       "source_file": "lib/core.mjs",
-      "source_location": "L153"
-    },
-    {
-      "id": "lib_core_filesfromtool",
-      "label": "filesFromTool()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "core.mjs",
-      "file_type": "code",
-      "norm_label": "filesfromtool()",
-      "source_file": "lib/core.mjs",
-      "source_location": "L318"
-    },
-    {
-      "id": "lib_core_iscodefile",
-      "label": "isCodeFile()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "core.mjs",
-      "file_type": "code",
-      "norm_label": "iscodefile()",
-      "source_file": "lib/core.mjs",
-      "source_location": "L317"
-    },
-    {
-      "id": "lib_core_isedittool",
-      "label": "isEditTool()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "core.mjs",
-      "file_type": "code",
-      "norm_label": "isedittool()",
-      "source_file": "lib/core.mjs",
-      "source_location": "L334"
-    },
-    {
-      "id": "lib_core_isshelltool",
-      "label": "isShellTool()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "core.mjs",
-      "file_type": "code",
-      "norm_label": "isshelltool()",
-      "source_file": "lib/core.mjs",
-      "source_location": "L335"
-    },
-    {
-      "id": "lib_core_lookslikeverification",
-      "label": "looksLikeVerification()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "core.mjs",
-      "file_type": "code",
-      "norm_label": "lookslikeverification()",
-      "source_file": "lib/core.mjs",
-      "source_location": "L336"
+      "source_location": "L68"
     },
     {
       "id": "lib_core_readstdin",
@@ -1012,76 +1108,16 @@
       "source_location": "L165"
     },
     {
-      "id": "lib_core_readtail",
-      "label": "readTail()",
+      "id": "lib_core_slug",
+      "label": "slug()",
       "_callable": true,
       "_origin": "ast",
       "community": 16,
       "community_name": "core.mjs",
       "file_type": "code",
-      "norm_label": "readtail()",
+      "norm_label": "slug()",
       "source_file": "lib/core.mjs",
-      "source_location": "L133"
-    },
-    {
-      "id": "lib_core_recordevent",
-      "label": "recordEvent()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "core.mjs",
-      "file_type": "code",
-      "norm_label": "recordevent()",
-      "source_file": "lib/core.mjs",
-      "source_location": "L129"
-    },
-    {
-      "id": "lib_core_sha",
-      "label": "sha()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "core.mjs",
-      "file_type": "code",
-      "norm_label": "sha()",
-      "source_file": "lib/core.mjs",
-      "source_location": "L56"
-    },
-    {
-      "id": "lib_core_trimevent",
-      "label": "trimEvent()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "core.mjs",
-      "file_type": "code",
-      "norm_label": "trimevent()",
-      "source_file": "lib/core.mjs",
-      "source_location": "L111"
-    },
-    {
-      "id": "lib_guard_destructivereason",
-      "label": "destructiveReason()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "core.mjs",
-      "file_type": "code",
-      "norm_label": "destructivereason()",
-      "source_file": "lib/guard.mjs",
-      "source_location": "L21"
-    },
-    {
-      "id": "lib_guard_pretool",
-      "label": "preTool()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "core.mjs",
-      "file_type": "code",
-      "norm_label": "pretool()",
-      "source_file": "lib/guard.mjs",
-      "source_location": "L27"
+      "source_location": "L98"
     },
     {
       "id": "lib_hooks_dispatch",
@@ -1118,30 +1154,6 @@
       "norm_label": "shape()",
       "source_file": "lib/hooks.mjs",
       "source_location": "L23"
-    },
-    {
-      "id": "lib_track_posttool",
-      "label": "postTool()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "core.mjs",
-      "file_type": "code",
-      "norm_label": "posttool()",
-      "source_file": "lib/track.mjs",
-      "source_location": "L5"
-    },
-    {
-      "id": "lib_track_subagentstop",
-      "label": "subagentStop()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "core.mjs",
-      "file_type": "code",
-      "norm_label": "subagentstop()",
-      "source_file": "lib/track.mjs",
-      "source_location": "L26"
     },
     {
       "id": "lib_agent_b",
@@ -1540,6 +1552,18 @@
       "source_location": "L19"
     },
     {
+      "id": "mcp_tools_remember",
+      "label": "remember()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 2,
+      "community_name": "agent.mjs",
+      "file_type": "code",
+      "norm_label": "remember()",
+      "source_file": "mcp/tools.mjs",
+      "source_location": "L61"
+    },
+    {
       "id": "test_run_ch",
       "label": "ch()",
       "_callable": true,
@@ -1624,136 +1648,184 @@
       "source_location": "L44"
     },
     {
-      "id": "lib_brief_build",
-      "label": "build()",
+      "id": "lib_core_commandfromtool",
+      "label": "commandFromTool()",
       "_callable": true,
       "_origin": "ast",
       "community": 4,
-      "community_name": "brief.mjs",
+      "community_name": "track.mjs",
       "file_type": "code",
-      "norm_label": "build()",
-      "source_file": "lib/brief.mjs",
-      "source_location": "L47"
+      "norm_label": "commandfromtool()",
+      "source_file": "lib/core.mjs",
+      "source_location": "L328"
+    },
+    {
+      "id": "lib_core_eventstail",
+      "label": "eventsTail()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "track.mjs",
+      "file_type": "code",
+      "norm_label": "eventstail()",
+      "source_file": "lib/core.mjs",
+      "source_location": "L153"
+    },
+    {
+      "id": "lib_core_filesfromtool",
+      "label": "filesFromTool()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "track.mjs",
+      "file_type": "code",
+      "norm_label": "filesfromtool()",
+      "source_file": "lib/core.mjs",
+      "source_location": "L318"
+    },
+    {
+      "id": "lib_core_isedittool",
+      "label": "isEditTool()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "track.mjs",
+      "file_type": "code",
+      "norm_label": "isedittool()",
+      "source_file": "lib/core.mjs",
+      "source_location": "L334"
+    },
+    {
+      "id": "lib_core_isshelltool",
+      "label": "isShellTool()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "track.mjs",
+      "file_type": "code",
+      "norm_label": "isshelltool()",
+      "source_file": "lib/core.mjs",
+      "source_location": "L335"
+    },
+    {
+      "id": "lib_core_lookslikeverification",
+      "label": "looksLikeVerification()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "track.mjs",
+      "file_type": "code",
+      "norm_label": "lookslikeverification()",
+      "source_file": "lib/core.mjs",
+      "source_location": "L336"
+    },
+    {
+      "id": "lib_core_readtail",
+      "label": "readTail()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "track.mjs",
+      "file_type": "code",
+      "norm_label": "readtail()",
+      "source_file": "lib/core.mjs",
+      "source_location": "L133"
+    },
+    {
+      "id": "lib_core_recordevent",
+      "label": "recordEvent()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "track.mjs",
+      "file_type": "code",
+      "norm_label": "recordevent()",
+      "source_file": "lib/core.mjs",
+      "source_location": "L129"
+    },
+    {
+      "id": "lib_core_sha",
+      "label": "sha()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "track.mjs",
+      "file_type": "code",
+      "norm_label": "sha()",
+      "source_file": "lib/core.mjs",
+      "source_location": "L56"
+    },
+    {
+      "id": "lib_core_trimevent",
+      "label": "trimEvent()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "track.mjs",
+      "file_type": "code",
+      "norm_label": "trimevent()",
+      "source_file": "lib/core.mjs",
+      "source_location": "L111"
+    },
+    {
+      "id": "lib_guard_destructivereason",
+      "label": "destructiveReason()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "track.mjs",
+      "file_type": "code",
+      "norm_label": "destructivereason()",
+      "source_file": "lib/guard.mjs",
+      "source_location": "L21"
+    },
+    {
+      "id": "lib_guard_pretool",
+      "label": "preTool()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "track.mjs",
+      "file_type": "code",
+      "norm_label": "pretool()",
+      "source_file": "lib/guard.mjs",
+      "source_location": "L27"
+    },
+    {
+      "id": "lib_track_posttool",
+      "label": "postTool()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "track.mjs",
+      "file_type": "code",
+      "norm_label": "posttool()",
+      "source_file": "lib/track.mjs",
+      "source_location": "L5"
+    },
+    {
+      "id": "lib_track_subagentstop",
+      "label": "subagentStop()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 4,
+      "community_name": "track.mjs",
+      "file_type": "code",
+      "norm_label": "subagentstop()",
+      "source_file": "lib/track.mjs",
+      "source_location": "L26"
     },
     {
       "id": "lib_brief_companions",
       "label": "companions()",
       "_callable": true,
       "_origin": "ast",
-      "community": 4,
-      "community_name": "brief.mjs",
+      "community": 5,
+      "community_name": "graph.mjs",
       "file_type": "code",
       "norm_label": "companions()",
       "source_file": "lib/brief.mjs",
       "source_location": "L10"
-    },
-    {
-      "id": "lib_brief_fitlines",
-      "label": "fitLines()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "brief.mjs",
-      "file_type": "code",
-      "norm_label": "fitlines()",
-      "source_file": "lib/brief.mjs",
-      "source_location": "L33"
-    },
-    {
-      "id": "lib_brief_sessionstart",
-      "label": "sessionStart()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "brief.mjs",
-      "file_type": "code",
-      "norm_label": "sessionstart()",
-      "source_file": "lib/brief.mjs",
-      "source_location": "L104"
-    },
-    {
-      "id": "lib_core_savesessionmeta",
-      "label": "saveSessionMeta()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "brief.mjs",
-      "file_type": "code",
-      "norm_label": "savesessionmeta()",
-      "source_file": "lib/core.mjs",
-      "source_location": "L104"
-    },
-    {
-      "id": "lib_core_sessionmeta",
-      "label": "sessionMeta()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "brief.mjs",
-      "file_type": "code",
-      "norm_label": "sessionmeta()",
-      "source_file": "lib/core.mjs",
-      "source_location": "L103"
-    },
-    {
-      "id": "lib_core_sessionmetapath",
-      "label": "sessionMetaPath()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "brief.mjs",
-      "file_type": "code",
-      "norm_label": "sessionmetapath()",
-      "source_file": "lib/core.mjs",
-      "source_location": "L102"
-    },
-    {
-      "id": "lib_router_classify",
-      "label": "classify()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "brief.mjs",
-      "file_type": "code",
-      "norm_label": "classify()",
-      "source_file": "lib/router.mjs",
-      "source_location": "L11"
-    },
-    {
-      "id": "lib_router_prompt",
-      "label": "prompt()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "brief.mjs",
-      "file_type": "code",
-      "norm_label": "prompt()",
-      "source_file": "lib/router.mjs",
-      "source_location": "L30"
-    },
-    {
-      "id": "lib_router_stalenote",
-      "label": "staleNote()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "brief.mjs",
-      "file_type": "code",
-      "norm_label": "stalenote()",
-      "source_file": "lib/router.mjs",
-      "source_location": "L22"
-    },
-    {
-      "id": "lib_core_detach",
-      "label": "detach()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "graph.mjs",
-      "file_type": "code",
-      "norm_label": "detach()",
-      "source_file": "lib/core.mjs",
-      "source_location": "L237"
     },
     {
       "id": "lib_core_graphify",
@@ -1802,42 +1874,6 @@
       "norm_label": "mtime()",
       "source_file": "lib/core.mjs",
       "source_location": "L54"
-    },
-    {
-      "id": "lib_core_trylock",
-      "label": "tryLock()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "graph.mjs",
-      "file_type": "code",
-      "norm_label": "trylock()",
-      "source_file": "lib/core.mjs",
-      "source_location": "L245"
-    },
-    {
-      "id": "lib_core_unlock",
-      "label": "unlock()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "graph.mjs",
-      "file_type": "code",
-      "norm_label": "unlock()",
-      "source_file": "lib/core.mjs",
-      "source_location": "L253"
-    },
-    {
-      "id": "lib_dream_sessionend",
-      "label": "sessionEnd()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "graph.mjs",
-      "file_type": "code",
-      "norm_label": "sessionend()",
-      "source_file": "lib/dream.mjs",
-      "source_location": "L24"
     },
     {
       "id": "lib_graph_age",
@@ -1924,18 +1960,6 @@
       "source_location": "L73"
     },
     {
-      "id": "lib_graph_scheduleupdate",
-      "label": "scheduleUpdate()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 5,
-      "community_name": "graph.mjs",
-      "file_type": "code",
-      "norm_label": "scheduleupdate()",
-      "source_file": "lib/graph.mjs",
-      "source_location": "L96"
-    },
-    {
       "id": "lib_graph_status",
       "label": "status()",
       "_callable": true,
@@ -1984,6 +2008,42 @@
       "source_location": "L110"
     },
     {
+      "id": "lib_router_classify",
+      "label": "classify()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "graph.mjs",
+      "file_type": "code",
+      "norm_label": "classify()",
+      "source_file": "lib/router.mjs",
+      "source_location": "L11"
+    },
+    {
+      "id": "lib_router_prompt",
+      "label": "prompt()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "graph.mjs",
+      "file_type": "code",
+      "norm_label": "prompt()",
+      "source_file": "lib/router.mjs",
+      "source_location": "L30"
+    },
+    {
+      "id": "lib_router_stalenote",
+      "label": "staleNote()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "graph.mjs",
+      "file_type": "code",
+      "norm_label": "stalenote()",
+      "source_file": "lib/router.mjs",
+      "source_location": "L22"
+    },
+    {
       "id": "lib_core_gitstatusshort",
       "label": "gitStatusShort()",
       "_callable": true,
@@ -1994,6 +2054,54 @@
       "norm_label": "gitstatusshort()",
       "source_file": "lib/core.mjs",
       "source_location": "L300"
+    },
+    {
+      "id": "lib_core_iscodefile",
+      "label": "isCodeFile()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "gate.mjs",
+      "file_type": "code",
+      "norm_label": "iscodefile()",
+      "source_file": "lib/core.mjs",
+      "source_location": "L317"
+    },
+    {
+      "id": "lib_core_savesessionmeta",
+      "label": "saveSessionMeta()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "gate.mjs",
+      "file_type": "code",
+      "norm_label": "savesessionmeta()",
+      "source_file": "lib/core.mjs",
+      "source_location": "L104"
+    },
+    {
+      "id": "lib_core_sessionmeta",
+      "label": "sessionMeta()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "gate.mjs",
+      "file_type": "code",
+      "norm_label": "sessionmeta()",
+      "source_file": "lib/core.mjs",
+      "source_location": "L103"
+    },
+    {
+      "id": "lib_core_sessionmetapath",
+      "label": "sessionMetaPath()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "gate.mjs",
+      "file_type": "code",
+      "norm_label": "sessionmetapath()",
+      "source_file": "lib/core.mjs",
+      "source_location": "L102"
     },
     {
       "id": "lib_gate_block",
@@ -2090,18 +2198,6 @@
       "norm_label": "syntaxcheckdetailed()",
       "source_file": "lib/gate.mjs",
       "source_location": "L82"
-    },
-    {
-      "id": "lib_gate_syntaxreport",
-      "label": "syntaxReport()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "gate.mjs",
-      "file_type": "code",
-      "norm_label": "syntaxreport()",
-      "source_file": "lib/gate.mjs",
-      "source_location": "L77"
     },
     {
       "id": "lib_gate_turnevents",
@@ -2224,100 +2320,16 @@
       "source_location": "L50"
     },
     {
-      "id": "bin_atlias_after",
-      "label": "after()",
+      "id": "lib_gate_syntaxreport",
+      "label": "syntaxReport()",
       "_callable": true,
       "_origin": "ast",
       "community": 8,
-      "community_name": "atlias.mjs",
+      "community_name": "tools.mjs",
       "file_type": "code",
-      "norm_label": "after()",
-      "source_file": "bin/atlias.mjs",
-      "source_location": "L30"
-    },
-    {
-      "id": "bin_atlias_extraids",
-      "label": "extraIds()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "atlias.mjs",
-      "file_type": "code",
-      "norm_label": "extraids()",
-      "source_file": "bin/atlias.mjs",
-      "source_location": "L28"
-    },
-    {
-      "id": "bin_atlias_flag",
-      "label": "flag()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "atlias.mjs",
-      "file_type": "code",
-      "norm_label": "flag()",
-      "source_file": "bin/atlias.mjs",
-      "source_location": "L29"
-    },
-    {
-      "id": "bin_atlias_reador",
-      "label": "readOr()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "atlias.mjs",
-      "file_type": "code",
-      "norm_label": "reador()",
-      "source_file": "bin/atlias.mjs",
-      "source_location": "L33"
-    },
-    {
-      "id": "bin_atlias_say",
-      "label": "say()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "atlias.mjs",
-      "file_type": "code",
-      "norm_label": "say()",
-      "source_file": "bin/atlias.mjs",
-      "source_location": "L32"
-    },
-    {
-      "id": "lib_core_claudememorydir",
-      "label": "claudeMemoryDir()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "atlias.mjs",
-      "file_type": "code",
-      "norm_label": "claudememorydir()",
-      "source_file": "lib/core.mjs",
-      "source_location": "L162"
-    },
-    {
-      "id": "lib_core_parsesetting",
-      "label": "parseSetting()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "atlias.mjs",
-      "file_type": "code",
-      "norm_label": "parsesetting()",
-      "source_file": "lib/core.mjs",
-      "source_location": "L68"
-    },
-    {
-      "id": "lib_core_slug",
-      "label": "slug()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "atlias.mjs",
-      "file_type": "code",
-      "norm_label": "slug()",
-      "source_file": "lib/core.mjs",
-      "source_location": "L98"
+      "norm_label": "syntaxreport()",
+      "source_file": "lib/gate.mjs",
+      "source_location": "L77"
     },
     {
       "id": "lib_hosts_formatdoctor",
@@ -2325,7 +2337,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 8,
-      "community_name": "atlias.mjs",
+      "community_name": "tools.mjs",
       "file_type": "code",
       "norm_label": "formatdoctor()",
       "source_file": "lib/hosts.mjs",
@@ -2337,7 +2349,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 8,
-      "community_name": "atlias.mjs",
+      "community_name": "tools.mjs",
       "file_type": "code",
       "norm_label": "fail()",
       "source_file": "mcp/server.mjs",
@@ -2349,7 +2361,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 8,
-      "community_name": "atlias.mjs",
+      "community_name": "tools.mjs",
       "file_type": "code",
       "norm_label": "handle()",
       "source_file": "mcp/server.mjs",
@@ -2361,7 +2373,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 8,
-      "community_name": "atlias.mjs",
+      "community_name": "tools.mjs",
       "file_type": "code",
       "norm_label": "reply()",
       "source_file": "mcp/server.mjs",
@@ -2373,7 +2385,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 8,
-      "community_name": "atlias.mjs",
+      "community_name": "tools.mjs",
       "file_type": "code",
       "norm_label": "send()",
       "source_file": "mcp/server.mjs",
@@ -2385,23 +2397,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 8,
-      "community_name": "atlias.mjs",
+      "community_name": "tools.mjs",
       "file_type": "code",
       "norm_label": "calltool()",
       "source_file": "mcp/tools.mjs",
       "source_location": "L116"
-    },
-    {
-      "id": "mcp_tools_remember",
-      "label": "remember()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "atlias.mjs",
-      "file_type": "code",
-      "norm_label": "remember()",
-      "source_file": "mcp/tools.mjs",
-      "source_location": "L61"
     },
     {
       "id": "mcp_tools_verifytext",
@@ -2409,7 +2409,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 8,
-      "community_name": "atlias.mjs",
+      "community_name": "tools.mjs",
       "file_type": "code",
       "norm_label": "verifytext()",
       "source_file": "mcp/tools.mjs",
@@ -2603,7 +2603,7 @@
       "node_kind": "heading",
       "norm_label": "configuration",
       "source_file": "README.md",
-      "source_location": "L104"
+      "source_location": "L106"
     },
     {
       "id": "readme_harnesses",
@@ -2615,7 +2615,7 @@
       "node_kind": "heading",
       "norm_label": "harnesses",
       "source_file": "README.md",
-      "source_location": "L39"
+      "source_location": "L41"
     },
     {
       "id": "readme_install",
@@ -2627,7 +2627,7 @@
       "node_kind": "heading",
       "norm_label": "install",
       "source_file": "README.md",
-      "source_location": "L61"
+      "source_location": "L63"
     },
     {
       "id": "readme_known_limits",
@@ -2639,7 +2639,7 @@
       "node_kind": "heading",
       "norm_label": "known limits",
       "source_file": "README.md",
-      "source_location": "L126"
+      "source_location": "L128"
     },
     {
       "id": "readme_sources",
@@ -2651,7 +2651,7 @@
       "node_kind": "heading",
       "norm_label": "sources",
       "source_file": "README.md",
-      "source_location": "L133"
+      "source_location": "L135"
     },
     {
       "id": "readme_surviving_an_update",
@@ -2663,7 +2663,7 @@
       "node_kind": "heading",
       "norm_label": "surviving an update",
       "source_file": "README.md",
-      "source_location": "L118"
+      "source_location": "L120"
     },
     {
       "id": "readme_tests_that_teach",
@@ -2675,7 +2675,7 @@
       "node_kind": "heading",
       "norm_label": "tests that teach",
       "source_file": "README.md",
-      "source_location": "L85"
+      "source_location": "L87"
     },
     {
       "id": "readme_tools_mcp_server_atlias",
@@ -2687,7 +2687,7 @@
       "node_kind": "heading",
       "norm_label": "tools (mcp server `atlias`)",
       "source_file": "README.md",
-      "source_location": "L45"
+      "source_location": "L47"
     },
     {
       "id": "readme_two_ways_to_fly",
@@ -2699,7 +2699,7 @@
       "node_kind": "heading",
       "norm_label": "two ways to fly",
       "source_file": "README.md",
-      "source_location": "L30"
+      "source_location": "L32"
     },
     {
       "id": "readme_versioning",
@@ -2711,7 +2711,7 @@
       "node_kind": "heading",
       "norm_label": "versioning",
       "source_file": "README.md",
-      "source_location": "L122"
+      "source_location": "L124"
     },
     {
       "id": "readme_what_happens_in_a_session",
@@ -2723,7 +2723,7 @@
       "node_kind": "heading",
       "norm_label": "what happens in a session",
       "source_file": "README.md",
-      "source_location": "L20"
+      "source_location": "L22"
     },
     {
       "id": "readme_what_it_costs_measured",
@@ -2735,7 +2735,7 @@
       "node_kind": "heading",
       "norm_label": "what it costs, measured",
       "source_file": "README.md",
-      "source_location": "L49"
+      "source_location": "L51"
     },
     {
       "id": "readme_what_it_fixes",
@@ -2747,7 +2747,7 @@
       "node_kind": "heading",
       "norm_label": "what it fixes",
       "source_file": "README.md",
-      "source_location": "L7"
+      "source_location": "L9"
     },
     {
       "id": "readme_what_it_refuses_to_pretend",
@@ -2759,7 +2759,7 @@
       "node_kind": "heading",
       "norm_label": "what it refuses to pretend",
       "source_file": "README.md",
-      "source_location": "L93"
+      "source_location": "L95"
     },
     {
       "id": "claude_plugin_marketplace",
@@ -2999,7 +2999,7 @@
       "node_kind": "heading",
       "norm_label": "1.0.0 (2026-09-21)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L125"
+      "source_location": "L129"
     },
     {
       "id": "changelog_1_2_0_2026_09_22",
@@ -3011,7 +3011,7 @@
       "node_kind": "heading",
       "norm_label": "1.2.0 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L121"
+      "source_location": "L125"
     },
     {
       "id": "changelog_1_3_0_2026_09_22",
@@ -3023,7 +3023,7 @@
       "node_kind": "heading",
       "norm_label": "1.3.0 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L117"
+      "source_location": "L121"
     },
     {
       "id": "changelog_1_4_0_2026_09_22",
@@ -3035,7 +3035,7 @@
       "node_kind": "heading",
       "norm_label": "1.4.0 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L113"
+      "source_location": "L117"
     },
     {
       "id": "changelog_1_4_1_2026_09_22",
@@ -3047,7 +3047,7 @@
       "node_kind": "heading",
       "norm_label": "1.4.1 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L109"
+      "source_location": "L113"
     },
     {
       "id": "changelog_1_5_0_2026_09_22",
@@ -3059,7 +3059,7 @@
       "node_kind": "heading",
       "norm_label": "1.5.0 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L105"
+      "source_location": "L109"
     },
     {
       "id": "changelog_1_5_1_2026_09_22",
@@ -3071,7 +3071,7 @@
       "node_kind": "heading",
       "norm_label": "1.5.1 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L101"
+      "source_location": "L105"
     },
     {
       "id": "changelog_1_6_0_2026_09_22",
@@ -3083,7 +3083,7 @@
       "node_kind": "heading",
       "norm_label": "1.6.0 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L97"
+      "source_location": "L101"
     },
     {
       "id": "changelog_1_7_0_2026_09_22",
@@ -3095,7 +3095,7 @@
       "node_kind": "heading",
       "norm_label": "1.7.0 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L93"
+      "source_location": "L97"
     },
     {
       "id": "changelog_1_8_0_2026_09_22",
@@ -3107,7 +3107,7 @@
       "node_kind": "heading",
       "norm_label": "1.8.0 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L89"
+      "source_location": "L93"
     },
     {
       "id": "changelog_1_9_0_2026_09_22",
@@ -3119,7 +3119,7 @@
       "node_kind": "heading",
       "norm_label": "1.9.0 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L85"
+      "source_location": "L89"
     },
     {
       "id": "changelog_1_9_1_2026_09_22",
@@ -3131,7 +3131,7 @@
       "node_kind": "heading",
       "norm_label": "1.9.1 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L81"
+      "source_location": "L85"
     },
     {
       "id": "changelog_2_0_0_2026_09_22",
@@ -3143,7 +3143,7 @@
       "node_kind": "heading",
       "norm_label": "2.0.0 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L77"
+      "source_location": "L81"
     },
     {
       "id": "changelog_2_1_0_2026_09_22",
@@ -3155,7 +3155,7 @@
       "node_kind": "heading",
       "norm_label": "2.1.0 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L71"
+      "source_location": "L75"
     },
     {
       "id": "changelog_2_1_1_2026_09_22",
@@ -3167,7 +3167,7 @@
       "node_kind": "heading",
       "norm_label": "2.1.1 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L67"
+      "source_location": "L71"
     },
     {
       "id": "changelog_2_1_2_2026_09_22",
@@ -3179,7 +3179,7 @@
       "node_kind": "heading",
       "norm_label": "2.1.2 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L63"
+      "source_location": "L67"
     },
     {
       "id": "changelog_2_1_3_2026_09_22",
@@ -3191,7 +3191,7 @@
       "node_kind": "heading",
       "norm_label": "2.1.3 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L59"
+      "source_location": "L63"
     },
     {
       "id": "changelog_2_1_4_2026_09_22",
@@ -3203,7 +3203,7 @@
       "node_kind": "heading",
       "norm_label": "2.1.4 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L55"
+      "source_location": "L59"
     },
     {
       "id": "changelog_2_1_5_2026_09_22",
@@ -3215,7 +3215,7 @@
       "node_kind": "heading",
       "norm_label": "2.1.5 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L51"
+      "source_location": "L55"
     },
     {
       "id": "changelog_2_1_6_2026_09_22",
@@ -3227,7 +3227,7 @@
       "node_kind": "heading",
       "norm_label": "2.1.6 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L47"
+      "source_location": "L51"
     },
     {
       "id": "changelog_2_1_7_2026_09_22",
@@ -3239,7 +3239,7 @@
       "node_kind": "heading",
       "norm_label": "2.1.7 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L43"
+      "source_location": "L47"
     },
     {
       "id": "changelog_2_1_8_2026_09_22",
@@ -3251,7 +3251,7 @@
       "node_kind": "heading",
       "norm_label": "2.1.8 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L39"
+      "source_location": "L43"
     },
     {
       "id": "changelog_2_2_0_2026_09_22",
@@ -3263,7 +3263,7 @@
       "node_kind": "heading",
       "norm_label": "2.2.0 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L35"
+      "source_location": "L39"
     },
     {
       "id": "changelog_2_2_1_2026_09_22",
@@ -3275,7 +3275,7 @@
       "node_kind": "heading",
       "norm_label": "2.2.1 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L31"
+      "source_location": "L35"
     },
     {
       "id": "changelog_2_2_2_2026_09_22",
@@ -3287,7 +3287,7 @@
       "node_kind": "heading",
       "norm_label": "2.2.2 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L27"
+      "source_location": "L31"
     },
     {
       "id": "changelog_2_2_3_2026_09_22",
@@ -3299,7 +3299,7 @@
       "node_kind": "heading",
       "norm_label": "2.2.3 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L23"
+      "source_location": "L27"
     },
     {
       "id": "changelog_2_2_4_2026_09_22",
@@ -3311,7 +3311,7 @@
       "node_kind": "heading",
       "norm_label": "2.2.4 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L19"
+      "source_location": "L23"
     },
     {
       "id": "changelog_2_2_5_2026_09_22",
@@ -3323,7 +3323,7 @@
       "node_kind": "heading",
       "norm_label": "2.2.5 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L15"
+      "source_location": "L19"
     },
     {
       "id": "changelog_2_2_6_2026_09_22",
@@ -3335,7 +3335,7 @@
       "node_kind": "heading",
       "norm_label": "2.2.6 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L11"
+      "source_location": "L15"
     },
     {
       "id": "changelog_2_2_7_2026_09_22",
@@ -3347,7 +3347,7 @@
       "node_kind": "heading",
       "norm_label": "2.2.7 (2026-09-22)",
       "source_file": "CHANGELOG.md",
-      "source_location": "L7"
+      "source_location": "L11"
     },
     {
       "id": "changelog_2_2_8_2026_09_22",
@@ -3358,6 +3358,18 @@
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "2.2.8 (2026-09-22)",
+      "source_file": "CHANGELOG.md",
+      "source_location": "L7"
+    },
+    {
+      "id": "changelog_2_3_0_2026_09_22",
+      "label": "2.3.0 (2026-09-22)",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "Changelog",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "2.3.0 (2026-09-22)",
       "source_file": "CHANGELOG.md",
       "source_location": "L3"
     },
@@ -3374,6 +3386,83 @@
       "source_location": "L1"
     },
     {
+      "id": "bin_atlias",
+      "label": "atlias.mjs",
+      "_origin": "ast",
+      "community": 16,
+      "community_name": "core.mjs",
+      "file_type": "code",
+      "norm_label": "atlias.mjs",
+      "source_file": "bin/atlias.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "bin_atlias_argv",
+      "label": "argv",
+      "_origin": "ast",
+      "community": 16,
+      "community_name": "core.mjs",
+      "file_type": "code",
+      "norm_label": "argv",
+      "source_file": "bin/atlias.mjs",
+      "source_location": "L24"
+    },
+    {
+      "id": "bin_atlias_cwd",
+      "label": "cwd",
+      "_origin": "ast",
+      "community": 16,
+      "community_name": "core.mjs",
+      "file_type": "code",
+      "norm_label": "cwd",
+      "source_file": "bin/atlias.mjs",
+      "source_location": "L31"
+    },
+    {
+      "id": "bin_atlias_flag_commands",
+      "label": "FLAG_COMMANDS",
+      "_origin": "ast",
+      "community": 16,
+      "community_name": "core.mjs",
+      "file_type": "code",
+      "norm_label": "flag_commands",
+      "source_file": "bin/atlias.mjs",
+      "source_location": "L26"
+    },
+    {
+      "id": "lib_brief",
+      "label": "brief.mjs",
+      "_origin": "ast",
+      "community": 16,
+      "community_name": "core.mjs",
+      "file_type": "code",
+      "norm_label": "brief.mjs",
+      "source_file": "lib/brief.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "lib_brief_brief_budget_ms",
+      "label": "BRIEF_BUDGET_MS",
+      "_origin": "ast",
+      "community": 16,
+      "community_name": "core.mjs",
+      "file_type": "code",
+      "norm_label": "brief_budget_ms",
+      "source_file": "lib/brief.mjs",
+      "source_location": "L46"
+    },
+    {
+      "id": "lib_brief_rules",
+      "label": "RULES",
+      "_origin": "ast",
+      "community": 16,
+      "community_name": "core.mjs",
+      "file_type": "code",
+      "norm_label": "rules",
+      "source_file": "lib/brief.mjs",
+      "source_location": "L22"
+    },
+    {
       "id": "lib_core",
       "label": "core.mjs",
       "_origin": "ast",
@@ -3383,6 +3472,17 @@
       "norm_label": "core.mjs",
       "source_file": "lib/core.mjs",
       "source_location": "L1"
+    },
+    {
+      "id": "lib_core_claude_dir",
+      "label": "CLAUDE_DIR",
+      "_origin": "ast",
+      "community": 16,
+      "community_name": "core.mjs",
+      "file_type": "code",
+      "norm_label": "claude_dir",
+      "source_file": "lib/core.mjs",
+      "source_location": "L15"
     },
     {
       "id": "lib_core_code_ext",
@@ -3405,6 +3505,17 @@
       "norm_label": "codex_dir",
       "source_file": "lib/core.mjs",
       "source_location": "L16"
+    },
+    {
+      "id": "lib_core_defaults",
+      "label": "DEFAULTS",
+      "_origin": "ast",
+      "community": 16,
+      "community_name": "core.mjs",
+      "file_type": "code",
+      "norm_label": "defaults",
+      "source_file": "lib/core.mjs",
+      "source_location": "L21"
     },
     {
       "id": "lib_core_end_mark",
@@ -3550,6 +3661,17 @@
       "source_location": "L259"
     },
     {
+      "id": "lib_core_root",
+      "label": "ROOT",
+      "_origin": "ast",
+      "community": 16,
+      "community_name": "core.mjs",
+      "file_type": "code",
+      "norm_label": "root",
+      "source_file": "lib/core.mjs",
+      "source_location": "L13"
+    },
+    {
       "id": "lib_core_root_record",
       "label": "ROOT_RECORD",
       "_origin": "ast",
@@ -3561,26 +3683,15 @@
       "source_location": "L195"
     },
     {
-      "id": "lib_guard",
-      "label": "guard.mjs",
+      "id": "lib_core_state_dir",
+      "label": "STATE_DIR",
       "_origin": "ast",
       "community": 16,
       "community_name": "core.mjs",
       "file_type": "code",
-      "norm_label": "guard.mjs",
-      "source_file": "lib/guard.mjs",
-      "source_location": "L1"
-    },
-    {
-      "id": "lib_guard_destructive",
-      "label": "DESTRUCTIVE",
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "core.mjs",
-      "file_type": "code",
-      "norm_label": "destructive",
-      "source_file": "lib/guard.mjs",
-      "source_location": "L11"
+      "norm_label": "state_dir",
+      "source_file": "lib/core.mjs",
+      "source_location": "L14"
     },
     {
       "id": "lib_hooks",
@@ -3603,17 +3714,6 @@
       "norm_label": "host",
       "source_file": "lib/hooks.mjs",
       "source_location": "L18"
-    },
-    {
-      "id": "lib_track",
-      "label": "track.mjs",
-      "_origin": "ast",
-      "community": 16,
-      "community_name": "core.mjs",
-      "file_type": "code",
-      "norm_label": "track.mjs",
-      "source_file": "lib/track.mjs",
-      "source_location": "L1"
     },
     {
       "id": "lib_agent",
@@ -3814,81 +3914,37 @@
       "source_location": "L69"
     },
     {
-      "id": "lib_brief",
-      "label": "brief.mjs",
+      "id": "lib_guard",
+      "label": "guard.mjs",
       "_origin": "ast",
       "community": 4,
-      "community_name": "brief.mjs",
+      "community_name": "track.mjs",
       "file_type": "code",
-      "norm_label": "brief.mjs",
-      "source_file": "lib/brief.mjs",
+      "norm_label": "guard.mjs",
+      "source_file": "lib/guard.mjs",
       "source_location": "L1"
     },
     {
-      "id": "lib_brief_brief_budget_ms",
-      "label": "BRIEF_BUDGET_MS",
+      "id": "lib_guard_destructive",
+      "label": "DESTRUCTIVE",
       "_origin": "ast",
       "community": 4,
-      "community_name": "brief.mjs",
+      "community_name": "track.mjs",
       "file_type": "code",
-      "norm_label": "brief_budget_ms",
-      "source_file": "lib/brief.mjs",
-      "source_location": "L46"
+      "norm_label": "destructive",
+      "source_file": "lib/guard.mjs",
+      "source_location": "L11"
     },
     {
-      "id": "lib_brief_rules",
-      "label": "RULES",
+      "id": "lib_track",
+      "label": "track.mjs",
       "_origin": "ast",
       "community": 4,
-      "community_name": "brief.mjs",
+      "community_name": "track.mjs",
       "file_type": "code",
-      "norm_label": "rules",
-      "source_file": "lib/brief.mjs",
-      "source_location": "L22"
-    },
-    {
-      "id": "lib_core_claude_dir",
-      "label": "CLAUDE_DIR",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "brief.mjs",
-      "file_type": "code",
-      "norm_label": "claude_dir",
-      "source_file": "lib/core.mjs",
-      "source_location": "L15"
-    },
-    {
-      "id": "lib_router",
-      "label": "router.mjs",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "brief.mjs",
-      "file_type": "code",
-      "norm_label": "router.mjs",
-      "source_file": "lib/router.mjs",
+      "norm_label": "track.mjs",
+      "source_file": "lib/track.mjs",
       "source_location": "L1"
-    },
-    {
-      "id": "lib_router_codebase_re",
-      "label": "CODEBASE_RE",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "brief.mjs",
-      "file_type": "code",
-      "norm_label": "codebase_re",
-      "source_file": "lib/router.mjs",
-      "source_location": "L8"
-    },
-    {
-      "id": "lib_router_frontend_re",
-      "label": "FRONTEND_RE",
-      "_origin": "ast",
-      "community": 4,
-      "community_name": "brief.mjs",
-      "file_type": "code",
-      "norm_label": "frontend_re",
-      "source_file": "lib/router.mjs",
-      "source_location": "L9"
     },
     {
       "id": "lib_graph",
@@ -3933,6 +3989,39 @@
       "norm_label": "skip",
       "source_file": "lib/graph.mjs",
       "source_location": "L11"
+    },
+    {
+      "id": "lib_router",
+      "label": "router.mjs",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "graph.mjs",
+      "file_type": "code",
+      "norm_label": "router.mjs",
+      "source_file": "lib/router.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "lib_router_codebase_re",
+      "label": "CODEBASE_RE",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "graph.mjs",
+      "file_type": "code",
+      "norm_label": "codebase_re",
+      "source_file": "lib/router.mjs",
+      "source_location": "L8"
+    },
+    {
+      "id": "lib_router_frontend_re",
+      "label": "FRONTEND_RE",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "graph.mjs",
+      "file_type": "code",
+      "norm_label": "frontend_re",
+      "source_file": "lib/router.mjs",
+      "source_location": "L9"
     },
     {
       "id": "package",
@@ -4188,88 +4277,11 @@
       "source_location": "L1"
     },
     {
-      "id": "bin_atlias",
-      "label": "atlias.mjs",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "atlias.mjs",
-      "file_type": "code",
-      "norm_label": "atlias.mjs",
-      "source_file": "bin/atlias.mjs",
-      "source_location": "L1"
-    },
-    {
-      "id": "bin_atlias_argv",
-      "label": "argv",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "atlias.mjs",
-      "file_type": "code",
-      "norm_label": "argv",
-      "source_file": "bin/atlias.mjs",
-      "source_location": "L24"
-    },
-    {
-      "id": "bin_atlias_cwd",
-      "label": "cwd",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "atlias.mjs",
-      "file_type": "code",
-      "norm_label": "cwd",
-      "source_file": "bin/atlias.mjs",
-      "source_location": "L31"
-    },
-    {
-      "id": "bin_atlias_flag_commands",
-      "label": "FLAG_COMMANDS",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "atlias.mjs",
-      "file_type": "code",
-      "norm_label": "flag_commands",
-      "source_file": "bin/atlias.mjs",
-      "source_location": "L26"
-    },
-    {
-      "id": "lib_core_defaults",
-      "label": "DEFAULTS",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "atlias.mjs",
-      "file_type": "code",
-      "norm_label": "defaults",
-      "source_file": "lib/core.mjs",
-      "source_location": "L21"
-    },
-    {
-      "id": "lib_core_root",
-      "label": "ROOT",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "atlias.mjs",
-      "file_type": "code",
-      "norm_label": "root",
-      "source_file": "lib/core.mjs",
-      "source_location": "L13"
-    },
-    {
-      "id": "lib_core_state_dir",
-      "label": "STATE_DIR",
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "atlias.mjs",
-      "file_type": "code",
-      "norm_label": "state_dir",
-      "source_file": "lib/core.mjs",
-      "source_location": "L14"
-    },
-    {
       "id": "lib_core_version",
       "label": "VERSION",
       "_origin": "ast",
       "community": 8,
-      "community_name": "atlias.mjs",
+      "community_name": "tools.mjs",
       "file_type": "code",
       "norm_label": "version",
       "source_file": "lib/core.mjs",
@@ -4280,7 +4292,7 @@
       "label": "server.mjs",
       "_origin": "ast",
       "community": 8,
-      "community_name": "atlias.mjs",
+      "community_name": "tools.mjs",
       "file_type": "code",
       "norm_label": "server.mjs",
       "source_file": "mcp/server.mjs",
@@ -4291,7 +4303,7 @@
       "label": "tools.mjs",
       "_origin": "ast",
       "community": 8,
-      "community_name": "atlias.mjs",
+      "community_name": "tools.mjs",
       "file_type": "code",
       "norm_label": "tools.mjs",
       "source_file": "mcp/tools.mjs",
@@ -4302,7 +4314,7 @@
       "label": "RESERVED_NAMES",
       "_origin": "ast",
       "community": 8,
-      "community_name": "atlias.mjs",
+      "community_name": "tools.mjs",
       "file_type": "code",
       "norm_label": "reserved_names",
       "source_file": "mcp/tools.mjs",
@@ -4313,7 +4325,7 @@
       "label": "TOOLS",
       "_origin": "ast",
       "community": 8,
-      "community_name": "atlias.mjs",
+      "community_name": "tools.mjs",
       "file_type": "code",
       "norm_label": "tools",
       "source_file": "mcp/tools.mjs",
@@ -4324,7 +4336,7 @@
       "label": "TYPES",
       "_origin": "ast",
       "community": 8,
-      "community_name": "atlias.mjs",
+      "community_name": "tools.mjs",
       "file_type": "code",
       "norm_label": "types",
       "source_file": "mcp/tools.mjs",
@@ -4487,6 +4499,18 @@
       "type": "external"
     },
     {
+      "id": "ref_node_fs",
+      "label": "ref_node_fs",
+      "_origin": "semantic",
+      "community": 16,
+      "community_name": "core.mjs",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "ref_node_fs",
+      "source_file": "",
+      "type": "external"
+    },
+    {
       "id": "ref_node_http",
       "label": "ref_node_http",
       "_origin": "semantic",
@@ -4523,6 +4547,18 @@
       "type": "external"
     },
     {
+      "id": "ref_node_child_process",
+      "label": "ref_node_child_process",
+      "_origin": "semantic",
+      "community": 3,
+      "community_name": "run.mjs",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "ref_node_child_process",
+      "source_file": "",
+      "type": "external"
+    },
+    {
       "id": "ref_node_os",
       "label": "ref_node_os",
       "_origin": "semantic",
@@ -4543,30 +4579,6 @@
       "external": true,
       "file_type": "concept",
       "norm_label": "ref_node_url",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "ref_node_fs",
-      "label": "ref_node_fs",
-      "_origin": "semantic",
-      "community": 7,
-      "community_name": "gate.mjs",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "ref_node_fs",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "ref_node_child_process",
-      "label": "ref_node_child_process",
-      "_origin": "semantic",
-      "community": 8,
-      "community_name": "atlias.mjs",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "ref_node_child_process",
       "source_file": "",
       "type": "external"
     }
@@ -13145,7 +13157,7 @@
     },
     {
       "source": "changelog_changelog",
-      "target": "changelog_1_5_1_2026_09_22",
+      "target": "changelog_1_6_0_2026_09_22",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -13156,7 +13168,7 @@
     },
     {
       "source": "changelog_changelog",
-      "target": "changelog_1_5_0_2026_09_22",
+      "target": "changelog_1_5_1_2026_09_22",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -13167,7 +13179,7 @@
     },
     {
       "source": "changelog_changelog",
-      "target": "changelog_1_4_1_2026_09_22",
+      "target": "changelog_1_5_0_2026_09_22",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -13178,7 +13190,7 @@
     },
     {
       "source": "changelog_changelog",
-      "target": "changelog_2_2_6_2026_09_22",
+      "target": "changelog_2_2_7_2026_09_22",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -13189,7 +13201,7 @@
     },
     {
       "source": "changelog_changelog",
-      "target": "changelog_1_4_0_2026_09_22",
+      "target": "changelog_1_4_1_2026_09_22",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -13200,7 +13212,7 @@
     },
     {
       "source": "changelog_changelog",
-      "target": "changelog_1_3_0_2026_09_22",
+      "target": "changelog_1_4_0_2026_09_22",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -13211,7 +13223,7 @@
     },
     {
       "source": "changelog_changelog",
-      "target": "changelog_1_2_0_2026_09_22",
+      "target": "changelog_1_3_0_2026_09_22",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -13222,7 +13234,7 @@
     },
     {
       "source": "changelog_changelog",
-      "target": "changelog_1_0_0_2026_09_21",
+      "target": "changelog_1_2_0_2026_09_22",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -13233,7 +13245,18 @@
     },
     {
       "source": "changelog_changelog",
-      "target": "changelog_2_2_5_2026_09_22",
+      "target": "changelog_1_0_0_2026_09_21",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CHANGELOG.md",
+      "source_location": "L129",
+      "weight": 1.0
+    },
+    {
+      "source": "changelog_changelog",
+      "target": "changelog_2_2_6_2026_09_22",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -13244,7 +13267,7 @@
     },
     {
       "source": "changelog_changelog",
-      "target": "changelog_2_2_4_2026_09_22",
+      "target": "changelog_2_2_5_2026_09_22",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -13255,7 +13278,7 @@
     },
     {
       "source": "changelog_changelog",
-      "target": "changelog_2_2_3_2026_09_22",
+      "target": "changelog_2_2_4_2026_09_22",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -13266,7 +13289,7 @@
     },
     {
       "source": "changelog_changelog",
-      "target": "changelog_2_2_2_2026_09_22",
+      "target": "changelog_2_2_3_2026_09_22",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -13277,7 +13300,7 @@
     },
     {
       "source": "changelog_changelog",
-      "target": "changelog_2_2_8_2026_09_22",
+      "target": "changelog_2_3_0_2026_09_22",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -13288,7 +13311,7 @@
     },
     {
       "source": "changelog_changelog",
-      "target": "changelog_2_2_1_2026_09_22",
+      "target": "changelog_2_2_2_2026_09_22",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -13299,7 +13322,7 @@
     },
     {
       "source": "changelog_changelog",
-      "target": "changelog_2_2_0_2026_09_22",
+      "target": "changelog_2_2_1_2026_09_22",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -13310,7 +13333,7 @@
     },
     {
       "source": "changelog_changelog",
-      "target": "changelog_2_1_8_2026_09_22",
+      "target": "changelog_2_2_0_2026_09_22",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -13321,7 +13344,7 @@
     },
     {
       "source": "changelog_changelog",
-      "target": "changelog_2_1_7_2026_09_22",
+      "target": "changelog_2_1_8_2026_09_22",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -13332,7 +13355,7 @@
     },
     {
       "source": "changelog_changelog",
-      "target": "changelog_2_1_6_2026_09_22",
+      "target": "changelog_2_1_7_2026_09_22",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -13343,7 +13366,7 @@
     },
     {
       "source": "changelog_changelog",
-      "target": "changelog_2_1_5_2026_09_22",
+      "target": "changelog_2_1_6_2026_09_22",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -13354,7 +13377,7 @@
     },
     {
       "source": "changelog_changelog",
-      "target": "changelog_2_1_4_2026_09_22",
+      "target": "changelog_2_1_5_2026_09_22",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -13365,7 +13388,7 @@
     },
     {
       "source": "changelog_changelog",
-      "target": "changelog_2_1_3_2026_09_22",
+      "target": "changelog_2_1_4_2026_09_22",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -13376,7 +13399,7 @@
     },
     {
       "source": "changelog_changelog",
-      "target": "changelog_2_1_2_2026_09_22",
+      "target": "changelog_2_1_3_2026_09_22",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -13387,7 +13410,7 @@
     },
     {
       "source": "changelog_changelog",
-      "target": "changelog_2_1_1_2026_09_22",
+      "target": "changelog_2_1_2_2026_09_22",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -13398,7 +13421,7 @@
     },
     {
       "source": "changelog_changelog",
-      "target": "changelog_2_2_7_2026_09_22",
+      "target": "changelog_2_2_8_2026_09_22",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -13409,7 +13432,7 @@
     },
     {
       "source": "changelog_changelog",
-      "target": "changelog_2_1_0_2026_09_22",
+      "target": "changelog_2_1_1_2026_09_22",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -13420,18 +13443,18 @@
     },
     {
       "source": "changelog_changelog",
-      "target": "changelog_2_0_0_2026_09_22",
+      "target": "changelog_2_1_0_2026_09_22",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "CHANGELOG.md",
-      "source_location": "L77",
+      "source_location": "L75",
       "weight": 1.0
     },
     {
       "source": "changelog_changelog",
-      "target": "changelog_1_9_1_2026_09_22",
+      "target": "changelog_2_0_0_2026_09_22",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -13442,7 +13465,7 @@
     },
     {
       "source": "changelog_changelog",
-      "target": "changelog_1_9_0_2026_09_22",
+      "target": "changelog_1_9_1_2026_09_22",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -13453,7 +13476,7 @@
     },
     {
       "source": "changelog_changelog",
-      "target": "changelog_1_8_0_2026_09_22",
+      "target": "changelog_1_9_0_2026_09_22",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -13464,7 +13487,7 @@
     },
     {
       "source": "changelog_changelog",
-      "target": "changelog_1_7_0_2026_09_22",
+      "target": "changelog_1_8_0_2026_09_22",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -13475,7 +13498,7 @@
     },
     {
       "source": "changelog_changelog",
-      "target": "changelog_1_6_0_2026_09_22",
+      "target": "changelog_1_7_0_2026_09_22",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -16495,7 +16518,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L104",
+      "source_location": "L106",
       "weight": 1.0
     },
     {
@@ -16506,7 +16529,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L118",
+      "source_location": "L120",
       "weight": 1.0
     },
     {
@@ -16517,7 +16540,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L122",
+      "source_location": "L124",
       "weight": 1.0
     },
     {
@@ -16528,7 +16551,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L126",
+      "source_location": "L128",
       "weight": 1.0
     },
     {
@@ -16539,7 +16562,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L133",
+      "source_location": "L135",
       "weight": 1.0
     },
     {
@@ -16550,7 +16573,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L20",
+      "source_location": "L22",
       "weight": 1.0
     },
     {
@@ -16561,7 +16584,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L30",
+      "source_location": "L32",
       "weight": 1.0
     },
     {
@@ -16572,7 +16595,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L39",
+      "source_location": "L41",
       "weight": 1.0
     },
     {
@@ -16583,7 +16606,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L45",
+      "source_location": "L47",
       "weight": 1.0
     },
     {
@@ -16594,7 +16617,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L49",
+      "source_location": "L51",
       "weight": 1.0
     },
     {
@@ -16605,18 +16628,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L61",
-      "weight": 1.0
-    },
-    {
-      "source": "readme_atlias",
-      "target": "readme_what_it_fixes",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": "L7",
+      "source_location": "L63",
       "weight": 1.0
     },
     {
@@ -16627,7 +16639,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L85",
+      "source_location": "L87",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_atlias",
+      "target": "readme_what_it_fixes",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L9",
       "weight": 1.0
     },
     {
@@ -16638,7 +16661,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L93",
+      "source_location": "L95",
       "weight": 1.0
     },
     {
@@ -17146,7 +17169,7 @@
       "confidence_score": 0.95,
       "context": "graph.godNodes",
       "source_file": "README.md",
-      "source_location": "L110",
+      "source_location": "L112",
       "weight": 1.0
     },
     {
@@ -17158,10 +17181,10 @@
       "confidence_score": 0.95,
       "context": "uninstall",
       "source_file": "README.md",
-      "source_location": "L81",
+      "source_location": "L83",
       "weight": 1.0
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "fde4cc7fadff8534b58be5bcdcc0ad60f88cfb54"
+  "built_at_commit": "c236119cda60a7e8831ca0157bfa12b9e137e93d"
 }

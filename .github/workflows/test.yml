@@ -38,6 +38,8 @@ jobs:
           NO_COLOR=1 node bin/atlias.mjs logo
           node bin/atlias.mjs agent --engine echo --once "ci is flying"
           node bin/atlias.mjs bench | head -5
+      - name: install into a sandbox home and validate what was written
+        run: node test/install-sandbox.mjs
       - name: the mcp server completes a handshake
         shell: bash
         run: |
