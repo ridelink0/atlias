@@ -20,6 +20,7 @@ atlias is the sub-harness under this session. It already ran at SessionStart: th
 | Changed files parse? | `harness_verify {paths}` | the floor of verification, not the ceiling |
 | Sessions waiting to become memory | `harness_digest {action: "show"}` then `"ack"` | Dream, stage two |
 | Something feels unwired | `harness_status` | every failing check comes with its fix |
+| Is the harness worth its cost | `harness_bench` | measured on this project, no model called |
 
 CLI equivalents: `node <plugin>/bin/atlias.mjs recall|remember|progress|dream|graph|doctor|status`.
 

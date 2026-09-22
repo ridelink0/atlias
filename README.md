@@ -46,6 +46,18 @@ Then every other harness atlias can find on the machine, each getting the MCP se
 
 `harness_recall`, `harness_remember`, `harness_progress`, `harness_verify`, `harness_digest`, `graph_query`, `graph_affected`, `graph_explain`, `harness_status`. The same server is registered in Claude Code (plugin `.mcp.json`), Codex (`config.toml`) and Antigravity (`mcp_config.json`), so memory written in one host is read in the others. Memory files use Claude Code's own format and directory, so Claude Code keeps loading them natively.
 
+## What it costs, measured
+
+Run `atlias bench` in any project and it prints numbers rather than claims. On atlias itself:
+
+| | measured |
+|---|---|
+| session brief, paid once per session | about 1,034 tokens |
+| one graph answer | about 590 tokens |
+| the files that answer named, opened in full | about 26,000 tokens |
+
+Token counts are estimated at four characters per token, the same rule on both sides. The file figure is an **upper bound**: it assumes every file the graph named would otherwise have been read in full, and a model often reads fewer of them, or only parts. What the bench does not measure, and says so in its own output, is whether the guard and the gate change how often a task actually succeeds. That needs the same tasks run with the harness on and off, and it has not been done.
+
 ## Install
 
 Claude Code:
@@ -76,7 +88,7 @@ Companions: [graphify](https://pypi.org/project/graphifyy/) for the knowledge gr
 node test/run.mjs
 ```
 
-Thirteen suites, each written from one expert's point of view: payload shapes, cache and token efficiency, guards, the verification gate, the handoff note, memory and Dream, host integration, the end-to-end dispatcher, the MCP server, the logo, the regular agent, the agent runtime, and the extra harnesses. A failure prints three lines: what happened, why it matters, how to fix it. That is the format the gate and the guard use too, so a model reading any atlias message knows what to do next.
+Fifteen suites, each written from one expert's point of view: payload shapes, cache and token efficiency, guards, the verification gate, the handoff note, memory and Dream, host integration, the end-to-end dispatcher, the MCP server, the logo, the regular agent, the agent runtime, the extra harnesses, hook budgets, and measurement. A failure prints three lines: what happened, why it matters, how to fix it. That is the format the gate and the guard use too, so a model reading any atlias message knows what to do next.
 
 ## Configuration
 

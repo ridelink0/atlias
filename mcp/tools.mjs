@@ -7,6 +7,7 @@ import * as dream from '../lib/dream.mjs';
 import * as progress from '../lib/progress.mjs';
 import { syntaxCheck } from '../lib/gate.mjs';
 import { doctor, formatDoctor } from '../lib/hosts.mjs';
+import * as bench from '../lib/bench.mjs';
 import { doctorRows } from '../lib/hosts-extra.mjs';
 
 const TYPES = new Set(['user', 'feedback', 'project', 'reference']);
@@ -71,6 +72,7 @@ export const TOOLS = [
   { name: 'graph_query', description: 'Ask the graphify knowledge graph of this project a question (BFS over code, docs and their relationships). A few hundred tokens instead of a file walk. Requires graphify-out/graph.json.', inputSchema: { type: 'object', properties: { question: { type: 'string' }, budget: { type: 'integer', description: 'token cap, default 600' }, cwd: { type: 'string' } }, required: ['question'] } },
   { name: 'graph_affected', description: 'Reverse traversal: what depends on this node and would be affected by changing it. Use before a risky edit.', inputSchema: { type: 'object', properties: { node: { type: 'string' }, cwd: { type: 'string' } }, required: ['node'] } },
   { name: 'graph_explain', description: 'Plain-language explanation of one node and its neighbours.', inputSchema: { type: 'object', properties: { node: { type: 'string' }, cwd: { type: 'string' } }, required: ['node'] } },
+  { name: 'harness_bench', description: 'Measure what atlias costs on this project and what a graph answer replaces: the session brief in tokens, a graph answer against the files it names, and how often the guard and the gate have interrupted. Reads only; calls no model. Use when asked whether the harness is worth its cost.', inputSchema: { type: 'object', properties: { questions: { type: 'array', items: { type: 'string' }, description: 'codebase questions to measure the graph against' }, cwd: { type: 'string' } } } },
   { name: 'harness_status', description: 'Health of the harness and its host integrations, with a fix for every failing check.', inputSchema: { type: 'object', properties: { cwd: { type: 'string' } } } },
 ];
 
@@ -90,6 +92,7 @@ export function callTool(name, args = {}) {
     case 'graph_query': return graph.query(cwd, args.question, args.budget || cfg.graph.queryBudget) || 'no graph here (run /graphify or `graphify update .`), or the graph had no answer.';
     case 'graph_affected': return graph.sub(cwd, 'affected', args.node) || 'no graph here, or no such node.';
     case 'graph_explain': return graph.sub(cwd, 'explain', args.node) || 'no graph here, or no such node.';
+    case 'harness_bench': return bench.report(cwd, Array.isArray(args.questions) ? args.questions : []);
     case 'harness_status': return formatDoctor(doctor(cwd).concat(doctorRows()));
     default: throw new Error(`unknown tool ${name}`);
   }
