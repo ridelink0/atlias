@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.3 (2026-09-22)
+
+Three unbounded things, bounded. Event lines are appended by several processes at once, a hook for this turn, a subagent’s hook, a second session in the same project, and a write under about four kilobytes lands atomically while a longer one can interleave with another and corrupt both; a patch touching forty files was already capable of producing one, so an event is now trimmed to fit and says how many entries it dropped. One bench call could read four megabytes from each of twenty session logs to print a summary of them, and now reads a bounded sample. And the MCP server buffered incoming bytes with no ceiling while waiting for a newline, so a client that never sent one grew the buffer until the process died.
+
 ## 2.1.2 (2026-09-22)
 
 The hook could cut its own answer in half, on the platforms not tested here. Every hook wrote its JSON to stdout and called process.exit on the next line. Node documents its own I/O as synchronous for pipes on Windows and asynchronous for pipes on POSIX, and process.exit does not wait for an asynchronous write, so a long brief could arrive truncated on macOS and Linux and be discarded as malformed. A probe on this Windows machine confirms the old code survived there, which is exactly why it went unnoticed: the platform that is safe is the one it was written on. The process now sets an exit code and lets the write drain, with an unreferenced ten second backstop so a stuck handle still cannot hold up the host. A suite writes a brief of over two hundred thousand characters and fails if a single one goes missing, and it will catch a regression on any platform.

@@ -630,6 +630,23 @@ suite('flush expert', 'hook output is never truncated', () => {
   check('the fixtures are cleaned up after', config().brief.progressChars === 2400, { happened: JSON.stringify(config().brief), why: 'A test that leaves a four hundred thousand character budget behind changes every test after it.', fix: 'Restore the config and the note.' });
 });
 
+suite('bounded writes expert', 'bounded writes', () => {
+  const many = Array.from({ length: 60 }, (_, i) => 'C:' + String.fromCharCode(92) + 'a'.repeat(40) + String.fromCharCode(92) + 'file-' + i + '.mjs');
+  const trimmed = core.trimEvent({ t: 1, kind: 'edit', tool: 'apply_patch', files: many });
+  check('a wide edit event stays inside the atomic append window', JSON.stringify(trimmed).length <= core.EVENT_MAX, { happened: JSON.stringify(trimmed).length + ' characters for 60 files', why: 'Two processes appending longer lines at the same moment can interleave and corrupt both. A patch across forty files already reached that size.', fix: 'Check trimEvent in core.' });
+  check('and it says how many it dropped', trimmed.moreFiles > 0 && trimmed.files.length > 0, { happened: JSON.stringify({ kept: trimmed.files.length, more: trimmed.moreFiles }), why: 'Silent truncation of a file list reads as "that is all that changed".', fix: 'Count the dropped entries into moreFiles.' });
+  const longCmd = core.trimEvent({ t: 1, kind: 'shell', command: 'x'.repeat(9000) });
+  check('a very long command is cut rather than written whole', JSON.stringify(longCmd).length <= core.EVENT_MAX && longCmd.commandTruncated === true, { happened: JSON.stringify(longCmd).length + ' characters', why: 'A pasted script as a command is ordinary, and it is the same interleaving risk.', fix: 'Cut the command when the line is still too long.' });
+  const absurd = core.trimEvent({ t: 1, kind: 'tool', tool: 'X', key: 'k', note: 'y'.repeat(50000) });
+  check('an event that cannot be trimmed is replaced by a small one', JSON.stringify(absurd).length <= core.EVENT_MAX && absurd.oversized === true, { happened: JSON.stringify(absurd).length + ' characters', why: 'The last resort still has to fit, or the guarantee is not a guarantee.', fix: 'Fall back to the minimal event shape.' });
+  const ordinary = core.trimEvent({ t: 1, kind: 'tool', tool: 'Read', key: 'k', files: ['a.mjs'] });
+  check('an ordinary event is left exactly as it was', ordinary.files.length === 1 && ordinary.moreFiles === undefined && ordinary.oversized === undefined, { happened: JSON.stringify(ordinary), why: 'Almost every event is small; the bound must cost them nothing.', fix: 'Return the event unchanged when it already fits.' });
+  const s = sid('bounded');
+  core.recordEvent(s, { kind: 'edit', tool: 'apply_patch', files: many });
+  const lines = fs.readFileSync(path.join(process.env.ATLIAS_HOME, 'sessions', core.safeId(s) + '.jsonl'), 'utf8').split(/\r?\n/).filter(Boolean);
+  check('what lands on disk is one parseable line', lines.length === 1 && JSON.parse(lines[0]).kind === 'edit', { happened: lines.length + ' line(s)', why: 'The whole point is that a reader never meets half an event.', fix: 'recordEvent must pass the event through trimEvent.' });
+});
+
 let failed = 0;
 for (const r of results) {
   const ok = r.failed.length === 0;

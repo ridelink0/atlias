@@ -6,6 +6,9 @@ import { VERSION, log } from '../lib/core.mjs';
 import { TOOLS, callTool } from './tools.mjs';
 
 let buf = '';
+// A message is one line. Without a ceiling, a client that never sends a
+// newline grows this until the process dies.
+const MAX_LINE = 16 * 1024 * 1024;
 const send = (obj) => process.stdout.write(JSON.stringify(obj) + '\n');
 const reply = (id, result) => send({ jsonrpc: '2.0', id, result });
 const fail = (id, code, message) => send({ jsonrpc: '2.0', id, error: { code, message } });
@@ -34,6 +37,11 @@ export function handle(msg) {
 process.stdin.setEncoding('utf8');
 process.stdin.on('data', (chunk) => {
   buf += chunk;
+  if (buf.length > MAX_LINE && buf.indexOf('\n') === -1) {
+    send({ jsonrpc: '2.0', id: null, error: { code: -32700, message: `message exceeded ${MAX_LINE} bytes with no newline` } });
+    buf = '';
+    return;
+  }
   let i;
   while ((i = buf.indexOf('\n')) !== -1) {
     const line = buf.slice(0, i).trim();
