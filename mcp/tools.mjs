@@ -5,7 +5,7 @@ import { claudeMemoryDir, readText, writeText, readLines, exists, clip, config, 
 import * as graph from '../lib/graph.mjs';
 import * as dream from '../lib/dream.mjs';
 import * as progress from '../lib/progress.mjs';
-import { syntaxCheck } from '../lib/gate.mjs';
+import { syntaxReport } from '../lib/gate.mjs';
 import { doctor, formatDoctor } from '../lib/hosts.mjs';
 import * as bench from '../lib/bench.mjs';
 import { doctorRows } from '../lib/hosts-extra.mjs';
@@ -34,6 +34,8 @@ export function recall(cwd, query, limit = 8) {
     if (score(text)) out.push(`### session ${r.cursor} (${r.ts})\n${clip(text, 400)}`);
     if (out.length >= limit + 3) break;
   }
+  const note = progress.read(cwd);
+  if (note && score(note)) out.push('### handoff note\n' + clip(note, 900));
   const g = graph.query(cwd, String(query), Math.min(config().graph.queryBudget, 400));
   if (g) out.push(`### graph\n${g}`);
   return out.length ? out.join('\n\n') : `recall: nothing matched "${clip(query, 80)}" in memory, session history or the graph.`;
@@ -58,9 +60,21 @@ export function remember(cwd, { name, type, description, body }) {
 export function verifyText(cwd, paths) {
   const files = (paths || []).map((p) => (path.isAbsolute(p) ? p : path.join(cwd, p)));
   if (!files.length) return 'verify: pass the changed file paths.';
-  const failures = syntaxCheck(files);
-  if (!failures.length) return `verify: ${files.length} file(s) parse. Syntax is the floor, not the ceiling: now run the smallest real check of behaviour and read each file once more as an adversary.`;
-  return `verify: ${failures.length} of ${files.length} file(s) fail to parse.\n${failures.map((f) => `- ${f.file}\n  ${f.error}`).join('\n')}\nWhat went wrong: a change was about to be called done without the cheapest check. Fix each file, then run verify again.`;
+  const r = syntaxReport(files);
+  const notes = [];
+  if (r.skipped.length) notes.push(`${r.skipped.length} file(s) atlias cannot parse here (${r.skipped.map((f) => path.basename(f)).join(', ')}): it knows JavaScript, JSON and Python only. Run the project's own type check, build or test for those; do not treat them as verified.`);
+  if (r.missing.length) notes.push(`${r.missing.length} path(s) do not exist: ${r.missing.map((f) => path.basename(f)).join(', ')}.`);
+  if (r.failures.length) {
+    return [`verify: ${r.failures.length} of ${r.checked.length} checked file(s) fail to parse.`,
+      ...r.failures.map((f) => `- ${f.file}\n  ${f.error}`),
+      ...notes,
+      'What went wrong: a change was about to be called done without the cheapest check. Fix each file, then run verify again.'].join('\n');
+  }
+  if (!r.checked.length) {
+    return [`verify: nothing was checked.`, ...notes, 'Syntax is the floor and atlias could not even reach it here. Run the project\'s own check, then read each changed file once more as an adversary.'].join('\n');
+  }
+  return [`verify: ${r.checked.length} file(s) checked and they parse.`, ...notes,
+    'Syntax is the floor, not the ceiling: now run the smallest real check of behaviour and read each file once more as an adversary.'].join('\n');
 }
 
 export const TOOLS = [

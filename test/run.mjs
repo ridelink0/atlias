@@ -423,6 +423,27 @@ suite('platform expert', 'platform assumptions', () => {
   check('the hook command quotes a path for any shell', /^node "[^"]+" session-start --host codex$/.test(hosts.hookCommand('session-start', 'codex')), { happened: hosts.hookCommand('session-start', 'codex'), why: 'A path with a space in it is the norm on Windows and common enough elsewhere.', fix: 'Check hookCommand and its quoting.' });
 });
 
+suite('verification honesty expert', 'verification honesty', () => {
+  const ts = path.join(PROJECT, 'typed.ts');
+  fs.writeFileSync(ts, 'export const a: number = ;');
+  const js = path.join(PROJECT, 'fine.mjs');
+  fs.writeFileSync(js, 'export const a = 1;');
+  const gone = path.join(PROJECT, 'not-here.mjs');
+  const r = gate.syntaxCheckDetailed([js, ts, gone]);
+  check('a file atlias cannot parse is reported as skipped, not as passing', r.checked.length === 1 && r.skipped.includes(ts) && r.missing.includes(gone), { happened: JSON.stringify({ checked: r.checked.length, skipped: r.skipped.length, missing: r.missing.length }), why: 'A broken TypeScript file used to come back as verified, which is the exact failure the harness exists to prevent.', fix: 'PARSEABLE gates what is checked; everything else goes to skipped.' });
+  const text = tools.verifyText(PROJECT, [js, ts]);
+  check('the tool never claims the unparseable file parses', /1 file\(s\) checked/.test(text) && /cannot parse/.test(text) && /typed\.ts/.test(text), { happened: text, why: 'The count has to match what was actually checked, and the rest has to be named.', fix: 'verifyText reports checked, skipped and missing separately.' });
+  check('it says what to run instead', /own type check, build or test/.test(text), { happened: text, why: 'Naming the gap without naming the remedy just moves the problem.', fix: 'Keep the remedy sentence in the skipped note.' });
+  const none = tools.verifyText(PROJECT, [ts]);
+  check('checking nothing says so plainly', /nothing was checked/.test(none), { happened: none, why: 'Silence here reads as success.', fix: 'Handle the empty checked list in verifyText.' });
+  const older = ['go test ./...', 'cargo clippy', 'dotnet test', 'flutter test', 'bun test', 'pyright .', 'mvn verify', 'rspec'];
+  check('the detector knows the runners projects actually use', older.every((c) => core.looksLikeVerification(c)), { happened: older.filter((c) => !core.looksLikeVerification(c)).join(', ') || 'all recognised', why: 'The handoff note and the gate report which checks ran; a runner it cannot see looks like no verification at all.', fix: 'Extend looksLikeVerification.' });
+  check('it still ignores a command that verifies nothing', !core.looksLikeVerification('git status') && !core.looksLikeVerification('cd ..'), { happened: 'a harmless command was counted as verification', why: 'False positives make the gate believe work was checked when it was not.', fix: 'Keep the pattern anchored on real runners.' });
+  progress.setNext(PROJECT, 'the migration needs the staging key rotated first');
+  progress.update(PROJECT, sid('recall'), null);
+  check('recall reads the handoff note as well as memory', /staging key rotated/.test(tools.recall(PROJECT, 'staging key rotation')), { happened: tools.recall(PROJECT, 'staging key rotation').slice(0, 200), why: 'The note is usually where the answer to "where was I" already is; leaving it out sends the model back to the files.', fix: 'Score the handoff note alongside memory in recall().' });
+});
+
 let failed = 0;
 for (const r of results) {
   const ok = r.failed.length === 0;
