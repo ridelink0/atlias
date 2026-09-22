@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.8 (2026-09-22)
+
+The doctor proves the launcher instead of assuming it. It checked that the file exists, which says nothing about whether a host would get its tools from it: a broken resolver, a node that is not on the host’s PATH, a half-written file, all look identical to a file that is there. The doctor now starts it, speaks the initialize handshake, and reports the name and version it answered with, which is exactly what a host does a moment later; a crash is reported with its own first line, and silence is not reported as success.
+
 ## 2.2.7 (2026-09-22)
 
 The launcher stops depending on the directory it exists to outlive. 2.2.0 pointed host configs at a launcher in the state directory so they would survive an update, and then had that launcher import its resolver from the copy that wrote it, inside the versioned plugin directory that the next update deletes. It would have failed on its first import, in exactly the situation it was written for. The launcher is now self-contained, on node builtins alone, and resolves the newest installed copy first, then the one that wrote it. A suite asserts it imports nothing that can expire, starts with the recorded copy deleted, and says why when there is nothing left to run.

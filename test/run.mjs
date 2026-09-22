@@ -875,6 +875,21 @@ await (async function launcherSuite() {
   check('with nothing installed it says so and exits non-zero', failed2.status === 1 && /no installed copy/.test(failed2.stderr || ''), { happened: 'exit ' + failed2.status + ': ' + (failed2.stderr || '').slice(0, 120), why: 'A host that gets silence cannot tell a broken launcher from a slow one.', fix: 'Write the reason to stderr and exit 1.' });
 })();
 
+suite('proof expert', 'the doctor proves what it reports', () => {
+  const real = path.join(ROOT, 'mcp', 'server.mjs');
+  const good = hosts.probeServer(real);
+  check('a working server is reported with the version it answered', good.ok && /answers as atlias \d+\.\d+\.\d+/.test(good.detail), { happened: JSON.stringify(good), why: 'Existing is not working: a broken resolver, a missing node, a half-written file all look the same to a check that only asks whether a file is there.', fix: 'Check probeServer.' });
+  check('a file that is not there is reported as such, not as broken', hosts.probeServer(path.join(TMP, 'no-server.mjs')).detail === 'not there', { happened: JSON.stringify(hosts.probeServer(path.join(TMP, 'no-server.mjs'))), why: 'Those are different problems with different fixes.', fix: 'Check existence before spawning.' });
+  const broken = path.join(TMP, 'broken-server.mjs');
+  fs.writeFileSync(broken, 'throw new Error("this server is broken");');
+  const bad = hosts.probeServer(broken, 8000);
+  check('a server that crashes is reported with its own first line', !bad.ok && bad.detail.length > 0, { happened: JSON.stringify(bad), why: 'The first line of the error is what tells the user which of the several possible causes it is.', fix: 'Return the first line of stderr.' });
+  const silent = path.join(TMP, 'silent-server.mjs');
+  fs.writeFileSync(silent, 'process.stdin.resume(); setTimeout(() => process.exit(0), 50);');
+  const quiet = hosts.probeServer(silent, 4000);
+  check('a server that answers nothing is not reported as fine', !quiet.ok, { happened: JSON.stringify(quiet), why: 'Silence is the most common failure and the easiest to mistake for success.', fix: 'Require a serverInfo line in the answer.' });
+});
+
 let failed = 0;
 for (const r of results) {
   const ok = r.failed.length === 0;
