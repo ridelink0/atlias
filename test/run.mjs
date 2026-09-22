@@ -559,6 +559,21 @@ suite('release expert', 'release numbering', () => {
   check('the changelog states the versioning rule it follows', /patch digit is a bug fix/.test(changelog), { happened: changelog.slice(0, 200), why: 'A rule nobody can read is a rule that drifts.', fix: 'Keep the versioning paragraph at the top of the changelog.' });
 });
 
+suite('shell edit expert', 'edits made outside the tools', () => {
+  const sample = [' M lib/x.mjs', '?? new-file.mjs', 'A  staged.mjs', 'R  old.mjs -> renamed.mjs', ' D gone.mjs', '!! ignored.mjs', ' M "with space.mjs"', 'MM both.mjs'].join('\n');
+  const parsed = gate.parseGitStatus(sample);
+  check('modified, untracked, staged and renamed paths are all seen', parsed.includes('lib/x.mjs') && parsed.includes('new-file.mjs') && parsed.includes('staged.mjs') && parsed.includes('renamed.mjs') && parsed.includes('both.mjs'), { happened: parsed.join(', '), why: 'A file written by a script is a file nobody reviewed; missing it is the whole point of the gap being closed.', fix: 'Check parseGitStatus against git status --short output.' });
+  check('a rename keeps the path that exists now', !parsed.includes('old.mjs') && parsed.includes('renamed.mjs'), { happened: parsed.join(', '), why: 'Syntax-checking the path that no longer exists wastes a turn and reports nothing.', fix: 'Take the right of the arrow.' });
+  check('deleted and ignored files are not offered up for checking', !parsed.includes('gone.mjs') && !parsed.includes('ignored.mjs'), { happened: parsed.join(', '), why: 'There is nothing to parse in a file that is gone, and ignored files are ignored on purpose.', fix: 'Skip the D and !! statuses.' });
+  check('a quoted path is unquoted', parsed.includes('with space.mjs'), { happened: parsed.join(', '), why: 'git quotes any path that needs it, and the quotes are not part of the name.', fix: 'Strip the surrounding quotes.' });
+  const fakeRun = () => ({ status: 0, stdout: ' M touched.mjs\n?? untouched.mjs\n', stderr: '', error: null });
+  const now = Date.now();
+  const times = { [path.join(PROJECT, 'touched.mjs')]: now + 10, [path.join(PROJECT, 'untouched.mjs')]: now - 60000 };
+  const found = gate.shellChangedFiles(PROJECT, now, { run: fakeRun, mtime: (f) => times[f] || 0 });
+  check('only files touched during this turn are pulled in', found.length === 1 && found[0].endsWith('touched.mjs'), { happened: found.join(', ') || '(none)', why: 'A working tree that was already dirty yesterday is not this turn\'s work, and dragging it in would make the gate cry wolf.', fix: 'Compare each file mtime against the first event of the turn.' });
+  check('a project that is not a git repository is simply skipped', gate.shellChangedFiles(path.join(TMP, 'not-a-repo'), now).length === 0, { happened: 'it tried anyway', why: 'Most scratch directories are not repositories and running git in them is noise.', fix: 'Check for the .git directory first.' });
+});
+
 let failed = 0;
 for (const r of results) {
   const ok = r.failed.length === 0;

@@ -1,14 +1,14 @@
 {
   ".claude-plugin/marketplace.json": {
-    "mtime": 1790078299.2373192,
-    "seen": 1790078352.3440797,
-    "ast_hash": "7270912311f35bac86793e35955670b8",
+    "mtime": 1790078392.98543,
+    "seen": 1790078447.071255,
+    "ast_hash": "93df76d15bdb6f448a62cf5da9c5e195",
     "semantic_hash": ""
   },
   ".claude-plugin/plugin.json": {
-    "mtime": 1790078299.2363193,
-    "seen": 1790078352.3441756,
-    "ast_hash": "9a48230a3a19ab4672dc03e133c46321",
+    "mtime": 1790078392.9844294,
+    "seen": 1790078447.0712671,
+    "ast_hash": "2d04c603771e8a7d37a71c406d7e6aab",
     "semantic_hash": ""
   },
   "bin/atlias.mjs": {
@@ -36,9 +36,9 @@
     "semantic_hash": ""
   },
   "lib/core.mjs": {
-    "mtime": 1790078299.2383177,
-    "seen": 1790078352.3452845,
-    "ast_hash": "3d3e523c1e6a3138e9c62b7ff2cc4a2c",
+    "mtime": 1790078392.9864292,
+    "seen": 1790078447.0742068,
+    "ast_hash": "bb792ca5a02c876fc51da1342b8b8b66",
     "semantic_hash": ""
   },
   "lib/dream.mjs": {
@@ -120,27 +120,27 @@
     "semantic_hash": ""
   },
   "package.json": {
-    "mtime": 1790078299.235319,
-    "seen": 1790078352.348004,
-    "ast_hash": "5b4c4fc1a83a8fe7f95f6c8f0187ca71",
+    "mtime": 1790078392.9834216,
+    "seen": 1790078447.0782816,
+    "ast_hash": "96b9f4e00c3c9454e0c526ea4572fc32",
     "semantic_hash": ""
   },
   "test/run.mjs": {
-    "mtime": 1790078299.2343183,
-    "seen": 1790078352.3480065,
-    "ast_hash": "c4ea5ee8ebb21391c2a1848679b2f55c",
+    "mtime": 1790078392.988432,
+    "seen": 1790078447.0782862,
+    "ast_hash": "878439afeedc4ed3dc625d8220c40d7c",
     "semantic_hash": ""
   },
   "CHANGELOG.md": {
-    "mtime": 1790078299.235319,
-    "seen": 1790078352.3480077,
-    "ast_hash": "9b7c4ee52bb6b5c66f1a8f8345a469cb",
+    "mtime": 1790078392.9864292,
+    "seen": 1790078447.0782886,
+    "ast_hash": "63364d7bfd1afd3a51f00d661b7d740c",
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1790078136.1862488,
-    "seen": 1790078189.063645,
-    "ast_hash": "382968ee25ae637b3a93c1d0a8ea6eb7",
+    "mtime": 1790078392.987429,
+    "seen": 1790078447.0782914,
+    "ast_hash": "5d50b7f2dfe9e40f02c861cf47300e3f",
     "semantic_hash": ""
   },
   "skills/double-check/SKILL.md": {

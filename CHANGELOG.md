@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.0 (2026-09-22)
+
+The gate stops trusting only its own event log. It knew a file had changed because it saw an edit tool touch it, so anything written another way was invisible: a heredoc, sed in place, a generator, a formatter, a script the model ran. Those are precisely the edits nobody reviews. In a git repository the gate now asks git what actually changed since this turn began, adds what it did not already know, and names those files separately in its message, because they are the ones that went through no review at all. Files dirty from before the turn are left alone.
+
 Versioning from here: the patch digit is a bug fix, the minor digit is a feature or a behaviour change, and the major digit is a change in what atlias is. The 1.x entries below moved the minor digit for plain bug fixes, which is how one day of work ran from 1.0.0 to 1.9.1. Rather than renumber them, which would collide with plugin caches already holding those directories, the correction starts here.
 
 ## 2.0.0 (2026-09-22)
