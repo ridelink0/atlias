@@ -612,6 +612,24 @@ suite('concurrency expert', 'two sessions ending at once', () => {
   check('the cursors stay unique', new Set(rows.map((r) => r.cursor)).size === rows.length, { happened: rows.map((r) => r.cursor).join(','), why: 'Two rows with the same cursor make ack skip one of them forever.', fix: 'Compute the next cursor from the max in the file.' });
 });
 
+suite('flush expert', 'hook output is never truncated', () => {
+  const cfgPath = path.join(process.env.ATLIAS_HOME, 'config.json');
+  const savedCfg = fs.existsSync(cfgPath) ? fs.readFileSync(cfgPath, 'utf8') : null;
+  const notePath = progress.notePath(PROJECT);
+  const savedNote = fs.existsSync(notePath) ? fs.readFileSync(notePath, 'utf8') : null;
+  fs.writeFileSync(cfgPath, JSON.stringify({ brief: { progressChars: 400000 } }));
+  const huge = '# atlias handoff\n\n' + ('a handoff line that is long enough to matter, repeated. ').repeat(4000);
+  fs.writeFileSync(notePath, huge);
+  check('the fixture is bigger than a pipe buffer', huge.length > 200000, { happened: huge.length + ' characters', why: 'A truncation test on a small payload proves nothing: short writes always fit in one chunk.', fix: 'Make the note larger.' });
+  const r = hookRun('session-start', { session_id: sid('flush'), cwd: PROJECT, source: 'resume' });
+  check('a very large brief arrives whole and parses', r.status === 0 && r.json && r.json.hookSpecificOutput && typeof r.json.hookSpecificOutput.additionalContext === 'string', { happened: 'status ' + r.status + ', ' + r.stdout.length + ' bytes on stdout, parsed: ' + Boolean(r.json), why: 'Hooks write to a pipe, where a write is asynchronous. Exiting on the next line can cut the JSON in half, and a host throws away what it cannot parse. The short briefs in the other tests would never have caught this.', fix: 'Set process.exitCode in lib/hooks.mjs instead of calling process.exit, and let the write drain.' });
+  check('and it is the whole brief, not the first chunk of it', r.json && r.json.hookSpecificOutput.additionalContext.length > 200000, { happened: r.json ? r.json.hookSpecificOutput.additionalContext.length + ' characters survived' : 'nothing parsed', why: 'Parsing is not the same as completeness: a cut that happens to land on a valid boundary is the worst case of all.', fix: 'Same fix; check the flush path.' });
+  check('the process still exits cleanly', r.status === 0, { happened: 'exit ' + r.status, why: 'A non-zero exit shows the user an error on every event of that kind.', fix: 'Keep process.exitCode at zero.' });
+  if (savedCfg) fs.writeFileSync(cfgPath, savedCfg); else fs.unlinkSync(cfgPath);
+  if (savedNote) fs.writeFileSync(notePath, savedNote); else fs.unlinkSync(notePath);
+  check('the fixtures are cleaned up after', config().brief.progressChars === 2400, { happened: JSON.stringify(config().brief), why: 'A test that leaves a four hundred thousand character budget behind changes every test after it.', fix: 'Restore the config and the note.' });
+});
+
 let failed = 0;
 for (const r of results) {
   const ok = r.failed.length === 0;

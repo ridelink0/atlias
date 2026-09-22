@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.2 (2026-09-22)
+
+The hook could cut its own answer in half, on the platforms not tested here. Every hook wrote its JSON to stdout and called process.exit on the next line. Node documents its own I/O as synchronous for pipes on Windows and asynchronous for pipes on POSIX, and process.exit does not wait for an asynchronous write, so a long brief could arrive truncated on macOS and Linux and be discarded as malformed. A probe on this Windows machine confirms the old code survived there, which is exactly why it went unnoticed: the platform that is safe is the one it was written on. The process now sets an exit code and lets the write drain, with an unreferenced ten second backstop so a stuck handle still cannot hold up the host. A suite writes a brief of over two hundred thousand characters and fails if a single one goes missing, and it will catch a regression on any platform.
+
 ## 2.1.1 (2026-09-22)
 
 Two bugs that destroyed work rather than merely annoying. Recording the next step with harness_progress rebuilt the entire handoff note under a placeholder session id, so the one tool whose job is to preserve state across a compaction was wiping the files, checks and prompts the Stop hook had written into it; it now rewrites only the Next section and leaves the rest alone. And when two sessions for the same project ended at the same moment, the second took the Dream lock, failed, and returned without writing anything, losing that session entirely; the digest row is now appended before the lock is taken, with only the tidying serialised, because a skipped prune costs nothing and a lost session costs everything.
