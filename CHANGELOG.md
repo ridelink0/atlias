@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.7.0 (2026-09-22)
+
+Two ways the harness could mislead, closed. A graph built before this session answered with exactly the same confidence as a fresh one, so an injected answer is now marked as possibly out of date when files have changed since the graph was built, and the mark clears itself when the graph is rebuilt. And the second-pass gate quoted its syntax check even on turns where every changed file was one atlias cannot parse; it now says plainly that it reached no floor and that the project’s own check is the only one.
+
 ## 1.6.0 (2026-09-22)
 
 The verification tool no longer claims a check it never ran. atlias parses JavaScript, JSON and Python by itself; given a TypeScript, Go, Rust or Swift file it used to check nothing and still answer that the files parse, which is the exact shape of claim the harness exists to stop. It now reports what it checked, what it could not, what does not exist, and what to run instead. The verification detector also learns the runners projects actually use, from go test and cargo clippy to flutter test, dotnet test, rspec and pyright, so a real check stops looking like no check at all. And recall searches the handoff note, which is usually where the answer to where was I already is.

@@ -17,7 +17,7 @@ atlias is the sub-harness under this session. It already ran at SessionStart: th
 | The plan changed | `harness_progress {action: "set", text}` | survives compaction and crashes |
 | A codebase question | `graph_query {question}` | far cheaper than reading files; open only what it names |
 | What breaks if I change this | `graph_affected {node}` | reverse traversal |
-| Changed files parse? | `harness_verify {paths}` | the floor of verification, not the ceiling |
+| Changed files parse? | `harness_verify {paths}` | JavaScript, JSON and Python only; it names what it could not check |
 | Sessions waiting to become memory | `harness_digest {action: "show"}` then `"ack"` | Dream, stage two |
 | Something feels unwired | `harness_status` | every failing check comes with its fix |
 | Is the harness worth its cost | `harness_bench` | measured on this project, no model called |

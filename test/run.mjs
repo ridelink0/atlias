@@ -36,6 +36,7 @@ const agentMod = await import('../lib/agent.mjs');
 const extras = await import('../lib/hosts-extra.mjs');
 const graphMod = await import('../lib/graph.mjs');
 const benchMod = await import('../lib/bench.mjs');
+const { config } = core;
 
 const only = process.argv.slice(2);
 const results = [];
@@ -442,6 +443,52 @@ suite('verification honesty expert', 'verification honesty', () => {
   progress.setNext(PROJECT, 'the migration needs the staging key rotated first');
   progress.update(PROJECT, sid('recall'), null);
   check('recall reads the handoff note as well as memory', /staging key rotated/.test(tools.recall(PROJECT, 'staging key rotation')), { happened: tools.recall(PROJECT, 'staging key rotation').slice(0, 200), why: 'The note is usually where the answer to "where was I" already is; leaving it out sends the model back to the files.', fix: 'Score the handoff note alongside memory in recall().' });
+});
+
+suite('staleness expert', 'stale answers', () => {
+  const s = sid('stale');
+  const gdir = path.join(PROJECT, 'graphify-out');
+  fs.mkdirSync(gdir, { recursive: true });
+  const gp = path.join(gdir, 'graph.json');
+  fs.writeFileSync(gp, '{}');
+  check('a graph with no edits after it is not marked stale', router.staleNote(PROJECT, s) === '', { happened: router.staleNote(PROJECT, s), why: 'Warning on every answer trains the model to ignore the warning.', fix: 'staleNote compares the newest edit event against the graph mtime.' });
+  core.recordEvent(s, { kind: 'edit', tool: 'Write', files: [path.join(PROJECT, 'fine.mjs')] });
+  check('an edit after the graph was built marks the answer stale', /may be out of date/.test(router.staleNote(PROJECT, s)), { happened: router.staleNote(PROJECT, s) || '(empty)', why: 'A graph built before this session answers with the same confidence as a fresh one; that is how a harness makes a model wrong faster.', fix: 'Check the comparison in staleNote.' });
+  const future = Date.now() / 1000 + 120;
+  fs.utimesSync(gp, future, future);
+  check('rebuilding the graph clears the warning', router.staleNote(PROJECT, s) === '', { happened: router.staleNote(PROJECT, s), why: 'A warning that never clears is noise.', fix: 'Compare against the current mtime each time rather than caching it.' });
+  check('no graph at all means no warning', router.staleNote(path.join(TMP, 'elsewhere'), s) === '', { happened: router.staleNote(path.join(TMP, 'elsewhere'), s), why: 'Projects without a graph must not see graph warnings.', fix: 'Return early when the graph file has no mtime.' });
+  fs.rmSync(gdir, { recursive: true, force: true });
+  const s2 = sid('floorless');
+  router.prompt({ session_id: s2, cwd: PROJECT, prompt: 'change the styles in this file please' });
+  const md = path.join(PROJECT, 'notes.md');
+  fs.writeFileSync(md, '# notes');
+  track.postTool({ session_id: s2, cwd: PROJECT, tool_name: 'Write', tool_input: { file_path: md } });
+  const held = gate.stop({ session_id: s2, cwd: PROJECT, last_assistant_message: 'Done.' });
+  check('the gate admits when it could not check anything', held && /could not syntax-check any of these/.test(held.reason), { happened: held ? held.reason.slice(0, 300) : '(not held)', why: 'Quoting a syntax check that never ran implies a floor the work never had.', fix: 'Add the floor note when the report checked nothing.' });
+});
+
+suite('configuration expert', 'configuration respected', () => {
+  const cfgPath = path.join(process.env.ATLIAS_HOME, 'config.json');
+  const saved = fs.existsSync(cfgPath) ? fs.readFileSync(cfgPath, 'utf8') : null;
+  const s = sid('cfgoff');
+  router.prompt({ session_id: s, cwd: PROJECT, prompt: 'change several files for me now' });
+  for (let i = 0; i < 6; i++) {
+    const f = path.join(PROJECT, 'cfg-' + i + '.mjs');
+    fs.writeFileSync(f, 'export const a = ;');
+    track.postTool({ session_id: s, cwd: PROJECT, tool_name: 'Write', tool_input: { file_path: f } });
+  }
+  fs.writeFileSync(cfgPath, JSON.stringify({ verify: { syntax: false, doublePass: false } }));
+  const t0 = Date.now();
+  const off = gate.stop({ session_id: s, cwd: PROJECT, last_assistant_message: 'Done.' });
+  const ms = Date.now() - t0;
+  check('both checks off means the gate never speaks', off === null, { happened: JSON.stringify(off), why: 'Configuration that says off has to mean off, or the setting is a lie.', fix: 'Honour cfg.verify.syntax and cfg.verify.doublePass in gate.stop.' });
+  check('both checks off means nothing is parsed either', ms < 900, { happened: ms + 'ms for six broken files', why: 'Parsing six files the user asked not to check costs a process spawn each, on every reply.', fix: 'Build the syntax report only when one of the checks wants it.' });
+  fs.writeFileSync(cfgPath, JSON.stringify({ verify: { syntax: true, doublePass: false } }));
+  const onlySyntax = gate.stop({ session_id: s, cwd: PROJECT, last_assistant_message: 'Done.' });
+  check('syntax on and second pass off blocks for syntax only', onlySyntax && /syntax/.test(onlySyntax.reason) && !/second pass/.test(onlySyntax.reason), { happened: onlySyntax ? onlySyntax.reason.slice(0, 120) : '(not held)', why: 'The two checks are separate settings and have to behave separately.', fix: 'Check the branches in gate.stop.' });
+  if (saved) fs.writeFileSync(cfgPath, saved); else fs.unlinkSync(cfgPath);
+  check('the defaults come back after the test', config().verify.syntax === true && config().verify.doublePass === true, { happened: JSON.stringify(config().verify), why: 'A test that leaves configuration behind poisons every suite after it.', fix: 'Restore the config file in the test.' });
 });
 
 let failed = 0;
