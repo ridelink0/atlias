@@ -1,0 +1,22 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "atlias",
+  "description": "A sub-harness for Claude Code, Codex, Antigravity and Gemini CLI: shared memory, graphify knowledge graph, guards, verification gate, compaction handoff, Dream consolidation.",
+  "owner": {
+    "name": "Gev",
+    "email": "app.ridelink@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "atlias",
+      "description": "atlias. A sub-harness that links itself to Claude Code, Codex, Antigravity and Gemini CLI the moment a session opens: one shared memory with layered history and Dream consolidation, a graphify knowledge graph that answers codebase questions first, a cache-stable session brief, a repeated-call and destructive-command guard, a syntax and two-pass verification gate, compaction handoff notes, and companion routing to Ultimate Frontend Skills.",
+      "author": {
+        "name": "Gev"
+      },
+      "category": "productivity",
+      "source": "./",
+      "homepage": "https://github.com/ridelink0/atlias",
+      "version": "1.0.0"
+    }
+  ]
+}
