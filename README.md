@@ -27,6 +27,21 @@ It also implements the mechanisms Anthropic documents for long-running agents (p
 6. **Stop**: the gate. If files changed this turn and any of them do not parse, the reply is held once with the errors. If code changed and the reply names only one bug-check, it is held once and told what the second adversarial pass looks for. Never more than once per reason per prompt; never when the host is already continuing.
 7. **SessionEnd**: a detached worker distils the session into one `history.jsonl` row and writes `DIGEST.md`. The model consolidates at a natural pause with `harness_remember`, then acks.
 
+## Two ways to fly
+
+Run `atlias` with no arguments and it shows the ship and asks:
+
+- **Sub-harness** - link into every harness on the machine. The hooks and the MCP server run inside them; this is the mode the rest of this README describes.
+- **Regular agent** - `atlias agent`. A terminal agent of its own, with the same guard, gate, graph router, handoff note and Dream, and a choice of engine: Claude Code (`claude -p`, sessions resumed by id), Codex (`codex exec`, continuity carried by atlias in the prompt), or a local Ollama model (default `gemma3:4b`) driven by atlias's own tool loop: read_file, write_file, list_dir, grep, shell behind the destructive guard, recall, remember, graph_query. `--engine echo --once "text"` exercises the loop with no model at all.
+
+Inside the agent: `/engine`, `/graph`, `/recall`, `/progress`, `/hosts`, `/doctor`, `/exit`. Every edit it makes goes through the same syntax check and the same second-pass gate as a hosted session, and the session is distilled into a Dream digest when you leave.
+
+## Harnesses
+
+Four first-class hosts: **Claude Code** (plugin: hooks, skills, MCP), **Codex** (hooks, MCP, AGENTS.md), **Antigravity** (MCP, GEMINI.md) and **Gemini CLI** (MCP, optional hooks).
+
+Then every other harness atlias can find on the machine, each getting the MCP server in its own config shape and the instruction block in its own instructions file: Cursor, Windsurf, OpenCode, Amp, Zed, Kiro, Droid (Factory), Aider, Trae, Cline, Continue, CodeBuddy, Hermes Agent and Pi. `atlias install` writes into a harness **only when its config directory already exists**, so nothing is scattered for tools you do not have, and `atlias install --extras cursor zed` narrows it to the ones you name. Their config shapes are marked UNVERIFIED in `lib/hosts-extra.mjs`: they follow each harness's own documentation as of September 2026, were not checked against a running install here, and `atlias uninstall --extras` reverses exactly what was written. Adding another harness is one row in that table.
+
 ## Tools (MCP server `atlias`)
 
 `harness_recall`, `harness_remember`, `harness_progress`, `harness_verify`, `harness_digest`, `graph_query`, `graph_affected`, `graph_explain`, `harness_status`. The same server is registered in Claude Code (plugin `.mcp.json`), Codex (`config.toml`) and Antigravity (`mcp_config.json`), so memory written in one host is read in the others. Memory files use Claude Code's own format and directory, so Claude Code keeps loading them natively.
@@ -61,7 +76,7 @@ Companions: [graphify](https://pypi.org/project/graphifyy/) for the knowledge gr
 node test/run.mjs
 ```
 
-Nine suites, each written from one expert's point of view: payload shapes, cache and token efficiency, guards, the verification gate, the handoff note, memory and Dream, host integration, the end-to-end dispatcher, and the MCP server. A failure prints three lines: what happened, why it matters, how to fix it. That is the format the gate and the guard use too, so a model reading any atlias message knows what to do next.
+Thirteen suites, each written from one expert's point of view: payload shapes, cache and token efficiency, guards, the verification gate, the handoff note, memory and Dream, host integration, the end-to-end dispatcher, the MCP server, the logo, the regular agent, the agent runtime, and the extra harnesses. A failure prints three lines: what happened, why it matters, how to fix it. That is the format the gate and the guard use too, so a model reading any atlias message knows what to do next.
 
 ## Configuration
 

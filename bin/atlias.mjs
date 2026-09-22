@@ -15,10 +15,14 @@ import * as brief from '../lib/brief.mjs';
 import * as progress from '../lib/progress.mjs';
 import * as dream from '../lib/dream.mjs';
 import * as graph from '../lib/graph.mjs';
+import * as agent from '../lib/agent.mjs';
+import * as extra from '../lib/hosts-extra.mjs';
+import { logo } from '../lib/logo.mjs';
 import { recall, remember } from '../mcp/tools.mjs';
 
 const argv = process.argv.slice(2);
-const cmd = argv[0] || 'help';
+const cmd = argv[0] || (process.stdin.isTTY ? 'chooser' : 'help');
+const extraIds = () => (argv.includes('--extras') ? argv.slice(argv.indexOf('--extras') + 1).filter((a) => !a.startsWith('--')) : []);
 const flag = (f) => argv.includes(f);
 const after = (f) => (argv.includes(f) ? argv[argv.indexOf(f) + 1] : undefined);
 const cwd = process.cwd();
@@ -26,6 +30,9 @@ const say = (x) => process.stdout.write((Array.isArray(x) ? x.join('\n') : Strin
 const readOr = (p, fallback) => { try { return fs.readFileSync(p, 'utf8'); } catch { return fallback; } };
 
 switch (cmd) {
+  case 'logo': say(logo()); break;
+  case 'chooser': process.exitCode = await agent.chooser(); break;
+  case 'agent': case 'run': case 'fly': process.exitCode = await agent.repl({ engine: after('--engine'), once: after('--once') }); break;
   case 'version': say(`atlias ${VERSION}`); break;
   case 'install': {
     const all = flag('--all') || !argv.slice(1).some((a) => a.startsWith('--'));
@@ -34,6 +41,7 @@ switch (cmd) {
     if (all || flag('--codex')) out.push(...hosts.installCodex());
     if (all || flag('--antigravity')) out.push(...hosts.installAntigravity());
     if (all || flag('--gemini')) out.push(...hosts.installGemini(flag('--gemini-hooks')));
+    if (all || flag('--extras')) out.push(...extra.installAll(extraIds()));
     if (all || flag('--companions')) out.push(...hosts.installCompanions());
     say(out); break;
   }
@@ -43,10 +51,11 @@ switch (cmd) {
     if (all || flag('--codex')) out.push(...hosts.uninstallCodex());
     if (all || flag('--antigravity')) out.push(...hosts.uninstallAntigravity());
     if (all || flag('--gemini')) out.push(...hosts.uninstallGemini());
+    if (all || flag('--extras')) out.push(...extra.uninstallAll(extraIds()));
     out.push('claude code: /plugin uninstall atlias@atlias inside Claude Code');
     say(out); break;
   }
-  case 'doctor': { const c = hosts.doctor(cwd); say(hosts.formatDoctor(c)); process.exitCode = c.every((x) => x.ok) ? 0 : 1; break; }
+  case 'doctor': { const c = hosts.doctor(cwd).concat(extra.doctorRows()); say(hosts.formatDoctor(c)); process.exitCode = c.every((x) => x.ok) ? 0 : 1; break; }
   case 'status': {
     const g = graph.status(cwd);
     const p = dream.pending(cwd);
@@ -96,5 +105,5 @@ switch (cmd) {
     break;
   }
   default:
-    say(['atlias: a sub-harness for Claude Code, Codex, Antigravity and Gemini CLI', '', 'install [--all|--codex|--antigravity|--gemini [--gemini-hooks]|--claude|--companions]', 'uninstall [--all|--codex|--antigravity|--gemini]', 'doctor | status | brief [--host codex] | test | version', 'recall <query> | remember <name> <type> <description> -- <body>', 'progress [set <next step>] | dream [ack|distil <session>] | graph query|affected|explain|update <arg>', 'config [set <section.key> <value>]']);
+    say([logo(), '', 'atlias                             choose: sub-harness or regular agent', 'agent [--engine claude|codex|ollama|echo] [--once "<prompt>"]', 'install [--all|--codex|--antigravity|--gemini [--gemini-hooks]|--claude|--extras [ids]|--companions]', 'uninstall [--all|--codex|--antigravity|--gemini]', 'doctor | status | brief [--host codex] | test | version | logo', 'recall <query> | remember <name> <type> <description> -- <body>', 'progress [set <next step>] | dream [ack|distil <session>] | graph query|affected|explain|update <arg>', 'config [set <section.key> <value>]']);
 }

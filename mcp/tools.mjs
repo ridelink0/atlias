@@ -7,6 +7,7 @@ import * as dream from '../lib/dream.mjs';
 import * as progress from '../lib/progress.mjs';
 import { syntaxCheck } from '../lib/gate.mjs';
 import { doctor, formatDoctor } from '../lib/hosts.mjs';
+import { doctorRows } from '../lib/hosts-extra.mjs';
 
 const TYPES = new Set(['user', 'feedback', 'project', 'reference']);
 
@@ -89,7 +90,7 @@ export function callTool(name, args = {}) {
     case 'graph_query': return graph.query(cwd, args.question, args.budget || cfg.graph.queryBudget) || 'no graph here (run /graphify or `graphify update .`), or the graph had no answer.';
     case 'graph_affected': return graph.sub(cwd, 'affected', args.node) || 'no graph here, or no such node.';
     case 'graph_explain': return graph.sub(cwd, 'explain', args.node) || 'no graph here, or no such node.';
-    case 'harness_status': return formatDoctor(doctor(cwd));
+    case 'harness_status': return formatDoctor(doctor(cwd).concat(doctorRows()));
     default: throw new Error(`unknown tool ${name}`);
   }
 }

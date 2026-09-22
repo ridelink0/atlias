@@ -31,6 +31,9 @@ const dream = await import('../lib/dream.mjs');
 const hosts = await import('../lib/hosts.mjs');
 const hooksMod = await import('../lib/hooks.mjs');
 const tools = await import('../mcp/tools.mjs');
+const logoMod = await import('../lib/logo.mjs');
+const agentMod = await import('../lib/agent.mjs');
+const extras = await import('../lib/hosts-extra.mjs');
 
 const only = process.argv.slice(2);
 const results = [];
@@ -56,7 +59,7 @@ const hookRun = (event, payload, env = {}) => {
 // tool guard mistakes this file for a script that runs them.
 const rev = (s) => s.split('').reverse().join('');
 const ch = (...codes) => String.fromCharCode(...codes);
-const DANGER = ['/ fr- mr', '/~ fr- mr', '\\:C fr- mr', 'ecrof-- niam nigiro hsup tig', '3~DAEH drah-- teser tig', 'F/ 2424 DIP/ lliksat', '2424 dI- ssecorP-potS', '\\:C ecroF- esruceR- metI-evomeR', '"sresu ELBAT PORD" c- lqsp', 'x/0kniledir eteled oper hg'].map(rev);
+const DANGER = ['/ fr- mr', '/~ fr- mr', '\\:C fr- mr', 'ecrof-- niam nigiro hsup tig', '3~DAEH drah-- teser tig', 'F/ 2424 DIP/ llikksat', '2424 dI- ssecorP-potS', '\\:C ecroF- esruceR- metI-evomeR', '"sresu ELBAT PORD" c- lqsp', 'x/0kniledir eteled oper hg'].map(rev);
 const SAFE = ['tsid/. fr- mr', 'seludom_edon fr- mr', 'niam nigiro hsup tig', 'sutats tig', 'al- sl', 'txt.elif led', 'sjm.a kcehc-- edon'].map(rev);
 const DRIVE = 'C' + ch(58) + ch(92);
 const WINPATH = DRIVE + 'Users' + ch(92) + 'OWNER';
@@ -280,6 +283,80 @@ async function mcpSuite() {
   check('server exits cleanly when stdin closes', await new Promise((res) => { const t = setTimeout(() => res(false), 5000); child.on('exit', (c) => { clearTimeout(t); res(c === 0); }); }), { happened: 'server did not exit within 5 s of stdin end', why: 'Orphaned servers pile up across sessions.', fix: 'process.stdin.on("end") must exit.' });
 }
 await mcpSuite();
+
+
+suite('ship expert', 'logo', () => {
+  const plain = logoMod.logo({ color: 'none', width: 100 });
+  check('the wordmark spells ATLIAS in blocks', logoMod.wordmark('ATLIAS').length === 5 && plain.includes('\u2588'), { happened: plain.split('\n')[1], why: 'The logo is the first thing anyone sees; block letters are the whole design.', fix: 'Check GLYPHS and wordmark().' });
+  check('the ship rides on the right', plain.includes('<_') && plain.includes('>=='), { happened: plain, why: 'Gev asked for a small spaceship beside the wordmark.', fix: 'Keep the SHIP rows and the wide branch in logo().' });
+  check('NO_COLOR output carries no escape codes', !plain.includes('\u001b'), { happened: JSON.stringify(plain.slice(0, 60)), why: 'A logo that prints escape codes into a pipe or a log file is unreadable.', fix: 'colorMode returns none when NO_COLOR is set; paint must pass text through.' });
+  const colored = logoMod.logo({ color: 'truecolor', width: 100 });
+  check('truecolor output is blue', colored.includes('38;2;29;78;216') && colored.includes('38;2;147;197;253'), { happened: JSON.stringify(colored.slice(0, 80)), why: 'Gev asked for blue, light to dark.', fix: 'Check the BLUE ramp and paint().' });
+  const basic = logoMod.logo({ color: 'basic', width: 100 });
+  check('16-colour terminals still get blue', basic.includes('\u001b[34m') || basic.includes('\u001b[94m'), { happened: JSON.stringify(basic.slice(0, 60)), why: 'Older terminals must not print raw truecolor sequences.', fix: 'paint() falls back to 34 and 94.' });
+  const narrow = logoMod.logo({ color: 'none', width: 20 });
+  check('a narrow terminal gets one line, not a broken ship', !narrow.includes('\n') && narrow.includes('atlias'), { happened: narrow, why: 'A wrapped logo looks like a crash.', fix: 'Keep the width guard at the top of logo().' });
+  check('the ship is dropped before the letters are', !logoMod.logo({ color: 'none', width: 40 }).includes('>=='), { happened: 'ship still drawn at width 40', why: 'The wordmark matters more than the ship when space is short.', fix: 'The wide branch needs rows[0].length + 16 columns.' });
+  check('colorMode respects NO_COLOR over everything', logoMod.colorMode({ NO_COLOR: '1', COLORTERM: 'truecolor' }, { isTTY: true }) === 'none', { happened: logoMod.colorMode({ NO_COLOR: '1', COLORTERM: 'truecolor' }, { isTTY: true }), why: 'NO_COLOR is a promise to the user.', fix: 'Check it first in colorMode.' });
+});
+
+suite('agent expert', 'regular agent', () => {
+  const block = (json) => 'sure\n' + "```" + 'atlias\n' + json + '\n' + "```";
+  const call = agentMod.parseToolCall(block('{"tool":"read_file","path":"a.js"}'));
+  check('a fenced atlias block is parsed as a tool call', call && call.tool === 'read_file' && call.path === 'a.js', { happened: JSON.stringify(call), why: 'The local engine can only act through this block; a parser miss makes the agent mute.', fix: 'Check TOOL_RE and parseToolCall.' });
+  check('prose is not mistaken for a tool call', agentMod.parseToolCall('I will read the file next.') === null, { happened: 'prose parsed as a call', why: 'A false positive runs a tool the model did not ask for.', fix: 'Require the fenced atlias block.' });
+  check('malformed JSON in a block is rejected, not thrown', agentMod.parseToolCall(block('{oops')) === null, { happened: 'threw or returned a value', why: 'A local model will produce broken JSON sooner or later; the loop must survive it.', fix: 'Wrap JSON.parse in try/catch and return null.' });
+  check('the system prompt names every tool', ['read_file', 'write_file', 'list_dir', 'grep', 'shell', 'recall', 'remember'].every((t) => agentMod.systemPrompt(PROJECT).includes(t)), { happened: agentMod.systemPrompt(PROJECT).slice(0, 120), why: 'A tool the prompt does not name is a tool the model never calls.', fix: 'Keep the tool line in systemPrompt.' });
+  check('echo is always an available engine', agentMod.detectEngines().echo === true && agentMod.pickEngine('echo') === 'echo', { happened: JSON.stringify(agentMod.detectEngines()), why: 'The loop has to be testable and demonstrable with no model installed.', fix: 'detectEngines always reports echo.' });
+  check('an engine that is not installed resolves to null, not a crash', agentMod.pickEngine('not-an-engine') === null, { happened: String(agentMod.pickEngine('not-an-engine')), why: 'The user gets a clear message instead of a stack trace.', fix: 'pickEngine returns null when the requested engine is absent.' });
+});
+
+await (async function agentRuntimeSuite() {
+  if (only.length && !only.some((o) => 'agent runtime'.includes(o.toLowerCase()))) return;
+  current = { expert: 'agent runtime expert', name: 'agent runtime', passed: 0, failed: [] };
+  results.push(current);
+  const state = agentMod.newState(PROJECT, 'echo');
+  const wrote = await agentMod.runTool(state, { tool: 'write_file', path: 'agent-made.mjs', content: 'export const ok = 1;\n' });
+  check('write_file writes and records the change', /written/.test(wrote) && fs.existsSync(path.join(PROJECT, 'agent-made.mjs')) && core.events(state.sid).some((e) => e.kind === 'edit'), { happened: wrote, why: 'If the write is not recorded the gate and the handoff note never see it.', fix: 'runTool write_file must call recordEvent with kind edit.' });
+  const broke = await agentMod.runTool(state, { tool: 'write_file', path: 'agent-broken.mjs', content: 'export const a = ;\n' });
+  check('a file that does not parse is reported at once', /does not parse/.test(broke), { happened: broke, why: 'Catching it here saves a whole turn.', fix: 'runTool write_file runs syntaxCheck on code files.' });
+  const refused = await agentMod.runTool(state, { tool: 'shell', command: DANGER[3] }, null);
+  check('a destructive shell command is refused without a confirmation', /refused by the user/.test(refused), { happened: refused, why: 'The terminal agent runs commands directly; the guard is the only thing between it and the disk.', fix: 'runTool shell asks, and treats no answer as no.' });
+  const unknown = await agentMod.runTool(state, { tool: 'teleport' });
+  check('an unknown tool answers with the list of real ones', /unknown tool teleport/.test(unknown) && /read_file/.test(unknown), { happened: unknown, why: 'A bare error teaches the model nothing.', fix: 'Return the tool list in the default branch.' });
+  const reply = await agentMod.turn(state, 'say something', null, null);
+  check('a turn on the echo engine round-trips through the harness', /echo: say something/.test(reply) && state.history.length === 2, { happened: reply, why: 'This is the whole loop: router, engine, gate, history.', fix: 'Check turn() and the echo branch.' });
+})();
+
+suite('extra harness expert', 'extra harnesses', () => {
+  const dir = path.join(TMP, 'fakehost');
+  const host = { id: 'testhost', label: 'Test Host', dir, mcp: path.join(dir, 'mcp.json'), shape: 'mcpServers', docs: path.join(dir, 'AGENTS.md'), verified: false };
+  check('a harness that is not installed is skipped, not created', /skipped/.test(extras.install(host)) && !fs.existsSync(dir), { happened: extras.install(host), why: 'atlias must not scatter config for tools the user does not have.', fix: 'install() checks that the harness directory exists first.' });
+  fs.mkdirSync(dir, { recursive: true });
+  const first = extras.install(host);
+  const doc = JSON.parse(fs.readFileSync(host.mcp, 'utf8'));
+  check('installing writes the mcp server and the instruction block', doc.mcpServers.atlias.command === 'node' && fs.readFileSync(host.docs, 'utf8').includes('atlias:start'), { happened: first, why: 'Without both, the harness has the tools but no idea when to use them, or the reverse.', fix: 'Check install() and instructionBlock().' });
+  check('the unverified shape is declared, not hidden', /UNVERIFIED/.test(first), { happened: first, why: 'Never pass an approximation off as the real thing.', fix: 'Keep the UNVERIFIED note for any host whose schema was not checked against a primary source.' });
+  fs.writeFileSync(host.mcp, JSON.stringify({ mcpServers: { other: { command: 'x' } }, theme: 'dark' }));
+  extras.install(host);
+  const merged = JSON.parse(fs.readFileSync(host.mcp, 'utf8'));
+  check('installing keeps the other servers and the other settings', merged.mcpServers.other && merged.theme === 'dark' && merged.mcpServers.atlias, { happened: JSON.stringify(merged), why: 'Overwriting a user config is the fastest way to lose their trust.', fix: 'The shape helpers spread the existing document.' });
+  extras.install(host);
+  const twice = JSON.parse(fs.readFileSync(host.mcp, 'utf8'));
+  const blocks = (fs.readFileSync(host.docs, 'utf8').match(/atlias:start/g) || []).length;
+  check('installing twice changes nothing the second time', Object.keys(twice.mcpServers).length === 2 && blocks === 1, { happened: 'servers ' + Object.keys(twice.mcpServers).join(',') + ' blocks ' + blocks, why: 'Duplicated entries cost tokens on every turn and can stop a harness starting.', fix: 'mergeBlock replaces between markers; the shape helpers key by name.' });
+  extras.uninstall(host);
+  const after = JSON.parse(fs.readFileSync(host.mcp, 'utf8'));
+  check('uninstalling removes only atlias', !after.mcpServers.atlias && after.mcpServers.other && !fs.readFileSync(host.docs, 'utf8').includes('atlias:start'), { happened: JSON.stringify(after), why: 'An uninstall that takes someone else with it is worse than no uninstall.', fix: 'Check the remove() helpers and stripBlock.' });
+  const shapes = extras.SHAPES;
+  const oc = shapes.opencode.add({ mcp: { other: {} } });
+  check('the OpenCode shape uses its own command array form', Array.isArray(oc.mcp.atlias.command) && oc.mcp.atlias.type === 'local' && oc.mcp.other, { happened: JSON.stringify(oc), why: 'Each harness has its own schema; one shape does not fit all.', fix: 'Check SHAPES.opencode.' });
+  const amp = shapes.ampSettings.add({});
+  const zed = shapes.zed.add({});
+  check('the Amp and Zed shapes use their own keys', amp['amp.mcpServers'].atlias && zed.context_servers.atlias.source === 'custom', { happened: JSON.stringify([amp, zed]), why: 'Writing mcpServers into Zed would do nothing at all, silently.', fix: 'Check SHAPES.ampSettings and SHAPES.zed.' });
+  check('every listed harness has a directory, an instructions file and an id', extras.EXTRAS.length >= 8 && extras.EXTRAS.every((h) => h.id && h.dir && h.docs), { happened: extras.EXTRAS.length + ' harnesses', why: 'The table is the feature: adding a harness should be one row.', fix: 'Fill in the missing field on the offending row.' });
+  check('the harness ids are unique', new Set(extras.EXTRAS.map((h) => h.id)).size === extras.EXTRAS.length, { happened: extras.EXTRAS.map((h) => h.id).join(','), why: 'A duplicate id makes --extras <id> ambiguous.', fix: 'Rename the duplicate.' });
+});
 
 let failed = 0;
 for (const r of results) {
