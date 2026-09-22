@@ -18,6 +18,7 @@ import * as graph from '../lib/graph.mjs';
 import * as agent from '../lib/agent.mjs';
 import * as extra from '../lib/hosts-extra.mjs';
 import { logo } from '../lib/logo.mjs';
+import * as bench from '../lib/bench.mjs';
 import { recall, remember } from '../mcp/tools.mjs';
 
 const argv = process.argv.slice(2);
@@ -31,6 +32,7 @@ const readOr = (p, fallback) => { try { return fs.readFileSync(p, 'utf8'); } cat
 
 switch (cmd) {
   case 'logo': say(logo()); break;
+  case 'bench': say(bench.report(cwd, argv.slice(1).filter((a) => !a.startsWith('--')))); break;
   case 'chooser': process.exitCode = await agent.chooser(); break;
   case 'agent': case 'run': case 'fly': process.exitCode = await agent.repl({ engine: after('--engine'), once: after('--once') }); break;
   case 'version': say(`atlias ${VERSION}`); break;
@@ -105,5 +107,5 @@ switch (cmd) {
     break;
   }
   default:
-    say([logo(), '', 'atlias                             choose: sub-harness or regular agent', 'agent [--engine claude|codex|ollama|echo] [--once "<prompt>"]', 'install [--all|--codex|--antigravity|--gemini [--gemini-hooks]|--claude|--extras [ids]|--companions]', 'uninstall [--all|--codex|--antigravity|--gemini]', 'doctor | status | brief [--host codex] | test | version | logo', 'recall <query> | remember <name> <type> <description> -- <body>', 'progress [set <next step>] | dream [ack|distil <session>] | graph query|affected|explain|update <arg>', 'config [set <section.key> <value>]']);
+    say([logo(), '', 'atlias                             choose: sub-harness or regular agent', 'agent [--engine claude|codex|ollama|echo] [--once "<prompt>"]', 'install [--all|--codex|--antigravity|--gemini [--gemini-hooks]|--claude|--extras [ids]|--companions]', 'uninstall [--all|--codex|--antigravity|--gemini]', 'doctor | status | brief [--host codex] | test | bench [question...] | version | logo', 'recall <query> | remember <name> <type> <description> -- <body>', 'progress [set <next step>] | dream [ack|distil <session>] | graph query|affected|explain|update <arg>', 'config [set <section.key> <value>]']);
 }

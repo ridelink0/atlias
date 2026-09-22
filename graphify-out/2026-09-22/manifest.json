@@ -1,14 +1,14 @@
 {
   ".claude-plugin/marketplace.json": {
-    "mtime": 1790075650.940524,
-    "seen": 1790075801.7554033,
-    "ast_hash": "6f36018e78abab37a63d8e26d8a0d181",
+    "mtime": 1790077232.8418221,
+    "seen": 1790077286.5153177,
+    "ast_hash": "e6028bf05bb5542d7ad48a67b9d7d6d9",
     "semantic_hash": ""
   },
   ".claude-plugin/plugin.json": {
-    "mtime": 1790075650.9395242,
-    "seen": 1790075801.7554142,
-    "ast_hash": "baee131693ecf7409b5e266a13434fe6",
+    "mtime": 1790077232.8398223,
+    "seen": 1790077286.5153298,
+    "ast_hash": "5173e365e777a7c548d34fa0348dcb98",
     "semantic_hash": ""
   },
   "bin/atlias.mjs": {
@@ -18,27 +18,27 @@
     "semantic_hash": ""
   },
   "hooks/hooks.json": {
-    "mtime": 1790045062.3284087,
-    "seen": 1790075801.755422,
-    "ast_hash": "59eeb0c349dd43800c14e1dc9a06f5e7",
+    "mtime": 1790077232.8278131,
+    "seen": 1790077286.5157912,
+    "ast_hash": "c2b891c7f593a8e8daff0612a54fdcf6",
     "semantic_hash": ""
   },
   "lib/agent.mjs": {
-    "mtime": 1790075463.1757882,
-    "seen": 1790075801.7554255,
-    "ast_hash": "fe81df01f05c96c07f2222fb470b5bbf",
+    "mtime": 1790077232.8230207,
+    "seen": 1790077286.5157955,
+    "ast_hash": "a825e24da5f2589f8f5131ab401264c3",
     "semantic_hash": ""
   },
   "lib/brief.mjs": {
-    "mtime": 1790045284.4432604,
-    "seen": 1790075801.7554283,
-    "ast_hash": "885094f0cc0d4dcb6351b4ef81bef6f9",
+    "mtime": 1790077278.4220896,
+    "seen": 1790077286.5157988,
+    "ast_hash": "6cd37d06fb5de12caea26cafc227ae82",
     "semantic_hash": ""
   },
   "lib/core.mjs": {
-    "mtime": 1790075650.9365232,
-    "seen": 1790075801.7554317,
-    "ast_hash": "1d6eee603ac443bdbfc4ca4b5f57c1c6",
+    "mtime": 1790077232.8174846,
+    "seen": 1790077286.515802,
+    "ast_hash": "98efd8145df153d9928b7b10aea21894",
     "semantic_hash": ""
   },
   "lib/dream.mjs": {
@@ -54,9 +54,9 @@
     "semantic_hash": ""
   },
   "lib/graph.mjs": {
-    "mtime": 1790045392.1839623,
-    "seen": 1790075801.7554407,
-    "ast_hash": "7520a743f83e21f881c0c9482722c774",
+    "mtime": 1790077232.818491,
+    "seen": 1790077286.516387,
+    "ast_hash": "434b91159474567840546a6a72199f52",
     "semantic_hash": ""
   },
   "lib/guard.mjs": {
@@ -78,9 +78,9 @@
     "semantic_hash": ""
   },
   "lib/hosts.mjs": {
-    "mtime": 1790046360.7850764,
-    "seen": 1790075801.7554536,
-    "ast_hash": "fe17e0801c8d6f07ba61de50ba9fded8",
+    "mtime": 1790077232.8328145,
+    "seen": 1790077286.5173204,
+    "ast_hash": "d88a170356effd9fce7e8addcae89827",
     "semantic_hash": ""
   },
   "lib/logo.mjs": {
@@ -120,21 +120,21 @@
     "semantic_hash": ""
   },
   "package.json": {
-    "mtime": 1790075650.9375222,
-    "seen": 1790075801.755582,
-    "ast_hash": "814172ed81967c5bd375b914b8f4bf14",
+    "mtime": 1790077232.8328145,
+    "seen": 1790077286.5205994,
+    "ast_hash": "a6ce5bb4ae8d54e297940040005058ea",
     "semantic_hash": ""
   },
   "test/run.mjs": {
-    "mtime": 1790075650.986535,
-    "seen": 1790075801.7555854,
-    "ast_hash": "6528ccded164c14d2b2fb197e9eebce7",
+    "mtime": 1790077232.8523242,
+    "seen": 1790077286.5206065,
+    "ast_hash": "8a1220a52a41380d78f24ad344dec5a4",
     "semantic_hash": ""
   },
   "CHANGELOG.md": {
-    "mtime": 1790075650.9875343,
-    "seen": 1790075801.7555904,
-    "ast_hash": "3c6b295c8ca9d070ecf4ff62702d72a2",
+    "mtime": 1790077232.8573258,
+    "seen": 1790077286.5206106,
+    "ast_hash": "9696a27d058ad2bb0c6151c0034cee66",
     "semantic_hash": ""
   },
   "README.md": {
@@ -153,6 +153,12 @@
     "mtime": 1790046454.0341232,
     "seen": 1790075801.7555995,
     "ast_hash": "e51f10a371f551aacdb7d96535009720",
+    "semantic_hash": ""
+  },
+  "lib/bench.mjs": {
+    "mtime": 1790077404.7913496,
+    "seen": 1790077416.1754503,
+    "ast_hash": "b63c18f2fb93d911743f53f606fc9bcf",
     "semantic_hash": ""
   }
 }

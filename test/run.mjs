@@ -35,6 +35,7 @@ const logoMod = await import('../lib/logo.mjs');
 const agentMod = await import('../lib/agent.mjs');
 const extras = await import('../lib/hosts-extra.mjs');
 const graphMod = await import('../lib/graph.mjs');
+const benchMod = await import('../lib/bench.mjs');
 
 const only = process.argv.slice(2);
 const results = [];
@@ -381,6 +382,22 @@ suite('reliability expert', 'hook budgets', () => {
   brief.build({ cwd: PROJECT, session_id: sid('budget'), source: 'startup' }, 'claude');
   const bms = Date.now() - b0;
   check('a warm brief is built in well under a second', bms < 1000, { happened: bms + 'ms', why: 'The brief runs before the user can type; it is the first thing that makes the harness feel slow or fast.', fix: 'Check what in brief.build is spawning a process on the warm path.' });
+});
+
+suite('measurement expert', 'bench', () => {
+  check('the token estimate is the same rule on both sides', benchMod.estimateTokens('') === 0 && benchMod.estimateTokens('abcd') === 1 && benchMod.estimateTokens('a'.repeat(400)) === 100, { happened: [benchMod.estimateTokens(''), benchMod.estimateTokens('abcd'), benchMod.estimateTokens('a'.repeat(400))].join(','), why: 'A comparison is only honest if both sides are counted the same way.', fix: 'Keep estimateTokens at four characters per token, and zero for empty.' });
+  check('a null or undefined input does not throw', benchMod.estimateTokens(null) === 0 && benchMod.estimateTokens(undefined) === 0, { happened: 'estimateTokens threw or returned a non-zero value', why: 'bench runs over whatever the project happens to contain.', fix: 'Guard the null case in estimateTokens.' });
+  check('with no graph the comparison is refused, not faked', benchMod.graphVsFiles(PROJECT, 'anything at all') === null, { happened: JSON.stringify(benchMod.graphVsFiles(PROJECT, 'anything at all')), why: 'A benchmark that invents a saving is worse than no benchmark.', fix: 'graphVsFiles returns null when graph.query has no answer.' });
+  const text = benchMod.report(PROJECT);
+  check('the report works on a project with nothing in it', typeof text === 'string' && /no graph in this project/.test(text), { happened: text.slice(0, 200), why: 'The first thing anyone runs it on may have no graph and no history.', fix: 'Check the empty branches in report().' });
+  check('every estimate is labelled as one', /estimate/i.test(text), { happened: text.slice(0, 200), why: 'Four characters per token is a rule of thumb; presenting it as measurement is the dressing up that makes a benchmark worthless.', fix: 'Keep the word estimate beside every derived number.' });
+  const withGraph = benchMod.report(ROOT);
+  check('a saving is reported as an upper bound, not a promise', !/across \d+ question/.test(withGraph) || /upper bound/.test(withGraph), { happened: withGraph.split('\n').filter((l) => /across|upper bound/.test(l)).join(' | '), why: 'The file side of the comparison assumes every named file would have been read in full. Stated without that caveat it flatters the harness.', fix: 'Keep the upper bound lines beside the total in report().' });
+  check('the report says plainly what it does not measure', /Not measured here/.test(text) && /has not been done/.test(text), { happened: text.slice(-200), why: 'The open question is whether the guard and the gate raise task success; the bench must not imply it answered that.', fix: 'Keep the closing paragraph in report().' });
+  const counted = benchMod.interventions(PROJECT);
+  check('intervention counts come from real digests and add up', counted.sessions >= 0 && counted.toolCalls >= 0 && counted.spoke === counted.guard + counted.gate, { happened: JSON.stringify(counted), why: 'These are the only numbers here taken from real runs rather than derived, so they have to add up.', fix: 'Check interventions() against the history.jsonl row shape.' });
+  const cost = benchMod.briefCost(PROJECT);
+  check('the brief cost is measured, not guessed', cost.chars > 0 && cost.tokens === Math.ceil(cost.chars / 4), { happened: JSON.stringify(cost), why: 'The one cost atlias imposes on every session should be the number it is most precise about.', fix: 'briefCost builds the real brief and counts it.' });
 });
 
 let failed = 0;
