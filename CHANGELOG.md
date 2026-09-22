@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.7 (2026-09-22)
+
+The terminal agent could not start its main engine. It built a session id of the form atlias-<uuid> and handed that to Claude Code as --session-id, which takes a UUID and nothing else, so the very first turn of the agent on the claude engine failed; and the retry path only ran for turns after the first, so the one failure a new user would actually hit was the one with no recovery. atlias now keeps its prefixed id for its own files and gives the host a plain UUID, and any refused turn falls back to continuing the most recent conversation instead.
+
 ## 2.1.6 (2026-09-22)
 
 Two more places where something grew without a ceiling and was then cut in the middle. For Codex and Antigravity the brief pastes the memory index inline, and cut it at six thousand characters with an ellipsis, mid-line, saying nothing; with eighty memories that silently dropped half of them, and a model reading a truncated index concludes the rest do not exist. It now cuts on a line boundary and says how many it did not list. And the Dream digest listed every session waiting to be consolidated, so a fortnight of them produced an enormous file that the brief tells the model to read; it now shows the ten most recent and accounts for the rest, while ack still consolidates all of them.

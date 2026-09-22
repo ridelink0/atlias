@@ -718,6 +718,27 @@ suite('truncation expert', 'nothing is cut in the middle', () => {
   check('acking still covers every waiting session', dream.ack(cwd2) === 30 && dream.pending(cwd2).count === 0, { happened: 'cursor ' + dream.cursor(cwd2) + ', pending ' + dream.pending(cwd2).count, why: 'Showing ten must not mean consolidating ten.', fix: 'ack works from history.jsonl, not from the digest.' });
 });
 
+suite('engine handshake expert', 'engine handshake', () => {
+  const state = agentMod.newState(PROJECT, 'claude');
+  const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  check('the host is given a plain UUID', UUID.test(state.hostSid), { happened: state.hostSid, why: 'Claude Code --session-id takes a UUID and nothing else, so a prefixed id fails the very first turn of the agent, which is the only turn that matters for whether anyone tries it twice.', fix: 'Generate hostSid with randomUUID and keep the prefix for atlias state only.' });
+  check('atlias keeps its own prefixed id for its own files', state.sid.startsWith('atlias-') && state.sid.includes(state.hostSid), { happened: state.sid, why: 'The session log and meta are keyed by it, and a bare UUID in that directory is indistinguishable from a host session.', fix: 'Keep sid as atlias- plus the same UUID.' });
+  const first = agentMod.claudeArgs(state);
+  check('the first turn pins the session', first.includes('--session-id') && first.includes(state.hostSid) && !first.includes('--resume'), { happened: first.join(' '), why: 'Pinning is what lets the next turn resume the same conversation.', fix: 'Check claudeArgs when started is false.' });
+  state.started = true;
+  const later = agentMod.claudeArgs(state);
+  check('a later turn resumes it', later.includes('--resume') && later.includes(state.hostSid) && !later.includes('--session-id'), { happened: later.join(' '), why: 'Without resume every turn is a fresh conversation and the engine forgets the one before.', fix: 'Check claudeArgs when started is true.' });
+  state.started = false;
+  let calls = 0;
+  const failFirst = (cmd, args) => { calls++; return calls === 1 ? { status: 1, stdout: '', stderr: 'invalid session id', error: null } : { status: 0, stdout: 'recovered', stderr: '', error: null }; };
+  const out = agentMod.claudeTurn(state, 'hello', { run: failFirst });
+  check('a first turn that is refused falls back instead of giving up', out === 'recovered' && calls === 2, { happened: 'result ' + JSON.stringify(out) + ' after ' + calls + ' call(s)', why: 'The old code only retried on turns after the first, so the one failure a new user would actually hit was the one with no recovery.', fix: 'Retry without pinning a session, whether or not the turn is the first.' });
+  let always = 0;
+  const alwaysFail = () => { always++; return { status: 1, stdout: '', stderr: 'nope', error: null }; };
+  const bad = agentMod.claudeTurn(agentMod.newState(PROJECT, 'claude'), 'hello', { run: alwaysFail });
+  check('an engine that will not answer says so plainly and stops', /claude failed/.test(bad) && always === 2, { happened: bad + ' after ' + always + ' call(s)', why: 'Two attempts is a fallback; more would be a loop the user pays for.', fix: 'Return the failure after the single retry.' });
+});
+
 let failed = 0;
 for (const r of results) {
   const ok = r.failed.length === 0;
