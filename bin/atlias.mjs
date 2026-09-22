@@ -22,7 +22,9 @@ import * as bench from '../lib/bench.mjs';
 import { recall, remember } from '../mcp/tools.mjs';
 
 const argv = process.argv.slice(2);
-const cmd = argv[0] || (process.stdin.isTTY ? 'chooser' : 'help');
+// --version and --help are what people type; treat them as the commands.
+const FLAG_COMMANDS = { '--version': 'version', '-v': 'version', '--help': 'help', '-h': 'help' };
+const cmd = FLAG_COMMANDS[argv[0]] || argv[0] || (process.stdin.isTTY ? 'chooser' : 'help');
 const extraIds = () => (argv.includes('--extras') ? argv.slice(argv.indexOf('--extras') + 1).filter((a) => !a.startsWith('--')) : []);
 const flag = (f) => argv.includes(f);
 const after = (f) => (argv.includes(f) ? argv[argv.indexOf(f) + 1] : undefined);

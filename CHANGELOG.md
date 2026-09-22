@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.8 (2026-09-22)
+
+Three small ones that each waste somebody’s afternoon. The Ollama client always used the http module, so pointing it at a remote instance over https failed on every turn with a protocol error that named nothing useful; the transport and the port now follow the url, for the health probe as well as the chat. Switching engine mid-session left the resume flag and the old system prompt in place, so the new engine was asked to continue a conversation it had never had. And atlias --version printed the help, which is what everybody types first.
+
 ## 2.1.7 (2026-09-22)
 
 The terminal agent could not start its main engine. It built a session id of the form atlias-<uuid> and handed that to Claude Code as --session-id, which takes a UUID and nothing else, so the very first turn of the agent on the claude engine failed; and the retry path only ran for turns after the first, so the one failure a new user would actually hit was the one with no recovery. atlias now keeps its prefixed id for its own files and gives the host a plain UUID, and any refused turn falls back to continuing the most recent conversation instead.

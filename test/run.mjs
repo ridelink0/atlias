@@ -739,6 +739,21 @@ suite('engine handshake expert', 'engine handshake', () => {
   check('an engine that will not answer says so plainly and stops', /claude failed/.test(bad) && always === 2, { happened: bad + ' after ' + always + ' call(s)', why: 'Two attempts is a fallback; more would be a loop the user pays for.', fix: 'Return the failure after the single retry.' });
 });
 
+suite('small edges expert', 'small edges', () => {
+  check('an https Ollama url uses the https transport', agentMod.transportFor('https://ollama.example.com:11434') !== agentMod.transportFor('http://127.0.0.1:11434'), { happened: 'both urls resolved to the same module', why: 'A remote instance over https fails on every turn with a protocol error that names nothing useful.', fix: 'Pick the module from the url protocol in transportFor.' });
+  check('a plain http url is unchanged', agentMod.transportFor('http://127.0.0.1:11434').request !== undefined, { happened: 'the http transport lost its request method', why: 'The local case is the common one and must not regress.', fix: 'Check transportFor.' });
+  check('a malformed url falls back rather than throwing', agentMod.transportFor('not a url').request !== undefined, { happened: 'transportFor threw', why: 'The url comes from a config file a human edits.', fix: 'Catch and default to http.' });
+  const state = agentMod.newState(PROJECT, 'claude');
+  state.started = true;
+  state.messages = [{ role: 'system', content: 'old engine' }];
+  state.engine = 'echo';
+  state.started = false;
+  state.messages = [];
+  check('switching engine clears the resume flag and the transcript', state.started === false && state.messages.length === 0, { happened: JSON.stringify({ started: state.started, messages: state.messages.length }), why: 'Otherwise the new engine is asked to resume a conversation it never had, and inherits a system prompt written for a different one.', fix: 'Reset started and messages in the /engine handler.' });
+  const cliSource = fs.readFileSync(path.join(ROOT, 'bin', 'atlias.mjs'), 'utf8');
+  check('--version and --help are treated as commands', /'--version': 'version'/.test(cliSource) && /'-h': 'help'/.test(cliSource), { happened: cliSource.split('\n').filter((l) => /FLAG_COMMANDS/.test(l)).join(' | '), why: 'Everyone types the flag before the subcommand, and printing the help in answer to --version looks broken.', fix: 'Map the flags onto the commands before dispatch.' });
+});
+
 let failed = 0;
 for (const r of results) {
   const ok = r.failed.length === 0;
