@@ -16,7 +16,18 @@ export function recall(cwd, query, limit = 8) {
   const terms = String(query || '').toLowerCase().split(/[^a-z0-9_]+/).filter((t) => t.length > 2);
   if (!terms.length) return 'recall: give at least one word of three letters or more.';
   const score = (text) => { const t = text.toLowerCase(); return terms.reduce((n, w) => n + (t.includes(w) ? 1 : 0), 0); };
+  // recall exists to be the cheap way to a fact. A budget keeps it that way,
+  // and anything dropped is counted rather than silently lost.
+  const cfg = config().recall;
   const out = [];
+  let used = 0;
+  let omitted = 0;
+  const add = (text) => {
+    if (used + text.length > cfg.budgetChars) { omitted++; return false; }
+    out.push(text);
+    used += text.length;
+    return true;
+  };
   const memDir = claudeMemoryDir(cwd);
   if (exists(memDir)) {
     const hits = [];
@@ -27,18 +38,20 @@ export function recall(cwd, query, limit = 8) {
       if (s) hits.push({ f, s, text });
     }
     hits.sort((a, b) => b.s - a.s);
-    for (const h of hits.slice(0, limit)) out.push(`### memory ${h.f}\n${clip(h.text.replace(/^---[\s\S]*?---\s*/, '').trim(), 700)}`);
+    for (const h of hits.slice(0, limit)) add(`### memory ${h.f}\n${clip(h.text.replace(/^---[\s\S]*?---\s*/, '').trim(), cfg.bodyChars)}`);
   }
   for (const r of dream.pending(cwd).rows.slice(-20).reverse()) {
     const text = [...(r.prompts || []), r.summary || ''].join(' ');
-    if (score(text)) out.push(`### session ${r.cursor} (${r.ts})\n${clip(text, 400)}`);
+    if (score(text)) add(`### session ${r.cursor} (${r.ts})\n${clip(text, 400)}`);
     if (out.length >= limit + 3) break;
   }
   const note = progress.read(cwd);
-  if (note && score(note)) out.push('### handoff note\n' + clip(note, 900));
+  if (note && score(note)) add('### handoff note\n' + clip(note, Math.min(900, cfg.bodyChars * 2)));
   const g = graph.query(cwd, String(query), Math.min(config().graph.queryBudget, 400));
-  if (g) out.push(`### graph\n${g}`);
-  return out.length ? out.join('\n\n') : `recall: nothing matched "${clip(query, 80)}" in memory, session history or the graph.`;
+  if (g) add(`### graph\n${g}`);
+  if (!out.length) return `recall: nothing matched "${clip(query, 80)}" in memory, session history or the graph.`;
+  const tail = omitted ? `\n\n(${omitted} further match(es) left out to stay inside the recall budget of ${cfg.budgetChars} characters. Narrow the query, or read the files named above.)` : '';
+  return out.join('\n\n') + tail;
 }
 
 export function remember(cwd, { name, type, description, body }) {

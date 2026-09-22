@@ -515,6 +515,36 @@ suite('long session expert', 'long sessions', () => {
   check('reading the tail of a file that is not there is empty, not an error', core.readTail(path.join(TMP, 'nope.jsonl'), 1024) === '' && core.eventsTail('no-such-session').length === 0, { happened: 'readTail threw', why: 'The first tool call of a session happens before the log exists.', fix: 'Swallow the open error and return empty.' });
 });
 
+suite('recall budget expert', 'recall budget', () => {
+  for (let i = 0; i < 12; i++) tools.remember(PROJECT, { name: 'budget-note-' + i, type: 'project', description: 'the deployment pipeline for service ' + i, body: ('the deployment pipeline runs on service ' + i + ' and needs the staging credentials. ').repeat(20) });
+  const text = tools.recall(PROJECT, 'deployment pipeline staging credentials');
+  check('recall stays inside its budget', text.length < 3200, { happened: text.length + ' characters', why: 'A tool whose point is to be the cheap way to a fact must not cost more than reading the file would have.', fix: 'Check the budget accounting in recall().' });
+  check('what it left out is counted, not dropped silently', /further match\(es\) left out/.test(text), { happened: text.slice(-200), why: 'Silent truncation reads as "that is everything there is", which is how a model stops looking.', fix: 'Keep the omitted tail line in recall().' });
+  check('it still returns the matches it kept', /budget-note-/.test(text), { happened: text.slice(0, 160), why: 'A budget that returns nothing is not a budget, it is a failure.', fix: 'Add the highest scoring entries first.' });
+  check('a query with no match still says so plainly', /nothing matched/.test(tools.recall(PROJECT, 'zzzz unrelated nonsense term')), { happened: tools.recall(PROJECT, 'zzzz unrelated nonsense term'), why: 'An empty answer must not look like an error.', fix: 'Keep the nothing matched branch.' });
+});
+
+suite('live count expert', 'live interventions', () => {
+  const s = sid('livecount');
+  core.saveSessionMeta(s, { host: 'claude', cwd: PROJECT });
+  for (let i = 0; i < 3; i++) guard.preTool({ session_id: s, cwd: PROJECT, tool_name: 'Read', tool_input: { file_path: 'live' + i } });
+  const i1 = benchMod.interventions(PROJECT);
+  check('the session you are in is counted', i1.toolCalls >= 3 && i1.live >= 1, { happened: JSON.stringify(i1), why: 'Reporting zero during the session whose numbers you asked for reads as "the guard never fires".', fix: 'liveSessions reads the logs of sessions that have no digest yet.' });
+  check('the totals still add up', i1.spoke === i1.guard + i1.gate, { happened: JSON.stringify(i1), why: 'Adding a second source of counts is where a total quietly stops matching its parts.', fix: 'Sum finished and live in one place.' });
+  check('another project does not borrow these counts', benchMod.liveSessions(path.join(TMP, 'other-project')).toolCalls === 0, { happened: JSON.stringify(benchMod.liveSessions(path.join(TMP, 'other-project'))), why: 'Session logs live in one directory for every project; matching on cwd is the only thing keeping them apart.', fix: 'Check the cwd comparison in liveSessions.' });
+  check('the report mentions the open session', /still open/.test(benchMod.report(PROJECT)), { happened: benchMod.report(PROJECT).split('\n').filter((l) => /sessions/.test(l)).join(' | '), why: 'A number from a session in flight should say that is what it is.', fix: 'Keep the still open wording in report().' });
+});
+
+suite('empty answer expert', 'empty graph answers', () => {
+  const empties = ['No matching nodes found.', 'no nodes found', 'Nothing matched your query', 'nothing found', '0 nodes', '   ', ''];
+  check('every wording of nothing found is treated as nothing', empties.every((e) => graphMod.isEmptyAnswer(e)), { happened: empties.filter((e) => !graphMod.isEmptyAnswer(e)).map((e) => JSON.stringify(e)).join(', ') || 'all recognised', why: 'An unrecognised empty answer is injected into the prompt as if it were a finding, which spends the tokens the graph exists to save and tells the model something it cannot use.', fix: 'Extend the pattern in isEmptyAnswer.' });
+  const real = 'NODE clip() [src=lib/core.mjs loc=L56 community=agent.mjs] NODE exists() [src=lib/core.mjs loc=L54] EDGE clip -> exists';
+  check('a real answer is not mistaken for an empty one', !graphMod.isEmptyAnswer(real), { happened: real.slice(0, 80), why: 'Discarding a real answer is the same waste in the other direction.', fix: 'Keep the pattern anchored at the start and bounded by length.' });
+  const long = 'No matching nodes were found for the first term, but the second resolved to ' + 'x'.repeat(300);
+  check('a long answer that merely starts with those words is kept', !graphMod.isEmptyAnswer(long), { happened: long.slice(0, 60) + '...', why: 'Length is what separates a refusal from an answer that mentions one.', fix: 'Keep the 200 character bound.' });
+  check('null and undefined are empty, not errors', graphMod.isEmptyAnswer(null) && graphMod.isEmptyAnswer(undefined), { happened: 'isEmptyAnswer threw', why: 'graphify can exit without writing anything at all.', fix: 'Guard the null case first.' });
+});
+
 let failed = 0;
 for (const r of results) {
   const ok = r.failed.length === 0;

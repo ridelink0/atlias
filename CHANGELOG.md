@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.9.1 (2026-09-22)
+
+A graph that found nothing said so in a wording atlias did not recognise, so "No matching nodes found." was injected into the prompt as though it were a finding. It now recognises the refusal in every wording graphify uses, bounded by length so a real answer that happens to open with those words is still kept.
+
+## 1.9.0 (2026-09-22)
+
+Two things that were quietly wrong in daily use. recall could return eight memory bodies at seven hundred characters each, so the tool whose whole point is to be the cheap way to a fact could cost more than reading the file would have; it now works to a budget and counts what it left out instead of truncating in silence. And the bench counted interventions only from finished sessions, so during the session you were actually in it always reported zero, which reads as the guard never firing rather than as nothing having been written down yet; it now reads the logs of sessions still open and says how many of those there are.
+
 ## 1.8.0 (2026-09-22)
 
 The guard stops re-reading the whole session on every tool call. Each call appends a line to the session log, and the guard parsed the entire file to decide whether the call was a repeat, so a four hundred turn session meant thousands of lines parsed thousands of times. The harness was getting slower exactly as the session got long, which is when it is needed most. The guard, the gate and the handoff note now read only the tail of the log, which is all any of them looks at, and Dream still reads the whole file once at session end where that is the right thing to do. A suite builds a log of twenty thousand events and fails if five guard calls take a second between them.
