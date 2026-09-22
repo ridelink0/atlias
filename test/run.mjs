@@ -545,6 +545,20 @@ suite('empty answer expert', 'empty graph answers', () => {
   check('null and undefined are empty, not errors', graphMod.isEmptyAnswer(null) && graphMod.isEmptyAnswer(undefined), { happened: 'isEmptyAnswer threw', why: 'graphify can exit without writing anything at all.', fix: 'Guard the null case first.' });
 });
 
+suite('release expert', 'release numbering', () => {
+  const pkg = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8'));
+  const plugin = JSON.parse(fs.readFileSync(path.join(ROOT, '.claude-plugin', 'plugin.json'), 'utf8'));
+  const market = JSON.parse(fs.readFileSync(path.join(ROOT, '.claude-plugin', 'marketplace.json'), 'utf8'));
+  const changelog = fs.readFileSync(path.join(ROOT, 'CHANGELOG.md'), 'utf8');
+  const newest = (changelog.match(/^## (\d+\.\d+\.\d+)/m) || [])[1];
+  check('the version is plain semantic versioning', /^\d+\.\d+\.\d+$/.test(pkg.version), { happened: pkg.version, why: 'Anything else breaks the tools that sort releases, including the plugin cache.', fix: 'Use major.minor.patch with no suffix.' });
+  check('the changelog names the version that is shipping', newest === pkg.version, { happened: 'changelog says ' + newest + ', package.json says ' + pkg.version, why: 'A release whose changelog describes a different version is how a fix gets announced twice and shipped never.', fix: 'Add the entry before bumping, or bump before committing.' });
+  check('all four manifests agree', plugin.version === pkg.version && market.plugins[0].version === pkg.version && core.VERSION === pkg.version, { happened: [pkg.version, plugin.version, market.plugins[0].version, core.VERSION].join(' / '), why: 'The brief announces core.VERSION while the host caches by plugin.json; when they disagree the user is told one thing and served another.', fix: 'Bump all four together.' });
+  const versions = (changelog.match(/^## (\d+\.\d+\.\d+)/gm) || []).map((h) => h.replace('## ', ''));
+  check('no version is announced twice', new Set(versions).size === versions.length, { happened: versions.join(', '), why: 'A repeated version means two different builds answer to one number, and a plugin cache keyed by that number serves whichever it saw first.', fix: 'Never reuse a number, even to correct an earlier mistake.' });
+  check('the changelog states the versioning rule it follows', /patch digit is a bug fix/.test(changelog), { happened: changelog.slice(0, 200), why: 'A rule nobody can read is a rule that drifts.', fix: 'Keep the versioning paragraph at the top of the changelog.' });
+});
+
 let failed = 0;
 for (const r of results) {
   const ok = r.failed.length === 0;

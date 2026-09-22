@@ -1,5 +1,11 @@
 # Changelog
 
+Versioning from here: the patch digit is a bug fix, the minor digit is a feature or a behaviour change, and the major digit is a change in what atlias is. The 1.x entries below moved the minor digit for plain bug fixes, which is how one day of work ran from 1.0.0 to 1.9.1. Rather than renumber them, which would collide with plugin caches already holding those directories, the correction starts here.
+
+## 2.0.0 (2026-09-22)
+
+What atlias is has changed since 1.0.0, so this is the major that should have marked it: it stopped being only a sub-harness and became a thing you can also run on its own. A terminal agent with its own wordmark and ship, three engines behind it, fourteen more harnesses it can link into, a tenth tool, and a bench that measures its own cost. No behaviour changes in this release beyond the number itself and the rule it now follows.
+
 ## 1.9.1 (2026-09-22)
 
 A graph that found nothing said so in a wording atlias did not recognise, so "No matching nodes found." was injected into the prompt as though it were a finding. It now recognises the refusal in every wording graphify uses, bounded by length so a real answer that happens to open with those words is still kept.

@@ -113,6 +113,10 @@ State lives under `~/.atlias/` (override with `ATLIAS_HOME`).
 
 Two things are kept fast on purpose, and tested for it. The work a hook does is bounded so it cannot outlast the timeout it declares: the interpreter search is time-boxed and remembers a miss, the directory walk has a wall clock, and the hub lookup is skipped rather than allowed to overrun. And the guard reads only the tail of the session log rather than all of it, so a long session does not get slower with every tool call.
 
+## Versioning
+
+Plain semantic versioning: the patch digit is a bug fix, the minor digit is a feature or a behaviour change, and the major digit is a change in what atlias is. A test ties the newest changelog heading to the version in all four manifests, so a release cannot ship with them disagreeing.
+
 ## Known limits
 
 - Gemini CLI hook output shape is not documented on the page checked; hooks there are opt-in (`--gemini-hooks`) and mirror what graphify ships for its own Gemini hook. MCP and the GEMINI.md block are the verified path.
