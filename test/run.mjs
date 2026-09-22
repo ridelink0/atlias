@@ -47,6 +47,13 @@ function suite(expert, name, fn) {
   results.push(current);
   try { fn(); } catch (e) { current.failed.push({ test: '(suite crashed)', happened: String(e && e.stack || e), why: 'A crash means every later check in this suite did not run.', fix: 'Fix the exception first, then re-run this suite alone.' }); }
 }
+// The same, for a suite whose checks have to await something.
+async function asyncSuite(expert, name, fn) {
+  if (only.length && !only.some((o) => name.toLowerCase().includes(o.toLowerCase()))) return;
+  current = { expert, name, passed: 0, failed: [] };
+  results.push(current);
+  try { await fn(); } catch (e) { current.failed.push({ test: '(suite crashed)', happened: String(e && e.stack || e), why: 'A crash means every later check in this suite did not run.', fix: 'Fix the exception first, then re-run this suite alone.' }); }
+}
 function check(test, cond, { happened, why, fix }) {
   if (cond) { current.passed++; return true; }
   current.failed.push({ test, happened, why, fix });
@@ -896,6 +903,7 @@ suite('proof expert', 'the doctor proves what it reports', () => {
 
 await (await import('./integrity-suites.mjs')).default({ suite, check, core, gate, track, router, PROJECT, TMP, ROOT, spawnSync, fs, path });
 await (await import('./shortcut-suites.mjs')).default({ suite, check, TMP, ROOT, spawnSync, fs, path });
+await (await import('./agent-suites.mjs')).default({ suite, asyncSuite, check, core, agentMod, hookRun, PROJECT, TMP, ROOT, fs, path, spawnSync });
 
 let failed = 0;
 for (const r of results) {

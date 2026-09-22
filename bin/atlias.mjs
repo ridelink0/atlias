@@ -4,6 +4,7 @@
 //   atlias uninstall [--all|--codex|--antigravity|--gemini]
 //   atlias doctor | status | brief [--host codex] | test | version
 //   atlias shortcut [install|uninstall|status]   the atlias command in any terminal
+//   atlias mode [both|sub|standalone] | settings [list]
 //   atlias recall <query> | remember <name> <type> <description> -- <body>
 //   atlias progress [set <text>] | dream [show|ack|distil <session-id> [transcript]]
 //   atlias graph query|affected|explain|update <arg> | config [set <section.key> <value>]
@@ -21,12 +22,13 @@ import * as extra from '../lib/hosts-extra.mjs';
 import { logo } from '../lib/logo.mjs';
 import * as bench from '../lib/bench.mjs';
 import * as shortcut from '../lib/shortcut.mjs';
+import * as settings from '../lib/settings.mjs';
 import { recall, remember } from '../mcp/tools.mjs';
 
 const argv = process.argv.slice(2);
 // --version and --help are what people type; treat them as the commands.
 const FLAG_COMMANDS = { '--version': 'version', '-v': 'version', '--help': 'help', '-h': 'help' };
-const cmd = FLAG_COMMANDS[argv[0]] || argv[0] || (process.stdin.isTTY ? 'chooser' : 'help');
+const cmd = FLAG_COMMANDS[argv[0]] || argv[0] || settings.bareCommand();
 const extraIds = () => (argv.includes('--extras') ? argv.slice(argv.indexOf('--extras') + 1).filter((a) => !a.startsWith('--')) : []);
 const flag = (f) => argv.includes(f);
 const after = (f) => (argv.includes(f) ? argv[argv.indexOf(f) + 1] : undefined);
@@ -67,6 +69,20 @@ switch (cmd) {
     out.push('claude code: /plugin uninstall atlias@atlias inside Claude Code');
     say(out); break;
   }
+  case 'mode': {
+    if (!argv[1]) { say(settings.describeMode()); break; }
+    const r = settings.setMode(argv[1]);
+    say(r.text);
+    process.exitCode = r.ok ? 0 : 2;
+    break;
+  }
+  case 'settings': {
+    if (!process.stdin.isTTY || argv[1] === 'list') { say(settings.format()); break; }
+    const rl = (await import('node:readline/promises')).createInterface({ input: process.stdin, output: process.stdout });
+    process.exitCode = await settings.menu((q) => rl.question(q), say);
+    rl.close();
+    break;
+  }
   case 'shortcut': {
     const sub = argv[1] || 'status';
     if (sub === 'install') say(shortcutInstall());
@@ -83,7 +99,7 @@ switch (cmd) {
   case 'status': {
     const g = graph.status(cwd);
     const p = dream.pending(cwd);
-    say([`atlias ${VERSION}`, `state: ${STATE_DIR}`, `project: ${cwd}`, `graph: ${g.exists ? `present, updated ${g.age}` : 'none'}`, `dream pending: ${p.count}`, `handoff note: ${progress.read(cwd) ? progress.notePath(cwd) : 'none yet'}`]);
+    say([`atlias ${VERSION}`, `mode: ${settings.mode()} (atlias mode to change it)`, `state: ${STATE_DIR}`, `project: ${cwd}`, `graph: ${g.exists ? `present, updated ${g.age}` : 'none'}`, `dream pending: ${p.count}`, `handoff note: ${progress.read(cwd) ? progress.notePath(cwd) : 'none yet'}`]);
     break;
   }
   case 'brief': say(brief.build({ cwd, session_id: 'cli', source: 'startup' }, after('--host') || 'claude')); break;
@@ -130,5 +146,5 @@ switch (cmd) {
     break;
   }
   default:
-    say([logo(), '', 'atlias                             choose: sub-harness or regular agent', 'agent [--engine claude|codex|ollama|echo] [--once "<prompt>"]', 'install [--all|--codex|--antigravity|--gemini [--gemini-hooks]|--claude|--extras [ids]|--companions|--shortcut]', 'uninstall [--all|--codex|--antigravity|--gemini|--extras|--shortcut]', 'shortcut [install|uninstall|status]  the atlias command in any terminal', 'doctor | status | brief [--host codex] | test | bench [question...] | version | logo', 'recall <query> | remember <name> <type> <description> -- <body>', 'progress [set <next step>] | dream [ack|distil <session>] | graph query|affected|explain|update <arg>', 'config [set <section.key> <value>]']);
+    say([logo(), '', 'atlias                             by mode: ask (both), status (sub), the agent (standalone)', 'agent [--engine claude|codex|openai|ollama|echo] [--once "<prompt>"]', 'mode [both|sub|standalone]         what atlias is on this machine', 'settings [list]                    every option, with what it does', 'install [--all|--codex|--antigravity|--gemini [--gemini-hooks]|--claude|--extras [ids]|--companions|--shortcut]', 'uninstall [--all|--codex|--antigravity|--gemini|--extras|--shortcut]', 'shortcut [install|uninstall|status]  the atlias command in any terminal', 'doctor | status | brief [--host codex] | test | bench [question...] | version | logo', 'recall <query> | remember <name> <type> <description> -- <body>', 'progress [set <next step>] | dream [ack|distil <session>] | graph query|affected|explain|update <arg>', 'config [set <section.key> <value>]']);
 }
