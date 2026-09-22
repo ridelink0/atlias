@@ -1,6 +1,6 @@
 {
   "name": "atlias",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "atlias: a sub-harness for Claude Code, Codex, Antigravity and Gemini CLI. Shared memory, graphify knowledge graph, guards, verification gate, compaction handoff, Dream consolidation.",
   "type": "module",
   "bin": { "atlias": "bin/atlias.mjs" },

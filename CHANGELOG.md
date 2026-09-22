@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.2 (2026-09-22)
+
+A turn long enough to push its own beginning out of view. The gate finds where a turn started by looking back for the prompt marker in the last 256 KB of the session log, and a turn with thousands of tool calls pushes that marker past the window. The old code then treated the whole window as the current turn: files changed an hour earlier were syntax-checked and named as though they had just been touched, and every such turn shared one flag key, so the gate would speak once and stay silent for the rest of the session. When the marker is not in the tail atlias now reads the whole log, which is rare enough to be worth paying for and correct when it happens.
+
 ## 2.2.1 (2026-09-22)
 
 A setting you cannot corrupt, and a doctor that looks where the answer is. `atlias config set brief.memoryChars` with no value stored the empty string, nothing complained, and the clip that reads it silently stopped clipping, because a number compared to an empty string is never greater; a setting now takes the type its default has, refuses anything else with the reason, and prints what actually took effect rather than what was typed. And the doctor decided whether the Claude Code plugin was enabled by reading one settings file when enablement can equally live in the local one, so it told some users to reinstall something they already had.

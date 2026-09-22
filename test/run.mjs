@@ -778,6 +778,23 @@ suite('settings expert', 'settings refuse the wrong type', () => {
   check('a string setting keeps its text', core.parseSetting('agent', 'ollamaModel', 'qwen3:8b').value === 'qwen3:8b', { happened: JSON.stringify(core.parseSetting('agent', 'ollamaModel', 'qwen3:8b')), why: 'A model name with a colon must not be mangled by the parser.', fix: 'Fall back to the raw text for string settings.' });
 });
 
+suite('long turn expert', 'a turn longer than the window', () => {
+  const s = sid('longturn');
+  const evPath = path.join(process.env.ATLIAS_HOME, 'sessions', core.safeId(s) + '.jsonl');
+  fs.mkdirSync(path.dirname(evPath), { recursive: true });
+  const older = [JSON.stringify({ t: 1000, kind: 'prompt', prompt_id: 'earlier', text: 'the turn before' }), JSON.stringify({ t: 1001, kind: 'edit', tool: 'Write', files: ['from-an-earlier-turn.mjs'] })];
+  const marker = JSON.stringify({ t: 2000, kind: 'prompt', prompt_id: 'this-turn', text: 'the turn under test' });
+  const filler = [];
+  for (let i = 0; i < 9000; i++) filler.push(JSON.stringify({ t: 3000 + i, kind: 'tool', tool: 'Read', key: 'k' + i, files: ['padding-' + i + '.txt'] }));
+  fs.writeFileSync(evPath, older.concat([marker], filler).join('\n') + '\n');
+  const size = fs.statSync(evPath).size;
+  check('the fixture pushes the marker out of the tail', size > core.TURN_TAIL, { happened: Math.round(size / 1024) + ' KB against a ' + Math.round(core.TURN_TAIL / 1024) + ' KB window', why: 'A turn that never reaches the window size cannot exercise the bug.', fix: 'Add more filler events.' });
+  const t = gate.turnEvents(s);
+  check('the turn is still identified correctly', t.promptId === 'this-turn', { happened: 'prompt id ' + t.promptId, why: 'The per-prompt flags are keyed by this id. Losing it collapses every long turn onto one key, so the gate fires once and is silent for the rest of the session.', fix: 'Fall back to the full log when the marker is not in the tail.' });
+  check('and it does not drag in an earlier turn', !gate.changedFiles(t.turn, PROJECT).some((f) => f.includes('from-an-earlier-turn')), { happened: gate.changedFiles(t.turn, PROJECT).filter((f) => f.includes('earlier')).join(', ') || 'none', why: 'Syntax-checking and naming files that were changed an hour ago makes the gate cry wolf about work nobody just did.', fix: 'Slice from the prompt marker, not from the start of the window.' });
+  check('a short turn still answers from the tail alone', gate.turnEvents(sid('gate2')).promptId !== undefined, { happened: 'the short path threw', why: 'The common case must not pay for the rare one.', fix: 'Only read the whole log when the tail has no marker.' });
+});
+
 let failed = 0;
 for (const r of results) {
   const ok = r.failed.length === 0;
