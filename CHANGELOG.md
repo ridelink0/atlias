@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.6 (2026-09-22)
+
+Two more places where something grew without a ceiling and was then cut in the middle. For Codex and Antigravity the brief pastes the memory index inline, and cut it at six thousand characters with an ellipsis, mid-line, saying nothing; with eighty memories that silently dropped half of them, and a model reading a truncated index concludes the rest do not exist. It now cuts on a line boundary and says how many it did not list. And the Dream digest listed every session waiting to be consolidated, so a fortnight of them produced an enormous file that the brief tells the model to read; it now shows the ten most recent and accounts for the rest, while ack still consolidates all of them.
+
 ## 2.1.5 (2026-09-22)
 
 The instruction block called every harness Antigravity. It mapped two host ids to their names and everything else to Antigravity, and the extra harnesses passed their own id into it, so the rules file written into Cursor, Windsurf, Kiro, Zed, Amp, Trae, Cline, Continue, CodeBuddy, Hermes, Droid and Aider each opened by telling that tool it was Antigravity. Nothing broke, which is exactly why it survived: it simply told twelve harnesses the wrong thing about themselves on every turn. Cursor also reads its rules only from a .mdc file that carries frontmatter, so one is now written when the extension calls for it, once, not stacked on every install.

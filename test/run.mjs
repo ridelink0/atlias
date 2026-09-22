@@ -689,6 +689,35 @@ suite('naming expert', 'each harness is called by its own name', () => {
   check('installing twice does not stack frontmatter or blocks', (twice.match(/alwaysApply/g) || []).length === 1 && (twice.match(/atlias:start/g) || []).length === 1, { happened: 'frontmatter ' + (twice.match(/alwaysApply/g) || []).length + ', blocks ' + (twice.match(/atlias:start/g) || []).length, why: 'A rules file that doubles on every install is read on every turn.', fix: 'Only seed the frontmatter when the file does not exist yet.' });
 });
 
+suite('truncation expert', 'nothing is cut in the middle', () => {
+  const index = [];
+  for (let i = 0; i < 120; i++) index.push('- [memory number ' + i + '](memory-' + i + '.md) - a description long enough to take up room in the index');
+  const memDir = core.claudeMemoryDir(PROJECT);
+  fs.mkdirSync(memDir, { recursive: true });
+  const savedIndex = fs.readFileSync(path.join(memDir, 'MEMORY.md'), 'utf8');
+  fs.writeFileSync(path.join(memDir, 'MEMORY.md'), index.join('\n') + '\n');
+  const text = brief.build({ cwd: PROJECT, session_id: sid('trunc'), source: 'startup' }, 'codex');
+  const memorySection = text.slice(text.indexOf('## Memory'), text.indexOf('Full files:'));
+  check('the index is cut on a line, never mid-line', memorySection.split('\n').filter((l) => l.startsWith('- ')).every((l) => /\.md\) - /.test(l)), { happened: memorySection.split('\n').filter((l) => l.startsWith('- ')).slice(-1)[0], why: 'Half a memory line reads as a memory with a mangled name, which is worse than one that is absent.', fix: 'Use fitLines rather than clip for the index.' });
+  check('and it says how many it did not list', /further memories are indexed/.test(text), { happened: memorySection.slice(-220), why: 'A model reading a silently truncated index concludes the rest do not exist and asks the user to repeat themselves.', fix: 'Report fitted.omitted.' });
+  const small = brief.fitLines('one\ntwo\nthree', 1000);
+  check('a list that fits is left alone and reports nothing omitted', small.text === 'one\ntwo\nthree' && small.omitted === 0, { happened: JSON.stringify(small), why: 'Most projects have a short index and must pay nothing for the bound.', fix: 'Check fitLines when everything fits.' });
+  const tiny = brief.fitLines('aaaa\nbbbb\ncccc', 6);
+  check('an impossible budget still returns whole lines', !tiny.text.includes('bbbb') && tiny.omitted === 2, { happened: JSON.stringify(tiny), why: 'The boundary case is where a mid-line cut would appear.', fix: 'Break before adding a line that does not fit.' });
+  fs.writeFileSync(path.join(memDir, 'MEMORY.md'), savedIndex);
+  const cwd2 = path.join(TMP, 'digest-pile');
+  fs.mkdirSync(cwd2, { recursive: true });
+  const rows = [];
+  for (let i = 1; i <= 30; i++) rows.push(JSON.stringify({ cursor: i, ts: '2026-09-2' + (i % 10) + 'T00:00:00Z', session: 's' + i, host: 'claude', prompts: ['prompt ' + i], files: ['f' + i + '.mjs'], tools: {}, checks: [], blocks: { guard: 0, gate: 0 }, summary: 'summary ' + i }));
+  fs.writeFileSync(dream.historyPath(cwd2), rows.join('\n') + '\n');
+  dream.digest(cwd2);
+  const digestText = fs.readFileSync(dream.digestPath(cwd2), 'utf8');
+  const sessions = (digestText.match(/^## Session /gm) || []).length;
+  check('a pile of unconsolidated sessions is summarised, not dumped', sessions === 10, { happened: sessions + ' sessions listed out of 30 waiting', why: 'The brief tells the model to read this file. Left for a fortnight it becomes the most expensive thing in the session.', fix: 'Show the most recent ten in dream.digest.' });
+  check('and the ones it left out are accounted for', /20 older session\(s\) are waiting too/.test(digestText), { happened: digestText.split('\n').slice(0, 8).join(' | '), why: 'Otherwise ack quietly consolidates sessions the model never saw.', fix: 'Keep the older sessions line.' });
+  check('acking still covers every waiting session', dream.ack(cwd2) === 30 && dream.pending(cwd2).count === 0, { happened: 'cursor ' + dream.cursor(cwd2) + ', pending ' + dream.pending(cwd2).count, why: 'Showing ten must not mean consolidating ten.', fix: 'ack works from history.jsonl, not from the digest.' });
+});
+
 let failed = 0;
 for (const r of results) {
   const ok = r.failed.length === 0;
