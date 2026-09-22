@@ -408,6 +408,21 @@ suite('measurement expert', 'bench', () => {
   check('the brief cost is measured, not guessed', cost.chars > 0 && cost.tokens === Math.ceil(cost.chars / 4), { happened: JSON.stringify(cost), why: 'The one cost atlias imposes on every session should be the number it is most precise about.', fix: 'briefCost builds the real brief and counts it.' });
 });
 
+suite('platform expert', 'platform assumptions', () => {
+  check('a plain path is written as a TOML literal string', hosts.tomlString('C:\\Users\\Gev\\atlias\\mcp\\server.mjs') === String.fromCharCode(39) + 'C:\\Users\\Gev\\atlias\\mcp\\server.mjs' + String.fromCharCode(39), { happened: hosts.tomlString('C:\\Users\\Gev\\atlias\\mcp\\server.mjs'), why: 'A literal string is the right form for a Windows path because backslashes in it mean nothing.', fix: 'Check tomlString in hosts.mjs.' });
+  const apostrophe = hosts.tomlString("C:\\Users\\O" + String.fromCharCode(39) + "Brien\\atlias\\mcp\\server.mjs");
+  check('a path with an apostrophe becomes a basic string, not a doubled quote', apostrophe.startsWith('"') && apostrophe.endsWith('"') && !apostrophe.includes(String.fromCharCode(39, 39)) && apostrophe.includes('\\\\'), { happened: apostrophe, why: 'TOML literal strings have no escapes, so the old doubled apostrophe produced a config.toml that does not parse. That takes Codex down, not just atlias.', fix: 'tomlString must switch to a basic string and escape backslashes when the value contains an apostrophe.' });
+  check('a POSIX path survives the same treatment', hosts.tomlString('/home/gev/atlias/mcp/server.mjs') === String.fromCharCode(39) + '/home/gev/atlias/mcp/server.mjs' + String.fromCharCode(39), { happened: hosts.tomlString('/home/gev/atlias/mcp/server.mjs'), why: 'The same installer runs on Linux and macOS.', fix: 'Check tomlString.' });
+  const withQuote = hosts.mergeToml("model = 'x'\n");
+  check('the generated block has one args line and one command line', (withQuote.match(/^args = /gm) || []).length === 1 && (withQuote.match(/^command = /gm) || []).length === 1, { happened: withQuote, why: 'A malformed table is worse than a missing one: Codex refuses the whole file.', fix: 'Check the block assembled in mergeToml.' });
+  check('paths are compared case-sensitively away from Windows', (() => {
+    const norm = (s) => (process.platform === 'win32' ? s.toLowerCase() : s);
+    return process.platform === 'win32' ? norm('/Home') === norm('/home') : norm('/Home') !== norm('/home');
+  })(), { happened: 'case folding matches the platform: ' + process.platform, why: 'On Linux and macOS /Home and /home are different directories; folding them together made a project look like the home directory and silently skip the graph.', fix: 'Fold case only on win32, in graph.status.' });
+  check('the project slug is stable for both path shapes', core.slug('/home/gev/app') === '-home-gev-app' && core.slug('D:\\work\\app') === 'D--work-app', { happened: core.slug('/home/gev/app') + ' and ' + core.slug('D:\\work\\app'), why: 'The slug is how every host finds the same memory; if it differs by platform the sharing stops at the OS boundary.', fix: 'slug replaces separators and colons only.' });
+  check('the hook command quotes a path for any shell', /^node "[^"]+" session-start --host codex$/.test(hosts.hookCommand('session-start', 'codex')), { happened: hosts.hookCommand('session-start', 'codex'), why: 'A path with a space in it is the norm on Windows and common enough elsewhere.', fix: 'Check hookCommand and its quoting.' });
+});
+
 let failed = 0;
 for (const r of results) {
   const ok = r.failed.length === 0;
