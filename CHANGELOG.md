@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.1 (2026-09-22)
+
+A setting you cannot corrupt, and a doctor that looks where the answer is. `atlias config set brief.memoryChars` with no value stored the empty string, nothing complained, and the clip that reads it silently stopped clipping, because a number compared to an empty string is never greater; a setting now takes the type its default has, refuses anything else with the reason, and prints what actually took effect rather than what was typed. And the doctor decided whether the Claude Code plugin was enabled by reading one settings file when enablement can equally live in the local one, so it told some users to reinstall something they already had.
+
 ## 2.2.0 (2026-09-22)
 
 Host configs stop pointing at a directory that will not exist. The installer wrote the absolute path of the running copy into Codex, Antigravity, Gemini and every extra harness, and when atlias runs as an installed plugin that path contains the version number. The next update writes the new version beside it and removes the old one, so every one of those configs is left pointing at a directory that is gone, and the failure shows up one update after the install, which is the hardest kind to connect to its cause. When the running copy sits at a versioned path the installer now writes a launcher into the state directory and points the hosts at that instead; the launcher resolves the newest installed copy at run time, falls back to the one that wrote it, and its own path never changes.

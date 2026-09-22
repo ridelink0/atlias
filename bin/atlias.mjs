@@ -9,7 +9,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
-import { VERSION, STATE_DIR, ROOT, readJson, writeJson, DEFAULTS, config } from '../lib/core.mjs';
+import { VERSION, STATE_DIR, ROOT, readJson, writeJson, DEFAULTS, config, parseSetting } from '../lib/core.mjs';
 import * as hosts from '../lib/hosts.mjs';
 import * as brief from '../lib/brief.mjs';
 import * as progress from '../lib/progress.mjs';
@@ -100,11 +100,12 @@ switch (cmd) {
     const user = readJson(p, {}) || {};
     if (argv[1] === 'set' && argv[2]) {
       const [section, key] = argv[2].split('.');
-      if (!DEFAULTS[section] || !(key in DEFAULTS[section])) { say(`unknown key ${argv[2]}; sections: ${Object.keys(DEFAULTS).join(', ')}`); process.exitCode = 2; break; }
-      const raw = argv.slice(3).join(' ');
-      let val; try { val = JSON.parse(raw); } catch { val = raw; }
-      user[section] = { ...(user[section] || {}), [key]: val };
-      writeJson(p, user); say(`${argv[2]} = ${JSON.stringify(val)}`);
+      const parsed = parseSetting(section, key, argv.slice(3).join(' '));
+      if (parsed.error) { say(parsed.error); process.exitCode = 2; break; }
+      user[section] = { ...(user[section] || {}), [key]: parsed.value };
+      writeJson(p, user);
+      // Read it back through config() so what is printed is what took effect.
+      say(`${argv[2]} = ${JSON.stringify(config()[section][key])}`);
     } else say(JSON.stringify(config(), null, 2));
     break;
   }

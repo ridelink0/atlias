@@ -768,6 +768,16 @@ suite('durable path expert', 'host configs survive an update', () => {
   check('a checkout still points hosts straight at the file', hosts.serverPathForConfig() === hosts.SERVER_MJS, { happened: hosts.serverPathForConfig(), why: 'Tests run from a checkout, and the extra hop would be pure cost there.', fix: 'serverPathForConfig returns SERVER_MJS when the path is not versioned.' });
 });
 
+suite('settings expert', 'settings refuse the wrong type', () => {
+  check('a missing value is refused with the type it wanted', /needs a value \(a number\)/.test(core.parseSetting('brief', 'memoryChars', '').error || ''), { happened: JSON.stringify(core.parseSetting('brief', 'memoryChars', '')), why: 'It used to store the empty string, and the clip that reads it then stopped clipping, because a number compared to an empty string is never greater.', fix: 'Check parseSetting for the empty case.' });
+  check('a word where a number belongs is refused', core.parseSetting('graph', 'queryBudget', 'lots').error !== undefined, { happened: JSON.stringify(core.parseSetting('graph', 'queryBudget', 'lots')), why: 'A budget of "lots" is not a budget.', fix: 'Coerce and check with Number.isFinite.' });
+  check('a number is accepted as a number, not a string', core.parseSetting('graph', 'queryBudget', '800').value === 800, { happened: JSON.stringify(core.parseSetting('graph', 'queryBudget', '800')), why: 'A numeric setting stored as text compares wrongly everywhere it is used.', fix: 'Return Number(value).' });
+  check('true and false are accepted in either spelling', core.parseSetting('verify', 'syntax', 'false').value === false && core.parseSetting('verify', 'syntax', 'true').value === true, { happened: JSON.stringify([core.parseSetting('verify', 'syntax', 'false'), core.parseSetting('verify', 'syntax', 'true')]), why: 'People type both, and a switch that silently ignores one is a switch nobody trusts.', fix: 'Accept the booleans and their spellings.' });
+  check('a number where a switch belongs is refused', core.parseSetting('verify', 'doublePass', '1').error !== undefined, { happened: JSON.stringify(core.parseSetting('verify', 'doublePass', '1')), why: 'One is not true, and guessing which the user meant is how a gate ends up off without anyone choosing that.', fix: 'Only true and false.' });
+  check('an unknown key still names the sections', /sections:/.test(core.parseSetting('nope', 'nothing', '1').error || ''), { happened: JSON.stringify(core.parseSetting('nope', 'nothing', '1')), why: 'The user mistyped and needs the list, not a refusal.', fix: 'Keep the section list in the message.' });
+  check('a string setting keeps its text', core.parseSetting('agent', 'ollamaModel', 'qwen3:8b').value === 'qwen3:8b', { happened: JSON.stringify(core.parseSetting('agent', 'ollamaModel', 'qwen3:8b')), why: 'A model name with a colon must not be mangled by the parser.', fix: 'Fall back to the raw text for string settings.' });
+});
+
 let failed = 0;
 for (const r of results) {
   const ok = r.failed.length === 0;
