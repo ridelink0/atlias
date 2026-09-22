@@ -452,6 +452,8 @@ suite('staleness expert', 'stale answers', () => {
   const gp = path.join(gdir, 'graph.json');
   fs.writeFileSync(gp, '{}');
   check('a graph with no edits after it is not marked stale', router.staleNote(PROJECT, s) === '', { happened: router.staleNote(PROJECT, s), why: 'Warning on every answer trains the model to ignore the warning.', fix: 'staleNote compares the newest edit event against the graph mtime.' });
+  const past = Date.now() / 1000 - 60;
+  fs.utimesSync(gp, past, past); // the graph was built a minute ago, not this millisecond
   core.recordEvent(s, { kind: 'edit', tool: 'Write', files: [path.join(PROJECT, 'fine.mjs')] });
   check('an edit after the graph was built marks the answer stale', /may be out of date/.test(router.staleNote(PROJECT, s)), { happened: router.staleNote(PROJECT, s) || '(empty)', why: 'A graph built before this session answers with the same confidence as a fresh one; that is how a harness makes a model wrong faster.', fix: 'Check the comparison in staleNote.' });
   const future = Date.now() / 1000 + 120;
@@ -489,6 +491,28 @@ suite('configuration expert', 'configuration respected', () => {
   check('syntax on and second pass off blocks for syntax only', onlySyntax && /syntax/.test(onlySyntax.reason) && !/second pass/.test(onlySyntax.reason), { happened: onlySyntax ? onlySyntax.reason.slice(0, 120) : '(not held)', why: 'The two checks are separate settings and have to behave separately.', fix: 'Check the branches in gate.stop.' });
   if (saved) fs.writeFileSync(cfgPath, saved); else fs.unlinkSync(cfgPath);
   check('the defaults come back after the test', config().verify.syntax === true && config().verify.doublePass === true, { happened: JSON.stringify(config().verify), why: 'A test that leaves configuration behind poisons every suite after it.', fix: 'Restore the config file in the test.' });
+});
+
+suite('long session expert', 'long sessions', () => {
+  const s = sid('long');
+  const evPath = path.join(process.env.ATLIAS_HOME, 'sessions', core.safeId(s) + '.jsonl');
+  fs.mkdirSync(path.dirname(evPath), { recursive: true });
+  const filler = [];
+  for (let i = 0; i < 20000; i++) filler.push(JSON.stringify({ t: Date.now() - 100000 + i, kind: 'tool', tool: 'Read', key: 'k' + i, files: ['f' + i + '.mjs'] }));
+  fs.writeFileSync(evPath, filler.join('\n') + '\n');
+  const bytes = fs.statSync(evPath).size;
+  check('the fixture really is a long session', bytes > 1500000, { happened: bytes + ' bytes', why: 'A performance test on a small file proves nothing.', fix: 'Raise the number of filler events.' });
+  const tail = core.eventsTail(s);
+  check('the tail parses only the recent end of the log', tail.length > 0 && tail.length < 2000 && tail[tail.length - 1].key === 'k19999', { happened: tail.length + ' events, last key ' + (tail.length ? tail[tail.length - 1].key : 'none'), why: 'The guard only looks at the last thirty tool events; parsing twenty thousand to find them is work nobody asked for.', fix: 'Check readTail and eventsTail in core.' });
+  check('a cut line at the head of the tail is discarded, not half-parsed', tail.every((e) => e && typeof e.kind === 'string'), { happened: JSON.stringify(tail[0]), why: 'The read starts mid-file, so the first line is almost always half a JSON object.', fix: 'readTail drops everything before the first newline when it did not start at zero.' });
+  const t0 = Date.now();
+  for (let i = 0; i < 5; i++) guard.preTool({ session_id: s, cwd: PROJECT, tool_name: 'Read', tool_input: { file_path: 'x' + i } });
+  const ms = Date.now() - t0;
+  check('five guard calls on a long session stay well under a second', ms < 1000, { happened: ms + 'ms across a ' + Math.round(bytes / 1024) + ' KB log', why: 'The guard runs before every tool call. If it scales with session length the harness gets slower exactly as the session gets long, which is when it matters most.', fix: 'guard.preTool must read the tail, not the whole log.' });
+  const t1 = Date.now();
+  gate.turnEvents(s);
+  check('the gate reads its turn from the tail too', Date.now() - t1 < 800, { happened: (Date.now() - t1) + 'ms', why: 'The gate runs at the end of every reply.', fix: 'turnEvents uses eventsTail with the larger turn budget.' });
+  check('reading the tail of a file that is not there is empty, not an error', core.readTail(path.join(TMP, 'nope.jsonl'), 1024) === '' && core.eventsTail('no-such-session').length === 0, { happened: 'readTail threw', why: 'The first tool call of a session happens before the log exists.', fix: 'Swallow the open error and return empty.' });
 });
 
 let failed = 0;
