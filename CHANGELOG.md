@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.7 (2026-09-22)
+
+The launcher stops depending on the directory it exists to outlive. 2.2.0 pointed host configs at a launcher in the state directory so they would survive an update, and then had that launcher import its resolver from the copy that wrote it, inside the versioned plugin directory that the next update deletes. It would have failed on its first import, in exactly the situation it was written for. The launcher is now self-contained, on node builtins alone, and resolves the newest installed copy first, then the one that wrote it. A suite asserts it imports nothing that can expire, starts with the recorded copy deleted, and says why when there is nothing left to run.
+
 ## 2.2.6 (2026-09-22)
 
 The doctor checks the launcher. Host configs point at ~/.atlias/server.mjs, and if that file is deleted every one of them loses its tools in silence: the server never starts and no host says why. The doctor now reports it, and reports whether the launcher can still find an installed copy to run. The README also catches up: forty suites, the launcher, and the two newest refusals, a memory name that would destroy the index and a write outside the project.

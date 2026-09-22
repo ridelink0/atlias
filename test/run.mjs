@@ -854,6 +854,27 @@ await (async function blastRadiusSuite() {
   check('and the user can still say yes', /written/.test(yes) && fs.existsSync(outside), { happened: yes, why: 'Editing a file outside the project is legitimate; it is just a decision someone should make.', fix: 'Honour the yes.' });
 })();
 
+await (async function launcherSuite() {
+  if (only.length && !only.some((o) => 'the launcher stands alone'.includes(o.toLowerCase()))) return;
+  current = { expert: 'launcher expert', name: 'the launcher stands alone', passed: 0, failed: [] };
+  results.push(current);
+  const src = core.LAUNCHER_SOURCE;
+  check('the launcher imports nothing from a versioned path', !/from\s+['\"]file:/.test(src) && !/\d+\.\d+\.\d+/.test(src.replace(/\\d\+/g, '')), { happened: src.split('\n').filter((l) => /import/.test(l)).join(' | '), why: 'The first version of this launcher imported its resolver from the copy that wrote it, which is the directory the next update deletes. It would have failed on its first import, in exactly the case it was written for.', fix: 'Keep the launcher on node builtins only.' });
+  check('it imports only node builtins', src.split('\n').filter((l) => /^import /.test(l)).every((l) => /'node:/.test(l)), { happened: src.split('\n').filter((l) => /^import /.test(l)).join(' | '), why: 'Anything else is a dependency that can move.', fix: 'Use node: specifiers.' });
+  const launcher = core.writeLauncher(ROOT);
+  const checked = spawnSync(process.execPath, ['--check', launcher], { encoding: 'utf8' });
+  check('it parses', checked.status === 0, { happened: (checked.stderr || 'ok').slice(0, 200), why: 'Generated code nobody reads until a host fails to start.', fix: 'Check LAUNCHER_SOURCE.' });
+  const fakeState = path.join(TMP, 'launcher-state');
+  fs.mkdirSync(fakeState, { recursive: true });
+  fs.writeFileSync(path.join(fakeState, 'root.json'), JSON.stringify({ root: path.join(TMP, 'a-copy-that-was-deleted'), version: '0.0.1' }));
+  const env = { ...process.env, ATLIAS_HOME: fakeState, ATLIAS_ROOT: ROOT };
+  const ok = spawnSync(process.execPath, [launcher], { input: JSON.stringify({ jsonrpc: '2.0', id: 1, method: 'initialize', params: { protocolVersion: '2025-06-18', capabilities: {} } }) + '\n', encoding: 'utf8', env, timeout: 15000 });
+  check('with the recorded copy deleted it still starts', /serverInfo/.test(ok.stdout || ''), { happened: (ok.stdout || ok.stderr || '').slice(0, 200), why: 'That is the whole scenario: the copy that wrote the launcher is gone and the hosts still need their tools.', fix: 'Fall through to the next candidate that has an mcp/server.mjs.' });
+  const nowhere = { ...process.env, ATLIAS_HOME: fakeState, CLAUDE_CONFIG_DIR: path.join(TMP, 'no-claude-here'), ATLIAS_ROOT: path.join(TMP, 'also-gone') };
+  const failed2 = spawnSync(process.execPath, [launcher], { input: '', encoding: 'utf8', env: nowhere, timeout: 15000 });
+  check('with nothing installed it says so and exits non-zero', failed2.status === 1 && /no installed copy/.test(failed2.stderr || ''), { happened: 'exit ' + failed2.status + ': ' + (failed2.stderr || '').slice(0, 120), why: 'A host that gets silence cannot tell a broken launcher from a slow one.', fix: 'Write the reason to stderr and exit 1.' });
+})();
+
 let failed = 0;
 for (const r of results) {
   const ok = r.failed.length === 0;
