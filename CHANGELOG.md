@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.3.0 (2026-09-22)
+
+The platform gap closes by evidence. Everything here was written and run on Windows, the platform assumptions were reasoned about rather than observed, and the last two platform bugs came from exactly that. The whole suite, the command line, the logo, the agent, the bench and an MCP handshake now run on Linux, macOS and Windows across Node 18, 20 and 22 on every push.
+
 ## 2.2.8 (2026-09-22)
 
 The doctor proves the launcher instead of assuming it. It checked that the file exists, which says nothing about whether a host would get its tools from it: a broken resolver, a node that is not on the host’s PATH, a half-written file, all look identical to a file that is there. The doctor now starts it, speaks the initialize handshake, and reports the name and version it answered with, which is exactly what a host does a moment later; a crash is reported with its own first line, and silence is not reported as success.

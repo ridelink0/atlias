@@ -1,5 +1,7 @@
 # atlias
 
+[![tests](https://github.com/ridelink0/atlias/actions/workflows/test.yml/badge.svg)](https://github.com/ridelink0/atlias/actions/workflows/test.yml)
+
 A sub-harness for Claude Code, Codex, Antigravity and Gemini CLI. It links itself to the host the moment a session opens and makes whatever model is running inside smarter, cheaper and harder to fool: one memory shared by every host, a knowledge graph that answers codebase questions before a file is read, a cache-stable session brief, guards against loops and destructive commands, a verification gate that holds a reply until the work is checked twice, handoff notes that survive compaction, and a Dream stage that turns each session into memory.
 
 The name is a tribute to atelier, the art-direction plugin that was folded into Ultimate Frontend Skills.
