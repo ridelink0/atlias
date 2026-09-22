@@ -672,6 +672,23 @@ suite('idle turn expert', 'turns that did nothing', () => {
   core.clearGitMemo();
 });
 
+suite('naming expert', 'each harness is called by its own name', () => {
+  const wrong = extras.EXTRAS.filter((h) => !hosts.instructionBlock(h.label).includes(h.label));
+  check('every harness block names that harness', wrong.length === 0, { happened: wrong.map((h) => h.label).join(', ') || 'all correct', why: 'The block opens by telling the tool which tool it is. Getting that wrong told twelve harnesses they were Antigravity, on every turn, and nothing failed loudly enough to notice.', fix: 'instructionBlock takes a display name; pass h.label rather than h.id.' });
+  const others = extras.EXTRAS.filter((h) => h.id !== 'antigravity');
+  check('and none of them is told it is Antigravity', others.every((h) => !hosts.instructionBlock(h.label).includes('Antigravity')), { happened: others.filter((h) => hosts.instructionBlock(h.label).includes('Antigravity')).map((h) => h.label).join(', '), why: 'That was the exact symptom.', fix: 'Check the fallback in instructionBlock.' });
+  check('the known host ids still resolve to their proper names', hosts.instructionBlock('codex').includes('Codex') && hosts.instructionBlock('gemini').includes('Gemini CLI') && hosts.instructionBlock('antigravity').includes('Antigravity'), { happened: 'a known id lost its name', why: 'The first callers pass ids, not labels, and they must keep working.', fix: 'Keep the HOST_NAMES map.' });
+  const dir = path.join(TMP, 'cursor-like');
+  fs.mkdirSync(path.join(dir, 'rules'), { recursive: true });
+  const host = { id: 'cursorlike', label: 'Cursor', dir, mcp: null, shape: null, docs: path.join(dir, 'rules', 'atlias.mdc'), verified: false };
+  extras.install(host);
+  const mdc = fs.readFileSync(host.docs, 'utf8');
+  check('an mdc rule file gets the frontmatter that makes it readable', mdc.startsWith('---') && /alwaysApply: true/.test(mdc) && /Cursor/.test(mdc), { happened: mdc.slice(0, 120), why: 'Cursor ignores a rule file with no frontmatter, so the block would have been written and never read.', fix: 'Prepend MDC_FRONTMATTER when the target ends in .mdc.' });
+  extras.install(host);
+  const twice = fs.readFileSync(host.docs, 'utf8');
+  check('installing twice does not stack frontmatter or blocks', (twice.match(/alwaysApply/g) || []).length === 1 && (twice.match(/atlias:start/g) || []).length === 1, { happened: 'frontmatter ' + (twice.match(/alwaysApply/g) || []).length + ', blocks ' + (twice.match(/atlias:start/g) || []).length, why: 'A rules file that doubles on every install is read on every turn.', fix: 'Only seed the frontmatter when the file does not exist yet.' });
+});
+
 let failed = 0;
 for (const r of results) {
   const ok = r.failed.length === 0;

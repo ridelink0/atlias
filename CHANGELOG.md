@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.5 (2026-09-22)
+
+The instruction block called every harness Antigravity. It mapped two host ids to their names and everything else to Antigravity, and the extra harnesses passed their own id into it, so the rules file written into Cursor, Windsurf, Kiro, Zed, Amp, Trae, Cline, Continue, CodeBuddy, Hermes, Droid and Aider each opened by telling that tool it was Antigravity. Nothing broke, which is exactly why it survived: it simply told twelve harnesses the wrong thing about themselves on every turn. Cursor also reads its rules only from a .mdc file that carries frontmatter, so one is now written when the extension calls for it, once, not stacked on every install.
+
 ## 2.1.4 (2026-09-22)
 
 Stop paying for a turn that did nothing. The handoff note was rewritten at the end of every reply, including one that only answered a question, which cost a file write and a git process for a turn with nothing to hand off, and replaced a note from a turn that did have something to say with one that does not. The note is now written only when the turn changed a file or ran a command. And within a single reply git status ran twice, once for the note and once to find edits made outside the tools; one memo now serves both, and expires after two seconds so it never reports yesterday.
