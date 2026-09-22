@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.5 (2026-09-22)
+
+A write outside the project is a decision, not a detail. The terminal agent guarded shell commands and let the file tools write anywhere, so a local model that resolved a path badly, or followed an instruction from a file it had just read, could overwrite something in the home directory with nobody asked. Writing outside the directory the agent was started in now asks, treats no answer as no, and says what to do instead; a write inside the project is untouched, because that is the work.
+
 ## 2.2.4 (2026-09-22)
 
 Two slow leaks. The gate keeps a flag per prompt so it speaks once per turn, and never dropped an old one, so a four hundred turn session carried four hundred keys in a file that is read and rewritten at the end of every reply while only the current turn is ever consulted; it now keeps a short tail. And saving a memory rebuilt the index from its non-empty lines, which silently deleted every blank line, so an index with sections lost its shape one save at a time; the raw lines are now kept and only the entry being replaced is touched.

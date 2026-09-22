@@ -1,20 +1,20 @@
 {
   ".claude-plugin/marketplace.json": {
-    "mtime": 1790079459.3761072,
-    "seen": 1790079467.1599305,
-    "ast_hash": "c6313ea500484f9cb74ae3a6d3fe2bac",
+    "mtime": 1790079691.7131882,
+    "seen": 1790079748.6544013,
+    "ast_hash": "32dcd5593952c84dade325464cab1b09",
     "semantic_hash": ""
   },
   ".claude-plugin/plugin.json": {
-    "mtime": 1790079459.3761072,
-    "seen": 1790079467.1599364,
-    "ast_hash": "c7eec7f1a57e5d1cc9f80d6a5f7b4704",
+    "mtime": 1790079691.712189,
+    "seen": 1790079748.6544087,
+    "ast_hash": "04f89e524b8acfc8ca0af520e325f28c",
     "semantic_hash": ""
   },
   "bin/atlias.mjs": {
-    "mtime": 1790079303.9590023,
-    "seen": 1790079359.1325746,
-    "ast_hash": "c3525cfd773ee8e11e65acbe12d74884",
+    "mtime": 1790079614.1129272,
+    "seen": 1790079748.6544118,
+    "ast_hash": "04ffe37c49e5643855a6faa2d46b8998",
     "semantic_hash": ""
   },
   "hooks/hooks.json": {
@@ -36,9 +36,9 @@
     "semantic_hash": ""
   },
   "lib/core.mjs": {
-    "mtime": 1790079412.4242072,
-    "seen": 1790079467.1609192,
-    "ast_hash": "74cf29f0dd6965947ff2d951809d3084",
+    "mtime": 1790079691.7111883,
+    "seen": 1790079748.6561098,
+    "ast_hash": "c87be235b26f9d909c345262fb8bca45",
     "semantic_hash": ""
   },
   "lib/dream.mjs": {
@@ -48,9 +48,9 @@
     "semantic_hash": ""
   },
   "lib/gate.mjs": {
-    "mtime": 1790078932.3610327,
-    "seen": 1790078988.0838614,
-    "ast_hash": "979244fc8a91e6462283653422394a41",
+    "mtime": 1790079691.7111883,
+    "seen": 1790079748.656408,
+    "ast_hash": "fb6e8ebbcbc9721cdeab086a5fcba27d",
     "semantic_hash": ""
   },
   "lib/graph.mjs": {
@@ -78,9 +78,9 @@
     "semantic_hash": ""
   },
   "lib/hosts.mjs": {
-    "mtime": 1790079459.3741064,
-    "seen": 1790079467.1621313,
-    "ast_hash": "211339adffb69682facee42dd401ec57",
+    "mtime": 1790079614.1139286,
+    "seen": 1790079748.6573918,
+    "ast_hash": "6688bb4b52a7f0b9ae39bcfe5b2c93a1",
     "semantic_hash": ""
   },
   "lib/logo.mjs": {
@@ -120,21 +120,21 @@
     "semantic_hash": ""
   },
   "package.json": {
-    "mtime": 1790079459.375112,
-    "seen": 1790079467.1634188,
-    "ast_hash": "6d099be3abb2de47a141fb43f7c065e1",
+    "mtime": 1790079691.712189,
+    "seen": 1790079748.65902,
+    "ast_hash": "b604c6abe25097172f2968e78105140d",
     "semantic_hash": ""
   },
   "test/run.mjs": {
-    "mtime": 1790079459.3771083,
-    "seen": 1790079467.163421,
-    "ast_hash": "0d565baa5e5c0628182adf80ed3002ef",
+    "mtime": 1790079691.7151906,
+    "seen": 1790079748.6590245,
+    "ast_hash": "efb464f6454cf4e31d0c1eb6c5cd69a2",
     "semantic_hash": ""
   },
   "CHANGELOG.md": {
-    "mtime": 1790079459.378108,
-    "seen": 1790079467.163423,
-    "ast_hash": "ed1f76054e036614953fa921a3049367",
+    "mtime": 1790079691.7161894,
+    "seen": 1790079748.6590283,
+    "ast_hash": "21a3714869d1a21b440b55a887e6ccb1",
     "semantic_hash": ""
   },
   "README.md": {

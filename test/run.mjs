@@ -836,6 +836,24 @@ suite('leak expert', 'nothing grows for ever', () => {
   check('saving it again replaces the line rather than adding one', (twice.match(/\(three\.md\)/g) || []).length === 1 && /revised/.test(twice), { happened: (twice.match(/\(three\.md\)/g) || []).length + ' lines for three.md', why: 'A duplicated index line is read on every session start.', fix: 'Filter the old line before appending.' });
 });
 
+await (async function blastRadiusSuite() {
+  if (only.length && !only.some((o) => 'writes outside the project'.includes(o.toLowerCase()))) return;
+  current = { expert: 'blast radius expert', name: 'writes outside the project', passed: 0, failed: [] };
+  results.push(current);
+  check('a path inside the project is inside', agentMod.insideProject(PROJECT, path.join(PROJECT, 'a', 'b.mjs')) && agentMod.insideProject(PROJECT, PROJECT), { happened: 'an ordinary path was called outside', why: 'Every real edit is inside the project and must not be interrupted.', fix: 'Check insideProject.' });
+  check('a sibling directory is outside', !agentMod.insideProject(PROJECT, path.join(TMP, 'somewhere-else', 'x.mjs')), { happened: 'a sibling was called inside', why: 'A relative path that climbs out is the ordinary way this happens.', fix: 'Use path.relative and reject a result that starts with two dots.' });
+  check('a path that only shares a prefix is outside', !agentMod.insideProject(PROJECT, PROJECT + '-other/x.mjs'), { happened: 'a prefix match was called inside', why: 'Comparing with startsWith on the string is the classic version of this bug.', fix: 'Compare on path segments, not text.' });
+  const state = agentMod.newState(PROJECT, 'echo');
+  const outside = path.join(TMP, 'outside-the-project.mjs');
+  const refused = await agentMod.runTool(state, { tool: 'write_file', path: outside, content: 'export const a = 1;' }, null);
+  check('with nobody to ask, a write outside is refused', /refused/.test(refused) && !fs.existsSync(outside), { happened: refused, why: 'A local model that resolves a path badly, or follows an instruction from a file it just read, could otherwise overwrite something in the home directory with no one asked.', fix: 'Treat a missing prompt as no, exactly as the shell guard does.' });
+  check('and it says what to do instead', /start atlias in the directory/.test(refused), { happened: refused, why: 'A refusal with no route forward gets worked around.', fix: 'Keep the remedy in the message.' });
+  const allowed = await agentMod.runTool(state, { tool: 'write_file', path: 'inside-the-project.mjs', content: 'export const a = 1;' }, null);
+  check('a write inside the project is not interrupted', /written/.test(allowed) && fs.existsSync(path.join(PROJECT, 'inside-the-project.mjs')), { happened: allowed, why: 'Confirming every ordinary edit would train the user to answer yes without reading.', fix: 'Only ask when the path leaves the project.' });
+  const yes = await agentMod.runTool(state, { tool: 'write_file', path: outside, content: 'export const a = 2;' }, async () => 'y');
+  check('and the user can still say yes', /written/.test(yes) && fs.existsSync(outside), { happened: yes, why: 'Editing a file outside the project is legitimate; it is just a decision someone should make.', fix: 'Honour the yes.' });
+})();
+
 let failed = 0;
 for (const r of results) {
   const ok = r.failed.length === 0;
