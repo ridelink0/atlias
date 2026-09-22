@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.4 (2026-09-22)
+
+Two slow leaks. The gate keeps a flag per prompt so it speaks once per turn, and never dropped an old one, so a four hundred turn session carried four hundred keys in a file that is read and rewritten at the end of every reply while only the current turn is ever consulted; it now keeps a short tail. And saving a memory rebuilt the index from its non-empty lines, which silently deleted every blank line, so an index with sections lost its shape one save at a time; the raw lines are now kept and only the entry being replaced is touched.
+
 ## 2.2.3 (2026-09-22)
 
 harness_remember could destroy the memory index. The name went straight into a file beside MEMORY.md, and on Windows and macOS the filesystem is case-insensitive, so remembering something called "memory" wrote the body over MEMORY.md itself; the index rewrite that follows then read that body as the index, appended one line and saved it, and every memory line for that project was gone. A model choosing a reasonable-sounding name could do it without doing anything wrong. Those names are now refused before anything is written, with a working alternative in the message.

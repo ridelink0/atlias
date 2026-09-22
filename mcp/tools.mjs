@@ -69,9 +69,14 @@ export function remember(cwd, { name, type, description, body }) {
   const desc = String(description).replace(/\r?\n/g, ' ');
   writeText(file, `---\nname: ${name}\ndescription: ${desc}\nmetadata:\n  type: ${type}\n---\n\n${String(body || description).trim()}\n`);
   const index = path.join(memDir, 'MEMORY.md');
-  const lines = readLines(index).filter((l) => !l.includes(`](${name}.md)`));
-  lines.push(`- [${name.replace(/[-_]/g, ' ')}](${name}.md) - ${clip(desc, 160)}`);
-  writeText(index, lines.join('\n') + '\n');
+  // Keep every line the file already had, including the blank ones. Rebuilding
+  // it from non-empty lines deleted the shape of a structured index, one save
+  // at a time, and never mentioned it.
+  const existingIndex = readText(index) || '';
+  const kept = existingIndex.split(/\r?\n/).filter((l) => !l.includes(`](${name}.md)`));
+  while (kept.length && kept[kept.length - 1].trim() === '') kept.pop();
+  kept.push(`- [${name.replace(/[-_]/g, ' ')}](${name}.md) - ${clip(desc, 160)}`);
+  writeText(index, kept.join('\n') + '\n');
   return `${existed ? 'updated' : 'saved'} ${file} and indexed it in MEMORY.md (shared by every host).`;
 }
 

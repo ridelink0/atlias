@@ -811,6 +811,31 @@ suite('index safety expert', 'the memory index cannot be overwritten', () => {
   check('an ordinary name is still accepted', /saved|updated/.test(tools.remember(PROJECT, { name: 'memory-notes', type: 'project', description: 'a note about memory', body: 'fine' })), { happened: tools.remember(PROJECT, { name: 'memory-notes', type: 'project', description: 'a note about memory', body: 'fine' }), why: 'The guard must not block the obvious alternative it just suggested.', fix: 'Only the exact reserved names are refused.' });
 });
 
+suite('leak expert', 'nothing grows for ever', () => {
+  const s = sid('flagleak');
+  for (let i = 0; i < 40; i++) {
+    router.prompt({ session_id: s, cwd: PROJECT, prompt: 'turn number ' + i + ' please change a file' });
+    const f = path.join(PROJECT, 'leak-' + i + '.mjs');
+    fs.writeFileSync(f, 'export const a = ;');
+    track.postTool({ session_id: s, cwd: PROJECT, tool_name: 'Write', tool_input: { file_path: f } });
+    gate.stop({ session_id: s, cwd: PROJECT, last_assistant_message: 'Done.' });
+  }
+  const meta = core.sessionMeta(s);
+  const keys = Object.keys(meta.gate || {});
+  check('the gate keeps a short tail of flags, not one per turn', keys.length <= 25, { happened: keys.length + ' flag keys after 40 turns', why: 'Session meta is read and rewritten at the end of every reply, and only the current turn is ever consulted.', fix: 'Trim to the most recent keys in setFlag.' });
+  check('and the most recent turn is one it kept', keys.length > 0, { happened: keys.length + ' keys', why: 'Trimming the wrong end would make the gate speak twice on the turn it just spoke on.', fix: 'Keep the tail, not the head.' });
+  const memDir = core.claudeMemoryDir(PROJECT);
+  const indexPath = path.join(memDir, 'MEMORY.md');
+  fs.writeFileSync(indexPath, '# Memories\n\n## Projects\n\n- [one](one.md) - the first\n\n## People\n\n- [two](two.md) - the second\n');
+  tools.remember(PROJECT, { name: 'three', type: 'project', description: 'the third', body: 'x' });
+  const after = fs.readFileSync(indexPath, 'utf8');
+  check('saving a memory keeps the shape of the index', /# Memories\n\n## Projects\n\n- \[one\]/.test(after) && /## People/.test(after), { happened: JSON.stringify(after.slice(0, 120)), why: 'Rebuilding the file from its non-empty lines deleted every blank line, so a structured index lost its sections one save at a time and nothing said so.', fix: 'Filter the raw lines instead of readLines.' });
+  check('and the new memory is on the end', /- \[three\]\(three\.md\)/.test(after) && after.trim().endsWith('the third'), { happened: after.split('\n').slice(-3).join(' | '), why: 'Preserving the shape is worthless if the entry is lost.', fix: 'Append after trimming trailing blanks only.' });
+  tools.remember(PROJECT, { name: 'three', type: 'project', description: 'the third, revised', body: 'x' });
+  const twice = fs.readFileSync(indexPath, 'utf8');
+  check('saving it again replaces the line rather than adding one', (twice.match(/\(three\.md\)/g) || []).length === 1 && /revised/.test(twice), { happened: (twice.match(/\(three\.md\)/g) || []).length + ' lines for three.md', why: 'A duplicated index line is read on every session start.', fix: 'Filter the old line before appending.' });
+});
+
 let failed = 0;
 for (const r of results) {
   const ok = r.failed.length === 0;
