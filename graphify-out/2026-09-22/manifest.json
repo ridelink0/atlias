@@ -1,14 +1,14 @@
 {
   ".claude-plugin/marketplace.json": {
-    "mtime": 1790080152.992378,
-    "seen": 1790080209.4862988,
-    "ast_hash": "8e78846a39525eb561bc805764db25eb",
+    "mtime": 1790080230.9864216,
+    "seen": 1790080279.751722,
+    "ast_hash": "ff32b34992cf6c4ba08e06f7bc1b5b9c",
     "semantic_hash": ""
   },
   ".claude-plugin/plugin.json": {
-    "mtime": 1790080152.9913812,
-    "seen": 1790080209.4863043,
-    "ast_hash": "412e069cab5ab7388d3b120ded0a678b",
+    "mtime": 1790080230.9854214,
+    "seen": 1790080279.7517276,
+    "ast_hash": "c169c02bc5467e9dc09527e864298450",
     "semantic_hash": ""
   },
   "bin/atlias.mjs": {
@@ -36,9 +36,9 @@
     "semantic_hash": ""
   },
   "lib/core.mjs": {
-    "mtime": 1790080152.989376,
-    "seen": 1790080209.4872608,
-    "ast_hash": "9177810705493ea8bf3a21f3373a423a",
+    "mtime": 1790080230.9864216,
+    "seen": 1790080279.7535017,
+    "ast_hash": "528ea6565cd06c9d26060e829cb4a848",
     "semantic_hash": ""
   },
   "lib/dream.mjs": {
@@ -120,9 +120,9 @@
     "semantic_hash": ""
   },
   "package.json": {
-    "mtime": 1790080152.9903746,
-    "seen": 1790080209.4890637,
-    "ast_hash": "93c37f7219d89ca4c795eac8398dc0f4",
+    "mtime": 1790080230.9854214,
+    "seen": 1790080279.7557163,
+    "ast_hash": "4be7dc87357c5b583c8c7607e6271f7e",
     "semantic_hash": ""
   },
   "test/run.mjs": {
@@ -132,15 +132,15 @@
     "semantic_hash": ""
   },
   "CHANGELOG.md": {
-    "mtime": 1790080152.9943762,
-    "seen": 1790080209.4890666,
-    "ast_hash": "5fd453a768b6546c6c42be9c01f48652",
+    "mtime": 1790080230.9884224,
+    "seen": 1790080279.7558882,
+    "ast_hash": "4a78235d45dee1ea537b3e0a171af69a",
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1790079968.1430185,
-    "seen": 1790080023.1876655,
-    "ast_hash": "e4fdba2caa4a9a04ab750309c77735a7",
+    "mtime": 1790080230.9874258,
+    "seen": 1790080279.7558897,
+    "ast_hash": "a1d625dc57a28389a5c0bd22584b9cf0",
     "semantic_hash": ""
   },
   "skills/double-check/SKILL.md": {
@@ -159,6 +159,12 @@
     "mtime": 1790078847.7656603,
     "seen": 1790078903.5964513,
     "ast_hash": "528e6069b9f1c22181775cc45ea0c297",
+    "semantic_hash": ""
+  },
+  ".github/workflows/test.yml": {
+    "mtime": 1790080214.1151974,
+    "seen": 1790080279.7558856,
+    "ast_hash": "c92ebe74407f7a23fa29aabb40c622b6",
     "semantic_hash": ""
   }
 }

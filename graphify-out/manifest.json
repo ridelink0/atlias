@@ -1,14 +1,14 @@
 {
   ".claude-plugin/marketplace.json": {
-    "mtime": 1790080230.9864216,
-    "seen": 1790080279.751722,
-    "ast_hash": "ff32b34992cf6c4ba08e06f7bc1b5b9c",
+    "mtime": 1790080516.566651,
+    "seen": 1790080551.134624,
+    "ast_hash": "64795da4ad03dd603166d13209713ae5",
     "semantic_hash": ""
   },
   ".claude-plugin/plugin.json": {
-    "mtime": 1790080230.9854214,
-    "seen": 1790080279.7517276,
-    "ast_hash": "c169c02bc5467e9dc09527e864298450",
+    "mtime": 1790080516.5656488,
+    "seen": 1790080551.1346304,
+    "ast_hash": "10786c60d73aa9443f6896b05d73ff7a",
     "semantic_hash": ""
   },
   "bin/atlias.mjs": {
@@ -36,9 +36,9 @@
     "semantic_hash": ""
   },
   "lib/core.mjs": {
-    "mtime": 1790080230.9864216,
-    "seen": 1790080279.7535017,
-    "ast_hash": "528ea6565cd06c9d26060e829cb4a848",
+    "mtime": 1790080516.566651,
+    "seen": 1790080551.1357586,
+    "ast_hash": "93852b32d44d69ffe3b90a2c01a6fd26",
     "semantic_hash": ""
   },
   "lib/dream.mjs": {
@@ -120,9 +120,9 @@
     "semantic_hash": ""
   },
   "package.json": {
-    "mtime": 1790080230.9854214,
-    "seen": 1790080279.7557163,
-    "ast_hash": "4be7dc87357c5b583c8c7607e6271f7e",
+    "mtime": 1790080516.5656488,
+    "seen": 1790080551.1392677,
+    "ast_hash": "62c79757662080fdca7a870f9c9bd778",
     "semantic_hash": ""
   },
   "test/run.mjs": {
@@ -132,15 +132,15 @@
     "semantic_hash": ""
   },
   "CHANGELOG.md": {
-    "mtime": 1790080230.9884224,
-    "seen": 1790080279.7558882,
-    "ast_hash": "4a78235d45dee1ea537b3e0a171af69a",
+    "mtime": 1790080516.5686612,
+    "seen": 1790080551.1394467,
+    "ast_hash": "3e0352268592762ab6dec45fa89486a1",
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1790080230.9874258,
-    "seen": 1790080279.7558897,
-    "ast_hash": "a1d625dc57a28389a5c0bd22584b9cf0",
+    "mtime": 1790080516.5676486,
+    "seen": 1790080551.1394486,
+    "ast_hash": "3fb87174e0c87fd2e5fe8e30ea376baa",
     "semantic_hash": ""
   },
   "skills/double-check/SKILL.md": {
@@ -162,9 +162,15 @@
     "semantic_hash": ""
   },
   ".github/workflows/test.yml": {
-    "mtime": 1790080214.1151974,
-    "seen": 1790080279.7558856,
-    "ast_hash": "c92ebe74407f7a23fa29aabb40c622b6",
+    "mtime": 1790080516.5646544,
+    "seen": 1790080551.139445,
+    "ast_hash": "8e8861f9e0f3a3e1379b9ac14becdf7b",
+    "semantic_hash": ""
+  },
+  "test/install-sandbox.mjs": {
+    "mtime": 1790080484.9659064,
+    "seen": 1790080551.13927,
+    "ast_hash": "df414037650591d03df59bd76056a793",
     "semantic_hash": ""
   }
 }
