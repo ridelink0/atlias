@@ -24,7 +24,9 @@ export default async function shortcutSuites({ suite, check, TMP, ROOT, spawnSyn
     check('on Windows it prefers a folder that is already on PATH', w.onPath && /WindowsApps$/.test(w.dir), { happened: JSON.stringify(w), why: 'WindowsApps is on PATH for every Windows user by default, which is what makes the command work without editing PATH.', fix: 'Check chooseShimDir and shimDirCandidates.' });
     const w2 = shortcut.chooseShimDir(winEnv(false), 'win32');
     check('with nothing on PATH it still picks a folder and says so', !w2.onPath && typeof w2.dir === 'string', { happened: JSON.stringify(w2), why: 'The user needs to be told the command will not be found yet, not left to discover it.', fix: 'Return onPath false and let installShortcut add the note.' });
-    const p = shortcut.chooseShimDir(posixEnv(true), 'linux');
+    // Linux-shaped paths: a Windows temp path in a colon-separated PATH loses
+    // its drive letter, which only passes where the working drive happens to match.
+    const p = shortcut.chooseShimDir({ HOME: '/home/u', PATH: '/home/u/.local/bin:/usr/bin:/bin' }, 'linux');
     check('on Linux and macOS it uses ~/.local/bin when that is on PATH', p.onPath && p.dir.endsWith(path.join('.local', 'bin')), { happened: JSON.stringify(p), why: 'That is where user-level commands live on both platforms.', fix: 'Check shimDirCandidates for posix.' });
     const files = shortcut.shimFiles('win32', 'C:' + String.fromCharCode(92) + 'x' + String.fromCharCode(92) + 'cli.mjs');
     const cmd = files.find((f) => f.name === 'atlias.cmd');
