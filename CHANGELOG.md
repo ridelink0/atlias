@@ -1,5 +1,17 @@
 # Changelog
 
+## 3.0.0 (2026-09-22)
+
+atlias becomes a harness in its own right, not only a sub-harness. Its terminal agent used to hand the work to another CLI; it now also drives any OpenAI-compatible model or a local Ollama model directly, through a loop built around what weak models get wrong, and `atlias mode both|sub|standalone` decides whether atlias runs inside other harnesses, on its own, or both. That is a change in what atlias is, so the major number moves.
+
+Done means done. The gate checks the claim against the session: a pass claimed with no test run, a pass claimed after a failing run, done with no check since the last edit, placeholders, weakened tests and new code nothing calls, all in one block per prompt because a host lets the gate speak once. In a live run, gemma3:4b claimed it had fixed a bug the tests had just refuted; the gate held the claim and the model took it back.
+
+Two Codex bugs are fixed from Codex's own source. Its apply_patch hook sends the patch in `tool_input.command`, so atlias never saw a Codex edit; and its PreToolUse fails open on `ask`, so the destructive guard let every flagged command run, as it did in Gemini CLI. On hosts that cannot pause a tool, the guard now denies, tells the model to ask, and lets the identical command through once after the user answers.
+
+The agent: Codex's apply_patch format, parsed from Codex's grammar and applied all or nothing; exact-text edits with a syntax guard that puts a broken file back; undo; windowed reads and an outline tool; tool JSON and foreign tool names repaired; native tool calling with a text fallback; observation masking and plan recitation; project AGENTS.md, CLAUDE.md and GEMINI.md in the prompt; the project's own check run by the harness when the model answers after editing; workspace, ask and read-only permissions; alternating-loop detection; saved sessions and `atlias resume`; `atlias exec` with `--json`; and /status, /diff, /review, /undo, /compact, /sessions and /permissions.
+
+Everywhere else: an `atlias` command in any terminal (`atlias shortcut install`, or `npm install -g github:ridelink0/atlias`); `atlias settings`, a menu over every option; a Usage section in the Claude Code brief that states the 5-hour and weekly windows as information, never as a brake, and defers to the user; a Codex plugin manifest; a logo; a README rewritten around what atlias catches; and docs/RESEARCH.md, naming the source behind each mechanism and what has not been measured. A coverage suite now fails the run when any exported function has no test of its own.
+
 ## 2.3.1 (2026-09-22)
 
 What can be verified about the host configs now is. The shapes stay marked UNVERIFIED, because nobody here has those tools installed and claiming otherwise would be the pretending this harness exists to stop, but that was never a reason to leave the files unchecked. A new sandbox install runs on all three platforms in CI: it installs into a throwaway home, parses the config.toml it produced with a real TOML parser and every JSON file with a real JSON parser, proves that installing twice changes nothing at all, and proves that uninstalling removes the atlias entry while another server’s entry beside it survives.

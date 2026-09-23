@@ -34,6 +34,10 @@ An honest count: the 3.0 work drew on the fourteen primary sources listed here, 
 | Manus, [Context engineering for AI agents](https://manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Manus) | Reciting the plan at the end of the context keeps a long task on course; a stable prompt prefix keeps the KV cache hitting | the plan line after every tool result, and a system prompt that does not change between calls |
 | [HKUDS nanobot](https://github.com/HKUDS/nanobot), issues 2463, 4522, 5266, 1955 | Broken prompt-prefix caching, repeated identical calls, invisible token burn, opaque subagents | the base atlias was built on in 2.0; see the README table |
 
+## One live run
+
+`gemma3:4b` through Ollama, on a project whose `add()` subtracted and whose `npm test` failed, told only to fix it (`atlias exec --engine ollama`). The model did not find the one-character bug: it wrote a new test file and added input checks around the same wrong line. Its first answer said the bug was fixed and the check passed. The gate held that answer, because the only test runs on record had failed, and the model's next answer said the test still fails. atlias ran `npm test` itself after the edits, and all three runs are recorded as failed in the JSON result. What that shows: the honesty layer works on a real weak model, and a four-billion-parameter model is below the level where the harness can make up the difference. One run is an anecdote, not a measurement.
+
 ## Not measured
 
 Whether atlias makes a given model finish more tasks. Every mechanism above is tested to do what it says (the suite checks each one), and each has a published result behind it in some other harness, but nobody has yet run the same tasks with atlias on and off and counted. `atlias bench` measures token cost only, and says so in its own output. Until that comparison exists, "makes a weak model as capable as a strong one" is a goal the design aims at, not a result.

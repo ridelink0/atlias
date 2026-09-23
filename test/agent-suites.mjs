@@ -177,6 +177,11 @@ export default async function agentSuites({ suite, asyncSuite, check, core, agen
     const back = agentMod.loadChat('last', S);
     const byPart = agentMod.loadChat(st.sid.slice(-12), S);
     check('the last session here, or one named by part of its id, comes back whole', back && back.sid === st.sid && back.history.length === 2 && byPart && byPart.sid === st.sid && agentMod.loadChat('no-such-session-xyz', S) === null, { happened: JSON.stringify(back && { sid: back.sid, turns: back.history.length }), why: 'atlias resume must land on the right conversation or say it cannot.', fix: 'Check loadChat.' });
+    const st2 = agentMod.newState(S, 'echo');
+    await agentMod.turn(st2, 'second session', null, null);
+    agentMod.saveChat(st2);
+    const newest = agentMod.listChats(S, 1);
+    check('the listing stops at its limit and puts the newest first', newest.length === 1 && newest[0].sid === st2.sid && agentMod.listChats(S).length === 2, { happened: JSON.stringify(newest.map((c) => c.sid)), why: 'Each saved chat holds a whole conversation; reading every one to find the last grows slower with every session.', fix: 'Sort by file time and stop at the limit.' });
     const status = agentMod.statusText(st);
     check('/status names the engine, the session, the turns and the context size', /engine echo/.test(status) && status.includes(st.sid) && /turns 1/.test(status) && /tokens sent per call/.test(status), { happened: status, why: 'It is the first thing to look at when a session feels off.', fix: 'Check statusText.' });
     const once = await agentMod.runOnce({ engine: 'echo', prompt: 'ping' });
@@ -244,6 +249,27 @@ export default async function agentSuites({ suite, asyncSuite, check, core, agen
     const alt = [];
     await loop.runLoop(agentMod.newState(H, 'ollama'), 'loop', { chat: scripted([blk({ tool: 'list_dir', path: 'src' }), blk({ tool: 'list_dir', path: '.' }), blk({ tool: 'list_dir', path: 'src' }), blk({ tool: 'list_dir', path: '.' }), blk({ tool: 'list_dir', path: 'src' }), blk({ tool: 'list_dir', path: '.' }), 'stopped'], alt) });
     check('two calls taking turns are stopped as a loop', alt.some((s) => /back and forth between the same two calls/.test(s.messages[s.messages.length - 1].content)), { happened: 'no guard message', why: 'OpenHands\' stuck detector catches this pattern; repeat counting alone never sees it.', fix: 'Check the recent keys in runLoop.' });
+  });
+
+  await asyncSuite('held answer expert', 'the agent says when the gate held an answer', async () => {
+    // Replays the live gemma3:4b run: a failing check, then a claim that it passed.
+    const G = path.join(W, 'held-project');
+    fs.mkdirSync(G, { recursive: true });
+    fs.writeFileSync(path.join(G, 'broken.mjs'), 'export const = 1;' + NL);
+    const replies = [blk({ tool: 'shell', command: `${JSON.stringify(process.execPath)} --check broken.mjs` }), 'All tests pass now; the bug is fixed.', 'Correction: the check failed, so it is not fixed.'];
+    const server = http.createServer((req, res) => { req.resume(); req.on('end', () => { res.writeHead(200, { 'content-type': 'application/json' }); res.end(JSON.stringify({ message: { role: 'assistant', content: replies.shift() || 'nothing more' } })); }); });
+    await new Promise((r) => server.listen(0, '127.0.0.1', r));
+    settings.set('agent.ollamaUrl', `http://127.0.0.1:${server.address().port}`);
+    let reply = '';
+    try {
+      const st = agentMod.newState(G, 'ollama');
+      reply = await agentMod.turn(st, 'fix it', null, null);
+    } finally {
+      settings.reset('agent.ollamaUrl');
+      server.close();
+    }
+    const at = reply.indexOf('[atlias held the answer above:');
+    check('a claimed pass after a failing check is held, and the output says so between the two answers', at > reply.indexOf('All tests pass') && at < reply.indexOf('Correction:') && /a pass|passed|failed|fail/i.test(reply.slice(at, reply.indexOf(']', at))), { happened: reply.slice(0, 400), why: 'In the live run a reader saw "the bug is fixed" first; without the marker the false claim reads as the result.', fix: 'Check the held marker in turn().' });
   });
 
   suite('instructions expert', 'project instruction files and /compact', () => {

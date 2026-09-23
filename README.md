@@ -49,6 +49,8 @@ or, from an installed copy, `atlias shortcut install`, which puts the command in
 /plugin install atlias@atlias
 ```
 
+**Codex**: `codex plugin marketplace add ridelink0/atlias` lists it in Codex's own plugin browser (Codex reads the same marketplace file), and `atlias install --codex` adds the hooks and the MCP server.
+
 **Every other harness on the machine**: `atlias install`. It writes only into harnesses whose config folder already exists, marks every block it adds, and `atlias uninstall` removes exactly those. `atlias doctor` checks all of it, including that typing `atlias` finds the command.
 
 ## Sub-harness, agent, or both
