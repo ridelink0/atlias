@@ -2,7 +2,7 @@
 
 Every mechanism in atlias traces to a source below, and every source was read, not remembered. Where a claim below carries a number, the number is the source's own. Where atlias does something no source measured, it says so under "Not measured".
 
-An honest count: the 3.0 work drew on the fourteen primary sources listed here, read in full or at the relevant section, plus the open-source code of Codex itself, which settled three questions its documentation did not. It is not a survey of hundreds of pages. It is the set of sources that changed what the code does.
+An honest count: the 3.0 work drew on the thirteen primary sources listed here, read in full or at the relevant section, plus the open-source code of Codex itself, which settled three questions its documentation did not. It is not a survey of hundreds of pages. It is the set of sources that changed what the code does.
 
 ## Hosts: what they really send
 
