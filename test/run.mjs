@@ -779,6 +779,17 @@ suite('durable path expert', 'host configs survive an update', () => {
   const checked = spawnSync(process.execPath, ['--check', launcher], { encoding: 'utf8' });
   check('the launcher is valid JavaScript', checked.status === 0, { happened: (checked.stderr || '').slice(0, 200) || 'ok', why: 'It is generated code that nobody reads until a host fails to start.', fix: 'Check the template in writeLauncher.' });
   check('a checkout still points hosts straight at the file', hosts.serverPathForConfig() === hosts.SERVER_MJS, { happened: hosts.serverPathForConfig(), why: 'Tests run from a checkout, and the extra hop would be pure cost there.', fix: 'serverPathForConfig returns SERVER_MJS when the path is not versioned.' });
+  // The hooks and the CLI line follow the same rule (Codex hooks.json once named lib/hooks.mjs in the 3.0.0 folder).
+  check('a checkout points hook commands straight at lib/hooks.mjs', hosts.hooksPathForConfig() === hosts.HOOKS_MJS && hosts.hookCommand('prompt', 'codex').includes('lib/hooks.mjs'), { happened: hosts.hookCommand('prompt', 'codex'), why: 'Tests run from a checkout.', fix: 'hooksPathForConfig returns HOOKS_MJS when the path is not versioned.' });
+  check('and the CLI line straight at bin/atlias.mjs', hosts.cliPathForConfig() === path.join(ROOT, 'bin', 'atlias.mjs') && hosts.instructionBlock('codex').includes('bin/atlias.mjs'), { happened: hosts.cliPathForConfig(), why: 'Tests run from a checkout.', fix: 'cliPathForConfig returns the direct path when the path is not versioned.' });
+  const hooksLauncher = core.writeHooksLauncher(ROOT);
+  check('the hooks launcher lives in the state directory and ends in hooks.mjs', hooksLauncher.startsWith(process.env.ATLIAS_HOME) && /hooks\.mjs$/.test(hooksLauncher) && fs.existsSync(hooksLauncher), { happened: hooksLauncher, why: 'lib/hooks.mjs runs main() only when argv[1] ends in hooks.mjs, and the path must outlive the versioned copy.', fix: 'Check HOOKS_LAUNCHER and writeHooksLauncher.' });
+  const hooksSrc = core.HOOKS_LAUNCHER_SOURCE;
+  check('the hooks launcher imports only node builtins and targets lib/hooks.mjs', !/server\.mjs/.test(hooksSrc) && hooksSrc.includes("'lib', 'hooks.mjs'") && hooksSrc.split(String.fromCharCode(10)).filter((l) => /^import /.test(l)).every((l) => /'node:/.test(l)), { happened: hooksSrc.slice(0, 120), why: 'An import from a versioned folder is the failure this launcher prevents.', fix: 'HOOKS_LAUNCHER_SOURCE is derived from LAUNCHER_SOURCE.' });
+  const hooksChecked = spawnSync(process.execPath, ['--check', hooksLauncher], { encoding: 'utf8' });
+  check('the hooks launcher is valid JavaScript', hooksChecked.status === 0, { happened: (hooksChecked.stderr || 'ok').slice(0, 200), why: 'Generated code nobody reads until every hook fails.', fix: 'Check HOOKS_LAUNCHER_SOURCE.' });
+  const ran = spawnSync(process.execPath, [hooksLauncher, 'session-end', '--host', 'codex'], { encoding: 'utf8', input: '{}', timeout: 30000, env: { ...process.env, ATLIAS_ROOT: ROOT } });
+  check('a hook run through the launcher reaches lib/hooks.mjs and exits cleanly', ran.status === 0, { happened: `status ${ran.status} ${(ran.stderr || '').slice(0, 200)}`, why: 'The launcher must hand argv through so the real dispatcher runs.', fix: 'lib/hooks.mjs main() keys on argv[1] ending in hooks.mjs.' });
 });
 
 suite('settings expert', 'settings refuse the wrong type', () => {

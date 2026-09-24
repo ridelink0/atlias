@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.1 (2026-09-24)
+
+Codex hooks no longer name the versioned plugin folder. `~/.codex/hooks.json` ran every atlias hook from `.../plugins/cache/atlias/atlias/3.0.0/lib/hooks.mjs`, a folder the next update removes, while the MCP server already went through the `~/.atlias/server.mjs` launcher. Hooks now go through `~/.atlias/hooks.mjs`, built from the same launcher source so the two cannot drift, and the CLI line in every instruction block goes through `~/.atlias/cli.mjs`. `atlias doctor` used to pass a hook that pointed into a versioned folder; it now fails it and says why.
+
 ## 3.0.0 (2026-09-22)
 
 atlias becomes a harness in its own right, not only a sub-harness. Its terminal agent used to hand the work to another CLI; it now also drives any OpenAI-compatible model or a local Ollama model directly, through a loop built around what weak models get wrong, and `atlias mode both|sub|standalone` decides whether atlias runs inside other harnesses, on its own, or both. That is a change in what atlias is, so the major number moves.
