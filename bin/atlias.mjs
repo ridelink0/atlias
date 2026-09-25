@@ -5,6 +5,7 @@
 //   atlias doctor | status | brief [--host codex] | test | version
 //   atlias shortcut [install|uninstall|status]   the atlias command in any terminal
 //   atlias mode [both|sub|standalone] | settings [list]
+//   atlias skills [name]   the skills installed here, or one of them in full
 //   atlias recall <query> | remember <name> <type> <description> -- <body>
 //   atlias progress [set <text>] | dream [show|ack|distil <session-id> [transcript]]
 //   atlias graph query|affected|explain|update <arg> | config [set <section.key> <value>]
@@ -23,6 +24,7 @@ import { logo } from '../lib/logo.mjs';
 import * as bench from '../lib/bench.mjs';
 import * as shortcut from '../lib/shortcut.mjs';
 import * as settings from '../lib/settings.mjs';
+import * as skills from '../lib/skills.mjs';
 import { recall, remember } from '../mcp/tools.mjs';
 
 const argv = process.argv.slice(2);
@@ -34,6 +36,9 @@ const flag = (f) => argv.includes(f);
 // The value after a flag: --engine ollama, --only fix-a-bug.
 const optVal = (f) => { const i = argv.indexOf(f); return i >= 0 && argv[i + 1] && !argv[i + 1].startsWith('--') ? argv[i + 1] : null; };
 const after = (f) => (argv.includes(f) ? argv[argv.indexOf(f) + 1] : undefined);
+// --sandbox and --no-sandbox both mean something, so undefined has to stay
+// distinguishable from false or the flag could not turn the setting off.
+const sandboxFlag = () => (flag('--sandbox') ? true : flag('--no-sandbox') ? false : undefined);
 const cwd = process.cwd();
 const say = (x) => process.stdout.write((Array.isArray(x) ? x.join('\n') : String(x)) + '\n');
 const readOr = (p, fallback) => { try { return fs.readFileSync(p, 'utf8'); } catch { return fallback; } };
@@ -74,10 +79,10 @@ switch (cmd) {
   case 'chooser': process.exitCode = await agent.chooser(); break;
   case 'agent': case 'run': case 'fly': {
     const r = after('--resume');
-    process.exitCode = await agent.repl({ engine: after('--engine'), once: after('--once'), resume: flag('--resume') ? (r && !r.startsWith('--') ? r : 'last') : null });
+    process.exitCode = await agent.repl({ engine: after('--engine'), once: after('--once'), resume: flag('--resume') ? (r && !r.startsWith('--') ? r : 'last') : null, sandbox: sandboxFlag() });
     break;
   }
-  case 'resume': process.exitCode = await agent.repl({ engine: after('--engine'), resume: argv[1] && !argv[1].startsWith('--') ? argv[1] : 'last' }); break;
+  case 'resume': process.exitCode = await agent.repl({ engine: after('--engine'), resume: argv[1] && !argv[1].startsWith('--') ? argv[1] : 'last', sandbox: sandboxFlag() }); break;
   case 'exec': {
     // The prompt is every word that is not a flag or a flag's value; - or a
     // pipe reads it from stdin, as codex exec does.
@@ -86,9 +91,9 @@ switch (cmd) {
     for (let i = 1; i < argv.length; i++) { if (valued.has(argv[i])) { i++; continue; } if (!argv[i].startsWith('--')) words.push(argv[i]); }
     let prompt = words.join(' ').trim();
     if (prompt === '-' || (!prompt && !process.stdin.isTTY)) { prompt = ''; for await (const chunk of process.stdin) prompt += chunk; prompt = prompt.trim(); }
-    if (!prompt) { say('usage: atlias exec "<prompt>" [--engine claude|codex|openai|ollama|echo] [--resume [id]] [--json]   (or pipe the prompt in)'); process.exitCode = 2; break; }
+    if (!prompt) { say('usage: atlias exec "<prompt>" [--engine claude|codex|openai|ollama|echo] [--resume [id]] [--sandbox] [--json]   (or pipe the prompt in)'); process.exitCode = 2; break; }
     const rs = after('--resume');
-    const res = await agent.runOnce({ engine: after('--engine'), prompt, resume: flag('--resume') ? (rs && !rs.startsWith('--') ? rs : 'last') : null });
+    const res = await agent.runOnce({ engine: after('--engine'), prompt, resume: flag('--resume') ? (rs && !rs.startsWith('--') ? rs : 'last') : null, sandbox: sandboxFlag() });
     say(flag('--json') ? JSON.stringify(res.json) : res.text);
     process.exitCode = res.code;
     break;
@@ -152,6 +157,14 @@ switch (cmd) {
   }
   case 'brief': say(brief.build({ cwd, session_id: 'cli', source: 'startup' }, after('--host') || 'claude')); break;
   case 'test': { const r = spawnSync(process.execPath, [path.join(ROOT, 'test', 'run.mjs'), ...argv.slice(1)], { stdio: 'inherit' }); process.exitCode = r.status || 0; break; }
+  case 'skills': {
+    const which = argv.slice(1).filter((a) => !a.startsWith('--')).join(' ').trim();
+    if (!which) { say(skills.format(skills.discover(cwd))); break; }
+    const one = skills.body(cwd, which);
+    if (!one) { say(`no skill matches ${which}; atlias skills lists them`); process.exitCode = 1; break; }
+    say(`${one.path}\n\n${one.text}`);
+    break;
+  }
   case 'recall': say(recall(cwd, argv.slice(1).join(' '))); break;
   case 'remember': {
     const sep = argv.indexOf('--');
@@ -194,5 +207,5 @@ switch (cmd) {
     break;
   }
   default:
-    say([logo(), '', 'atlias                             by mode: ask (both), status (sub), the agent (standalone)', 'agent [--engine claude|codex|openai|ollama|echo] [--once "<prompt>"] [--resume [id]]', 'exec "<prompt>" [--engine e] [--resume [id]] [--json]   one prompt, no questions; - or a pipe reads stdin', 'resume [id]                        carry on the last agent session in this folder', 'mode [both|sub|standalone]         what atlias is on this machine', 'settings [list]                    every option, with what it does', 'install [--all|--codex|--antigravity|--gemini [--gemini-hooks]|--claude|--extras [ids]|--companions|--shortcut]', 'uninstall [--all|--codex|--antigravity|--gemini|--extras|--shortcut]', 'shortcut [install|uninstall|status]  the atlias command in any terminal', 'doctor | status | brief [--host codex] | test | bench [question...] | version | logo', 'recall <query> | remember <name> <type> <description> -- <body>', 'progress [set <next step>] | dream [ack|distil <session>] | graph query|affected|explain|update <arg>', 'config [set <section.key> <value>]']);
+    say([logo(), '', 'atlias                             by mode: ask (both), status (sub), the agent (standalone)', 'agent [--engine claude|codex|openai|ollama|echo] [--once "<prompt>"] [--resume [id]] [--sandbox]', 'exec "<prompt>" [--engine e] [--resume [id]] [--sandbox] [--json]   one prompt, no questions; - or a pipe reads stdin', '  --sandbox                        work in a throwaway git worktree, show the diff at the end, and change the project only if you take it', 'resume [id]                        carry on the last agent session in this folder', 'mode [both|sub|standalone]         what atlias is on this machine', 'settings [list]                    every option, with what it does', 'install [--all|--codex|--antigravity|--gemini [--gemini-hooks]|--claude|--extras [ids]|--companions|--shortcut]', 'uninstall [--all|--codex|--antigravity|--gemini|--extras|--shortcut]', 'shortcut [install|uninstall|status]  the atlias command in any terminal', 'doctor | status | brief [--host codex] | test | bench [question...] | version | logo', 'skills [name]                      the skills installed here, or one of them in full', 'recall <query> | remember <name> <type> <description> -- <body>', 'progress [set <next step>] | dream [ack|distil <session>] | graph query|affected|explain|update <arg>', 'config [set <section.key> <value>]']);
 }

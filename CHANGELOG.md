@@ -1,5 +1,23 @@
 # Changelog
 
+## 3.3.0 (2026-09-25)
+
+The next-generation work from docs/NEXTGEN.md, and two fixes read out of other harnesses' source.
+
+**Output is cut once, where it enters.** The elision moved from the point of use to the ingestion gate, so the prompt prefix is written once and never rewritten - and a rewritten prefix is a discarded prompt cache, which costs far more than the bytes it saved. Each tool gets its own share of `agent.outputBudget`, because a shell run, a file read, a grep and a directory listing do not deserve the same room, and each keeps the end that matters: a file read keeps its head and names the offset to carry on from, a shell result keeps mostly its tail because a test puts the failure last. The summary line the mask will show later is written at the same moment rather than recomputed. And the bytes the budget cuts are no longer gone: the whole result is written to `~/.atlias/output/` first and the note names the file, so the model can grep what it missed instead of running the command a second time. The model's own turn goes through the same gate.
+
+**A prompt-cache readout.** `/status` shows the share of the prompt the provider said it served from cache, read from the four shapes that exist: `prompt_tokens_details.cached_tokens` (OpenAI, Azure, OpenRouter), `prompt_cache_hit_tokens` (DeepSeek), `cache_read_input_tokens` (Anthropic-shaped gateways) and `prompt_eval_cached_count` (Ollama). A provider that reports nothing is counted as silent, never as a miss, and the silent calls are named separately, so no number is invented where none was given. The `claude` and `codex` engines run their own conversations, and atlias says so rather than showing a zero.
+
+**A throwaway git worktree.** `atlias agent --sandbox` and `atlias exec --sandbox` run the agent in a worktree of the last commit, show the diff when it stops, and change the project only if you take it. A dirty tree is refused out loud and names the files. A folder that is not a git repository says so and runs as usual rather than pretending to isolate. The worktree is removed whichever way the run ends, and the patch is kept either way.
+
+**Eight eval tasks, up from three.** A failing test, a function to add, a test that must keep passing, a change across three files, a rate to read out of a config file, a bug report that is false and whose right answer is to change nothing and say so, a failure whose message blames the wrong file, and one judged by a linter rather than a test. Every task fails before the work is done, and the suite checks that.
+
+**Replies that produce nothing are counted apart from the rounds.** mini-swe-agent keeps that count separately from its step budget and leaves with a typed status; atlias had only `maxToolRounds` and answered in prose, which an eval harness cannot match on. Every way out of the loop now names itself - answered, malformed-output, truncated-output, rounds-exhausted, model-error - and a tool block that did not parse, an edit that did not apply, or a reply cut off at the output limit counts against `agent.maxBadReplies` (default 3), cleared by any round that did something. `atlias eval` carries the reason into every row.
+
+**A reply the provider cut off is never run.** pi-mono and Aider both read `finish_reason` and refuse the tool calls in a truncated message, because truncated JSON still parses: a path cut short or a patch missing its end arrives looking well formed. atlias's `openaiChat` never read the field. It does now, and every call in such a reply is refused rather than run, while still being answered so the next request stays valid. Ollama's `done_reason` is read the same way; that it says `length` was measured here against gemma3:4b.
+
+Also: the pointer-first nudge and skills discovery from the last stretch. The suite is 748 checks across 105 suites.
+
 ## 3.2.0 (2026-09-25)
 
 atlias could say what it cost but never whether the work got done. `atlias eval` runs a task corpus: each task seeds its own scratch workspace, the agent works there, and a command decides. The model's claim never scores anything - only the check's exit code does, a claim with no work behind it fails, a checker that cannot run is a failure rather than a pass, and a failed workspace is kept so the failure can be read. The public suites each start a container per instance and there is no Docker here, so the same idea runs locally; `--engine echo` is a dry run that spends nothing. First real run against the local gemma3:4b: one of three tasks finished.

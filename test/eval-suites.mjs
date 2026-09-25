@@ -61,16 +61,29 @@ export default function register({ asyncSuite, check }) {
 
     // 6. The shipped corpus loads and every task can be scored.
     const tasks = evals.loadTasks();
-    check('the shipped tasks load', tasks.length >= 3, { happened: `${tasks.length} tasks`, why: 'A suite with no tasks reports a perfect score.', fix: 'Check evals/*.json.' });
+    check('the shipped tasks load', tasks.length >= 8, { happened: `${tasks.length} tasks`, why: 'A suite with no tasks reports a perfect score, and three tasks is too few for a difference between two versions of the loop to mean anything.', fix: 'Check evals/*.json.' });
     check('every shipped task names a check and a prompt', tasks.every((t) => t.prompt && t.check && t.files), { happened: tasks.map((t) => t.id).join(','), why: 'A task without a check cannot fail, so it cannot mean anything.', fix: 'Each evals/*.json needs files, prompt and check.' });
     // The corpus must start failing, or fixing nothing would score a pass.
-    const starts = tasks.map((t) => {
+    const scored = tasks.map((t) => {
       const d = evals.makeWorkspace(t, 'start');
       const s = evals.score(d, t);
       try { fs.rmSync(d, { recursive: true, force: true }); } catch { /* best effort */ }
-      return s.pass;
+      return s;
     });
+    const starts = scored.map((s) => s.pass);
     check('every shipped task fails before the work is done', starts.every((p) => p === false), { happened: tasks.map((t, i) => `${t.id}:${starts[i] ? 'passes' : 'fails'}`).join(' '), why: 'A task that already passes measures nothing and quietly inflates the score.', fix: 'Seed the workspace with the bug, not the fix.' });
+    // A checker that cannot start fails every task for a reason that has
+    // nothing to do with the work, and the score then reads as a bad model.
+    const unrunnable = tasks.filter((t, i) => /could not run/.test(scored[i].why)).map((t) => t.id);
+    check('and every check really ran rather than failing to start', unrunnable.length === 0, { happened: unrunnable.join(', ') || 'none', why: 'A check whose program is not on this machine fails the task before the model has done anything, and nothing in the report says so.', fix: 'Every check must name a program this machine has; node is the only one the corpus assumes.' });
+    // Eight tasks that are all a failing unit test measure one skill eight
+    // times. These are the shapes a harness fails differently on.
+    const KINDS = ['failing-test', 'new-function', 'no-regression', 'multi-file', 'read-first', 'no-change', 'misleading-error', 'linter'];
+    const have = new Set(tasks.map((t) => t.kind));
+    const missingKinds = KINDS.filter((k) => !have.has(k));
+    check('the corpus covers every kind of task it claims to', missingKinds.length === 0, { happened: `missing ${missingKinds.join(', ') || 'nothing'}; present ${[...have].join(', ')}`, why: 'A multi-file change, code the model never read, a report whose right answer is to change nothing, an error message that names the wrong file and a linter instead of a test are five different ways to fail, and a corpus that only holds one of them cannot tell them apart.', fix: 'Give each evals/*.json a kind and keep all eight covered.' });
+    const ids = tasks.map((t) => t.id);
+    check('no two tasks share an id', new Set(ids).size === ids.length, { happened: ids.join(', '), why: 'The workspace directory is named from the id, so two tasks with one id would run in each other\'s files.', fix: 'Rename one of them.' });
 
     // 7. A whole suite counts what happened, and the report says it plainly.
     // One script per task: a shared one would hand the second task the first

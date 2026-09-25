@@ -1,5 +1,5 @@
 {
-  "description": "atlias: links the session to the sub-harness at start (progress note, shared memory, graphify god nodes, companion skills), answers codebase questions from the graph before the model reads files, guards against repeated identical tool calls and destructive commands, tracks every changed file, runs a syntax and two-pass verification gate before the reply ends, writes a handoff note before compaction and re-injects it after, and hands each session to Dream for memory consolidation at exit.",
+  "description": "atlias: links the session to the sub-harness at start (progress note, shared memory, graphify god nodes, companion skills), answers codebase questions from the graph before the model reads files, guards against repeated identical tool calls and destructive commands, tracks every changed file, says once a turn when a whole file was read that the graph could have answered and names the query that would have done it, runs a syntax and two-pass verification gate before the reply ends, writes a handoff note before compaction and re-injects it after, and hands each session to Dream for memory consolidation at exit.",
   "hooks": {
     "SessionStart": [
       {

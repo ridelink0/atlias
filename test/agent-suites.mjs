@@ -328,7 +328,12 @@ export default async function agentSuites({ suite, asyncSuite, check, core, agen
     check('the recent ones stay whole', obs.slice(-2).every((m) => !/elided/.test(m.content)), { happened: obs.slice(-2).map((m) => m.content.slice(0, 40)).join(' | '), why: 'The model is working from them right now.', fix: 'Keep the last keep observations.' });
     check('the stored history is not changed', msgs[3].content.length > 2000 && msgs[2].content.length === 3000, { happened: 'the original messages were modified', why: 'Masking is a view; the history must stay complete.', fix: 'Map to new objects in view().' });
     check('the private bookkeeping never reaches the model', v.every((m) => !('_obs' in m)), { happened: 'an _obs field was sent', why: 'Some endpoints reject unknown fields outright.', fix: 'Strip _obs in view().' });
-    check('an old long assistant message is shortened too', v[2].content.length < 1000, { happened: v[2].content.length + ' characters', why: 'A whole file the model wrote twenty rounds ago is dead weight.', fix: 'Elide assistant content before the oldest kept observation.' });
+    // A whole file the model wrote twenty rounds ago is dead weight, but cutting
+    // it here - later, when the eviction boundary reaches it - would rewrite the
+    // prefix. So the cut moved to the ingestion gate, and the view no longer
+    // touches an assistant message at all.
+    check('a long assistant message is capped where it enters, not later', loop.capAssistant({ role: 'assistant', content: 'w'.repeat(3000) }, 1000).content.length <= 1000 && loop.capAssistant({ role: 'assistant', content: 'short' }, 1000).content === 'short', { happened: loop.capAssistant({ role: 'assistant', content: 'w'.repeat(3000) }, 1000).content.length + ' characters', why: 'A whole file the model wrote twenty rounds ago is dead weight; capping it on the way in costs no cache miss, capping it later costs one.', fix: 'Check capAssistant and where runLoop pushes the assistant message.' });
+    check('and the view leaves every assistant message exactly as it was stored', v.filter((m, i) => msgs[i].role === 'assistant').every((m, j) => JSON.stringify(m) === JSON.stringify(msgs.filter((x) => x.role === 'assistant')[j])), { happened: JSON.stringify(v[2]).slice(0, 120), why: 'Any rewrite the view does depends on how far the conversation has run, so it changes bytes the provider had already cached.', fix: 'view() masks observations and nothing else.' });
     // Cache stability: evicting one more observation every turn rewrites the
     // prompt prefix every turn, which throws the provider cache away.
     const grow = (n) => { const m = []; for (let i = 0; i < n; i++) { m.push({ role: 'assistant', content: 'call ' + i }); m.push({ role: 'user', content: 'long ' + 'x'.repeat(500), _obs: { label: 'read f' + i, summary: 'r' + i } }); } return m; };
@@ -338,6 +343,115 @@ export default async function agentSuites({ suite, asyncSuite, check, core, agen
     check('and it does evict once the block is full', evicted(14) === 12 && evicted(9) === 4, { happened: `evicted ${evicted(9)} at nine and ${evicted(14)} at fourteen`, why: 'Holding every observation forever is the other failure: the window fills and the run dies.', fix: 'Check the floor division in view().' });
     check('a missing block size behaves as it always did', JSON.stringify(loop.view(grow(6), 2)) === JSON.stringify(loop.view(grow(6), 2, 1)), { happened: 'the default changed behaviour', why: 'Callers that pass two arguments must keep the old one-at-a-time eviction.', fix: 'Default step to 1.' });
     check('a zero keep setting is treated as one', loop.view(msgs, 0).filter((m, i) => msgs[i]._obs && !/elided/.test(m.content)).length === 1, { happened: 'wrong number kept', why: 'A config value of 0 must not crash or keep everything.', fix: 'Clamp keep to at least 1.' });
+  });
+
+  await asyncSuite('ingestion expert', 'output is capped where it enters', async () => {
+    // A per-tool budget, from one setting. A file read is worth far more room
+    // than a directory listing, and both are shares of agent.outputBudget.
+    const B = (t) => loop.budgetFor(t, 10000);
+    check('every tool gets its own room, and one setting moves them all', B('read_file') > B('shell') && B('shell') > B('grep') && B('grep') > B('list_dir') && loop.budgetFor('shell', 20000) === 2 * B('shell') && loop.budgetFor('no_such_tool', 10000) === Math.round(10000 * loop.outputRule('no_such_tool').share), { happened: ['read_file', 'shell', 'grep', 'list_dir'].map((t) => t + ' ' + B(t)).join(', '), why: 'A shell run, a file read, a grep and a listing do not deserve the same room; one knob has to move all of them together.', fix: 'Check OUTPUT_RULES and budgetFor.' });
+    check('a budget is never zero, however the setting is mangled', loop.budgetFor('shell', 0) >= 500 && loop.budgetFor('shell', -5) >= 500 && loop.budgetFor('shell', 'nonsense') >= 500, { happened: [0, -5, 'nonsense'].map((v) => loop.budgetFor('shell', v)).join(','), why: 'A budget of zero would send the model empty results forever.', fix: 'Clamp in budgetFor.' });
+    // The shape of the cut follows the tool: a test run puts the failure last.
+    const shell = loop.capOutput('shell', 'exit 1' + NL + 'x'.repeat(40000) + NL + 'FAIL the last line', 2000);
+    check('a shell result keeps its end and says how to see the rest', shell.text.includes('FAIL the last line') && shell.text.length <= 2000 && shell.cut > 0 && /narrowed down/.test(shell.text) && /capped this shell result to 2000 characters/.test(shell.text), { happened: shell.text.slice(0, 120) + ' ... ' + shell.text.slice(-60), why: 'Test summaries and stack traces come last, and a cut with no way back to what it took is a dead end.', fix: 'Check the tail share for shell in OUTPUT_RULES.' });
+    // A file read is ordered and resumable, so it keeps its head and names the
+    // exact line to carry on from.
+    const numbered = Array.from({ length: 900 }, (_, i) => (i + 1) + '\t' + 'line ' + (i + 1) + ' ' + 'p'.repeat(40)).join(NL);
+    const read = loop.capOutput('read_file', 'f.txt lines 1-900 of 900' + NL + numbered, 3000);
+    const at = /read_file with offset (\d+) to carry on/.exec(read.text);
+    check('a file read keeps its head and names the line to carry on from', Boolean(at) && read.text.includes('1\tline 1 ') && !/cut from the middle/.test(read.text) && Number(at[1]) > 1 && read.text.includes((Number(at[1]) - 1) + '\tline ' + (Number(at[1]) - 1)), { happened: (at ? 'offset ' + at[1] : 'no offset named') + ': ' + read.text.slice(-80), why: 'Cutting the tail out of a numbered window and then not saying where it stopped leaves the model guessing which lines it has.', fix: 'Check nextOffset and the read_file rule.' });
+    check('output under its budget is passed through untouched', loop.capOutput('shell', 'exit 0' + NL + 'all good', 2000).text === 'exit 0' + NL + 'all good' && loop.capOutput('shell', 'exit 0', 2000).cut === 0, { happened: JSON.stringify(loop.capOutput('shell', 'exit 0' + NL + 'all good', 2000)), why: 'Most results fit; touching them would be work for nothing and noise for the model.', fix: 'Return early under the budget.' });
+    // The point of deciding at the gate: the summary the mask shows later is
+    // written now, so nothing recomputes it from the text afterwards.
+    const noisy = 'exit 1' + NL + 'y'.repeat(9000);
+    const ing = loop.ingest('shell', 'shell npm test', noisy, 1200);
+    const masked = loop.view([{ role: 'user', content: ing.content, _obs: ing.obs }, { role: 'user', content: 'b', _obs: { label: 'l', summary: 's' } }, { role: 'user', content: 'c', _obs: { label: 'l', summary: 's' } }], 2, 1);
+    check('the summary the mask shows is the one written at ingestion', ing.obs.summary.startsWith('exit 1') && ing.obs.summary.includes(noisy.length + ' characters') && masked[0].content.includes(ing.obs.summary) && masked[0].content.includes('shell npm test'), { happened: ing.obs.summary + ' | ' + masked[0].content, why: 'A summary written later is a prefix rewritten later, and a rewritten prefix is a discarded prompt cache.', fix: 'ingest() returns the obs, and view() only prints it.' });
+    check('the ingested bytes never change afterwards', loop.view([{ role: 'user', content: ing.content, _obs: ing.obs }], 4, 4)[0].content === ing.content, { happened: 'the view changed a kept observation', why: 'The cut is decided once, at the gate; anything that cuts again costs the cache it was meant to keep.', fix: 'Check view().' });
+    // A tool call's own arguments come in through the same gate.
+    const big = JSON.stringify({ path: 'src/app.js', replace_all: true, content: 'z'.repeat(5000) });
+    const capped = loop.capArgs(big, 1000);
+    const parsed = JSON.parse(capped);
+    check('a long tool call keeps its path and flags and loses only the payload', capped.length < 1000 && parsed.path === 'src/app.js' && parsed.replace_all === true && /elided 5000 characters/.test(parsed.content), { happened: capped, why: 'The model has to be able to read what it asked for; the file it wrote is already on disk.', fix: 'Check capArgs.' });
+    check('arguments that cannot be parsed still come back as valid JSON', JSON.parse(loop.capArgs('{{{ not json at all ' + 'q'.repeat(3000), 500)).elided.includes('characters of arguments') && loop.capArgs('{"a":1}', 500) === '{"a":1}', { happened: loop.capArgs('{{{ not json ' + 'q'.repeat(3000), 500), why: 'An endpoint that is sent a broken assistant message refuses the whole request.', fix: 'Check the fallback in capArgs.' });
+    const asst = loop.capAssistant({ role: 'assistant', content: '', tool_calls: [{ id: 'c1', type: 'function', function: { name: 'write_file', arguments: big } }, { id: 'c2', type: 'function', function: { name: 'list_dir', arguments: '{"path":"."}' } }] }, 1000);
+    check('capAssistant caps the long call and leaves the short one alone', asst.tool_calls[0].function.arguments.length < 1000 && asst.tool_calls[0].function.name === 'write_file' && asst.tool_calls[1].function.arguments === '{"path":"."}', { happened: JSON.stringify(asst.tool_calls).slice(0, 160), why: 'Both calls are in the same message; capping the small one throws away context for nothing.', fix: 'Check capAssistant.' });
+    // Through the real loop, with the real setting.
+    settings.set('agent.outputBudget', '1500');
+    const node = JSON.stringify(process.execPath);
+    const st = fresh();
+    const seen = [];
+    await loop.runLoop(st, 'print a lot', { chat: scripted([blk({ tool: 'shell', command: `${node} -e "process.stdout.write('a'.repeat(30000)+'the error is here')"` }), 'Done looking.'], seen) });
+    const result = st.messages.find((m) => m._obs && /^shell/.test(m._obs.label));
+    settings.reset('agent.outputBudget');
+    check('a long shell result enters the context capped to the shell budget, end kept', result && result.content.length < 2000 && result.content.includes('the error is here') && /capped this shell result/.test(result.content), { happened: result ? result.content.length + ' characters stored' : 'no observation stored', why: 'This is the whole point: the elision happens once, at the gate, and the stored message is what the provider will see every round from here on.', fix: 'Check the ingest() call in runLoop.' });
+    check('and the plan recitation is added after the cap, never cut by it', st.messages.filter((m) => m._obs).every((m) => !/\(plan /.test(m.content) || /\(plan [^)]*\)$/.test(m.content.trim())), { happened: result ? result.content.slice(-60) : 'nothing', why: 'Reciting the plan at the end of the context is what keeps a weak model on course; a cap that ate it would defeat both features.', fix: 'Append recitation() to the capped body.' });
+
+    {
+    // Goose keeps the whole oversized response in a temp file and hands back the
+    // path. Without that the cut bytes are gone and the only way to see them is
+    // to run the command a second time.
+    const spillMe = 'head line' + NL + 'm'.repeat(9000) + NL + 'the tail line';
+    const ing = loop.ingest('shell', 'shell echo', spillMe, 1200);
+    check('the bytes the budget cuts are written out whole before they are cut', ing.spill && fs.existsSync(ing.spill) && fs.readFileSync(ing.spill, 'utf8') === spillMe && ing.content.length <= 1200, { happened: (ing.spill || '(nothing spilled)') + ' | stored ' + ing.content.length + ' characters against a budget of 1200', why: 'A cut that loses the bytes makes the model run the same command again to see what it missed, which costs the output twice and every token in between.', fix: 'Check spill() and the ingest() gate.' });
+    check('and the note names the file so the model can grep it', /The whole result was kept at /.test(ing.content) && ing.content.includes(ing.spill) && /grep or read_file it there/.test(ing.content), { happened: ing.content.split(NL)[0].slice(0, 260), why: 'A file the model is never told about is a file that is never read; Goose says "you can use other tools to examine or search in" for the same reason.', fix: 'Pass the spill path into capOutput and keep it outside the clip.' });
+    check('a result inside its budget is not spilled at all', loop.ingest('shell', 'shell echo', 'small enough', 1200).spill === '' && loop.capOutput('shell', 'small enough', 1200).cut === 0, { happened: JSON.stringify(loop.ingest('shell', 'shell echo', 'small enough', 1200)), why: 'A file per tool call would fill the disk to solve a problem that only exists when something is cut.', fix: 'Only spill when the text is over budget.' });
+    check('a read_file result is not spilled, because the file is still on disk', loop.ingest('read_file', 'read_file x', spillMe, 1200).spill === '' && /offset|To see the rest/.test(loop.ingest('read_file', 'read_file x', spillMe, 1200).content), { happened: JSON.stringify(loop.ingest('read_file', 'read_file x', spillMe, 1200).spill), why: 'Copying a file the model can already open is pure waste, and the note already names the offset to carry on from.', fix: 'Check the read_file exception in ingest.' });
+    const spillDir = path.join(TMP, 'spill-sweep');
+    fs.mkdirSync(spillDir, { recursive: true });
+    const oldFile = path.join(spillDir, 'shell-old.txt');
+    const newFile = loop.spill('shell', 'still wanted', spillDir);
+    fs.writeFileSync(oldFile, 'long gone');
+    fs.utimesSync(oldFile, new Date(Date.now() - 48 * 3600 * 1000), new Date(Date.now() - 48 * 3600 * 1000));
+    const swept = loop.sweepSpills(spillDir);
+    check('yesterday\'s spills are swept and today\'s are kept', swept === 1 && !fs.existsSync(oldFile) && fs.existsSync(newFile), { happened: swept + ' swept; old exists ' + fs.existsSync(oldFile) + ', new exists ' + fs.existsSync(newFile), why: 'A spill is only useful to the run that made it, and a folder nothing ever sweeps grows until it is the biggest thing atlias owns.', fix: 'Check sweepSpills and SPILL_KEEP_MS.' });
+    check('a spill that cannot be written returns nothing rather than throwing', loop.spill('shell', 'x', path.join(newFile, 'deeper')) === '' && loop.SPILL_KEEP_MS > 0 && loop.SPILL_DIR().endsWith('output'), { happened: JSON.stringify(loop.spill('shell', 'x', path.join(newFile, 'deeper'))), why: 'The spill is a convenience; a full disk or a read-only home must cost the tool call nothing, and the note then simply does not promise a file.', fix: 'Keep the try/catch in spill and return the empty string.' });
+    }
+  });
+
+  await asyncSuite('cache readout expert', 'what the provider says it served from cache', async () => {
+    // The four shapes providers actually send. The Ollama pair was measured on
+    // this machine against ollama 0.34.3: 0 of 76 prompt tokens cached on the
+    // first call, 71 of 76 on the repeat.
+    const shapes = [
+      ['OpenAI, Azure and OpenRouter', { prompt_tokens: 2000, completion_tokens: 40, prompt_tokens_details: { cached_tokens: 1792 } }, 2000, 1792, 'openai'],
+      ['DeepSeek', { prompt_tokens: 900, prompt_cache_hit_tokens: 832, prompt_cache_miss_tokens: 68 }, 900, 832, 'deepseek'],
+      ['an Anthropic-shaped gateway', { input_tokens: 12, cache_creation_input_tokens: 100, cache_read_input_tokens: 4000 }, 4112, 4000, 'anthropic'],
+      ['Ollama', { prompt_eval_count: 76, prompt_eval_cached_count: 71, eval_count: 3 }, 76, 71, 'ollama'],
+    ];
+    for (const [who, usage, prompt, cached, source] of shapes) {
+      const r = loop.cacheReading(usage);
+      check(`the cached prompt tokens ${who} reports are read`, Boolean(r) && r.prompt === prompt && r.cached === cached && r.source === source, { happened: JSON.stringify(r), why: 'Each provider names this field differently; reading only one of them means measuring nothing on the others.', fix: 'Check cacheReading.' });
+    }
+    check('a provider that reports no cached count is silent, not a zero', loop.cacheReading({ prompt_tokens: 500, completion_tokens: 10 }).cached === null && loop.cacheReading({ prompt_eval_count: 40 }).cached === null && loop.cacheReading(null) === null && loop.cacheReading({ nothing: 'useful' }) === null, { happened: JSON.stringify([loop.cacheReading({ prompt_tokens: 500 }), loop.cacheReading({ prompt_eval_count: 40 })]), why: 'Counting silence as a miss invents a number the provider never gave, which is the one thing a measurement must never do.', fix: 'Return cached: null unless a cached field was actually there.' });
+    check('a first call with nothing cached is a real zero, and reads as one', loop.cacheReading({ prompt_eval_count: 76, prompt_eval_cached_count: 0 }).cached === 0, { happened: JSON.stringify(loop.cacheReading({ prompt_eval_count: 76, prompt_eval_cached_count: 0 })), why: 'Ollama reports 0 on a first call and 71 on the repeat; treating the 0 as silence would hide the miss that matters.', fix: 'Only null when the field is absent.' });
+    const st = { cache: null };
+    loop.countCache(st, { prompt_tokens: 1000, prompt_tokens_details: { cached_tokens: 900 } });
+    loop.countCache(st, { prompt_tokens: 1000, prompt_tokens_details: { cached_tokens: 500 } });
+    loop.countCache(st, { prompt_tokens: 4000 });
+    loop.countCache(st, null);
+    check('the session counts only the calls that reported, and counts the rest as silent', st.cache.calls === 4 && st.cache.reported === 2 && st.cache.silent === 2 && st.cache.prompt === 2000 && st.cache.cached === 1400, { happened: JSON.stringify(st.cache), why: 'Folding a silent call\'s prompt tokens into the denominator would report a hit rate no provider ever measured.', fix: 'Check countCache.' });
+    check('the readout gives the rate over the calls that reported it', /1400 of 2000 prompt tokens served from cache \(70%\)/.test(loop.cacheLine(st.cache)) && /2 of 4 calls/.test(loop.cacheLine(st.cache)) && /2 reporting nothing/.test(loop.cacheLine(st.cache)), { happened: loop.cacheLine(st.cache), why: 'The harness cannot improve what it does not measure, and a rate with no denominator is not a measurement.', fix: 'Check cacheLine.' });
+    const quiet = { cache: null };
+    loop.countCache(quiet, { prompt_tokens: 900 });
+    check('an endpoint that never reports is said so plainly, with no number', /nothing measured here/.test(loop.cacheLine(quiet.cache)) && !/%/.test(loop.cacheLine(quiet.cache)) && loop.cacheLine(null) === '' && loop.cacheLine({ calls: 0 }) === '', { happened: loop.cacheLine(quiet.cache), why: 'Inventing a rate for a silent provider is worse than having none.', fix: 'Check the no-report branch of cacheLine.' });
+    // The engines have to pass what they got back up, or there is nothing to read.
+    const oa = await loop.openaiChat({ openaiUrl: 'http://127.0.0.1:1/v1', openaiModel: 'm' }, {}, { post: async () => ({ status: 200, json: { choices: [{ message: { role: 'assistant', content: 'hi' } }], usage: { prompt_tokens: 100, prompt_tokens_details: { cached_tokens: 64 } } } }) })([{ role: 'user', content: 'x' }], null);
+    const ol = await loop.ollamaChat({ ollamaUrl: 'http://127.0.0.1:11434', ollamaModel: 'm' }, { post: async () => ({ status: 200, json: { message: { content: 'hi' }, prompt_eval_count: 76, prompt_eval_cached_count: 71 } }) })([{ role: 'user', content: 'x' }]);
+    check('both engines hand the usage they were sent back to the loop', loop.cacheReading(oa.usage).cached === 64 && loop.cacheReading(ol.usage).cached === 71 && loop.cacheReading(ol.usage).prompt === 76, { happened: JSON.stringify([oa.usage, ol.usage]), why: 'The counters live in the response; dropping them there makes every later reading impossible.', fix: 'Return usage from openaiChat and ollamaChat.' });
+    // End to end, and on the status line.
+    const state = fresh();
+    await loop.runLoop(state, 'say hello', { chat: async () => ({ content: 'Hello.', calls: [], usage: { prompt_tokens: 800, prompt_tokens_details: { cached_tokens: 600 } } }) });
+    const status = agentMod.statusText(state);
+    check('a run records its cache rate and /status shows it', state.cache && state.cache.cached === 600 && state.cache.prompt === 800 && /600 of 800 prompt tokens served from cache \(75%\)/.test(status), { happened: JSON.stringify(state.cache) + ' | ' + status.split(NL).find((l) => /prompt cache/.test(l)), why: 'A number nobody can see is a number nobody acts on.', fix: 'countCache in runLoop, cacheLine in statusText.' });
+    const bare = fresh();
+    await loop.runLoop(bare, 'say hello', { chat: async () => ({ content: 'Hello.', calls: [] }) });
+    check('a run against a silent endpoint says so on the status line, with no rate', /prompt cache: 1 call, none reporting/.test(agentMod.statusText(bare)) && !/%/.test(agentMod.statusText(bare).split(NL).find((l) => /prompt cache/.test(l))), { happened: agentMod.statusText(bare).split(NL).find((l) => /prompt cache/.test(l)), why: 'Most local servers report nothing; the readout has to be honest about that rather than show a zero.', fix: 'Check statusText and cacheLine.' });
+    const saved = fresh();
+    loop.countCache(saved, { prompt_tokens: 10, prompt_tokens_details: { cached_tokens: 5 } });
+    agentMod.saveChat(saved);
+    const again = agentMod.loadChat(saved.sid, saved.cwd);
+    check('the reading survives a resume', again && again.cache && again.cache.cached === 5 && again.cache.prompt === 10, { happened: JSON.stringify(again && again.cache), why: 'A session that is resumed goes on making calls; starting its count again would report the wrong denominator.', fix: 'saveChat and loadChat carry state.cache.' });
   });
 
   await asyncSuite('planning expert', 'the plan stays in view', async () => {

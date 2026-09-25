@@ -920,6 +920,10 @@ await (await import('./agent-suites.mjs')).default({ suite, asyncSuite, check, c
 await (await import('./eval-suites.mjs')).default({ suite, asyncSuite, check });
 await (await import('./host-suites.mjs')).default({ suite, check, PROJECT });
 await (await import('./unit-suites.mjs')).default({ suite, asyncSuite, check, PROJECT, TMP, fs, path });
+await (await import('./pointer-suites.mjs')).default({ suite, check, core, track, router, TMP, ROOT, fs, path });
+await (await import('./skills-suites.mjs')).default({ suite, check, core, TMP, ROOT, fs, path });
+await (await import('./sandbox-suites.mjs')).default({ suite, asyncSuite, check, core, agentMod, TMP, ROOT, fs, path, spawnSync });
+await (await import('./exit-suites.mjs')).default({ suite, asyncSuite, check, core, agentMod, TMP, fs, path });
 await (await import('./coverage-suites.mjs')).default({ suite, check, ROOT, fs, path });
 
 let failed = 0;

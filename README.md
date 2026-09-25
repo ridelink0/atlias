@@ -89,7 +89,7 @@ Inside: `/status`, `/diff`, `/review` (the engine reviews the uncommitted change
 1. **Session start**: one brief. The handoff note from the last stretch, the memory index, the knowledge graph's hubs, pending Dream digests, and, in Claude Code, where the 5-hour and weekly usage windows stand, from the [usage-limits](https://github.com/ridelink0/claude-code-usage-limits) plugin's last reading, **as information, never as a brake**: the model keeps full quality and scope, and whatever you say about usage decides.
 2. **Each prompt**: silent, unless it is a codebase question and a graph exists, in which case the graph answers in a few hundred tokens before any file is read.
 3. **Before each tool**: silent, unless the call is a loop or the command is destructive. Codex and Gemini CLI cannot pause a tool for the user, so there the command is stopped, the model is told to ask, and the identical command goes through once after you answer.
-4. **After each tool**: records the files changed and the checks run, with their outcome read from the tool's own response.
+4. **After each tool**: records the files changed and the checks run, with their outcome read from the tool's own response. Silent, with one exception: when a whole file was read that the knowledge graph could have answered, atlias says so once for that turn and names the query that would have done it. The read is never blocked, and the note is held back unless a graph exists, the graph was not already asked this turn, the file is large enough that asking would have been cheaper, your prompt did not name it, and nothing in the session wrote it.
 5. **Compaction**: writes the handoff note before and puts it back after.
 6. **End of a reply**: the gate described above.
 7. **Session end**: a background worker distils the session for the model to fold into memory later.
@@ -102,13 +102,16 @@ Hosts: **Claude Code** (plugin), **Codex** (hooks, MCP, AGENTS.md), **Antigravit
 node test/run.mjs
 ```
 
-Over five hundred and seventy checks in ninety suites, each written from one expert's point of view, and each failure printed as what happened, why it matters and how to fix it. A coverage suite fails the run if any exported function is not exercised by a test through its own module, so a feature cannot arrive untested. Host payloads are pinned to the hosts' own source code, not to guesses. CI runs everything on Linux, macOS and Windows under Node 18, 20 and 22, plus a sandboxed install that parses every config atlias writes with a real parser and proves that uninstall leaves other tools' entries alone.
+Over seven hundred and forty checks in a hundred and five suites, each written from one expert's point of view, and each failure printed as what happened, why it matters and how to fix it. A coverage suite fails the run if any exported function is not exercised by a test through its own module, so a feature cannot arrive untested. Host payloads are pinned to the hosts' own source code, not to guesses. CI runs everything on Linux, macOS and Windows under Node 18, 20 and 22, plus a sandboxed install that parses every config atlias writes with a real parser and proves that uninstall leaves other tools' entries alone.
 
 ## What it refuses to pretend
 
 - It names what it did not check, and marks a stale graph as stale.
 - It reports a test run it cannot read as unknown, never as a pass.
 - It tells the agent when it ran out of rounds rather than letting that read as an answer.
+- It never invents a cache number: `/status` shows the share of the prompt the provider said it served from cache, counts the calls that reported nothing separately, and says plainly that the `claude` and `codex` engines run their own conversations so atlias never sees their token counts.
+- It will not run a tool call out of a reply the provider cut off at its output limit, because truncated JSON still parses and the arguments may be quietly wrong.
+- It says which way a run ended rather than leaving them all to read alike: answered, malformed output, a reply cut off, rounds exhausted, or a failed model call.
 - It shows the caveat with the number: `atlias bench` measures token cost and says it has not measured task success.
 - It says, in [docs/RESEARCH.md](docs/RESEARCH.md), which source each mechanism comes from and what has not been measured: whether atlias makes a given model finish more tasks is the aim of the design, not yet a result.
 
@@ -116,9 +119,45 @@ Over five hundred and seventy checks in ninety suites, each written from one exp
 
 `atlias bench` in any project prints numbers, not claims. On atlias itself: the session brief costs about 1,000 tokens once per session, and one graph answer about 600, against an upper bound of about 26,000 for opening in full the files that answer names.
 
+## Scoring the harness
+
+```
+atlias eval                    every task in evals/, with the engine you use
+atlias eval --engine echo      a dry run: every task must fail before any work is done
+```
+
+Eight tasks, each a small project written into a scratch workspace that the
+agent then has to fix: a failing test, a function to add, a test that must keep
+passing, a change across three files, a rate that has to be read out of a config
+file, a bug report that is false and whose right answer is to change nothing and
+say so, a failure whose message blames the wrong file, and one judged by a
+linter rather than a test. **The model's claim never scores a task** - a command
+does, and its exit code is the whole verdict. Every row says how the agent
+stopped, so a task that failed because the model could not send a usable action
+reads differently from one that ran out of rounds.
+
+## A throwaway worktree
+
+```
+atlias agent --sandbox
+atlias exec --sandbox "<prompt>"
+```
+
+The agent works in a git worktree of the last commit, the diff is shown when it
+stops, and the project changes only if you take it. A dirty tree is refused out
+loud and names the files, because a worktree is checked out from the last commit
+and the agent would not see uncommitted work. A folder that is not a git
+repository says so and runs exactly as it would without the sandbox, rather than
+pretending to isolate. The worktree is removed whichever way the run ends, and
+the patch is kept either way, so a dropped run is still recoverable.
+
 ## Settings
 
-`atlias settings`, or `atlias config set <section.key> <value>`. The keys, each described in the menu: `verify.*` (syntax, second pass, integrity, placeholders, weakened tests, unwired code), `guard.*`, `graph.*`, `brief.*`, `recall.*`, `dream.*`, `router.*`, `usage.show`, and `agent.*` (mode, engine, endpoints, permissions, test command, rounds, observations kept). State lives in `~/.atlias/` (`ATLIAS_HOME` overrides it).
+`atlias settings`, or `atlias config set <section.key> <value>`. The keys, each described in the menu: `verify.*` (syntax, second pass, integrity, placeholders, weakened tests, unwired code), `guard.*`, `graph.*`, `brief.*`, `recall.*`, `dream.*`, `router.*`, `pointer.*` (the pointer-first note: on or off, the size below which a whole-file read is left alone, and how many notes a session may spend), `usage.show`, and `agent.*` (mode, engine, endpoints, permissions, test command, rounds, observations kept, `outputBudget` for how much tool output may enter the context, `maxBadReplies` for how many replies in a row may produce nothing before atlias stops and says which kind, and `sandbox` for the throwaway git worktree). State lives in `~/.atlias/` (`ATLIAS_HOME` overrides it).
+
+## Skills
+
+atlias reads the skill format the hosts already use rather than adding one of its own: a folder holding a `SKILL.md` whose frontmatter carries a name and a description. It looks in what atlias ships, `~/.claude/skills`, `~/.codex/skills`, and the project's own `.claude/skills` or `.codex/skills`, with the nearer folder winning a name clash. `atlias skills` lists them with what each is for, `atlias skills <name>` prints one, and `/skills` does both inside the agent. The agent's system prompt carries the index - one path per folder and the names under it - so the skills a machine has cost a few hundred characters and the agent opens the one it recognises with the read tool it already has. atlias does not run or install skills; the hosts stay the ones that do.
 
 ## Surviving an update
 

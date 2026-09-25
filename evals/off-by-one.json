@@ -1,5 +1,6 @@
 {
   "id": "off-by-one",
+  "kind": "failing-test",
   "name": "Fix an off-by-one so the test passes",
   "files": {
     "sum.js": "// Adds the numbers from 1 to n.\nexport function sumTo(n) {\n  let t = 0;\n  for (let i = 1; i < n; i++) t += i;\n  return t;\n}\n",

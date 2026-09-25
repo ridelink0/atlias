@@ -1,5 +1,6 @@
 {
   "id": "keep-the-other-test",
+  "kind": "no-regression",
   "name": "Fix one test without breaking the other",
   "files": {
     "calc.js": "export function add(a, b) { return a - b; }\nexport function mul(a, b) { return a * b; }\n",

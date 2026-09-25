@@ -1,5 +1,6 @@
 {
   "id": "add-function",
+  "kind": "new-function",
   "name": "Add a function the test asks for",
   "files": {
     "strings.js": "export function upper(s) { return String(s).toUpperCase(); }\n",
