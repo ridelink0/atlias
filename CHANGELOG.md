@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.2.0 (2026-09-25)
+
+atlias could say what it cost but never whether the work got done. `atlias eval` runs a task corpus: each task seeds its own scratch workspace, the agent works there, and a command decides. The model's claim never scores anything - only the check's exit code does, a claim with no work behind it fails, a checker that cannot run is a failure rather than a pass, and a failed workspace is kept so the failure can be read. The public suites each start a container per instance and there is no Docker here, so the same idea runs locally; `--engine echo` is a dry run that spends nothing. First real run against the local gemma3:4b: one of three tasks finished.
+
 ## 3.1.0 (2026-09-25)
 
 The optimisation target for a harness moved from smallest context to highest prompt-cache hit rate, and atlias was on the wrong side of it: `view()` shrank one more old tool result every turn, so every turn rewrote the prompt prefix and threw the provider cache away. The saving from eliding one observation was paid back many times over by re-reading the whole conversation at full price. Eviction now moves in blocks (`agent.evictBlock`, default 4): between two block edges the prefix is byte-identical and can be served from cache. docs/NEXTGEN.md records the research behind it, with sources, and ranks what is still to build.

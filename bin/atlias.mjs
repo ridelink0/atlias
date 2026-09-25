@@ -31,6 +31,8 @@ const FLAG_COMMANDS = { '--version': 'version', '-v': 'version', '--help': 'help
 const cmd = FLAG_COMMANDS[argv[0]] || argv[0] || settings.bareCommand();
 const extraIds = () => (argv.includes('--extras') ? argv.slice(argv.indexOf('--extras') + 1).filter((a) => !a.startsWith('--')) : []);
 const flag = (f) => argv.includes(f);
+// The value after a flag: --engine ollama, --only fix-a-bug.
+const optVal = (f) => { const i = argv.indexOf(f); return i >= 0 && argv[i + 1] && !argv[i + 1].startsWith('--') ? argv[i + 1] : null; };
 const after = (f) => (argv.includes(f) ? argv[argv.indexOf(f) + 1] : undefined);
 const cwd = process.cwd();
 const say = (x) => process.stdout.write((Array.isArray(x) ? x.join('\n') : String(x)) + '\n');
@@ -42,6 +44,32 @@ const shortcutUninstall = () => { const r = shortcut.uninstallShortcut(); return
 
 switch (cmd) {
   case 'logo': say(logo()); break;
+  // Task evaluation: the model works in a scratch copy and a command decides.
+  case 'eval': {
+    const evals = await import('../lib/eval.mjs');
+    const loopMod = await import('../lib/loop.mjs');
+    const cfg = config().agent;
+    // Positional task ids only: the value after --engine or --only belongs to
+    // that flag, not to the task list.
+    const taken = new Set();
+    for (const f of ['--engine', '--only']) { const i = argv.indexOf(f); if (i >= 0) taken.add(i + 1); }
+    const want = argv.slice(1).filter((a, i) => !a.startsWith('--') && !taken.has(i + 1));
+    const only = optVal('--only');
+    let tasks = evals.loadTasks();
+    if (only) tasks = tasks.filter((t) => t.id === only);
+    if (want.length) tasks = tasks.filter((t) => want.includes(t.id));
+    if (!tasks.length) { say('no tasks; the corpus is in evals/*.json'); break; }
+    const engine = optVal('--engine') || (cfg.openaiModel ? 'openai' : 'ollama');
+    // echo is the dry run: it exercises the harness without a model, so a
+    // broken corpus or checker shows up before any tokens are spent.
+    const chat = engine === 'echo' ? async () => ({ content: 'echo: no work done' })
+      : engine === 'openai' ? loopMod.openaiChat(cfg) : loopMod.ollamaChat(cfg);
+    say(`${tasks.length} task(s) against ${engine}. The check command decides, not the model.`);
+    const report = await evals.runSuite(tasks, { chat, state: agent.newState(cwd, engine) });
+    say(evals.format(report));
+    process.exitCode = report.passed === report.total ? 0 : 1;
+    break;
+  }
   case 'bench': say(bench.report(cwd, argv.slice(1).filter((a) => !a.startsWith('--')))); break;
   case 'chooser': process.exitCode = await agent.chooser(); break;
   case 'agent': case 'run': case 'fly': {
