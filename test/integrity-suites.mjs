@@ -136,7 +136,32 @@ export default async function integritySuites({ suite, check, core, gate, track,
     const reason = held ? held.reason : '';
     check('one block names every problem at once', Boolean(held) && /no check ran/.test(reason) && /placeholders/.test(reason) && /weakened/.test(reason) && /nothing calls/.test(reason), { happened: reason.slice(0, 400) || 'not held', why: 'After a Stop hook blocks the host sets stop_hook_active and the gate never speaks again in that chain, so every finding has to be in the first block.', fix: 'Collect integrity.check() findings into the single block in gate.stop.' });
     check('the unwired list names the right functions', /unusedFeature/.test(reason) && /brandNewModule/.test(reason) && !/wiredNew\b/.test(reason.replace(/brandNewModule/g, '')), { happened: reason.split(NL).filter((l) => /unused|brandNew|wiredNew/.test(l)).join(' | '), why: 'Flagging a function that is called would send the model to wire in code that is already wired.', fix: 'Count references with git grep -w across the repository.' });
-    check('and it does not speak twice for the same prompt', gate.stop({ session_id: s, cwd: repo, last_assistant_message: 'Done. All tests pass.' }) === null, { happened: 'it held a second time', why: 'An unbounded gate is a loop.', fix: 'Set every raised flag at once.' });
+    const again = gate.stop({ session_id: s, cwd: repo, last_assistant_message: 'Done. All tests pass.' });
+    check('and it does not speak twice for the same prompt', again === null, { happened: `it held a second time: ${again ? again.reason.split(NL).filter((l) => /^\d+\. /.test(l)).join(' | ') : ''}`, why: 'An unbounded gate is a loop.', fix: 'Set every raised flag at once.' });
+
+    // The same prompt on a loaded machine. Measured before this fix: 7 of 240
+    // replays of the scenario above held twice when six ran at once, because a
+    // git grep or git diff that timed out on the first stop silently skipped its
+    // check, and the second stop then raised it alone; a node --check that timed
+    // out was reported as a file that does not parse. Here one git grep is made
+    // to time out on purpose.
+    const slowGrep = (cmd, args, opts) => (cmd === 'git' && args[0] === 'grep' ? { status: null, stdout: '', stderr: '', error: 'spawnSync git ETIMEDOUT' } : core.run(cmd, args, opts));
+    const s3 = sid('e2e-slow');
+    router.prompt({ session_id: s3, cwd: repo, prompt: 'add the feature and make the tests pass' });
+    for (const file of [app, spec, extra]) track.postTool({ session_id: s3, cwd: repo, tool_name: 'Write', tool_input: { file_path: file } });
+    const slow = gate.stop({ session_id: s3, cwd: repo, last_assistant_message: 'Done. All tests pass.' }, 'claude', { run: slowGrep });
+    const slowReason = slow ? slow.reason : '';
+    check('a check that timed out is named in the one block, not saved for a second', Boolean(slow) && /could not finish/.test(slowReason) && /git grep did not finish/.test(slowReason) && !/nothing calls/.test(slowReason) && /placeholders/.test(slowReason), { happened: slowReason.slice(0, 500) || 'not held', why: 'An unfinished check is not a passed one, and left unsaid it comes back on the next stop as a second block for the same prompt.', fix: 'Collect incomplete checks in integrity.check and name them in gate.stop.' });
+    const slowAgain = gate.stop({ session_id: s3, cwd: repo, last_assistant_message: 'Done. All tests pass.' });
+    check('and when git is quick again the gate stays quiet for that prompt', slowAgain === null, { happened: slowAgain ? slowAgain.reason.split(NL).filter((l) => /^\d+\. /.test(l)).join(' | ') : '', why: 'This is the exact shape that failed the suite under load: nothing calls, alone, on the second stop.', fix: 'Spend the incomplete flags with the raised ones in gate.stop.' });
+
+    const timedOut = () => ({ status: null, stdout: '', stderr: '', error: 'spawnSync ETIMEDOUT' });
+    const syn = gate.syntaxCheckDetailed([app], { run: timedOut });
+    check('a parser that timed out leaves the file unchecked, not broken', syn.failures.length === 0 && syn.unchecked.length === 1 && syn.checked.length === 0, { happened: JSON.stringify({ failures: syn.failures.length, unchecked: syn.unchecked, checked: syn.checked }), why: 'Reporting a timeout as a syntax error held a reply over a file that parses, and in the editor it would put back an edit that was fine.', fix: 'Check r.status === null in syntaxCheckDetailed.' });
+    const partial = integrity.diffFor(repo, [app, spec, extra], { run: (cmd, args, opts) => (args.includes('diff') ? timedOut() : core.run(cmd, args, opts)) });
+    const grepOut = {};
+    const none = integrity.findUnwired(repo, [{ file: 'x', line: 1, name: 'anything' }], { run: timedOut }, grepOut);
+    check('and a git call that timed out marks its check unfinished', partial && partial.incomplete === true && partial.added.some((a) => /brandNewModule/.test(a.text)) && none.length === 0 && grepOut.incomplete === true, { happened: JSON.stringify({ incomplete: partial && partial.incomplete, added: partial ? partial.added.length : null, grep: grepOut }), why: 'Silence from a check that never finished reads exactly like a clean result, which is the bug that let the gate speak twice.', fix: 'Set incomplete in diffFor and findUnwired when status is null.' });
     const s2 = sid('e2e-honest');
     router.prompt({ session_id: s2, cwd: repo, prompt: 'try the change' });
     track.postTool({ session_id: s2, cwd: repo, tool_name: 'Write', tool_input: { file_path: app } });

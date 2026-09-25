@@ -87,6 +87,7 @@ export function verifyText(cwd, paths) {
   const notes = [];
   if (r.skipped.length) notes.push(`${r.skipped.length} file(s) atlias cannot parse here (${r.skipped.map((f) => path.basename(f)).join(', ')}): it knows JavaScript, JSON and Python only. Run the project's own type check, build or test for those; do not treat them as verified.`);
   if (r.missing.length) notes.push(`${r.missing.length} path(s) do not exist: ${r.missing.map((f) => path.basename(f)).join(', ')}.`);
+  if (r.unchecked && r.unchecked.length) notes.push(`${r.unchecked.length} file(s) whose parser did not finish (${r.unchecked.map((u) => path.basename(u.file)).join(', ')}): neither passed nor failed. Run verify again, or the project's own check.`);
   if (r.failures.length) {
     return [`verify: ${r.failures.length} of ${r.checked.length} checked file(s) fail to parse.`,
       ...r.failures.map((f) => `- ${f.file}\n  ${f.error}`),
