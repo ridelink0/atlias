@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.3.2 (2026-09-25)
+
+The stall line counted its kinds in words that agreed with their numbers and then said "1 model replies in a row" one clause earlier. Reachable only with agent.maxBadReplies set to 1, and fixed for the same reason the rest of that line was: the last thing a failed run says should not sound careless.
+
 ## 3.3.1 (2026-09-25)
 
 Two things 3.3.0 said badly, found on a second read of what the model actually sees.
