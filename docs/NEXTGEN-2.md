@@ -733,11 +733,13 @@ was found doing this" means not found, not absent.
 
 **Pointer-first priced from outside the loop.** `lib/pointer.mjs` notes a
 whole-file read that the graph could have answered, at PostToolUse, in hosts
-whose read tool atlias does not own - Claude Code's and Codex's. Everything
-else in the field that enforces pointer-first does it inside its own loop,
-where it controls the read. Doing it across a foreign harness is a different
-problem, and the hard part is not the note but the silence: seven conditions
-have to hold before it speaks. *What it would take:* evidence the note changes
+whose read tool atlias does not own - Claude Code's and Codex's. Every
+pointer-first mechanism this research did look at sits inside its own loop,
+where the harness controls the read; none of the research went looking for a
+counter-example, so that is a gap in what was searched, not an established
+absence. Doing it across a foreign harness is a different problem either way,
+and the hard part is not the note but the silence: seven conditions have to
+hold before it speaks. *What it would take:* evidence the note changes
 behaviour, which needs a repeat-capable eval (item 4) and at least one task
 where the graph genuinely answers better than a read, which the corpus does not
 have. The `read-first` task is close and was not built for this.
@@ -811,6 +813,18 @@ The eleven-agent source-code study (2609.00006) and TokenPilot's 56-87% figures
 - inherited from NEXTGEN.md's own unverified list and not re-verified here,
 though both papers were re-fetched and confirmed to exist with matching titles
 and abstracts.
+
+**Only two of the local harness-source claims were adversarially checked.**
+Eleven verification passes ran, and they covered pi-mono's steering hook and
+OpenHands' critic among the code-reading claims; both came back with a
+correction, and one of those corrections was a wrong file:line. The other
+local-source claims in the loop section - mini-swe-agent's typed exit statuses,
+goose's large-response spill, opencode's overflow arithmetic, and pi-mono's
+refusal of truncated tool calls - rest on a single research agent's read of a
+file under `D:/harness-work`, never re-read by anyone else. Given that two of
+the two that were checked needed correcting, treat the quotes from those four as
+accurate in substance and unconfirmed in detail. The atlias half of each was
+re-read here; the field half was not.
 
 **Aider's two claims are the weakest sourcing in this document.**
 `max_reflections = 3` and the `finish_reason == "length"` handling were
