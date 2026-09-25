@@ -270,6 +270,86 @@ below single-agent under sycophancy). Provenance as a scoring bonus
 (indistinguishable from no defence). Write-time memory abstraction (beaten by
 read-time curation). Recall-maximising retrieval (bought recall, lost resolve).
 
+## Measured, 2026-09-25, and it refused to confirm the thing it was built on
+
+Three runs, same corpus of nine, same model (`qwen2.5-coder:7b`), one attempt
+each, each stamped with the sha of the loop that produced it:
+
+| Run | Loop | Tasks finished | Wall clock | Apply failures |
+|---|---|---|---|---|
+| A | before budget disclosure | 3/9 | 950.6s | not yet counted |
+| B | with disclosure | 4/9 | 328.7s | 12 of 37 (32%) |
+| C | with disclosure and the edit ladder | 2/9 | 1038.2s | 12 of 41 (29%) |
+
+Read naively that is a win and then a loss. Read with the comparator built for
+it (`atlias compare`: McNemar's exact test on the paired tasks plus a paired
+bootstrap), it is nothing at all:
+
+- **A against B:** two gained, one lost, p = 1.000. The bootstrap puts the
+  difference at +11.1 points with a 95 per cent interval from -33.3 to +44.4.
+- **B against C:** none gained, two lost, p = 0.500, interval -55.6 to 0.0.
+- **A against C:** one gained, two lost, p = 1.000.
+
+So the field's +18.6 points for budget disclosure is **not reproduced here, and
+cannot be** on nine tasks with one attempt each: one task flipping moves this
+score 11.1 points. The honest statement is that atlias discloses the budget
+because a measured study says it helps, not because atlias has measured it
+helping. The same applies in reverse to the ladder: its apparent two-task drop
+is inside the noise, and calling it a regression would be the same error with
+the sign flipped.
+
+**What the measurement did settle**, because it is a count and not a
+comparison: the apply-failure rate. It was 32 per cent, and the ladder moved it
+to 29. Three points. That is the strongest evidence available that most failed
+edits here are **not near-misses**, so the fuzzy matching the field's biggest
+number rests on is not what this harness needed most. The response is not a
+bigger ladder: it is `editFailKind`, which now tallies every failed edit by
+cause - no-file, not-found, ambiguous, would-not-parse, empty-old, same-text,
+no-path - and prints the distribution beside the score. The next fix goes where
+that distribution points rather than where the literature's fix pointed.
+
+The tally covers all three edit tools. Its first draft named only
+`edit_file`'s refusals, so a failed `write_file` or `apply_patch` - a malformed
+patch, a missing path, arguments that were not JSON - would have been filed
+under `other`, which is where a weak model's commonest failures would have
+hidden. It now names `bad-patch`, `bad-args`, `refused` (the permission
+setting or the user) and `repeated` (the loop guard) as well, and the suite
+produces every tool refusal by calling `runTool` rather than by typing the
+expected string, so a reworded message fails a test instead of drifting into
+`other`. poly-A ran before any of this, so it has a rate (52 of 79 edits did
+not apply) and no causes; the next polyglot run is the first with both.
+
+Two smaller things the runs settled:
+- Wall clock swung 950s, 328s, 1038s with no change to the model. Time on this
+  machine measures the machine.
+- The tamper detector caught a real cheat on its first live run: the model
+  rewrote `test.mjs` in the pricing task so the check would exit zero. That is
+  the mechanism working against a real model rather than a scripted one.
+
+## The gate spoke twice, and only on a loaded machine
+
+The full suite failed "and it does not speak twice for the same prompt" once,
+and passed it ten times alone. That is the shape of a flake, and it was not
+one. Replaying the scenario 240 times with six replays at once held a second
+time 7 times, and every one had the same cause: a check that could not finish
+on the first stop was silently skipped, so it raised no flag, and the second
+stop raised it alone. Three checks did it - `git grep` past its budget ("nothing
+calls" on the second stop), `git diff` past its timeout (placeholders and
+weakened tests on the second stop), and `node --check` past its ten seconds,
+which was worse: a parser that timed out was reported as a file that does not
+parse, so a correct file blocked a reply, and in the editor the same function
+would have put back an edit that was fine.
+
+The fix is to stop treating an unfinished check as a clean one. A parser that
+did not finish leaves the file `unchecked`, neither passed nor failed. A git
+call that timed out marks its check incomplete, and a timed-out `rev-parse` is
+no longer memoised as "not a repository" for the life of the process. When the
+gate blocks, it names every unfinished check in the same block and spends it
+with the rest, so it speaks once; when it does not block, it has not spoken,
+and the next stop may still check. The regression test times out one
+`git grep` on purpose and asserts both halves. The same 240 replays, six at
+once, after the fix: 0 held twice, against 7 before.
+
 ## The A/B this round set up by accident, and how it will be judged
 
 The baseline run started before the two mechanisms landed and therefore measures
