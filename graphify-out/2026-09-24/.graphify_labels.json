@@ -3,8 +3,8 @@
   "1": "loop.mjs",
   "2": "agent.mjs",
   "3": "install-sandbox.mjs",
-  "4": "gate.mjs",
-  "5": "server.mjs",
+  "4": "server.mjs",
+  "5": "gate.mjs",
   "6": "package.json",
   "7": "core.mjs",
   "8": "run.mjs",
@@ -15,7 +15,7 @@
   "13": "double-check",
   "14": "atlias",
   "15": "Changelog",
-  "17": "usage.mjs",
   "18": "atlias.mjs",
-  "19": "hosts.mjs"
+  "19": "hosts.mjs",
+  "20": "atlias"
 }

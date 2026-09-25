@@ -329,6 +329,14 @@ export default async function agentSuites({ suite, asyncSuite, check, core, agen
     check('the stored history is not changed', msgs[3].content.length > 2000 && msgs[2].content.length === 3000, { happened: 'the original messages were modified', why: 'Masking is a view; the history must stay complete.', fix: 'Map to new objects in view().' });
     check('the private bookkeeping never reaches the model', v.every((m) => !('_obs' in m)), { happened: 'an _obs field was sent', why: 'Some endpoints reject unknown fields outright.', fix: 'Strip _obs in view().' });
     check('an old long assistant message is shortened too', v[2].content.length < 1000, { happened: v[2].content.length + ' characters', why: 'A whole file the model wrote twenty rounds ago is dead weight.', fix: 'Elide assistant content before the oldest kept observation.' });
+    // Cache stability: evicting one more observation every turn rewrites the
+    // prompt prefix every turn, which throws the provider cache away.
+    const grow = (n) => { const m = []; for (let i = 0; i < n; i++) { m.push({ role: 'assistant', content: 'call ' + i }); m.push({ role: 'user', content: 'long ' + 'x'.repeat(500), _obs: { label: 'read f' + i, summary: 'r' + i } }); } return m; };
+    const pre = (n) => JSON.stringify(loop.view(grow(n), 2, 4).slice(0, 20));
+    const evicted = (n) => loop.view(grow(n), 2, 4).filter((m) => /elided to keep/.test(m.content)).length;
+    check('the prefix stays byte-identical while the block fills', pre(10) === pre(11) && pre(11) === pre(13) && evicted(10) === 8 && evicted(13) === 8, { happened: `prefix same: ${pre(10) === pre(13)}, evicted ${evicted(10)} then ${evicted(13)}`, why: 'A rewritten prefix is a thrown-away prompt cache: the whole conversation is re-read at full price every turn.', fix: 'view() quantises the eviction boundary to evictBlock.' });
+    check('and it does evict once the block is full', evicted(14) === 12 && evicted(9) === 4, { happened: `evicted ${evicted(9)} at nine and ${evicted(14)} at fourteen`, why: 'Holding every observation forever is the other failure: the window fills and the run dies.', fix: 'Check the floor division in view().' });
+    check('a missing block size behaves as it always did', JSON.stringify(loop.view(grow(6), 2)) === JSON.stringify(loop.view(grow(6), 2, 1)), { happened: 'the default changed behaviour', why: 'Callers that pass two arguments must keep the old one-at-a-time eviction.', fix: 'Default step to 1.' });
     check('a zero keep setting is treated as one', loop.view(msgs, 0).filter((m, i) => msgs[i]._obs && !/elided/.test(m.content)).length === 1, { happened: 'wrong number kept', why: 'A config value of 0 must not crash or keep everything.', fix: 'Clamp keep to at least 1.' });
   });
 

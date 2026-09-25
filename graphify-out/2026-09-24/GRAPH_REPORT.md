@@ -1,13 +1,13 @@
 # Graph Report - atlias  (2026-09-24)
 
 ## Corpus Check
-- 44 files · ~96,222 words
+- 43 files · ~95,327 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 2 file(s) not represented in the graph (top: (none) 2)
 
 ## Summary
-- 596 nodes · 1561 edges · 19 communities
-- Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 32 edges (avg confidence: 0.9)
+- 588 nodes · 1552 edges · 19 communities
+- Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 30 edges (avg confidence: 0.89)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
@@ -20,7 +20,7 @@
 - loop.mjs
 - agent.mjs
 - install-sandbox.mjs
-- brief.mjs
+- server.mjs
 - gate.mjs
 - package.json
 - core.mjs
@@ -51,14 +51,14 @@
 ## Surprising Connections (you probably didn't know these)
 - `Hosts: what they really send` --references--> `filesFromTool()`  [INFERRED]
   docs/RESEARCH.md → lib/core.mjs
-- `Hosts: what they really send` --references--> `verdict()`  [INFERRED]
-  docs/RESEARCH.md → lib/integrity.mjs
-- `What was wrong, and is now fixed` --references--> `view()`  [INFERRED]
-  docs/NEXTGEN.md → lib/loop.mjs
-- `Keeping the context small` --references--> `view()`  [INFERRED]
+- `Hosts: what they really send` --references--> `applyUpdate()`  [INFERRED]
   docs/RESEARCH.md → lib/loop.mjs
 - `1.2.0 (2026-09-22)` --references--> `atlias()`  [INFERRED]
   CHANGELOG.md → test/install-sandbox.mjs
+- `3.0.0 (2026-09-22)` --references--> `atlias()`  [INFERRED]
+  CHANGELOG.md → test/install-sandbox.mjs
+- `Install` --references--> `atlias()`  [INFERRED]
+  README.md → test/install-sandbox.mjs
 
 ## Import Cycles
 - None detected.
@@ -67,39 +67,39 @@
 
 ### Community 0 - "graph.mjs"
 Cohesion: 0.11
-Nodes (50): briefCost(), estimateTokens(), graphVsFiles(), interventions(), liveSessions(), report(), appendLine(), detach() (+42 more)
+Nodes (49): briefCost(), estimateTokens(), graphVsFiles(), interventions(), liveSessions(), report(), appendLine(), detach() (+41 more)
 
 ### Community 1 - "loop.mjs"
-Cohesion: 0.05
-Nodes (68): Ranked, still to build, The next generation: what atlias takes from the field, and what it adds, The one number that has changed, Unverified, What atlias already had, What the field actually looks like, What was wrong, and is now fixed, Hosts: what they really send (+60 more)
+Cohesion: 0.07
+Nodes (52): Keeping the context small, programCommand(), apiKey(), applyUpdate(), ARG_ALIASES, checkCommand(), compact(), confirmOutside() (+44 more)
 
 ### Community 2 - "agent.mjs"
 Cohesion: 0.11
-Nodes (44): b(), c(), chatPath(), CHATS(), chooser(), claudeArgs(), claudeTurn(), cli() (+36 more)
+Nodes (43): b(), c(), chatPath(), CHATS(), chooser(), claudeArgs(), claudeTurn(), cli() (+35 more)
 
 ### Community 3 - "install-sandbox.mjs"
-Cohesion: 0.06
-Nodes (32): ref_node_child_process, ref_node_fs, ref_node_url, added, after, before, changed, checks (+24 more)
+Cohesion: 0.05
+Nodes (39): ago(), line(), pct(), reading(), resets(), section(), STANCE, ref_node_fs (+31 more)
 
-### Community 4 - "brief.mjs"
-Cohesion: 0.12
-Nodes (26): BRIEF_BUDGET_MS, build(), companions(), fitLines(), RULES, sessionStart(), CLAUDE_DIR, claudeMemoryDir() (+18 more)
+### Community 4 - "server.mjs"
+Cohesion: 0.48
+Nodes (6): VERSION, fail(), handle(), reply(), send(), TOOLS
 
 ### Community 5 - "gate.mjs"
 Cohesion: 0.15
-Nodes (24): eventsTail(), gitStatusShort(), TURN_TAIL, block(), changedFiles(), lastPrompt(), PARSEABLE, parseGitStatus() (+16 more)
+Nodes (26): eventsTail(), gitStatusShort(), readTail(), TURN_TAIL, block(), changedFiles(), lastPrompt(), PARSEABLE (+18 more)
 
 ### Community 6 - "package.json"
 Cohesion: 0.11
 Nodes (18): author, bin, atlias, description, engines, node, keywords, license (+10 more)
 
 ### Community 7 - "core.mjs"
-Cohesion: 0.08
-Nodes (41): CODE_EXT, CODEX_DIR, commandFromTool(), detectHost(), emit(), END_MARK, EVENT_MAX, filesFromTool() (+33 more)
+Cohesion: 0.07
+Nodes (53): BRIEF_BUDGET_MS, fitLines(), RULES, sessionStart(), CLAUDE_DIR, clip(), CODE_EXT, commandFromTool() (+45 more)
 
 ### Community 8 - "run.mjs"
 Cohesion: 0.07
-Nodes (32): chooseShimDir(), CLI_LAUNCHER_SOURCE, installShortcut(), launcherPath(), MARKER, onPath(), shimDirCandidates(), shimFiles() (+24 more)
+Nodes (33): chooseShimDir(), CLI_LAUNCHER_SOURCE, installShortcut(), launcherPath(), MARKER, onPath(), shimDirCandidates(), shimFiles() (+25 more)
 
 ### Community 9 - "plugin.json"
 Cohesion: 0.17
@@ -110,8 +110,8 @@ Cohesion: 0.17
 Nodes (11): Built on, In every host, Known limits, Measured, Settings, Surviving an update, Tests, The agent (+3 more)
 
 ### Community 11 - "integrity.mjs"
-Cohesion: 0.10
-Nodes (31): isCodeFile(), check(), CONVENTION_NAMES, DEF_PATTERNS, diffFor(), DONE_RE, FAIL_RE, failExcerpt() (+23 more)
+Cohesion: 0.08
+Nodes (37): Hosts: what they really send, Making a weak model finish the job, Not measured, One live run, What atlias is built on, isCodeFile(), check(), CONVENTION_NAMES (+29 more)
 
 ### Community 12 - "marketplace.json"
 Cohesion: 0.25
@@ -130,35 +130,35 @@ Cohesion: 0.06
 Nodes (34): 1.0.0 (2026-09-21), 1.3.0 (2026-09-22), 1.4.0 (2026-09-22), 1.4.1 (2026-09-22), 1.5.0 (2026-09-22), 1.5.1 (2026-09-22), 1.6.0 (2026-09-22), 1.7.0 (2026-09-22) (+26 more)
 
 ### Community 18 - "atlias.mjs"
-Cohesion: 0.08
-Nodes (26): argv, cwd, FLAG_COMMANDS, shortcutInstall(), CHOICES, DEFAULTS, parseSetting(), ROOT (+18 more)
+Cohesion: 0.09
+Nodes (18): argv, cwd, FLAG_COMMANDS, shortcutInstall(), CHOICES, DEFAULTS, parseSetting(), STATE_DIR (+10 more)
 
 ### Community 19 - "hosts.mjs"
-Cohesion: 0.08
-Nodes (66): exists(), findPython(), installedRoots(), isVersionedPath(), readJson(), readText(), run(), START_MARK (+58 more)
+Cohesion: 0.07
+Nodes (77): build(), companions(), claudeMemoryDir(), CODEX_DIR, config(), END_MARK, ensureDir(), exists() (+69 more)
 
 ### Community 20 - "atlias"
 Cohesion: 0.40
 Nodes (5): 1.2.0 (2026-09-22), 3.0.0 (2026-09-22), Install, Sub-harness, agent, or both, atlias()
 
 ## Knowledge Gaps
-- **189 isolated node(s):** `$schema`, `name`, `description`, `name`, `email` (+184 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 216 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **185 isolated node(s):** `$schema`, `name`, `description`, `name`, `email` (+180 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 211 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `atlias()` connect `atlias` to `README.md`, `install-sandbox.mjs`?**
-  _High betweenness centrality (0.145) - this node is a cross-community bridge._
+  _High betweenness centrality (0.147) - this node is a cross-community bridge._
 - **Why does `Changelog` connect `Changelog` to `atlias`?**
-  _High betweenness centrality (0.102) - this node is a cross-community bridge._
+  _High betweenness centrality (0.103) - this node is a cross-community bridge._
 - **Why does `3.0.0 (2026-09-22)` connect `atlias` to `Changelog`?**
   _High betweenness centrality (0.051) - this node is a cross-community bridge._
 - **What connects `$schema`, `name`, `description` to the rest of the system?**
-  _189 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _185 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `graph.mjs` be split into smaller, more focused modules?**
-  _Cohesion score 0.10522496371552975 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.10633484162895927 - nodes in this community are weakly interconnected._
 - **Should `loop.mjs` be split into smaller, more focused modules?**
-  _Cohesion score 0.05289193302891933 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.06753246753246753 - nodes in this community are weakly interconnected._
 - **Should `agent.mjs` be split into smaller, more focused modules?**
-  _Cohesion score 0.11207729468599034 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.10808080808080808 - nodes in this community are weakly interconnected._

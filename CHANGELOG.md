@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.1.0 (2026-09-25)
+
+The optimisation target for a harness moved from smallest context to highest prompt-cache hit rate, and atlias was on the wrong side of it: `view()` shrank one more old tool result every turn, so every turn rewrote the prompt prefix and threw the provider cache away. The saving from eliding one observation was paid back many times over by re-reading the whole conversation at full price. Eviction now moves in blocks (`agent.evictBlock`, default 4): between two block edges the prefix is byte-identical and can be served from cache. docs/NEXTGEN.md records the research behind it, with sources, and ranks what is still to build.
+
 ## 3.0.1 (2026-09-24)
 
 Codex hooks no longer name the versioned plugin folder. `~/.codex/hooks.json` ran every atlias hook from `.../plugins/cache/atlias/atlias/3.0.0/lib/hooks.mjs`, a folder the next update removes, while the MCP server already went through the `~/.atlias/server.mjs` launcher. Hooks now go through `~/.atlias/hooks.mjs`, built from the same launcher source so the two cannot drift, and the CLI line in every instruction block goes through `~/.atlias/cli.mjs`. `atlias doctor` used to pass a hook that pointed into a versioned folder; it now fails it and says why.
