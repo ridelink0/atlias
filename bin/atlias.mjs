@@ -57,7 +57,7 @@ switch (cmd) {
     // Positional task ids only: the value after --engine or --only belongs to
     // that flag, not to the task list.
     const taken = new Set();
-    for (const f of ['--engine', '--only', '--repeat', '--model', '--corpus']) { const i = argv.indexOf(f); if (i >= 0) taken.add(i + 1); }
+    for (const f of ['--engine', '--only', '--repeat', '--model', '--corpus', '--save']) { const i = argv.indexOf(f); if (i >= 0) taken.add(i + 1); }
     const want = argv.slice(1).filter((a, i) => !a.startsWith('--') && !taken.has(i + 1));
     const only = optVal('--only');
     // --corpus scores a different task directory, so the shipped nine stay fast
@@ -83,10 +83,36 @@ switch (cmd) {
     say(`${tasks.length} task(s) against ${engine}${repeat > 1 ? `, ${repeat} attempts each` : ''}. The check command decides, not the model.`);
     const report = await evals.runSuite(tasks, { chat, state: agent.newState(cwd, engine), repeat, engineName: engine, model });
     say(evals.format(report));
+    // --save keeps the report so two runs can be compared later. A score nobody
+    // wrote down cannot be the A in an A/B.
+    const savePath = optVal('--save');
+    if (savePath) {
+      const out = path.resolve(savePath);
+      fs.mkdirSync(path.dirname(out), { recursive: true });
+      fs.writeFileSync(out, `${JSON.stringify(report, null, 2)}\n`);
+      say(`saved to ${out}`);
+    }
     process.exitCode = report.passed === report.total ? 0 : 1;
     break;
   }
   case 'bench': say(bench.report(cwd, argv.slice(1).filter((a) => !a.startsWith('--')))); break;
+  // Two saved runs, asked the paired question rather than eyeballed. Two scores
+  // on a corpus this size are not a result; the disagreements are.
+  case 'compare': {
+    const evals2 = await import('../lib/eval.mjs');
+    const files = argv.slice(1).filter((a) => !a.startsWith('--'));
+    if (files.length !== 2) { say('usage: atlias compare <a.json> <b.json>   (write them with atlias eval --save)'); process.exitCode = 1; break; }
+    const load = (f) => { try { return JSON.parse(fs.readFileSync(path.resolve(f), 'utf8')); } catch (e) { say(`could not read ${f}: ${e.message}`); return null; } };
+    const A = load(files[0]), B = load(files[1]);
+    if (!A || !B) { process.exitCode = 1; break; }
+    const nameOf = (rep, f) => [rep.stamp && rep.stamp.text, rep.model].filter(Boolean).join(' ') || path.basename(f);
+    let aName = nameOf(A, files[0]), bName = nameOf(B, files[1]);
+    // Two runs of the same code and model (a rerun, or a changed setting) would
+    // otherwise print as "X 3/9 against X 4/9"; the file names tell them apart.
+    if (aName === bName) { aName = `${aName} (${path.basename(files[0])})`; bName = `${bName} (${path.basename(files[1])})`; }
+    say(evals2.formatCompare(evals2.compare(A, B), aName, bName));
+    break;
+  }
   // Somebody else's benchmark, converted into tasks this machine can run, with
   // every task proved to fail as shipped and pass with its own reference
   // solution before it is written.

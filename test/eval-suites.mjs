@@ -153,6 +153,56 @@ export default async function register({ asyncSuite, check }) {
     try { fs.rmSync(repo, { recursive: true, force: true }); } catch { /* best effort */ }
   });
 
+  // Two scores are not a result. The comparator has to be checked against
+  // itself before it is trusted to judge anything else.
+  await asyncSuite('paired comparison expert', 'a difference between two runs is judged, not eyeballed', async () => {
+    const rep = (pass) => ({ results: pass.map((p, i) => ({ id: `t${i}`, name: `t${i}`, pass: p })) });
+    const same = evals.compare(rep([true, false, true, false]), rep([true, false, true, false]));
+    check('the same run against itself is never a difference', same.changed === 0 && same.p === 1 && /nothing changed/.test(same.verdict), { happened: JSON.stringify({ changed: same.changed, p: same.p, verdict: same.verdict }), why: 'A comparator that finds a difference between a configuration and itself would report every change as a win, and that is the first thing to rule out before any of its other numbers mean anything.', fix: 'Check mcnemar with no disagreements.' });
+
+    // One task flipping on a nine-task corpus is what the real A/B produced.
+    const oneUp = evals.compare(rep([true, true, true, false, false, false, false, false, false]), rep([true, true, true, true, false, false, false, false, false]));
+    check('one task gained on a small corpus is reported as inside the noise', oneUp.gained.length === 1 && oneUp.lost.length === 0 && oneUp.p === 1 && /inside the noise/.test(oneUp.verdict), { happened: JSON.stringify({ gained: oneUp.gained, p: oneUp.p, verdict: oneUp.verdict }), why: 'This is the actual measurement this harness produced - 3 of 9 against 4 of 9 - and calling it an improvement would be the single easiest way to fool ourselves.', fix: 'Check the exact binomial tail in mcnemar.' });
+
+    const sevenUp = evals.compare(rep(Array(20).fill(false)), rep([...Array(7).fill(true), ...Array(13).fill(false)]));
+    check('and seven gained with none lost is a real difference', sevenUp.p < 0.05 && /real difference/.test(sevenUp.verdict), { happened: `p=${sevenUp.p.toFixed(4)} ${sevenUp.verdict}`, why: 'A test that can never say yes is as useless as one that always does.', fix: 'Check mcnemar.' });
+
+    const mixed = evals.compare(rep([true, true, false, false]), rep([false, true, true, false]));
+    check('a swap in both directions cancels rather than counting as progress', mixed.gained.length === 1 && mixed.lost.length === 1 && mixed.p === 1, { happened: JSON.stringify({ gained: mixed.gained, lost: mixed.lost, p: mixed.p }), why: 'Two tasks changing in opposite directions is the commonest shape of noise, and a score difference of zero hides it entirely.', fix: 'Count b01 and b10 separately.' });
+
+    const shifted = evals.compare(rep([true, false]), { results: [{ id: 't0', pass: true }, { id: 'tX', pass: true }] });
+    check('a task only one run holds is set aside, not counted', shifted.pairs === 1 && shifted.onlyA.includes('t1') && shifted.onlyB.includes('tX'), { happened: JSON.stringify({ pairs: shifted.pairs, onlyA: shifted.onlyA, onlyB: shifted.onlyB }), why: 'A corpus that changed between the two runs is not a comparison, and silently pairing the wrong tasks would make it look like one.', fix: 'Align by id and report the leftovers.' });
+
+    // A fixed generator, so the interval is the same number on every machine.
+    let seed = 7;
+    const rng = () => { seed = (seed * 1103515245 + 12345) % 2147483648; return seed / 2147483648; };
+    const boot = evals.bootstrapDiff([{ a: false, b: true }, { a: false, b: true }, { a: true, b: true }, { a: false, b: false }], 500, rng);
+    check('the bootstrap interval covers the mean and is not a point', boot.mean === 0.5 && boot.lo < boot.mean && boot.hi >= boot.mean, { happened: JSON.stringify(boot), why: 'An interval that collapses to the estimate tells the reader the corpus is certain when it is four tasks.', fix: 'Check bootstrapDiff resampling.' });
+
+    // mcnemar on its own, against values worked by hand: seven to none is
+    // 2 x 0.5^7; ten to two is 2 x (1 + 12 + 66) / 4096; two to one is 2 x 4/8,
+    // capped at one. And a corpus big enough to underflow 2^-n must still give
+    // a number, not NaN.
+    const m = [evals.mcnemar(7, 0), evals.mcnemar(10, 2), evals.mcnemar(2, 1), evals.mcnemar(0, 0), evals.mcnemar(0, 7)];
+    const big = [evals.mcnemar(1200, 1100), evals.mcnemar(1500, 1500), evals.mcnemar(3000, 0)];
+    const near = (x, y) => Math.abs(x - y) < 1e-9;
+    check('mcnemar matches the exact binomial tail worked by hand', near(m[0].p, 0.015625) && near(m[1].p, 2 * 79 / 4096) && m[2].p === 1 && m[3].p === 1 && m[3].n === 0 && near(m[4].p, m[0].p) && m[1].n === 12, { happened: JSON.stringify(m), why: 'Every verdict the comparator prints rests on this one number; a test that only checks its verdict words would pass with the tail off by a term.', fix: 'Check the loop over k in mcnemar.' });
+    check('and it stays a probability on a corpus of thousands', big.every((r) => Number.isFinite(r.p) && r.p >= 0 && r.p <= 1) && big[0].p < 0.05 && big[1].p === 1 && big[2].p === 0, { happened: JSON.stringify(big), why: 'Past about a thousand disagreements 2^-n underflows and C(n, k) overflows, and their product is NaN, which would print as the p-value.', fix: 'Build each term in logs.' });
+    const none = evals.formatCompare(evals.compare(rep([true]), { results: [{ id: 'other', pass: true }] }), 'A', 'B');
+    check('two runs with no task in common are not reported as a tie', /share no task/.test(none) && !/Infinity|NaN|0\/0/.test(none), { happened: none, why: 'A p of one and an interval of zero over no tasks at all reads as a measured tie, and the size warning divided by zero.', fix: 'Return early in formatCompare when pairs is zero.' });
+
+    // Each task's edit tally is its own. A state that already carries counters
+    // (a reused agent session) must neither leak them into the task nor collect
+    // the task's failures into its shared object.
+    const carried = { ...agentMod.newState(process.cwd(), 'echo'), editTries: 9, editFails: 7, editWhy: { 'not-found': 5 } };
+    const own = await evals.runTask(FIX, { state: carried, chat: scripted([blk({ tool: 'edit_file', path: 'nowhere.js', old_string: 'a', new_string: 'b' }), 'Stopping.']) });
+    check('a task counts only its own edits, whatever state it was handed', own.editTries === 1 && own.editFails === 1 && JSON.stringify(own.editWhy) === JSON.stringify({ 'no-file': 1 }) && JSON.stringify(carried.editWhy) === JSON.stringify({ 'not-found': 5 }), { happened: JSON.stringify({ tries: own.editTries, fails: own.editFails, why: own.editWhy, carried: carried.editWhy }), why: 'The state is copied shallowly, so a carried editWhy would be one object every task adds into, and runSuite would then sum those running totals a second time.', fix: 'Start editTries, editFails and editWhy fresh in runTask.' });
+    if (own.workspace) { try { fs.rmSync(own.workspace, { recursive: true, force: true }); } catch { /* best effort */ } }
+
+    const text = evals.formatCompare(oneUp, 'before', 'after');
+    check('the report says both numbers, the p and the size warning', /before 3\/9 against after 4\/9/.test(text) && /McNemar exact p = 1\.000/.test(text) && /one task flipping moves the score 11\.1 points/.test(text), { happened: text, why: 'A verdict with no arithmetic behind it is just a louder opinion.', fix: 'Check formatCompare.' });
+  });
+
   await asyncSuite('eval provenance expert', 'a score names the code behind it and cannot be bought', async () => {
     const state = agentMod.newState(process.cwd(), 'echo');
     const kill = (d) => { try { fs.rmSync(d, { recursive: true, force: true }); } catch { /* best effort */ } };

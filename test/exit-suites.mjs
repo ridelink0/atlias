@@ -152,6 +152,64 @@ export default async function exitSuites({ suite, asyncSuite, check, core, agent
     check('the harness counts the edits that did not apply', st2.editTries === 2 && st2.editFails === 1, { happened: `tries=${st2.editTries} fails=${st2.editFails}`, why: 'The largest single harness effect measured anywhere in the field is the share of edits that fail to apply - one adapter moved a model from 19.1 to 73.4 per cent on the same benchmark by fixing only that - and a rate nobody records is a rate nobody can improve.', fix: 'Check the isEdit branch in runLoop and prep.' });
     const evalMod2 = await import('../lib/eval.mjs');
     const text = evalMod2.format({ results: [{ name: 'a', pass: true, rounds: 2, ms: 10, editTries: 4, editFails: 2 }], passed: 1, total: 1, ms: 10, editTries: 4, editFails: 2, chars: 40000 });
+    // The rate says there is a problem; only the causes say which problem. The
+    // ladder moved the measured rate from 32 to 29 per cent, which is how we
+    // learned most failures are not near-misses at all.
+    const kinds = ['there is no x.js. Use write_file to create a new file.', 'old_string was not found in a.js, exactly or with its whitespace ignored.', 'old_string matches 3 places in a.js (lines 1, 2, 3).', 'refused: that edit would leave a.js unable to parse (x).', 'old_string is empty. Copy the exact lines', 'something nobody wrote a branch for'].map((t) => loop.editFailKind(t));
+    check('each kind of edit failure is named from the refusal itself', JSON.stringify(kinds) === JSON.stringify(['no-file', 'not-found', 'ambiguous', 'would-not-parse', 'empty-old', 'other']), { happened: kinds.join(' '), why: 'A harness whose failures are mostly a missing file has a different problem from one whose failures are mostly a stale old_string, and the two fixes have nothing in common; a single rate cannot tell them apart.', fix: 'Check editFailKind in lib/loop.mjs.' });
+    check('and every name it can return is in the published list', ['no-file', 'not-found', 'ambiguous', 'would-not-parse', 'empty-old', 'same-text', 'no-path', 'other'].every((k) => loop.EDIT_FAILS.includes(k)), { happened: loop.EDIT_FAILS.join(', '), why: 'A cause that appears in a report and not in the list is a cause nobody knows how to read.', fix: 'Keep EDIT_FAILS and editFailKind in step.' });
+
+    // The refusals themselves, produced by runTool rather than typed here, for
+    // all three edit tools. A hand-copied string passes forever after the tool
+    // rewords its message; this breaks the day they drift apart.
+    const RW = path.join(W, 'refusals');
+    fs.mkdirSync(RW, { recursive: true });
+    fs.writeFileSync(path.join(RW, 'r.mjs'), ['export const a = 1;', 'export const twin = 0;', 'export const twin2 = 0;', '// a  note', '//  a note'].join(NL) + NL);
+    const rst = { sid: 'edit-refusals', cwd: RW, messages: [] };
+    const outsideFile = path.join(path.dirname(TMP), `atlias-outside-${process.pid}.js`);
+    const cases = [
+      [{ tool: 'edit_file', old_string: 'a', new_string: 'b' }, 'no-path'],
+      [{ tool: 'write_file', content: 'x' }, 'no-path'],
+      [{ tool: 'edit_file', path: 'missing.js', old_string: 'a', new_string: 'b' }, 'no-file'],
+      [{ tool: 'edit_file', path: outsideFile, old_string: 'a', new_string: 'b' }, 'outside-workspace'],
+      [{ tool: 'edit_file', path: 'r.mjs', old_string: '', new_string: 'b' }, 'empty-old'],
+      [{ tool: 'edit_file', path: 'r.mjs', old_string: 'export const a = 1;', new_string: 'export const a = 1;' }, 'same-text'],
+      [{ tool: 'edit_file', path: 'r.mjs', old_string: 'export const nothing = 41;', new_string: 'x' }, 'not-found'],
+      [{ tool: 'edit_file', path: 'r.mjs', old_string: ' = 0;', new_string: ' = 5;' }, 'ambiguous'],
+      [{ tool: 'edit_file', path: 'r.mjs', old_string: '// a note', new_string: '// the note' }, 'ambiguous'],
+      [{ tool: 'edit_file', path: 'r.mjs', old_string: 'export const a = 1;', new_string: 'export const a = ;' }, 'would-not-parse'],
+      [{ tool: 'write_file', path: 'r.mjs', content: 'export const = ;' + NL }, 'would-not-parse'],
+      [{ tool: 'apply_patch', input: 'no patch here' }, 'bad-patch'],
+      [{ tool: 'apply_patch', input: ['*** Begin Patch', '*** Update File: missing.js', '-a', '+b', '*** End Patch'].join(NL) }, 'no-file'],
+      [{ tool: 'apply_patch', input: ['*** Begin Patch', '*** Update File: r.mjs', '-export const zzz = 9;', '+export const zzz = 8;', '*** End Patch'].join(NL) }, 'not-found'],
+      [{ tool: 'apply_patch', input: ['*** Begin Patch', '*** Update File: r.mjs', '-export const a = 1;', '+export const a = ;', '*** End Patch'].join(NL) }, 'would-not-parse'],
+      [{ tool: 'edit_file', _badArgs: '{"path": "r.js", old_string' }, 'bad-args'],
+    ];
+    const misread = [];
+    for (const [call, want] of cases) {
+      const said = await loop.runTool(rst, call, async () => 'n');
+      const got = loop.editFailKind(said);
+      if (got !== want) misread.push(`${call.tool} wanted ${want}, got ${got}: ${String(said).slice(0, 120)}`);
+    }
+    const untouched = fs.readFileSync(path.join(RW, 'r.mjs'), 'utf8').startsWith('export const a = 1;') && !fs.existsSync(outsideFile);
+    check('every refusal the three edit tools really return is named, none as other', misread.length === 0 && untouched, { happened: misread.join(' || ') || `a refusal changed a file (untouched=${untouched})`, why: 'write_file and apply_patch count as edits too, and a malformed patch or arguments that are not JSON are the failures a weak model makes most; filed under other, they are invisible in exactly the report meant to find them.', fix: 'Anchor editFailKind on the wording runTool returns for that case.' });
+    // The two refusals that come from the loop and the permission setting rather
+    // than from the tool, in the loop's own words.
+    const outer = ['atlias guard: this exact tool call has repeated and returns the same result each time.', 'read-only mode: edit_file is not allowed here and nothing was changed.', 'refused by the user: edit_file r.js. Nothing was changed.'].map((t) => loop.editFailKind(t));
+    check('and a refusal from the guard or the permission setting is named apart from the tool', JSON.stringify(outer) === JSON.stringify(['repeated', 'refused', 'refused']) && [...cases.map((c) => c[1]), ...outer].every((k) => loop.EDIT_FAILS.includes(k)), { happened: outer.join(' '), why: 'An edit the loop guard swallowed or the user declined is not a model that cannot copy text, and a fix aimed at matching would do nothing for it.', fix: 'Check the first branches of editFailKind and EDIT_FAILS.' });
+
+    const st3 = { sid: 'edit-why', cwd: W, messages: [], engine: 'ollama' };
+    await loop.runLoop(st3, 'fix it', {
+      chat: scripted([
+        blk({ tool: 'edit_file', path: 'nowhere-at-all.js', old_string: 'a', new_string: 'b' }),
+        blk({ tool: 'edit_file', path: 'target.js', old_string: 'export const nothing = 41;', new_string: 'export const nothing = 42;' }),
+        'Done.',
+      ]),
+    });
+    check('a run tallies its edit failures by cause', st3.editWhy && st3.editWhy['no-file'] === 1 && st3.editWhy['not-found'] === 1, { happened: JSON.stringify(st3.editWhy), why: 'The distribution is the thing that decides the next fix; without it the only available move is to guess.', fix: 'Check the isEdit branch in runLoop.' });
+    const whyText = evalMod2.format({ results: [{ name: 'a', pass: false, why: 'the check exited 1', rounds: 2, ms: 10 }], passed: 0, total: 1, ms: 10, editTries: 5, editFails: 3, editWhy: { 'not-found': 2, 'no-file': 1 } });
+    check('and the report prints the causes worst first', /why: not-found 2, no-file 1/.test(whyText), { happened: whyText.split(NL).filter((l) => /why:/.test(l)).join(' | ') || whyText.slice(-160), why: 'A tally nobody prints is a tally nobody acts on.', fix: 'Check the why line in format.' });
+
     check('and the report prints the rate beside the score', /edits: 4 attempted, 2 did not apply \(50%\)/.test(text) && /context moved: 40k characters/.test(text), { happened: text.split(NL).slice(-3).join(' | '), why: 'Two harnesses can sit inside the noise on pass rate and forty-fold apart on what the score cost; a report with no cost on it cannot tell them apart.', fix: 'Check the tail of format in lib/eval.mjs.' });
   });
 

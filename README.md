@@ -124,7 +124,15 @@ Over seven hundred and fifty checks in a hundred and five suites, each written f
 ```
 atlias eval                    every task in evals/, with the engine you use
 atlias eval --engine echo      a dry run: every task must fail before any work is done
+atlias eval --save a.json      keep the report, so a later run can be compared with it
+atlias compare a.json b.json   the paired question: which tasks flipped, and could a coin have done it
 ```
+
+Two scores on a corpus this small are not a result. `atlias compare` pairs the
+two runs task by task and reports McNemar's exact test on the tasks that
+changed, plus a paired bootstrap interval, so "4 of 9 beats 3 of 9" is judged
+rather than eyeballed. A failed edit is also counted by cause (not-found,
+no-file, ambiguous, bad-patch and the rest) beside the apply-failure rate.
 
 Eight tasks, each a small project written into a scratch workspace that the
 agent then has to fix: a failing test, a function to add, a test that must keep
