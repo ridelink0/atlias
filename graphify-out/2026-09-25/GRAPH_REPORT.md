@@ -1,7 +1,7 @@
 # Graph Report - atlias  (2026-09-25)
 
 ## Corpus Check
-- 92 files · ~177,521 words
+- 92 files · ~177,502 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 2 file(s) not represented in the graph (top: (none) 2)
 

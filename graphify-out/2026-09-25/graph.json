@@ -973,7 +973,7 @@
       "file_type": "code",
       "norm_label": "compare()",
       "source_file": "lib/eval.mjs",
-      "source_location": "L324"
+      "source_location": "L322"
     },
     {
       "id": "lib_eval_format",
@@ -985,7 +985,7 @@
       "file_type": "code",
       "norm_label": "format()",
       "source_file": "lib/eval.mjs",
-      "source_location": "L376"
+      "source_location": "L374"
     },
     {
       "id": "lib_eval_formatcompare",
@@ -997,7 +997,7 @@
       "file_type": "code",
       "norm_label": "formatcompare()",
       "source_file": "lib/eval.mjs",
-      "source_location": "L355"
+      "source_location": "L353"
     },
     {
       "id": "lib_eval_harnessstamp",
@@ -11458,7 +11458,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/eval.mjs",
-      "source_location": "L336",
+      "source_location": "L334",
       "weight": 1.0
     },
     {
@@ -11470,7 +11470,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "lib/eval.mjs",
-      "source_location": "L337",
+      "source_location": "L335",
       "weight": 1.0
     },
     {
@@ -26252,7 +26252,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/eval.mjs",
-      "source_location": "L324",
+      "source_location": "L322",
       "weight": 1.0
     },
     {
@@ -26263,7 +26263,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/eval.mjs",
-      "source_location": "L355",
+      "source_location": "L353",
       "weight": 1.0
     },
     {
@@ -26274,7 +26274,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/eval.mjs",
-      "source_location": "L376",
+      "source_location": "L374",
       "weight": 1.0
     },
     {
