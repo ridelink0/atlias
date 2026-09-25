@@ -1,6 +1,7 @@
 // The eval harness, checked against a scripted model so the result is the
 // same on every machine. What these prove is not that a model is clever: it is
 // that the scoreboard cannot be talked into a pass.
+import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -105,6 +106,53 @@ export default async function register({ asyncSuite, check }) {
   // A score is only worth reading if you can say which code produced it, how
   // many times it was tried, and that the check that produced it is still the
   // one the task shipped. These are the three ways a scoreboard quietly lies.
+  // Somebody else's benchmark, converted. The corpus is only worth growing if
+  // every task added to it was proved on this machine first.
+  await asyncSuite('borrowed corpus expert', 'a converted task is proved before it is kept', async () => {
+    const poly = await import('../lib/polyglot.mjs');
+    const repo = fs.mkdtempSync(path.join(os.tmpdir(), 'atlias-poly-'));
+    const ex = path.join(repo, 'python', 'exercises', 'practice', 'tiny');
+    fs.mkdirSync(path.join(ex, '.docs'), { recursive: true });
+    fs.mkdirSync(path.join(ex, '.meta'), { recursive: true });
+    fs.writeFileSync(path.join(ex, 'tiny.py'), 'def total(items):' + NL + '    raise NotImplementedError' + NL);
+    fs.writeFileSync(path.join(ex, 'tiny_test.py'), 'from tiny import total' + NL + NL + 'def test_total():' + NL + '    assert total([1, 2]) == 3' + NL);
+    fs.writeFileSync(path.join(ex, 'helper.py'), '# carried along because the stub may import it' + NL);
+    fs.writeFileSync(path.join(ex, '.docs', 'instructions.md'), 'Add up the numbers you are given. This sentence is here to be clipped.' + NL);
+    fs.writeFileSync(path.join(ex, '.meta', 'example.py'), 'def total(items):' + NL + '    return sum(items)' + NL);
+
+    check('the exercises are found where the benchmark keeps them', JSON.stringify(poly.exercisesIn(repo, 'python')) === '["tiny"]' && poly.exercisesIn(repo, 'nope').length === 0, { happened: JSON.stringify(poly.exercisesIn(repo, 'python')), why: 'A converter that silently finds nothing reports a clean run having done nothing at all.', fix: 'Check exercisesIn and the directory layout it expects.' });
+    const brief = poly.briefFor(ex, 30);
+    check('the brief is the exercise own words, clipped and said to be clipped', /Add up the numbers/.test(brief) && /clipped here/.test(brief) && brief.length < 200, { happened: brief, why: 'The task has to say what is wanted in the words its author used, and a six-thousand-character brief is paid again on every round of every attempt.', fix: 'Check briefFor.' });
+    const built = poly.taskFromExercise(repo, 'python', 'tiny', { rounds: 7 });
+    check('the task carries its files, its check and its protected test', built.task && built.task.id === 'polyglot-python-tiny' && built.task.rounds === 7 && JSON.stringify(built.task.protect) === '["tiny_test.py"]' && /-m pytest -q tiny_test\.py$/.test(built.task.check.join(' ')) && Object.keys(built.task.files).length === 3, { happened: JSON.stringify(built.task && { id: built.task.id, protect: built.task.protect, check: built.task.check, files: Object.keys(built.task.files || {}) }), why: 'The protected test is what stops a converted task being passed by rewriting it, and a missing second module fails the task on an import for a reason that has nothing to do with the model.', fix: 'Check taskFromExercise.' });
+    check('and a missing stub is refused rather than guessed at', Boolean(poly.taskFromExercise(repo, 'python', 'absent').error) && Boolean(poly.taskFromExercise(repo, 'nope', 'tiny').error), { happened: JSON.stringify(poly.taskFromExercise(repo, 'python', 'absent')), why: 'A task built from files that are not there would fail every run and look like a hard exercise.', fix: 'Return an error, not a half-built task.' });
+    // The Store alias for python.exe hangs instead of running, and it sat second
+    // on PATH here: it converted nothing on the first full run. So the candidate
+    // list must never offer it, and the resolver must return a real path.
+    const cands = poly.runnerCandidates('python');
+    check('the runner candidates exclude the Windows Store alias', cands.length > 0 && !cands.some((c) => /WindowsApps/i.test(c)) && poly.runnerCandidates('brainfuck').length === 0, { happened: JSON.stringify(cands), why: 'That alias opens the Microsoft Store and, spawned without a console, hangs until the timeout - which looked exactly like a machine with no python at all and refused the whole corpus.', fix: 'Check runnerCandidates and the WindowsApps filter.' });
+    const resolved = poly.resolveRunner('python');
+    check('and the resolver returns one that answers', resolved.ok ? Boolean(resolved.exe) && /pytest/i.test(resolved.why) : /no working runner|no candidate/.test(resolved.why), { happened: JSON.stringify(resolved), why: 'Baking a resolved interpreter into every task is what makes a converted corpus runnable twice; a bare name is whatever PATH offers that minute.', fix: 'Check resolveRunner.' });
+    const ready = poly.runnerReady('python');
+    check('a language with no runner here is refused by name', poly.runnerReady('brainfuck').ok === false && /no converter/.test(poly.runnerReady('brainfuck').why), { happened: JSON.stringify(poly.runnerReady('brainfuck')), why: 'A check whose program is not on this machine fails every task before the model does anything, and the score reads as a bad harness.', fix: 'Check runnerReady and LANGS.' });
+    if (ready.ok) {
+      const proof = poly.proveTask(built, 'python');
+      check('a task is proved to fail as shipped and pass with the reference', proof.ok && proof.before.status !== 0 && proof.after.status === 0, { happened: JSON.stringify({ ok: proof.ok, why: proof.why, before: proof.before && proof.before.status, after: proof.after && proof.after.status }), why: 'This is the whole reason a borrowed benchmark can be trusted: a task that already passes measures nothing, and a task its own author solution cannot pass is measuring this machine.', fix: 'Check proveTask.' });
+      fs.writeFileSync(path.join(ex, 'tiny.py'), 'def total(items):' + NL + '    return sum(items)' + NL);
+      const solved = poly.proveTask(poly.taskFromExercise(repo, 'python', 'tiny'), 'python');
+      check('and one that already passes is refused', solved.ok === false && /already passes/.test(solved.why), { happened: JSON.stringify(solved), why: 'A task that passes with the stub in place quietly inflates every score it appears in.', fix: 'Check the first branch of proveTask.' });
+      fs.writeFileSync(path.join(ex, 'tiny.py'), 'def total(items):' + NL + '    raise NotImplementedError' + NL);
+      const out = fs.mkdtempSync(path.join(os.tmpdir(), 'atlias-poly-out-'));
+      const done = poly.convert(repo, 'python', out, { rounds: 7 });
+      check('the conversion writes only what it proved', done.wrote.length === 1 && fs.existsSync(path.join(out, 'polyglot-python-tiny.json')) && JSON.parse(fs.readFileSync(path.join(out, 'polyglot-python-tiny.json'), 'utf8')).check.length === 5, { happened: JSON.stringify({ wrote: done.wrote, refused: done.refused }), why: 'A converter that writes first and checks later fills the corpus with tasks nobody can trust.', fix: 'Check convert.' });
+      check('and the report names what it refused', /1 task\(s\) written/.test(poly.report(done)) && /refused, which is the point/.test(poly.report({ ok: true, why: 'x', dir: out, wrote: ['a'], refused: [{ name: 'b', why: 'no stub' }] })), { happened: poly.report(done).split(NL)[0], why: 'A refusal nobody is told about looks like an exercise that was never there.', fix: 'Check report.' });
+      try { fs.rmSync(out, { recursive: true, force: true }); } catch { /* best effort */ }
+    } else {
+      check('with no runner the converter refuses instead of writing', poly.convert(repo, 'python', path.join(repo, 'out')).ok === false && /nothing converted/.test(poly.report(poly.convert(repo, 'python', path.join(repo, 'out')))), { happened: JSON.stringify(poly.convert(repo, 'python', path.join(repo, 'out'))), why: 'Writing tasks whose check cannot start would fill the corpus with guaranteed failures.', fix: 'convert returns early when runnerReady says no.' });
+    }
+    try { fs.rmSync(repo, { recursive: true, force: true }); } catch { /* best effort */ }
+  });
+
   await asyncSuite('eval provenance expert', 'a score names the code behind it and cannot be bought', async () => {
     const state = agentMod.newState(process.cwd(), 'echo');
     const kill = (d) => { try { fs.rmSync(d, { recursive: true, force: true }); } catch { /* best effort */ } };
@@ -112,7 +160,12 @@ export default async function register({ asyncSuite, check }) {
     // 1. The stamp. A sha or an honest "unstamped", never a guess.
     const here = evals.harnessStamp();
     check('the stamp names the harness', /^atlias( |,)/.test(here.text), { happened: here.text, why: 'A score with no version or sha against it cannot be placed a week later, and the loop moves far enough in a day for that to matter.', fix: 'Check harnessStamp in lib/eval.mjs.' });
-    check('a sha is a sha, or the stamp says unstamped', here.sha ? /^[0-9a-f]{7,40}$/.test(here.sha) : /unstamped/.test(here.text), { happened: `sha=${JSON.stringify(here.sha)} text=${here.text}`, why: 'A made-up or truncated sha is worse than none: it points at code that may not be what ran.', fix: 'Only accept git output that is a hex sha.' });
+    // This machine has git, so demand the sha rather than accepting the excuse:
+    // an or-clause here is what let a five-second timeout print "unstamped" on a
+    // repository that had the commit all along, through a passing test.
+    const hasGit = spawnSync('git', ['--version'], { encoding: 'utf8', timeout: 20000 }).status === 0;
+    check('a sha is a sha, and a machine with git produces one', hasGit ? /^[0-9a-f]{7,40}$/.test(here.sha) : here.sha === '', { happened: `git=${hasGit} sha=${JSON.stringify(here.sha)} text=${here.text}`, why: 'A made-up or truncated sha is worse than none, and an unstamped report on a machine that does have git is the same failure wearing an excuse: it was caused here by a timeout too short for a cold git call under load, and an or-clause in this very check let it pass.', fix: 'Only accept hex from git log, and give it a timeout a loaded machine can meet.' });
+    check('and an unstamped report says why it could not stamp', here.sha ? true : /unstamped \(.+\)/.test(here.text), { happened: here.text, why: 'Unstamped with no reason cannot be told apart from a machine with no git at all, so nobody knows whether to fix the harness or the environment.', fix: 'Carry the reason in why and in the text.' });
     check('and dirty is said out loud when it is true', here.dirty === (here.dirtyFiles.length > 0) && (here.dirty ? /-dirty/.test(here.text) : !/-dirty/.test(here.text)), { happened: `dirty=${here.dirty} files=${here.dirtyFiles.join(',') || 'none'} text=${here.text}`, why: 'A sha stamped on a tree with uncommitted changes to the loop describes code that did not run.', fix: 'Keep text and dirtyFiles in step.' });
     const nonRepo = fs.mkdtempSync(path.join(os.tmpdir(), 'atlias-stamp-'));
     const away = evals.harnessStamp(nonRepo);

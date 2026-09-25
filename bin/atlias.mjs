@@ -57,10 +57,13 @@ switch (cmd) {
     // Positional task ids only: the value after --engine or --only belongs to
     // that flag, not to the task list.
     const taken = new Set();
-    for (const f of ['--engine', '--only', '--repeat', '--model']) { const i = argv.indexOf(f); if (i >= 0) taken.add(i + 1); }
+    for (const f of ['--engine', '--only', '--repeat', '--model', '--corpus']) { const i = argv.indexOf(f); if (i >= 0) taken.add(i + 1); }
     const want = argv.slice(1).filter((a, i) => !a.startsWith('--') && !taken.has(i + 1));
     const only = optVal('--only');
-    let tasks = evals.loadTasks();
+    // --corpus scores a different task directory, so the shipped nine stay fast
+    // and a converted benchmark can be run on purpose rather than by default.
+    const corpus = optVal('--corpus');
+    let tasks = corpus ? evals.loadTasks(path.resolve(corpus)) : evals.loadTasks();
     if (only) tasks = tasks.filter((t) => t.id === only);
     if (want.length) tasks = tasks.filter((t) => want.includes(t.id));
     if (!tasks.length) { say('no tasks; the corpus is in evals/*.json'); break; }
@@ -84,6 +87,27 @@ switch (cmd) {
     break;
   }
   case 'bench': say(bench.report(cwd, argv.slice(1).filter((a) => !a.startsWith('--')))); break;
+  // Somebody else's benchmark, converted into tasks this machine can run, with
+  // every task proved to fail as shipped and pass with its own reference
+  // solution before it is written.
+  case 'polyglot': {
+    const poly = await import('../lib/polyglot.mjs');
+    const valued = new Set(['--lang', '--out', '--limit', '--rounds', '--only']);
+    const skip = new Set();
+    for (const f of valued) { const i = argv.indexOf(f); if (i >= 0) skip.add(i + 1); }
+    const repo = argv.slice(1).find((a, i) => !a.startsWith('--') && !skip.has(i + 1));
+    if (!repo) { say('usage: atlias polyglot <path to a polyglot-benchmark clone> [--lang python] [--out <dir>] [--limit N] [--only name,name]'); break; }
+    const lang = optVal('--lang') || 'python';
+    const out = optVal('--out') || path.join(ROOT, 'evals', 'polyglot');
+    const limit = parseInt(optVal('--limit') || '0', 10) || 0;
+    const rounds = parseInt(optVal('--rounds') || '18', 10) || 18;
+    const only = String(optVal('--only') || '').split(',').map((s) => s.trim()).filter(Boolean);
+    say(`converting ${lang} exercises from ${repo}. Each one is run twice here before it is kept: it has to fail as shipped and pass with the exercise's own solution.`);
+    const result = poly.convert(path.resolve(repo), lang, out, { limit, rounds, only });
+    say(poly.report(result));
+    process.exitCode = result.wrote.length ? 0 : 1;
+    break;
+  }
   case 'chooser': process.exitCode = await agent.chooser(); break;
   case 'agent': case 'run': case 'fly': {
     const r = after('--resume');
