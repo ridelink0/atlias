@@ -1,5 +1,29 @@
 # Changelog
 
+## 3.6.0 (2026-09-25)
+
+An edit that nearly matches now lands, and says how it landed.
+
+The largest single harness effect measured anywhere in the field is the share of edits that never apply - one adapter took the same model from 19.1 to 73.4 per cent pass@1 on the same benchmark purely by driving apply failures from 69.1 per cent to under 1.5. atlias measured its own for the first time this week and found 12 of 37 edits changing nothing, which is near a third, so `edit_file` grew a ladder. An exact miss is now retried with whitespace ignored, and then anchored on the first and last line with the middle taken from the file. Every rung still demands exactly one match: two loose matches come back as a count and their line numbers rather than a guess, an anchor pair further apart than twice the lines the model thought it was replacing is refused rather than eating the middle, and the parse guard still has the last word. The reply says which rung caught the edit, so the model can see what it got wrong.
+
+Both of the bugs in the first draft were caught by the checks written for it: a two-line old_string was being anchored, which is two ends and no middle, and the loose branch printed `[object Object]` where the changed lines should have been.
+
+## 3.5.0 (2026-09-25)
+
+Somebody else's benchmark, proved task by task on this machine.
+
+At eight tasks the standard error is about sixteen points and one task flipping moves the score twelve and a half, so the shipped corpus was a tripwire rather than a measurement. `lib/polyglot.mjs` converts aider's polyglot benchmark - 225 Exercism exercises, each a stub, a test and a reference solution - into atlias's own task format, and nothing is taken on trust: every task is run twice here before it is written, and it has to fail with the stub in place and pass with the exercise's own solution. 27 of the 34 Python exercises passed both gates and are in `evals/polyglot`; the other seven are refused with the reason printed. `atlias eval --corpus evals/polyglot` runs them.
+
+Two things this found. Windows ships an App Execution Alias called python.exe under WindowsApps that opens the Store instead of running anything, and spawned without a console it hangs until the timeout; it sat second on PATH here, so the first full conversion converted nothing and blamed a missing python. The runner is resolved to a real path now and baked into each task's check. And the harness stamp printed "unstamped" on a machine that has git, because five seconds could not cover a cold git call under load - the timeout is generous now, an unstamped report says why, and the test that let it through has stopped accepting the excuse.
+
+## 3.4.0 (2026-09-25)
+
+A score that names its own code, and a budget the model can see.
+
+Six research fronts, 268 sources, written up in `docs/NEXTGEN-3.md`. Two findings outranked the whole previous ranking and both are built here: the apply-failure rate is now counted and printed beside every score, and the remaining round budget is disclosed to the model on the newest tool result - a disclosed budget bought +18.6 points at a fixed call budget in the field's own measurement, for about a third of a cent.
+
+The rest is a scoreboard that cannot be talked past. Every report is stamped with the harness version, the sha of the two files that decide how a run behaves, dirty when either is uncommitted, the engine, the model and the round budget. `--repeat` runs each task k times and reports pass^k beside pass@k. A task carries its own round budget. And the files that grade a task are compared against what the task shipped, so a pass bought by editing or deleting the checker is refused and named - which caught qwen2.5-coder rewriting test.mjs on the first real run. Standing instructions now survive a compaction, measured at no violations when the rule survives and nearly four in ten when it is dropped.
+
 ## 3.3.2 (2026-09-25)
 
 The stall line counted its kinds in words that agreed with their numbers and then said "1 model replies in a row" one clause earlier. Reachable only with agent.maxBadReplies set to 1, and fixed for the same reason the rest of that line was: the last thing a failed run says should not sound careless.

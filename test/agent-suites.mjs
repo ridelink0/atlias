@@ -69,6 +69,41 @@ export default async function agentSuites({ suite, asyncSuite, check, core, agen
     check('a directory is pointed at list_dir', /is a directory; use list_dir/.test(await loop.runTool(state, { tool: 'read_file', path: '.' })), { happened: 'no guidance', why: 'EISDIR is not a message a model can act on.', fix: 'Check isDirectory first.' });
   });
 
+  // The rungs on their own, against text on disk, so a failure here points at
+  // the matcher rather than at the agent that called it.
+  await asyncSuite('edit ladder expert', 'an edit that nearly matches still lands, or is refused for a reason', async () => {
+    const state = fresh();
+    const f = path.join(W, 'ladder.mjs');
+    const src = 'export function add(a, b) {' + NL + '  const sum = a + b;' + NL + '  return sum;' + NL + '}' + NL;
+    const write = () => fs.writeFileSync(f, src);
+
+    write();
+    const spaced = await loop.runTool(state, { tool: 'edit_file', path: 'ladder.mjs', old_string: '  const  sum   =  a + b;', new_string: '  const sum = a + b + 0;' });
+    check('spacing inside the line is not a refusal', /edited/.test(spaced) && fs.readFileSync(f, 'utf8').includes('a + b + 0;'), { happened: spaced, why: 'A model that retypes a line rather than copying it gets the spacing slightly wrong, and that is not a reason to spend a round.', fix: 'Check the flat() normalisation in looseMatch.' });
+
+    write();
+    const anchored = await loop.runTool(state, { tool: 'edit_file', path: 'ladder.mjs', old_string: 'export function add(a, b) {' + NL + '  const total = a + b;' + NL + '  return total;' + NL + '}', new_string: 'export function add(a, b) {' + NL + '  return a + b;' + NL + '}' });
+    check('a stale middle is anchored on the first and last line', /edited/.test(anchored) && /first and last line/.test(anchored) && /return a \+ b;/.test(fs.readFileSync(f, 'utf8')), { happened: anchored, why: 'The model read the file a few edits ago and the middle has moved since; the ends are what it still has right, and this is the case that otherwise costs a re-read.', fix: 'Check the anchored rung in looseMatch.' });
+
+    write();
+    fs.appendFileSync(f, NL + 'export function addAgain(a, b) {' + NL + '  const sum = a + b;' + NL + '  return sum;' + NL + '}' + NL);
+    const twice = await loop.runTool(state, { tool: 'edit_file', path: 'ladder.mjs', old_string: '  const  sum = a + b;', new_string: '  const sum = 0;' });
+    const stillBoth = (fs.readFileSync(f, 'utf8').match(/const sum = a \+ b;/g) || []).length;
+    check('two loose matches are refused with their line numbers, not guessed between', /matches 2 places/.test(twice) && /lines 2, 7/.test(twice) && stillBoth === 2, { happened: `${twice} | ${stillBoth} left`, why: 'Picking one of two possible places is how a harness silently edits the wrong function, and nothing downstream would catch it.', fix: 'looseMatch returns a count when more than one span matches.' });
+
+    write();
+    const far = await loop.runTool(state, { tool: 'edit_file', path: 'ladder.mjs', old_string: 'export function add(a, b) {' + NL + '}', new_string: 'export function add() {}' });
+    check('an anchor pair too far apart is refused rather than eating the middle', /was not found/.test(far) && fs.readFileSync(f, 'utf8') === src, { happened: far, why: 'A first and last line that are four lines apart when the model thought they were two is a stale read, and replacing everything between them would delete work nobody asked about.', fix: 'Keep the span bound in the anchored rung.' });
+
+    write();
+    const breaks = await loop.runTool(state, { tool: 'edit_file', path: 'ladder.mjs', old_string: '  return   sum;', new_string: '  return sum' + NL + '  const oops = ;' });
+    check('and a loose match that would break the file is still refused', /refused/.test(breaks) && fs.readFileSync(f, 'utf8') === src, { happened: breaks, why: 'The parse guard is the last thing between a loose match and a file nothing else can read; a new way in must not walk around it.', fix: 'The loose branch writes through guardedWrite too.' });
+
+    const m = loop.looseMatch(src, '  const sum = a + b;');
+    check('the matcher reports where it matched and how', m && m.line === 2 && /whitespace/.test(m.how) && src.slice(m.start, m.end) === '  const sum = a + b;', { happened: JSON.stringify(m), why: 'The reply tells the model which rung caught its edit, and that is only useful if the rung and the line are real.', fix: 'Check the offsets in looseMatch.' });
+    check('and says nothing when there is nothing to say', loop.looseMatch(src, 'const nope = 1;') === null, { happened: JSON.stringify(loop.looseMatch(src, 'const nope = 1;')), why: 'A matcher that always finds something is a matcher that edits the wrong place.', fix: 'Return null rather than a best guess.' });
+  });
+
   await asyncSuite('editing expert', 'editing by exact replacement', async () => {
     const state = fresh();
     const e = path.join(W, 'e.mjs');
@@ -76,8 +111,15 @@ export default async function agentSuites({ suite, asyncSuite, check, core, agen
     const ok = await loop.runTool(state, { tool: 'edit_file', path: 'e.mjs', old_string: 'export const a = 1;', new_string: 'export const a = 10;' });
     check('an exact match is replaced and recorded', /edited e\.mjs/.test(ok) && fs.readFileSync(e, 'utf8').includes('a = 10;') && core.events(state.sid).some((x) => x.kind === 'edit' && x.tool === 'edit_file'), { happened: ok, why: 'The gate and the handoff note only see edits that are recorded.', fix: 'Check edit_file in runTool.' });
     check('the edit shows the changed lines back', ok.includes('1' + '\t' + 'export const a = 10;'), { happened: ok, why: 'Seeing the result lets the model catch its own mistake without another read.', fix: 'Keep snippetAround in the reply.' });
-    const miss = await loop.runTool(state, { tool: 'edit_file', path: 'e.mjs', old_string: '    export const b = 2;', new_string: 'export const b = 3;' });
-    check('a near miss names the line it probably meant', /was not found/.test(miss) && /line 2/.test(miss), { happened: miss, why: 'Wrong indentation is the usual miss; pointing at the line saves a search.', fix: 'Match the trimmed first line.' });
+    // Wrong indentation used to be a refusal that named the line. It is now an
+    // edit that lands and says how it landed: atlias's own first measured
+    // apply-failure rate was 12 of 37, and the field's largest single harness
+    // effect is the share of edits that never apply.
+    const indent = await loop.runTool(state, { tool: 'edit_file', path: 'e.mjs', old_string: '    export const b = 2;', new_string: 'export const b = 3;' });
+    check('an edit whose indentation drifted still lands, and says that it did', /edited e\.mjs/.test(indent) && /whitespace ignored/.test(indent) && fs.readFileSync(e, 'utf8').includes('b = 3;'), { happened: indent, why: 'Wrong indentation is the commonest miss there is, and a harness that refuses it spends a round asking the model to retype what it already meant.', fix: 'Check looseMatch and the ladder in edit_file.' });
+    fs.writeFileSync(e, 'export const a = 10;' + NL + 'export const b = 2;' + NL);   // back to where the next check expects it
+    const gone = await loop.runTool(state, { tool: 'edit_file', path: 'e.mjs', old_string: 'export const zzz = 9;', new_string: 'export const zzz = 10;' });
+    check('and text that is genuinely not there is still refused', /was not found/.test(gone) && /whitespace ignored/.test(gone) && fs.readFileSync(e, 'utf8').includes('b = 2;'), { happened: gone, why: 'A ladder that ends in a guess would edit the wrong place confidently, which is worse than any refusal.', fix: 'looseMatch returns null when nothing matches.' });
     const numbered = await loop.runTool(state, { tool: 'edit_file', path: 'e.mjs', old_string: '2' + '\t' + 'export const b = 2;', new_string: '2' + '\t' + 'export const b = 20;' });
     check('line numbers copied from a read are stripped', /edited/.test(numbered) && fs.readFileSync(e, 'utf8').includes('b = 20;') && !fs.readFileSync(e, 'utf8').includes('\t'), { happened: numbered, why: 'Copying the number column is the commonest way a weak model breaks an edit.', fix: 'Retry without the NUM prefix.' });
     const before = fs.readFileSync(e, 'utf8');
