@@ -102,7 +102,7 @@ Hosts: **Claude Code** (plugin), **Codex** (hooks, MCP, AGENTS.md), **Antigravit
 node test/run.mjs
 ```
 
-Over seven hundred and forty checks in a hundred and five suites, each written from one expert's point of view, and each failure printed as what happened, why it matters and how to fix it. A coverage suite fails the run if any exported function is not exercised by a test through its own module, so a feature cannot arrive untested. Host payloads are pinned to the hosts' own source code, not to guesses. CI runs everything on Linux, macOS and Windows under Node 18, 20 and 22, plus a sandboxed install that parses every config atlias writes with a real parser and proves that uninstall leaves other tools' entries alone.
+Over seven hundred and fifty checks in a hundred and five suites, each written from one expert's point of view, and each failure printed as what happened, why it matters and how to fix it. A coverage suite fails the run if any exported function is not exercised by a test through its own module, so a feature cannot arrive untested. Host payloads are pinned to the hosts' own source code, not to guesses. CI runs everything on Linux, macOS and Windows under Node 18, 20 and 22, plus a sandboxed install that parses every config atlias writes with a real parser and proves that uninstall leaves other tools' entries alone.
 
 ## What it refuses to pretend
 

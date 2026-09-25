@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.3.1 (2026-09-25)
+
+Two things 3.3.0 said badly, found on a second read of what the model actually sees.
+
+The note on a capped result read "To see the rest, To see the rest, run it again narrowed down, or pipe it through a filter.." - the header asks the question and each tool's clause was answering it with the question again, and with a second full stop. The clauses now finish the sentence the header starts, and a check reads every tool's header back to keep it that way.
+
+And a run that stopped because every reply was cut off at the provider's output limit was told to try a stronger model. That is the wrong fix: the model was working, it ran out of room. It is now told to ask for shorter replies, one tool call at a time, or to raise the output limit, and only a run that could not format an action is pointed at the model. The counts in that line also agree with their numbers now rather than reading "1 tool blocks".
+
 ## 3.3.0 (2026-09-25)
 
 The next-generation work from docs/NEXTGEN.md, and two fixes read out of other harnesses' source.

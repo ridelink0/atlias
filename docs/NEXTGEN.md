@@ -404,7 +404,7 @@ what block eviction was changed to let it do.
 
 ### The suite
 
-`node test/run.mjs`: **748 checks across 105 suites**, up from 716 across 101 at
+`node test/run.mjs`: **751 checks across 105 suites**, up from 716 across 101 at
 the start of this stretch. One check, `graphify answers with a result object
 even when it fails`, fails when the machine is loaded because it gives a real
 `graphify query` fifteen seconds and a cold Python import can take longer; it
