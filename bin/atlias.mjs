@@ -57,7 +57,7 @@ switch (cmd) {
     // Positional task ids only: the value after --engine or --only belongs to
     // that flag, not to the task list.
     const taken = new Set();
-    for (const f of ['--engine', '--only']) { const i = argv.indexOf(f); if (i >= 0) taken.add(i + 1); }
+    for (const f of ['--engine', '--only', '--repeat', '--model']) { const i = argv.indexOf(f); if (i >= 0) taken.add(i + 1); }
     const want = argv.slice(1).filter((a, i) => !a.startsWith('--') && !taken.has(i + 1));
     const only = optVal('--only');
     let tasks = evals.loadTasks();
@@ -67,10 +67,18 @@ switch (cmd) {
     const engine = optVal('--engine') || (cfg.openaiModel ? 'openai' : 'ollama');
     // echo is the dry run: it exercises the harness without a model, so a
     // broken corpus or checker shows up before any tokens are spent.
+    // --model scores a named model without editing the machine's settings, so
+    // two baselines can be taken in a row and the report names which was which.
+    const picked = optVal('--model');
+    const cfgFor = picked ? { ...cfg, ollamaModel: picked, openaiModel: picked } : cfg;
     const chat = engine === 'echo' ? async () => ({ content: 'echo: no work done' })
-      : engine === 'openai' ? loopMod.openaiChat(cfg) : loopMod.ollamaChat(cfg);
-    say(`${tasks.length} task(s) against ${engine}. The check command decides, not the model.`);
-    const report = await evals.runSuite(tasks, { chat, state: agent.newState(cwd, engine) });
+      : engine === 'openai' ? loopMod.openaiChat(cfgFor) : loopMod.ollamaChat(cfgFor);
+    // One run of a sampling process is not a result: --repeat 3 runs each task
+    // three times and reports pass^3 beside pass@3.
+    const repeat = Math.max(1, parseInt(optVal('--repeat') || '1', 10) || 1);
+    const model = picked || (engine === 'openai' ? cfg.openaiModel : engine === 'ollama' ? cfg.ollamaModel : '');
+    say(`${tasks.length} task(s) against ${engine}${repeat > 1 ? `, ${repeat} attempts each` : ''}. The check command decides, not the model.`);
+    const report = await evals.runSuite(tasks, { chat, state: agent.newState(cwd, engine), repeat, engineName: engine, model });
     say(evals.format(report));
     process.exitCode = report.passed === report.total ? 0 : 1;
     break;

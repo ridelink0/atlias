@@ -123,4 +123,57 @@ export default async function exitSuites({ suite, asyncSuite, check, core, agent
     check('and the report line shows it', /stopped: malformed-output/.test(evalMod.format({ results: [r], passed: 0, total: 1, ms: 10 })), { happened: evalMod.format({ results: [r], passed: 0, total: 1, ms: 10 }).split(NL)[0], why: 'A field no report prints is a field nobody reads.', fix: 'Check format in lib/eval.mjs.' });
     if (r.workspace) { try { fs.rmSync(r.workspace, { recursive: true, force: true }); } catch { /* left behind on purpose by runTask when a task fails */ } }
   });
+
+  // Two things the field measured and atlias was not doing: telling the model
+  // how much budget is left, and counting the edits that never landed.
+  await asyncSuite('budget and edit expert', 'the run says what is left and what did not apply', async () => {
+    check('the line names the round and what remains', /round 1 of 5, 4 left/.test(loop.budgetLine(0, 5)) && /round 4 of 5, 1 left\. Finish/.test(loop.budgetLine(3, 5)), { happened: loop.budgetLine(0, 5) + ' || ' + loop.budgetLine(3, 5), why: 'A model that cannot see the wall spends its last rounds exploring; a disclosed remaining budget was measured at +18.6 points on a fixed call budget for well under a cent, which is a larger effect than most loop changes being argued about.', fix: 'Check budgetLine in lib/loop.mjs.' });
+    check('and the last round says it is the last', /This is the last round/.test(loop.budgetLine(4, 5)) && loop.budgetLine(0, 1) === '', { happened: loop.budgetLine(4, 5) + ' || ' + JSON.stringify(loop.budgetLine(0, 1)), why: 'The round where the answer has to be given is the one round the model must not spend on a new file read; and a one-round run has nothing to disclose, so the line would be pure cost.', fix: 'Check the two edges of budgetLine.' });
+
+    const st = { sid: 'budget-probe', cwd: W, messages: [], engine: 'ollama' };
+    const seenByModel = [];
+    const watch = async (messages) => {
+      seenByModel.push(String((messages[messages.length - 1] || {}).content || ''));
+      return { content: blk({ tool: 'list_dir', path: '.' }) };
+    };
+    await loop.runLoop(st, 'look around', { chat: watch, limits: { maxToolRounds: 3 } });
+    const second = seenByModel[1] || '';
+    check('a real run carries the budget on the newest tool result', /round 1 of 3, 2 left/.test(second), { happened: second.slice(-140) || `no tool result reached the model (${seenByModel.length} calls)`, why: 'A mechanism that only exists in a helper function is not in the loop; and it has to ride on the newest message, because writing it anywhere earlier would rewrite the cached prefix every round.', fix: 'Check where budgetLine is appended in runLoop.' });
+
+    const st2 = { sid: 'edit-probe', cwd: W, messages: [], engine: 'ollama' };
+    fs.writeFileSync(path.join(W, 'target.js'), 'export const a = 1;' + NL);
+    await loop.runLoop(st2, 'fix it', {
+      chat: scripted([
+        blk({ tool: 'edit_file', path: 'target.js', old_string: 'export const zzz = 9;', new_string: 'export const a = 2;' }),
+        blk({ tool: 'edit_file', path: 'target.js', old_string: 'export const a = 1;', new_string: 'export const a = 2;' }),
+        'Done.',
+      ]),
+    });
+    check('the harness counts the edits that did not apply', st2.editTries === 2 && st2.editFails === 1, { happened: `tries=${st2.editTries} fails=${st2.editFails}`, why: 'The largest single harness effect measured anywhere in the field is the share of edits that fail to apply - one adapter moved a model from 19.1 to 73.4 per cent on the same benchmark by fixing only that - and a rate nobody records is a rate nobody can improve.', fix: 'Check the isEdit branch in runLoop and prep.' });
+    const evalMod2 = await import('../lib/eval.mjs');
+    const text = evalMod2.format({ results: [{ name: 'a', pass: true, rounds: 2, ms: 10, editTries: 4, editFails: 2 }], passed: 1, total: 1, ms: 10, editTries: 4, editFails: 2, chars: 40000 });
+    check('and the report prints the rate beside the score', /edits: 4 attempted, 2 did not apply \(50%\)/.test(text) && /context moved: 40k characters/.test(text), { happened: text.split(NL).slice(-3).join(' | '), why: 'Two harnesses can sit inside the noise on pass rate and forty-fold apart on what the score cost; a report with no cost on it cannot tell them apart.', fix: 'Check the tail of format in lib/eval.mjs.' });
+  });
+
+  // A rule the user gave is the one thing a compaction must not lose.
+  await asyncSuite('standing rule expert', 'a rule survives the cut that drops everything else', async () => {
+    const st = { cwd: W, messages: [], pinned: [] };
+    loop.pinRules(st, 'Have a look at the parser. Never edit anything under vendor/. It is generated.');
+    loop.pinRules(st, 'Also make sure the tests run before you answer.');
+    check('a rule is picked out of what the user said', st.pinned.length === 2 && /Never edit anything under vendor/.test(st.pinned[0]) && /tests run before you answer/.test(st.pinned[1]), { happened: JSON.stringify(st.pinned), why: 'Rule violations were measured at none while the rule survived a compaction and nearly four in ten once it was dropped, so which sentences get kept is the whole mechanism.', fix: 'Check RULE_RE and the sentence split in pinRules.' });
+    check('and ordinary prose is not pinned', loop.pinRules({ pinned: [] }, 'Have a look at the parser and tell me what it does.').length === 0, { happened: JSON.stringify(loop.pinRules({ pinned: [] }, 'Have a look at the parser and tell me what it does.')), why: 'Pinning every sentence would put the whole conversation back into the context that was just trimmed, which is the opposite of the point.', fix: 'Keep RULE_RE to the words that actually mark an instruction.' });
+    loop.pinRules(st, 'Never edit anything under vendor/.');
+    check('and the same rule twice is one rule', st.pinned.length === 2, { happened: JSON.stringify(st.pinned), why: 'A repeated instruction is common and must not crowd out the others.', fix: 'Compare normalised text before pushing.' });
+    const many = { pinned: [] };
+    for (let i = 0; i < loop.MAX_PINNED + 5; i++) loop.pinRules(many, `Never touch file-${i}.js.`);
+    check('the list is capped and keeps the newest', many.pinned.length === loop.MAX_PINNED && new RegExp(`file-${loop.MAX_PINNED + 5 - loop.MAX_PINNED}\\.js`).test(many.pinned[0]) && new RegExp(`file-${loop.MAX_PINNED + 4}\\.js`).test(many.pinned[many.pinned.length - 1]), { happened: `${many.pinned.length} pinned, first=${many.pinned[0]}, last=${many.pinned[many.pinned.length - 1]}`, why: 'An unbounded pin list becomes the context problem it was meant to solve, and a rule given twenty instructions ago has usually been overtaken.', fix: 'Check MAX_PINNED and the shift in pinRules.' });
+
+    const full = { cwd: W, messages: [{ role: 'system', content: 'sys' }], todo: [], edited: new Set(), pinned: [] };
+    loop.pinRules(full, 'Never edit anything under vendor/.');
+    for (let i = 0; i < 24; i++) full.messages.push({ role: i % 2 ? 'assistant' : 'user', content: `message ${i}` });
+    const said = loop.compact(full, 4);
+    const note = full.messages[1].content;
+    check('the compaction note carries the rule the dropped messages held', /Never edit anything under vendor/.test(note) && /standing instruction/.test(said), { happened: `${said} || ${note.slice(0, 160)}`, why: 'This is the measured fix: the rule that survives the summary is obeyed, the rule that is dropped is not, and pinning took violations back to none.', fix: 'Check the rules block in compact.' });
+    check('and a run with no rules says nothing about them', !/standing instruction/.test(loop.compact({ cwd: W, messages: [{ role: 'system', content: 'sys' }, ...Array.from({ length: 24 }, (_, i) => ({ role: i % 2 ? 'assistant' : 'user', content: `m${i}` }))], todo: [], edited: new Set() }, 4)), { happened: 'the note spoke about standing instructions when there were none', why: 'Boilerplate that is always there stops being read.', fix: 'Only add the block when something is pinned.' });
+  });
 }

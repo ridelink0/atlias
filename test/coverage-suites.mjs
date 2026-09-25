@@ -88,5 +88,24 @@ export default async function coverageSuites({ suite, check, ROOT, fs, path }) {
     check('no exemption hides a function that is tested after all', stale.length === 0, { happened: stale.join('; '), why: 'An exemption outliving its reason is how the list grows until it means nothing.', fix: 'Remove it from EXEMPT.' });
     const exemptMissing = Object.keys(EXEMPT).filter((k) => { const [file, name] = k.split(' '); return !WORD(name).test(fs.readFileSync(path.join(ROOT, file), 'utf8')); });
     check('every exemption names a function that exists', exemptMissing.length === 0, { happened: exemptMissing.join('; '), why: 'An exemption for a deleted function is noise.', fix: 'Remove it from EXEMPT.' });
+
+    // asyncSuite points the runner's current-suite pointer at itself before it
+    // starts, so an un-awaited one runs at the same time as the next one and
+    // its checks are counted under the wrong suite name. The totals still add
+    // up, which is what makes it hard to notice: it was found here because a
+    // suite reported 0 passed, 0 failed while its checks were plainly running.
+    const loose = [];
+    for (const f of fs.readdirSync(path.join(ROOT, 'test')).filter((x) => x.endsWith('-suites.mjs')).sort()) {
+      const src = fs.readFileSync(path.join(ROOT, 'test', f), 'utf8');
+      // Comments name these functions while explaining them, and a checker that
+      // reads prose as code reports a bug in a sentence.
+      const code = src.replace(/\/\*[\s\S]*?\*\//g, '').split('\n').map((l) => l.replace(/\/\/.*$/, '')).join('\n');
+      const calls = [...code.matchAll(/(await\s+)?asyncSuite\s*\(/g)];
+      if (!calls.length) continue;
+      const bare = calls.filter((m) => !m[1]).length;
+      if (bare) loose.push(`${f}: ${bare} un-awaited asyncSuite call(s)`);
+      if (!/export default async function/.test(src)) loose.push(`${f}: register is not async, so it cannot await its suites`);
+    }
+    check('every async suite is awaited by the file that registers it', loose.length === 0, { happened: loose.join('; ') || 'all awaited', why: 'Checks counted under the wrong suite send whoever reads a failure to the wrong file, and a suite that reports zero checks looks like one that was skipped on purpose.', fix: 'Make register async and await every asyncSuite call.' });
   });
 }
