@@ -489,15 +489,18 @@ engine and model, not in the harness stamp, because the stamp identifies code
 and the window is a run setting that can grow during a run. The REPL builds a
 new engine each turn, so each turn starts again from the configured window,
 and an overflow costs one extra request there.
-*Not yet verified live:* the positive codeword check
-(`D:/harness-work/runs/probe-codeword.mjs`, a 23,090-character conversation)
-could not run. During this stage C: reached 0 bytes free, and the Ollama runner
-failed to load either model ("out of memory allocating heap arena map",
+*Live check, passed:* `D:/harness-work/runs/probe-codeword.txt`, from
+qwen2.5-coder:7b on ollama 0.34.3. The codeword was at the start of the first
+user message of a 23,090-character conversation. With the request shape 3.6.0
+sent, the engine evaluated **61** prompt tokens and the model answered "Echo".
+Through the new `ollamaChat`, it evaluated **9,783** tokens at num_ctx 16384 and
+answered "ZEPHYR-7731". The first three attempts could not load a model at all
+(C: had reached 0 bytes free: "out of memory allocating heap arena map", then
 "unable to allocate CUDA_Host buffer", then "PTX JIT compilation failed"). The
-old-shape request failed the same way, so these failures say nothing about the
-change. The live check and poly-B are still owed. Behaviour on Ollama versions
-other than 0.34.3 is UNVERIFIED, and a server that ignores `truncate` would
-still cut silently.
+old-shape request failed in the same way, and the check passed once the disk
+had room again. *Still owed:* poly-B. Behaviour on Ollama versions other than
+0.34.3 is UNVERIFIED, and a server that ignores `truncate` would still cut
+silently.
 
 **2. A corpus where the baseline is off the floor.** *Attacks:* 0/27, which
 makes every A/B powerless (six one-way flips needed; power 0.05-0.27 at N=27).
