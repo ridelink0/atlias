@@ -163,7 +163,10 @@ export default async function unitSuites({ suite, asyncSuite, check, PROJECT, TM
     fs.writeFileSync(path.join(venvBin, 'graphify' + exe), '');
     fs.writeFileSync(path.join(venvBin, 'python' + exe), '');
     const fromPath = core.graphifyInterpreters({ env: { PATH: venvBin, LOCALAPPDATA: path.join(base, 'nolocal') }, home: path.join(base, 'nohome') });
-    check('graphify in its own venv is found through its launcher on PATH', fromPath.includes(path.join(venvBin, 'python' + exe)), { happened: JSON.stringify(fromPath), why: 'A graphify the system Python cannot import was invisible, and the companion installer then pip-installed a second copy.', fix: 'graphifyInterpreters reads PATH for a graphify launcher and returns the interpreter beside it.' });
+    // macOS keeps temp folders behind a symlink (/var is /private/var), and the
+    // launcher is followed to its real path, so compare real paths.
+    const wantPy = fs.realpathSync(path.join(venvBin, 'python' + exe));
+    check('graphify in its own venv is found through its launcher on PATH', fromPath.some((p) => fs.realpathSync(p) === wantPy), { happened: JSON.stringify(fromPath), why: 'A graphify the system Python cannot import was invisible, and the companion installer then pip-installed a second copy.', fix: 'graphifyInterpreters reads PATH for a graphify launcher and returns the interpreter beside it.' });
     const pipxHome = path.join(base, 'home');
     const pipxPy = win ? path.join(pipxHome, 'pipx', 'venvs', 'graphifyy', 'Scripts', 'python.exe') : path.join(pipxHome, '.local', 'pipx', 'venvs', 'graphifyy', 'bin', 'python');
     fs.mkdirSync(path.dirname(pipxPy), { recursive: true });
