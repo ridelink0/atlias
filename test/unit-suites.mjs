@@ -153,6 +153,51 @@ export default async function unitSuites({ suite, asyncSuite, check, PROJECT, TM
     check('sessionStart returns the brief and records the session', out && out.hookSpecificOutput && out.hookSpecificOutput.additionalContext.length > 0 && core.sessionMeta('unit-brief').host === 'claude', { happened: JSON.stringify(out).slice(0, 160), why: 'This is the first thing every session sees.', fix: 'Check sessionStart.' });
   });
 
+  suite('companion expert', 'one copy of each companion, never two', () => {
+    const base = path.join(process.env.CLAUDE_CONFIG_DIR, 'companion-case');
+    fs.rmSync(base, { recursive: true, force: true });
+    const win = process.platform === 'win32';
+    const exe = win ? '.exe' : '';
+    const venvBin = path.join(base, 'venv', win ? 'Scripts' : 'bin');
+    fs.mkdirSync(venvBin, { recursive: true });
+    fs.writeFileSync(path.join(venvBin, 'graphify' + exe), '');
+    fs.writeFileSync(path.join(venvBin, 'python' + exe), '');
+    const fromPath = core.graphifyInterpreters({ env: { PATH: venvBin, LOCALAPPDATA: path.join(base, 'nolocal') }, home: path.join(base, 'nohome') });
+    check('graphify in its own venv is found through its launcher on PATH', fromPath.includes(path.join(venvBin, 'python' + exe)), { happened: JSON.stringify(fromPath), why: 'A graphify the system Python cannot import was invisible, and the companion installer then pip-installed a second copy.', fix: 'graphifyInterpreters reads PATH for a graphify launcher and returns the interpreter beside it.' });
+    const pipxHome = path.join(base, 'home');
+    const pipxPy = win ? path.join(pipxHome, 'pipx', 'venvs', 'graphifyy', 'Scripts', 'python.exe') : path.join(pipxHome, '.local', 'pipx', 'venvs', 'graphifyy', 'bin', 'python');
+    fs.mkdirSync(path.dirname(pipxPy), { recursive: true });
+    fs.writeFileSync(pipxPy, '');
+    const fromPipx = core.graphifyInterpreters({ env: { PATH: '', LOCALAPPDATA: path.join(base, 'nolocal') }, home: pipxHome });
+    check('graphify installed with pipx is found in pipx\'s venvs', fromPipx.includes(pipxPy), { happened: JSON.stringify(fromPipx), why: 'pipx is the documented way to install a Python CLI, and its venv is invisible to the system Python.', fix: 'graphifyInterpreters lists the pipx venv interpreters.' });
+    const none = core.graphifyInterpreters({ env: { PATH: path.join(base, 'empty'), LOCALAPPDATA: path.join(base, 'nolocal') }, home: path.join(base, 'nohome') });
+    check('nothing is invented when graphify is nowhere', none.length === 0, { happened: JSON.stringify(none), why: 'A candidate that is not on disk would be spawned for nothing.', fix: 'graphifyInterpreters returns only paths that exist.' });
+    const cdir = path.join(base, 'claude');
+    const otherHome = path.join(base, 'agents-home');
+    fs.mkdirSync(path.join(cdir, 'skills', 'ultimate-frontend-skills'), { recursive: true });
+    fs.writeFileSync(path.join(cdir, 'skills', 'ultimate-frontend-skills', 'SKILL.md'), '# UFS');
+    fs.writeFileSync(path.join(cdir, 'settings.json'), JSON.stringify({ enabledPlugins: { 'ultimate-website-skills@old': true } }));
+    const twice = core.ufsCopies({ claudeDir: cdir, home: otherHome });
+    const twicePlan = core.ufsInstallPlan(twice);
+    check('UFS under an old name plus a skills-only copy is two loaded copies, and nothing is installed', twice.filter((x) => x.loaded).length === 2 && !twicePlan.install && /keep one/.test(twicePlan.say), { happened: JSON.stringify({ twice, twicePlan }), why: 'Only the current plugin name was recognised, so a renamed install or a skills folder was reported missing and a second copy was installed beside it.', fix: 'ufsCopies knows every name and folder; ufsInstallPlan never installs when a copy loads.' });
+    fs.rmSync(path.join(cdir, 'skills'), { recursive: true, force: true });
+    fs.writeFileSync(path.join(cdir, 'settings.json'), JSON.stringify({ enabledPlugins: { 'ultimate-frontend-skills@m': false } }));
+    const off = core.ufsInstallPlan(core.ufsCopies({ claudeDir: cdir, home: otherHome }));
+    check('an installed but switched-off UFS is enabled, not installed a second time', !off.install && /enable it/.test(off.say), { happened: JSON.stringify(off), why: 'Installing over a disabled copy leaves two once it is switched back on.', fix: 'ufsInstallPlan treats an installed plugin as present.' });
+    fs.writeFileSync(path.join(cdir, 'settings.json'), JSON.stringify({}));
+    fs.mkdirSync(path.join(otherHome, '.agents', 'skills', 'ultimate-frontend-skills'), { recursive: true });
+    fs.writeFileSync(path.join(otherHome, '.agents', 'skills', 'ultimate-frontend-skills', 'SKILL.md'), '# UFS');
+    const other = core.ufsCopies({ claudeDir: cdir, home: otherHome });
+    check('a copy only other agents load is listed but does not block the Claude Code install', core.ufsInstallPlan(other).install && other.length === 1 && other[0].loaded === false, { happened: JSON.stringify(other), why: 'Claude Code does not load ~/.agents/skills, so refusing would leave it without UFS.', fix: 'Only loaded copies and installed plugins block the install.' });
+    const settingsPath = path.join(process.env.CLAUDE_CONFIG_DIR, 'settings.json');
+    const before = core.readText(settingsPath);
+    fs.writeFileSync(settingsPath, JSON.stringify({ enabledPlugins: { 'ultimate-website-skills@x': true } }));
+    const c = brief.companions();
+    if (before === null) fs.unlinkSync(settingsPath); else fs.writeFileSync(settingsPath, before);
+    check('the brief counts UFS enabled under an older name as on', c.ufs === true, { happened: JSON.stringify({ ufs: c.ufs, copies: c.ufsCopies }), why: 'A renamed install reported as off makes the router offer a second copy.', fix: 'companions reads ufsCopies.' });
+    fs.rmSync(base, { recursive: true, force: true });
+  });
+
   suite('hook dispatch expert', 'the hook dispatcher', () => {
     check('an unknown event is ignored, not thrown', hooksMod.dispatch('no-such-event', {}, 'claude') === null, { happened: 'returned something', why: 'A new host event must not break the host.', fix: 'Keep the default branch.' });
     const r = hooksMod.dispatch('subagent-stop', { session_id: 'unit-dispatch', agent_type: 'reviewer', last_assistant_message: 'looked fine' }, 'claude');

@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.7.1 (2026-09-26)
+
+Never two copies of a companion. The companion installer and the doctor knew graphify only through the system Python and knew Ultimate Frontend Skills only by its current plugin name, so a machine that already had either one a different way could get a second copy beside it.
+
+graphify installed with pipx or into its own virtual environment is now found: a `graphify` launcher on PATH is followed to the interpreter beside it, pipx's venvs are checked, and `atlias install --companions` searches afresh instead of trusting a cached miss before it installs anything. Ultimate Frontend Skills is recognised under all four of its names (ultimate-frontend-skills, ultimate-website-skills, ultimate-design-skills, cinematic-web-design), as an installed plugin that is only switched off, and as a skills-only folder; any of those means nothing is installed, and the brief and `atlias doctor` say so when two copies would load at once. usage-limits and computer-use were never installed by atlias, only detected, so they could not be doubled.
+
+Also in this release: `atlias compare` prints the characters moved per passing attempt beside the total, so a harness cannot look cheap by solving less.
+
 ## 3.7.0 (2026-09-26)
 
 A local model gets the window it was promised, an edit that only needs re-indenting lands, and the eval can say what it could never have detected.
