@@ -1,5 +1,19 @@
 # Changelog
 
+## 3.7.0 (2026-09-26)
+
+A local model gets the window it was promised, an edit that only needs re-indenting lands, and the eval can say what it could never have detected.
+
+The first real run of aider's polyglot benchmark came back 0 of 27, and the plan in `docs/NEXTGEN-4.md` argued that number measured Ollama rather than the model: atlias sent no `num_ctx`, so every local run got the server's default window of 4096 tokens, and an over-long conversation was cut from the front, task first, without an error. Every Ollama request now carries `num_ctx` (16384 by default, capped at the model's trained length and grown in powers of two when a prompt needs it), `num_predict` and `truncate: false`, so an overflow comes back as an error with its token count, and a conversation that cannot fit even the trained length stops as the new reason `context-full` rather than as a model error. The three settings are `agent.ollamaNumCtx`, `agent.ollamaNumPredict` and `agent.ollamaKeepAlive`.
+
+`edit_file` has one more rung. When an edit would leave a file that parsed unable to parse, the span is widened to whole lines and the new text is re-based on that line's indentation; the first candidate that parses is kept, and the reply says it was repaired. The commonest shape in the captured refusals was a `pass` stub replaced by the whole function, `def` line included. The first draft of this rung nested that function inside the stub, which parses and makes the stub return None, and a replay of the captured refusals caught it before commit: a new_string that restates the enclosing def or class now replaces from that header down, and a def that would become the body of a different function is refused as before. Mid-line edits are never widened and CRLF files stay CRLF. A refusal that remains shows the numbered lines around the parse error.
+
+The eval grew what an A/B on a small corpus needs. `atlias compare` pairs two saved runs by task and reports McNemar's exact test, the Wilson interval per arm, a Jeffreys-prior interval on the difference, and how many one-way flips it would need before any p could reach 0.05. `atlias tiers` and `atlias eval --tier smoke|main|big --sample N --seed s` name a corpus that is the same on every machine; the main tier is HumanEvalFix and CanItEdit, converted by `atlias editbench` with CanItEdit's tests kept hidden until the model stops, and the big tier is aider's refactor benchmark with its AST grader inlined. The generated corpora stay out of git, and `evals/CORPORA.md` says where each comes from and how to regenerate it. A failing task reports partial credit from pytest or unittest's own counts, never as part of the verdict. Every failed edit is tallied by cause, and under eval its arguments and refusal are kept, which is how the re-indent rung was found.
+
+Measured, and still not a pass: on the 27 polyglot tasks with qwen2.5-coder:7b the would-not-parse refusals fell from 25 and 23 in the two runs before the rung to 7, the share of edits that did not apply went from 64 and 70 per cent to 53 (a number a rerun with nothing changed also moves by several points), and the score stayed 0 of 27. Numbers and caveats are in `docs/NEXTGEN-4.md`.
+
+Also: the stop gate names an unfinished check once instead of raising it on a second stop when a git call timed out under load, and a parser that does not finish leaves a file unchecked rather than failed.
+
 ## 3.6.0 (2026-09-25)
 
 An edit that nearly matches now lands, and says how it landed.
