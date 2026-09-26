@@ -3,3 +3,11 @@ node_modules/
 *.tmp
 .DS_Store
 test/part*.mjs
+
+# Benchmark corpora that atlias generates from somebody else's dataset.
+# evals/CORPORA.md says where each comes from and how to regenerate it; the
+# short version is that CanItEdit hides its tests upstream and this harness
+# keeps them hidden, so a copy of them does not go into a public repository.
+evals/canitedit/
+evals/humanevalfix/
+evals/refactor/

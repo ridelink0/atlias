@@ -926,6 +926,7 @@ await (await import('./sandbox-suites.mjs')).default({ suite, asyncSuite, check,
 await (await import('./exit-suites.mjs')).default({ suite, asyncSuite, check, core, agentMod, TMP, fs, path });
 await (await import('./context-suites.mjs')).default({ asyncSuite, check, agentMod, TMP, fs, path });
 await (await import('./editbench-suites.mjs')).default({ asyncSuite, check, TMP, fs, path });
+await (await import('./tier-suites.mjs')).default({ asyncSuite, check, TMP, ROOT, fs, path, spawnSync });
 await (await import('./coverage-suites.mjs')).default({ suite, check, ROOT, fs, path });
 
 let failed = 0;
