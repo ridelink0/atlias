@@ -203,6 +203,41 @@ export default async function register({ asyncSuite, check }) {
     check('the report says both numbers, the p and the size warning', /before 3\/9 against after 4\/9/.test(text) && /McNemar exact p = 1\.000/.test(text) && /one task flipping moves the score 11\.1 points/.test(text), { happened: text, why: 'A verdict with no arithmetic behind it is just a louder opinion.', fix: 'Check formatCompare.' });
   });
 
+  // NEXTGEN-4 build item 2, the last piece: partial credit. At 0 of 27 the pass
+  // rate cannot tell "every test failed" from "seven of eight passed", and those
+  // two need different fixes.
+  await asyncSuite('partial credit expert', 'a failing task says how much of the check passed', async () => {
+    const pytest = evals.caseCounts('collected 8 items\n\nFAILED test_x.py::test_a\n2 failed, 6 passed in 0.12s\n');
+    const withErrors = evals.caseCounts('1 failed, 2 passed, 1 error in 0.30s');
+    const unit = evals.caseCounts('......F\nRan 7 tests in 0.01s\n\nFAILED (failures=1, errors=1)\n');
+    const clean = evals.caseCounts('Ran 4 tests in 0.00s\n\nOK\n');
+    check('pytest and unittest counts are read, errors included',
+      pytest.passed === 6 && pytest.total === 8 && withErrors.total === 4 && withErrors.passed === 2 && unit.passed === 5 && unit.total === 7 && clean.passed === 4,
+      { happened: JSON.stringify({ pytest, withErrors, unit, clean }), why: 'These are the two runners the converted corpora use; a count read wrong would print a partial score that is worse than none.', fix: 'Check caseCounts.' });
+    check('an assert-based check that stops at the first failure reports no fraction rather than a made-up one',
+      evals.caseCounts('Traceback (most recent call last):\n  File "main.py", line 3\nAssertionError\n') === null && evals.caseCounts('') === null,
+      { happened: JSON.stringify(evals.caseCounts('AssertionError')), why: 'CanItEdit and HumanEvalFix run one script that throws on the first bad assert; calling that 0 of 1 would put a fiction in the report for 252 of the tasks.', fix: 'caseCounts returns null when nothing counted its cases.' });
+
+    // End to end: a task whose check prints counts carries them out of runTask
+    // and into the suite report, and never into the verdict.
+    const counted = {
+      id: 'counts-its-cases', name: 'counts its cases', rounds: 1, files: { 'note.txt': 'nothing to do' }, protect: [],
+      prompt: 'Do nothing.',
+      check: ['node', '-e', 'console.log("3 failed, 5 passed in 0.11s"); process.exit(1)'],
+    };
+    const one = await evals.runTask(counted, { chat: async () => ({ content: 'Nothing done.' }), stamp: 'cases-test' });
+    check('a failing task carries the counts without them softening the verdict',
+      one.pass === false && one.cases && one.cases.passed === 5 && one.cases.total === 8,
+      { happened: JSON.stringify({ pass: one.pass, cases: one.cases }), why: 'Partial credit that leaked into pass/fail would be the exact kind of number-massaging the eval runner exists to prevent.', fix: 'runTask copies verdict.cases and leaves pass to the exit code.' });
+    if (one.workspace) { try { fs.rmSync(one.workspace, { recursive: true, force: true }); } catch { /* best effort */ } }
+    const suite = await evals.runSuite([counted, { ...counted, id: 'no-counts', check: ['node', '-e', 'console.log("AssertionError"); process.exit(1)'] }], { chat: async () => ({ content: 'Nothing done.' }), stamp: false });
+    const printed = evals.format(suite);
+    check('the report totals the cases over the tasks that count them, and says how many those were',
+      suite.cases.passed === 5 && suite.cases.total === 8 && suite.cases.tasks === 1 && suite.cases.of === 2 && /partial credit: 5\/8 test case\(s\) passed \(63%\)/.test(printed) && /5 of 8 test case\(s\) passed/.test(printed),
+      { happened: JSON.stringify({ cases: suite.cases, line: printed.split('\n').filter((l) => /partial|test case/.test(l)) }), why: 'A partial score averaged over tasks that cannot report one would read as a much lower number than the truth.', fix: 'runSuite counts only rows with cases, and format names how many they were.' });
+    for (const r of suite.results) if (r.workspace) { try { fs.rmSync(r.workspace, { recursive: true, force: true }); } catch { /* best effort */ } }
+  });
+
   // NEXTGEN-4 build item 3: the comparator has to print what it cannot see.
   // Every number below was worked out by hand first, so a rewrite that is
   // subtly wrong fails here rather than printing a plausible interval.
