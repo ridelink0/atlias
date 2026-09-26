@@ -526,6 +526,36 @@ JSONL-benchmark converter), `bin/atlias.mjs` (subcommands beside `polyglot`),
 163) and refuses the 17 broken CanItEdit ids and `JavaScript/162` by name; an
 `--engine echo` dry run scores 0 on every task (nothing passes without work).
 
+*Status: BUILT (converters, hidden grader files, the polyglot refusal reason),
+see the commit that adds `lib/editbench.mjs`; results below.* One generic
+module, `lib/editbench.mjs`, and one subcommand,
+`atlias editbench <rows.jsonl> --bench canitedit|humanevalfix [--variant
+lazy|descriptive] [--lang python|js]`. It reads the dataset as JSONL (what the
+Hugging Face `datasets` library writes with `to_json`) and proves every task
+with the polyglot converter's own `proveTask`.
+*A change the plan did not name, found on contact with the code:* CanItEdit
+hides its tests upstream, and the plan's "protected `test_main.py`" would have
+shown them to the model, which is a different and easier benchmark. So tasks
+can now carry `hidden` files: `runTask` writes them into the workspace only
+after the model stops, over anything of the same name the run left behind, and
+`proveTask` writes them the same way. The model gets `main.py` and the
+instruction, nothing else. The grader runs the program and its tests as one
+module registered as `__main__`, as upstream runs them as one file, because
+tests may use a name the program keeps private (checked: a `_secret()` helper).
+HumanEvalFix shows its tests upstream, so there they are a visible, protected
+`tests.py`/`tests.js` beside a protected runner; the JS test file starts with
+the throwing `console.assert` prelude.
+*The seven polyglot "no output" refusals, explained:* re-run alone on
+2026-09-25, all seven (dominoes, dot-dsl, food-chain, forth, hangman, list-ops,
+paasio) fail as shipped in the normal way, with pytest counts. The first
+conversion's refusal came from `proveTask` dropping the spawn error of a run
+that returned no status. It now keeps that error in the reason, asks a
+statusless run once more before judging it, and treats a stub that hangs until
+the timeout as failing as shipped (only a runner that cannot start is a
+refusal).
+*Not built from this item:* the partial score (fraction of test cases passed)
+and the refactor-benchmark tier. Both are still owed.
+
 **3. A comparator that says what it cannot see.** *Attacks:* A/B/C being read as
 results. *Expected effect:* no score change; stops false claims (confirmed
 guidance from arXiv 2503.01747).

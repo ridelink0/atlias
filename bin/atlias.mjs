@@ -137,6 +137,28 @@ switch (cmd) {
     process.exitCode = result.wrote.length ? 0 : 1;
     break;
   }
+  // CanItEdit and HumanEvalFix, from their JSONL rows, proved the same way.
+  case 'editbench': {
+    const eb = await import('../lib/editbench.mjs');
+    const valued = new Set(['--bench', '--variant', '--lang', '--out', '--limit', '--only']);
+    const skip = new Set();
+    for (const f of valued) { const i = argv.indexOf(f); if (i >= 0) skip.add(i + 1); }
+    const file = argv.slice(1).find((a, i) => !a.startsWith('--') && !skip.has(i + 1));
+    const kind = optVal('--bench');
+    if (!file || !['canitedit', 'humanevalfix'].includes(kind)) { say('usage: atlias editbench <rows.jsonl> --bench canitedit|humanevalfix [--variant lazy|descriptive] [--lang python|js] [--out <dir>] [--limit N] [--only id,id]'); process.exitCode = 1; break; }
+    const variant = optVal('--variant') || 'lazy';
+    const lang = optVal('--lang') || 'python';
+    const out = optVal('--out') || path.join(ROOT, 'evals', kind, kind === 'canitedit' ? variant : lang);
+    const rows = eb.readJsonl(path.resolve(file));
+    if (!rows.length) { say(`no rows in ${file}`); process.exitCode = 1; break; }
+    const limit = parseInt(optVal('--limit') || '0', 10) || 0;
+    const only = String(optVal('--only') || '').split(',').map((s) => s.trim()).filter(Boolean);
+    say(`converting ${rows.length} ${kind} row(s) from ${file}. Each one has to fail as shipped and pass with the benchmark's own reference here before it is kept.`);
+    const result = eb.convertRows(rows, kind, out, { variant, lang, limit, only });
+    say(eb.report(result));
+    process.exitCode = result.wrote.length ? 0 : 1;
+    break;
+  }
   case 'chooser': process.exitCode = await agent.chooser(); break;
   case 'agent': case 'run': case 'fly': {
     const r = after('--resume');
