@@ -59,7 +59,7 @@ switch (cmd) {
     // Positional task ids only: the value after --engine or --only belongs to
     // that flag, not to the task list.
     const taken = new Set();
-    for (const f of ['--engine', '--only', '--repeat', '--model', '--corpus', '--save', '--tier', '--sample', '--seed']) { const i = argv.indexOf(f); if (i >= 0) taken.add(i + 1); }
+    for (const f of ['--engine', '--only', '--repeat', '--model', '--corpus', '--save', '--tier', '--sample', '--seed', '--rounds']) { const i = argv.indexOf(f); if (i >= 0) taken.add(i + 1); }
     const want = argv.slice(1).filter((a, i) => !a.startsWith('--') && !taken.has(i + 1));
     const only = optVal('--only');
     // --corpus scores a different task directory, so the shipped nine stay fast
@@ -74,6 +74,7 @@ switch (cmd) {
     const tiers = await import('../lib/tiers.mjs');
     let chosen = null;
     let tasks;
+    if (tierName && corpus) say(`--tier ${tierName} and --corpus ${corpus} were both given; the tier is what ran.`);
     if (tierName) {
       chosen = tiers.tierTasks(tierName);
       if (!chosen.ok) { say([chosen.why, '', tiers.statusLines()]); process.exitCode = 2; break; }
@@ -110,7 +111,10 @@ switch (cmd) {
     // What corpus produced the score, in the report itself: a saved report that
     // does not say which tier and which sample it ran cannot be the A in an A/B.
     const corpusInfo = { tier: chosen ? chosen.name : (corpus ? path.basename(path.resolve(corpus)) : 'shipped'), tasks: tasks.length, of: before, sample: sample > 0 && tasks.length < before ? sample : 0, seed: sample > 0 && tasks.length < before ? seed : '' };
-    const report = await evals.runSuite(tasks, { chat, state: agent.newState(cwd, engine), repeat, engineName: engine, model, corpus: corpusInfo });
+    // --rounds overrides every task's own budget for this run and says so in the
+    // report. A tier where most runs end out of rounds is measuring the budget.
+    const roundsArg = Math.max(0, parseInt(optVal('--rounds') || '0', 10) || 0);
+    const report = await evals.runSuite(tasks, { chat, state: agent.newState(cwd, engine), repeat, engineName: engine, model, corpus: corpusInfo, budget: roundsArg });
     say(evals.format(report));
     // --save keeps the report so two runs can be compared later. A score nobody
     // wrote down cannot be the A in an A/B.
@@ -182,7 +186,11 @@ switch (cmd) {
     const out = optVal('--out') || path.join(ROOT, 'evals', 'refactor');
     const limit = parseInt(optVal('--limit') || '0', 10) || 0;
     const rounds = parseInt(optVal('--rounds') || '16', 10) || 16;
-    const maxBytes = optVal('--max-bytes') === null ? rb.DEFAULT_MAX_BYTES : (parseInt(optVal('--max-bytes'), 10) || 0);
+    // --max-bytes 0 means no cap; anything that is not a number keeps the
+    // default rather than quietly becoming no cap.
+    const capArg = optVal('--max-bytes');
+    const capNum = capArg === null ? NaN : parseInt(capArg, 10);
+    const maxBytes = Number.isFinite(capNum) && capNum >= 0 ? capNum : rb.DEFAULT_MAX_BYTES;
     const only = String(optVal('--only') || '').split(',').map((s) => s.trim()).filter(Boolean);
     say(`converting the refactor benchmark from ${dir}. Each task is proved here first: the file as shipped must fail the AST check, and the same file with the method moved out must pass it.`);
     const result = rb.convert(path.resolve(dir), out, { limit, rounds, only, maxBytes });
@@ -193,12 +201,12 @@ switch (cmd) {
   // CanItEdit and HumanEvalFix, from their JSONL rows, proved the same way.
   case 'editbench': {
     const eb = await import('../lib/editbench.mjs');
-    const valued = new Set(['--bench', '--variant', '--lang', '--out', '--limit', '--only']);
+    const valued = new Set(['--bench', '--variant', '--lang', '--out', '--limit', '--only', '--rounds']);
     const skip = new Set();
     for (const f of valued) { const i = argv.indexOf(f); if (i >= 0) skip.add(i + 1); }
     const file = argv.slice(1).find((a, i) => !a.startsWith('--') && !skip.has(i + 1));
     const kind = optVal('--bench');
-    if (!file || !['canitedit', 'humanevalfix'].includes(kind)) { say('usage: atlias editbench <rows.jsonl> --bench canitedit|humanevalfix [--variant lazy|descriptive] [--lang python|js] [--out <dir>] [--limit N] [--only id,id]'); process.exitCode = 1; break; }
+    if (!file || !['canitedit', 'humanevalfix'].includes(kind)) { say('usage: atlias editbench <rows.jsonl> --bench canitedit|humanevalfix [--variant lazy|descriptive] [--lang python|js] [--out <dir>] [--limit N] [--only id,id] [--rounds N]'); process.exitCode = 1; break; }
     const variant = optVal('--variant') || 'lazy';
     const lang = optVal('--lang') || 'python';
     const out = optVal('--out') || path.join(ROOT, 'evals', kind, kind === 'canitedit' ? variant : lang);
@@ -207,7 +215,7 @@ switch (cmd) {
     const limit = parseInt(optVal('--limit') || '0', 10) || 0;
     const only = String(optVal('--only') || '').split(',').map((s) => s.trim()).filter(Boolean);
     say(`converting ${rows.length} ${kind} row(s) from ${file}. Each one has to fail as shipped and pass with the benchmark's own reference here before it is kept.`);
-    const result = eb.convertRows(rows, kind, out, { variant, lang, limit, only });
+    const result = eb.convertRows(rows, kind, out, { variant, lang, limit, only, rounds: Math.max(0, parseInt(optVal('--rounds') || '0', 10) || 0) });
     say(eb.report(result));
     process.exitCode = result.wrote.length ? 0 : 1;
     break;

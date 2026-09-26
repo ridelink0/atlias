@@ -203,6 +203,24 @@ export default async function register({ asyncSuite, check }) {
     check('the report says both numbers, the p and the size warning', /before 3\/9 against after 4\/9/.test(text) && /McNemar exact p = 1\.000/.test(text) && /one task flipping moves the score 11\.1 points/.test(text), { happened: text, why: 'A verdict with no arithmetic behind it is just a louder opinion.', fix: 'Check formatCompare.' });
   });
 
+  // The round budget a run was actually given, and what the header says about
+  // it. Found on the first real slice of the main tier: every task ran on its
+  // own 8 or 12 rounds while the header printed the machine's 25.
+  await asyncSuite('round budget expert', 'a report says the rounds its tasks ran on, and a run can override them', async () => {
+    const quiet = async () => ({ content: 'Nothing done.' });
+    const small = { id: 'eight-rounds', name: 'eight rounds', rounds: 8, protect: [], files: {}, prompt: 'Do nothing.', check: ['node', '-e', 'process.exit(1)'] };
+    const large = { ...small, id: 'twelve-rounds', name: 'twelve rounds', rounds: 12 };
+    const own = await evals.runSuite([small, large], { chat: quiet, stamp: false });
+    check('the header prints the spread of the task budgets, not the machine default',
+      /8-12 rounds per task/.test(evals.format(own)) && own.budgetRange[0] === 8 && own.budgetRange[1] === 12 && own.budgetSet === false,
+      { happened: evals.format(own).split('\n').slice(0, 3).join(' | '), why: 'A run where most tasks end rounds-exhausted is read completely differently depending on whether the budget was 8 or 25, and the report said 25.', fix: 'runSuite records budgetRange; format prefers it.' });
+    const forced = await evals.runSuite([small, large], { chat: quiet, stamp: false, budget: 3 });
+    check('--rounds overrides every task budget and the header says it was set for this run',
+      forced.results.every((r) => r.budget === 3) && forced.budgetSet === true && /3 rounds, set for this run/.test(evals.format(forced)),
+      { happened: JSON.stringify({ budgets: forced.results.map((r) => r.budget), line: evals.format(forced).split('\n')[0] }), why: 'Asking whether a tier scores zero because of its own budget needs a way to change it that is recorded, not a corpus edited by hand.', fix: 'runTask takes budget as an override; runSuite reports budgetSet.' });
+    for (const rep of [own, forced]) for (const r of rep.results) if (r.workspace) { try { fs.rmSync(r.workspace, { recursive: true, force: true }); } catch { /* best effort */ } }
+  });
+
   // NEXTGEN-4 build item 2, the last piece: partial credit. At 0 of 27 the pass
   // rate cannot tell "every test failed" from "seven of eight passed", and those
   // two need different fixes.

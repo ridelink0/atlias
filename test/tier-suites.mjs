@@ -81,6 +81,36 @@ export default async function tierSuites({ asyncSuite, check, TMP, ROOT, fs, pat
       { happened: JSON.stringify(clash.duplicates), why: 'compare pairs by id: a duplicate id silently pairs a task with the wrong task.', fix: 'tierTasks collects duplicates.' });
   });
 
+  // A tier nobody can regenerate in an evening is a tier that will not be
+  // regenerated. This is the cost that made a 164-task conversion look wedged.
+  await asyncSuite('conversion cost expert', 'a stub that hangs is not asked again three times', async () => {
+    const tally = path.join(TMP, 'hang-tally.txt');
+    const count = () => { try { return fs.readFileSync(tally, 'utf8').length; } catch { return 0; } };
+    // Records every spawn; outlives the timeout while the stub is in place, and
+    // exits zero once the reference has replaced it - which is the shape of a
+    // HumanEvalFix stub whose bug is an endless loop.
+    const hanging = [process.execPath, '-e', `const fs=require('fs'); fs.appendFileSync(${JSON.stringify(tally)}, 'x'); if (fs.readFileSync('main.py','utf8').includes('STUB')) setTimeout(() => {}, 600000); else process.exit(0);`];
+    const built = (check2) => ({
+      task: { id: 'hangs-forever', name: 'hangs forever', rounds: 2, protect: [], files: { 'main.py': '# STUB' }, prompt: 'Do nothing.', check: check2, timeoutMs: 5000 },
+      reference: '# fixed',
+      stubName: 'main.py',
+    });
+    const proof = poly.proveTask(built(hanging), 'python', { beforeRuns: 3 });
+    const hangSpawns = count();
+    check('a stub that runs until the timeout is asked once, not three times, and still counts as failing',
+      proof.ok === true && hangSpawns === 3,
+      { happened: `${hangSpawns} spawn(s) (want 3: one stub run, its one retry, one reference run), ok=${proof.ok}, why=${proof.why}`, why: 'Three repeats times a retry each, at a sixty-second timeout, is six minutes for one task: with a handful of such stubs a 164-task conversion looks wedged and gets abandoned.', fix: 'The beforeRuns loop stops on a timeout; only a check that could pass by timing is repeated.' });
+    try { fs.rmSync(tally, { force: true }); } catch { /* best effort */ }
+    // And the guard it was protecting still works: a stub that merely fails is
+    // repeated, because a check that decides by timing can pass by chance.
+    const failing = [process.execPath, '-e', `const fs=require('fs'); fs.appendFileSync(${JSON.stringify(tally)}, 'x'); process.exit(fs.readFileSync('main.py','utf8').includes('STUB') ? 1 : 0);`];
+    const repeated = poly.proveTask(built(failing), 'python', { beforeRuns: 3 });
+    check('while a stub that fails quickly is still repeated, which is what catches a flaky check',
+      repeated.ok === true && count() === 4,
+      { happened: `${count()} spawn(s) (want 4: three stub runs and one reference run), ok=${repeated.ok}`, why: 'CanItEdit 60_unique_number passed 2 of 3 direct runs here; dropping the repeats to save time would let a task like that into the corpus.', fix: 'Only a timeout ends the loop early.' });
+    try { fs.rmSync(tally, { force: true }); } catch { /* best effort */ }
+  });
+
   // The big-file tier. The grader is the benchmark's own AST rule, so these
   // checks hold it to that rule in both directions: the file as shipped must
   // fail, and only a real move must pass.
