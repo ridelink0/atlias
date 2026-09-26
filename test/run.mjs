@@ -917,7 +917,7 @@ suite('proof expert', 'the doctor proves what it reports', () => {
 await (await import('./integrity-suites.mjs')).default({ suite, check, core, gate, track, router, PROJECT, TMP, ROOT, spawnSync, fs, path });
 await (await import('./shortcut-suites.mjs')).default({ suite, check, TMP, ROOT, spawnSync, fs, path });
 await (await import('./agent-suites.mjs')).default({ suite, asyncSuite, check, core, agentMod, hookRun, PROJECT, TMP, ROOT, fs, path, spawnSync });
-await (await import('./eval-suites.mjs')).default({ suite, asyncSuite, check });
+await (await import('./eval-suites.mjs')).default({ suite, asyncSuite, check, TMP });
 await (await import('./host-suites.mjs')).default({ suite, check, PROJECT });
 await (await import('./unit-suites.mjs')).default({ suite, asyncSuite, check, PROJECT, TMP, fs, path });
 await (await import('./pointer-suites.mjs')).default({ suite, check, core, track, router, TMP, ROOT, fs, path });
@@ -940,5 +940,11 @@ for (const r of results) {
 }
 const total = results.reduce((n, r) => n + r.passed + r.failed.length, 0);
 process.stdout.write(`\n${total - failed}/${total} checks passed across ${results.length} suites.\n`);
-try { fs.rmSync(TMP, { recursive: true, force: true }); } catch { /* temp */ }
+// The suite's own temp tree, removed with retries: on Windows a directory whose
+// handle a just-spawned child still holds cannot be deleted, and a single
+// attempt inside a silent catch left twelve of these behind in one evening.
+// maxRetries covers EBUSY, EPERM and ENOTEMPTY; if it still survives, say where
+// it is rather than leaking it quietly.
+try { fs.rmSync(TMP, { recursive: true, force: true, maxRetries: 20, retryDelay: 150 }); } catch { /* reported below */ }
+if (fs.existsSync(TMP)) process.stdout.write(`\nthis run could not remove its own temp tree: ${TMP}\n  Something still holds a handle in it (a spawned server, the graph worker). Delete it, and treat it as a leak to fix, not noise.\n`);
 process.exit(failed ? 1 : 0);

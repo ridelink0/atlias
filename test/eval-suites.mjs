@@ -3,7 +3,6 @@
 // that the scoreboard cannot be talked into a pass.
 import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
-import os from 'node:os';
 import path from 'node:path';
 import * as evals from '../lib/eval.mjs';
 import * as agentMod from '../lib/agent.mjs';
@@ -30,7 +29,9 @@ const FIX = {
 // register is async and every suite is awaited: asyncSuite points the runner's
 // current-suite pointer at itself before it starts, so two un-awaited suites
 // run at once and the first one's checks are counted under the second's name.
-export default async function register({ asyncSuite, check }) {
+// TMP is the runner's own temp tree: a fixture made under os.tmpdir() instead
+// outlives a suite that throws before its own cleanup line.
+export default async function register({ asyncSuite, check, TMP }) {
   await asyncSuite('harness scoreboard expert', 'a task is scored by the check, not the claim', async () => {
     const state = agentMod.newState(process.cwd(), 'echo');
 
@@ -110,7 +111,7 @@ export default async function register({ asyncSuite, check }) {
   // every task added to it was proved on this machine first.
   await asyncSuite('borrowed corpus expert', 'a converted task is proved before it is kept', async () => {
     const poly = await import('../lib/polyglot.mjs');
-    const repo = fs.mkdtempSync(path.join(os.tmpdir(), 'atlias-poly-'));
+    const repo = fs.mkdtempSync(path.join(TMP, 'poly-'));
     const ex = path.join(repo, 'python', 'exercises', 'practice', 'tiny');
     fs.mkdirSync(path.join(ex, '.docs'), { recursive: true });
     fs.mkdirSync(path.join(ex, '.meta'), { recursive: true });
@@ -142,7 +143,7 @@ export default async function register({ asyncSuite, check }) {
       const solved = poly.proveTask(poly.taskFromExercise(repo, 'python', 'tiny'), 'python');
       check('and one that already passes is refused', solved.ok === false && /already passes/.test(solved.why), { happened: JSON.stringify(solved), why: 'A task that passes with the stub in place quietly inflates every score it appears in.', fix: 'Check the first branch of proveTask.' });
       fs.writeFileSync(path.join(ex, 'tiny.py'), 'def total(items):' + NL + '    raise NotImplementedError' + NL);
-      const out = fs.mkdtempSync(path.join(os.tmpdir(), 'atlias-poly-out-'));
+      const out = fs.mkdtempSync(path.join(TMP, 'poly-out-'));
       const done = poly.convert(repo, 'python', out, { rounds: 7 });
       check('the conversion writes only what it proved', done.wrote.length === 1 && fs.existsSync(path.join(out, 'polyglot-python-tiny.json')) && JSON.parse(fs.readFileSync(path.join(out, 'polyglot-python-tiny.json'), 'utf8')).check.length === 5, { happened: JSON.stringify({ wrote: done.wrote, refused: done.refused }), why: 'A converter that writes first and checks later fills the corpus with tasks nobody can trust.', fix: 'Check convert.' });
       check('and the report names what it refused', /1 task\(s\) written/.test(poly.report(done)) && /refused, which is the point/.test(poly.report({ ok: true, why: 'x', dir: out, wrote: ['a'], refused: [{ name: 'b', why: 'no stub' }] })), { happened: poly.report(done).split(NL)[0], why: 'A refusal nobody is told about looks like an exercise that was never there.', fix: 'Check report.' });
@@ -350,7 +351,7 @@ export default async function register({ asyncSuite, check }) {
     check('a sha is a sha, and a machine with git produces one', hasGit ? /^[0-9a-f]{7,40}$/.test(here.sha) : here.sha === '', { happened: `git=${hasGit} sha=${JSON.stringify(here.sha)} text=${here.text}`, why: 'A made-up or truncated sha is worse than none, and an unstamped report on a machine that does have git is the same failure wearing an excuse: it was caused here by a timeout too short for a cold git call under load, and an or-clause in this very check let it pass.', fix: 'Only accept hex from git log, and give it a timeout a loaded machine can meet.' });
     check('and an unstamped report says why it could not stamp', here.sha ? true : /unstamped \(.+\)/.test(here.text), { happened: here.text, why: 'Unstamped with no reason cannot be told apart from a machine with no git at all, so nobody knows whether to fix the harness or the environment.', fix: 'Carry the reason in why and in the text.' });
     check('and dirty is said out loud when it is true', here.dirty === (here.dirtyFiles.length > 0) && (here.dirty ? /-dirty/.test(here.text) : !/-dirty/.test(here.text)), { happened: `dirty=${here.dirty} files=${here.dirtyFiles.join(',') || 'none'} text=${here.text}`, why: 'A sha stamped on a tree with uncommitted changes to the loop describes code that did not run.', fix: 'Keep text and dirtyFiles in step.' });
-    const nonRepo = fs.mkdtempSync(path.join(os.tmpdir(), 'atlias-stamp-'));
+    const nonRepo = fs.mkdtempSync(path.join(TMP, 'stamp-'));
     const away = evals.harnessStamp(nonRepo);
     check('no git here means unstamped, not a guess', away.sha === '' && /unstamped/.test(away.text), { happened: JSON.stringify(away), why: 'A machine without git must say so; inventing a sha there would put a false provenance on every number.', fix: 'harnessStamp returns unstamped when git cannot answer.' });
     kill(nonRepo);
