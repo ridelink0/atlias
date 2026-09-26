@@ -99,7 +99,11 @@ export default async function coverageSuites({ suite, check, ROOT, fs, path }) {
       const src = fs.readFileSync(path.join(ROOT, 'test', f), 'utf8');
       // Comments name these functions while explaining them, and a checker that
       // reads prose as code reports a bug in a sentence.
-      const code = src.replace(/\/\*[\s\S]*?\*\//g, '').split('\n').map((l) => l.replace(/\/\/.*$/, '')).join('\n');
+      // Split on \r?\n: in a CRLF checkout (core.autocrlf on Windows) a line
+      // keeps its \r, `.` stops before it, and `$` then never matches, so no
+      // line comment was stripped and a comment naming asyncSuite() was counted
+      // as an un-awaited call.
+      const code = src.replace(/\/\*[\s\S]*?\*\//g, '').split(/\r?\n/).map((l) => l.replace(/\/\/.*$/, '')).join('\n');
       const calls = [...code.matchAll(/(await\s+)?asyncSuite\s*\(/g)];
       if (!calls.length) continue;
       const bare = calls.filter((m) => !m[1]).length;
