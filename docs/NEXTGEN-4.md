@@ -463,6 +463,42 @@ in the body; a fake over-limit error ends the run as `engine-truncated`, not
 this as the only change, `--save`, `atlias compare poly-A.json poly-B.json`,
 and the editWhy tally beside it.
 
+*Status: BUILT in d1b585e (2026-09-25), suite 843/843.* Before any code was
+written, I probed ollama 0.34.3 on this machine at num_ctx 512
+(`D:/harness-work/runs/probe-truncate.txt`). With the old request shape, a
+2137-token prompt came back as a 200 that had evaluated **23** tokens, and the
+model did not know the codeword. With `truncate:false`, the same request came
+back as HTTP 400 `exceed_context_size_error`, "request (2137 tokens) exceeds the
+available context size (512 tokens)". The overflow parser is tested against
+that exact body. What landed:
+`options.num_ctx` (setting `agent.ollamaNumCtx`, default 16384, capped at the
+`.context_length` from `/api/show`; a failed show is asked again rather than
+cached); `options.num_predict` (`agent.ollamaNumPredict`, 2048); `truncate:false`;
+`keep_alive` (`agent.ollamaKeepAlive`; eval sets 30m when unset). The window
+moves only in powers of two (`ctxBucket`). An overflow that still fits the
+model grows the window once and retries. After a reply, the window grows when
+prompt + num_predict no longer fits. An overflow past the model's trained
+length stops the run as the new reason `context-full` (the name chosen over
+"engine-truncated", because nothing is truncated any more). Each round's
+`prompt_eval_count` goes into the eval row as `promptTokens` and `peakPrompt`,
+the window goes in as `numCtx`, and the report header prints "context N tokens,
+largest prompt M". `v1ContextWarning` warns when the openai engine is pointed at
+Ollama's `/v1`.
+*Deviations from the plan above:* `num_ctx` is recorded in the report beside
+engine and model, not in the harness stamp, because the stamp identifies code
+and the window is a run setting that can grow during a run. The REPL builds a
+new engine each turn, so each turn starts again from the configured window,
+and an overflow costs one extra request there.
+*Not yet verified live:* the positive codeword check
+(`D:/harness-work/runs/probe-codeword.mjs`, a 23,090-character conversation)
+could not run. During this stage C: reached 0 bytes free, and the Ollama runner
+failed to load either model ("out of memory allocating heap arena map",
+"unable to allocate CUDA_Host buffer", then "PTX JIT compilation failed"). The
+old-shape request failed the same way, so these failures say nothing about the
+change. The live check and poly-B are still owed. Behaviour on Ollama versions
+other than 0.34.3 is UNVERIFIED, and a server that ignores `truncate` would
+still cut silently.
+
 **2. A corpus where the baseline is off the floor.** *Attacks:* 0/27, which
 makes every A/B powerless (six one-way flips needed; power 0.05-0.27 at N=27).
 *Expected effect:* Qwen2.5-Coder-7B scored 57.9% on Aider's 133-task
