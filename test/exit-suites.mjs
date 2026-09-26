@@ -213,6 +213,84 @@ export default async function exitSuites({ suite, asyncSuite, check, core, agent
     check('and the report prints the rate beside the score', /edits: 4 attempted, 2 did not apply \(50%\)/.test(text) && /context moved: 40k characters/.test(text), { happened: text.split(NL).slice(-3).join(' | '), why: 'Two harnesses can sit inside the noise on pass rate and forty-fold apart on what the score cost; a report with no cost on it cannot tell them apart.', fix: 'Check the tail of format in lib/eval.mjs.' });
   });
 
+  // NEXTGEN-4 item 4. poly-B's largest failure cause was would-not-parse, and
+  // the mechanisms are indentation, not code. Each fixture is one of them, in
+  // Python, where indentation is syntax; the last three are edits that must
+  // still be refused, because the repair may never make a broken edit land.
+  await asyncSuite('edit repair expert', 'an edit that fails only on its indentation is re-based, not refused', async () => {
+    const RP = path.join(W, 'reindent');
+    fs.mkdirSync(RP, { recursive: true });
+    const st = { sid: 'edit-repair', cwd: RP, messages: [] };
+    const put = (name, text) => fs.writeFileSync(path.join(RP, name), text);
+    const got = (name) => fs.readFileSync(path.join(RP, name), 'utf8');
+    const edit = (p, old_string, new_string) => loop.runTool(st, { tool: 'edit_file', path: p, old_string, new_string }, async () => 'y');
+
+    put('a.py', 'def encode(text):\n    pass\n');
+    const r1 = await edit('a.py', 'pass', "    out = []\n    for c in text:\n        out.append(c)\n    return ''.join(out)");
+    check('old_string "pass" with a new_string that carries the full indentation again applies and parses', got('a.py') === "def encode(text):\n    out = []\n    for c in text:\n        out.append(c)\n    return ''.join(out)\n" && /^edited a\.py\. As written it would not have parsed, so new_string was re-indented/.test(r1) && st.editRepaired === 1, { happened: JSON.stringify(got('a.py')) + ' || ' + r1.slice(0, 200) + ' || repaired=' + st.editRepaired, why: 'Inserted after the four spaces already in front of "pass", the first line lands at eight columns and the rest at four, which Python refuses; the code itself was right.', fix: 'Check reindentCandidates and writeOrRepair in lib/loop.mjs.' });
+
+    put('b.py', 'class Tree:\n    def build(self):\n        pass\n');
+    await edit('b.py', '    def build(self):\n        pass', 'def build(self):\n    return 1');
+    check('a method written at column zero is re-based on the line it replaces', got('b.py') === 'class Tree:\n    def build(self):\n        return 1\n', { happened: JSON.stringify(got('b.py')), why: 'A small model writes a method as if it were a module function; placed as written it ends the class body and the file does not parse.', fix: 'The indentation comes from the first line of the widened span in the file.' });
+
+    put('c.py', 'def build_tree(records):\n    pass\n');
+    await edit('c.py', 'build_tree(records):\n    pass', 'def build_tree(records):\n    return records');
+    check('a doubled prefix ("def " + "def build_tree") replaces the whole line', got('c.py') === 'def build_tree(records):\n    return records\n', { happened: JSON.stringify(got('c.py')), why: 'old_string started after "def ", new_string starts with "def" again, and "def def build_tree" is a syntax error the model did not mean.', fix: 'Widen the span to the line when what precedes it is repeated at the start of new_string.' });
+
+    put('c2.py', 'def build_tree(records):\n    pass\n');
+    await edit('c2.py', 'records', 'def build_tree(rows):');
+    check('and when new_string repeats the rest of the line too, the line is replaced once', got('c2.py') === 'def build_tree(rows):\n    pass\n', { happened: JSON.stringify(got('c2.py')), why: '"def build_tree(" before and "):" after, both repeated in new_string, would otherwise leave "def build_tree(def build_tree(rows):):".', fix: 'Widen the end of the span when new_string ends with the rest of the line.' });
+
+    // The shape poly-B2 logged most: old_string "pass", new_string the whole
+    // function again, at three different indentations (poker, three tries).
+    const heads = [];
+    for (const nw of ['def best_hands(hands):\n    return hands[0] if hands else []', '    def best_hands(hands):\n        return hands[0] if hands else []', '        def best_hands(hands):\n            return hands[0] if hands else []']) {
+      put('p.py', '\ndef best_hands(hands):\n    pass\n');
+      await edit('p.py', 'pass', nw);
+      heads.push(got('p.py'));
+    }
+    check('a new_string that restates the whole function replaces the stub, not nests inside it', heads.every((h) => h === '\ndef best_hands(hands):\n    return hands[0] if hands else []\n'), { happened: JSON.stringify(heads), why: 'Re-based on the body, the restated function parses as a def nested inside the stub, and the stub returns None: a wrong edit that looks applied, where the refusal at least told the model.', fix: 'Widen to the enclosing header when new_string starts with the same def and name.' });
+
+    put('q.py', 'def total(basket):\n    pass\n');
+    const rq = await edit('q.py', 'pass', 'def calculate_discount(basket):\n    return 0');
+    check('a def that would become the body of a different function is refused, not nested', got('q.py') === 'def total(basket):\n    pass\n' && loop.editFailKind(rq) === 'would-not-parse', { happened: JSON.stringify(got('q.py')) + ' || ' + rq.slice(0, 160), why: 'book-store in poly-B2: a helper written in place of total\'s pass. Nested, it parses and total returns None; nobody meant that.', fix: 'reindentCandidates returns nothing when new_string starts with a def or class and the enclosing block is a different def.' });
+
+    put('m.py', 'class Tree:\n    pass\n');
+    await edit('m.py', 'pass', 'def build(self):\n        return 1');
+    check('while a method written in place of a class body\'s pass still lands in the class', got('m.py') === 'class Tree:\n    def build(self):\n        return 1\n', { happened: JSON.stringify(got('m.py')), why: 'A def inside a class body is a method, which is what the model meant there.', fix: 'Only an enclosing def blocks the repair.' });
+
+    put('w.py', 'def answer(question):\n    pass\n');
+    const n0 = st.editRepaired;
+    const rw = await edit('w.py', 'pass', 'def answer(question):\n    pass');
+    check('and a repair that would leave the file exactly as it was is not counted as applied', got('w.py') === 'def answer(question):\n    pass\n' && /^refused: /.test(rw) && st.editRepaired === n0, { happened: rw.slice(0, 160) + ' || repaired ' + n0 + '->' + st.editRepaired, why: 'wordy in poly-B2: restating the stub as it stands. Counting that as an applied edit would lift the apply rate for a change that changed nothing.', fix: 'Skip a candidate equal to the file before the edit.' });
+
+    put('d.py', 'def f(a):\n    pass\n');
+    const r4 = await edit('d.py', 'def f(a):\n  pass', '    def f(a):\n        return a');
+    check('and the loose match is repaired the same way', got('d.py') === 'def f(a):\n    return a\n' && /matched with its whitespace ignored/.test(r4) && /re-indented/.test(r4), { happened: JSON.stringify(got('d.py')) + ' || ' + r4.slice(0, 200), why: 'The whitespace-ignored rung is where a model with drifting indentation lands, so it is where its new_string is most likely to be off too.', fix: 'Route the loose path through writeOrRepair as well.' });
+
+    put('e.py', 'def g():\n    pass\n');
+    const r5 = await edit('e.py', 'pass', 'return (1');
+    check('a real syntax error is still refused, with the numbered lines it would have made', got('e.py') === 'def g():\n    pass\n' && loop.editFailKind(r5) === 'would-not-parse' && /Around line \d+ the edit would have made it read:\n\d+\t/.test(r5), { happened: r5.slice(0, 400), why: 'The repair only moves indentation; a broken expression must not land, and the model needs to see what it would have made to fix it.', fix: 'Keep the refusal when no candidate parses, and add aroundError to it.' });
+
+    put('f.py', 'def h():\n    pass\n');
+    const r6 = await edit('f.py', 'pass', '# todo');
+    check('a function body left as only a comment is still refused', got('f.py') === 'def h():\n    pass\n' && loop.editFailKind(r6) === 'would-not-parse', { happened: r6.slice(0, 200), why: 'No indentation makes an empty body parse; a candidate that changed nothing but whitespace must not be reported as a repair.', fix: 'reindentCandidates skips a candidate equal to the plain edit.' });
+
+    put('g.py', 'x = foo(1)\n');
+    const r7 = await edit('g.py', 'foo(1)', 'foo(\n1');
+    check('a mid-line edit is never widened to its line', got('g.py') === 'x = foo(1)\n' && loop.editFailKind(r7) === 'would-not-parse' && st.editRepaired === 8, { happened: r7.slice(0, 200) + ' || repaired=' + st.editRepaired, why: 'With code before the match that new_string does not repeat, there is no line to re-base on, and widening would delete that code.', fix: 'reindentCandidates returns nothing when the prefix is code new_string does not start with.' });
+
+    put('h.py', 'def k():\r\n    pass\r\n\r\nk()\r\n');
+    await edit('h.py', 'pass', '    a = 1\r\n    return a');
+    check('a CRLF file stays CRLF through a repair', got('h.py') === 'def k():\r\n    a = 1\r\n    return a\r\n\r\nk()\r\n', { happened: JSON.stringify(got('h.py')), why: 'A repaired edit that wrote bare newlines into a CRLF file would be a whole-file diff for a two-line change.', fix: 'Join candidate lines with the file\'s own line ending.' });
+
+    const ev = await import('../lib/eval.mjs');
+    const rtext = ev.format({ results: [{ name: 'a', pass: false, why: 'the check exited 1', rounds: 2, ms: 10 }], passed: 0, total: 1, ms: 10, editTries: 5, editFails: 1, editWhy: { 'would-not-parse': 1 }, editRepaired: 2 });
+    check('and a report says how many edits applied only after re-indentation', /applied only after re-indentation: 2 \(counted as applied\)/.test(rtext), { happened: rtext.split(NL).filter((l) => /edits:|why:|re-indent/.test(l)).join(' | '), why: 'A repair that lifts the apply rate has to say how much of the rate it is, or an A/B cannot tell the model editing better from the harness fixing its edits.', fix: 'Check the edits lines of format in lib/eval.mjs and editRepaired in runTask and runSuite.' });
+
+    check('and it is exported for the suite to reason about', typeof loop.reindentCandidates === 'function' && loop.reindentCandidates('x = 1\n', 4, 5, '2\n3').length === 0, { happened: String(typeof loop.reindentCandidates), why: 'The candidates are the whole policy; a caller that cannot see them cannot test it.', fix: 'Export reindentCandidates.' });
+  });
+
   // A rule the user gave is the one thing a compaction must not lose.
   await asyncSuite('standing rule expert', 'a rule survives the cut that drops everything else', async () => {
     const st = { cwd: W, messages: [], pinned: [] };
