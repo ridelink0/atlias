@@ -203,6 +203,81 @@ export default async function register({ asyncSuite, check }) {
     check('the report says both numbers, the p and the size warning', /before 3\/9 against after 4\/9/.test(text) && /McNemar exact p = 1\.000/.test(text) && /one task flipping moves the score 11\.1 points/.test(text), { happened: text, why: 'A verdict with no arithmetic behind it is just a louder opinion.', fix: 'Check formatCompare.' });
   });
 
+  // NEXTGEN-4 build item 3: the comparator has to print what it cannot see.
+  // Every number below was worked out by hand first, so a rewrite that is
+  // subtly wrong fails here rather than printing a plausible interval.
+  await asyncSuite('small-sample statistics expert', 'a comparison says what it could never have detected', async () => {
+    const pct = (x) => Number((x * 100).toFixed(1));
+    // Wilson, worked by hand at z = 1.96: 0 of 27 is 0.0 to 12.5, which is the
+    // interval on the poly-A baseline, and 3 of 9 is 12.1 to 64.6.
+    const zero = evals.wilson(0, 27), third = evals.wilson(3, 9), four = evals.wilson(4, 9);
+    check('Wilson on 0 of 27 is 0.0 to 12.5, not 0 to 0',
+      pct(zero.lo) === 0 && pct(zero.hi) === 12.5,
+      { happened: JSON.stringify(zero), why: 'The normal interval on a zero score is zero wide, which claims the corpus proved the harness can never pass anything; that claim is what made poly-A look like a measurement.', fix: 'Check wilson(): centre and half-width both carry the z-squared terms.' });
+    check('and on 3 of 9 it is 12.1 to 64.6, so 3/9 and 4/9 overlap almost entirely',
+      pct(third.lo) === 12.1 && pct(third.hi) === 64.6 && four.lo < third.hi && third.lo < four.hi,
+      { happened: JSON.stringify({ third, four }), why: 'Runs A and B of round three were quoted against each other; their intervals share nearly all their width.', fix: 'Check wilson().' });
+    check('an empty corpus gets the whole range rather than a point',
+      evals.wilson(0, 0).lo === 0 && evals.wilson(0, 0).hi === 1,
+      { happened: JSON.stringify(evals.wilson(0, 0)), why: 'A zero-task interval of zero width would read as certainty.', fix: 'wilson() returns 0 to 1 when n is zero.' });
+
+    check('the minimum detectable flip count at the usual threshold is six',
+      evals.minFlips(0.05) === 6 && evals.minFlips(0.01) === 8 && evals.minFlips(0.5) === 2,
+      { happened: `${evals.minFlips(0.05)} / ${evals.minFlips(0.01)} / ${evals.minFlips(0.5)}`, why: 'Five one-way flips give a two-sided exact p of 0.0625, so below six disagreements no A/B can reach 0.05 however large the corpus; a run that does not print this invites a conclusion it cannot support.', fix: 'Check minFlips against mcnemar(n, 0).' });
+
+    // The incomplete beta, against values that are exact: Beta(1,1) is uniform,
+    // Beta(2,1) has CDF x squared, and Beta(1/2,1/2) is symmetric about a half.
+    const nearly = (x, y, tol = 1e-6) => Math.abs(x - y) < tol;
+    check('the beta CDF matches the closed forms',
+      nearly(evals.betaCdf(0.37, 1, 1), 0.37) && nearly(evals.betaCdf(0.5, 2, 1), 0.25) && nearly(evals.betaCdf(0.5, 0.5, 0.5), 0.5) && evals.betaCdf(0, 2, 3) === 0 && evals.betaCdf(1, 2, 3) === 1,
+      { happened: JSON.stringify([evals.betaCdf(0.37, 1, 1), evals.betaCdf(0.5, 2, 1), evals.betaCdf(0.5, 0.5, 0.5)]), why: 'The paired interval is read off this function; a continued fraction that is off by a term prints an interval that looks fine and is wrong.', fix: 'Check betaCdf and its two branches.' });
+    check('and the quantile inverts it',
+      nearly(evals.betaQuantile(0.25, 2, 1), 0.5, 1e-5) && nearly(evals.betaQuantile(0.5, 0.5, 0.5), 0.5, 1e-5) && nearly(evals.betaCdf(evals.betaQuantile(0.975, 3, 5), 3, 5), 0.975, 1e-5),
+      { happened: JSON.stringify([evals.betaQuantile(0.25, 2, 1), evals.betaQuantile(0.5, 0.5, 0.5)]), why: 'An interval is two quantiles; if the inverse drifts the interval drifts with it.', fix: 'Check the bisection in betaQuantile.' });
+
+    // The paired interval on the disagreements only, which is what the ICML
+    // 2025 position paper recommends at this sample size.
+    const oneFlip = evals.pairedInterval(1, 0, 9);
+    check('one gain in nine tasks gives a paired interval that still covers zero',
+      nearly(oneFlip.mean, 1 / 9, 1e-9) && oneFlip.lo < 0 && oneFlip.hi > 0 && oneFlip.discordant === 1,
+      { happened: JSON.stringify(oneFlip), why: 'This is the 3/9-against-4/9 shape: an interval that excluded zero here would turn the single commonest piece of noise into a result.', fix: 'Check pairedInterval: the Beta posterior on one of one disagreement is wide.' });
+    const sixFlips = evals.pairedInterval(6, 0, 27);
+    check('six gains and no losses is the point where the interval clears zero',
+      sixFlips.lo > 0 && sixFlips.hi <= 6 / 27 + 1e-9 && sixFlips.theta.lo > 0.5,
+      { happened: JSON.stringify(sixFlips), why: 'It has to agree with the flip floor, or the two lines in the report contradict each other.', fix: 'Check the Beta posterior and the scaling by the discordant share.' });
+    const noFlip = evals.pairedInterval(0, 0, 27);
+    check('and with nothing changed the interval is zero and says so',
+      noFlip.lo === 0 && noFlip.hi === 0 && noFlip.discordant === 0 && /nothing/.test(noFlip.why || ''),
+      { happened: JSON.stringify(noFlip), why: 'A Beta posterior on no observations would print an interval spanning the whole range for two runs that agreed on every task.', fix: 'pairedInterval returns zero with a reason when there are no disagreements.' });
+
+    // --repeat pairs on each task's pass fraction. Two attempts out of three
+    // against one out of three is one task moving, not two attempts moving.
+    const repeated = (fracs) => ({ results: fracs.map((p, i) => ({ id: `t${i}`, name: `t${i}`, pass: p === 1, passes: p * 3, tries: 3 })) });
+    const byFraction = evals.compare(repeated([2 / 3, 1 / 3, 1]), repeated([1 / 3, 1 / 3, 1]));
+    check('a task that fell from two attempts of three to one is one disagreement, not two',
+      byFraction.changed === 1 && byFraction.lost.length === 1 && byFraction.gained.length === 0 && byFraction.repeated === true,
+      { happened: JSON.stringify({ changed: byFraction.changed, lost: byFraction.lost, gained: byFraction.gained }), why: 'Counting attempts as independent trials is the classic way to manufacture significance: three attempts each would report six pseudo-tasks on a corpus of three.', fix: 'compare() pairs on passes/tries per task and tests over tasks.' });
+    const fracText = evals.formatCompare(byFraction, 'poly-A', 'poly-B');
+    check('and the report says it paired on the pass fraction, with the sign test named',
+      /pass fraction/.test(fracText) && /sign test/.test(fracText) && !/McNemar/.test(fracText),
+      { happened: fracText, why: 'A reader who thinks a repeated run was tested attempt by attempt will read the p as far stronger than it is.', fix: 'formatCompare switches its wording when either arm has more than one attempt.' });
+
+    // Everything item 3 adds has to appear on an ordinary single-attempt
+    // comparison too, which is the one a person actually runs.
+    const rep = (pass) => ({ results: pass.map((p, i) => ({ id: `t${i}`, name: `t${i}`, pass: p })) });
+    const floorRun = evals.compare(rep(Array(27).fill(false)), rep([...Array(2).fill(true), ...Array(25).fill(false)]));
+    const floorText = evals.formatCompare(floorRun, 'poly-A', 'poly-B');
+    check('a run against a zero baseline prints the flip floor, both Wilson intervals and the paired interval',
+      /6 one-way flips/.test(floorText) && /2 disagreement/.test(floorText) && /0\.0 to 12\.5/.test(floorText) && /Wilson/.test(floorText) && /Paired interval/.test(floorText),
+      { happened: floorText, why: 'poly-A against poly-B is the next real measurement; without these three lines a two-task gain reads as progress.', fix: 'Check formatCompare.' });
+    check('the bootstrap is labelled unreliable at this corpus size',
+      /bootstrap/.test(floorText) && /below about 100 tasks/.test(floorText),
+      { happened: floorText, why: 'The percentile bootstrap is the number most likely to be quoted and the least trustworthy at 27 tasks.', fix: 'formatCompare labels it under 100 tasks.' });
+    check('and a comparison of a run against itself still prints p = 1.000 with no flips claimed',
+      /McNemar exact p = 1\.000/.test(evals.formatCompare(evals.compare(rep([true, false, true]), rep([true, false, true])), 'A', 'A2')),
+      { happened: evals.formatCompare(evals.compare(rep([true, false, true]), rep([true, false, true])), 'A', 'A2'), why: 'The first thing the new lines could break is the case that must never move.', fix: 'Check compare().' });
+  });
+
   await asyncSuite('eval provenance expert', 'a score names the code behind it and cannot be bought', async () => {
     const state = agentMod.newState(process.cwd(), 'echo');
     const kill = (d) => { try { fs.rmSync(d, { recursive: true, force: true }); } catch { /* best effort */ } };
