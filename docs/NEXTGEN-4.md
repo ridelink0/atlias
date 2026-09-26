@@ -616,26 +616,55 @@ level while the class keeps its own is refused on the class's node count, a
 one-line stand-in for the moved body is refused on the function's, and a file
 left unparseable is a failure with the syntax error rather than a crash.
 
-*The first real slice, and what it says about the expectation above.* `atlias
-eval --tier main --sample 8 --seed nextgen4 --engine ollama` (qwen2.5-coder:7b,
-`D:/harness-work/runs/main-slice-A.json`) scored **0 of 8 in 373 s** at num_ctx
-16384 with a largest prompt of 3,687 tokens. So the expectation that this tier
-puts a 7B in the 30-70 per cent band is **not confirmed**, and this document
-will not pretend otherwise on eight tasks - the Wilson interval on 0 of 8 is 0
-to 32.4 per cent, which does not even exclude the band. What the run does say,
-because the counters now exist:
+*The first real slices, and what they say about the expectation above.* Two runs
+of the same eight tasks, `--tier main --sample 8 --seed nextgen4`:
 
-- **10 of 17 edits never applied (59 per cent)**, causes `not-found 4`,
-  `same-text 3`, `empty-old 1`, `no-file 1`, `would-not-parse 1`. The apply rate
-  is the same shape of failure poly-A had, on a corpus of one-function edits
-  where the whole file fits the window with room to spare. That is item 4 and
-  item 5, and it is now measurable on a tier that is not the floor for context
-  reasons.
+- **slice A** (`D:/harness-work/runs/main-slice-A.json`): **0 of 8 in 373 s**,
+  model **gemma3:4b**, the configured default, at the tier's old 8-round budget.
+- **slice B** (`D:/harness-work/runs/main-slice-B.json`): **2 of 8 in 237 s**,
+  model **qwen2.5-coder:7b**, at 12-14 rounds, stamped `bd0f46d` clean.
+  Wilson 7.1 to 59.1 per cent.
+
+**A correction, because this document's own rule applies to itself.** The first
+version of this section, committed in `c1a6a32`, and the message of `4adae41`
+both attributed slice A to qwen2.5-coder:7b. They were wrong: the run took the
+machine's default model, which is gemma3:4b - a 4B general model, and the one
+item 8 wants replaced because `/api/show` does not list `tools` for it. The
+report said `model gemma3:4b` in its own header all along and I did not read it.
+Slice B is the run the expectation was about, and `atlias eval --model` now
+appears in what I run rather than being left to the config.
+
+**The tier is off the floor.** 2 of 8 is the first non-zero score atlias has on
+a borrowed corpus, which is the whole point of item 2: an arm that can lose as
+well as gain. It is eight tasks, so 25 per cent is not the tier's rate - the
+interval is 7.1 to 59.1 - but it is no longer zero.
+
+**And the two slices are what item 3 was built for.** `atlias compare
+main-slice-A.json main-slice-B.json`: 2 gained, 0 lost, McNemar exact p = 0.500,
+"inside the noise"; the flip floor line says six one-way flips were needed and
+there were two disagreements, so no p below 0.05 was reachable; the paired
+interval is 25.0 points, 95 per cent **-8.3 to 25.0**, which covers zero. A
+4B-against-7B gap is not resolvable on eight tasks, and the comparator says so
+instead of reporting a 25-point win. (It also confounds model and round budget,
+which is why it is a demonstration of the comparator and not a model result.)
+
+What the runs say about the harness, because the counters now exist:
+
+- **The apply failure is the same on both**: slice A 10 of 17 edits never applied
+  (59 per cent; `not-found 4`, `same-text 3`, `empty-old 1`, `no-file 1`,
+  `would-not-parse 1`), slice B 9 of 14 (64 per cent; `not-found 5`,
+  `repeated 4`). The better model did not edit more reliably, on a corpus of
+  one-function edits where the whole file fits the window with room to spare.
+  That is the same shape of failure poly-A had, it is items 4 and 5, and it is
+  now measurable on a tier that is not the floor for context reasons.
 - **The context window is no longer the binding constraint on this tier**: the
-  largest prompt of the whole slice was 3,687 tokens against a 16,384-token
-  window, so whatever is failing here is not the truncation item 1 fixed.
-- **Five of eight runs ended `rounds-exhausted` at 8 rounds**, which was the
-  HumanEvalFix converter's budget. A tier where most runs are cut off is
+  largest prompt of either slice was 3,687 tokens against a 16,384-token window,
+  so whatever is failing here is not the truncation item 1 fixed.
+- **Three of slice B's eight runs still ended `rounds-exhausted`, at 14 rounds**,
+  and two of those attempted no edit at all in fourteen rounds, which is a
+  different failure from an edit that will not apply and is not in items 4-5.
+- **Five of slice A's eight runs ended `rounds-exhausted` at 8 rounds**, which was
+  the HumanEvalFix converter's budget. A tier where most runs are cut off is
   measuring the budget, so that default is now 14 (with `--rounds` on the
   converter to set it, and `atlias eval --rounds N` to override every task's
   budget for one run and say so in the report). While it was 8, the report
@@ -645,7 +674,8 @@ because the counters now exist:
 - **Two tasks died with Ollama's "model runner has unexpectedly stopped"** on a
   loaded machine. Re-run alone, as the rule requires, both ran normally (one to
   `malformed-output` at 8 of 12 rounds, one to a failing check), so the crash was
-  the machine, not the corpus - and the run is still 0 of 8 either way.
+  the machine, not the corpus - and slice A is still 0 of 8 either way. Neither
+  crashed in slice B.
 
 All four of those went in with `4adae41`, along with one more thing the slice
 exposed: a stub that runs until the timeout was being asked again three times
@@ -654,11 +684,17 @@ which is six spawns at a 60-second timeout - six minutes for one task, and the
 reason a 164-task conversion looked wedged. A stub that fails quickly is still
 repeated.
 
-*Still owed from this item:* nothing in the build. The honest measurement of
-whether this tier is off the floor needs a slice large enough to mean something,
-after items 4 and 5, and it belongs to the measure stage rather than here. The
-seven polyglot "no output" refusals were explained above; the refactor tasks over
-40 KB are a setting, not a gap.
+*Still owed from this item:* nothing in the build. The rate of this tier still
+needs a slice large enough to mean something - 8 tasks put it anywhere between 7
+and 59 per cent - and that belongs to the measure stage. The seven polyglot "no
+output" refusals were explained above; the refactor tasks over 40 KB are a
+setting, not a gap.
+
+*The big tier against a real model, once:* `--tier big --sample 1 --seed one`
+with the default gemma3:4b ended `malformed-output` at 5 of 16 rounds with 3 of 3
+edits not applying, on a 15 KB file that made a 7,804-token prompt. One task is
+an anecdote, not a measurement, and it is recorded here only because it is the
+first time anything ran this tier with a model at all.
 
 **3. A comparator that says what it cannot see.** *Attacks:* A/B/C being read as
 results. *Expected effect:* no score change; stops false claims (confirmed
