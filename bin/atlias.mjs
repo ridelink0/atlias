@@ -73,7 +73,10 @@ switch (cmd) {
     // --model scores a named model without editing the machine's settings, so
     // two baselines can be taken in a row and the report names which was which.
     const picked = optVal('--model');
-    const cfgFor = picked ? { ...cfg, ollamaModel: picked, openaiModel: picked } : cfg;
+    // An eval run keeps the local model loaded between tasks, so no task pays a
+    // reload the one before it did not, unless the machine's settings say otherwise.
+    const cfgFor = { ...cfg, ...(picked ? { ollamaModel: picked, openaiModel: picked } : {}), ollamaKeepAlive: cfg.ollamaKeepAlive || '30m' };
+    if (engine === 'openai' && loopMod.v1ContextWarning(cfgFor.openaiUrl)) say(loopMod.v1ContextWarning(cfgFor.openaiUrl));
     const chat = engine === 'echo' ? async () => ({ content: 'echo: no work done' })
       : engine === 'openai' ? loopMod.openaiChat(cfgFor) : loopMod.ollamaChat(cfgFor);
     // One run of a sampling process is not a result: --repeat 3 runs each task

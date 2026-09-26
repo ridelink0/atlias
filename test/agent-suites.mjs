@@ -299,7 +299,9 @@ export default async function agentSuites({ suite, asyncSuite, check, core, agen
     fs.mkdirSync(G, { recursive: true });
     fs.writeFileSync(path.join(G, 'broken.mjs'), 'export const = 1;' + NL);
     const replies = [blk({ tool: 'shell', command: `${JSON.stringify(process.execPath)} --check broken.mjs` }), 'All tests pass now; the bug is fixed.', 'Correction: the check failed, so it is not fixed.'];
-    const server = http.createServer((req, res) => { req.resume(); req.on('end', () => { res.writeHead(200, { 'content-type': 'application/json' }); res.end(JSON.stringify({ message: { role: 'assistant', content: replies.shift() || 'nothing more' } })); }); });
+    // /api/show is the engine asking how long the model's context is, as real
+    // Ollama answers it; only /api/chat takes a scripted reply.
+    const server = http.createServer((req, res) => { req.resume(); req.on('end', () => { res.writeHead(200, { 'content-type': 'application/json' }); if (req.url === '/api/show') { res.end(JSON.stringify({ capabilities: ['completion'], model_info: { 'general.architecture': 'gemma3', 'gemma3.context_length': 131072 } })); return; } res.end(JSON.stringify({ message: { role: 'assistant', content: replies.shift() || 'nothing more' } })); }); });
     await new Promise((r) => server.listen(0, '127.0.0.1', r));
     settings.set('agent.ollamaUrl', `http://127.0.0.1:${server.address().port}`);
     let reply = '';
