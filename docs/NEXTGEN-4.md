@@ -15,6 +15,12 @@ verified" at the end. Claims the verifier refuted are named as refuted. Local
 measurements a verifier could not re-run are labelled as such, unless I re-ran
 them myself for this document, in which case that is said.
 
+**The re-measurement, 2026-09-26:** poly-B, the same 27 tasks with the window
+set, scored **0 of 27 again**. The window was truncating the task, as argued
+below, and fixing it did not move the pass count; 64 per cent of edits still
+never applied, most of them as would-not-parse. See "The honest
+re-measurement" near the end, before reading the ranked list as a forecast.
+
 What I re-ran myself on 2026-09-25, on this machine, before writing:
 
 - `D:/harness-work/runs/poly-A.json`: 27 tasks, 0 passed, 79 edit tries, 52
@@ -880,6 +886,106 @@ the novelty as unverified; the mechanisms rest on confirmed facts.
 5. **A measured break-even for delegation on coding work.** NEXTGEN-3 already
    recorded that nobody has published one.
 
+## The honest re-measurement: poly-B, the smoke tier, and mini-swe-agent
+
+Run on 2026-09-25/26 after items 1-3 were built, on this machine, by the
+measure stage. Every number below is from a file I wrote and read back in this
+session; the files are in `D:/harness-work/runs/`.
+
+**poly-B scored 0 of 27, the same as poly-A. Fixing the context window did not
+move the pass count.** Same 27 polyglot Python tasks, same engine (ollama), same
+model (qwen2.5-coder:7b), same round budget: `atlias eval --corpus
+evals/polyglot --engine ollama --model qwen2.5-coder:7b --save poly-B.json`,
+stamped `atlias 3.6.0 @ bd0f46d`, clean (the stamp names the last commit that
+touched the harness code; nothing after it changed `lib/`).
+
+*A correction about poly-A's budget.* poly-A's saved `budget` is 25, and this
+document and the task that asked for poly-B both called it "budget 25". That was
+the machine's `agent.maxToolRounds`, which the old header printed. Every poly-A
+task ran on its own `rounds: 18`, as its own per-task lines say ("5/18
+rounds"). poly-B ran on the same 18, so the two are comparable; neither ran on
+25.
+
+`atlias compare poly-A.json poly-B.json`, with the cost section this stage
+added to the comparator (`e33c3e7`), because at 0 against 0 the pass lines can
+say nothing:
+
+| | poly-A | poly-B |
+| --- | --- | --- |
+| passed | 0/27, Wilson 0.0-12.5% | 0/27, Wilson 0.0-12.5% |
+| edits that did not apply | 52 of 79 (66%) | 60 of 94 (64%) |
+| why | not recorded | would-not-parse 25, not-found 14, repeated 14, same-text 4, ambiguous 3 |
+| partial credit | not recorded | 41 of 429 test cases (10%); 8 tasks above zero |
+| context moved | 646k characters | 725k characters |
+| wall time, summed over tasks | 3046.0 s | 1551.4 s |
+| context window | not recorded | 16384, grown to 32768 on the third task; largest prompt 16,192 tokens |
+| stop reasons | malformed-output 10, answered 8, rounds-exhausted 8, model-error 1 | rounds-exhausted 12, malformed-output 9, answered 6 |
+
+The comparator's verdict: 0 gained, 0 lost, McNemar exact p = 1.000, "nothing
+changed on any task"; six one-way flips were needed for p < 0.05 and there were
+none; the paired interval is 0.0 points with nothing to spread.
+
+What that does and does not say:
+
+- **The window was the fault NEXTGEN-4 said it was, and fixing it was not
+  enough.** 14 of poly-B's 27 tasks sent a prompt larger than 4,096 tokens
+  (median largest prompt 4,206, range 2,161 to 16,192; these are Ollama's own
+  `prompt_eval_count`, not a character estimate). At poly-A's 4096 default
+  those 14 conversations would have been cut from the front, task first. So the
+  "about 21 of 27" estimate in "Could not be verified" was high; the measured
+  count on this run is 14 (the conversations differ between runs, so it is not
+  a measurement of poly-A itself). No poly-B call was refused or cut: no task
+  stopped with a context-full reason.
+- **Seeing the task did not make the edits land.** The apply-failure rate went
+  from 66 to 64 per cent. That is inside any reasonable noise, and it is the same
+  rate slice B had on the main tier (9 of 14, 64 per cent) where the window was
+  never the constraint. The largest cause is now measured, not guessed:
+  **would-not-parse 25 of 60**, the model's JSON edit call, then not-found 14 and
+  repeated 14. That is items 4 and 5 (re-indent and line-snap repair; a repeated
+  failure switching to whole-file output), and it moves them to the top of the
+  build order ahead of everything else still open.
+- **The shape of failure moved from giving up to running out.** rounds-exhausted
+  rose from 8 to 12 and answered fell from 8 to 6. A model that can see its task
+  keeps working on it; it still does not finish in 18 rounds. This is a change
+  in behaviour, not in score, and 27 tasks cannot tell whether it is real.
+- **Partial credit is the first sign of life on this corpus**: 41 of 429 test
+  cases pass across 8 tasks (transpose 9 of 12, bowling 13 of 31, tree-building
+  7 of 13). poly-A recorded no case counts, so there is nothing to pair it with,
+  and it is not part of the score.
+- **Wall time halved (3046 s to 1551 s), and I do not attribute that to the
+  harness.** poly-B kept the model loaded for the whole run (`keep_alive` 30m,
+  item 1, `d1b585e`) while poly-A (`dacf97e`, earlier the same day) sent no
+  `keep_alive` and so got Ollama's default 5 minutes; whether it actually
+  reloaded between tasks is not recorded. poly-A's machine load is not known (the RideLink worker shares the one Ollama). The comparator
+  now prints that caveat under the wall-time line.
+- **A harness behaviour the run exposed**: `ollamaChat` grows the window once and
+  never shrinks it, so after book-store (third task) needed more than 16,384 every
+  later task ran at 32,768. The coverage audit measured 32,768 as fully resident
+  in VRAM on this GPU, so this cost nothing here, but it means one task's need
+  sets the window for the rest of an eval run. It is recorded, not changed.
+
+**The smoke tier, same model: 3 of 9 in 475 s** (`smoke-B.json`), Wilson 12.1 to
+64.6 per cent, at a 16,384 window with a largest prompt of 7,061. The shipped
+nine scored 3/9, 4/9 and 2/9 in NEXTGEN-3's runs A, B and C, all before
+`d1b585e`, so all at the old default window (B's and C's files name
+qwen2.5-coder:7b in their headers; A's file does not print its model). 3 of 9 is
+inside that range, so nothing moved here either, and none of those three were
+saved as JSON, so `compare` cannot pair them.
+Edits: 10 of 39 did not apply (26%; not-found 3, repeated 3, no-file 2,
+same-text 2). The run's stamp says `bd0f46d-dirty (uncommitted: lib/eval.mjs)`:
+the stamp is taken when the report is written, and during this run I was
+editing `compare` in `lib/eval.mjs`, which the eval had already loaded and does
+not call. The stamp is right to say it, and the scoring code that ran is
+`bd0f46d`'s.
+
+*A header bug the smoke run exposed, fixed in `e33c3e7`:* its header read "8
+rounds per task", because only one of the nine tasks has a budget of its own (8)
+and the other eight - which ran on the machine's 25 and three of which ended
+rounds-exhausted at 25 - were left out of the spread. It now reads "8-25 rounds
+per task (8 of them with no budget of their own, on agent.maxToolRounds 25)".
+
+**mini-swe-agent on the same 27 tasks: in progress when this was committed.** The first attempt hung on its third task, book-store, where the model ran `vim book_store.py`: Git's vim waited for keys, held the output pipe, and the driver's 120 s timeout killed bash but could never finish reading. The driver (`D:/harness-work/mini-swe-h2h/run_polyglot.py`) now puts `vim`, `vi`, `nano`, `emacs`, `less`, `more` and `man` shims first on PATH that answer "command not found" (as in the slim Docker images mini-swe-agent normally runs in), and writes action output to a file instead of a pipe. It also now sends `num_ctx` 16384 and `num_predict` 2048, because LiteLLM sends no window of its own, so the old one-task smoke run (`mswe-smoke.json`) ran at Ollama's 4096 default and cannot be compared with poly-B. A second full run was under way at commit time; its result replaces this paragraph.
+
 ## How the benchmarks and the head-to-head will be used
 
 - **HumanEvalFix** is the smoke and tripwire tier. Single-function bug fixes
@@ -909,7 +1015,10 @@ the novelty as unverified; the mechanisms rest on confirmed facts.
   atlias's call as it is today (`run_polyglot.py` line 10 says so), so once
   item 1 lands the driver must pass the same `num_ctx` in its `model_kwargs`;
   a head-to-head in which either side is truncated measures the window, not the
-  harness. Whether LiteLLM adds a `num_ctx` of its own is UNVERIFIED. The same
+  harness. Whether LiteLLM adds a `num_ctx` of its own: *checked on 2026-09-26, it does
+  not* - a capture server showed LiteLLM 1.102.1 sending `options: {temperature}`
+  only, and `num_ctx`/`num_predict` only when passed; the driver now passes 16384
+  and 2048 (see the re-measurement section). The same
   driver then runs on the CanItEdit and HumanEvalFix tiers once they exist. Caveat: mini-swe-agent counts model
   calls and atlias counts tool rounds; they are close, not identical. Only the
   one-task smoke run exists so far.
@@ -934,7 +1043,9 @@ confirmed code paths, and not facts until re-run):
 - The system prompt in a poly-A workspace: 3,847 characters, 1,263 of them a
   52-skill index (depends on the skills installed at the time).
 - The estimate that about 21 of 27 poly-A transcripts exceed 4096 tokens
-  (characters divided by 3.5-3.6, not a tokenizer count).
+  (characters divided by 3.5-3.6, not a tokenizer count). *poly-B measured 14 of
+  27 with Ollama's own prompt counts; different conversations, so not poly-A's
+  number, but the estimate was high.*
 - Whether the 612 s zebra-puzzle timeout came from contention with the RideLink
   worker on the one Ollama slot.
 
