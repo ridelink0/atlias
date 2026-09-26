@@ -21,6 +21,12 @@ below, and fixing it did not move the pass count; 64 per cent of edits still
 never applied, most of them as would-not-parse. See "The honest
 re-measurement" near the end, before reading the ranked list as a forecast.
 
+**Item 4, 2026-09-26:** built (`7b3b2e4`) and re-measured as **poly-C: 0 of 27
+again.** would-not-parse fell from 25 (poly-B) and 23 (poly-B2, a second
+baseline run) to 7, and the share of edits that did not apply fell from 64 and
+70 per cent to 53. The pass count did not move, and no difference in it is
+detectable. See "Item 4 measured" near the end.
+
 What I re-ran myself on 2026-09-25, on this machine, before writing:
 
 - `D:/harness-work/runs/poly-A.json`: 27 tasks, 0 passed, 79 edit tries, 52
@@ -765,6 +771,39 @@ When nothing parses, show the numbered lines around the parse error.
 `def` prefix applies; a comment-only function body is still refused. Then the
 would-not-parse share in the editWhy tally falls on a rerun of the same tier.
 
+*Status: BUILT in `7b3b2e4` (2026-09-26), suite 935/935; measured as poly-C,
+see "Item 4 measured".* Built against the refusals themselves, not against the
+mechanisms named above. `031b44e` first made each eval row keep the arguments of
+every edit that did not apply (`failedEdits`, part of item 10), and a second
+baseline run, poly-B2, captured 23 would-not-parse refusals. The commonest shape
+was **not** one this item predicted: `old_string: "pass"` with a `new_string`
+restating the whole function, `def` line and all (poker, proverb, book-store,
+wordy, pov). The first version of the repair re-based that on the body's
+indentation. It parsed, as a function nested inside the stub it was meant to
+replace, so the stub returned None: a wrong edit counted as applied, where the
+refusal had at least told the model. Replaying poly-B2's refusals through it
+showed this before any run, and it was changed before commit. What landed, in
+`edit_file`, only when the parse guard would refuse:
+- the span is widened to whole lines when what precedes it on its line is
+  whitespace, or is repeated at the start of `new_string` (and likewise the rest
+  of the line at its end);
+- `new_string` is re-based on that line's indentation, first as a dedented
+  block, then with only its first line placed; the first that parses is kept;
+- a `new_string` starting with the same `def`/`class` and name as the enclosing
+  block (only blank lines between) replaces from that header down;
+- a `def`/`class` that would become the body of a *different* function gets no
+  repair and is refused as before (a method into a class body is allowed);
+- a mid-line edit is never widened, a candidate that leaves the file byte for
+  byte as it was does not count as applied, and CRLF files stay CRLF;
+- a refusal that remains now shows the numbered lines around the parse error;
+- repairs are counted apart as `editRepaired` ("applied only after
+  re-indentation: N") and are not hidden in the apply rate.
+16 new checks (`test/exit-suites.mjs`, "edit repair expert", plus the ledger and
+report lines). Six of the fixture checks were run against the code with the
+candidate loop disabled and failed, so they test the repair and not the fixture.
+*Deviation:* the `reindented` tally is `editRepaired` beside `editWhy`, not a key
+in it, because `editWhy` holds causes of failure and the comparator sums them.
+
 **5. A no-op is not a strike, and a repeat changes the channel.** *Attacks:*
 10 of 27 poly-A tasks ended malformed-output (counted by me); same-text refusals
 count toward `maxBadReplies = 3`.
@@ -1000,6 +1039,79 @@ Reading, stated plainly: after the window fix atlias is not better than a minima
 *A correction to the two sentences above as first written (in `6a9ed27`).* They called would-not-parse "the model's JSON edit call" and said it pointed at a non-JSON edit channel. That misread the counter. In `editFailKind` (`lib/loop.mjs`), a tool call whose arguments are not valid JSON is `bad-args`, and poly-B had none. `would-not-parse` is `guardedWrite` refusing an edit that did apply textually but would have left a file that parsed before unable to parse (`python -m py_compile` on these tasks). So the 25 are well-formed calls whose `new_string` made broken Python. That is item 4's target exactly, and it is not evidence for a non-JSON channel.
 
 *The driver changed before this run, and why.* The first attempt hung on its third task, book-store, where the model ran `vim book_store.py`: Git's vim waited for keys, held the output pipe, and the 120 s timeout killed bash but could never finish reading. Closing stdin does not stop Git's vim (tried). The driver (`D:/harness-work/mini-swe-h2h/run_polyglot.py`) now puts `vim`, `vi`, `nano`, `emacs`, `less`, `more` and `man` shims first on PATH that answer "command not found" (as in the slim Docker images mini-swe-agent normally runs in), and writes action output to a file instead of a pipe. It also sends `num_ctx` 16384 and `num_predict` 2048, because LiteLLM sends no window of its own; the old one-task smoke run (`mswe-smoke.json`) therefore ran at Ollama's 4096 default and is not comparable with this one. The hung first attempt left two windowless `vim.exe` processes (the run's own and one from my probe of the fix); they were not ended, under the rule against killing processes.
+
+## Item 4 measured: poly-B2, poly-C
+
+Run on 2026-09-26 on this machine. Same 27 tasks, engine ollama, model
+qwen2.5-coder:7b, 18 rounds per task, window 16,384 set by item 1, no other
+settings changed. Files in `D:/harness-work/runs/`.
+
+- **poly-B2** (`poly-B2.json`, stamped `atlias 3.6.0 @ 031b44e`, clean) is a
+  second run of the poly-B harness. `031b44e` adds only the failed-edit ledger,
+  which records and does not change what the agent does. It exists to capture
+  the refusals, and it doubles as a reading of how far the same code moves
+  between two runs.
+- **poly-C** (`poly-C.json`, stamped `atlias 3.6.0 @ 7b3b2e4`, clean) is item 4.
+
+| | poly-A | poly-B | poly-B2 | poly-C |
+| --- | --- | --- | --- | --- |
+| passed | 0/27 | 0/27 | 0/27 | 0/27 |
+| edits that did not apply | 52 of 79 (66%) | 60 of 94 (64%) | 79 of 113 (70%) | **55 of 104 (53%)** |
+| would-not-parse | not recorded | 25 | 23 | **7** |
+| applied only after re-indentation | - | - | - | 8, in 8 tasks |
+| other causes | not recorded | not-found 14, repeated 14, same-text 4, ambiguous 3 | same-text 17, repeated 17, not-found 16, ambiguous 3, empty-old 2, outside-workspace 1 | not-found 17, same-text 12, repeated 11, ambiguous 6, outside-workspace 2 |
+| partial credit | not recorded | 41/429 (10%) | 66/425 (16%) | 47/428 (11%) |
+| context moved | 646k | 725k | 726k | 617k |
+| wall time, summed | 3046 s | 1551 s | 1078 s | 801 s |
+| largest prompt | not recorded | 16,192 (window grew to 32,768) | 11,953 | 8,562 |
+| stops | malformed 10, answered 8, rounds 8, model-error 1 | rounds 12, malformed 9, answered 6 | rounds 12, malformed 10, answered 5 | rounds 13, malformed 7, answered 6, model-error 1 |
+
+`atlias compare` of poly-C against each of poly-A, poly-B and poly-B2 (`A-vs-C.txt`,
+`B-vs-C.txt`, `B2-vs-C.txt`): 0 gained, 0 lost, McNemar exact p = 1.000,
+"nothing changed on any task". poly-B against poly-B2 (`polyB-vs-polyB2.txt`)
+says the same.
+
+What that does and does not say:
+
+- **The pass count did not move, and no change in it could have been detected
+  here.** Six one-way flips were needed for p < 0.05, and there were none in
+  either direction. The harness still finishes nothing on this corpus with this
+  model.
+- **The targeted failure moved well beyond the baseline's own spread.**
+  would-not-parse was 25 and 23 in the two baseline runs and 7 in poly-C.
+  The apply-failure share went from 64 and 70 to 53 per cent. The baseline
+  spread on that share is six points, so the fall is larger than that spread,
+  but it comes from one run of each arm, not a repeated measurement. The repair
+  applied 8 edits directly. The rest of the drop is plausibly the retries that
+  a refused edit used to cause (a would-not-parse refusal was typically retried
+  two or three times in poly-B2), but I have not proved that.
+- **The seven would-not-parse refusals left** (read from `failedEdits`): three
+  in book-store, a helper `def` written in place of `total`'s `pass`, refused
+  on purpose because nesting it would parse and be wrong. One in zipper, a
+  function body left as only a comment, which no indentation can fix. Two in
+  simple-linked-list and one in bowling, which I have not diagnosed.
+- **The secondary numbers are noisy, and poly-B2 shows how noisy.** With no
+  change to what the agent does, partial credit went from 41/429 to 66/425, and
+  wall time from 1551 s to 1078 s. So poly-C's 47/428 is not a loss of partial
+  credit, and its 801 s and 617k characters are not a speed-up I attribute to
+  item 4. They are single runs on a machine whose load I do not control.
+- **What the in-run repairs did is checked by fixture, not by instance.** A
+  successful edit is not logged, so the 8 repaired edits in poly-C cannot be
+  read back. The fixtures cover each shape seen in poly-B2, including the
+  nested-def trap. A replay of poly-B2's 23 refusals through the final code, on
+  a copy of each task's final file (an estimate, since the file at the moment of
+  refusal was not kept), repaired 7. I read the repaired poker and proverb files,
+  and each was the function the model wrote, in place of the stub.
+- **One poly-C task stopped `model-error`**: affine-cipher at round 14, Ollama's
+  "prediction aborted, token repeat limit reached", meaning the model looped on
+  its own output. Re-run alone (`poly-C-affine-alone.json`), it failed normally,
+  malformed-output at 5 of 18 rounds with 2 more would-not-parse refusals, so the
+  task's result does not depend on that crash.
+- **What this points at next.** The largest remaining causes are not-found 17,
+  same-text 12 and repeated 11. same-text and repeated together (23 of 55) are
+  item 5: a no-op edit should not count as a strike, and a repeated failed edit
+  should switch to a whole-file write. Item 5 is next, and poly-D must be read
+  against the poly-B/B2 spread, preferably with `--repeat 3`.
 
 ## How the benchmarks and the head-to-head will be used
 
