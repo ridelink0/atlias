@@ -326,6 +326,11 @@ export default async function register({ asyncSuite, check }) {
     check('the bootstrap is labelled unreliable at this corpus size',
       /bootstrap/.test(floorText) && /below about 100 tasks/.test(floorText),
       { happened: floorText, why: 'The percentile bootstrap is the number most likely to be quoted and the least trustworthy at 27 tasks.', fix: 'formatCompare labels it under 100 tasks.' });
+    // Two runs of different tiers share no task, and 252 against 27 is 279 ids.
+    const strangers = evals.formatCompare(evals.compare(rep(Array(30).fill(false)), { results: Array.from({ length: 20 }, (_, i) => ({ id: `other-${i}`, pass: false })) }), 'main', 'poly');
+    check('a comparison of two different corpora names a few unpaired tasks and counts the rest',
+      /share no task/.test(strangers) && /and 24 more only in main/.test(strangers) && /and 14 more only in poly/.test(strangers) && strangers.split('\n')[1].length < 400,
+      { happened: strangers, why: 'Printing every id put 279 of them on one line and buried the numbers under it, which is how a comparison of the wrong two files goes unnoticed.', fix: 'formatCompare lists six per side and counts the remainder.' });
     check('and a comparison of a run against itself still prints p = 1.000 with no flips claimed',
       /McNemar exact p = 1\.000/.test(evals.formatCompare(evals.compare(rep([true, false, true]), rep([true, false, true])), 'A', 'A2')),
       { happened: evals.formatCompare(evals.compare(rep([true, false, true]), rep([true, false, true])), 'A', 'A2'), why: 'The first thing the new lines could break is the case that must never move.', fix: 'Check compare().' });
