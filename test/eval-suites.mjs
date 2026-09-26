@@ -215,6 +215,17 @@ export default async function register({ asyncSuite, check, TMP }) {
     check('the header prints the spread of the task budgets, not the machine default',
       /8-12 rounds per task/.test(evals.format(own)) && own.budgetRange[0] === 8 && own.budgetRange[1] === 12 && own.budgetSet === false,
       { happened: evals.format(own).split('\n').slice(0, 3).join(' | '), why: 'A run where most tasks end rounds-exhausted is read completely differently depending on whether the budget was 8 or 25, and the report said 25.', fix: 'runSuite records budgetRange; format prefers it.' });
+    // The smoke tier mixes the two: one task with 8 rounds of its own, eight with
+    // none, which run on agent.maxToolRounds. The header said "8 rounds per task".
+    const unbudgeted = { ...small, id: 'no-rounds', name: 'no rounds' };
+    delete unbudgeted.rounds;
+    const mixed = await evals.runSuite([small, unbudgeted], { chat: quiet, stamp: false });
+    const dflt = mixed.budget;
+    check('a task with no budget of its own is in the spread at the machine default, and the header counts it',
+      mixed.budgetRange[0] === 8 && mixed.budgetRange[1] === dflt && mixed.budgetDefaulted === 1
+        && new RegExp(`8-${dflt} rounds per task \\(1 of them with no budget of their own, on agent\\.maxToolRounds ${dflt}\\)`).test(evals.format(mixed)),
+      { happened: JSON.stringify({ range: mixed.budgetRange, defaulted: mixed.budgetDefaulted, line: evals.format(mixed).split('\n')[0] }), why: 'A header that names only the one task budget in the corpus tells the reader a run that ended rounds-exhausted at 25 was cut off at 8.', fix: 'budgetRange counts a task with no budget at agent.maxToolRounds; budgetDefaulted says how many.' });
+    for (const r of mixed.results) if (r.workspace) { try { fs.rmSync(r.workspace, { recursive: true, force: true }); } catch { /* best effort */ } }
     const forced = await evals.runSuite([small, large], { chat: quiet, stamp: false, budget: 3 });
     check('--rounds overrides every task budget and the header says it was set for this run',
       forced.results.every((r) => r.budget === 3) && forced.budgetSet === true && /3 rounds, set for this run/.test(evals.format(forced)),
@@ -332,6 +343,36 @@ export default async function register({ asyncSuite, check, TMP }) {
     check('a comparison of two different corpora names a few unpaired tasks and counts the rest',
       /share no task/.test(strangers) && /and 24 more only in main/.test(strangers) && /and 14 more only in poly/.test(strangers) && strangers.split('\n')[1].length < 400,
       { happened: strangers, why: 'Printing every id put 279 of them on one line and buried the numbers under it, which is how a comparison of the wrong two files goes unnoticed.', fix: 'formatCompare lists six per side and counts the remainder.' });
+    // At a 0/27 floor the pass lines cannot move, so the comparison has to carry
+    // the cost side itself, over the paired tasks only, and say "not recorded"
+    // for a number a run never took rather than printing a zero.
+    const costA = { results: [
+      { id: 't0', pass: false, editTries: 3, editFails: 2, chars: 4000, ms: 10000 },
+      { id: 't1', pass: false, editTries: 1, editFails: 1, chars: 2000, ms: 5000 },
+      { id: 'gone', pass: false, editTries: 50, editFails: 50, chars: 999000, ms: 999000 },
+    ] };
+    const costB = { results: [
+      { id: 't0', pass: false, editTries: 4, editFails: 1, editWhy: { 'not-found': 1 }, chars: 3000, ms: 4000, numCtx: 16384, peakPrompt: 5000, cases: { passed: 2, total: 8 } },
+      { id: 't1', pass: false, editTries: 2, editFails: 2, editWhy: { 'would-not-parse': 2 }, chars: 1000, ms: 2000, numCtx: 32768, peakPrompt: 17000, cases: { passed: 0, total: 4 } },
+    ] };
+    const costCmp = evals.compare(costA, costB);
+    const costText = evals.formatCompare(costCmp, 'old', 'new');
+    check('a comparison totals the cost of the paired tasks only',
+      costCmp.cost.a.editTries === 4 && costCmp.cost.a.editFails === 3 && costCmp.cost.a.chars === 6000 && costCmp.cost.a.ms === 15000
+        && costCmp.cost.b.editTries === 6 && costCmp.cost.b.editFails === 3 && costCmp.cost.b.ms === 6000 && costCmp.cost.b.numCtx === 32768 && costCmp.cost.b.peakPrompt === 17000,
+      { happened: JSON.stringify(costCmp.cost), why: 'A task only one run holds is not a cost of the harness; counting it would let a changed corpus pass for a changed loop.', fix: 'costOf sums over pairs, not over every result.' });
+    check('and prints the apply rate, the causes, partial credit, context, wall time and window side by side',
+      /edits: old 3 of 4 did not apply \(75%\); new 3 of 6 did not apply \(50%\)/.test(costText)
+        && /why an edit did not apply: old not recorded; new would-not-parse 2, not-found 1/.test(costText)
+        && /partial credit: old not recorded; new 2\/12 test case\(s\) \(17%\) over 2 task\(s\)/.test(costText)
+        && /context moved: old 6k characters; new 4k characters/.test(costText)
+        && /wall time, summed over the tasks: old 15\.0s; new 6\.0s/.test(costText)
+        && /largest context window: old not recorded; new 32768 tokens, largest prompt 17000/.test(costText),
+      { happened: costText, why: 'poly-A against poly-B is 0/27 against 0/27: a comparator that prints only passes says "nothing changed" about two runs whose edits, window and wall time all moved.', fix: 'Check costLines.' });
+    const noEdits = evals.formatCompare(evals.compare(costA, { results: [{ id: 't0', pass: false, chars: 10, ms: 10 }, { id: 't1', pass: false, chars: 10, ms: 10 }] }), 'atlias', 'mini');
+    check('and a run that counted no edits at all says not recorded, never a zero',
+      /edits: atlias 3 of 4 did not apply \(75%\); mini not recorded/.test(noEdits) && !/why an edit did not apply/.test(noEdits),
+      { happened: noEdits, why: 'mini-swe-agent does not count edits; printing 0 of 0 beside atlias would read as a harness that never failed an edit.', fix: 'costOf returns null for a field no paired run carries.' });
     check('and a comparison of a run against itself still prints p = 1.000 with no flips claimed',
       /McNemar exact p = 1\.000/.test(evals.formatCompare(evals.compare(rep([true, false, true]), rep([true, false, true])), 'A', 'A2')),
       { happened: evals.formatCompare(evals.compare(rep([true, false, true]), rep([true, false, true])), 'A', 'A2'), why: 'The first thing the new lines could break is the case that must never move.', fix: 'Check compare().' });
