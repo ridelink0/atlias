@@ -367,7 +367,7 @@ export default async function register({ asyncSuite, check, TMP }) {
       /edits: old 3 of 4 did not apply \(75%\); new 3 of 6 did not apply \(50%\)/.test(costText)
         && /why an edit did not apply: old not recorded; new would-not-parse 2, not-found 1/.test(costText)
         && /partial credit: old not recorded; new 2\/12 test case\(s\) \(17%\) over 2 task\(s\)/.test(costText)
-        && /context moved: old 6k characters; new 4k characters/.test(costText)
+        && /context moved: old 6k characters, no attempt passed; new 4k characters, no attempt passed/.test(costText)
         && /wall time, summed over the tasks: old 15\.0s; new 6\.0s/.test(costText)
         && /largest context window: old not recorded; new 32768 tokens, largest prompt 17000/.test(costText),
       { happened: costText, why: 'poly-A against poly-B is 0/27 against 0/27: a comparator that prints only passes says "nothing changed" about two runs whose edits, window and wall time all moved.', fix: 'Check costLines.' });
@@ -375,6 +375,31 @@ export default async function register({ asyncSuite, check, TMP }) {
     check('and a run that counted no edits at all says not recorded, never a zero',
       /edits: atlias 3 of 4 did not apply \(75%\); mini not recorded/.test(noEdits) && !/why an edit did not apply/.test(noEdits),
       { happened: noEdits, why: 'mini-swe-agent does not count edits; printing 0 of 0 beside atlias would read as a harness that never failed an edit.', fix: 'costOf returns null for a field no paired run carries.' });
+    // A total says what a run spent, not what a solve cost: a harness that
+    // passes twice as many attempts on the same characters is the cheaper one,
+    // and the head-to-head against mini-swe-agent is judged on exactly that.
+    // Over attempts, not tasks, and over the paired tasks only, failures included
+    // in the spend: what the passing attempts cost is everything the run moved.
+    const att = (rows) => rows.map(([pass, chars]) => ({ pass, chars }));
+    const perA = { results: [
+      { id: 't0', pass: false, passes: 2, tries: 3, attempts: att([[true, 1000], [false, 3000], [true, 2000]]) },
+      { id: 't1', pass: false, passes: 0, tries: 3, attempts: att([[false, 4000], [false, 4000], [false, 4000]]) },
+      { id: 'gone', pass: true, passes: 3, tries: 3, attempts: att([[true, 1], [true, 1], [true, 1]]) },
+    ] };
+    const perB = { results: [
+      { id: 't0', pass: true, passes: 3, tries: 3, attempts: att([[true, 2000], [true, 2000], [true, 2000]]) },
+      { id: 't1', pass: false, passes: 1, tries: 3, attempts: att([[true, 3000], [false, 3000], [false, 4000]]) },
+    ] };
+    const perCmp = evals.compare(perA, perB);
+    const perText = evals.formatCompare(perCmp, 'atlias', 'mini');
+    check('a comparison prints the characters each passing attempt cost, over the paired tasks only',
+      perCmp.cost.a.passedRuns === 2 && perCmp.cost.a.runs === 6 && perCmp.cost.b.passedRuns === 4 && perCmp.cost.b.runs === 6
+        && perCmp.cost.a.charsPerPass === 9000 && perCmp.cost.b.charsPerPass === 4000
+        && /context moved: atlias 18k characters, 9\.0k per passing attempt \(2 of 6\); mini 16k characters, 4\.0k per passing attempt \(4 of 6\)/.test(perText),
+      { happened: `${JSON.stringify(perCmp.cost)}\n${perText}`, why: 'Characters per solved task is half of the bar atlias has to clear against mini-swe-agent, and a total alone hides a harness that spends less by solving less.', fix: 'costOf counts passing runs and divides the paired spend by them; costLines prints it.' });
+    check('and a run where no attempt passed says so rather than dividing by zero',
+      perCmp.cost.a.charsPerPass !== null && evals.compare(costA, costB).cost.a.charsPerPass === null && !/Infinity|NaN/.test(costText),
+      { happened: costText, why: 'Infinity characters per solve is not a measurement, and a zero would read as free.', fix: 'charsPerPass is null when nothing passed.' });
     check('and a comparison of a run against itself still prints p = 1.000 with no flips claimed',
       /McNemar exact p = 1\.000/.test(evals.formatCompare(evals.compare(rep([true, false, true]), rep([true, false, true])), 'A', 'A2')),
       { happened: evals.formatCompare(evals.compare(rep([true, false, true]), rep([true, false, true])), 'A', 'A2'), why: 'The first thing the new lines could break is the case that must never move.', fix: 'Check compare().' });
