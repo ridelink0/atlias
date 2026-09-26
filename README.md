@@ -125,14 +125,32 @@ Over seven hundred and fifty checks in a hundred and five suites, each written f
 atlias eval                    every task in evals/, with the engine you use
 atlias eval --engine echo      a dry run: every task must fail before any work is done
 atlias eval --save a.json      keep the report, so a later run can be compared with it
+atlias tiers                   the three benchmark tiers, and which are on this machine
+atlias eval --tier main --sample 24 --seed s    one tier, the same subset every time
+atlias eval --rounds 14        override every task's own round budget, and say so in the report
 atlias compare a.json b.json   the paired question: which tasks flipped, and could a coin have done it
 ```
 
+Three tiers: **smoke** (the nine tasks that ship here), **main** (HumanEvalFix
+Python and CanItEdit lazy - one-function fixes and short instruction edits) and
+**big** (Aider's refactor benchmark: one method out of one class in a real source
+file, graded on the AST). The main and big corpora are generated from published
+datasets rather than committed - `evals/CORPORA.md` has every URL, licence and
+regeneration command, and `atlias tiers` prints the command for whatever is not
+here. Every converted task was proved on the machine that converted it: it has to
+fail as shipped and pass with the benchmark's own reference, or it is refused with
+the reason.
+
 Two scores on a corpus this small are not a result. `atlias compare` pairs the
-two runs task by task and reports McNemar's exact test on the tasks that
-changed, plus a paired bootstrap interval, so "4 of 9 beats 3 of 9" is judged
-rather than eyeballed. A failed edit is also counted by cause (not-found,
-no-file, ambiguous, bad-patch and the rest) beside the apply-failure rate.
+two runs task by task and reports McNemar's exact test on the tasks that changed,
+a Wilson interval per arm, a paired Beta interval on the disagreements, and how
+many one-way flips would have been needed before any p below 0.05 was reachable -
+six, whatever the corpus size - so "4 of 9 beats 3 of 9" is judged rather than
+eyeballed. With `--repeat k` it pairs on each task's pass fraction, so a task is
+one disagreement however many attempts it ran. A failed edit is also counted by
+cause (not-found, no-file, ambiguous, bad-patch and the rest) beside the
+apply-failure rate, and a failing task says how much of its check passed when the
+check counts its cases.
 
 Eight tasks, each a small project written into a scratch workspace that the
 agent then has to fix: a failing test, a function to add, a test that must keep

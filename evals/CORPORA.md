@@ -83,10 +83,18 @@ bigcode/humanevalpack, 164 tasks per language, arXiv 2308.07124. Licence: MIT.
       open('hef-python.jsonl','w',encoding='utf-8').write(''.join(json.dumps(r, default=str)+'\n' for r in rows))"
     atlias editbench hef-python.jsonl --bench humanevalfix --lang python
 
-164 of 164 proved sound here. JavaScript is the same with
-`.../parquet/js/test/0.parquet` and `--lang js`; Node's `console.assert` only
-logs, so the converter puts a throwing `console.assert` at the top of the
-protected test file, or most buggy solutions would "pass".
+164 of 164 proved sound here, at a round budget of 14 per task (`--rounds N`
+changes it; the budget was 8 until a slice of the main tier showed five of eight
+runs ending out of rounds at 8, which measures the budget rather than the work).
+
+JavaScript is the same with `.../parquet/js/test/0.parquet` and `--lang js`:
+**163 of 164**, refusing `JavaScript/162`, whose own canonical solution does not
+pass here. Node's `console.assert` only logs, so the converter puts a throwing
+`console.assert` at the top of the protected test file, or most buggy solutions
+would "pass". It is not part of a tier, but `atlias eval --corpus
+evals/humanevalfix/js` runs it. Expect it to be slow to convert: a buggy stub
+that loops forever costs three proof attempts, each retried once, at the task's
+60-second timeout.
 
 ### Aider refactor-benchmark (big-file tier)
 
@@ -103,6 +111,13 @@ named function must exist at module level with the same subtree size, and the
 class must have lost exactly that much. No tests are run, so nothing here
 depends on the packages those projects need.
 
+**57 of 89 proved here.** 31 source files are over the 40 KB default cap
+(`--max-bytes 0` removes the cap; the largest file in the benchmark is 1.1 MB,
+which no local window can hold), and one, `generator.py`, is refused because the
+reference move cannot be made mechanically: the method's body holds a
+triple-quoted string with text at column zero, so dedenting the block does not
+lift it and the moved copy rejoins its own class.
+
 ## The tiers
 
     atlias tiers                     what each tier is, and whether it is here
@@ -112,4 +127,12 @@ depends on the packages those projects need.
 
 `--sample N` takes the same N tasks every time for a given tier and seed, so two
 arms of an A/B are scored on the same subset and `atlias compare` pairs them
-task by task.
+task by task. `--rounds N` overrides every task's own round budget for one run
+and the report says it was set for this run; without it each task runs on the
+budget its converter gave it, and the report header prints that spread.
+
+What a run of a tier is worth is `atlias compare`'s business, not the score's:
+it prints the Wilson interval per arm, how many one-way flips would have been
+needed for a p below 0.05, and a paired interval on the disagreements. On eight
+tasks, 0 of 8 has a Wilson interval of 0.0 to 32.4 per cent, which is why a
+sample that small settles nothing either way.

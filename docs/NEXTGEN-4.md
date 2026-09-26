@@ -526,8 +526,8 @@ JSONL-benchmark converter), `bin/atlias.mjs` (subcommands beside `polyglot`),
 163) and refuses the 17 broken CanItEdit ids and `JavaScript/162` by name; an
 `--engine echo` dry run scores 0 on every task (nothing passes without work).
 
-*Status: BUILT (converters, hidden grader files, the polyglot refusal reason),
-see the commit that adds `lib/editbench.mjs`; results below.* One generic
+*Status: BUILT (converters, hidden grader files, the polyglot refusal reason) in
+`750e122`; results below.* One generic
 module, `lib/editbench.mjs`, and one subcommand,
 `atlias editbench <rows.jsonl> --bench canitedit|humanevalfix [--variant
 lazy|descriptive] [--lang python|js]`. It reads the dataset as JSONL (what the
@@ -553,8 +553,112 @@ that returned no status. It now keeps that error in the reason, asks a
 statusless run once more before judging it, and treats a stub that hangs until
 the timeout as failing as shipped (only a runner that cannot start is a
 refusal).
-*Not built from this item:* the partial score (fraction of test cases passed)
-and the refactor-benchmark tier. Both are still owed.
+*Finished on 2026-09-25 in `fae41e8` (the tiers and the big-file tier) and
+`3a56d8b` (the partial score), suite 910/910.* What the converters were missing
+was that nothing could name a tier, so poly-A stayed the only number anybody ran
+end to end.
+
+- **The tiers exist and run** (`lib/tiers.mjs`, `atlias tiers`,
+  `atlias eval --tier smoke|main|big`). smoke is the nine shipped tasks (9
+  here), main is HumanEvalFix Python 164 plus CanItEdit lazy 88 (252 here), big
+  is the refactor benchmark (57 here). A tier that is not on the machine says so
+  and prints the command that regenerates it, rather than scoring 0 of 0 and
+  looking like a clean run; two tasks sharing an id are reported, because
+  `compare` pairs by id. `--sample N --seed s` takes the same subset on every
+  machine and in both arms of an A/B (sorted by id, seeded shuffle, sorted
+  again), and the report carries the tier, the count and the seed, so a saved
+  arm says what corpus it scored.
+- **The big-file tier is built** (`lib/refactorbench.mjs`,
+  `atlias refactorbench`): Aider's refactor benchmark, real source files, one
+  method to move out of its class. The grader is that benchmark's own AST rule
+  inlined into a hidden Python file, so it needs neither the `aider` package nor
+  Django or TensorFlow importable, and the node counts it measures are not in
+  front of the model. *A change the plan did not name:* the benchmark ships no
+  answer key, so the reference is built by moving the method mechanically
+  (its own source lines, dedented, appended at module level), which makes the
+  node counts identical rather than within the 10 per cent the grader allows.
+  **57 of 89 proved here**: 31 source files are over the 40 KB default cap
+  (`--max-bytes` raises it; the largest in the benchmark is 1.1 MB, which no
+  local window can hold), and 1 is refused because the mechanical move cannot be
+  made - `generator.py`'s method body holds a triple-quoted string with text at
+  column zero, so `textwrap.dedent` has no common indent to remove and the moved
+  block rejoins the class it came from. That file still parses, so the mover now
+  checks that the function is a statement of the module, not only that the
+  result parses.
+- **The partial score is built** (`caseCounts`): the counts out of pytest's
+  summary line and unittest's "Ran N tests", read before the output is clipped,
+  printed per failing task and totalled over the tasks whose check reports them.
+  It is never part of the verdict. The two main-tier benchmarks run one
+  assert-based script that stops at the first failure, so they report no
+  fraction at all rather than a fabricated 0 of 1 - which means partial credit
+  helps on polyglot and the refactor tier's own output, not on the main tier.
+- **HumanEvalFix JavaScript converted after all**: 163 of 164, refusing
+  `JavaScript/162` by name, which is the count this document measured. It is not
+  in a tier - the tiers stay three - but `atlias eval --corpus evals/humanevalfix/js`
+  runs it. What made it slow enough to look stuck is worth recording: a buggy
+  stub that loops forever costs three proof attempts, each retried once, at the
+  task's 60-second timeout.
+- **The generated corpora are not in git**, and `evals/CORPORA.md` is: every
+  dataset URL, licence, expected count and regeneration command. CanItEdit hides
+  its tests upstream and this harness keeps them hidden, so a plain-text copy of
+  them does not go into a public repository where it is crawled and eventually
+  trained on - the CanItEdit licence on GitHub forbids exactly that use, while
+  its Hugging Face card says MIT, and keeping the generated copy out is the
+  reading that respects both. `evals/polyglot` stays tracked, because Exercism
+  ships its test files in the open.
+
+*Verified here, not argued:* `atlias eval --tier main --engine echo` scored
+**0 of 252 in 450 s** (nothing passes without work, and every one of the 252
+graders ran), `--tier big --sample 4 --engine echo` scored 0 of 4 with the AST
+grader naming "is not a top level function" on each, and the grader was checked
+against the three ways this tier can be cheated: a method copied to the top
+level while the class keeps its own is refused on the class's node count, a
+one-line stand-in for the moved body is refused on the function's, and a file
+left unparseable is a failure with the syntax error rather than a crash.
+
+*The first real slice, and what it says about the expectation above.* `atlias
+eval --tier main --sample 8 --seed nextgen4 --engine ollama` (qwen2.5-coder:7b,
+`D:/harness-work/runs/main-slice-A.json`) scored **0 of 8 in 373 s** at num_ctx
+16384 with a largest prompt of 3,687 tokens. So the expectation that this tier
+puts a 7B in the 30-70 per cent band is **not confirmed**, and this document
+will not pretend otherwise on eight tasks - the Wilson interval on 0 of 8 is 0
+to 32.4 per cent, which does not even exclude the band. What the run does say,
+because the counters now exist:
+
+- **10 of 17 edits never applied (59 per cent)**, causes `not-found 4`,
+  `same-text 3`, `empty-old 1`, `no-file 1`, `would-not-parse 1`. The apply rate
+  is the same shape of failure poly-A had, on a corpus of one-function edits
+  where the whole file fits the window with room to spare. That is item 4 and
+  item 5, and it is now measurable on a tier that is not the floor for context
+  reasons.
+- **The context window is no longer the binding constraint on this tier**: the
+  largest prompt of the whole slice was 3,687 tokens against a 16,384-token
+  window, so whatever is failing here is not the truncation item 1 fixed.
+- **Five of eight runs ended `rounds-exhausted` at 8 rounds**, which was the
+  HumanEvalFix converter's budget. A tier where most runs are cut off is
+  measuring the budget, so that default is now 14 (with `--rounds` on the
+  converter to set it, and `atlias eval --rounds N` to override every task's
+  budget for one run and say so in the report). While it was 8, the report
+  header printed the machine's `agent.maxToolRounds` of 25 beside runs that were
+  cut off at 8 - a number a reader would have used to judge them. The header now
+  prints the spread the tasks actually ran on.
+- **Two tasks died with Ollama's "model runner has unexpectedly stopped"** on a
+  loaded machine. Re-run alone, as the rule requires, both ran normally (one to
+  `malformed-output` at 8 of 12 rounds, one to a failing check), so the crash was
+  the machine, not the corpus - and the run is still 0 of 8 either way.
+
+All four of those went in with `4adae41`, along with one more thing the slice
+exposed: a stub that runs until the timeout was being asked again three times
+(the repeat exists for a check that decides by timing and can pass by chance),
+which is six spawns at a 60-second timeout - six minutes for one task, and the
+reason a 164-task conversion looked wedged. A stub that fails quickly is still
+repeated.
+
+*Still owed from this item:* nothing in the build. The honest measurement of
+whether this tier is off the floor needs a slice large enough to mean something,
+after items 4 and 5, and it belongs to the measure stage rather than here. The
+seven polyglot "no output" refusals were explained above; the refactor tasks over
+40 KB are a setting, not a gap.
 
 **3. A comparator that says what it cannot see.** *Attacks:* A/B/C being read as
 results. *Expected effect:* no score change; stops false claims (confirmed
@@ -571,6 +675,30 @@ test over tasks, never over attempts.
 the flip line prints 6 at alpha 0.05; poly-A against itself still prints p =
 1.000; a repeated run with fractions 2/3 against 1/3 on one task is one
 disagreement, not two.
+
+*Status: BUILT in `b7f01c4` (2026-09-25), suite 879/879 at that commit.* Every
+check above passes, and `atlias compare poly-A.json poly-A.json` was run to see
+it on the real file: 0/27 against 0/27, "McNemar exact p = 1.000 on 0
+disagreement(s)", "Minimum detectable: 6 one-way flips are needed for p < 0.05;
+this corpus has 27 task(s) and 0 disagreement(s), so no p below 0.05 was
+reachable however the tasks fell", "Wilson 95 per cent interval on the pass
+rate: 0.0 to 12.5" for both arms, and the bootstrap now carries "unreliable
+below about 100 tasks (this corpus has 27); the paired interval above is the one
+to read".
+*Deviations from the plan above:* the paired interval uses a Beta posterior with
+the Jeffreys prior on the discordant split, read back as a difference in pass
+rate by scaling `2*theta - 1` by the discordant share - that is the paper's
+recommendation implemented directly rather than through `bayes_evals`, and the
+incomplete beta and its inverse are in `lib/eval.mjs` (`betaCdf`,
+`betaQuantile`) so there is no new dependency. The sign test over tasks is the
+same exact binomial tail as McNemar, so `mcnemar` computes both and only the
+wording changes with `--repeat`; `formatCompare` then says "Paired sign test over
+tasks" and names the pass fraction, because a reader who thinks a repeated run
+was tested attempt by attempt will read the p as far stronger than it is.
+*What it still cannot do:* it pairs on pass fraction, not on partial credit, so a
+change that moves a task from two of eight test cases to seven of eight is
+invisible to the verdict. The partial score from item 2 is printed beside it, not
+tested on.
 
 **4. Repair before refusing an edit that will not parse.** *Attacks:* the 66%
 apply failure. In the edit front's local run, 18 of 35 failed edits were
