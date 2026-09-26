@@ -940,7 +940,8 @@ What that does and does not say:
   from 66 to 64 per cent. That is inside any reasonable noise, and it is the same
   rate slice B had on the main tier (9 of 14, 64 per cent) where the window was
   never the constraint. The largest cause is now measured, not guessed:
-  **would-not-parse 25 of 60**, the model's JSON edit call, then not-found 14 and
+  **would-not-parse 25 of 60** (an edit whose result the syntax guard refused
+  to keep; see the correction below, this is not the JSON call), then not-found 14 and
   repeated 14. That is items 4 and 5 (re-indent and line-snap repair; a repeated
   failure switching to whole-file output), and it moves them to the top of the
   build order ahead of everything else still open.
@@ -994,7 +995,9 @@ What differs, and what that is worth:
 - **Stops**: mini-swe-agent ran out of steps on 18 and submitted on 9; atlias ran out on 12, stopped on malformed output on 9, and answered on 6. mini-swe-agent has no malformed-output stop: it has one action format (a bash block) and a bad reply is one wasted step, not a strike.
 - **Edits cannot be compared**: mini-swe-agent edits with shell commands and does not count failures, so its apply rate is "not recorded", never zero. It changed a protected test file in 2 tasks; the driver restores those files before grading, as atlias does, so neither run was graded against a test it wrote.
 
-Reading, stated plainly: after the window fix atlias is not better than a minimal bash-only agent on this corpus and this model, and it is more expensive. The biggest measured difference in atlias's own counters is the JSON edit call that will not parse (25 of 60 failures), and mini-swe-agent has no such call. That is the evidence item 4 and 5 were waiting for, and it points at the "Later" item for a non-JSON edit channel too.
+Reading, stated plainly: after the window fix atlias is not better than a minimal bash-only agent on this corpus and this model, and it is more expensive. The biggest measured cause in atlias's own counters is an edit whose result would not parse (25 of 60 failures), and mini-swe-agent has no parse guard to refuse one. That is the evidence item 4 and 5 were waiting for.
+
+*A correction to the two sentences above as first written (in `6a9ed27`).* They called would-not-parse "the model's JSON edit call" and said it pointed at a non-JSON edit channel. That misread the counter. In `editFailKind` (`lib/loop.mjs`), a tool call whose arguments are not valid JSON is `bad-args`, and poly-B had none. `would-not-parse` is `guardedWrite` refusing an edit that did apply textually but would have left a file that parsed before unable to parse (`python -m py_compile` on these tasks). So the 25 are well-formed calls whose `new_string` made broken Python. That is item 4's target exactly, and it is not evidence for a non-JSON channel.
 
 *The driver changed before this run, and why.* The first attempt hung on its third task, book-store, where the model ran `vim book_store.py`: Git's vim waited for keys, held the output pipe, and the 120 s timeout killed bash but could never finish reading. Closing stdin does not stop Git's vim (tried). The driver (`D:/harness-work/mini-swe-h2h/run_polyglot.py`) now puts `vim`, `vi`, `nano`, `emacs`, `less`, `more` and `man` shims first on PATH that answer "command not found" (as in the slim Docker images mini-swe-agent normally runs in), and writes action output to a file instead of a pipe. It also sends `num_ctx` 16384 and `num_predict` 2048, because LiteLLM sends no window of its own; the old one-task smoke run (`mswe-smoke.json`) therefore ran at Ollama's 4096 default and is not comparable with this one. The hung first attempt left two windowless `vim.exe` processes (the run's own and one from my probe of the fix); they were not ended, under the rule against killing processes.
 
