@@ -87,6 +87,14 @@ export default async function contextSuites({ asyncSuite, check, agentMod, TMP, 
     await chat6([{ role: 'user', content: 'x' }]);
     check('a prompt that leaves no room for the reply grows the next window', s6.bodies[0].options.num_ctx === 16384 && s6.bodies[1].options.num_ctx === 32768, { happened: JSON.stringify(s6.bodies.map((b) => b.options.num_ctx)), why: 'num_ctx holds the prompt and the reply together; a 15000-token prompt in a 16384 window has 1384 tokens left for a 2048-token reply.', fix: 'After each reply, grow the window when prompt_eval_count + num_predict exceeds it.' });
 
+    // The same chat function serves every task of an eval run. A window grown
+    // for one conversation must not carry into the next (poly-B: task 3 grew to
+    // 32768 and every later task ran there).
+    await chat6([{ role: 'user', content: 'a different task' }]);
+    await chat6([{ role: 'user', content: 'a different task' }, { role: 'assistant', content: 'ok' }, { role: 'user', content: 'go on' }]);
+    check('a new conversation starts at the base window again, and keeps it while it lasts', s6.bodies[2].options.num_ctx === 16384 && s6.bodies[3].options.num_ctx === 16384,
+      { happened: JSON.stringify(s6.bodies.map((b) => b.options.num_ctx)), why: 'A window that only ever grows makes every later task in a run pay for one task\'s need, and per-task costs stop being comparable.', fix: 'ollamaChat resets numCtx when the opening user message changes.' });
+
     // The loop types it, and does not call it malformed output or a model error.
     const st = agentMod.newState(W, 'ollama');
     const reply = await loop.runLoop(st, 'fix it', { chat: loop.ollamaChat(cfg(), { post: server(32768, [overflow(40000, 16384)]).post }) });
