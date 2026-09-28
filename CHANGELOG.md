@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- In Claude Code, before the gate says no check ran after the last edit, it reads the tail of the session transcript. Under the load of the 3.8.1 study Claude Code cancelled 80 atlias hook calls in 22 of 34 runs, and a cancelled PostToolUse left a check that ran unrecorded, so the gate held a reply that had checked its work. A check the transcript shows after the turn's last edit, by the same rules the hooks use (`track.isCheck`), is recorded and counted with its result: a failing one is still reported as failing. A transcript that is missing, does not parse, is cut mid-line, has lost an edit the log has, or comes from another host changes nothing. Not yet measured in a study.
+
 ## 3.8.1 (2026-09-28)
 
 In Claude Code, the gate stops buying rounds it does not need. Measured against plain Claude Code on the same 34 tasks with the same model, atlias 3.8.0 cost twice the prompt tokens per solved task; this release brings that to 1.25 times, with no task lost. It does not yet beat plain Claude Code.
