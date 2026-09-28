@@ -23,6 +23,9 @@ process.env.ATLIAS_EVAL_REAP = '0';
 // the test project and the temp tree could not be deleted (the leak the judge
 // saw twice). Hooks spawned by the suite inherit this.
 process.env.ATLIAS_NO_DETACH = '1';
+// Eval workspaces default to the system temp folder; this run keeps its own
+// inside its temp tree, so they go when the tree goes.
+process.env.ATLIAS_EVAL_DIR = path.join(TMP, 'eval-work');
 // Temp trees of earlier runs that were killed before their cleanup (an agent's
 // two-minute tool limit ends a run mid-way) are removed once they are a day
 // old. Only this suite's own prefix, and never one young enough to be running.

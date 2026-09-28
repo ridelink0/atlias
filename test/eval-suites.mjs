@@ -3,11 +3,14 @@
 // that the scoreboard cannot be talked into a pass.
 import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import * as evals from '../lib/eval.mjs';
 import * as agentMod from '../lib/agent.mjs';
 
 const NL = String.fromCharCode(10);
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const blk = (obj) => '```atlias' + NL + JSON.stringify(obj) + NL + '```';
 // A scripted model: each call returns the next reply in the list.
 const scripted = (replies) => {
@@ -529,5 +532,43 @@ export default async function register({ asyncSuite, check, TMP }) {
       check('and forcing it does not', forced.pass === false && forced.tampered.length > 0, { happened: `pass=${forced.pass} tampered=${forced.tampered.join(',')}`, why: 'This task exists to catch exactly this, so if it can be forced it is worse than not having it.', fix: 'protect lists test.mjs, and tamper() compares it against what shipped.' });
       kill(forced.workspace);
     }
+  });
+
+  await asyncSuite('eval workspace expert', 'workspaces go where they can be made, and a long run keeps what it did', async () => {
+    const saved = process.env.ATLIAS_EVAL_DIR;
+    const here = path.join(TMP, 'ew-root');
+    check('the work folder comes from --work, then ATLIAS_EVAL_DIR, then the setting, then the system temp folder',
+      evals.workRoot(here) === path.resolve(here) && evals.workRoot('') === path.resolve(saved || path.join(os.tmpdir(), 'atlias-evals')),
+      { happened: `${evals.workRoot(here)} | ${evals.workRoot('')}`, why: 'Every main-tier run on 2026-09-26 died at its first mkdir in ~/.atlias/evals, a folder locked against new subfolders, with no way to point it elsewhere.', fix: 'Check workRoot.' });
+    delete process.env.ATLIAS_EVAL_DIR;
+    const fallback = evals.workRoot('');
+    process.env.ATLIAS_EVAL_DIR = saved;
+    check('with nothing set it is an atlias-evals folder in the system temp folder, not under ~/.atlias', fallback === path.resolve(path.join(os.tmpdir(), 'atlias-evals')),
+      { happened: fallback, why: 'Scratch workspaces are temp files; a state folder is where the lock was.', fix: 'Default to os.tmpdir().' });
+    const blocker = path.join(TMP, 'ew-a-file');
+    fs.writeFileSync(blocker, 'not a folder');
+    const problem = evals.workRootProblem(path.join(blocker, 'sub'));
+    check('a folder that cannot take a workspace is named with the fix before any task runs', /cannot make its workspaces in/.test(String(problem)) && /--work/.test(String(problem)) && /agent\.evalDir/.test(String(problem)) && evals.workRootProblem(here) === null,
+      { happened: String(problem), why: 'A stack trace at task one of 252 is how three runs were lost.', fix: 'Check workRootProblem.' });
+    const bin = path.join(ROOT, 'bin', 'atlias.mjs');
+    const corpus = path.join(TMP, 'ew-corpus');
+    fs.mkdirSync(corpus, { recursive: true });
+    for (const id of ['ew-a', 'ew-b']) fs.writeFileSync(path.join(corpus, `${id}.json`), JSON.stringify({ id, prompt: 'nothing', files: { 'x.js': 'process.exit(1);' + NL }, check: ['node', 'x.js'] }));
+    const refused = spawnSync(process.execPath, [bin, 'eval', '--corpus', corpus, '--engine', 'echo', '--work', path.join(blocker, 'sub')], { encoding: 'utf8', timeout: 60000 });
+    check('atlias eval refuses such a folder with exit 2 and the sentence, not a stack trace', refused.status === 2 && /cannot make its workspaces/.test(refused.stdout) && !/at Object\.mkdirSync/.test(refused.stdout + refused.stderr),
+      { happened: `${refused.status}: ${refused.stdout} ${refused.stderr}`.slice(0, 300), why: 'Same.', fix: 'bin/atlias.mjs checks workRootProblem first.' });
+    const out = path.join(TMP, 'ew-report.json');
+    fs.writeFileSync(out, JSON.stringify({ partial: true, engine: 'echo', model: '', tries: 1, results: [{ id: 'ew-a', name: 'ew-a', pass: false, passes: 0, tries: 1, chars: 7, why: 'carried over' }] }));
+    const resumed = spawnSync(process.execPath, [bin, 'eval', '--corpus', corpus, '--engine', 'echo', '--work', here, '--save', out, '--resume'], { encoding: 'utf8', timeout: 120000 });
+    let rep = null;
+    try { rep = JSON.parse(fs.readFileSync(out, 'utf8')); } catch { rep = null; }
+    check('--resume runs only the tasks the saved report lacks, and the final report counts both', /1 of 2 task\(s\) already/.test(resumed.stdout) && rep && !rep.partial && rep.total === 2 && rep.results.some((r) => r.id === 'ew-a' && r.why === 'carried over') && rep.results.some((r) => r.id === 'ew-b'),
+      { happened: `${resumed.stdout.slice(0, 300)} | ${rep ? JSON.stringify({ partial: rep.partial, total: rep.total, ids: rep.results.map((r) => r.id) }) : 'no report'}`, why: 'A four-hour run interrupted at hour three used to keep nothing: --save wrote only at the end.', fix: 'runSuite takes prior rows; the CLI writes after every task.' });
+    const mixed = spawnSync(process.execPath, [bin, 'eval', '--corpus', corpus, '--engine', 'echo', '--repeat', '2', '--work', here, '--save', out, '--resume'], { encoding: 'utf8', timeout: 60000 });
+    check('and refuses to mix a report made with different settings', mixed.status === 2 && /Refusing to mix/.test(mixed.stdout),
+      { happened: `${mixed.status}: ${mixed.stdout.slice(0, 200)}`, why: 'Rows with one attempt and rows with two in one report would make pass^k meaningless.', fix: 'Compare engine, model and attempts before resuming.' });
+    const rows = [];
+    await evals.runSuite([{ ...FIX, id: 'ew-live' }], { state: agentMod.newState(process.cwd(), 'echo'), chat: scripted(['nothing']), stamp: false, work: here, onResult: (r) => rows.push(r.length) });
+    check('runSuite reports each finished task as it goes', JSON.stringify(rows) === '[1]', { happened: JSON.stringify(rows), why: 'That call is what the partial report is written from.', fix: 'Call onResult after every task.' });
   });
 }

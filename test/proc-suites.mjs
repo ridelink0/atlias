@@ -211,9 +211,9 @@ export default async function procSuites({ asyncSuite, check, skip, TMP, ROOT, f
   await asyncSuite('command line expert', 'help runs nothing, and an eval stops when whatever started it is gone', async () => {
     const bin = path.join(ROOT, 'bin', 'atlias.mjs');
     // A dead port: if --help reached the engine, the run would say so here.
-    const env = { ATLIAS_HOME: path.join(W, 'cli-home') };
+    const env = { ATLIAS_HOME: path.join(W, 'cli-home'), ATLIAS_EVAL_DIR: path.join(W, 'cli-evals') };
     const h = proc.runSync(process.execPath, [bin, 'eval', '--help'], { timeoutMs: 60000, env });
-    check('atlias eval --help prints the eval usage, exits 0, and starts no eval', h.status === 0 && /usage: atlias eval/.test(h.stdout) && /--outlive-parent/.test(h.stdout) && !/task\(s\) against/.test(h.stdout) && !fs.existsSync(path.join(W, 'cli-home', 'evals')),
+    check('atlias eval --help prints the eval usage, exits 0, and starts no eval', h.status === 0 && /usage: atlias eval/.test(h.stdout) && /--outlive-parent/.test(h.stdout) && !/task\(s\) against/.test(h.stdout) && !fs.existsSync(path.join(W, 'cli-evals')),
       { happened: `${h.status}: ${String(h.stdout).slice(0, 200)}`, why: 'The judge typed it and got a real nine-task eval on the default model, with five workspaces left behind.', fix: 'bin/atlias.mjs answers --help and -h before the command runs.' });
     const e = proc.runSync(process.execPath, [bin, 'compare', '-h'], { timeoutMs: 60000, env });
     check('and -h after another command prints that command\'s usage', e.status === 0 && /usage: atlias compare/.test(e.stdout), { happened: `${e.status}: ${e.stdout}`, why: 'Every command, not only eval.', fix: 'Add it to HELP.' });

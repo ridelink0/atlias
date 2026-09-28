@@ -118,7 +118,7 @@ else switch (cmd) {
     // Positional task ids only: the value after --engine or --only belongs to
     // that flag, not to the task list.
     const taken = new Set();
-    for (const f of ['--engine', '--only', '--repeat', '--model', '--corpus', '--save', '--tier', '--sample', '--seed', '--rounds']) { const i = argv.indexOf(f); if (i >= 0) taken.add(i + 1); }
+    for (const f of ['--engine', '--only', '--repeat', '--model', '--corpus', '--save', '--tier', '--sample', '--seed', '--rounds', '--work']) { const i = argv.indexOf(f); if (i >= 0) taken.add(i + 1); }
     const want = argv.slice(1).filter((a, i) => !a.startsWith('--') && !taken.has(i + 1));
     const only = optVal('--only');
     // --corpus scores a different task directory, so the shipped nine stay fast
@@ -173,17 +173,32 @@ else switch (cmd) {
     // --rounds overrides every task's own budget for this run and says so in the
     // report. A tier where most runs end out of rounds is measuring the budget.
     const roundsArg = Math.max(0, parseInt(optVal('--rounds') || '0', 10) || 0);
-    const report = await evals.runSuite(tasks, { chat, state: agent.newState(cwd, engine), repeat, engineName: engine, model, corpus: corpusInfo, budget: roundsArg, beforeAttempt: stopIfOrphaned });
-    say(evals.format(report));
+    // The workspaces' folder is checked before the first task, not discovered
+    // broken at it.
+    const work = evals.workRoot(optVal('--work') || '');
+    const refused = evals.workRootProblem(work);
+    if (refused) { say(refused); process.exitCode = 2; break; }
     // --save keeps the report so two runs can be compared later. A score nobody
-    // wrote down cannot be the A in an A/B.
+    // wrote down cannot be the A in an A/B. It is written after every task, so a
+    // run that dies keeps what it did, and --resume carries on from it.
     const savePath = optVal('--save');
-    if (savePath) {
-      const out = path.resolve(savePath);
-      fs.mkdirSync(path.dirname(out), { recursive: true });
-      fs.writeFileSync(out, `${JSON.stringify(report, null, 2)}\n`);
-      say(`saved to ${out}`);
+    const out = savePath ? path.resolve(savePath) : '';
+    let prior = [];
+    if (flag('--resume')) {
+      if (!out) { say('--resume needs --save <file>: it carries on from the report in that file.'); process.exitCode = 2; break; }
+      let old = null;
+      try { old = JSON.parse(fs.readFileSync(out, 'utf8')); } catch { old = null; }
+      const same = old && old.engine === engine && (old.model || '') === (model || '') && (old.tries || 1) === repeat;
+      if (old && !same) { say(`--resume: ${out} was a ${old.engine} ${old.model || ''} run with ${old.tries || 1} attempt(s) each; this one is ${engine} ${model || ''} with ${repeat}. Refusing to mix them.`); process.exitCode = 2; break; }
+      const want = new Set(tasks.map((t) => t.id));
+      prior = old ? (old.results || []).filter((r) => want.has(r.id)) : [];
+      say(prior.length ? `--resume: ${prior.length} of ${tasks.length} task(s) already in ${out}; running the other ${tasks.length - prior.length}.` : `--resume: nothing to carry on from in ${out}; starting fresh.`);
     }
+    const save = (rep) => { fs.mkdirSync(path.dirname(out), { recursive: true }); fs.writeFileSync(out, `${JSON.stringify(rep, null, 2)}\n`); };
+    const partial = (rows) => { if (out) save({ partial: true, results: rows, engine, model, tries: repeat, corpus: corpusInfo }); };
+    const report = await evals.runSuite(tasks, { chat, state: agent.newState(cwd, engine), repeat, engineName: engine, model, corpus: corpusInfo, budget: roundsArg, beforeAttempt: stopIfOrphaned, work, prior, onResult: partial });
+    say(evals.format(report));
+    if (out) { save(report); say(`saved to ${out}`); }
     process.exitCode = report.passed === report.total ? 0 : 1;
     break;
   }
