@@ -115,7 +115,7 @@ export default async function tierSuites({ asyncSuite, check, TMP, ROOT, fs, pat
   // checks hold it to that rule in both directions: the file as shipped must
   // fail, and only a real move must pass.
   await asyncSuite('big-file benchmark expert', 'the refactor tier grades the AST and proves every task', async () => {
-    const py = poly.resolveRunner('python');
+    const py = poly.resolveRunner('python', { bare: true });
     const dir = path.join(TMP, 'refactor-bench', 'thing_Holder_shout');
     fs.mkdirSync(path.join(dir, '.docs'), { recursive: true });
     // A class with one method that does not use self, which is the shape the
@@ -147,7 +147,10 @@ export default async function tierSuites({ asyncSuite, check, TMP, ROOT, fs, pat
       'm=next(n for n in k.body if isinstance(n,ast.FunctionDef) and n.name=="shout")',
       'print(sum(1 for _ in ast.walk(k)), sum(1 for _ in ast.walk(m)))',
     ].join(';'), path.join(dir, 'thing.py')], { encoding: 'utf8' }) : null;
-    const [classChildren, funcChildren] = counts && counts.status === 0 ? counts.stdout.trim().split(/\s+/).map(Number) : [0, 0];
+    // With no Python here the counts cannot be measured. The parsing checks below
+    // still run on stand-in numbers (they only read the file back), and every
+    // check that needs the grader to run is replaced by the refusal check.
+    const [classChildren, funcChildren] = counts && counts.status === 0 ? counts.stdout.trim().split(/\s+/).map(Number) : [50, 20];
     fs.writeFileSync(path.join(dir, 'thing_test.py'), [
       'import unittest',
       'from benchmark.refactor_tools import verify_refactor',

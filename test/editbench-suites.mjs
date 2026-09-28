@@ -14,10 +14,11 @@ import * as bench from '../lib/editbench.mjs';
 import * as poly from '../lib/polyglot.mjs';
 import * as evals from '../lib/eval.mjs';
 
-export default async function editbenchSuites({ asyncSuite, check, TMP, fs, path }) {
+export default async function editbenchSuites({ asyncSuite, check, skip, TMP, fs, path }) {
   const W = path.join(TMP, 'editbench-work');
   fs.mkdirSync(W, { recursive: true });
-  const py = poly.resolveRunner('python');
+  // The graders are plain scripts, so an interpreter is enough; pytest is not.
+  const py = poly.resolveRunner('python', { bare: true });
   const exe = py.ok ? py.exe : 'python';
   const cie = {
     id: 10, name: 'csv_parser', full_name: '10_csv_parser',

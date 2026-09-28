@@ -3,6 +3,7 @@
   "kind": "multi-file",
   "name": "Carry a trace id through three files",
   "files": {
+    "package.json": "{ \"type\": \"module\" }\n",
     "db.js": "// The data layer.\nexport function findUser(id) {\n  return { id, name: 'gev' };\n}\n",
     "api.js": "import { findUser } from './db.js';\n\n// The request layer.\nexport function handle(req) {\n  return findUser(req.id);\n}\n",
     "app.js": "import { handle } from './api.js';\n\n// The entry point.\nexport function run(id) {\n  return handle({ id });\n}\n",

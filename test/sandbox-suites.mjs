@@ -64,10 +64,14 @@ export default async function sandboxSuites({ suite, asyncSuite, check, core, ag
 
   await asyncSuite('sandbox worktree expert', 'a worktree the agent can work in', async () => {
     const root = committed({ 'a.js': 'export const a = 1;' + NL, 'sub/b.js': 'export const b = 2;' + NL });
-    check('repoRoot finds the repository from inside it', path.resolve(sandbox.repoRoot(path.join(root, 'sub'))) === path.resolve(root) && sandbox.repoRoot(path.join(TMP, 'not-a-repo')) === null, { happened: String(sandbox.repoRoot(path.join(root, 'sub'))), why: 'The worktree is added from the repository root, not from wherever the agent was started.', fix: 'git rev-parse --show-toplevel.' });
+    // git names the repository by its real path: the long form of a Windows 8.3
+    // temp path (RUNNER~1 on CI), /private/var for macOS's /var. So paths are
+    // compared real, and messages are checked for the path git gave.
+    const real = (p) => { try { return fs.realpathSync.native(p); } catch { return path.resolve(String(p)); } };
+    check('repoRoot finds the repository from inside it', real(sandbox.repoRoot(path.join(root, 'sub'))) === real(root) && sandbox.repoRoot(path.join(TMP, 'not-a-repo')) === null, { happened: String(sandbox.repoRoot(path.join(root, 'sub'))), why: 'The worktree is added from the repository root, not from wherever the agent was started.', fix: 'git rev-parse --show-toplevel.' });
     check('headSha reads the commit the worktree will come from', /^[0-9a-f]{7,}$/.test(sandbox.headSha(root)), { happened: sandbox.headSha(root), why: 'The opening line tells the user which commit their sandbox is a copy of.', fix: 'git rev-parse --short HEAD.' });
     const seen = sandbox.inspect(root);
-    check('a clean repository is reported ready', seen.ok === true && seen.kind === 'clean' && path.resolve(seen.root) === path.resolve(root), { happened: JSON.stringify(seen), why: 'If the ordinary case cannot start, nothing else matters.', fix: 'Check inspect().' });
+    check('a clean repository is reported ready', seen.ok === true && seen.kind === 'clean' && real(seen.root) === real(root), { happened: JSON.stringify(seen), why: 'If the ordinary case cannot start, nothing else matters.', fix: 'Check inspect().' });
 
     const box = sandbox.begin(root);
     check('a worktree is made', box.ok === true && box.isolated === true && fs.existsSync(box.dir), { happened: JSON.stringify(box).slice(0, 300), why: 'This is the feature.', fix: 'Check begin().' });
@@ -75,7 +79,7 @@ export default async function sandboxSuites({ suite, asyncSuite, check, core, ag
     check('the committed files are there at HEAD', fs.readFileSync(path.join(box.dir, 'a.js'), 'utf8').includes('a = 1') && fs.existsSync(path.join(box.dir, 'sub', 'b.js')), { happened: fs.readdirSync(box.dir).join(','), why: 'An empty sandbox is not a copy of the project.', fix: 'worktree add --detach <dir> HEAD.' });
     check('git knows about it', worktrees(root).length === 2, { happened: worktrees(root).join(' | '), why: 'A worktree git does not know about cannot be removed cleanly later.', fix: 'Use git worktree add, not a copy.' });
     const said = sandbox.opening(box);
-    check('the opening line names the worktree, the project and the commit', said.includes(box.dir) && said.includes(root) && said.includes(box.head), { happened: said, why: 'The user has to know where the work is happening and what it started from.', fix: 'Check opening().' });
+    check('the opening line names the worktree, the project and the commit', said.includes(box.dir) && said.includes(box.root) && real(box.root) === real(root) && said.includes(box.head), { happened: said, why: 'The user has to know where the work is happening and what it started from.', fix: 'Check opening().' });
     check('and it admits the two things a worktree does not carry', /ignores/.test(said) && /remembers/.test(said), { happened: said, why: 'node_modules and build output are not in a fresh worktree, and memory is filed under its path; a user who learns that from a broken test run will not trust the feature again.', fix: 'Keep the second line of opening().' });
 
     // What the agent did in there.
@@ -85,7 +89,7 @@ export default async function sandboxSuites({ suite, asyncSuite, check, core, ag
     check('the diff includes a file the agent created, not only ones it edited', ch.files.some((f) => /a\.js/.test(f)) && ch.files.some((f) => /new\.js/.test(f)), { happened: JSON.stringify(ch.files), why: 'A plain git diff shows no untracked file, so every new file the agent wrote would be silently dropped when the diff was taken.', fix: 'Stage with git add -A before diffing --cached.' });
     check('and the patch carries both changes', /a = 99/.test(ch.patch) && /new\.js/.test(ch.patch), { happened: ch.patch.slice(0, 300), why: 'The patch is the only thing that reaches the project.', fix: 'git diff --cached --binary.' });
     const sum = sandbox.summary(box, ch);
-    check('the summary counts the files and shows the patch', /2 files changed/.test(sum) && sum.includes(root) && /a = 99/.test(sum), { happened: sum.slice(0, 200), why: 'Take it or drop it is a decision, and nobody can make it without seeing what changed.', fix: 'Check summary().' });
+    check('the summary counts the files and shows the patch', /2 files changed/.test(sum) && sum.includes(box.root) && /a = 99/.test(sum), { happened: sum.slice(0, 200), why: 'Take it or drop it is a decision, and nobody can make it without seeing what changed.', fix: 'Check summary().' });
     check('a summary of nothing says nothing changed', /nothing changed/.test(sandbox.summary(box, { files: [], patch: '' })), { happened: sandbox.summary(box, { files: [], patch: '' }), why: 'Showing an empty diff as a change invites a pointless yes.', fix: 'Special-case the empty list.' });
     const saved = sandbox.savePatch(box, ch.patch);
     check('the patch can be written where the user can find it', saved === sandbox.patchPath(box) && fs.readFileSync(saved, 'utf8') === ch.patch, { happened: saved, why: 'A dropped run still has to be recoverable, or drop means lose.', fix: 'Check savePatch and patchPath.' });

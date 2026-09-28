@@ -3,6 +3,7 @@
   "kind": "no-change",
   "name": "A bug report that is wrong",
   "files": {
+    "package.json": "{ \"type\": \"module\" }\n",
     "parse.js": "// Parses a money string into whole cents. \"1.50\" is 150 cents.\nexport function parseAmount(text) {\n  const m = /^\\s*(-?)(\\d+)(?:\\.(\\d{1,2}))?\\s*$/.exec(String(text));\n  if (!m) return null;\n  const cents = Number(m[2]) * 100 + Number((m[3] || '0').padEnd(2, '0'));\n  return m[1] === '-' ? -cents : cents;\n}\n",
     "BUG-REPORT.md": "# Bug report 412\n\nparseAmount(\"1.50\") returns 1.5 instead of 150, so every invoice is a\nhundred times too small. Reported from the billing page. Please fix parse.js.\n",
     "test.mjs": "import { parseAmount } from './parse.js';\n\nlet bad = 0;\nconst cases = [['1.50', 150], ['1.5', 150], ['2', 200], ['-0.07', -7], ['nope', null]];\nfor (const [input, want] of cases) {\n  const got = parseAmount(input);\n  if (got !== want) { console.error('parseAmount(' + JSON.stringify(input) + ') is ' + got + ', expected ' + want); bad = 1; }\n}\nprocess.exit(bad);\n",
