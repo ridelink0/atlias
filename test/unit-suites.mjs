@@ -335,4 +335,43 @@ export default async function unitSuites({ suite, asyncSuite, check, PROJECT, TM
     check('the candidate folders are the npm folder, WindowsApps, then ~/.local/bin on Windows, and ~/.local/bin then ~/bin elsewhere', win.length === 3 && win[0] === path.join(U, 'h', 'r', 'npm') && win[1].endsWith(path.join('Microsoft', 'WindowsApps')) && posix[0] === path.join(U, 'h', '.local', 'bin') && posix[1] === path.join(U, 'h', 'bin'), { happened: JSON.stringify([win, posix]), why: 'The command has to land in a folder already on PATH.', fix: 'Check shimDirCandidates.' });
     check('the launcher lives in the atlias state folder', shortcut.launcherPath({ ATLIAS_HOME: path.join(U, 's') }) === path.join(U, 's', 'cli.mjs'), { happened: shortcut.launcherPath({ ATLIAS_HOME: path.join(U, 's') }), why: 'A path that never changes is the point of the launcher.', fix: 'Check launcherPath.' });
   });
+
+  await asyncSuite('compaction expert', 'after a compaction the model is told what the summary left out', async () => {
+    const C = path.join(TMP, 'compact-audit');
+    fs.mkdirSync(C, { recursive: true });
+    const note = [
+      '# atlias handoff for ' + C,
+      '', '## Objective (latest prompts)', '- make the parser strict',
+      '', '## Files changed this session', '- src/parse.mjs', '- src/lexer.mjs',
+      '', '## Checks run', '- node test/parse-test.mjs',
+      '', '## Next', 'wire strictMode into the tokenizer and rerun parse-test',
+      '',
+    ].join('\n');
+    const summaryText = 'Summary:\n1. Primary Request: make the parser strict.\n2. Files: src/parse.mjs was changed; node test/parse-test.mjs passes.\n';
+    const transcript = path.join(C, 'session.jsonl');
+    fs.writeFileSync(transcript, [
+      JSON.stringify({ type: 'user', message: { role: 'user', content: 'earlier' } }),
+      JSON.stringify({ type: 'system', subtype: 'compact_boundary', content: 'Conversation compacted', compactMetadata: { trigger: 'auto' } }),
+      JSON.stringify({ type: 'user', isCompactSummary: true, message: { role: 'user', content: 'This session is being continued. ' + summaryText } }),
+      '',
+    ].join('\n'));
+    const got = progress.compactSummary(transcript);
+    check('the summary is read from the transcript: the isCompactSummary message after the boundary', got.includes('make the parser strict') && got.includes('src/parse.mjs'),
+      { happened: got.slice(0, 200), why: 'The hooks documentation gives PostCompact no summary field and no say in the result; the transcript is where the summary can be checked.', fix: 'Check compactSummary.' });
+    check('a transcript with no compaction, or none at all, gives nothing rather than a guess', progress.compactSummary(path.join(C, 'nope.jsonl')) === '' && (() => { const p = path.join(C, 'plain.jsonl'); fs.writeFileSync(p, JSON.stringify({ type: 'user', message: { role: 'user', content: 'hi' } }) + '\n'); return progress.compactSummary(p) === ''; })(),
+      { happened: 'a summary was invented', why: 'An audit against nothing would report everything missing.', fix: 'Return an empty string.' });
+    const audit = progress.auditSummary(note, got);
+    check('the audit names the file and the next step the summary dropped, and not what it kept', audit.checked === 4 && audit.missing.length === 2 && audit.missing.some((m) => /src\/lexer\.mjs/.test(m)) && audit.missing.some((m) => /^next step: wire strictMode/.test(m)) && !audit.missing.some((m) => /^file changed: src\/parse\.mjs|^check run/.test(m)),
+      { happened: JSON.stringify(audit), why: 'Re-sending what the summary kept is noise; what it dropped is the point.', fix: 'Check auditSummary.' });
+    const notePath = progress.notePath(C);
+    fs.mkdirSync(path.dirname(notePath), { recursive: true });
+    fs.writeFileSync(notePath, note);
+    const sid = 'compact-audit-session';
+    const b = brief.build({ cwd: C, session_id: sid, source: 'compact', transcript_path: transcript }, 'claude');
+    const plain = brief.build({ cwd: C, session_id: sid + '-2', source: 'startup', transcript_path: transcript }, 'claude');
+    const ev = core.eventsTail(sid).find((e) => e.kind === 'compact-audit');
+    check('the brief after a compaction carries a section naming what was left out, and the loss is counted', /## What the compaction summary left out/.test(b) && /kept 2 of 4/.test(b) && /src\/lexer\.mjs/.test(b) && ev && ev.missing === 2 && !/left out/.test(plain),
+      { happened: `${(b.match(/## What the compaction summary left out[\s\S]{0,300}/) || ['(no section)'])[0]} | event ${JSON.stringify(ev)} | plain has it: ${/left out/.test(plain)}`, why: 'PreCompact "keep in the summary" text goes through a channel Claude Code does not document as delivered; this is the part that can be proved.', fix: 'brief.build audits at source compact.' });
+    fs.rmSync(notePath, { force: true });
+  });
 }
