@@ -80,6 +80,16 @@ export default async function procSuites({ asyncSuite, check, skip, TMP, ROOT, f
     check('a command that finishes keeps its own exit status, output and error, and one that cannot start says so', quick.status === 3 && quick.stdout === 'o' && quick.stderr === 'e' && !quick.timedOut && !quick.error && nothing.status === null && /ENOENT|not recognized|cannot find/i.test(String(nothing.error && nothing.error.message)),
       { happened: JSON.stringify({ quick: { ...quick, error: quick.error && quick.error.message }, nothing: { ...nothing, error: nothing.error && nothing.error.message } }), why: 'Everything downstream (the integrity verdict, the score) reads status and output as spawnSync gave them.', fix: 'Keep spawnSync\'s result shape in proc.' });
 
+    // 2b. A loop that prints for ever. The caller's buffer would overflow, and a
+    // spawnSync that overflows ends the watchdog alone, which would orphan the
+    // printer; the watchdog caps what it passes on instead.
+    const spewPid = pidFile();
+    const spew = `${node} -e "require('fs').writeFileSync(${JSON.stringify(spewPid).replace(/"/g, "'")}, String(process.pid)); const s = 'x'.repeat(65536); for (;;) process.stdout.write(s)"`;
+    const sp = proc.runSync(spew, [], { shell: true, timeoutMs: 3000, maxBuffer: 1024 * 1024 });
+    const printer = await waitFor(spewPid, 1000);
+    check('a command that prints for ever is capped, stopped at its limit, and gone', sp.timedOut === true && sp.stdout.length <= 1024 * 1024 && /output past \d+ bytes was dropped/.test(sp.stdout) && printer > 0 && await goneWithin(printer, 8000),
+      { happened: JSON.stringify({ timedOut: sp.timedOut, bytes: sp.stdout.length, tail: sp.stdout.slice(-80), error: sp.error && sp.error.code, printer, alive: printer ? alive(printer) : null }), why: 'An overflowed buffer ends the watchdog before the tree, and the printer runs on with nobody to stop it.', fix: 'The watchdog passes on at most maxOutput bytes per stream and drops the rest.' });
+
     // 3. The asking process dies while its command runs. On Windows nothing
     // ends a child with its parent; the watchdog has to notice.
     const orphanPid = pidFile();
