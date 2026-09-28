@@ -1166,6 +1166,42 @@ What that does and does not say:
   calls and atlias counts tool rounds; they are close, not identical. Only the
   one-task smoke run exists so far.
 
+## The main-tier head-to-head, measured 2026-09-28
+
+The first comparison off the floor. Main tier (HumanEvalFix Python 164 and
+CanItEdit lazy 88), qwen2.5-coder:7b on Ollama (digest dae161e2), num_ctx 16384,
+num_predict 2048, temperature 0.2, each task's own round budget, the same hidden
+graders, one attempt per task on each side. The driver is now in the repository
+(`tools/h2h/mini_swe_runner.py`); the mini-swe-agent arm is the 2026-09-26 run of
+its predecessor with the same settings (D:/harness-work/runs/h2h/mini-main-r1.json,
+250 of the 252 tasks). Raw reports: D:/harness-work/runs/h2h0927/.
+
+| arm | passed | HumanEvalFix | CanItEdit | Wilson 95% | prompt tokens | per passing attempt |
+| --- | --- | --- | --- | --- | --- | --- |
+| atlias @ ca1e948 (B) | 59/250 | 51/162 | 8/88 | 18.8-29.2 | 5,838k | 99.0k |
+| mini-swe-agent 2.4.6 | 41/250 | 39/162 | 2/88 | 12.3-21.5 | 5,221k | 127.4k |
+
+36 tasks only atlias solved and 18 only mini-swe-agent did: McNemar exact
+p = 0.020, paired interval 1.5 to 12.1 points in atlias's favour. Context: atlias
+read 1.12 times the prompt tokens and moved 1.31 times the characters in total,
+and 1.07 times on the runner's own measure (role and content of what the model
+was handed), for 1.44 times the solves. So the 1.4-1.7x context gap of the
+polyglot runs is, on this tier, a 22 per cent saving per solved task.
+
+What this does not show. One run per arm, on different days: the smoke rerun of
+two tasks with the new driver failed both where the 2026-09-26 run had passed
+them, so the noise is real on both sides and `--repeat 3` is the next run. The
+gain is not from this round's loop changes: arm A (the same harness before
+multi-block execution, 2442fa5) and arm B tied 49 and 49 on the 156 tasks both
+ran (21 gained, 21 lost, p = 1.000), while B's share of edits that did not apply
+fell from 41 to 34 per cent and would-not-parse from 19 to 10. A against
+mini-swe-agent on those 156 was 49 against 39 (p = 0.184). CanItEdit lazy stays
+near the floor for both (8 and 2 of 88). HumanEvalFix's check prints a bare
+AssertionError with no line or values, and same-text edits (the model re-sending
+its own wrong function) were 87 of the 246 edits atlias could not apply; a
+runner that shows the failing assert changes the corpus, so it waits for a
+re-conversion with both arms re-run.
+
 ## Could not be verified
 
 Local measurements that no second agent re-ran (plausible, consistent with the
