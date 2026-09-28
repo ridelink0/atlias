@@ -11,3 +11,7 @@ test/part*.mjs
 evals/canitedit/
 evals/humanevalfix/
 evals/refactor/
+
+# graphify writes its knowledge graph and query cache here on every run; it is
+# per machine, and tracking it put a changed file in every working tree.
+graphify-out/
