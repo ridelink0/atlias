@@ -128,8 +128,18 @@ atlias eval --save a.json      keep the report, so a later run can be compared w
 atlias tiers                   the three benchmark tiers, and which are on this machine
 atlias eval --tier main --sample 24 --seed s    one tier, the same subset every time
 atlias eval --rounds 14        override every task's own round budget, and say so in the report
+atlias eval --save a.json --resume   carry on an interrupted run; the report is written after every task
+atlias eval --work D:/scratch  where the scratch workspaces go (default: atlias-evals in the temp folder)
 atlias compare a.json b.json   the paired question: which tasks flipped, and could a coin have done it
+atlias eval --help             the options, and nothing else runs
 ```
+
+Code the model wrote runs under a watchdog: at its limit (two minutes for a shell
+command, the task's own limit for the check) it is ended with every process it
+started, a background process a task leaves behind is ended when the task is
+scored, and an eval whose starter goes away stops instead of running on.
+`tools/h2h/mini_swe_runner.py` runs mini-swe-agent on the same task files with
+the same safeguards, so `atlias compare` can pair the two harnesses task by task.
 
 Three tiers: **smoke** (the nine tasks that ship here), **main** (HumanEvalFix
 Python and CanItEdit lazy - one-function fixes and short instruction edits) and

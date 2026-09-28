@@ -195,7 +195,9 @@ else switch (cmd) {
       say(prior.length ? `--resume: ${prior.length} of ${tasks.length} task(s) already in ${out}; running the other ${tasks.length - prior.length}.` : `--resume: nothing to carry on from in ${out}; starting fresh.`);
     }
     const save = (rep) => { fs.mkdirSync(path.dirname(out), { recursive: true }); fs.writeFileSync(out, `${JSON.stringify(rep, null, 2)}\n`); };
-    const partial = (rows) => { if (out) save({ partial: true, results: rows, engine, model, tries: repeat, corpus: corpusInfo }); };
+    // The stamp is taken once, at the start: it names the code that is running.
+    const stampNow = out ? evals.harnessStamp() : null;
+    const partial = (rows) => { if (out) save({ partial: true, results: rows, engine, model, tries: repeat, corpus: corpusInfo, stamp: stampNow }); };
     const report = await evals.runSuite(tasks, { chat, state: agent.newState(cwd, engine), repeat, engineName: engine, model, corpus: corpusInfo, budget: roundsArg, beforeAttempt: stopIfOrphaned, work, prior, onResult: partial });
     say(evals.format(report));
     if (out) { save(report); say(`saved to ${out}`); }
