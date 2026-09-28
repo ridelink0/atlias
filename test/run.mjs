@@ -944,6 +944,7 @@ suite('proof expert', 'the doctor proves what it reports', () => {
 });
 
 await (await import('./integrity-suites.mjs')).default({ suite, check, core, gate, track, router, PROJECT, TMP, ROOT, spawnSync, fs, path });
+await (await import('./subharness-suites.mjs')).default({ suite, check, core, gate, track, router, brief, PROJECT, fs, path });
 await (await import('./shortcut-suites.mjs')).default({ suite, check, TMP, ROOT, spawnSync, fs, path });
 await (await import('./agent-suites.mjs')).default({ suite, asyncSuite, check, core, agentMod, hookRun, PROJECT, TMP, ROOT, fs, path, spawnSync });
 await (await import('./eval-suites.mjs')).default({ suite, asyncSuite, check, TMP });
