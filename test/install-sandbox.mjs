@@ -132,5 +132,11 @@ const passed = checks.filter((c) => c.ok).length;
 process.stdout.write(`\n${passed}/${checks.length} install checks passed in a sandbox home\n`);
 for (const f of failures) process.stdout.write(`  x ${f}\n`);
 if (process.argv.includes('--keep')) process.stdout.write(`sandbox kept at ${SANDBOX}\n`);
-else try { fs.rmSync(SANDBOX, { recursive: true, force: true }); } catch { /* a file lock on Windows */ }
+else {
+  // With retries, as test/run.mjs does: a handle a just-exited child still holds
+  // on Windows fails a single attempt, and a silent catch leaked the folder.
+  try { fs.rmSync(SANDBOX, { recursive: true, force: true, maxRetries: 20, retryDelay: 150 }); } catch { /* reported below */ }
+  if (fs.existsSync(SANDBOX)) process.stdout.write(`the sandbox could not be removed: ${SANDBOX}
+`);
+}
 process.exit(failures.length ? 1 : 0);
