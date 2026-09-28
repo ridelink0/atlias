@@ -29,7 +29,9 @@ export default async function subharnessSuites({ suite, check, core, gate, track
       ['python -c "import mainframe"', false], ['cat main.py', false], ['python -c "print(1)"', false], ['python domain.py', false],
     ];
     const off = runs.filter(([c, want]) => track.runsEditedFile(c, [main]) !== want).map(([c]) => c);
-    check('running the file this turn edited counts, naming it anywhere else does not', off.length === 0 && !track.runsEditedFile('python main.py', []), { happened: 'wrong for: ' + off.join(' | '), why: 'atlias\'s own loop has always counted running an edited program as checking it; the hooks did not, so a reply that had run its code was held for having checked nothing.', fix: 'runsEditedFile in lib/track.mjs.' });
+    const winPath = 'D:' + BS + 'w' + BS + 'main.py';
+    const edges = track.runsEditedFile('python main.py; echo done', [main]) && track.runsEditedFile('python main.py', [winPath]) && !track.runsEditedFile('python domain.py', [winPath]);
+    check('running the file this turn edited counts, naming it anywhere else does not', off.length === 0 && edges && !track.runsEditedFile('python main.py', []), { happened: 'wrong for: ' + off.join(' | '), why: 'atlias\'s own loop has always counted running an edited program as checking it; the hooks did not, so a reply that had run its code was held for having checked nothing.', fix: 'runsEditedFile in lib/track.mjs.' });
 
     const s = sid('run-edited');
     router.prompt({ session_id: s, cwd: PROJECT, prompt: 'make f in main round up please' });
