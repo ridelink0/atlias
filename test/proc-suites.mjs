@@ -110,9 +110,9 @@ export default async function procSuites({ asyncSuite, check, skip, TMP, ROOT, f
       { happened: `${bgTook} ms, ${JSON.stringify({ ...bgRun, error: bgRun.error && bgRun.error.message })}`, why: 'The background program holds the output pipe; waiting for the pipe to close would wait the whole limit.', fix: 'The watchdog lets the pipes go a second after the command exits.' });
     const found = proc.leftovers([bgRun.pid], { since, kill: true });
     const leftGone = await goneWithin(left, 10000);
-    check('leftovers finds what it left running and ends it', left > 0 && found.length >= 1 && leftGone,
+    check('leftovers finds what it left running and ends it', left > 0 && Array.isArray(found) && found.length >= 1 && leftGone,
       { happened: JSON.stringify({ left, found, alive: left ? alive(left) : null }), why: 'Inside an eval nothing a task started may outlive it, and a backgrounded loop is outside the tree the timeout ends.', fix: 'Check proc.leftovers.' });
-    check('and asks nothing of a command that left nothing', proc.leftovers([bgRun.pid], { since }).length === 0 && proc.leftovers([], {}).length === 0,
+    check('and asks nothing of a command that left nothing', (() => { const again = proc.leftovers([bgRun.pid], { since }); return Array.isArray(again) && again.length === 0; })() && proc.leftovers([], {}).length === 0,
       { happened: JSON.stringify(proc.leftovers([bgRun.pid], { since })), why: 'A leftover report that is never empty is noise.', fix: 'Check proc.leftovers.' });
 
     // 5. The Windows listing logic, on a made-up process table: a pid Windows
