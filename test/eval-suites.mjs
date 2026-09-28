@@ -571,4 +571,23 @@ export default async function register({ asyncSuite, check, TMP }) {
     await evals.runSuite([{ ...FIX, id: 'ew-live' }], { state: agentMod.newState(process.cwd(), 'echo'), chat: scripted(['nothing']), stamp: false, work: here, onResult: (r) => rows.push(r.length) });
     check('runSuite reports each finished task as it goes', JSON.stringify(rows) === '[1]', { happened: JSON.stringify(rows), why: 'That call is what the partial report is written from.', fix: 'Call onResult after every task.' });
   });
+
+  await asyncSuite('token accounting expert', 'a run counts the engine tokens it spent and what the model was handed', async () => {
+    const usageChat = (replies) => { let i = 0; return async () => ({ content: replies[Math.min(i++, replies.length - 1)], usage: { prompt_eval_count: 100 * i, eval_count: 7 } }); };
+    const r = await evals.runTask({ ...FIX, id: 'tok-selftest' }, {
+      state: agentMod.newState(process.cwd(), 'echo'),
+      // Three calls: the fix, an answer the loop sends back because no check ran,
+      // and the answer again.
+      chat: usageChat([blk({ tool: 'write_file', path: 'sum.js', content: 'export function two() { return 2; }' + NL }), 'Fixed; node test.mjs exits 0.']),
+    });
+    check('each row carries the prompt and output tokens the engine reported, summed', r.promptTotal === 600 && r.outputTotal === 21 && JSON.stringify(r.outputTokens) === '[7,7,7]',
+      { happened: JSON.stringify({ promptTotal: r.promptTotal, outputTotal: r.outputTotal, out: r.outputTokens, prompts: r.promptTokens }), why: 'Characters are a proxy; the engine\'s own counts are what a run cost, and "tokens per solved task" is the judge\'s number.', fix: 'runLoop keeps outLog beside promptLog; runTask sums both.' });
+    check('and what the model was handed, which is never more than what was recorded', r.handed > 0 && r.handed <= r.chars,
+      { happened: `handed ${r.handed}, chars ${r.chars}`, why: 'chars also counts bookkeeping and observations the view had shrunk, so it over-states atlias against a harness with no such record.', fix: 'handed is the role/content JSON of loop.view at the end.' });
+    const A = { results: [{ id: 't1', pass: true, chars: 1000, handed: 800, promptTotal: 5000, outputTotal: 500 }, { id: 't2', pass: false, chars: 2000, handed: 1500, promptTotal: 7000, outputTotal: 700 }] };
+    const B = { results: [{ id: 't1', pass: true, chars: 900, promptTokens: [1000, 2000], outputTokens: [50, 50] }, { id: 't2', pass: true, chars: 900, promptTokens: [1000, null], outputTokens: [50] }] };
+    const text = evals.formatCompare(evals.compare(A, B), 'atlias', 'mini');
+    check('compare prints engine tokens per passing attempt for both, from totals or from the per-round lists', /engine tokens: atlias 12k prompt \+ 1k output, 13\.2k per passing attempt; mini 4k prompt \+ 0k output, 2\.1k per passing attempt/.test(text) && /handed at the end/.test(text),
+      { happened: text.split(NL).filter((l) => /engine tokens|handed/.test(l)).join(' | '), why: 'The head-to-head is judged on the cost of a solve, and the mini-swe-agent runner keeps only per-round lists.', fix: 'Check costOf tok() in compare.' });
+  });
 }

@@ -207,15 +207,20 @@ def context_chars(messages):
     return len(json.dumps(rows, ensure_ascii=False, separators=(",", ":")))
 
 
-def prompt_tokens(messages):
-    """Ollama's prompt_eval_count per call, as LiteLLM reports it (usage.prompt_tokens), or None."""
+def usage_tokens(messages, key):
+    """Per model call, the engine's own count as LiteLLM reports it (usage.prompt_tokens is Ollama's
+    prompt_eval_count, usage.completion_tokens its eval_count), or None."""
     out = []
     for m in messages:
         if m.get("role") != "assistant":
             continue
         u = ((m.get("extra") or {}).get("response") or {}).get("usage") or {}
-        out.append(u.get("prompt_tokens") if isinstance(u, dict) else None)
+        out.append(u.get(key) if isinstance(u, dict) else None)
     return out
+
+
+def prompt_tokens(messages):
+    return usage_tokens(messages, "prompt_tokens")
 
 
 def make_env_class(bash, shims):
@@ -292,6 +297,7 @@ def run_one(task, a, cfg, agent_cfg, tag, Env):
     tail = (f"[the check ran past {limit:.0f} s and was stopped with everything it started]\n" if timed_out else "") + full[-300:]
     chars = context_chars(agent.messages)
     toks = prompt_tokens(agent.messages)
+    outs = usage_tokens(agent.messages, "completion_tokens")
     passed = check_ok and not tampered
     if passed and not a.keep:
         shutil.rmtree(ws, ignore_errors=True)
@@ -300,6 +306,9 @@ def run_one(task, a, cfg, agent_cfg, tag, Env):
     return {"id": task["id"], "name": task.get("name", task["id"]), "pass": passed,
             "checkExit": check_ok, "tampered": tampered, "rounds": agent.n_calls, "budget": budget,
             "stop": exit_status, "chars": chars, "promptTokens": toks, "cases": case_counts(full),
+            "promptTotal": sum(t for t in toks if isinstance(t, int)) if any(isinstance(t, int) for t in toks) else None,
+            "outputTokens": outs,
+            "outputTotal": sum(t for t in outs if isinstance(t, int)) if any(isinstance(t, int) for t in outs) else None,
             "peakPrompt": max([t for t in toks if isinstance(t, int)] or [0]), "numCtx": a.num_ctx,
             "ms": int((time.time() - t0) * 1000), "agentMs": agent_ms,
             "workspace": None if (passed and not a.keep) else str(ws), "output": tail}

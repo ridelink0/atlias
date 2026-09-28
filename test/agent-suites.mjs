@@ -202,6 +202,64 @@ export default async function agentSuites({ suite, asyncSuite, check, core, agen
       { happened: `${Date.now() - t1} ms; ${loopState.messages.map((m) => String(m.content || '').slice(0, 40)).join(' | ')}`, why: 'The eval sets 120 s, the action timeout of the mini-swe-agent driver it is compared with, instead of inheriting the interactive agent\'s ten minutes.', fix: 'runLoop copies limits.shellTimeoutMs onto the state for the run.' });
   });
 
+  await asyncSuite('several blocks expert', 'every block in a reply runs in order, and a failed one stops the rest by name', async () => {
+    // qwen2.5-coder:7b under the eval, 2026-09-28: 50 of 128 replies held more
+    // than one block, 96 of 221 blocks were never run and nobody said so, and 9
+    // of 9 blocks that did not parse had written "new_string=" for "new_string":.
+    const eq = loop.repairJson('{"tool":"edit_file","path":"m.py","old_string":"pass","new_string="return 1","replace_all":true}');
+    check('a key joined to its value by = is read as key and value', eq && eq.new_string === 'return 1' && eq.old_string === 'pass' && eq.replace_all === true,
+      { happened: JSON.stringify(eq), why: 'The model sent this shape 9 times in 128 replies and every one was dropped.', fix: 'repairJson tries "key"="value" as "key":"value" at key positions after the ordinary parse fails.' });
+    const inside = loop.repairJson('{"tool":"shell","command":"echo \\"a=\\" b"}');
+    check('and text inside a value is never rewritten', inside && inside.command === 'echo "a=" b', { happened: JSON.stringify(inside), why: 'Valid JSON must come back exactly as written.', fix: 'Only repair after JSON.parse fails, and only at key positions.' });
+    const many = loop.parseToolCalls([blk({ tool: 'read_file', path: 'a.txt' }), 'prose', FENCE + 'python' + NL + 'print(1)' + NL + FENCE, FENCE + 'atlias' + NL + '{"tool": "shell", "command": ' + NL + FENCE, blk({ tool: 'list_dir', path: '.' })].join(NL));
+    check('parseToolCalls returns every block in order, marks the unreadable one, and ignores code in prose', many.length === 3 && many[0].tool === 'read_file' && many[1].broken === true && many[1].tool === 'shell' && many[2].tool === 'list_dir',
+      { happened: JSON.stringify(many), why: 'The loop has to know what the model asked for, in the order it asked.', fix: 'Check parseToolCalls.' });
+
+    const P = path.join(W, 'multi');
+    fs.mkdirSync(P, { recursive: true });
+    fs.writeFileSync(path.join(P, 'n.txt'), 'one' + NL);
+    const st = agentMod.newState(P, 'ollama');
+    const seen = [];
+    await loop.runLoop(st, 'change it and look', { chat: scripted([
+      [blk({ tool: 'edit_file', path: 'n.txt', old_string: 'one', new_string: 'two' }), blk({ tool: 'read_file', path: 'n.txt' })].join(NL),
+      'Changed one to two; read it back: two.',
+    ], seen), say: () => {}, ask: async () => true, limits: { maxToolRounds: 4 } });
+    const round1 = seen[1] ? seen[1].messages.map((m) => String(m.content)).join(NL) : '';
+    check('two blocks in one reply both run, in order, in one round', fs.readFileSync(path.join(P, 'n.txt'), 'utf8').startsWith('two') && /Tool result for edit_file/.test(round1) && /Tool result for read_file[\s\S]*two/.test(round1) && seen[1].messages.filter((m) => m.role === 'assistant').length === 1,
+      { happened: `calls ${seen.length}; ${st.messages.map((m) => m.role + ': ' + String(m.content).slice(0, 90)).join(' / ')}`, why: 'Running only the first block left the model believing the rest had happened.', fix: 'runLoop runs every parsed block in text mode.' });
+
+    const st2 = agentMod.newState(P, 'ollama');
+    const seen2 = [];
+    await loop.runLoop(st2, 'try it', { chat: scripted([
+      [blk({ tool: 'edit_file', path: 'n.txt', old_string: 'not in the file', new_string: 'x' }), blk({ tool: 'shell', command: 'echo SHOULD-NOT-RUN' })].join(NL),
+      'Stopping.',
+    ], seen2), say: () => {}, ask: async () => true, limits: { maxToolRounds: 4 } });
+    const r2 = seen2[1] ? seen2[1].messages.map((m) => String(m.content)).join(NL) : '';
+    check('an edit that does not apply stops the blocks after it, and they are named', !/SHOULD-NOT-RUN\s*$/m.test(r2.replace(/"command":"echo SHOULD-NOT-RUN"/g, '')) && /Not run: block 2 \(shell\)/.test(r2) && !/Tool result for shell/.test(r2),
+      { happened: r2.slice(-500), why: 'The test run after a failed edit reports on the old file and reads as a pass.', fix: 'In text mode a dead edit ends the chain and notRun() names the rest.' });
+
+    const st3 = agentMod.newState(P, 'ollama');
+    const seen3 = [];
+    await loop.runLoop(st3, 'try again', { chat: scripted([
+      [FENCE + 'atlias' + NL + '{"tool":"edit_file","path":"n.txt",,,}}' + NL + FENCE, blk({ tool: 'shell', command: 'echo SHOULD-NOT-RUN' })].join(NL),
+      'Stopping.',
+    ], seen3), say: () => {}, ask: async () => true, limits: { maxToolRounds: 4 } });
+    const r3 = seen3[1] ? seen3[1].messages.map((m) => String(m.content)).join(NL) : '';
+    check('a block nobody can read is reported as not run, and so are the blocks after it', /block 1 of that reply \(edit_file\) was not run/.test(r3) && /Not run: block 2 \(shell\)/.test(r3) && !/Tool result for shell/.test(r3),
+      { happened: r3.slice(-500), why: 'A silently dropped edit is the worst case: the model moves on as if it had landed.', fix: 'Broken blocks stay in the list and are answered.' });
+
+    const six = Array.from({ length: loop.MAX_BLOCKS + 2 }, (_, i) => blk({ tool: 'shell', command: `echo b${i + 1}` })).join(NL);
+    const st4 = agentMod.newState(P, 'ollama');
+    const seen4 = [];
+    await loop.runLoop(st4, 'many', { chat: scripted([six, 'Done.'], seen4), say: () => {}, ask: async () => true, limits: { maxToolRounds: 4 } });
+    const r4 = seen4[1] ? seen4[1].messages.map((m) => String(m.content)).join(NL) : '';
+    check(`at most ${loop.MAX_BLOCKS} blocks of one reply run, and the rest are counted in the answer`, (r4.match(/Tool result for shell/g) || []).length === loop.MAX_BLOCKS && /2 more blocks past the 5/.test(r4),
+      { happened: r4.slice(-400), why: 'A runaway reply must not turn into an unbounded burst of commands.', fix: 'Check MAX_BLOCKS in runLoop.' });
+    const sys = loop.systemPrompt(P, { native: false, hasGraph: false });
+    check('the prompt says what the loop does with several blocks', /Several blocks in one reply run in order/.test(sys) && !/ONLY one fenced block/.test(sys),
+      { happened: sys.split(NL).filter((l) => /block/.test(l)).join(' | '), why: 'Telling the model one thing and doing another is how it learns to distrust the tool results.', fix: 'Keep systemPrompt in step with runLoop.' });
+  });
+
   await asyncSuite('patch expert', 'apply_patch, the Codex edit format', async () => {
     const P = path.join(W, 'patchwork');
     fs.mkdirSync(P, { recursive: true });
