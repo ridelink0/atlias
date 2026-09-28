@@ -49,10 +49,69 @@ const readOr = (p, fallback) => { try { return fs.readFileSync(p, 'utf8'); } cat
 const shortcutInstall = () => { writeLauncher(ROOT); return shortcut.installShortcut().lines; };
 const shortcutUninstall = () => { const r = shortcut.uninstallShortcut(); return r.length ? r.map((f) => `removed ${f}`) : ['terminal command: nothing of ours to remove']; };
 
-switch (cmd) {
+// `atlias <command> --help` prints that command's usage and runs nothing. It
+// used to be read as one more flag: `atlias eval --help` started a real eval on
+// the default model and left five workspaces behind.
+const HELP = {
+  eval: [
+    'usage: atlias eval [task ids] [options]   score tasks: the model works in a scratch copy and the check command decides',
+    '  --tier smoke|main|big     a named tier (atlias tiers lists them); default: the shipped smoke tasks',
+    '  --corpus <dir>            score the task files in another directory instead',
+    '  --only <id>               one task by id',
+    '  --sample N [--seed s]     the same N tasks every time for a given seed',
+    '  --engine ollama|openai|echo   echo is a dry run with no model',
+    '  --model <name>            score a named model without changing the settings',
+    '  --repeat k                k attempts per task; a task passes only when all k do (pass^k)',
+    '  --rounds N                override every task\'s own round budget',
+    '  --save <file.json>        keep the report for atlias compare',
+    '  --outlive-parent          keep running if the process that started the eval goes away (by default it stops)',
+    'Code the model wrote runs under a watchdog: at its limit (shell 2 min, check 60 s) it is ended with everything it',
+    'started, and whatever a task left running in the background is ended when the task is scored (ATLIAS_EVAL_REAP=0 turns that off).',
+  ],
+  compare: ['usage: atlias compare <a.json> <b.json>   two runs saved with atlias eval --save, paired task by task'],
+  tiers: ['usage: atlias tiers   the benchmark tiers, which are on this machine, and how to get the rest'],
+  polyglot: ['usage: atlias polyglot <path to a polyglot-benchmark clone> [--lang python] [--out <dir>] [--limit N] [--only name,name]'],
+  editbench: ['usage: atlias editbench <rows.jsonl> --bench canitedit|humanevalfix [--variant lazy|descriptive] [--lang python|js] [--out <dir>] [--limit N] [--only id,id] [--rounds N]'],
+  refactorbench: ['usage: atlias refactorbench <path to refactor-benchmark/refactor-benchmark> [--out <dir>] [--limit N] [--only name,name] [--max-bytes 40960] [--rounds 16]'],
+  agent: ['usage: atlias agent [--engine claude|codex|openai|ollama|echo] [--once "<prompt>"] [--resume [id]] [--sandbox]'],
+  exec: ['usage: atlias exec "<prompt>" [--engine claude|codex|openai|ollama|echo] [--resume [id]] [--sandbox] [--json]   (or pipe the prompt in)'],
+  resume: ['usage: atlias resume [id] [--engine e] [--sandbox]   carry on the last agent session in this folder'],
+  install: ['usage: atlias install [--all|--codex|--antigravity|--gemini [--gemini-hooks]|--claude|--extras [ids]|--companions|--shortcut]'],
+  uninstall: ['usage: atlias uninstall [--all|--codex|--antigravity|--gemini|--extras|--shortcut]'],
+  shortcut: ['usage: atlias shortcut [install|uninstall|status]   the atlias command in any terminal'],
+  mode: ['usage: atlias mode [both|sub|standalone]'],
+  settings: ['usage: atlias settings [list]'],
+  graph: ['usage: atlias graph query|affected|explain|update <arg>'],
+  remember: ['usage: atlias remember <name> <user|feedback|project|reference> <description> -- <body>'],
+  config: ['usage: atlias config [set <section.key> <value>]'],
+};
+HELP.run = HELP.agent;
+HELP.fly = HELP.agent;
+const beforeDashes = argv.slice(1, argv.includes('--') ? argv.indexOf('--') : undefined);
+const helpFor = cmd !== 'help' && beforeDashes.some((a) => a === '--help' || a === '-h') ? cmd : null;
+
+if (helpFor) say(HELP[helpFor] || [`atlias ${helpFor}: no usage of its own; atlias --help lists every command.`]);
+else switch (cmd) {
   case 'logo': say(logo()); break;
   // Task evaluation: the model works in a scratch copy and a command decides.
   case 'eval': {
+    // A long run whose starter is gone has nobody to read it, and on Windows
+    // nothing ends it: the orphaned head-to-head runner of 2026-09-26 kept
+    // starting tasks for hours. Checked every two seconds between tasks (a
+    // check that is running finishes first); --outlive-parent keeps it going,
+    // for a run started under nohup or the like on purpose.
+    let stopIfOrphaned = () => {};
+    if (!flag('--outlive-parent')) {
+      const first = process.ppid;
+      const gone = () => {
+        if (process.platform !== 'win32' && process.ppid !== first) return true;
+        try { process.kill(first, 0); return false; } catch (e) { return !(e && e.code === 'EPERM'); }
+      };
+      stopIfOrphaned = () => { if (gone()) { say('atlias eval: the process that started this run is gone, so the run stops here (--outlive-parent keeps it going).'); process.exit(3); } };
+      // The timer covers a long wait on the model; runSuite also asks before
+      // every attempt, because a fast engine never yields to a timer.
+      setInterval(stopIfOrphaned, 2000).unref();
+    }
     const evals = await import('../lib/eval.mjs');
     const loopMod = await import('../lib/loop.mjs');
     const cfg = config().agent;
@@ -114,7 +173,7 @@ switch (cmd) {
     // --rounds overrides every task's own budget for this run and says so in the
     // report. A tier where most runs end out of rounds is measuring the budget.
     const roundsArg = Math.max(0, parseInt(optVal('--rounds') || '0', 10) || 0);
-    const report = await evals.runSuite(tasks, { chat, state: agent.newState(cwd, engine), repeat, engineName: engine, model, corpus: corpusInfo, budget: roundsArg });
+    const report = await evals.runSuite(tasks, { chat, state: agent.newState(cwd, engine), repeat, engineName: engine, model, corpus: corpusInfo, budget: roundsArg, beforeAttempt: stopIfOrphaned });
     say(evals.format(report));
     // --save keeps the report so two runs can be compared later. A score nobody
     // wrote down cannot be the A in an A/B.

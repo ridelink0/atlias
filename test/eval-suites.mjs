@@ -19,6 +19,9 @@ const FIX = {
   id: 'eval-selftest',
   name: 'a one-line fix',
   files: {
+    // Node 18 has no module detection: without this the ESM sum.js does not
+    // load and a correct fix fails (CI's node 18 job, since 3.6.0).
+    'package.json': '{ "type": "module" }' + NL,
     'sum.js': 'export function two() { return 1; }' + NL,
     'test.mjs': "import { two } from './sum.js';" + NL + 'process.exit(two() === 2 ? 0 : 1);' + NL,
   },
@@ -58,6 +61,20 @@ export default async function register({ asyncSuite, check, TMP }) {
     const broken = await evals.runTask({ ...FIX, id: 'eval-selftest-nocheck', check: ['definitely-not-a-program-xyz'] }, { state, chat: scripted(['nothing to do']) });
     check('a check that cannot run is a failure', !broken.pass, { happened: `${broken.pass} - ${broken.why}`, why: 'A missing checker silently passing everything is the worst possible failure of a scoreboard.', fix: 'run() returning no status must score false.' });
     try { fs.rmSync(broken.workspace, { recursive: true, force: true }); } catch { /* best effort */ }
+
+    // 5. Code that never returns costs the eval's shell limit, not the ten
+    // minutes an interactive session allows (HumanEvalFix/10 on 2026-09-26).
+    check('an eval task runs its shell commands under a two-minute limit', evals.EVAL_SHELL_TIMEOUT_MS === 120000,
+      { happened: String(evals.EVAL_SHELL_TIMEOUT_MS), why: 'The same limit as the mini-swe-agent driver it is compared with, so neither side waits longer on a hung check.', fix: 'Check EVAL_SHELL_TIMEOUT_MS in lib/eval.mjs.' });
+    const hangAt = Date.now();
+    const hung = await evals.runTask({ ...FIX, id: 'eval-selftest-hang' }, {
+      state,
+      shellTimeoutMs: 2000,
+      chat: scripted([blk({ tool: 'shell', command: `${JSON.stringify(process.execPath)} -e "setTimeout(() => {}, 60000)"` }), 'Gave up.']),
+    });
+    check('and a hanging command inside a task is stopped at the limit the run set', Date.now() - hangAt < 20000 && !hung.pass,
+      { happened: `${Date.now() - hangAt} ms, pass=${hung.pass}`, why: 'runTask has to hand its limit to the loop, or the limit exists only in a test of the loop.', fix: 'runTask passes shellTimeoutMs in limits.' });
+    try { if (hung.workspace) fs.rmSync(hung.workspace, { recursive: true, force: true }); } catch { /* best effort */ }
 
     // 5. The task files on disk are what the task said they were.
     const dir = evals.makeWorkspace(FIX, 'shape');

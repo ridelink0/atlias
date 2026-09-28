@@ -15,6 +15,25 @@ const TMP = fs.mkdtempSync(path.join(os.tmpdir(), 'atlias-test-'));
 process.env.ATLIAS_HOME = path.join(TMP, 'state');
 process.env.CLAUDE_CONFIG_DIR = path.join(TMP, 'claude');
 process.env.CODEX_HOME = path.join(TMP, 'codex');
+// Dozens of scripted eval tasks run here; each would otherwise list every
+// process on Windows to find what it left behind. The one suite that tests that
+// asks for it by name (test/proc-suites.mjs).
+process.env.ATLIAS_EVAL_REAP = '0';
+// No background workers from this run: a detached graph worker kept its cwd in
+// the test project and the temp tree could not be deleted (the leak the judge
+// saw twice). Hooks spawned by the suite inherit this.
+process.env.ATLIAS_NO_DETACH = '1';
+// Temp trees of earlier runs that were killed before their cleanup (an agent's
+// two-minute tool limit ends a run mid-way) are removed once they are a day
+// old. Only this suite's own prefix, and never one young enough to be running.
+try {
+  for (const name of fs.readdirSync(os.tmpdir())) {
+    if (!/^atlias-test-[A-Za-z0-9]{6}$/.test(name)) continue;
+    const p = path.join(os.tmpdir(), name);
+    if (p === TMP || Date.now() - fs.statSync(p).mtimeMs < 24 * 3600 * 1000) continue;
+    fs.rmSync(p, { recursive: true, force: true, maxRetries: 3, retryDelay: 100 });
+  }
+} catch { /* a sweep that cannot run leaves things as they were */ }
 fs.mkdirSync(process.env.CLAUDE_CONFIG_DIR, { recursive: true });
 fs.mkdirSync(process.env.CODEX_HOME, { recursive: true });
 const PROJECT = path.join(TMP, 'project');
@@ -53,6 +72,13 @@ async function asyncSuite(expert, name, fn) {
   current = { expert, name, passed: 0, failed: [] };
   results.push(current);
   try { await fn(); } catch (e) { current.failed.push({ test: '(suite crashed)', happened: String(e && e.stack || e), why: 'A crash means every later check in this suite did not run.', fix: 'Fix the exception first, then re-run this suite alone.' }); }
+}
+// A check that cannot be run on this machine (no Python, no corpus) is skipped
+// by name with the reason, printed, and never counted as passed: a skip that
+// reads as a pass is the pretending the suite exists to prevent.
+const skipped = [];
+function skip(test, why) {
+  skipped.push({ suite: current ? current.name : '', test, why });
 }
 function check(test, cond, { happened, why, fix }) {
   if (cond) { current.passed++; return true; }
@@ -925,8 +951,9 @@ await (await import('./skills-suites.mjs')).default({ suite, check, core, TMP, R
 await (await import('./sandbox-suites.mjs')).default({ suite, asyncSuite, check, core, agentMod, TMP, ROOT, fs, path, spawnSync });
 await (await import('./exit-suites.mjs')).default({ suite, asyncSuite, check, core, agentMod, TMP, fs, path });
 await (await import('./context-suites.mjs')).default({ asyncSuite, check, agentMod, TMP, fs, path });
-await (await import('./editbench-suites.mjs')).default({ asyncSuite, check, TMP, fs, path });
+await (await import('./editbench-suites.mjs')).default({ asyncSuite, check, skip, TMP, fs, path });
 await (await import('./tier-suites.mjs')).default({ asyncSuite, check, TMP, ROOT, fs, path, spawnSync });
+await (await import('./proc-suites.mjs')).default({ asyncSuite, check, skip, TMP, ROOT, fs, path });
 await (await import('./coverage-suites.mjs')).default({ suite, check, ROOT, fs, path });
 
 let failed = 0;
@@ -938,8 +965,9 @@ for (const r of results) {
     process.stdout.write(`  x ${f.test}\n    What happened: ${String(f.happened).replace(/\n/g, '\n                   ')}\n    Why it matters: ${f.why}\n    Fix: ${f.fix}\n`);
   }
 }
+for (const s of skipped) process.stdout.write(`SKIP ${s.suite}: ${s.test}\n    Why: ${s.why}\n`);
 const total = results.reduce((n, r) => n + r.passed + r.failed.length, 0);
-process.stdout.write(`\n${total - failed}/${total} checks passed across ${results.length} suites.\n`);
+process.stdout.write(`\n${total - failed}/${total} checks passed across ${results.length} suites${skipped.length ? `, ${skipped.length} skipped (listed above, not counted)` : ''}.\n`);
 // The suite's own temp tree, removed with retries: on Windows a directory whose
 // handle a just-spawned child still holds cannot be deleted, and a single
 // attempt inside a silent catch left twelve of these behind in one evening.

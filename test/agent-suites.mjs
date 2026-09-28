@@ -162,6 +162,46 @@ export default async function agentSuites({ suite, asyncSuite, check, core, agen
     check('a failing check is recorded as a failure', /^exit 1/.test(failed) && ev && ev.verify === true && ev.outcome === 'fail', { happened: JSON.stringify(ev), why: 'The gate refuses a pass claim after a failing run only if the failure was recorded.', fix: 'shell records integrity.verdict for checks.' });
   });
 
+  await asyncSuite('timeout expert', 'a shell command that hangs is stopped with everything it started', async () => {
+    // On 2026-09-26 the main-tier head-to-head ran HumanEvalFix/10, whose buggy
+    // make_palindrome never returns. The model ran `python check.py`; the shell
+    // tool waited its full ten minutes, killed cmd.exe only, and left python
+    // spinning a core forever - three of them in half an hour. The stand-in here
+    // is a node that records its pid and would idle for 60 s: a grandchild,
+    // through the shell, exactly like python under cmd.exe.
+    const node = JSON.stringify(process.execPath);
+    const pidFile = path.join(W, 'hang.pid');
+    try { fs.rmSync(pidFile, { force: true }); } catch { /* none */ }
+    const hang = `${node} -e "require('fs').writeFileSync(${JSON.stringify(pidFile).replace(/"/g, "'")}, String(process.pid)); setTimeout(() => {}, 60000)"`;
+    const alive = (pid) => { try { process.kill(pid, 0); return true; } catch (e) { return e.code === 'EPERM'; } };
+    const st = fresh();
+    st.shellTimeoutMs = 3000;
+    const t0 = Date.now();
+    const out = await loop.runTool(st, { tool: 'shell', command: hang });
+    const took = Date.now() - t0;
+    const pid = Number(fs.existsSync(pidFile) ? fs.readFileSync(pidFile, 'utf8') : 0);
+    // Give the OS a moment to reap what was killed.
+    const deadline = Date.now() + 5000;
+    while (pid && alive(pid) && Date.now() < deadline) await new Promise((r) => setTimeout(r, 100));
+    check('a command past its time limit returns at the limit, not ten minutes later', took < 15000 && /^timed out after 3 s/.test(out),
+      { happened: `${took} ms: ${out.slice(0, 80)}`, why: 'An eval task whose code loops forever cost ten minutes per check run, and a 14-round task can run the check every round.', fix: 'The shell tool honours state.shellTimeoutMs.' });
+    check('and what it started is gone too, not left spinning a core', pid > 0 && !alive(pid),
+      { happened: `grandchild pid ${pid} alive=${pid ? alive(pid) : 'no pid file'}`, why: 'Killing the shell alone orphans the program it ran; on Windows nothing reaps it, and each one holds a core until the machine restarts.', fix: 'On a timeout, kill the whole tree (taskkill /T on Windows, the process group elsewhere).' });
+    const quick = await loop.runTool(st, { tool: 'shell', command: `${node} -e "process.stdout.write('ok')"` });
+    check('and a command that finishes in time is untouched by the limit', /^exit 0\nok/.test(quick), { happened: quick, why: 'The limit is for the hung command, not the normal one.', fix: 'Only a timer that fires kills anything.' });
+    const direct = await loop.runShellCommand(`${node} -e "process.stdout.write('o'); process.stderr.write('e'); process.exit(3)"`, { cwd: W, timeoutMs: 20000 });
+    const stopped = await loop.runShellCommand(hang, { cwd: W, timeoutMs: 1500 });
+    check('runShellCommand answers in spawnSync\'s shape, with the timeout marked', direct.status === 3 && direct.stdout === 'o' && direct.stderr === 'e' && !direct.timedOut && !direct.error
+        && stopped.timedOut === true && stopped.error && stopped.error.code === 'ETIMEDOUT',
+      { happened: JSON.stringify({ direct, stopped: { ...stopped, error: stopped.error && stopped.error.code } }), why: 'The integrity verdict and the result line read status, output and error exactly as spawnSync gave them.', fix: 'Keep the fields of spawnSync\'s result.' });
+    const loopState = fresh();
+    loopState.messages = [];
+    const t1 = Date.now();
+    await loop.runLoop(loopState, 'run it', { chat: scripted([blk({ tool: 'shell', command: hang }), 'Done.'], []), say: () => {}, ask: async () => true, limits: { maxToolRounds: 3, shellTimeoutMs: 2000 } });
+    check('a run can set the limit for itself, as an eval task does', Date.now() - t1 < 15000 && loopState.messages.some((m) => /timed out after 2 s/.test(String(m.content || ''))),
+      { happened: `${Date.now() - t1} ms; ${loopState.messages.map((m) => String(m.content || '').slice(0, 40)).join(' | ')}`, why: 'The eval sets 120 s, the action timeout of the mini-swe-agent driver it is compared with, instead of inheriting the interactive agent\'s ten minutes.', fix: 'runLoop copies limits.shellTimeoutMs onto the state for the run.' });
+  });
+
   await asyncSuite('patch expert', 'apply_patch, the Codex edit format', async () => {
     const P = path.join(W, 'patchwork');
     fs.mkdirSync(P, { recursive: true });
