@@ -779,6 +779,30 @@ suite('engine handshake expert', 'engine handshake', () => {
   const alwaysFail = () => { always++; return { status: 1, stdout: '', stderr: 'nope', error: null }; };
   const bad = agentMod.claudeTurn(agentMod.newState(PROJECT, 'claude'), 'hello', { run: alwaysFail });
   check('an engine that will not answer says so plainly and stops', /claude failed/.test(bad) && always === 2, { happened: bad + ' after ' + always + ' call(s)', why: 'Two attempts is a fallback; more would be a loop the user pays for.', fix: 'Return the failure after the single retry.' });
+  const shimDir = 'C:\\tools\\npm';
+  const shims = {
+    [path.win32.join(shimDir, 'tool.cmd')]: '@ECHO off\r\nSETLOCAL\r\nCALL :find_dp0\r\n"%dp0%\\node_modules\\tool\\bin\\tool.exe"   %*\r\n',
+    [path.win32.join(shimDir, 'jstool.cmd')]: 'IF EXIST "%dp0%\\node.exe" (\r\n  SET "_prog=%dp0%\\node.exe"\r\n)\r\n"%_prog%"  "%dp0%\\node_modules\\jstool\\cli.js" %*\r\n',
+    [path.win32.join(shimDir, 'odd.cmd')]: '@echo something else\r\n',
+  };
+  const readShim = (f) => { if (f in shims) return shims[f]; throw Object.assign(new Error('ENOENT'), { code: 'ENOENT' }); };
+  const shimEnv = { PATH: 'C:\\nowhere;' + shimDir };
+  const viaExe = agentMod.resolveCommand('tool', ['--version'], { platform: 'win32', env: shimEnv, read: readShim });
+  check('an npm shim that wraps a program is run as that program', viaExe.file === 'C:\\tools\\npm\\node_modules\\tool\\bin\\tool.exe' && viaExe.args.join(' ') === '--version', { happened: JSON.stringify(viaExe), why: 'Node refuses to spawn a .cmd without a shell, so on a Windows machine with the CLI from npm the engine was reported missing and never ran.', fix: 'Read the shim for the program it launches in resolveCommand.' });
+  const viaJs = agentMod.resolveCommand('jstool', ['-p'], { platform: 'win32', env: shimEnv, read: readShim });
+  check('an npm shim that wraps a script is run with node', viaJs.file === process.execPath && viaJs.args[0] === 'C:\\tools\\npm\\node_modules\\jstool\\cli.js' && viaJs.args[1] === '-p', { happened: JSON.stringify(viaJs), why: 'Older npm packages ship a .js entry, and the shim hands it to node.', fix: 'Run a .js, .cjs or .mjs target through process.execPath.' });
+  const untouched = [agentMod.resolveCommand('odd', ['x'], { platform: 'win32', env: shimEnv, read: readShim }), agentMod.resolveCommand('missing', ['x'], { platform: 'win32', env: shimEnv, read: readShim }), agentMod.resolveCommand('tool', ['x'], { platform: 'linux', env: shimEnv, read: readShim })];
+  check('anything that is not an npm shim is left alone', untouched.every((r, i) => r.file === ['odd', 'missing', 'tool'][i] && r.args[0] === 'x'), { happened: JSON.stringify(untouched), why: 'A guess at a program path is worse than the plain name, which at least fails with a clear ENOENT.', fix: 'Return the command unchanged when no shim matches or off Windows.' });
+  if (process.platform === 'win32') {
+    const realDir = path.join(TMP, 'shim-bin');
+    fs.mkdirSync(path.join(realDir, 'node_modules', 'echoargs'), { recursive: true });
+    fs.writeFileSync(path.join(realDir, 'node_modules', 'echoargs', 'cli.js'), 'process.stdout.write(JSON.stringify(process.argv.slice(2)))');
+    fs.writeFileSync(path.join(realDir, 'echoargs.cmd'), '@ECHO off\r\n"%_prog%"  "%dp0%\\node_modules\\echoargs\\cli.js" %*\r\n');
+    const tricky = ['a b', 'x"y', '100%', '&whoami'];
+    const target = agentMod.resolveCommand('echoargs', tricky, { env: { PATH: realDir } });
+    const ran = spawnSync(target.file, target.args, { encoding: 'utf8', timeout: 15000, windowsHide: true });
+    check('arguments reach the program exactly, with no shell in between', ran.status === 0 && ran.stdout === JSON.stringify(tricky), { happened: 'status ' + ran.status + ' stdout ' + JSON.stringify(ran.stdout) + (ran.error ? ' error ' + ran.error.code : ''), why: 'A shell would split, expand or run parts of these; the prompt and flags must arrive as written.', fix: 'Spawn the shim target directly in resolveCommand, never through cmd.exe.' });
+  }
 });
 
 suite('small edges expert', 'small edges', () => {
