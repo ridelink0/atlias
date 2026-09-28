@@ -255,6 +255,13 @@ export default async function exitSuites({ suite, asyncSuite, check, core, agent
     const rq = await edit('q.py', 'pass', 'def calculate_discount(basket):\n    return 0');
     check('a def that would become the body of a different function is refused, not nested', got('q.py') === 'def total(basket):\n    pass\n' && loop.editFailKind(rq) === 'would-not-parse', { happened: JSON.stringify(got('q.py')) + ' || ' + rq.slice(0, 160), why: 'book-store in poly-B2: a helper written in place of total\'s pass. Nested, it parses and total returns None; nobody meant that.', fix: 'reindentCandidates returns nothing when new_string starts with a def or class and the enclosing block is a different def.' });
 
+    // HumanEvalFix Python/11, 2026-09-28: a helper nested in the function, restated
+    // whole at column 0 in both old_string and new_string. It belongs where it was.
+    put('x.py', "def string_xor(a, b):\n    def xor(i, j):\n        if i == j:\n            return '1'\n        else:\n            return '0'\n\n    return ''.join(xor(x, y) for x, y in zip(a, b))\n");
+    const rx = await edit('x.py', "def xor(i, j):\n    if i == j:\n        return '1'\n    else:\n        return '0'", "def xor(i, j):\n    if i == j:\n        return '0'\n    else:\n        return '1'");
+    check('a nested helper restated whole at column 0 replaces itself in place, re-indented', got('x.py') === "def string_xor(a, b):\n    def xor(i, j):\n        if i == j:\n            return '0'\n        else:\n            return '1'\n\n    return ''.join(xor(x, y) for x, y in zip(a, b))\n" && /re-indented/.test(rx),
+      { happened: JSON.stringify(got('x.py')) + ' || ' + rx.slice(0, 200), why: 'The refusal meant for a def written into another function\'s body also refused a def replacing itself, and the model spent two rounds working around it.', fix: 'reindentCandidates allows a def under an enclosing def when the replaced text starts with the same header.' });
+
     put('m.py', 'class Tree:\n    pass\n');
     await edit('m.py', 'pass', 'def build(self):\n        return 1');
     check('while a method written in place of a class body\'s pass still lands in the class', got('m.py') === 'class Tree:\n    def build(self):\n        return 1\n', { happened: JSON.stringify(got('m.py')), why: 'A def inside a class body is a method, which is what the model meant there.', fix: 'Only an enclosing def blocks the repair.' });
@@ -278,7 +285,7 @@ export default async function exitSuites({ suite, asyncSuite, check, core, agent
 
     put('g.py', 'x = foo(1)\n');
     const r7 = await edit('g.py', 'foo(1)', 'foo(\n1');
-    check('a mid-line edit is never widened to its line', got('g.py') === 'x = foo(1)\n' && loop.editFailKind(r7) === 'would-not-parse' && st.editRepaired === 8, { happened: r7.slice(0, 200) + ' || repaired=' + st.editRepaired, why: 'With code before the match that new_string does not repeat, there is no line to re-base on, and widening would delete that code.', fix: 'reindentCandidates returns nothing when the prefix is code new_string does not start with.' });
+    check('a mid-line edit is never widened to its line', got('g.py') === 'x = foo(1)\n' && loop.editFailKind(r7) === 'would-not-parse' && st.editRepaired === 9, { happened: r7.slice(0, 200) + ' || repaired=' + st.editRepaired, why: 'With code before the match that new_string does not repeat, there is no line to re-base on, and widening would delete that code.', fix: 'reindentCandidates returns nothing when the prefix is code new_string does not start with.' });
 
     put('h.py', 'def k():\r\n    pass\r\n\r\nk()\r\n');
     await edit('h.py', 'pass', '    a = 1\r\n    return a');
