@@ -587,7 +587,7 @@ export default async function register({ asyncSuite, check, TMP }) {
     const A = { results: [{ id: 't1', pass: true, chars: 1000, handed: 800, promptTotal: 5000, outputTotal: 500 }, { id: 't2', pass: false, chars: 2000, handed: 1500, promptTotal: 7000, outputTotal: 700 }] };
     const B = { results: [{ id: 't1', pass: true, chars: 900, promptTokens: [1000, 2000], outputTokens: [50, 50] }, { id: 't2', pass: true, chars: 900, promptTokens: [1000, null], outputTokens: [50] }] };
     const text = evals.formatCompare(evals.compare(A, B), 'atlias', 'mini');
-    check('compare prints engine tokens per passing attempt for both, from totals or from the per-round lists', /engine tokens: atlias 12k prompt \+ 1k output, 13\.2k per passing attempt; mini 4k prompt \+ 0k output, 2\.1k per passing attempt/.test(text) && /handed at the end/.test(text),
+    check('compare prints engine tokens per passing attempt for both, from totals or from the per-round lists', /engine tokens: atlias 12k prompt \(12\.0k per passing attempt\) \+ 1k output; mini 4k prompt \(2\.0k per passing attempt\) \+ 0k output/.test(text) && /handed at the end/.test(text),
       { happened: text.split(NL).filter((l) => /engine tokens|handed/.test(l)).join(' | '), why: 'The head-to-head is judged on the cost of a solve, and the mini-swe-agent runner keeps only per-round lists.', fix: 'Check costOf tok() in compare.' });
   });
 }
