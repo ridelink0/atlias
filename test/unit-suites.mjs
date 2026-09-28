@@ -60,7 +60,13 @@ export default async function unitSuites({ suite, asyncSuite, check, PROJECT, TM
     const flag = path.join(U, 'detached.flag');
     const script = path.join(U, 'detached.mjs');
     fs.writeFileSync(script, 'import fs from "node:fs"; fs.writeFileSync(' + JSON.stringify(flag) + ', "ok");');
+    // The runner sets ATLIAS_NO_DETACH for the whole suite; this check is the
+    // one place that wants a real background process, so it lifts it briefly.
+    const refused = core.detach([script]);
+    check('with ATLIAS_NO_DETACH=1 nothing is started in the background', process.env.ATLIAS_NO_DETACH === '1' && refused === false && !fs.existsSync(flag), { happened: `env ${process.env.ATLIAS_NO_DETACH}, detach returned ${refused}`, why: 'A graph worker the suite started kept its cwd in the temp tree, which then could not be deleted.', fix: 'detach returns false when ATLIAS_NO_DETACH is 1.' });
+    delete process.env.ATLIAS_NO_DETACH;
     const started = core.detach([script]);
+    process.env.ATLIAS_NO_DETACH = '1';
     let seen = false;
     // Up to 15 s: a process start on a loaded Windows machine can take several.
     for (let i = 0; i < 150 && !seen; i++) { await sleep(100); seen = fs.existsSync(flag); }
@@ -192,6 +198,29 @@ export default async function unitSuites({ suite, asyncSuite, check, PROJECT, TM
     fs.writeFileSync(path.join(otherHome, '.agents', 'skills', 'ultimate-frontend-skills', 'SKILL.md'), '# UFS');
     const other = core.ufsCopies({ claudeDir: cdir, home: otherHome });
     check('a copy only other agents load is listed but does not block the Claude Code install', core.ufsInstallPlan(other).install && other.length === 1 && other[0].loaded === false, { happened: JSON.stringify(other), why: 'Claude Code does not load ~/.agents/skills, so refusing would leave it without UFS.', fix: 'Only loaded copies and installed plugins block the install.' });
+    // Project scope: <cwd>/.claude/settings.json, then settings.local.json, and
+    // <cwd>/.claude/skills, as Claude Code reads them inside that project.
+    const proj = path.join(base, 'a-project');
+    fs.mkdirSync(path.join(proj, '.claude'), { recursive: true });
+    fs.rmSync(path.join(otherHome, '.agents'), { recursive: true, force: true });
+    fs.writeFileSync(path.join(proj, '.claude', 'settings.json'), JSON.stringify({ enabledPlugins: { 'ultimate-frontend-skills@ultimate-frontend-skills': true } }));
+    const inProject = core.ufsCopies({ claudeDir: cdir, home: otherHome, cwd: proj });
+    check('UFS enabled only in the project .claude/settings.json counts as loaded there, so --companions installs nothing', inProject.filter((x) => x.loaded).length === 1 && !core.ufsInstallPlan(inProject).install,
+      { happened: JSON.stringify(inProject), why: 'Reading only the user settings, `atlias install --companions` inside such a project added a second, user-wide copy.', fix: 'ufsCopies merges <cwd>/.claude/settings.json and settings.local.json into the enabled map.' });
+    fs.writeFileSync(path.join(proj, '.claude', 'settings.local.json'), JSON.stringify({ enabledPlugins: { 'ultimate-frontend-skills@ultimate-frontend-skills': false } }));
+    const localOff = core.ufsCopies({ claudeDir: cdir, home: otherHome, cwd: proj });
+    check('settings.local.json wins over settings.json, as it does in Claude Code', localOff.length === 1 && localOff[0].loaded === false && /enable it/.test(core.ufsInstallPlan(localOff).say),
+      { happened: JSON.stringify(localOff), why: 'The local file is the one a user edits to switch a plugin off for themselves.', fix: 'Merge the scopes in order: user, user local, project, project local.' });
+    fs.rmSync(path.join(proj, '.claude', 'settings.local.json'));
+    fs.rmSync(path.join(proj, '.claude', 'settings.json'));
+    fs.mkdirSync(path.join(proj, '.claude', 'skills', 'ultimate-frontend-skills'), { recursive: true });
+    fs.writeFileSync(path.join(proj, '.claude', 'skills', 'ultimate-frontend-skills', 'SKILL.md'), '# UFS');
+    const projSkills = core.ufsCopies({ claudeDir: cdir, home: otherHome, cwd: proj });
+    check('a project skills folder is a loaded copy too', projSkills.length === 1 && projSkills[0].kind === 'skills' && projSkills[0].loaded && !core.ufsInstallPlan(projSkills).install,
+      { happened: JSON.stringify(projSkills), why: 'Claude Code loads <project>/.claude/skills; a user-wide install beside it is the second copy.', fix: 'ufsCopies looks in the project skills folder.' });
+    const atHome = core.ufsCopies({ claudeDir: path.join(proj, '.claude'), home: otherHome, cwd: proj });
+    check('run from the folder whose .claude is the user settings, nothing is counted twice', atHome.length === 1,
+      { happened: JSON.stringify(atHome), why: 'In the home folder the project scope and the user scope are one folder; counting it twice reports two copies of one.', fix: 'ufsCopies skips the project scope when it is the user scope.' });
     const settingsPath = path.join(process.env.CLAUDE_CONFIG_DIR, 'settings.json');
     const before = core.readText(settingsPath);
     fs.writeFileSync(settingsPath, JSON.stringify({ enabledPlugins: { 'ultimate-website-skills@x': true } }));
