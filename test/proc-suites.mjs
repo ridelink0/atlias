@@ -84,7 +84,11 @@ export default async function procSuites({ asyncSuite, check, skip, TMP, ROOT, f
     // spawnSync that overflows ends the watchdog alone, which would orphan the
     // printer; the watchdog caps what it passes on instead.
     const spewPid = pidFile();
-    const spew = `${node} -e "require('fs').writeFileSync(${JSON.stringify(spewPid).replace(/"/g, "'")}, String(process.pid)); const s = 'x'.repeat(65536); for (;;) process.stdout.write(s)"`;
+    // Synchronous writes: process.stdout.write to a pipe is asynchronous on
+    // POSIX, and a loop that never yields would queue its output in memory
+    // instead of sending it (CI's Linux and macOS jobs saw 8 KB to 300 KB).
+    // EAGAIN from a full pipe is retried, as a printer that never stops would.
+    const spew = `${node} -e "const fs = require('fs'); fs.writeFileSync(${JSON.stringify(spewPid).replace(/"/g, "'")}, String(process.pid)); const s = 'x'.repeat(65536); for (;;) { try { fs.writeSync(1, s); } catch (e) { /* EAGAIN: try again */ } }"`;
     const sp = proc.runSync(spew, [], { shell: true, timeoutMs: 3000, maxBuffer: 1024 * 1024 });
     const printer = await waitFor(spewPid, 1000);
     check('a command that prints for ever is capped, stopped at its limit, and gone', sp.timedOut === true && sp.stdout.length <= 1024 * 1024 && /output past \d+ bytes was dropped/.test(sp.stdout) && printer > 0 && await goneWithin(printer, 8000),
