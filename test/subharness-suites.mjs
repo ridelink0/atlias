@@ -33,6 +33,12 @@ export default async function subharnessSuites({ suite, check, core, gate, track
     const edges = track.runsEditedFile('python main.py; echo done', [main]) && track.runsEditedFile('python main.py', [winPath]) && !track.runsEditedFile('python domain.py', [winPath]);
     check('running the file this turn edited counts, naming it anywhere else does not', off.length === 0 && edges && !track.runsEditedFile('python main.py', []), { happened: 'wrong for: ' + off.join(' | '), why: 'atlias\'s own loop has always counted running an edited program as checking it; the hooks did not, so a reply that had run its code was held for having checked nothing.', fix: 'runsEditedFile in lib/track.mjs.' });
 
+    const s0 = sid('is-check');
+    router.prompt({ session_id: s0, cwd: PROJECT, prompt: 'edit main so f rounds up please' });
+    const before = track.isCheck('python main.py', s0);
+    track.postTool({ session_id: s0, cwd: PROJECT, tool_name: 'Edit', tool_input: { file_path: main } });
+    check('isCheck counts running a file only once this turn has edited it, and a check script always', !before && track.isCheck('python main.py', s0) && track.isCheck('python check.py', s0) && !track.isCheck('git status', s0), { happened: JSON.stringify({ before, after: track.isCheck('python main.py', s0) }), why: 'Running a file nobody changed checks nothing this turn did.', fix: 'isCheck reads the turn\'s edit events.' });
+
     const s = sid('run-edited');
     router.prompt({ session_id: s, cwd: PROJECT, prompt: 'make f in main round up please' });
     track.postTool({ session_id: s, cwd: PROJECT, tool_name: 'Edit', tool_input: { file_path: main } });
@@ -49,6 +55,11 @@ export default async function subharnessSuites({ suite, check, core, gate, track
     const start = (name) => { const s = sid(name); router.prompt({ session_id: s, cwd: PROJECT, prompt: 'Fix the bug in f in solution.py please' }); return s; };
     const edit = (s) => track.postTool({ session_id: s, cwd: PROJECT, tool_name: 'Edit', tool_input: { file_path: file } });
     const checkRun = (s, stdout, stderr = '') => track.postTool({ session_id: s, cwd: PROJECT, tool_name: 'PowerShell', tool_input: { command: 'python check.py' }, tool_response: { stdout, stderr } });
+
+    const ed = { kind: 'edit', files: ['solution.py'] };
+    const ok = { kind: 'shell', verify: true, command: 'python check.py', outcome: 'unknown' };
+    const ls = { kind: 'shell', verify: false, command: 'ls' };
+    check('lastVerificationAfterEdit finds the last check after the last edit and nothing before it', gate.lastVerificationAfterEdit([ed, ok, ls]) === ok && gate.lastVerificationAfterEdit([ok, ed]) === null && gate.lastVerificationAfterEdit([ok]) === ok && gate.lastVerificationAfterEdit([]) === null, { happened: JSON.stringify([gate.lastVerificationAfterEdit([ed, ok, ls]), gate.lastVerificationAfterEdit([ok, ed])]), why: 'The second-pass request tells the model no tool call is needed only when this is right.', fix: 'Check lastVerificationAfterEdit in lib/gate.mjs.' });
 
     const a = start('after');
     edit(a); checkRun(a, 'all tests passed');
@@ -76,9 +87,9 @@ export default async function subharnessSuites({ suite, check, core, gate, track
   suite('brief rounds expert', 'the brief asks for the fewest rounds', () => {
     const cc = brief.build({ cwd: PROJECT, session_id: sid('brief-cc'), source: 'startup' }, 'claude');
     const cx = brief.build({ cwd: PROJECT, session_id: sid('brief-cx'), source: 'startup' }, 'codex');
-    check('Claude Code is told to send the edit and its check in one message', /send the edit and the command that checks it in the same message/.test(cc) && /Every tool round re-sends the whole context/.test(cc), { happened: (cc.match(/Every tool round[^\n]*/) || ['(no rounds rule)'])[0], why: 'Plain Claude Code spent a round on the check alone in every HumanEvalFix task of the study; the pair in one message saves it, and Claude Code runs them in order (probed: a Write then a PowerShell read of the file, one message, the read saw the write).', fix: 'roundsRule(host) in lib/brief.mjs.' });
-    check('other hosts are not told what was only checked in Claude Code', !/same message/.test(cx) && /Every tool round re-sends the whole context/.test(cx), { happened: (cx.match(/Every tool round[^\n]*/) || ['(no rounds rule)'])[0], why: 'Whether Codex or Gemini CLI run one message\'s calls in order was not checked; telling them to rely on it could run a check before its edit.', fix: 'Only host claude gets the pair clause.' });
-    const taught = (cc.match(/\("(Pass 1:[^"]+)"\)/) || [])[1] || '';
+    check('Claude Code is told to send the edit and its check in one message', /send an edit and the command that checks it in the same message/.test(cc) && /Every tool round re-sends the whole context/.test(cc) && brief.roundsRule('claude') !== brief.roundsRule('codex'), { happened: (cc.match(/Every tool round[^\n]*/) || ['(no rounds rule)'])[0], why: 'Plain Claude Code spent a round on the check alone in every HumanEvalFix task of the study; the pair in one message saves it, and Claude Code runs them in order (probed: a Write then a PowerShell read of the file, one message, the read saw the write).', fix: 'roundsRule(host) in lib/brief.mjs.' });
+    check('other hosts are not told what was only checked in Claude Code', !/same message/.test(cx) && !/same message/.test(brief.roundsRule('gemini')) && /Every tool round re-sends the whole context/.test(cx), { happened: (cx.match(/Every tool round[^\n]*/) || ['(no rounds rule)'])[0], why: 'Whether Codex or Gemini CLI run one message\'s calls in order was not checked; telling them to rely on it could run a check before its edit.', fix: 'Only host claude gets the pair clause.' });
+    const taught = (cc.match(/"(Pass 1:[^"]+)"/) || [])[1] || '';
     check('the line the brief teaches satisfies the gate', Boolean(taught) && gate.PASS_RE.test(taught), { happened: taught || '(no example line in the brief)', why: 'A brief that teaches a line the gate does not accept buys the held turn it was written to save.', fix: 'Keep the example in RULES in step with PASS_RE in lib/gate.mjs.' });
   });
 }
