@@ -1,5 +1,20 @@
 # Changelog
 
+## 3.8.1 (2026-09-28)
+
+In Claude Code, the gate stops buying rounds it does not need. Measured against plain Claude Code on the same 34 tasks with the same model, atlias 3.8.0 cost twice the prompt tokens per solved task; this release brings that to 1.25 times, with no task lost. It does not yet beat plain Claude Code.
+
+The study (Claude Code 2.1.283, Sonnet 5 at medium effort, headless, one fresh workspace per task, hidden graders; 20 HumanEvalFix, 10 CanItEdit and 4 refactor tasks drawn with atlias's seeded sampler) ran plain Claude Code against Claude Code with only atlias added. With 3.8.0 both solved about the same (32 and 31 of 34) but atlias read 282.9k prompt tokens per solved task against 141.5k (ratio 2.00, 95 per cent 1.70 to 2.43), and the gate held 32 of 34 replies. The transcripts say why: `python check.py` ran and passed, but the hooks did not count it as a check, so the gate said "no check ran this turn" (false) and asked for the second pass, and the model re-ran the passing check before it replied. Every held reply is at least one more round, and every round re-sends the whole context.
+
+- A project's own check script run by name is a check (check.py, canitedit_check.py, test_x.py, run_tests.sh, by path or through PowerShell's &), and so are `python -m unittest` and a `python -c` or `node -e` one-liner that asserts; checkout.py, main.py and a bare print are not. The agent loop counts these too.
+- The hooks count running a file this turn edited as a check, the rule the agent loop already had (`python main.py`, `from main import f`).
+- When a check already ran after the last edit and did not fail, the second-pass request says so and that no tool call is needed if the re-read finds nothing.
+- The brief teaches the line the gate accepts ("Pass 1: ... Pass 2: ..."), so the second pass happens inside the first reply, and tells Claude Code to send an edit and its check in the same message. Claude Code runs one message's calls in order (probed: a Write then a PowerShell read of the file in one message; the read saw the write); other hosts were not probed and are not told to.
+
+Measured on fb81be3 (the brief rules were then shortened to fit the brief's 3200-character limit, 1abed38; that final text is not yet measured): 32 of 34 solved in both arms, 177.1k prompt tokens per solved task against 141.5k (ratio 1.25, 95 per cent 1.14 to 1.38), gate holds 8 instead of 32. On the 12 task pairs no cancelled hook touched, 1.16 (1.06 to 1.29). What is left: about 1.3k tokens a call of brief, skill and tool listing, which is the whole gap on the 8 clean HumanEvalFix pairs (4 rounds each, 122.4k against 117.7k per task); CanItEdit, where plain Claude Code ran no check at all and atlias's check costs a round; and the model did not send an edit and its check together. Under the load of the study Claude Code cancelled 80 atlias hook calls in 22 of the 34 runs, and a cancelled PostToolUse leaves a check unrecorded, so the gate can still say "no check ran" when one did; the rows those touched are reported apart. The study, the per-task rows and the scripts are in D:/harness-work/runs/cc-token-study-0928.
+
+Also: npm-installed claude and codex CLIs start on Windows without a shell (Node refuses to spawn a .cmd without one since the CVE-2024-27980 fix, so the agent reported the engine missing).
+
 ## 3.8.0 (2026-09-28)
 
 Code the model wrote can no longer outlive the harness, every block a model writes is run or answered, and the first head-to-head against mini-swe-agent on a corpus off the floor.
