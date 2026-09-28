@@ -166,6 +166,8 @@ export default async function procSuites({ asyncSuite, check, skip, TMP, ROOT, f
     const py = poly.resolveRunner('python', { bare: true });
     if (!py.ok) { skip('the head-to-head runner ends a looping action as a tree', `no Python interpreter answers here (${py.why})`); return; }
     const runner = path.join(ROOT, 'tools', 'h2h', 'mini_swe_runner.py');
+    // Importing the runner must not leave a __pycache__ folder in the repository.
+    process.env.PYTHONDONTWRITEBYTECODE = '1';
     const gc = pidFile();
     const driver = path.join(W, 'drive_runner.py');
     fs.writeFileSync(driver, [
