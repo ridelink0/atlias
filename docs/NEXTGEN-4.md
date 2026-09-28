@@ -904,6 +904,22 @@ only; a read-only exploration fold for the terminal agent (Context-Folding);
 rules from pairs where masking lost. A fast-apply model only if items 4-5 leave
 the failure rate above one in ten.
 
+The three findings the coverage audit (NEXTGEN-4-COVERAGE.md) found with no
+item, decided on 2026-09-28:
+
+- *Consolidate and restart* (context finding 11), Later: it is for sharded
+  multi-turn conversations with the terminal agent, and every eval task arrives
+  as one prompt, so no corpus here can measure it. It needs a multi-turn corpus
+  first; /compact already restates the pinned rules, plan and files.
+- *Disclosing remaining context to the model* (context finding 10), Later: the
+  finding says disclosure cuts both ways, and the rounds line it would sit
+  beside has never been A/B tested either. It goes behind the comparator, not in
+  on faith.
+- *Code as action for small models* (small-models finding 8), Later: the
+  research ranks it below findings 1-7 and calls the 7B-13B evidence mixed. The
+  mini-swe-agent head-to-head (bash as the only action) is the nearest
+  measurement this machine can make of it, and it is being run.
+
 ## Where atlias could be first
 
 Items 1-4 are the context front's: it searched for them and did not find them
