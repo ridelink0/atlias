@@ -71,6 +71,7 @@ const HELP = {
     'started, and whatever a task left running in the background is ended when the task is scored (ATLIAS_EVAL_REAP=0 turns that off).',
   ],
   compare: ['usage: atlias compare <a.json> <b.json>   two runs saved with atlias eval --save, paired task by task'],
+  council: ['usage: atlias council replay <report.json...> [--json]   what a check-selected retry on red would have gained on runs already saved: one --repeat 2+ report, or several runs of one arm'],
   tiers: ['usage: atlias tiers   the benchmark tiers, which are on this machine, and how to get the rest'],
   polyglot: ['usage: atlias polyglot <path to a polyglot-benchmark clone> [--lang python] [--out <dir>] [--limit N] [--only name,name]'],
   editbench: ['usage: atlias editbench <rows.jsonl> --bench canitedit|humanevalfix [--variant lazy|descriptive] [--lang python|js] [--out <dir>] [--limit N] [--only id,id] [--rounds N] [--explain]'],
@@ -224,6 +225,20 @@ else switch (cmd) {
   case 'bench': say(bench.report(cwd, argv.slice(1).filter((a) => !a.startsWith('--')))); break;
   // Two saved runs, asked the paired question rather than eyeballed. Two scores
   // on a corpus this size are not a result; the disagreements are.
+  // Council Stage A: a check-selected retry on red, simulated over saved runs
+  // (lib/council.mjs). Nothing here runs a model.
+  case 'council': {
+    const council = await import('../lib/council.mjs');
+    const files = argv.slice(2).filter((a) => !a.startsWith('--'));
+    if (argv[1] !== 'replay' || !files.length) { say(HELP.council[0]); process.exitCode = 1; break; }
+    const reps = [];
+    for (const f of files) { try { reps.push(JSON.parse(fs.readFileSync(path.resolve(f), 'utf8'))); } catch (e) { say(`could not read ${f}: ${e.message}`); process.exitCode = 1; } }
+    if (process.exitCode) break;
+    const x = council.replay(reps);
+    say(argv.includes('--json') ? JSON.stringify(x, null, 2) : council.formatReplay(x));
+    process.exitCode = x.error ? 1 : 0;
+    break;
+  }
   case 'compare': {
     const evals2 = await import('../lib/eval.mjs');
     const files = argv.slice(1).filter((a) => !a.startsWith('--'));
