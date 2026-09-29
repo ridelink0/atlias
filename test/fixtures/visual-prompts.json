@@ -1,0 +1,155 @@
+{
+ "visual": {
+  "mood-board": [
+   "Put together a mood board for a Japanese ceramics brand called Kiln & Ash",
+   "I need mood boards for three directions of the new coffee roaster identity",
+   "Can you make a mood board for a calm sleep-tracking app before we design anything",
+   "Start with a mood board for the autumn menu, warm and a little bit smoky",
+   "Build me a mood board around brutalist bookshops in Europe"
+  ],
+  "reference-images": [
+   "Collect reference images of mid-century desk lamps for the product shoot",
+   "Find reference photos for a brass and walnut watch box",
+   "I want reference pictures of weathered lighthouse paint before I brief the illustrator",
+   "Gather reference images for the rainy Tokyo alley scene",
+   "Pull some reference photos of hand-lettered shop signs in Lisbon"
+  ],
+  "visual-research": [
+   "Do some visual research on how boutique hotels photograph their lobbies",
+   "Visual references for a retro arcade poster series please",
+   "I need visual inspiration for a botanical tea packaging line",
+   "Run visual research on editorial food photography in the 1970s",
+   "Give me visual references for gothic cathedral rose windows"
+  ],
+  "design-references": [
+   "Design references for a fintech dashboard's colour palette, mostly dark with one warm accent",
+   "Looking for design inspiration for a vinyl record label logo",
+   "Get me design references for wayfinding signage in airports",
+   "Design inspiration for a children's museum entrance, playful but not childish"
+  ],
+  "contact-sheet": [
+   "Make a contact sheet of the brutalist library photos so I can pick three",
+   "Show a contact sheet of candidate hero photographs for the vineyard story",
+   "Can you build a contact sheet from what you found on art deco cinemas"
+  ],
+  "find-images": [
+   "Find images of Bauhaus stair towers for the slide about geometry",
+   "Show me photos of Nordic summer houses at dusk",
+   "Pull images for the alpine cheese packaging brief",
+   "Find me some pictures of 1960s Olivetti typewriters",
+   "Get a few photos of brutalist bus stations in Georgia"
+  ],
+  "look-like": [
+   "What do traditional Moroccan zellige tiles look like up close",
+   "What does a well-lit ramen counter look like in Osaka, so I can match the mood",
+   "What do the best independent bookstore homepages look like"
+  ],
+  "screenshots-of-sites": [
+   "Screenshots of competitor homepages in the meal-kit space, side by side",
+   "Get renders of architecture studio sites that use a lot of white space"
+  ],
+  "competitor-sites": [
+   "Look at competitor sites for the plant subscription and tell me what they all do the same",
+   "Compare the competitor sites of our three rivals visually"
+  ],
+  "licensed-images": [
+   "I need public-domain images of Victorian botanical plates",
+   "Only CC0 photos of ocean waves please, for the album art",
+   "Find licensed photos of city skylines we can use commercially"
+  ]
+ },
+ "nonVisual": {
+  "codebase": [
+   "How does the news worker decide which category leads the front page?",
+   "Where is the retry logic for the payment webhook defined?",
+   "Walk me through the login flow from the form to the session cookie",
+   "What calls the invoice renderer and what does it depend on?",
+   "Explain the architecture of the sync engine at a high level",
+   "Why does the cache invalidation run twice on every save?",
+   "Which module owns the rate limiter for the public API?",
+   "What breaks if I rename the users table column email to address?",
+   "Trace the request path for uploading a profile picture",
+   "Show me the data flow between the queue consumer and the database layer"
+  ],
+  "code-with-image-words": [
+   "Fix the bug where the image upload endpoint returns 500 for PNG files over 5 MB",
+   "Refactor src/components/Gallery.tsx so reference images load lazily",
+   "The contact sheet component in ui/ContactSheet.jsx has an error when the list is empty",
+   "Write a test for the function that resizes photos to 800 pixels wide",
+   "Find images.py and tell me where thumbnails get generated",
+   "Add an endpoint that returns the mood board as JSON",
+   "The screenshot of the failing build is in ci/build.png, what is the error",
+   "Refactor the function that picks licensed images so it takes a list",
+   "Show images of type Buffer being decoded in decode.js",
+   "There is a bug in the design references importer, it crashes on empty input",
+   "Write a component that shows the mood boards a user saved",
+   "Why does the test for the visual research page fail on CI"
+  ],
+  "frontend": [
+   "Build me a landing page with parallax for the launch",
+   "Redesign the page for the new pricing tiers using Tailwind",
+   "Make a website for a ceramics studio with a hero section and a gallery",
+   "Restyle the home page so it feels more editorial",
+   "Add a three.js background to the start screen of the game",
+   "Create a webgl hero for the product launch page",
+   "Do a css animation for the loading state of the landing page",
+   "Design a home page with a mood board section and a contact form",
+   "Build a website that shows reference images of our past projects",
+   "Redesign the site and find images of coastal houses for the hero section"
+  ],
+  "casual": [
+   "please just say hello to me",
+   "thanks, that looks great",
+   "can you summarise what we did today in two lines",
+   "what time zone is Lisbon in",
+   "write a haiku about the compile step",
+   "give me a short pep talk before the demo",
+   "is it okay to commit this now",
+   "translate the previous answer into German",
+   "how many tokens is that roughly",
+   "remind me what we decided about the release date"
+  ],
+  "writing-and-data": [
+   "Draft an email to the supplier asking for a revised quote by Friday",
+   "Summarise this changelog into three bullets for the newsletter",
+   "Convert this CSV of orders into a monthly revenue table",
+   "Write release notes for version 2.4 based on the commits above",
+   "Proofread the README intro and tighten the wording",
+   "Rename the variables in this script so they follow snake_case",
+   "Explain the difference between a mutex and a semaphore to a junior",
+   "Give me a regular expression that matches ISO dates",
+   "Sort these names alphabetically and remove duplicates",
+   "Suggest names for a CLI that cleans up old git branches"
+  ],
+  "config-and-ops": [
+   "Bump the node version in the Dockerfile to 22 and update the CI matrix",
+   "Add a lint step to the GitHub workflow before the tests run",
+   "The deploy script fails on the second run, can you find out why",
+   "Set up a pre-commit hook that runs prettier on staged files",
+   "Update the dependencies in package.json and run the tests",
+   "Why is the build using 4 GB of memory in CI",
+   "Write a migration that adds a nullable column named archived_at",
+   "Add logging around the queue consumer so we can see retries"
+  ],
+  "short-and-slash": [
+   "hi",
+   "ok",
+   "/review",
+   "/mood board of the sprint",
+   "yes do that",
+   "go"
+  ],
+  "near-miss-visual": [
+   "Our mood was low after the outage, help me write a calm post-mortem",
+   "The reference implementation in the spec disagrees with our parser",
+   "I did research on the sorting algorithms and want to compare their complexity",
+   "Design the database schema for a photo sharing service",
+   "The images in the docs folder are outdated, list which pages embed them",
+   "Look at the competitor pricing sheet and summarise the tiers in a table",
+   "Print the retry policy from the current config",
+   "My contact list export has duplicates, how do I dedupe it in a spreadsheet",
+   "Which licence does this repository use and is it compatible with MIT",
+   "I need a reference for the git rebase options"
+  ]
+ }
+}
