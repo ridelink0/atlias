@@ -82,7 +82,10 @@ export default async function register({ asyncSuite, check, TMP }) {
     // 5. The task files on disk are what the task said they were.
     const dir = evals.makeWorkspace(FIX, 'shape');
     check('the workspace is built from the task', fs.readFileSync(path.join(dir, 'sum.js'), 'utf8').includes('return 1'), { happened: 'the seeded file was wrong', why: 'A task that starts from the wrong files measures nothing.', fix: 'Check makeWorkspace.' });
-    check('and it is not the project being measured', !dir.startsWith(process.cwd()), { happened: dir, why: 'An eval that edits the repo it is testing corrupts the thing it measures.', fix: 'Workspaces live under the state directory.' });
+    // By path segments: D:\x\atlias-tmp starts with the text D:\x\atlias and is
+    // not inside it.
+    const relToCwd = path.relative(process.cwd(), dir);
+    check('and it is not the project being measured', relToCwd === '..' || relToCwd.startsWith('..' + path.sep) || path.isAbsolute(relToCwd), { happened: dir, why: 'An eval that edits the repo it is testing corrupts the thing it measures.', fix: 'Workspaces live under the state directory.' });
     try { fs.rmSync(dir, { recursive: true, force: true }); } catch { /* best effort */ }
 
     // 6. The shipped corpus loads and every task can be scored.
