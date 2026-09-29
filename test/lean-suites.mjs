@@ -5,6 +5,7 @@
 const NL = String.fromCharCode(10);
 
 export default async function ({ suite, check, brief, TMP, ROOT, fs, path }) {
+  const hosts = await import('../lib/hosts.mjs');
   const withEnv = (vars, fn) => {
     const before = {};
     for (const k of Object.keys(vars)) { before[k] = process.env[k]; if (vars[k] == null) delete process.env[k]; else process.env[k] = vars[k]; }
@@ -21,6 +22,13 @@ export default async function ({ suite, check, brief, TMP, ROOT, fs, path }) {
   };
   const build = (dir, host, vars) => withEnv({ [LEAN]: null, [GATE]: null, ...vars }, () => brief.build({ cwd: dir, session_id: `lean-${++n}`, source: 'startup' }, host));
   const TOOL_NAMES = ['harness_recall', 'harness_remember', 'harness_progress', 'harness_verify', 'harness_digest', 'graph_query', 'graph_affected', 'graph_explain'];
+
+  suite('lean host instructions', 'Codex reuses supplied startup context with safe missing-context behavior', () => {
+    const off = hosts.instructionBlock('codex', { lean: false });
+    const lean = hosts.instructionBlock('codex', { lean: true });
+    check('the opt-in block saves repeated reads and retains required checks and tools', lean.length < off.length && /if absent, read/.test(lean) && /resuming without a supplied handoff/.test(lean) && /When a graph exists/.test(lean) && /no graph, read active files/.test(lean) && ['harness_remember','graph_affected','graph_explain','harness_progress set','harness_verify','harness_digest ack'].every(t=>lean.includes(t)) && /smallest real check/.test(lean) && /adversarially re-read every changed file/.test(lean) && /Confirm destructive/.test(lean), {happened:lean,why:'Context reuse must preserve missing-context recovery, graph navigation and both verification passes.',fix:'Retain each rule in the opt-in Codex block.'});
+    check('the flag does not alter other hosts or the disabled Codex profile', hosts.instructionBlock('claude',{lean:true}) === hosts.instructionBlock('claude',{lean:false}) && /Read it, then read the files/.test(off) && /get` when you start/.test(off), {happened:off,why:'Only the experimental Codex profile should change.',fix:'Guard the new block with host codex and lean.'});
+  });
 
   suite('lean brief expert', 'the lean brief cuts what every request pays for', () => {
     const empty = project();
