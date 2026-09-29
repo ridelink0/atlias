@@ -14,7 +14,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
-import { VERSION, STATE_DIR, ROOT, readJson, writeJson, DEFAULTS, config, parseSetting, writeLauncher, flagStamp, flagLine, flagEnvName } from '../lib/core.mjs';
+import { VERSION, STATE_DIR, ROOT, readJson, writeJson, DEFAULTS, config, parseSetting, writeLauncher, flagStamp, flagLine, flagEnvName, sameFlags } from '../lib/core.mjs';
 import * as hosts from '../lib/hosts.mjs';
 import * as brief from '../lib/brief.mjs';
 import * as progress from '../lib/progress.mjs';
@@ -202,7 +202,7 @@ else switch (cmd) {
       const same = old && old.engine === engine && (old.model || '') === (model || '') && (old.tries || 1) === repeat;
       if (old && !same) { say(`--resume: ${out} was a ${old.engine} ${old.model || ''} run with ${old.tries || 1} attempt(s) each; this one is ${engine} ${model || ''} with ${repeat}. Refusing to mix them.`); process.exitCode = 2; break; }
       // Nor two arms: rows run with other flags are another arm's rows.
-      if (old && old.flags && JSON.stringify(old.flags.values) !== JSON.stringify(flagsNow.values)) { say(`--resume: ${out} ran with flags ${flagLine(old.flags)}; this run has ${flagLine(flagsNow)}. Refusing to mix them.`); process.exitCode = 2; break; }
+      if (old && old.flags && !sameFlags(old.flags, flagsNow)) { say(`--resume: ${out} ran with flags ${flagLine(old.flags)}; this run has ${flagLine(flagsNow)}. Refusing to mix them.`); process.exitCode = 2; break; }
       const want = new Set(tasks.map((t) => t.id));
       prior = old ? (old.results || []).filter((r) => want.has(r.id)) : [];
       say(prior.length ? `--resume: ${prior.length} of ${tasks.length} task(s) already in ${out}; running the other ${tasks.length - prior.length}.` : `--resume: nothing to carry on from in ${out}; starting fresh.`);
