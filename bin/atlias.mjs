@@ -65,6 +65,7 @@ const HELP = {
     '  --model <name>            score a named model without changing the settings',
     '  --repeat k                k attempts per task; a task passes only when all k do (pass^k)',
     '  --rounds N                override every task\'s own round budget',
+    '  --direct                  the direct arm: one prompt with the files, whole files back, the visible check, at most one repair; no tools',
     '  --save <file.json>        keep the report for atlias compare',
     '  --outlive-parent          keep running if the process that started the eval goes away (by default it stops)',
     'Code the model wrote runs under a watchdog: at its limit (shell 2 min, check 60 s) it is ended with everything it',
@@ -75,7 +76,7 @@ const HELP = {
   score: ['usage: atlias score pack <report.json...> --out <dir> [--corpus <dir> | --tier <name>] [--names a,b]   one report (a score) or two (an A/B) saved with atlias eval --save, into a folder with lock.json, rows.jsonl, stats.json, SCORE.md and the re-run commands', '       atlias score verify <dir> [--corpus <dir> | --tier <name>]   recompute the stats from the rows and check the lock against the corpus files; exit 1 on a mismatch'],
   tiers: ['usage: atlias tiers   the benchmark tiers, which are on this machine, and how to get the rest'],
   polyglot: ['usage: atlias polyglot <path to a polyglot-benchmark clone> [--lang python] [--out <dir>] [--limit N] [--only name,name]'],
-  editbench: ['usage: atlias editbench <rows.jsonl> --bench canitedit|humanevalfix [--variant lazy|descriptive] [--lang python|js] [--v2] [--out <dir>] [--limit N] [--only id,id] [--rounds N]'],
+  editbench: ['usage: atlias editbench <rows.jsonl> --bench canitedit|humanevalfix [--variant lazy|descriptive] [--lang python|js] [--v2 | --explain] [--out <dir>] [--limit N] [--only id,id] [--rounds N]'],
   refactorbench: ['usage: atlias refactorbench <path to refactor-benchmark/refactor-benchmark> [--out <dir>] [--limit N] [--only name,name] [--max-bytes 40960] [--rounds 16]'],
   agent: ['usage: atlias agent [--engine claude|codex|openai|ollama|echo] [--once "<prompt>"] [--resume [id]] [--sandbox]'],
   exec: ['usage: atlias exec "<prompt>" [--engine claude|codex|openai|ollama|echo] [--resume [id]] [--sandbox] [--json]   (or pipe the prompt in)'],
@@ -168,6 +169,7 @@ else switch (cmd) {
       : engine === 'openai' ? loopMod.openaiChat(cfgFor) : loopMod.ollamaChat(cfgFor);
     // One run of a sampling process is not a result: --repeat 3 runs each task
     // three times and reports pass^3 beside pass@3.
+    const direct = argv.includes('--direct');
     const repeat = Math.max(1, parseInt(optVal('--repeat') || '1', 10) || 1);
     const model = picked || (engine === 'openai' ? cfg.openaiModel : engine === 'ollama' ? cfg.ollamaModel : '');
     say(`${tasks.length} task(s) against ${engine}${repeat > 1 ? `, ${repeat} attempts each` : ''}. The check command decides, not the model.`);
@@ -206,6 +208,7 @@ else switch (cmd) {
       const same = old && old.engine === engine && (old.model || '') === (model || '') && (old.tries || 1) === repeat;
       if (old && !same) { say(`--resume: ${out} was a ${old.engine} ${old.model || ''} run with ${old.tries || 1} attempt(s) each; this one is ${engine} ${model || ''} with ${repeat}. Refusing to mix them.`); process.exitCode = 2; break; }
       // Nor two arms: rows run with other flags are another arm's rows.
+      if (old && Boolean(old.direct) !== direct) { say(`--resume: ${out} ran ${old.direct ? 'the direct arm' : 'the agent loop'}; this run is ${direct ? 'the direct arm' : 'the agent loop'}. Refusing to mix them.`); process.exitCode = 2; break; }
       if (old && old.flags && !sameFlags(old.flags, flagsNow)) { say(`--resume: ${out} ran with flags ${flagLine(old.flags)}; this run has ${flagLine(flagsNow)}. Refusing to mix them.`); process.exitCode = 2; break; }
       const want = new Set(tasks.map((t) => t.id));
       prior = old ? (old.results || []).filter((r) => want.has(r.id)) : [];
@@ -214,8 +217,8 @@ else switch (cmd) {
     const save = (rep) => { fs.mkdirSync(path.dirname(out), { recursive: true }); fs.writeFileSync(out, `${JSON.stringify(rep, null, 2)}\n`); };
     // The stamp is taken once, at the start: it names the code that is running.
     const stampNow = out ? evals.harnessStamp() : null;
-    const partial = (rows) => { if (out) save({ partial: true, results: rows, engine, model, tries: repeat, corpus: corpusInfo, stamp: stampNow, flags: flagsNow }); };
-    const report = await evals.runSuite(tasks, { chat, state: agent.newState(cwd, engine), repeat, engineName: engine, model, corpus: corpusInfo, budget: roundsArg, beforeAttempt: stopIfOrphaned, work, prior, onResult: partial, flags: flagsNow });
+    const partial = (rows) => { if (out) save({ partial: true, results: rows, engine, model, tries: repeat, corpus: corpusInfo, stamp: stampNow, flags: flagsNow, ...(direct ? { direct: true } : {}) }); };
+    const report = await evals.runSuite(tasks, { chat, state: agent.newState(cwd, engine), repeat, engineName: engine, model, corpus: corpusInfo, budget: roundsArg, beforeAttempt: stopIfOrphaned, work, prior, onResult: partial, flags: flagsNow, direct });
     say(evals.format(report));
     if (out) { save(report); say(`saved to ${out}`); }
     process.exitCode = report.passed === report.total ? 0 : 1;
@@ -224,6 +227,8 @@ else switch (cmd) {
   case 'bench': say(bench.report(cwd, argv.slice(1).filter((a) => !a.startsWith('--')))); break;
   // Two saved runs, asked the paired question rather than eyeballed. Two scores
   // on a corpus this size are not a result; the disagreements are.
+  // Council Stage A: a check-selected retry on red, simulated over saved runs
+  // (lib/council.mjs). Nothing here runs a model.
   case 'compare': {
     const evals2 = await import('../lib/eval.mjs');
     const files = argv.slice(1).filter((a) => !a.startsWith('--'));
@@ -333,16 +338,17 @@ else switch (cmd) {
     const kind = optVal('--bench');
     if (!file || !['canitedit', 'humanevalfix'].includes(kind)) { say('usage: atlias editbench <rows.jsonl> --bench canitedit|humanevalfix [--variant lazy|descriptive] [--lang python|js] [--v2] [--out <dir>] [--limit N] [--only id,id] [--rounds N]'); process.exitCode = 1; break; }
     const v2 = flag('--v2');
-    if (v2 && (kind !== 'humanevalfix' || (optVal('--lang') || 'python') !== 'python')) { say('--v2 is a Python HumanEvalFix mode: atlias editbench <rows.jsonl> --bench humanevalfix --lang python --v2'); process.exitCode = 1; break; }
+    const explain = flag('--explain');
+    if ((v2 || explain) && (kind !== 'humanevalfix' || (optVal('--lang') || 'python') !== 'python')) { say('--v2 is a Python HumanEvalFix mode: atlias editbench <rows.jsonl> --bench humanevalfix --lang python --v2'); process.exitCode = 1; break; }
     const variant = optVal('--variant') || 'lazy';
     const lang = optVal('--lang') || 'python';
-    const out = optVal('--out') || path.join(ROOT, 'evals', kind, kind === 'canitedit' ? variant : `${lang}${v2 ? '-v2' : ''}`);
+    const out = optVal('--out') || path.join(ROOT, 'evals', kind, kind === 'canitedit' ? variant : `${lang}${v2 || explain ? '-v2' : ''}`);
     const rows = eb.readJsonl(path.resolve(file));
     if (!rows.length) { say(`no rows in ${file}`); process.exitCode = 1; break; }
     const limit = parseInt(optVal('--limit') || '0', 10) || 0;
     const only = String(optVal('--only') || '').split(',').map((s) => s.trim()).filter(Boolean);
     say(`converting ${rows.length} ${kind} row(s) from ${file}. Each one has to fail as shipped and pass with the benchmark's own reference here before it is kept.`);
-    const result = eb.convertRows(rows, kind, out, { variant, lang, v2, limit, only, rounds: Math.max(0, parseInt(optVal('--rounds') || '0', 10) || 0) });
+    const result = eb.convertRows(rows, kind, out, { variant, lang, v2, explain, limit, only, rounds: Math.max(0, parseInt(optVal('--rounds') || '0', 10) || 0) });
     say(eb.report(result));
     process.exitCode = result.wrote.length ? 0 : 1;
     break;
@@ -421,7 +427,7 @@ else switch (cmd) {
     } else { say('usage: atlias shortcut [install|uninstall|status]'); process.exitCode = 2; }
     break;
   }
-  case 'doctor': { const c = hosts.doctor(cwd).concat(extra.doctorRows()); say(hosts.formatDoctor(c)); process.exitCode = c.every((x) => x.ok) ? 0 : 1; break; }
+  case 'doctor': { const c = hosts.doctor(cwd).concat(extra.doctorRows(), await hosts.ollamaDoctorRows(config().agent)); say(hosts.formatDoctor(c)); process.exitCode = c.every((x) => x.ok) ? 0 : 1; break; }
   case 'status': {
     const g = graph.status(cwd);
     const p = dream.pending(cwd);

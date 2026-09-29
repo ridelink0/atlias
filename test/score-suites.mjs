@@ -88,6 +88,7 @@ export default async function scoreSuites({ asyncSuite, check, ROOT, TMP, fs, pa
   });
 
   await asyncSuite('score expert', 'the corpus source and the re-run command say exactly what to run', async () => {
+    check('a direct-arm report regenerates a direct-arm command', /--direct/.test(score.rerunCommand({ arm: 'direct', engine: 'ollama', direct: true }, { kind: 'tier', ref: 'main' })), { happened: score.rerunCommand({ arm: 'direct', direct: true }, { kind: 'tier', ref: 'main' }), why: 'Omitting --direct re-runs a different harness protocol.', fix: 'Keep direct in the lock and command.' });
     const shipped = score.corpusSource(), inTree = score.corpusSource({ corpus: path.join(ROOT, 'evals', 'polyglot') }), tier = score.corpusSource({ tier: 'main' });
     check('the corpus source is shipped, a repo-relative dir (posix slashes), or a tier', shipped.kind === 'shipped' && inTree.kind === 'dir' && inTree.ref === 'evals/polyglot' && tier.kind === 'tier' && tier.ref === 'main' && score.corpusSource({ corpus: corpusDir }).ref === corpusDir,
       { happened: JSON.stringify([shipped, inTree, tier]), why: 'The lock must point at the corpus the same way on every machine.', fix: 'corpusSource().' });
@@ -105,6 +106,15 @@ export default async function scoreSuites({ asyncSuite, check, ROOT, TMP, fs, pa
   await asyncSuite('score expert', 'verify passes an untouched pack and fails on any change', async () => {
     const ok = score.verify(fresh());
     check('an untouched pack verifies', ok.ok && ok.problems.length === 0, { happened: JSON.stringify(ok), why: 'Verify that fails on a good pack is noise.', fix: 'lib/score.mjs verify().' });
+    const coordinated = fresh();
+    const alteredRows = fs.readFileSync(path.join(coordinated, 'rows.jsonl'), 'utf8').trim().split('\n').map(JSON.parse);
+    alteredRows.find((r) => r.arm === 'arm-a' && r.task === 't2').pass = false;
+    const alteredLock = readJson(coordinated, 'lock.json');
+    const alteredStats = score.computeStats(alteredRows, alteredLock.arms.map((a) => a.arm));
+    fs.writeFileSync(path.join(coordinated, 'rows.jsonl'), alteredRows.map((r) => JSON.stringify(r)).join('\n') + '\n');
+    fs.writeFileSync(path.join(coordinated, 'stats.json'), JSON.stringify(alteredStats, null, 2) + '\n');
+    fs.writeFileSync(path.join(coordinated, 'SCORE.md'), score.renderScore(alteredLock, alteredStats));
+    check('coordinated edits to rows, statistics and summary fail against the original reports', score.verify(coordinated).problems.some((p) => /does not match the original reports/.test(p)), { happened: JSON.stringify(score.verify(coordinated)), why: 'Recomputing altered rows alone lets a false result verify itself.', fix: 'Derive the expected rows from the hashed original reports.' });
     const one = score.pack([fileA], path.join(base, 'one'), { corpus: corpusDir });
     check('a single-arm pack has no paired block and verifies', one.stats.paired === null && score.verify(path.join(base, 'one')).ok, { happened: JSON.stringify(one.stats.paired), why: 'A score is one arm.', fix: 'computeStats().' });
 

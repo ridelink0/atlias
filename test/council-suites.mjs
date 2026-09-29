@@ -14,6 +14,18 @@ export default async function councilSuites({ asyncSuite, check, core, ROOT, TMP
   const load = (n) => JSON.parse(fs.readFileSync(path.join(FIX, n), 'utf8'));
   const cli = (...args) => spawnSync(process.execPath, [path.join(ROOT, 'bin', 'atlias.mjs'), 'council', ...args], { encoding: 'utf8', env: { ...process.env, ATLIAS_HOME: path.join(TMP, 'state-council') }, timeout: 20000 });
 
+  await asyncSuite('council expert', 'a replay compares fresh attempts from one build and one arm', async () => {
+    const report = (sha = 'same') => ({ engine: 'ollama', model: 'qwen', stamp: { text: `atlias @ ${sha}` }, flags: core.flagStamp(), results: [{ id: 'a', pass: false, promptTotal: 10 }, { id: 'b', pass: true, promptTotal: 20 }] });
+    const a = report(), b = report();
+    const pooled = council.attemptsByTask([a, b]);
+    check('same build pools the two attempts; another build is refused', pooled.byTask.get('a').length === 2 && Boolean(council.replay([a, report('other')]).error), { happened: JSON.stringify(council.replay([a, report('other')])), why: 'An A/B comparison is not a fresh retry of the same harness.', fix: 'attemptsByTask checks provenance before pooling.' });
+    check('missing provenance, another model, a direct arm, and duplicate task ids are refused', Boolean(council.replay([a, { ...b, stamp: null }]).error) && Boolean(council.replay([a, { ...b, model: 'other' }]).error) && Boolean(council.replay([a, { ...b, direct: true }]).error) && Boolean(council.replay([{ ...a, results: [a.results[0], a.results[0]] }, b]).error), { happened: 'four mismatched provenance cases', why: 'Pooling them invents evidence for a council that never ran.', fix: 'Reject different arms, builds and duplicate ids.' });
+    const partial = council.replay([a, { ...b, results: [b.results[0]] }]);
+    check('partial reports keep only shared tasks and count the dropped task', partial.ok && partial.tasks === 1 && partial.dropped === 1, { happened: JSON.stringify(partial), why: 'An interrupted run cannot count missing attempts as failures or successes.', fix: 'Intersect task ids across reports.' });
+    const zero = council.replay([a, b], { extra: 0 });
+    check('zero retries spends no extra tokens, and invalid retry counts are refused', zero.ok && zero.extraTokens === 0 && zero.gained === 0 && Boolean(council.replay([a, b], { extra: Infinity }).error), { happened: JSON.stringify(zero), why: 'The model-free cost ledger must count exactly the attempts requested.', fix: 'Validate extra and preserve zero.' });
+  });
+
   await asyncSuite('council expert', 'the flag is registered, off, and reads its environment name (A8)', async () => {
     check('flags.council is off by default, described, and listed in settings', core.DEFAULTS.flags.council === false && Boolean(settings.DESCRIPTIONS['flags.council']) && /3x/.test(settings.DESCRIPTIONS['flags.council']) && settings.GROUPS.some(([, ids]) => ids.includes('flags.council')),
       { happened: JSON.stringify([core.DEFAULTS.flags.council, settings.DESCRIPTIONS['flags.council']]), why: 'Every round-five change lands behind a flag that is off, so the control arm stays the control.', fix: 'DEFAULTS.flags in lib/core.mjs; DESCRIPTIONS, LABELS and GROUPS in lib/settings.mjs.' });
@@ -94,7 +106,7 @@ export default async function councilSuites({ asyncSuite, check, core, ROOT, TMP
     check('a tries:3 report gives the hand-computed gain, tokens and multiplier', r.ok && r.tasks === 3 && near(r.baseSolved, 4 / 3) && near(r.councilSolved, 2) && near(r.gained, 2 / 3) && r.baseTokens === 300 && r.extraTokens === 300 && r.perSolveBefore === 225 && r.perSolveAfter === 300 && r.multiplier === 1.33 && r.clearsFloor === false,
       { happened: JSON.stringify(r), why: 'Step 0 decides whether any GPU hour is spent; the arithmetic must be what a person gets by hand.', fix: 'replay: rotate the baseline over every attempt, run the next two in order, stop at the first pass, mean over rotations.' });
     const three = council.replay([load('council-replay-run1.json'), load('council-replay-run2.json'), load('council-replay-run3.json')]);
-    check('three tries:1 reports (round five\'s MT protocol) replay to the same result', three.ok && JSON.stringify(three) === JSON.stringify(r),
+    check('three tries:1 reports replay to the same arithmetic and disclose their missing provenance', three.ok && three.unstamped && !r.unstamped && JSON.stringify({ ...three, unstamped: r.unstamped }) === JSON.stringify(r),
       { happened: JSON.stringify(three), why: 'A row keeps its attempts only when tries > 1; refusing three separate runs would refuse the very data Step 0 is for.', fix: 'Pool the rows of several reports per task id.' });
     const one = council.replay(load('council-replay-run1.json'));
     check('a single tries:1 report is refused', one.ok === false && /at least 2 attempts/.test(one.error),
