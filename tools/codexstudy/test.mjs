@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';import os from 'node:os';import path from 'node:path';
 import {usageOf,jobsOf,contained,validateResume,limitsOf,profileEnv} from './run.mjs';import {loadTaskList} from '../ccstudy/run.mjs';
 import {summarize} from './summary.mjs';
+import {spawnSync} from 'node:child_process';
 let n=0;const eq=(a,b)=>{assert.deepEqual(a,b);n++;};
 const count=(total,last)=>({type:'event_msg',payload:{type:'token_count',info:{total_token_usage:total,last_token_usage:{input_tokens:last}}}});
 eq(usageOf([]).promptRaw,null);
@@ -29,6 +30,8 @@ assert.throws(()=>summarize([row('a','plain',1),row('a','plain',1)]),/duplicate/
 eq(summarize([row('a','plain',10),{...row('a','atlias',20),timedOut:true}]).comparisons.length,0);
 eq(summarize([row('a','plain',10),row('a','atlias',20),{...row('a','plain',10),repeat:2},{...row('a','atlias',20),repeat:2}]).comparisons[0].semanticFamilies,1);
 try{
+  const envCheck=spawnSync(process.execPath,['--input-type=module','-e',`import {config} from ${JSON.stringify(new URL('../../lib/core.mjs',import.meta.url).href)};console.log(JSON.stringify(config().flags));`],{encoding:'utf8',env:{...process.env,ATLIAS_HOME:path.join(root,'state'),...profileEnv(true)}});
+  assert.equal(envCheck.status,0);const actualFlags=JSON.parse(envCheck.stdout);eq([actualFlags.leanBrief,actualFlags.gateRunsCheck],[true,true]);
   assert.throws(()=>contained(root,'../outside'));n++;assert.throws(()=>contained(root,root));n++;
   fs.writeFileSync(path.join(root,'task.json'),JSON.stringify({id:'x'}));fs.writeFileSync(path.join(root,'list.json'),JSON.stringify({tasks:[{id:'x',file:'task.json',sha256:'changed'}]}));assert.throws(()=>loadTaskList(path.join(root,'list.json'),root),/hash/);n++;
 }finally{fs.rmSync(root,{recursive:true,force:true});}
