@@ -10,10 +10,60 @@ import * as track from '../lib/track.mjs';
 import * as integrity from '../lib/integrity.mjs';
 import * as hooksMod from '../lib/hooks.mjs';
 import * as settings from '../lib/settings.mjs';
+import * as pointer from '../lib/pointer.mjs';
+import * as hostsMod from '../lib/hosts.mjs';
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
 export default async function hostSuites({ suite, check, PROJECT }) {
   const NL = String.fromCharCode(10);
   const patch = ['*** Begin Patch', '*** Update File: src/a.js', '@@', '-x', '+y', '*** Add File: b.js', '+z', '*** Delete File: old.js', '*** Update File: c.js', '*** Move to: d.js', '*** End Patch'].join(NL);
+
+  // Round five, PR-1. Claude Code cancels a command hook that reaches its
+  // timeout and drops its output (Hooks reference), and in the 3.8.1 study it
+  // cancelled 80 atlias hook calls in 22 of 34 runs at 8 seconds. The tool
+  // hooks now get 30, as Stop has. PostToolUse is narrowed to the tools
+  // track.postTool acts on, and PostToolUseFailure to the shell tools, which is
+  // all postToolFailure reads; PreToolUse keeps ".*", because the loop guard
+  // counts repeats of every tool and the destructive guard reads the shell.
+  suite('hook budget expert', 'the tool hooks have room, and fire where they do something', () => {
+    const doc = JSON.parse(fs.readFileSync(path.join(ROOT, 'hooks', 'hooks.json'), 'utf8'));
+    const group = (ev) => (doc.hooks[ev] || [])[0] || {};
+    const timeoutOf = (ev) => ((group(ev).hooks || [])[0] || {}).timeout;
+    const short = ['PreToolUse', 'PostToolUse', 'PostToolUseFailure', 'Stop'].filter((ev) => !(timeoutOf(ev) >= 30));
+    check('the tool hooks and Stop may take 30 seconds before the host cancels them', short.length === 0,
+      { happened: short.map((ev) => `${ev} ${timeoutOf(ev)}s`).join(', '), why: 'A hook the host cancels at its timeout records nothing: a PostToolUse cancelled after a check leaves the gate saying no check ran, which cost a full-context round each time in the 3.8.1 study.', fix: 'Set timeout 30 on PreToolUse, PostToolUse, PostToolUseFailure and Stop in hooks/hooks.json.' });
+    check('PreToolUse still fires for every tool', group('PreToolUse').matcher === '.*',
+      { happened: String(group('PreToolUse').matcher), why: 'The loop guard counts identical calls of any tool (Grep, Glob, WebFetch, an MCP tool), and the destructive guard reads every shell command; a narrower matcher switches both off for the tools it leaves out.', fix: 'Keep matcher ".*" on PreToolUse.' });
+    const names = (ev) => String(group(ev).matcher || '').split('|');
+    // The proof that the narrowing loses nothing: for tools the matchers leave
+    // out, both handlers return nothing and record nothing, with an input that
+    // would be recorded (a check, a big code file) if the tool were one they
+    // read.
+    const others = ['Glob', 'Grep', 'LS', 'Task', 'Agent', 'TodoWrite', 'WebFetch', 'WebSearch', 'NotebookRead', 'ExitPlanMode', 'Skill', 'mcp__atlias__graph_query', 'mcp__github__get_file_contents', 'mcp__fs__write_file', 'BashOutput', 'KillShell'];
+    const quietFor = (handler, sid) => {
+      const said = others.filter((tool) => handler({ session_id: sid, cwd: PROJECT, tool_name: tool, tool_input: { command: 'npm test', file_path: path.join(PROJECT, 'big.js'), path: PROJECT, pattern: 'x' }, tool_response: { stdout: '', exit_code: 1 }, error: 'failed' }) !== null);
+      return { said, recorded: core.events(sid) };
+    };
+    const acted = [...core.EDIT_TOOL_NAMES, ...core.SHELL_TOOL_NAMES, ...pointer.READ_TOOL_NAMES];
+    const missed = acted.filter((n) => !names('PostToolUse').includes(n));
+    const extra = names('PostToolUse').filter((n) => !acted.includes(n));
+    const post = quietFor(track.postTool, 'hook-budget-post');
+    check('PostToolUse fires for every tool track.postTool acts on, and only those', missed.length === 0 && extra.length === 0 && acted.every((n) => core.isEditTool(n) || core.isShellTool(n) || pointer.READ_TOOLS.test(n)) && post.said.length === 0 && post.recorded.length === 0 && !others.some((t) => names('PostToolUse').includes(t)),
+      { happened: `matcher ${group('PostToolUse').matcher}; missing ${missed.join(',') || 'none'}; extra ${extra.join(',') || 'none'}; spoke for ${post.said.join(',') || 'none'}; recorded ${JSON.stringify(post.recorded).slice(0, 200)}`, why: 'The matcher may only leave out a tool the hook provably does nothing for: one left out that it acts on is an edit the gate never sees or a check it never records, and one kept that it ignores costs a Node start per call.', fix: 'Set the PostToolUse matcher to core.EDIT_TOOL_NAMES, core.SHELL_TOOL_NAMES and pointer.READ_TOOL_NAMES joined with |.' });
+    const shellOnly = names('PostToolUseFailure');
+    const fail = quietFor(track.postToolFailure, 'hook-budget-failure');
+    check('PostToolUseFailure fires for the shell tools, the only ones it reads', shellOnly.length === core.SHELL_TOOL_NAMES.length && core.SHELL_TOOL_NAMES.every((n) => shellOnly.includes(n)) && fail.said.length === 0 && fail.recorded.length === 0,
+      { happened: `matcher ${group('PostToolUseFailure').matcher}; spoke for ${fail.said.join(',') || 'none'}; recorded ${JSON.stringify(fail.recorded).slice(0, 200)}`, why: 'A failed check is recorded from this hook; a shell tool left out is a failing check the gate never hears about.', fix: 'Set the PostToolUseFailure matcher to core.SHELL_TOOL_NAMES joined with |.' });
+    // Codex and Gemini CLI install the same handlers with their own budgets.
+    const codex = Object.fromEntries(hostsMod.CODEX_EVENTS.map(([ev, , t, m]) => [ev, { t, m }]));
+    const gem = Object.fromEntries(hostsMod.GEMINI_EVENTS.map(([ev, , t]) => [ev, t]));
+    check('Codex and Gemini CLI give their tool hooks the same 30 seconds', codex.PreToolUse.t >= 30 && codex.PostToolUse.t >= 30 && codex.Stop.t >= 30 && gem.BeforeTool >= 30000 && gem.AfterTool >= 30000 && gem.AfterAgent >= 30000 && codex.PreToolUse.m === '.*' && codex.PostToolUse.m === '.*',
+      { happened: JSON.stringify({ codex, gem }), why: 'The same handler runs in every host; a tighter budget in one is a cancellation that happens only there, the hardest kind to see.', fix: 'Raise the tool hooks in CODEX_EVENTS to 30 (seconds) and in GEMINI_EVENTS to 30000 (milliseconds); keep ".*" for Codex until its tool names are pinned.' });
+  });
 
   suite('codex payload expert', 'Codex edits are seen', () => {
     const files = core.filesFromTool('apply_patch', { command: patch });

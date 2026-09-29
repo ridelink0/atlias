@@ -30,31 +30,31 @@
           {
             "type": "command",
             "command": "node \"${CLAUDE_PLUGIN_ROOT}/lib/hooks.mjs\" pre-tool",
-            "timeout": 8
+            "timeout": 30
           }
         ]
       }
     ],
     "PostToolUse": [
       {
-        "matcher": ".*",
+        "matcher": "Write|Edit|MultiEdit|NotebookEdit|apply_patch|write_file|replace|edit_file|create_file|Bash|PowerShell|shell|exec|exec_command|run_shell_command|run_terminal_cmd|local_shell|Read|read_file|readfile|read|view|view_file|open_file|cat|get_file_contents",
         "hooks": [
           {
             "type": "command",
             "command": "node \"${CLAUDE_PLUGIN_ROOT}/lib/hooks.mjs\" post-tool",
-            "timeout": 8
+            "timeout": 30
           }
         ]
       }
     ],
     "PostToolUseFailure": [
       {
-        "matcher": ".*",
+        "matcher": "Bash|PowerShell|shell|exec|exec_command|run_shell_command|run_terminal_cmd|local_shell",
         "hooks": [
           {
             "type": "command",
             "command": "node \"${CLAUDE_PLUGIN_ROOT}/lib/hooks.mjs\" post-tool-failure",
-            "timeout": 8
+            "timeout": 30
           }
         ]
       }

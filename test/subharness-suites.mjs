@@ -84,6 +84,117 @@ export default async function subharnessSuites({ suite, check, core, gate, track
     check('a reply that ends with the line the brief teaches is not held', b4 === null, { happened: JSON.stringify(b4), why: 'The brief now asks for that line so the second pass happens inside the first reply instead of costing a held one.', fix: 'PASS_RE must match what RULES teaches.' });
   });
 
+  suite('cancelled hook expert', 'a check the transcript saw counts when its hook was cancelled', () => {
+    // Claude Code cancelled 80 atlias hook calls in 22 of the study's 34 runs.
+    // Each session here records the edit through the hook and leaves the check
+    // unrecorded, as a cancelled PostToolUse does; the transcript holds what ran.
+    const file = path.join(PROJECT, 'solution.py');
+    fs.writeFileSync(file, 'def f(x):\n    return x + 1\n');
+    const dir = path.join(path.dirname(PROJECT), 'transcripts');
+    fs.mkdirSync(dir, { recursive: true });
+    let n = 0;
+    const prompt = (text) => ({ type: 'user', message: { role: 'user', content: text } });
+    const call = (name, input) => { const id = 'toolu_' + (++n); return [id, { type: 'assistant', message: { role: 'assistant', content: [{ type: 'tool_use', id, name, input }] } }]; };
+    const answer = (id, content, isError, toolUseResult) => ({ type: 'user', message: { role: 'user', content: [{ type: 'tool_result', tool_use_id: id, content, is_error: isError }] }, toolUseResult });
+    const editRows = () => { const [id, row] = call('Edit', { file_path: file, old_string: 'x + 1', new_string: 'x + 2' }); return [row, answer(id, 'The file has been updated.', false, { filePath: file })]; };
+    const shellRows = (command, stdout, fail = '') => {
+      const [id, row] = call('Bash', { command });
+      return [row, fail ? answer(id, 'Exit code 1\n' + fail, true, 'Error: Exit code 1\n' + fail) : answer(id, stdout, false, { stdout, stderr: '', interrupted: false, isImage: false })];
+    };
+    const PASSED = 'all tests passed';
+    const FAILED = 'Traceback (most recent call last):\n  File "check.py", line 3\nAssertionError';
+    // Claude Code stamps every row. A row is written after the hook events of
+    // its turn, so a fixture is stamped after them unless a check says when.
+    const write = (name, rows, raw = '', at = Date.now() + 60000) => { const p = path.join(dir, name + '.jsonl'); fs.writeFileSync(p, rows.map((r, i) => JSON.stringify({ timestamp: new Date(at + i).toISOString(), ...r })).join('\n') + '\n' + raw); return p; };
+    const turn = (...parts) => [prompt('an earlier question'), ...shellRows('python check.py', PASSED), prompt('Fix the bug in f in solution.py please'), ...parts.flat()];
+    const start = (name) => { const s = sid('cancel-' + name); router.prompt({ session_id: s, cwd: PROJECT, prompt: 'Fix the bug in f in solution.py please' }); track.postTool({ session_id: s, cwd: PROJECT, tool_name: 'Edit', tool_input: { file_path: file } }); return s; };
+    const stop = (s, last, transcript, host) => gate.stop({ session_id: s, cwd: PROJECT, last_assistant_message: last, ...(transcript === undefined ? {} : { transcript_path: transcript }) }, host);
+    const fromTranscript = (s) => core.events(s).filter((e) => e.from === 'transcript');
+    const reasonOf = (b) => (b ? b.reason : '(not held)');
+    const TAUGHT = 'Fixed the comparison.\nPass 1: python check.py passed. Pass 2: re-read the empty and boundary cases, nothing found.';
+    const ONE = 'Fixed the off-by-one. All tests pass.';
+
+    const passing = write('passing', turn(editRows(), shellRows('python check.py', PASSED)));
+    const calls = track.transcriptTurn(passing);
+    check('the transcript turn starts at the last prompt and pairs each call with its result', Array.isArray(calls) && calls.length === 2 && calls[0].name === 'Edit' && calls[1].name === 'Bash' && calls[1].result && calls[1].result.block.is_error === false, { happened: JSON.stringify(calls && calls.map((c) => [c.name, Boolean(c.result)])), why: 'A call from the turn before, or one with no result, would be taken for a check of this turn.', fix: 'transcriptTurn in lib/track.mjs.' });
+    const bad = track.transcriptVerdict({ block: { is_error: true, content: 'Exit code 1\n' + FAILED }, row: {} });
+    const quiet = track.transcriptVerdict({ block: { is_error: true, content: 'Exit code 2\nno such option' }, row: {} });
+    const good = track.transcriptVerdict({ block: { is_error: false, content: PASSED }, row: { toolUseResult: { stdout: PASSED, stderr: '' } } });
+    check('a transcript result is judged by the rules the hooks use', bad.outcome === 'fail' && /Traceback/.test(bad.excerpt) && quiet.outcome === 'fail' && good.outcome !== 'fail', { happened: JSON.stringify([bad, quiet, good]), why: 'A failed check read as a pass would let a reply stop on red.', fix: 'transcriptVerdict: is_error with an exit code goes to integrity.verdict, anything else as PostToolUse would.' });
+
+    const base = start('none');
+    const held = stop(base, TAUGHT);
+    const a = start('pass');
+    const b = stop(a, TAUGHT, passing);
+    check('a passing check in the transcript is not held when its hook was cancelled', Boolean(held) && /nothing was run to check it after the last edit/.test(held.reason) && b === null && fromTranscript(a).length === 1 && fromTranscript(a)[0].verify === true, { happened: `without the transcript: ${reasonOf(held).slice(0, 160)} | with it: ${reasonOf(b).slice(0, 160)}`, why: 'The held reply is one more full-context round for a check that ran; in the study that was 80 cancelled hook calls in 22 of 34 runs.', fix: 'gate.stop calls track.recoverChecks before it says no check ran.' });
+    const a2 = start('pass-one');
+    const b2 = stop(a2, ONE, passing);
+    const r2 = track.recoverChecks({ session_id: a2, cwd: PROJECT, transcript_path: passing }, [{ kind: 'edit', files: [file] }]);
+    check('and the recovered check is recorded, so the second pass knows it ran', Boolean(b2) && !/no check ran/.test(b2.reason) && /already ran after the last edit \(python check\.py\)/.test(b2.reason) && r2.length === 1 && core.events(a2).filter((e) => e.kind === 'shell' && e.verify).length >= 1, { happened: reasonOf(b2).slice(0, 400), why: 'Later logic reads the event log; a check found only in memory would be "none recorded" to it.', fix: 'recoverChecks records the event and adds it to the turn in hand.' });
+
+    const c = start('fail');
+    const failing = write('failing', turn(editRows(), shellRows('python check.py', '', FAILED)));
+    const b3 = stop(c, ONE, failing);
+    check('a failing check in the transcript is still reported as failing', Boolean(b3) && /the last one that ran failed/.test(b3.reason) && /Traceback/.test(b3.reason) && !/no check ran/.test(b3.reason) && fromTranscript(c).length === 1 && fromTranscript(c)[0].outcome === 'fail', { happened: reasonOf(b3).slice(0, 300), why: 'Recovering the check must recover its result; a failure turned into "no check ran" or into a pass hides the red run.', fix: 'checksFromTranscript takes the outcome from transcriptVerdict.' });
+
+    // The later edit's hook was cancelled too: only the transcript shows it.
+    const d = start('edit-after');
+    const later = write('edit-after', turn(editRows(), shellRows('python check.py', PASSED), editRows()));
+    const b4 = stop(d, 'Fixed it.', later);
+    check('an edit after the check in the transcript is still an unchecked edit', Boolean(b4) && /nothing was run to check it after the last edit/.test(b4.reason) && fromTranscript(d).length === 0 && track.transcriptTurn(later).length === 3, { happened: reasonOf(b4).slice(0, 300), why: 'An edit made after the last check is an edit nobody checked, whichever of the two the log missed.', fix: 'checksFromTranscript looks only after the transcript\'s last edit.' });
+
+    // A subagent's edit reaches the log through its own hook but not the main
+    // transcript: Claude Code writes a subagent's transcript to a file of its
+    // own. The log's order decides, and a row with no time cannot be placed.
+    const until = (t) => { while (Date.now() <= t); };
+    const h = start('subagent-after');
+    const [subId, subRow] = call('Agent', { description: 'tidy', prompt: 'Tidy solution.py' });
+    until(core.events(h).filter((e) => e.kind === 'edit').pop().t);
+    const at = Date.now();
+    const subagent = write('subagent-after', turn(editRows(), shellRows('python check.py', PASSED), [subRow, answer(subId, 'Done.', false, {})]), '', at);
+    until(at + 20);
+    track.postTool({ session_id: h, cwd: PROJECT, tool_name: 'Edit', tool_input: { file_path: file } });
+    const b7 = stop(h, TAUGHT, subagent);
+    const k = start('unstamped');
+    const unstamped = path.join(dir, 'unstamped.jsonl');
+    fs.writeFileSync(unstamped, turn(editRows(), shellRows('python check.py', PASSED)).map((r) => JSON.stringify(r)).join('\n') + '\n');
+    const b8 = stop(k, TAUGHT, unstamped);
+    check('a check the transcript cannot place after the log\'s last edit is not counted', Boolean(b7) && /nothing was run to check it after the last edit/.test(b7.reason) && fromTranscript(h).length === 0 && reasonOf(b8) === reasonOf(held) && fromTranscript(k).length === 0, { happened: `subagent edit after the check: ${reasonOf(b7).slice(0, 160)} | no timestamps: ${reasonOf(b8).slice(0, 160)}`, why: 'An edit a subagent made after the check is in the log and not in the main transcript; counting the check would pass an edit nobody checked.', fix: 'checksFromTranscript counts only a result stamped after the last edit the log recorded.' });
+
+    const e = start('recorded');
+    track.postTool({ session_id: e, cwd: PROJECT, tool_name: 'Bash', tool_input: { command: 'python check.py' }, tool_response: { stdout: PASSED, stderr: '' } });
+    const e0 = start('recorded-base');
+    track.postTool({ session_id: e0, cwd: PROJECT, tool_name: 'Bash', tool_input: { command: 'python check.py' }, tool_response: { stdout: PASSED, stderr: '' } });
+    const b5 = stop(e, ONE, failing);
+    const b5base = stop(e0, ONE);
+    check('a check the hook recorded is left as it was', reasonOf(b5) === reasonOf(b5base) && fromTranscript(e).length === 0 && track.checksFromTranscript(failing, { cwd: PROJECT, sid: e, turn: [{ kind: 'edit', files: [file] }] }).length === 1, { happened: `${reasonOf(b5).slice(0, 200)} | ${reasonOf(b5base).slice(0, 200)}`, why: 'The transcript is a fallback for a missing record, not a second opinion on one.', fix: 'gate.stop reads the transcript only when lastVerificationAfterEdit finds nothing.' });
+
+    const garbled = write('garbled', turn(editRows(), shellRows('python check.py', PASSED)).slice(0, -1), '{"type":"user","message":{"role":"user","content":[{"type":"tool_re\n');
+    const truncated = write('truncated', turn(editRows(), shellRows('python check.py', PASSED)), '{"type":"assistant","message":{"role":"assistant","content":[{"type":"tool_use","id":"toolu_x","name":"Edit","input":{"file_pa');
+    const filler = [prompt('an earlier question'), prompt('Fix the bug in f in solution.py please'), ...editRows()];
+    for (let i = 0; i < 6; i++) { const [id, row] = call('Read', { file_path: file }); filler.push(row, answer(id, 'x'.repeat(400 * 1024), false, {})); }
+    const huge = write('huge', filler.concat(shellRows('python check.py', PASSED)));
+    const missing = path.join(dir, 'never-written.jsonl');
+    const cases = { missing, garbled, truncated, huge, 'another host': passing };
+    const off = [];
+    for (const [name, p] of Object.entries(cases)) {
+      const s = start('as-before-' + name.replace(/ /g, '-'));
+      const r = stop(s, TAUGHT, p, name === 'another host' ? 'codex' : undefined);
+      if (reasonOf(r) !== reasonOf(held) || fromTranscript(s).length) off.push(`${name}: ${reasonOf(r).slice(0, 120)}`);
+    }
+    const nothing = ['missing', 'garbled', 'truncated'].every((k) => track.transcriptTurn(cases[k]) === null) && track.checksFromTranscript(huge, { cwd: PROJECT, sid: sid('huge'), turn: [{ kind: 'edit', files: [file] }] }).length === 0;
+    check('a transcript that is missing, garbled, cut mid-line, too big to hold the turn, or another host\'s changes nothing', off.length === 0 && nothing, { happened: off.join(' | ') || `transcriptTurn or checksFromTranscript still answered (nothing=${nothing})`, why: 'A half-written line can be the edit after the check, and a tail that lost the edit cannot say what came after it; guessing there would pass an unchecked edit.', fix: 'transcriptTurn returns null on any line that does not parse; checksFromTranscript wants every recorded edit in view; gate.stop reads Claude Code transcripts only.' });
+
+    const f = start('not-checks');
+    const other = write('not-checks', turn(editRows(), shellRows('python main.py', '4'), shellRows('python -c "print(1)"', '1')));
+    const b6 = stop(f, 'Fixed it.', other);
+    const g = sid('cancel-module-run');
+    router.prompt({ session_id: g, cwd: PROJECT, prompt: 'Fix the bug in f in solution.py please' });
+    const moduleRun = write('module-run', turn(editRows(), shellRows('python -c "from solution import f; print(f(3))"', '5')));
+    const viaEdit = track.checksFromTranscript(moduleRun, { cwd: PROJECT, sid: g, turn: [] });
+    check('running an unedited file or a bare print is not a check; running the file the transcript edited is', Boolean(b6) && /nothing was run to check it after the last edit/.test(b6.reason) && fromTranscript(f).length === 0 && track.checksFromTranscript(other, { cwd: PROJECT, sid: f, turn: [] }).length === 0 && viaEdit.length === 1, { happened: `${reasonOf(b6).slice(0, 160)} | module run found ${viaEdit.length}`, why: 'The transcript is judged by track.isCheck, the rule the hooks and the agent loop use, with the transcript\'s own edits counted as this turn\'s.', fix: 'checksFromTranscript calls isCheck(command, sid, edited).' });
+  });
+
   suite('brief rounds expert', 'the brief asks for the fewest rounds', () => {
     const cc = brief.build({ cwd: PROJECT, session_id: sid('brief-cc'), source: 'startup' }, 'claude');
     const cx = brief.build({ cwd: PROJECT, session_id: sid('brief-cx'), source: 'startup' }, 'codex');

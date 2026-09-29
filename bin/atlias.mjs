@@ -14,7 +14,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
-import { VERSION, STATE_DIR, ROOT, readJson, writeJson, DEFAULTS, config, parseSetting, writeLauncher } from '../lib/core.mjs';
+import { VERSION, STATE_DIR, ROOT, readJson, writeJson, DEFAULTS, config, parseSetting, writeLauncher, flagStamp, flagLine, flagEnvName } from '../lib/core.mjs';
 import * as hosts from '../lib/hosts.mjs';
 import * as brief from '../lib/brief.mjs';
 import * as progress from '../lib/progress.mjs';
@@ -178,6 +178,17 @@ else switch (cmd) {
     const work = evals.workRoot(optVal('--work') || '');
     const refused = evals.workRootProblem(work);
     if (refused) { say(refused); process.exitCode = 2; break; }
+    // An arm is named by its flags. A flag the environment names that does not
+    // exist, or a value that does not parse, would run this arm as the control
+    // and score it as the change, so the run does not start.
+    const flagsNow = flagStamp();
+    if (flagsNow.unknown.length || flagsNow.bad.length) {
+      const known = Object.keys(flagsNow.values).map(flagEnvName);
+      say([...flagsNow.unknown.map((n) => `${n} names no flag.`), ...flagsNow.bad.map((b) => b.error), `The flags are: ${known.length ? known.join(', ') : 'none yet'}. Nothing ran.`].join('\n'));
+      process.exitCode = 2;
+      break;
+    }
+    say(`flags: ${flagLine(flagsNow)}`);
     // --save keeps the report so two runs can be compared later. A score nobody
     // wrote down cannot be the A in an A/B. It is written after every task, so a
     // run that dies keeps what it did, and --resume carries on from it.
@@ -190,6 +201,8 @@ else switch (cmd) {
       try { old = JSON.parse(fs.readFileSync(out, 'utf8')); } catch { old = null; }
       const same = old && old.engine === engine && (old.model || '') === (model || '') && (old.tries || 1) === repeat;
       if (old && !same) { say(`--resume: ${out} was a ${old.engine} ${old.model || ''} run with ${old.tries || 1} attempt(s) each; this one is ${engine} ${model || ''} with ${repeat}. Refusing to mix them.`); process.exitCode = 2; break; }
+      // Nor two arms: rows run with other flags are another arm's rows.
+      if (old && old.flags && JSON.stringify(old.flags.values) !== JSON.stringify(flagsNow.values)) { say(`--resume: ${out} ran with flags ${flagLine(old.flags)}; this run has ${flagLine(flagsNow)}. Refusing to mix them.`); process.exitCode = 2; break; }
       const want = new Set(tasks.map((t) => t.id));
       prior = old ? (old.results || []).filter((r) => want.has(r.id)) : [];
       say(prior.length ? `--resume: ${prior.length} of ${tasks.length} task(s) already in ${out}; running the other ${tasks.length - prior.length}.` : `--resume: nothing to carry on from in ${out}; starting fresh.`);
@@ -197,8 +210,8 @@ else switch (cmd) {
     const save = (rep) => { fs.mkdirSync(path.dirname(out), { recursive: true }); fs.writeFileSync(out, `${JSON.stringify(rep, null, 2)}\n`); };
     // The stamp is taken once, at the start: it names the code that is running.
     const stampNow = out ? evals.harnessStamp() : null;
-    const partial = (rows) => { if (out) save({ partial: true, results: rows, engine, model, tries: repeat, corpus: corpusInfo, stamp: stampNow }); };
-    const report = await evals.runSuite(tasks, { chat, state: agent.newState(cwd, engine), repeat, engineName: engine, model, corpus: corpusInfo, budget: roundsArg, beforeAttempt: stopIfOrphaned, work, prior, onResult: partial });
+    const partial = (rows) => { if (out) save({ partial: true, results: rows, engine, model, tries: repeat, corpus: corpusInfo, stamp: stampNow, flags: flagsNow }); };
+    const report = await evals.runSuite(tasks, { chat, state: agent.newState(cwd, engine), repeat, engineName: engine, model, corpus: corpusInfo, budget: roundsArg, beforeAttempt: stopIfOrphaned, work, prior, onResult: partial, flags: flagsNow });
     say(evals.format(report));
     if (out) { save(report); say(`saved to ${out}`); }
     process.exitCode = report.passed === report.total ? 0 : 1;
