@@ -12,10 +12,12 @@
 //   node test/golden.mjs --write    write it to the fixture (only when a change
 //                                   to flags-off behaviour is intended, and the
 //                                   baseline runs are then no longer the control)
-// The workspace path differs per machine and per run, so it is replaced by <WS>
-// wherever it appears, and the fields that count characters are corrected by
-// exactly what that replacement changed. Nothing else is normalised: wall time
-// and the workspace path are dropped, everything else must match.
+// The workspace path differs per machine and per run, and the repository root
+// per machine (the system prompt names the skills folder under it), so they are
+// replaced by <WS> and <ROOT> wherever they appear, and the fields that count
+// characters are corrected by exactly what those replacements changed. Nothing
+// else is normalised: wall time and the workspace path are dropped, everything
+// else must match.
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -70,7 +72,7 @@ function replaceDeep(v, from, to) {
 export async function fingerprint() {
   const evals = await import('../lib/eval.mjs');
   const loop = await import('../lib/loop.mjs');
-  const { config, DEFAULTS } = await import('../lib/core.mjs');
+  const { config, DEFAULTS, ROOT } = await import('../lib/core.mjs');
   // A flag nothing reads, registered on request, so the suite can prove that a
   // flag set to 0 from the environment is the same run as a flag not set.
   if (process.env.ATLIAS_GOLDEN_PROBE === '1') DEFAULTS.flags.goldenProbe = false;
@@ -91,18 +93,24 @@ export async function fingerprint() {
     const messages = JSON.parse(fs.readFileSync(path.join(ws, evals.TRANSCRIPT), 'utf8'));
     const cfg = config().agent;
     const handedOf = (ms) => JSON.stringify(loop.view(ms, cfg.keepObservations, cfg.evictBlock).map((m) => ({ role: m.role, content: typeof m.content === 'string' ? m.content : JSON.stringify(m.content ?? '') }))).length;
-    const norm = replaceDeep(messages, ws, '<WS>');
+    // The workspace first: it is the longer, more specific path. The root also
+    // in its forward-slash spelling, which is how Windows paths can reach a prompt.
+    const pairs = [[ws, '<WS>'], [ROOT, '<ROOT>']];
+    const slashed = ROOT.split(path.sep).join('/');
+    if (slashed !== ROOT) pairs.push([slashed, '<ROOT>']);
+    const normAll = (v) => pairs.reduce((acc, [from, to]) => replaceDeep(acc, from, to), v);
+    const norm = normAll(messages);
     const charsFix = JSON.stringify(messages).length - JSON.stringify(norm).length;
     const handedFix = handedOf(messages) - handedOf(norm);
     const clean = (r) => {
       const { ms, workspace, ...rest } = r;
-      return replaceDeep({ ...rest, chars: r.chars - charsFix, handed: r.handed - handedFix }, ws, '<WS>');
+      return normAll({ ...rest, chars: r.chars - charsFix, handed: r.handed - handedFix });
     };
     const { ms, results, ...totals } = report;
     out[name] = {
-      requests: requests.map((r) => JSON.stringify(replaceDeep(r, ws, '<WS>'))),
+      requests: requests.map((r) => JSON.stringify(normAll(r))),
       row: clean(row),
-      report: replaceDeep({ ...totals, chars: report.chars - charsFix, handed: report.handed - handedFix }, ws, '<WS>'),
+      report: normAll({ ...totals, chars: report.chars - charsFix, handed: report.handed - handedFix }),
     };
     try { fs.rmSync(ws, { recursive: true, force: true }); } catch { /* the temp tree goes anyway */ }
   }
