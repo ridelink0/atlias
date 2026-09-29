@@ -73,6 +73,17 @@ export default async function ({ suite, check, skip, core, gate, router, track, 
     const psWin = gate.visibleCheck(project('find-ps1', { 'check.ps1': 'exit 0\n' }), { platform: 'win32' });
     check('on Windows check.ps1 runs under PowerShell with -File, and python is looked for as python then py', psWin && psWin.command === 'powershell -File check.ps1' && psWin.args.join(' ') === '-NoProfile -ExecutionPolicy Bypass -File check.ps1' && JSON.stringify(gate.visibleCheck(he, { platform: 'win32' }).programs) === '["python","py"]' && gate.visibleCheck(ps, { platform: 'linux' }).name === 'check.py', { happened: JSON.stringify({ psWin, he: gate.visibleCheck(he, { platform: 'win32' }) }), why: 'Windows has no python3, and a .ps1 is refused by the default execution policy unless it is bypassed for this run.', fix: 'scriptRunner in lib/gate.mjs.' });
     check('a project with no check shows none', gate.visibleCheck(project('find-none', { 'main.py': '', 'checkout.py': '' })) === null && gate.visibleCheck(path.join(TMP, 'gatecheck', 'not-there')) === null, { happened: 'a check was named', why: 'checkout.py is not a check; the classifier already says so, and a missing folder is no project.', fix: 'Only what looksLikeVerification accepts.' });
+    // Files the rest of the classifier's words would name (eslint, jest,
+    // "node .*test"), an application module named for what it verifies, and a
+    // helper module of a test suite: each exits 0 when run and proves nothing.
+    const notChecks = { 'eslint.config.js': 'module.exports = [];\n', 'jest.config.js': 'module.exports = {};\n', 'latest.js': 'console.log("latest");\n', 'verify_email.py': 'def send(to):\n    return to\n', 'test-utils.mjs': 'export const helper = () => 1;\n' };
+    const named = Object.entries(notChecks).map(([f, text]) => [f, gate.visibleCheck(project('find-not', { 'main.py': '', [f]: text }))]).filter(([, r]) => r);
+    const real = [['test.mjs', "import test from 'node:test';\n"], ['verify_all.py', 'if __name__ == "__main__":\n    pass\n'], ['run_checks.sh', 'exit 0\n']].filter(([f, text]) => !gate.visibleCheck(project('find-real', { [f]: text }), { platform: 'linux' }));
+    check('a config file, an application module or a test helper is no check, and a test file that runs itself still is', named.length === 0 && real.length === 0 && core.looksLikeCheckScript('python check.py') && !core.looksLikeCheckScript('node eslint.config.js') && core.looksLikeVerification('node eslint.config.js'), { happened: JSON.stringify({ named: named.map(([f, r]) => `${f} -> ${r.command}`), missed: real.map(([f]) => f) }), why: 'node eslint.config.js or python verify_email.py exits 0 whatever the change did; the gate would call that a passing check and let a done reply through that it holds today, after running a script nobody asked it to run.', fix: 'visibleCheck names by looksLikeCheckScript, runs unread only a name ending in check or verify, and reads any other test file for a sign it runs by itself.' });
+    const cfgOnly = project('find-cfg', { 'main.py': 'x = 1\n', 'eslint.config.js': 'module.exports = [];\n' });
+    const cfgOff = withFlag(null, () => stop(cfgOnly, turn(cfgOnly, 'cfg-off'), DONE));
+    const cfgOn = withFlag('1', () => stop(cfgOnly, turn(cfgOnly, 'cfg-on'), DONE));
+    check('a project whose only candidate is eslint.config.js is held as it is with the flag off', cfgOff && cfgOn && JSON.stringify(cfgOn) === JSON.stringify(cfgOff), { happened: JSON.stringify({ off: cfgOff && cfgOff.reason.slice(0, 160), on: cfgOn && cfgOn.reason.slice(0, 160) }), why: 'A config file that loads and exits is not a passing check; waving the reply through on it is the false pass the flag must never add.', fix: 'visibleCheck must return null there.' });
   });
 
   suite('gate check expert', 'when the gate wants a check, and how it runs one', () => {
@@ -87,6 +98,8 @@ export default async function ({ suite, check, skip, core, gate, router, track, 
     const ok = gate.runVisibleCheck(node('ok.mjs'), js);
     const bad = gate.runVisibleCheck(node('bad.mjs'), js);
     check('runVisibleCheck: a program that is not there sends it to the next name, and the exit decides', ok.outcome === 'pass' && /fine/.test(ok.output) && bad.outcome === 'fail' && bad.status === 1 && /expected 3, got 4/.test(bad.output), { happened: JSON.stringify({ ok, bad }), why: 'python3 is missing on Windows and python on some Linux; the gate tries the next name before it calls the check unrunnable, and reads the result the way the hooks read a check the model ran.', fix: 'Check runVisibleCheck in lib/gate.mjs.' });
+    const noPm = gate.runVisibleCheck({ command: 'atlias-no-such-pm test', programs: ['atlias-no-such-pm test'], args: [], shell: true }, js);
+    check('a test script whose package manager is not on PATH could not start; it did not fail', noPm.outcome === 'unfinished' && /no atlias-no-such-pm on PATH/.test(noPm.why), { happened: JSON.stringify(noPm), why: 'Through a shell a missing program is exit 127 (sh) or 9009 (cmd.exe); calling that a failing check holds the reply over the project\'s code for what is the machine\'s fault, and quotes "not found" as the failure.', fix: 'runVisibleCheck reads the shell\'s not-found exit as unfinished.' });
   });
 
   suite('gate check expert', 'the gate runs the check and holds only on a failure', () => {
