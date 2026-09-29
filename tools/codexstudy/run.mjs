@@ -11,6 +11,7 @@ import { runAsync } from '../../lib/proc.mjs';
 const ROOT=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../..');
 const opt=(a,k,d='')=>a.includes(k)?a[a.indexOf(k)+1]:d;
 export function validateResume(old,plan){if(['sha','plugin','model','effort','lean'].some(k=>old[k]!==plan[k])||JSON.stringify(old.tasks)!==JSON.stringify(plan.tasks))throw new Error('resume would mix plugin/model/effort/flags or task hashes; choose a new output directory');}
+export function limitsOf(a){const stopPercent=Number(opt(a,'--stop-percent','60')),timeoutMin=Number(opt(a,'--timeout-min','12'));if(!Number.isFinite(stopPercent)||stopPercent<=0||stopPercent>100||!Number.isFinite(timeoutMin)||timeoutMin<=0)throw new Error('stop percentage must be in (0,100] and timeout minutes must be positive and finite');return {stopPercent,timeoutMin};}
 function sync(bin,args,options={}){const r=spawnSync(bin,args,{encoding:'utf8',windowsHide:true,timeout:120000,...options});if(r.status!==0)throw new Error(`${bin} failed: ${(r.stderr||r.stdout||r.error||'').toString().slice(-700)}`);return r.stdout.trim();}
 export function usageOf(rows){
   const counts=rows.filter(r=>r.type==='event_msg'&&r.payload?.type==='token_count'&&r.payload.info);
@@ -34,6 +35,7 @@ async function run(bin,args,{env,cwd,stream,stderr,timeoutMs}){
   return {code:r.status,timedOut:r.timedOut};
 }
 export async function main(a){
+  const {stopPercent,timeoutMin}=limitsOf(a);
   const list=path.resolve(opt(a,'--tasks')),taskRoot=path.resolve(opt(a,'--task-root',ROOT));
   const variant=opt(a,'--variant');
   const tasks=loadTaskList(list,taskRoot).filter(t=>!variant||t.id.endsWith(`-${variant}`)).slice(0,Number(opt(a,'--pairs','6')));
@@ -70,7 +72,7 @@ export async function main(a){
     const windows=meter.windows||[];
     if(!windows.length)throw new Error('quota windows unavailable; no model call started');
     if(windows.some(w=>!Number.isFinite(w.percentUsed)))throw new Error('quota percentage unknown; no model call started');
-    if(windows.some(w=>w.percentUsed>=Number(opt(a,'--stop-percent','60')))) {console.log('Stopped at requested account allowance boundary.');break;}
+    if(windows.some(w=>w.percentUsed>=stopPercent)) {console.log('Stopped at requested account allowance boundary.');break;}
     const base=path.join(out,'runs',job.task.id,`r${job.repeat}-${job.arm}`);
     if(fs.existsSync(base))throw new Error(`unfinished run exists: ${base}; preserve and inspect it before retrying`);
     const home=path.join(base,'home'),ws=path.join(base,'ws'),codexHome=path.join(home,'.codex');fs.mkdirSync(codexHome,{recursive:true});fs.mkdirSync(ws,{recursive:true});
@@ -94,7 +96,7 @@ export async function main(a){
     const args=['--no-daemon','-a','never','exec','--skip-git-repo-check','--ignore-rules','--dangerously-bypass-hook-trust','--json','-s','danger-full-access','-c','features.apps=false','-m',model,'-C',ws,job.task.prompt];
     const started=Date.now();console.log(`START ${job.task.id} r${job.repeat} ${job.arm}`);
     let proc;
-    try {proc=await run(bin,args,{env,cwd:ws,stream:path.join(base,'stream.jsonl'),stderr:path.join(base,'stderr.txt'),timeoutMs:Number(opt(a,'--timeout-min','12'))*60000});}
+    try {proc=await run(bin,args,{env,cwd:ws,stream:path.join(base,'stream.jsonl'),stderr:path.join(base,'stderr.txt'),timeoutMs:timeoutMin*60000});}
     finally {fs.rmSync(path.join(codexHome,'auth.json'),{force:true});}
     const rollouts=filesUnder(path.join(codexHome,'sessions')).filter(f=>f.endsWith('.jsonl'));
     const events=rollouts.flatMap(readJsonl),usage=usageOf(events);

@@ -31,6 +31,12 @@ jobs:
         run: for f in lib/*.mjs mcp/*.mjs bin/*.mjs test/run.mjs; do node --check "$f"; done
       - name: suite
         run: node test/run.mjs
+      - name: model-free benchmark protocol and corpus
+        shell: bash
+        run: |
+          node tools/ccstudy/test.mjs
+          node tools/codexstudy/test.mjs
+          node tools/codexstudy/corpus-test.mjs
       - name: the command line answers
         shell: bash
         run: |
