@@ -103,7 +103,9 @@ export default async function subharnessSuites({ suite, check, core, gate, track
     };
     const PASSED = 'all tests passed';
     const FAILED = 'Traceback (most recent call last):\n  File "check.py", line 3\nAssertionError';
-    const write = (name, rows, raw = '') => { const p = path.join(dir, name + '.jsonl'); fs.writeFileSync(p, rows.map((r) => JSON.stringify(r)).join('\n') + '\n' + raw); return p; };
+    // Claude Code stamps every row. A row is written after the hook events of
+    // its turn, so a fixture is stamped after them unless a check says when.
+    const write = (name, rows, raw = '', at = Date.now() + 60000) => { const p = path.join(dir, name + '.jsonl'); fs.writeFileSync(p, rows.map((r, i) => JSON.stringify({ timestamp: new Date(at + i).toISOString(), ...r })).join('\n') + '\n' + raw); return p; };
     const turn = (...parts) => [prompt('an earlier question'), ...shellRows('python check.py', PASSED), prompt('Fix the bug in f in solution.py please'), ...parts.flat()];
     const start = (name) => { const s = sid('cancel-' + name); router.prompt({ session_id: s, cwd: PROJECT, prompt: 'Fix the bug in f in solution.py please' }); track.postTool({ session_id: s, cwd: PROJECT, tool_name: 'Edit', tool_input: { file_path: file } }); return s; };
     const stop = (s, last, transcript, host) => gate.stop({ session_id: s, cwd: PROJECT, last_assistant_message: last, ...(transcript === undefined ? {} : { transcript_path: transcript }) }, host);
@@ -140,6 +142,24 @@ export default async function subharnessSuites({ suite, check, core, gate, track
     const later = write('edit-after', turn(editRows(), shellRows('python check.py', PASSED), editRows()));
     const b4 = stop(d, 'Fixed it.', later);
     check('an edit after the check in the transcript is still an unchecked edit', Boolean(b4) && /nothing was run to check it after the last edit/.test(b4.reason) && fromTranscript(d).length === 0 && track.transcriptTurn(later).length === 3, { happened: reasonOf(b4).slice(0, 300), why: 'An edit made after the last check is an edit nobody checked, whichever of the two the log missed.', fix: 'checksFromTranscript looks only after the transcript\'s last edit.' });
+
+    // A subagent's edit reaches the log through its own hook but not the main
+    // transcript: Claude Code writes a subagent's transcript to a file of its
+    // own. The log's order decides, and a row with no time cannot be placed.
+    const until = (t) => { while (Date.now() <= t); };
+    const h = start('subagent-after');
+    const [subId, subRow] = call('Agent', { description: 'tidy', prompt: 'Tidy solution.py' });
+    until(core.events(h).filter((e) => e.kind === 'edit').pop().t);
+    const at = Date.now();
+    const subagent = write('subagent-after', turn(editRows(), shellRows('python check.py', PASSED), [subRow, answer(subId, 'Done.', false, {})]), '', at);
+    until(at + 20);
+    track.postTool({ session_id: h, cwd: PROJECT, tool_name: 'Edit', tool_input: { file_path: file } });
+    const b7 = stop(h, TAUGHT, subagent);
+    const k = start('unstamped');
+    const unstamped = path.join(dir, 'unstamped.jsonl');
+    fs.writeFileSync(unstamped, turn(editRows(), shellRows('python check.py', PASSED)).map((r) => JSON.stringify(r)).join('\n') + '\n');
+    const b8 = stop(k, TAUGHT, unstamped);
+    check('a check the transcript cannot place after the log\'s last edit is not counted', Boolean(b7) && /nothing was run to check it after the last edit/.test(b7.reason) && fromTranscript(h).length === 0 && reasonOf(b8) === reasonOf(held) && fromTranscript(k).length === 0, { happened: `subagent edit after the check: ${reasonOf(b7).slice(0, 160)} | no timestamps: ${reasonOf(b8).slice(0, 160)}`, why: 'An edit a subagent made after the check is in the log and not in the main transcript; counting the check would pass an edit nobody checked.', fix: 'checksFromTranscript counts only a result stamped after the last edit the log recorded.' });
 
     const e = start('recorded');
     track.postTool({ session_id: e, cwd: PROJECT, tool_name: 'Bash', tool_input: { command: 'python check.py' }, tool_response: { stdout: PASSED, stderr: '' } });
