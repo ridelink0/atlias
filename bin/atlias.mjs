@@ -64,6 +64,7 @@ const HELP = {
     '  --model <name>            score a named model without changing the settings',
     '  --repeat k                k attempts per task; a task passes only when all k do (pass^k)',
     '  --rounds N                override every task\'s own round budget',
+    '  --direct                  the direct arm: one prompt with the files, whole files back, the visible check, at most one repair; no tools',
     '  --save <file.json>        keep the report for atlias compare',
     '  --outlive-parent          keep running if the process that started the eval goes away (by default it stops)',
     'Code the model wrote runs under a watchdog: at its limit (shell 2 min, check 60 s) it is ended with everything it',
@@ -165,6 +166,7 @@ else switch (cmd) {
       : engine === 'openai' ? loopMod.openaiChat(cfgFor) : loopMod.ollamaChat(cfgFor);
     // One run of a sampling process is not a result: --repeat 3 runs each task
     // three times and reports pass^3 beside pass@3.
+    const direct = argv.includes('--direct');
     const repeat = Math.max(1, parseInt(optVal('--repeat') || '1', 10) || 1);
     const model = picked || (engine === 'openai' ? cfg.openaiModel : engine === 'ollama' ? cfg.ollamaModel : '');
     say(`${tasks.length} task(s) against ${engine}${repeat > 1 ? `, ${repeat} attempts each` : ''}. The check command decides, not the model.`);
@@ -203,6 +205,7 @@ else switch (cmd) {
       const same = old && old.engine === engine && (old.model || '') === (model || '') && (old.tries || 1) === repeat;
       if (old && !same) { say(`--resume: ${out} was a ${old.engine} ${old.model || ''} run with ${old.tries || 1} attempt(s) each; this one is ${engine} ${model || ''} with ${repeat}. Refusing to mix them.`); process.exitCode = 2; break; }
       // Nor two arms: rows run with other flags are another arm's rows.
+      if (old && Boolean(old.direct) !== direct) { say(`--resume: ${out} ran ${old.direct ? 'the direct arm' : 'the agent loop'}; this run is ${direct ? 'the direct arm' : 'the agent loop'}. Refusing to mix them.`); process.exitCode = 2; break; }
       if (old && old.flags && !sameFlags(old.flags, flagsNow)) { say(`--resume: ${out} ran with flags ${flagLine(old.flags)}; this run has ${flagLine(flagsNow)}. Refusing to mix them.`); process.exitCode = 2; break; }
       const want = new Set(tasks.map((t) => t.id));
       prior = old ? (old.results || []).filter((r) => want.has(r.id)) : [];
@@ -211,8 +214,8 @@ else switch (cmd) {
     const save = (rep) => { fs.mkdirSync(path.dirname(out), { recursive: true }); fs.writeFileSync(out, `${JSON.stringify(rep, null, 2)}\n`); };
     // The stamp is taken once, at the start: it names the code that is running.
     const stampNow = out ? evals.harnessStamp() : null;
-    const partial = (rows) => { if (out) save({ partial: true, results: rows, engine, model, tries: repeat, corpus: corpusInfo, stamp: stampNow, flags: flagsNow }); };
-    const report = await evals.runSuite(tasks, { chat, state: agent.newState(cwd, engine), repeat, engineName: engine, model, corpus: corpusInfo, budget: roundsArg, beforeAttempt: stopIfOrphaned, work, prior, onResult: partial, flags: flagsNow });
+    const partial = (rows) => { if (out) save({ partial: true, results: rows, engine, model, tries: repeat, corpus: corpusInfo, stamp: stampNow, flags: flagsNow, ...(direct ? { direct: true } : {}) }); };
+    const report = await evals.runSuite(tasks, { chat, state: agent.newState(cwd, engine), repeat, engineName: engine, model, corpus: corpusInfo, budget: roundsArg, beforeAttempt: stopIfOrphaned, work, prior, onResult: partial, flags: flagsNow, direct });
     say(evals.format(report));
     if (out) { save(report); say(`saved to ${out}`); }
     process.exitCode = report.passed === report.total ? 0 : 1;
