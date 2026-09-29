@@ -4,6 +4,7 @@
 //   atlias uninstall [--all|--codex|--antigravity|--gemini]
 //   atlias doctor | status | brief [--host codex] | test | version
 //   atlias tiers | eval [--tier smoke|main|big] [--sample N] | compare <a.json> <b.json>
+//   atlias score pack <report.json...> --out <dir> | verify <dir>   the public score package
 //   atlias polyglot | editbench | refactorbench <path>   convert somebody else's benchmark
 //   atlias shortcut [install|uninstall|status]   the atlias command in any terminal
 //   atlias mode [both|sub|standalone] | settings [list]
@@ -71,6 +72,7 @@ const HELP = {
   ],
   compare: ['usage: atlias compare <a.json> <b.json>   two runs saved with atlias eval --save, paired task by task'],
   council: ['usage: atlias council replay <report.json...> [--json]   simulate the check-selected retry over reports saved with atlias eval --save: one --repeat 3 report, or three reports from three runs'],
+  score: ['usage: atlias score pack <report.json...> --out <dir> [--corpus <dir> | --tier <name>] [--names a,b]   one report (a score) or two (an A/B) saved with atlias eval --save, into a folder with lock.json, rows.jsonl, stats.json, SCORE.md and the re-run commands', '       atlias score verify <dir> [--corpus <dir> | --tier <name>]   recompute the stats from the rows and check the lock against the corpus files; exit 1 on a mismatch'],
   tiers: ['usage: atlias tiers   the benchmark tiers, which are on this machine, and how to get the rest'],
   polyglot: ['usage: atlias polyglot <path to a polyglot-benchmark clone> [--lang python] [--out <dir>] [--limit N] [--only name,name]'],
   editbench: ['usage: atlias editbench <rows.jsonl> --bench canitedit|humanevalfix [--variant lazy|descriptive] [--lang python|js] [--v2] [--out <dir>] [--limit N] [--only id,id] [--rounds N]'],
@@ -235,6 +237,24 @@ else switch (cmd) {
     // otherwise print as "X 3/9 against X 4/9"; the file names tell them apart.
     if (aName === bName) { aName = `${aName} (${path.basename(files[0])})`; bName = `${bName} (${path.basename(files[1])})`; }
     say(evals2.formatCompare(evals2.compare(A, B), aName, bName));
+    break;
+  }
+  case 'score': {
+    const score = await import('../lib/score.mjs');
+    const taken = new Set();
+    for (const f of ['--out', '--corpus', '--tier', '--names']) { const i = argv.indexOf(f); if (i >= 0) taken.add(i + 1); }
+    const rest = argv.slice(1).filter((a, i) => !a.startsWith('--') && !taken.has(i + 1));
+    const sub = rest[0];
+    if (sub === 'pack' && rest.length >= 2 && optVal('--out')) {
+      try {
+        const out = score.pack(rest.slice(1).map((f) => path.resolve(f)), path.resolve(optVal('--out')), { corpus: optVal('--corpus') || '', tier: optVal('--tier') || '', names: (optVal('--names') || '').split(',').filter(Boolean) });
+        say([`wrote ${path.resolve(optVal('--out'))}: lock.json, rows.jsonl, stats.json, SCORE.md, reports/`, ...out.stats.arms.map((s) => `${s.arm}: ${s.passed} of ${s.tasks}`), 'check it with: atlias score verify ' + optVal('--out')]);
+      } catch (e) { say(`atlias score pack: ${e.message}`); process.exitCode = 1; }
+    } else if (sub === 'verify' && rest.length === 2) {
+      const v = score.verify(path.resolve(rest[1]), { corpus: optVal('--corpus') || '', tier: optVal('--tier') || '' });
+      say([v.ok ? 'score package verified: the stats match the rows and every task file matches the lock.' : `score package does NOT verify (${v.problems.length}):`, ...v.problems.map((x) => `  - ${x}`), ...v.notes.map((x) => `  note: ${x}`)]);
+      if (!v.ok) process.exitCode = 1;
+    } else { say(HELP.score); process.exitCode = 1; }
     break;
   }
   case 'council': {
