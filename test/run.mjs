@@ -981,6 +981,7 @@ await (await import('./sandbox-suites.mjs')).default({ suite, asyncSuite, check,
 await (await import('./exit-suites.mjs')).default({ suite, asyncSuite, check, core, agentMod, TMP, fs, path });
 await (await import('./context-suites.mjs')).default({ asyncSuite, check, agentMod, TMP, fs, path });
 await (await import('./editbench-suites.mjs')).default({ asyncSuite, check, skip, TMP, fs, path });
+await (await import('./hefix-v2-suites.mjs')).default({ asyncSuite, check, skip, TMP, fs, path });
 await (await import('./tier-suites.mjs')).default({ asyncSuite, check, TMP, ROOT, fs, path, spawnSync });
 await (await import('./proc-suites.mjs')).default({ asyncSuite, check, skip, TMP, ROOT, fs, path });
 await (await import('./control-suites.mjs')).default({ suite, asyncSuite, check, TMP, ROOT, fs, path, spawnSync });
