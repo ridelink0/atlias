@@ -62,10 +62,10 @@ export const REPLIES = [
 // reading have something to carry.
 export const usageFor = (i) => ({ prompt_eval_count: 1000 + 100 * i, prompt_eval_cached_count: i ? 900 + 90 * i : 0, eval_count: 40 + i });
 
-function replaceDeep(v, from, to) {
-  if (typeof v === 'string') return from ? v.split(from).join(to) : v;
-  if (Array.isArray(v)) return v.map((x) => replaceDeep(x, from, to));
-  if (v && typeof v === 'object') return Object.fromEntries(Object.entries(v).map(([k, x]) => [k, replaceDeep(x, from, to)]));
+function mapStrings(v, fn) {
+  if (typeof v === 'string') return fn(v);
+  if (Array.isArray(v)) return v.map((x) => mapStrings(x, fn));
+  if (v && typeof v === 'object') return Object.fromEntries(Object.entries(v).map(([k, x]) => [k, mapStrings(x, fn)]));
   return v;
 }
 
@@ -94,11 +94,13 @@ export async function fingerprint() {
     const cfg = config().agent;
     const handedOf = (ms) => JSON.stringify(loop.view(ms, cfg.keepObservations, cfg.evictBlock).map((m) => ({ role: m.role, content: typeof m.content === 'string' ? m.content : JSON.stringify(m.content ?? '') }))).length;
     // The workspace first: it is the longer, more specific path. The root also
-    // in its forward-slash spelling, which is how Windows paths can reach a prompt.
-    const pairs = [[ws, '<WS>'], [ROOT, '<ROOT>']];
-    const slashed = ROOT.split(path.sep).join('/');
-    if (slashed !== ROOT) pairs.push([slashed, '<ROOT>']);
-    const normAll = (v) => pairs.reduce((acc, [from, to]) => replaceDeep(acc, from, to), v);
+    // in its forward-slash spelling. On Windows the path that follows either one
+    // is joined with backslashes (the skills line is path.join(dir, '<name>',
+    // 'SKILL.md')), so that tail is spelled with / as it is everywhere else.
+    const esc = (t) => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const anchors = [[ws, '<WS>'], [ROOT, '<ROOT>'], [ROOT.split(path.sep).join('/'), '<ROOT>']];
+    const normStr = (t) => anchors.reduce((acc, [from, to]) => acc.replace(new RegExp(esc(from) + '([^\\s"\'`]*)', 'g'), (m, tail) => to + tail.replace(/\\/g, '/')), t);
+    const normAll = (v) => mapStrings(v, normStr);
     const norm = normAll(messages);
     const charsFix = JSON.stringify(messages).length - JSON.stringify(norm).length;
     const handedFix = handedOf(messages) - handedOf(norm);
