@@ -5,7 +5,7 @@
 // pointer, once per session, chosen from what is installed.
 export default async function ({ suite, check, core, brief, router, hosts, TMP, ROOT, fs, path }) {
   const { DESCRIPTIONS } = await import('../lib/settings.mjs');
-  const { TOOLS } = await import('../mcp/tools.mjs');
+  const { TOOLS, callTool } = await import('../mcp/tools.mjs');
   const FLAG = 'ATLIAS_FLAG_VISUAL_HINT';
   const withEnv = (vars, fn) => {
     const before = {};
@@ -185,12 +185,65 @@ export default async function ({ suite, check, core, brief, router, hosts, TMP, 
     const c = doc([copy(miss)], { uid: 0, candidates: ['/opt/pw-browsers/chromium-1/chrome-linux/chrome'] });
     const cr = row(c, 'browser for image-deep-research');
     check('uid 0 adds the --no-sandbox note, and a known chromium is named', /Chrome needs --no-sandbox as root \(IDR 1\.1\.0 adds it\)/.test(cr.fix) && /chromium-1/.test(cr.fix), { happened: cr.fix, why: 'Chrome refuses to start as root without it.', fix: 'Append the note when process.getuid() is 0.' });
-    const none = doc([]);
-    check('with no copy loaded there is one failing image-deep-research row and no node or browser row', row(none, 'image-deep-research') && !row(none, 'image-deep-research').ok && row(none, 'image-deep-research').fix === 'atlias install --companions' && !row(none, 'node 22+ for image-deep-research') && !row(none, 'browser for image-deep-research') && !row(none, 'one copy of image-deep-research'), { happened: JSON.stringify(none.filter((x) => /image/.test(x.name))), why: 'Rows appear only when they can be answered.', fix: 'Gate the rows on loaded copies and dir.' });
+    const none = withEnv({ [FLAG]: 'compact' }, () => doc([]));
+    check('with the flag on and no copy loaded there is one failing image-deep-research row and no node or browser row', row(none, 'image-deep-research') && !row(none, 'image-deep-research').ok && row(none, 'image-deep-research').fix === 'atlias install --companions' && !row(none, 'node 22+ for image-deep-research') && !row(none, 'browser for image-deep-research') && !row(none, 'one copy of image-deep-research'), { happened: JSON.stringify(none.filter((x) => /image/.test(x.name))), why: 'Rows appear only when they can be answered.', fix: 'Gate the rows on loaded copies and dir.' });
+    const offNone = withEnv({ [FLAG]: null }, () => doc([]));
+    check('with the flag off a machine without image-deep-research gets no row, so atlias doctor exits as it did', !offNone.some((x) => /image-deep-research/.test(x.name)), { happened: JSON.stringify(offNone.filter((x) => /image/.test(x.name))), why: 'A new failing row turns `atlias doctor` from exit 0 to 1 for everyone who never asked for image research.', fix: 'Add the presence row only when a copy loads or flags.visualHint is on.' });
     const two = doc([copy(good), copy(null, { where: '/other' })], { uid: 1000 });
     check('two loaded copies add the failing one-copy row; a loaded copy adds the node row', row(two, 'one copy of image-deep-research') && !row(two, 'one copy of image-deep-research').ok && row(two, 'node 22+ for image-deep-research') && row(two, 'node 22+ for image-deep-research').ok === (parseInt(process.versions.node, 10) >= 22), { happened: JSON.stringify(two.filter((x) => /image/.test(x.name))), why: 'Two copies compete for every visual prompt; IDR needs Node 22.', fix: 'See hosts.doctor.' });
     const unknownDir = doc([copy(null)], { uid: 1000 });
     check('a loaded copy whose folder is unknown gets no browser row', !row(unknownDir, 'browser for image-deep-research') && row(unknownDir, 'image-deep-research').ok, { happened: JSON.stringify(unknownDir.filter((x) => /image/.test(x.name))), why: 'There is no browser.mjs to ask.', fix: 'Only run the lookup when dir is known.' });
+  });
+
+  suite('visual regression expert', 'a coding prompt is never a visual one, and off means off however the flag is written', () => {
+    const coding = [
+      'what does the output of git log --graph look like in a merge commit',
+      'fetch images for the gallery in my React app and cache them',
+      'get pictures of the user from the avatar API and resize them',
+      'collect images for the training set and write a script to dedupe them',
+      'what does a healthy kubernetes pod status look like in kubectl output',
+      'show me the images of the docker containers running on this box',
+      'find me all photos of that upload path in the S3 bucket and delete stale ones',
+      'screenshot of the competitor site broke our scraper, patch the playwright script',
+      'what do the logs look like when the queue backs up? add alerting',
+      'gather some images for the README and add a badge',
+      'find images of duplicates using perceptual hashing in Python',
+      'get a few pictures for the unit fixtures; the loader crashes on png',
+      'what does this regex look like after we escape the dot',
+      'write a script that fetches licensed images from Unsplash and stores them in Postgres',
+      'design inspiration for the dashboard: implement the sidebar collapse',
+      'what does our config look like for staging vs prod',
+      'show images of the failing screenshots diff from CI',
+    ];
+    const wrong = coding.filter((p) => router.classify(p, { visual: true }) === 'visual');
+    check('17 realistic coding prompts that mention images, logs or looks do not classify visual', wrong.length === 0, { happened: wrong.join(' | '), why: 'The visual route answers before the graph and the frontend hint; a coding prompt sent there loses both and costs a hint.', fix: 'Tighten VISUAL_RE (no "look like" about this, our or my things; no the/these before images) and extend CODE_GUARD_RE.' });
+    const real = ['Make me a mood board for a cozy Scandinavian bakery', 'find images of mid-century brutalist libraries for reference', 'what does Lisbon look like in November', 'show me some photos of art deco lobbies', 'pull reference photos for a 1970s Kodachrome look', 'what do Bauhaus posters look like', 'screenshots of competitor sites in the meal-kit space', 'find public-domain images of Victorian botanical plates', 'gather 12 images of alpine huts for inspiration', 'make a contact sheet of ceramic glazes'];
+    const missed = real.filter((p) => router.classify(p, { visual: true }) !== 'visual');
+    check('the tighter guard still routes ten real visual asks', missed.length === 0, { happened: missed.join(' | '), why: 'A hint that never fires is not a feature.', fix: 'Do not guard on words a visual ask uses.' });
+    const { STATE_DIR } = core;
+    const cfgPath = path.join(STATE_DIR, 'config.json');
+    const cwd = dir({ '.claude/skills/image-deep-research/SKILL.md': SKILL }).root;
+    const prev = fs.existsSync(cfgPath) ? fs.readFileSync(cfgPath, 'utf8') : null;
+    const outs = [];
+    try {
+      [false, 0, '', null, true, 'off'].forEach((v, i) => {
+        fs.mkdirSync(STATE_DIR, { recursive: true });
+        fs.writeFileSync(cfgPath, JSON.stringify({ flags: { visualHint: v } }));
+        outs.push([v, JSON.stringify(withEnv({ [FLAG]: null }, () => router.prompt({ session_id: `vcfg-${i}`, cwd, prompt: visual[0] })))]);
+      });
+    } finally { if (prev == null) fs.rmSync(cfgPath, { force: true }); else fs.writeFileSync(cfgPath, prev); }
+    check('config.json with flags.visualHint false, 0, "", null, true or "off" sends nothing, as the unset flag does', outs.every(([, o]) => o === 'null'), { happened: outs.filter(([, o]) => o !== 'null').map(([v, o]) => `${JSON.stringify(v)} -> ${o.slice(0, 80)}`).join(' | '), why: 'Every other flag is written false in config.json; a value that is not one of the two variants must be off, or the control arm gets the hint.', fix: 'router.prompt switches the class on only for compact or subagent.' });
+    const e = core.envFlags({ [FLAG]: '' });
+    check('an empty ATLIAS_FLAG_VISUAL_HINT is off and not reported as a bad value, as for a boolean flag', e.values.visualHint === 'off' && e.bad.length === 0, { happened: JSON.stringify(e), why: 'The environment is how an arm is set; an empty variable must not put "ignored" in a control run\'s report.', fix: 'envFlags reads an empty choice flag as off.' });
+    const claudeSkills = path.join(process.env.CLAUDE_CONFIG_DIR, 'skills', 'image-deep-research');
+    fs.mkdirSync(claudeSkills, { recursive: true });
+    fs.writeFileSync(path.join(claudeSkills, 'SKILL.md'), SKILL);
+    let status, cli;
+    try {
+      status = withEnv({ [FLAG]: null }, () => callTool('harness_status', { cwd }));
+      cli = withEnv({ [FLAG]: null }, () => hosts.doctor(cwd));
+    } finally { fs.rmSync(path.join(process.env.CLAUDE_CONFIG_DIR, 'skills'), { recursive: true, force: true }); }
+    check('harness_status, which the model reads, has no image-deep-research row even when a copy loads, while atlias doctor still has it', !/image-deep-research/.test(status) && cli.some((x) => x.name === 'image-deep-research' && x.ok), { happened: String(status).slice(0, 200) + ' || ' + JSON.stringify(cli.filter((x) => /image/.test(x.name))), why: 'The flag-off promise is that nothing the model sees changes; the status tool is something it sees.', fix: 'mcp/tools.mjs asks doctor for idrRows: false.' });
   });
 
   suite('visual surface expert', 'no new skill, tool or hook surface', () => {

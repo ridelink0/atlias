@@ -134,7 +134,7 @@ export function callTool(name, args = {}) {
     case 'graph_affected': return graph.sub(cwd, 'affected', args.node) || 'no graph here, or no such node.';
     case 'graph_explain': return graph.sub(cwd, 'explain', args.node) || 'no graph here, or no such node.';
     case 'harness_bench': return bench.report(cwd, Array.isArray(args.questions) ? args.questions : []);
-    case 'harness_status': return formatDoctor(doctor(cwd).concat(doctorRows()));
+    case 'harness_status': return formatDoctor(doctor(cwd, { idrRows: false }).concat(doctorRows()));
     default: throw new Error(`unknown tool ${name}`);
   }
 }
