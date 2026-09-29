@@ -237,13 +237,18 @@ export function streamHolds(stream) {
 
 // Walk the main transcript in order and say, for every hold, whether a check
 // had run after the last edit before it. `isCheck(command, editedFiles)` is
-// atlias's own rule, passed in so this file does not pin one version of it.
-export function holdsOf(rows, isCheck) {
+// atlias's own rule, passed in so this file does not pin one version of it:
+// a false hold by that rule is one the transcript recovery could have caught.
+// `isBroad` is the study's wider reading - any interpreter run after the last
+// edit, such as `node lint.mjs`, which atlias's rule does not call a check - so
+// a hold that atlias's own classifier made false is counted too.
+export function holdsOf(rows, isCheck, isBroad = isCheck) {
   const holds = [];
   const calls = new Map();
   let edited = [];
   let lastEditAt = -1;
   let checkAfterEdit = null;
+  let broadAfterEdit = null;
   let seq = 0;
   for (const r of rows) {
     if (!r || r.isSidechain) continue;
@@ -257,6 +262,7 @@ export function holdsOf(rows, isCheck) {
           if (f) edited.push(String(f));
           lastEditAt = seq;
           checkAfterEdit = null;
+          broadAfterEdit = null;
         }
       }
       continue;
@@ -267,11 +273,18 @@ export function holdsOf(rows, isCheck) {
       if (!c || c.name !== 'Bash' || c.seq < lastEditAt) continue;
       const cmd = String(c.input.command || '');
       if (cmd && isCheck(cmd, edited)) checkAfterEdit = { command: cmd, failed: Boolean(b.is_error) };
+      if (cmd && (isCheck(cmd, edited) || isBroad(cmd, edited))) broadAfterEdit = { command: cmd, failed: Boolean(b.is_error) };
     }
     const text = holdTextOf(r);
     if (text) {
       const saysNoCheck = NO_CHECK_RE.test(text);
-      holds.push({ atlias: HOLD_RE.test(text), saysNoCheck, checkShown: Boolean(checkAfterEdit), falseNoCheck: saysNoCheck && Boolean(checkAfterEdit), check: checkAfterEdit ? checkAfterEdit.command.slice(0, 200) : '', text: text.slice(0, 400) });
+      holds.push({
+        atlias: HOLD_RE.test(text), saysNoCheck,
+        checkShown: Boolean(checkAfterEdit), falseNoCheck: saysNoCheck && Boolean(checkAfterEdit),
+        runShown: Boolean(broadAfterEdit), falseNoCheckBroad: saysNoCheck && Boolean(broadAfterEdit),
+        check: (checkAfterEdit || broadAfterEdit) ? (checkAfterEdit || broadAfterEdit).command.slice(0, 200) : '',
+        text: text.slice(0, 400),
+      });
     }
   }
   return holds;

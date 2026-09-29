@@ -31,6 +31,9 @@ export const REPO = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '
 export function isCheck(command, edited) {
   return looksLikeVerification(command) || (RUNNER.test(String(command || '')) && runsEditedFile(command, edited));
 }
+// The study's wider reading: any interpreter run (node, python, ...) after the
+// last edit, whatever atlias's classifier makes of it.
+export function isRun(command) { return RUNNER.test(` ${String(command || '')}`); }
 
 function opt(argv, name, dflt = '') {
   const i = argv.indexOf(name);
@@ -178,7 +181,7 @@ export function analyzeRun({ base, sessionId, arm }) {
   for (const mu of Object.values((result && result.modelUsage) || {})) {
     resultTokens = S.addTokens(resultTokens, S.tokensOf({ input_tokens: mu.inputTokens, cache_read_input_tokens: mu.cacheReadInputTokens, cache_creation_input_tokens: mu.cacheCreationInputTokens, output_tokens: mu.outputTokens }));
   }
-  const holds = S.holdsOf(mainRows, isCheck);
+  const holds = S.holdsOf(mainRows, isCheck, isRun);
   const hookCalls = S.hookCallsOf(stream);
   const cancelledT = S.cancelledInTranscript(allRows);
   return {
@@ -196,6 +199,7 @@ export function analyzeRun({ base, sessionId, arm }) {
     holdsInStream: S.streamHolds(stream),
     holdsNoCheck: holds.filter((h) => h.saysNoCheck).length,
     holdsNoCheckFalse: holds.filter((h) => h.falseNoCheck).length,
+    holdsNoCheckFalseBroad: holds.filter((h) => h.falseNoCheckBroad).length,
     holdDetail: holds,
     hookCalls: hookCalls.length,
     hookCallsCancelled: hookCalls.filter((c) => c.cancelled).length,

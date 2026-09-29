@@ -8,7 +8,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import * as S from './lib.mjs';
-import { isCheck, portableCheck } from './run.mjs';
+import { isCheck, isRun, portableCheck } from './run.mjs';
 import { comparePair, byArm, summarize, markdown } from './summary.mjs';
 import { select, parseTake } from './select.mjs';
 
@@ -149,6 +149,25 @@ test('a hold that says no check ran when the transcript shows one is flagged', (
   assert.equal(h.length, 1);
   assert.ok(h[0].falseNoCheck);
   assert.equal(h[0].check, 'python check.py');
+});
+
+test('a hold after `node lint.mjs` is false by any run though atlias does not call it a check', () => {
+  const PASSCLAIM = 'atlias gate: one thing to settle before this reply ends.\n\n1. The reply says a check passed, but no check ran this turn.';
+  const rows = [
+    { type: 'assistant', message: { id: 'a1', content: [{ type: 'tool_use', id: 't1', name: 'Write', input: { file_path: '/ws/src.js' } }] } },
+    { type: 'user', message: { content: [{ type: 'tool_result', tool_use_id: 't1', content: 'ok' }] } },
+    { type: 'assistant', message: { id: 'a2', content: [{ type: 'tool_use', id: 't2', name: 'Bash', input: { command: 'node lint.mjs' } }] } },
+    { type: 'user', message: { content: [{ type: 'tool_result', tool_use_id: 't2', content: 'lint clean' }] } },
+    hold(PASSCLAIM, 'h'),
+  ];
+  assert.equal(isCheck('node lint.mjs', ['/ws/src.js']), false);
+  assert.equal(isRun('node lint.mjs'), true);
+  assert.equal(isRun('cat src.js'), false);
+  const [h] = S.holdsOf(rows, isCheck, isRun);
+  assert.ok(h.saysNoCheck);
+  assert.equal(h.falseNoCheck, false);
+  assert.equal(h.falseNoCheckBroad, true);
+  assert.equal(h.check, 'node lint.mjs');
 });
 
 test('a check before the last edit does not count as a check after it', () => {

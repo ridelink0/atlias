@@ -46,6 +46,7 @@ export function armStats(rows) {
     holdsInStream: sum('holdsInStream'),
     holdsNoCheck: sum('holdsNoCheck'),
     holdsNoCheckFalse: sum('holdsNoCheckFalse'),
+    holdsNoCheckFalseBroad: sum('holdsNoCheckFalseBroad'),
     runsWithHold: rows.filter((r) => r.holds > 0).length,
     hookCalls: sum('hookCalls'),
     hookCallsCancelled: sum('hookCallsCancelled'),
@@ -89,8 +90,10 @@ export function comparePair(A, B, { seed = 1 } = {}) {
 
 export function summarize(rows, { base = 'plain', pairsOf = null, meta = {} } = {}) {
   const arms = byArm(rows);
-  // The base arm first, then the others in the order they first appear.
-  const names = [...arms.keys()].sort((x, y) => (x === base ? -1 : y === base ? 1 : 0));
+  // meta.order when given, else the base arm first and the others in the
+  // order they first appear.
+  const rank = (a) => (Array.isArray(meta.order) && meta.order.includes(a) ? meta.order.indexOf(a) : a === base ? -1 : 1000);
+  const names = [...arms.keys()].sort((x, y) => rank(x) - rank(y));
   const stats = Object.fromEntries(names.map((a) => [a, armStats([...arms.get(a).values()])]));
   const want = pairsOf || names.filter((a) => a !== base).map((a) => [base, a]);
   const comparisons = want.filter(([a, b]) => arms.has(a) && arms.has(b)).map(([a, b]) => ({ a, b, ...comparePair(arms.get(a), arms.get(b)) }));
@@ -126,11 +129,11 @@ export function markdown(sum) {
   L.push('');
   L.push('## Per arm');
   L.push('');
-  L.push('| Arm | Solved | Prompt tokens per solved task, raw | Billed-equivalent | Mean rounds | Gate holds (runs) | "No check ran" holds / false | Hook calls cancelled / total (runs) | Spend |');
+  L.push('| Arm | Solved | Prompt tokens per solved task, raw | Billed-equivalent | Mean rounds | Gate holds (runs) | "No check ran" holds / false by atlias rule / false by any run | Hook calls cancelled / total (runs) | Spend |');
   L.push('|---|---|---|---|---|---|---|---|---|');
   for (const a of sum.arms) {
     const s = sum.stats[a];
-    L.push(`| ${a} | ${s.solved}/${s.n} | ${k(s.rawPerSolved)} | ${k(s.billedPerSolved)} | ${f2(s.roundsMean)} | ${s.holdsAtlias} (${s.runsWithHold}) | ${s.holdsNoCheck} / ${s.holdsNoCheckFalse} | ${s.hookCallsCancelled} / ${s.hookCalls} (${s.runsWithCancelled}) | $${s.costUsd.toFixed(2)} |`);
+    L.push(`| ${a} | ${s.solved}/${s.n} | ${k(s.rawPerSolved)} | ${k(s.billedPerSolved)} | ${f2(s.roundsMean)} | ${s.holdsAtlias} (${s.runsWithHold}) | ${s.holdsNoCheck} / ${s.holdsNoCheckFalse} / ${s.holdsNoCheckFalseBroad} | ${s.hookCallsCancelled} / ${s.hookCalls} (${s.runsWithCancelled}) | $${s.costUsd.toFixed(2)} |`);
   }
   L.push('');
   const anyArm = sum.arms[0];
