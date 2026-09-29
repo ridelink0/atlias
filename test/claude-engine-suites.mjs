@@ -134,5 +134,10 @@ export default async function claudeEngineSuites({ suite, check, core, agentMod,
     check('an effort Claude Code does not take is not passed', junk.calls.length === 1 && !junk.calls[0].includes('--effort'), { happened: JSON.stringify(junk.calls), why: 'An unknown level would fail every turn.', fix: 'Pass only low, medium, high, xhigh or max.' });
     const dead = turn({ responses: [ok, { status: 1, stderr: 'boom' }], cwd: project(1), flag: '1' });
     check('a retry that fails to run leaves the first answer standing', dead.calls.length >= 2 && dead.reply === 'changed the code', { happened: JSON.stringify({ reply: dead.reply, calls: dead.calls.length }), why: 'A failed extra attempt must not replace an answer with an error.', fix: 'Take the retry\'s text only when its exec succeeded.' });
+    const recovered = turn({ responses: [{ status: 1, stderr: 'no such session' }, { stdout: 'changed the code' }, { stdout: result('fixed after the recovery') }], cwd: project(1), flag: '1' });
+    const rc = recovered.calls[2] || [];
+    check('a turn that had to recover with --continue retries with --continue, not --resume of a session the host never took', recovered.calls.length === 3 && has(rc, '--continue') && !rc.includes('--resume') && has(rc, '--effort', 'high') && recovered.reply === 'fixed after the recovery', { happened: JSON.stringify(recovered.calls), why: 'hostSid is the id atlias asked for; when the host refused it or lost it, the answer came from the most recent conversation, and resuming hostSid fails, so the retry was spent and the red check stayed red.', fix: 'claudeTurn remembers it recovered and retries with --continue.' });
+    const blank = turn({ responses: [ok, { stdout: result('') }], cwd: project(1), flag: '1' });
+    check('a retry that returns no text leaves the first answer standing', blank.calls.length === 2 && blank.reply === 'changed the code', { happened: JSON.stringify(blank.reply), why: 'A retry that ends on a tool call has an empty result; the person would be shown nothing.', fix: 'Take the retry\'s text only when it has some.' });
   });
 }

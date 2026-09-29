@@ -99,6 +99,11 @@ export default async function hefixV2Suites({ asyncSuite, check, skip, TMP, fs, 
     check('a dozen more shapes that could be mis-rewritten all stay v1',
       rest.length === 0,
       { happened: `rewritten: ${rest.join(' | ')}`, why: 'A chain, a sum next to the subtraction, or a call on both sides would report the wrong expected value.', fix: 'Fall back when the shape is not exactly one of the three.' });
+    const loose = ['abs(f(1) - 2 << 1) < 1e-3', 'abs(f(1) - 2 >> 1) < 1e-3', 'abs(f(1) - 2 | 1) < 1e-3', 'abs(f(1) - 2 & 3) < 1e-3', 'abs(f(1) - 2 ^ 3) < 1e-3', 'abs(f(1) - 2 < 3) < 1e-3', 'abs(f(1) - 2 if 1 else 3) < 1e-3', 'abs(f(1) - 2 and 3) < 1e-3', 'abs(f(1) - 2, 5) < 1e-3', 'abs(f(1) - 2 in [1]) < 1e-3'];
+    const looseRewritten = loose.filter((s) => bench.rewriteHumanEvalFixTests(bare(s), 'f').rewritten !== 0);
+    check('abs() whose argument has an operator looser than the minus stays v1, because cutting at the minus would grade another expression',
+      looseRewritten.length === 0 && bench.rewriteHumanEvalFixTests(bare('abs(f(1) - 2 * 3 ** 2) < 1e-3'), 'f').rewritten === 1,
+      { happened: `rewritten: ${looseRewritten.join(' | ')}`, why: 'abs(f(1) - 2 << 1) is abs((f(1) - 2) << 1); split at the minus it became f(1) - (2 << 1), a different test that a solution could pass or fail differently from v1.', fix: 'Fall back when the abs argument has a comma, a comparison, a shift, a bitwise operator or a boolean/ternary keyword at depth 0.' });
     const unbal = bench.rewriteHumanEvalFixTests('def check(f):\n    assert f("(") == 1\n    x = (\n', 'f');
     check('tests that do not parse as balanced Python are passed through whole',
       unbal.rewritten === 0 && unbal.text === 'def check(f):\n    assert f("(") == 1\n    x = (\n' && unbal.fallbacks.length === 1,
