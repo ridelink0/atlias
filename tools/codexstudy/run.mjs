@@ -8,10 +8,12 @@ import { loadTaskList, writeFiles } from '../ccstudy/run.mjs';
 import { childEnv, readJsonl } from '../ccstudy/lib.mjs';
 import { score, tamper } from '../../lib/eval.mjs';
 import { runAsync } from '../../lib/proc.mjs';
+import {flagEnvName} from '../../lib/core.mjs';
 const ROOT=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../..');
 const opt=(a,k,d='')=>a.includes(k)?a[a.indexOf(k)+1]:d;
 export function validateResume(old,plan){if(['sha','plugin','model','effort','lean'].some(k=>old[k]!==plan[k])||JSON.stringify(old.tasks)!==JSON.stringify(plan.tasks))throw new Error('resume would mix plugin/model/effort/flags or task hashes; choose a new output directory');}
 export function limitsOf(a){const stopPercent=Number(opt(a,'--stop-percent','60')),timeoutMin=Number(opt(a,'--timeout-min','12'));if(!Number.isFinite(stopPercent)||stopPercent<=0||stopPercent>100||!Number.isFinite(timeoutMin)||timeoutMin<=0)throw new Error('stop percentage must be in (0,100] and timeout minutes must be positive and finite');return {stopPercent,timeoutMin};}
+export function profileEnv(lean){return lean?{[flagEnvName('leanBrief')]:'1',[flagEnvName('gateRunsCheck')]:'1'}:{};}
 function sync(bin,args,options={}){const r=spawnSync(bin,args,{encoding:'utf8',windowsHide:true,timeout:120000,...options});if(r.status!==0)throw new Error(`${bin} failed: ${(r.stderr||r.stdout||r.error||'').toString().slice(-700)}`);return r.stdout.trim();}
 export function usageOf(rows){
   const counts=rows.filter(r=>r.type==='event_msg'&&r.payload?.type==='token_count'&&r.payload.info);
@@ -78,7 +80,7 @@ export async function main(a){
     const home=path.join(base,'home'),ws=path.join(base,'ws'),codexHome=path.join(home,'.codex');fs.mkdirSync(codexHome,{recursive:true});fs.mkdirSync(ws,{recursive:true});
     writeFiles(ws,job.task.files);
     const env=childEnv(process.env,{home});env.CODEX_HOME=codexHome;env.ATLIAS_HOME=path.join(home,'.atlias');
-    if(lean&&job.arm==='plugin'){env.ATLIAS_LEAN_BRIEF='1';env.ATLIAS_GATE_RUNS_CHECK='1';}
+    if(job.arm==='plugin')Object.assign(env,profileEnv(lean));
     const globalSkills=[path.join(process.env.USERPROFILE||process.env.HOME,'.agents','skills'),path.join(process.env.USERPROFILE||process.env.HOME,'.codex','skills')].flatMap(root=>fs.existsSync(root)?fs.readdirSync(root).filter(n=>fs.existsSync(path.join(root,n,'SKILL.md'))).map(n=>path.join(root,n)):[]);
     const overrides=globalSkills.map(p=>`{ path = ${JSON.stringify(p.replaceAll('\\','/'))}, enabled = false }`).join(', ');
     fs.writeFileSync(path.join(codexHome,'config.toml'),`model_reasoning_effort = "${effort}"\nservice_tier = "default"\nskills.config = [${overrides}]\n[features]\nhooks = true\napps = false\n`);

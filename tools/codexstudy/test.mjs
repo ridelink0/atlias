@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';import os from 'node:os';import path from 'node:path';
-import {usageOf,jobsOf,contained,validateResume,limitsOf} from './run.mjs';import {loadTaskList} from '../ccstudy/run.mjs';
+import {usageOf,jobsOf,contained,validateResume,limitsOf,profileEnv} from './run.mjs';import {loadTaskList} from '../ccstudy/run.mjs';
 import {summarize} from './summary.mjs';
 let n=0;const eq=(a,b)=>{assert.deepEqual(a,b);n++;};
 const count=(total,last)=>({type:'event_msg',payload:{type:'token_count',info:{total_token_usage:total,last_token_usage:{input_tokens:last}}}});
@@ -11,6 +11,8 @@ eq(usageOf([count({...u,input_tokens:50},20),count(u,40)]).contextMean,30);
 const jobs=jobsOf([{id:'a'},{id:'b'}],3);eq(jobs.length,12);eq(jobs.slice(0,2).map(x=>x.arm),['plain','plugin']);eq(jobs.slice(4,6).map(x=>x.arm),['plugin','plain']);
 const root=fs.mkdtempSync(path.join(os.tmpdir(),'gev-study-test-'));
 const plan={sha:'x',plugin:'atlias',model:'x',effort:'medium',lean:false,tasks:[{id:'a',sha256:'old'}]};
+eq(profileEnv(true),{ATLIAS_FLAG_LEAN_BRIEF:'1',ATLIAS_FLAG_GATE_RUNS_CHECK:'1'});
+eq(profileEnv(false),{});
 eq(limitsOf([]),{stopPercent:60,timeoutMin:12});
 for(const args of [['--stop-percent','NaN'],['--stop-percent','101'],['--timeout-min','Infinity'],['--timeout-min','0']]){assert.throws(()=>limitsOf(args),/finite/);n++;}
 validateResume(plan,{...plan,repeats:3});n++;
