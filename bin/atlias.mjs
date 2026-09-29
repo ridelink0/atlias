@@ -384,7 +384,7 @@ else switch (cmd) {
     } else { say('usage: atlias shortcut [install|uninstall|status]'); process.exitCode = 2; }
     break;
   }
-  case 'doctor': { const c = hosts.doctor(cwd).concat(extra.doctorRows()); say(hosts.formatDoctor(c)); process.exitCode = c.every((x) => x.ok) ? 0 : 1; break; }
+  case 'doctor': { const c = hosts.doctor(cwd).concat(extra.doctorRows(), await hosts.ollamaDoctorRows(config().agent)); say(hosts.formatDoctor(c)); process.exitCode = c.every((x) => x.ok) ? 0 : 1; break; }
   case 'status': {
     const g = graph.status(cwd);
     const p = dream.pending(cwd);

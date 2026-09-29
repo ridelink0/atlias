@@ -92,6 +92,18 @@ export default async function smallModelSuites({ asyncSuite, suite, check, core,
       { happened: String(on.engine), why: 'runLoop reads chat.engine to keep the small-model flags off every other engine.', fix: 'chatFn.engine = \'ollama\' in ollamaChat.' });
   });
 
+  await asyncSuite('small model', 'the doctor names an Ollama model that cannot call tools', async () => {
+    const hosts = await import('../lib/hosts.mjs');
+    const fake = (caps, status = 200) => async () => ({ status, json: { capabilities: caps } });
+    const cfg = { ollamaModel: 'gemma3:4b', ollamaUrl: 'http://127.0.0.1:11434' };
+    const bad = await hosts.ollamaDoctorRows(cfg, { post: fake(['completion', 'vision']) });
+    const good = await hosts.ollamaDoctorRows({ ...cfg, ollamaModel: 'qwen2.5-coder:7b' }, { post: fake(['completion', 'tools', 'insert']) });
+    const down = await hosts.ollamaDoctorRows(cfg, { post: async () => null });
+    const missing = await hosts.ollamaDoctorRows(cfg, { post: fake(null, 404) });
+    check('gemma3:4b (no tools) is a failed row naming the model and the fix; qwen2.5-coder:7b passes; no server or no model is no row', bad.length === 1 && bad[0].ok === false && /gemma3:4b/.test(bad[0].detail) && /qwen2\.5-coder:7b/.test(bad[0].fix) && good.length === 1 && good[0].ok === true && down.length === 0 && missing.length === 0,
+      { happened: JSON.stringify({ bad, good, down, missing }).slice(0, 400), why: 'NEXTGEN-4 item 8\'s check: doctor names gemma3:4b as lacking tools. Most plugin users never run Ollama, so an absent server must not fail the doctor.', fix: 'ollamaDoctorRows in lib/hosts.mjs, joined in bin/atlias.mjs doctor and the agent\'s /doctor.' });
+  });
+
   suite('small model', 'window-sized tool results', () => {
     const base = { ...core.DEFAULTS.agent };
     const at = (ctx, predict = 2048, outputBudget = 10000) => loop.ctxOutputBudget({ ...base, ollamaNumCtx: ctx, ollamaNumPredict: predict, outputBudget });
