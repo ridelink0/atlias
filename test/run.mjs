@@ -990,6 +990,7 @@ await (await import('./visual-suites.mjs')).default({ suite, check, core, brief,
 await (await import('./sametext-suites.mjs')).default({ suite, asyncSuite, check, core, agentMod, TMP, fs, path });
 await (await import('./ollama-profile-suites.mjs')).default({ asyncSuite, check, core, TMP, fs, path });
 await (await import('./ui-suites.mjs')).default({ suite, asyncSuite, check, core, ROOT, fs, path });
+await (await import('./claude-engine-suites.mjs')).default({ suite, check, core, agentMod, TMP, fs, path });
 await (await import('./coverage-suites.mjs')).default({ suite, check, ROOT, fs, path });
 
 let failed = 0;
