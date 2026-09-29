@@ -102,6 +102,13 @@ export default async function sameTextSuites({ asyncSuite, suite, check, core, a
     const once = await run('1', files, [miss, miss, whole, blk({ tool: 'edit_file', path: 'main.py', old_string: '', new_string: 'def sub(a, b):' + NL + '    return a + b' + NL }), 'Done.', 'No check.']);
     check('the switch lasts one edit: the edit after it is read as an ordinary edit again', once.st.editWhy['empty-old'] === 1 && /def sub\(a, b\):\n    return a - b/.test(once.file('main.py')) && /return a \+ b/.test(once.file('main.py').split('def sub')[0]),
       { happened: `${brief(once)} || ${JSON.stringify(once.file('main.py'))}`, why: 'Row 5 switches the channel for the next attempt, not for the rest of the run.', fix: 'takeChannel deletes the entry it returns.' });
+    // Under the switch an edit that still names its old text is an ordinary
+    // edit, not a whole def: its new_string may hold only the def's first lines.
+    const long = { 'main.py': 'def add(a, b):' + NL + '    x = a' + NL + '    y = b' + NL + '    return x - y' + NL };
+    const lmiss = blk({ tool: 'edit_file', path: 'main.py', old_string: 'def add(a, b):' + NL + '    return a - b', new_string: 'def add(a, b):' + NL + '    return a + b' });
+    const part = await run('1', long, [lmiss, lmiss, blk({ tool: 'edit_file', path: 'main.py', old_string: 'def add(a, b):' + NL + '    x = a', new_string: 'def add(a, b):' + NL + '    x = a + 0' }), 'Done.', 'No check.']);
+    check('under a def switch an edit with old_string is an ordinary edit, and the rest of the def stays', part.file('main.py') === long['main.py'].replace('    x = a' + NL, '    x = a + 0' + NL) && part.st.switches === 1,
+      { happened: `${brief(part)} || ${JSON.stringify(part.file('main.py'))}`, why: 'Read as a whole def, a new_string that is only the def\'s first lines replaces the whole body, and the syntax guard lets it through.', fix: 'runTool edit_file: a def channel takes a whole def only when old_string is empty.' });
     // The same whole def sent back is the no-op again, and steered as one.
     const same = await run('1', files, [miss, miss, blk({ tool: 'edit_file', path: 'main.py', old_string: '', new_string: 'def add(a, b):' + NL + '    """Add two numbers."""' + NL + '    return a - b' + NL }), 'Gave up.']);
     const sameMsg = same.said.find((t) => /you sent is what main\.py already holds/.test(t)) || '';
@@ -162,6 +169,15 @@ export default async function sameTextSuites({ asyncSuite, suite, check, core, a
     const deco = loop.replaceWholeDef(src, '@cache' + NL + 'def f(a, b):' + NL + '    return b' + NL);
     check('decorators sent with the def replace the old decorators; a name defined twice or not at all is no whole-def edit', deco && !deco.after.includes('@other(1)') && deco.after.includes('@cache' + NL + 'def f(a, b):' + NL + '    return b' + NL + NL + NL + 'class K') && loop.replaceWholeDef('def g():' + NL + '  pass' + NL + 'def g():' + NL + '  pass' + NL, 'def g():' + NL + '  return 1') === null && loop.replaceWholeDef(src, 'def nowhere():' + NL + '  pass') === null && loop.replaceWholeDef(src, 'return 1') === null,
       { happened: JSON.stringify(deco && deco.after), why: 'An edit that could land in two places, or in none, must fall back to the ordinary edit and its refusals.', fix: 'replaceWholeDef returns null unless exactly one block has the name.' });
+    // A bracket or a # in a one-line string of the header is not one; read as
+    // one, the block ran to the end of the file, and the whole-def edit put the
+    // new def in front of the old one, which then shadowed it.
+    const strs = 'def f(a="(", b="#"):' + NL + '    return 1' + NL + NL + NL + 'def g(x=")"):' + NL + '    return (2)' + NL + NL + NL + 'def h():' + NL + '    return 3' + NL;
+    const sf = loop.pyBlocks(strs, 'f')[0];
+    const sr = loop.replaceWholeDef(strs, 'def f(a="(", b="#"):' + NL + '    return 9' + NL);
+    const open = loop.pyBlocks('def u(a,' + NL + '    return 1' + NL + NL + 'def v():' + NL + '    return 2' + NL, 'u');
+    check('brackets and # inside the header\'s strings do not stretch a def, and a header that never closes is no block', sf && sf.lastLine === 2 && sr && sr.after === strs.replace('    return 1', '    return 9') && open.length === 0,
+      { happened: JSON.stringify({ sf, after: sr && sr.after, open }), why: 'A block that runs past its def makes a whole-def edit drop or shadow the defs after it, and the syntax guard lets both through.', fix: 'pyBlocks: strip one-line strings before counting brackets and dropping a comment; skip a header whose brackets never close.' });
     const crlf = 'def a():\r\n    return 1\r\n\r\ndef b():\r\n    return 2\r\n';
     const cr = loop.replaceWholeDef(crlf, 'def a():\n    return 3\n');
     check('a CRLF file keeps CRLF', cr && cr.after === 'def a():\r\n    return 3\r\n\r\ndef b():\r\n    return 2\r\n',
