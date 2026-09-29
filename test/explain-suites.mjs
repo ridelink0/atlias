@@ -45,5 +45,8 @@ export default async function explainSuites({ suite, check, skip, TMP, fs, path 
     const fixed = runTask(['def add(a, b):', '    return a + b', ''].join(NL), tests);
     check('a correct program passes v2 exactly as it would pass v1', fixed.status === 0 && /all tests passed/.test(fixed.out),
       { happened: `${fixed.status} ${fixed.out} ${fixed.err.slice(-200)}`, why: 'v2 must change what a failure says, never whether a task passes.', fix: 'The rewrite evaluates the same expressions in the same order.' });
+    const lazy = runTask('def ok():\n    return True\n', 'assert ok() == True, 1 / 0\nassert ok(), 1 / 0\n');
+    check('a passing assert never evaluates its message', lazy.status === 0,
+      { happened: lazy.err.slice(-300), why: 'Python evaluates an assertion message only on failure; evaluating it eagerly can fail a correct solution.', fix: 'Pass the message as a lambda and invoke it only after the assertion fails.' });
   });
 }

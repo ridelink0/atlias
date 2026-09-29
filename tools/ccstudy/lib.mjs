@@ -23,6 +23,7 @@ export const ENV_KEEP = [
   'PATH', 'LANG', 'LC_ALL', 'TZ', 'TERM', 'SHELL', 'USER', 'LOGNAME',
   'HTTPS_PROXY', 'HTTP_PROXY', 'https_proxy', 'http_proxy', 'NO_PROXY', 'no_proxy',
   'SSL_CERT_FILE', 'NODE_EXTRA_CA_CERTS', 'REQUESTS_CA_BUNDLE', 'CURL_CA_BUNDLE', 'PIP_CERT',
+  'SystemRoot', 'SYSTEMROOT', 'WINDIR', 'COMSPEC', 'PATHEXT', 'TEMP', 'TMP',
 ];
 
 // Never allowed into a nested run, whatever a caller passes as extra.
@@ -38,6 +39,10 @@ export function childEnv(parent, { home, extra = {} } = {}) {
   const env = {};
   for (const k of ENV_KEEP) if (parent[k] != null && parent[k] !== '') env[k] = String(parent[k]);
   env.HOME = home;
+  // Native Windows programs resolve the profile through USERPROFILE, not HOME.
+  env.USERPROFILE = home;
+  env.APPDATA = path.join(home, 'AppData', 'Roaming');
+  env.LOCALAPPDATA = path.join(home, 'AppData', 'Local');
   env.IS_SANDBOX = '1';
   for (const [k, v] of Object.entries(extra || {})) {
     if (ENV_FORBIDDEN.test(k) && !/^ATLIAS_/.test(k)) throw new Error(`${k} may not be passed to a nested run`);
@@ -106,13 +111,15 @@ export function initProblems(init, arm) {
   const plugins = (init.plugins || []).map((p) => String(p.name || p));
   const mcp = (init.mcp_servers || []).map((s) => String(s.name || s));
   const skills = (init.skills || []).map(String);
-  const atliasish = (x) => /atlias/i.test(x);
+  const expected = arm.pluginName || 'atlias';
+  const atliasish = (x) => String(x).includes(expected);
   if (arm.kind === 'plain') {
-    if (plugins.some(atliasish)) problems.push(`plain arm loaded plugin ${plugins.filter(atliasish).join(', ')}`);
+    if (plugins.some((x) => /atlias|ultimate-frontend-skills/i.test(x))) problems.push(`plain arm loaded study plugin ${plugins.join(', ')}`);
     if (mcp.length) problems.push(`plain arm loaded MCP server(s) ${mcp.join(', ')}`);
-    if (skills.some(atliasish)) problems.push(`plain arm listed atlias skill(s) ${skills.filter(atliasish).join(', ')}`);
+    if (skills.some((x) => /atlias|ultimate-frontend-skills/i.test(x))) problems.push(`plain arm listed study skill(s) ${skills.join(', ')}`);
   } else {
-    if (!plugins.some(atliasish)) problems.push(`atlias arm did not load the atlias plugin (plugins: ${plugins.join(', ') || 'none'})`);
+    if (!plugins.some(atliasish)) problems.push(`plugin arm did not load ${expected} (plugins: ${plugins.join(', ') || 'none'})`);
+    if (plugins.some((x) => !atliasish(x) && x !== 'agents-md')) problems.push(`unexpected plugin(s): ${plugins.filter((x) => !atliasish(x) && x !== 'agents-md').join(', ')}`);
     const others = mcp.filter((n) => !atliasish(n));
     if (others.length) problems.push(`atlias arm loaded MCP server(s) other than atlias: ${others.join(', ')}`);
   }

@@ -102,14 +102,14 @@ Hosts: **Claude Code** (plugin), **Codex** (hooks, MCP, AGENTS.md), **Antigravit
 node test/run.mjs
 ```
 
-Over seven hundred and fifty checks in a hundred and five suites, each written from one expert's point of view, and each failure printed as what happened, why it matters and how to fix it. A coverage suite fails the run if any exported function is not exercised by a test through its own module, so a feature cannot arrive untested. Host payloads are pinned to the hosts' own source code, not to guesses. CI runs everything on Linux, macOS and Windows under Node 18, 20 and 22, plus a sandboxed install that parses every config atlias writes with a real parser and proves that uninstall leaves other tools' entries alone.
+The Windows integration check passed 1,399 checks across 203 suites, each written from one expert's point of view, and each failure printed as what happened, why it matters and how to fix it. A coverage suite fails the run if any exported function is not exercised by a test through its own module, so a feature cannot arrive untested. Host payloads are pinned to the hosts' own source code, not to guesses. CI runs everything on Linux, macOS and Windows under Node 18, 20 and 22, plus a sandboxed install that parses every config atlias writes with a real parser and proves that uninstall leaves other tools' entries alone.
 
 ## What it refuses to pretend
 
 - It names what it did not check, and marks a stale graph as stale.
 - It reports a test run it cannot read as unknown, never as a pass.
 - It tells the agent when it ran out of rounds rather than letting that read as an answer.
-- It never invents a cache number: `/status` shows the share of the prompt the provider reported from cache and counts unreported calls separately. The Claude engine records Claude Code's JSON usage and cost; the Codex engine's token cost remains unmeasured here.
+- It never invents a cache number: `/status` shows the share of the prompt the provider reported from cache and counts unreported calls separately. The Claude engine records Claude Code's JSON usage and cost; the standalone Codex engine's token cost remains unmeasured here. The separate native Codex study records CLI input, cached input, output, and context, without converting them into a dollar claim.
 - It will not run a tool call out of a reply the provider cut off at its output limit, because truncated JSON still parses and the arguments may be quietly wrong.
 - It says which way a run ended rather than leaving them all to read alike: answered, malformed output, a reply cut off, rounds exhausted, or a failed model call.
 - It shows the caveat with the number: `atlias bench` measures token cost and says it has not measured task success.
@@ -119,8 +119,11 @@ Over seven hundred and fifty checks in a hundred and five suites, each written f
 
 Measurements below use saved runs, not feature promises. A ratio below 1.0 means fewer prompt tokens per solved task. Confidence intervals are paired bootstrap 95% unless stated otherwise.
 
+Gev's current primary comparison is **native Codex versus Codex + Atlias**. A new [24-workload corpus and reproducible runner](tools/codexstudy/README.md) covers 12 semantic families with small and large archive variants. The initial matched pilot below is diagnostic; the larger, repeated study is unfinished.
+
 | Measurement | Result | What it establishes |
 |---|---|---|
+| Native Codex 0.159.0, GPT 6.1 medium, Atlias at 1544f9e, three matched repair families | Plain **3/3**, Atlias **2/3**; total input **310,834 vs 364,096**; input per solve **103,611 vs 182,048**; peak request input **20,542 vs 23,680** | Atlias used **17.1% more total input**, **75.7% more input per solve**. Failed-attempt tokens are included. No confidence interval for three families, no efficiency win claimed. [Evidence](evals/results/native-codex/codex-atlias-2026-09-29/REPORT.md). |
 | Main tier, qwen2.5-coder:7b, atlias **3.7.1 at ca1e948** vs mini-swe-agent 2.4.6, 250 shared tasks | **59/250 vs 41/250**; 36 gains, 18 losses; exact McNemar **p=0.0198**; **99.0k vs 127.4k** prompt tokens per solve, about **22% fewer** | One run per arm. This is the earlier build's result, not a replicated score for 3.8.1 or the pending changes. [Evidence and limits](evals/results/round5/2026-09-29-recovered.md). |
 | Claude Code, PC, Sonnet 5 medium, 34 tasks | Both **32/34**; atlias/plain prompt-token ratio **1.25 (1.14–1.38)** | Atlias added cost on this run; 80 hook calls were cancelled. [Study](docs/NEXTGEN-5.md). |
 | Claude Code, cloud, Sonnet 5 medium, 50 tasks, atlias at d59aa98 vs plain | Both **50/50**; raw ratio **1.00 (0.94–1.06)**; billed-equivalent ratio **1.06 (1.03–1.10)** | Raw parity inside the noise, with higher billed-equivalent input. All tasks solved: this corpus cannot distinguish solve rates. [Baseline study](evals/results/round5/cloud-cc/2026-09-29-baseline.md). |
