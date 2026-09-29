@@ -327,15 +327,16 @@ await mcpSuite();
 suite('ship expert', 'logo', () => {
   const plain = logoMod.logo({ color: 'none', width: 100 });
   check('the wordmark spells ATLIAS in blocks', logoMod.wordmark('ATLIAS').length === 5 && plain.includes('\u2588'), { happened: plain.split('\n')[1], why: 'The logo is the first thing anyone sees; block letters are the whole design.', fix: 'Check GLYPHS and wordmark().' });
-  check('the ship rides on the right', plain.includes('<_') && plain.includes('>=='), { happened: plain, why: 'Gev asked for a small spaceship beside the wordmark.', fix: 'Keep the SHIP rows and the wide branch in logo().' });
+  check('no ship rides beside the wordmark', !plain.includes('<_') && !plain.includes('>==') && !plain.includes('\\__/'), { happened: plain, why: 'Gev, looking at the start screen: "remove the space ship, it looks super weird here".', fix: 'Keep the SHIP rows and the wide branch out of logo().' });
   check('NO_COLOR output carries no escape codes', !plain.includes('\u001b'), { happened: JSON.stringify(plain.slice(0, 60)), why: 'A logo that prints escape codes into a pipe or a log file is unreadable.', fix: 'colorMode returns none when NO_COLOR is set; paint must pass text through.' });
   const colored = logoMod.logo({ color: 'truecolor', width: 100 });
   check('truecolor output is blue', colored.includes('38;2;29;78;216') && colored.includes('38;2;147;197;253'), { happened: JSON.stringify(colored.slice(0, 80)), why: 'Gev asked for blue, light to dark.', fix: 'Check the BLUE ramp and paint().' });
   const basic = logoMod.logo({ color: 'basic', width: 100 });
   check('16-colour terminals still get blue', basic.includes('\u001b[34m') || basic.includes('\u001b[94m'), { happened: JSON.stringify(basic.slice(0, 60)), why: 'Older terminals must not print raw truecolor sequences.', fix: 'paint() falls back to 34 and 94.' });
   const narrow = logoMod.logo({ color: 'none', width: 20 });
-  check('a narrow terminal gets one line, not a broken ship', !narrow.includes('\n') && narrow.includes('atlias'), { happened: narrow, why: 'A wrapped logo looks like a crash.', fix: 'Keep the width guard at the top of logo().' });
-  check('the ship is dropped before the letters are', !logoMod.logo({ color: 'none', width: 40 }).includes('>=='), { happened: 'ship still drawn at width 40', why: 'The wordmark matters more than the ship when space is short.', fix: 'The wide branch needs rows[0].length + 16 columns.' });
+  check('a narrow terminal gets one line, not broken letters', !narrow.includes('\n') && narrow.includes('atlias') && !narrow.includes('>=='), { happened: narrow, why: 'A wrapped logo looks like a crash.', fix: 'Keep the width guard at the top of logo().' });
+  const fits = logoMod.logo({ color: 'none', width: 40 }).split('\n');
+  check('the letters fit in 40 columns', fits.length > 1 && fits.every((l) => l.length <= 40), { happened: fits.map((l) => l.length).join(','), why: 'With the ship gone the wordmark alone must fit a small terminal.', fix: 'Keep the letters at five columns each.' });
   check('colorMode respects NO_COLOR over everything', logoMod.colorMode({ NO_COLOR: '1', COLORTERM: 'truecolor' }, { isTTY: true }) === 'none', { happened: logoMod.colorMode({ NO_COLOR: '1', COLORTERM: 'truecolor' }, { isTTY: true }), why: 'NO_COLOR is a promise to the user.', fix: 'Check it first in colorMode.' });
 });
 
@@ -986,6 +987,7 @@ await (await import('./control-suites.mjs')).default({ suite, asyncSuite, check,
 await (await import('./lean-suites.mjs')).default({ suite, check, brief, TMP, ROOT, fs, path });
 await (await import('./gatecheck-suites.mjs')).default({ suite, check, skip, core, gate, router, track, TMP, fs, path });
 await (await import('./sametext-suites.mjs')).default({ suite, asyncSuite, check, core, agentMod, TMP, fs, path });
+await (await import('./ui-suites.mjs')).default({ suite, asyncSuite, check, core, ROOT, fs, path });
 await (await import('./coverage-suites.mjs')).default({ suite, check, ROOT, fs, path });
 
 let failed = 0;
