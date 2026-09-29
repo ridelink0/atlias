@@ -5,7 +5,7 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 export const cases = [
-  ['money', 'Sum decimal prices in cents without floating-point drift. Accept optional minus signs and one or two decimal places; reject malformed prices with TypeError.',
+  ['money', 'Sum decimal prices in cents without floating-point drift. Accept integer strings or strings with one or two decimal places, each with an optional leading minus sign; reject malformed prices with TypeError.',
     'return prices.reduce((s,p)=>s+Math.floor(Number(p)*100),0);',
     `return prices.reduce((s,p)=>{if(typeof p!=='string'||!/^[-]?\\d+(?:\\.\\d{1,2})?$/.test(p))throw new TypeError('price');const neg=p.startsWith('-');const [a,b='']=p.replace(/^-/,'').split('.');return s+(neg?-1:1)*(Number(a)*100+Number(b.padEnd(2,'0')));},0);`,
     `assert.equal(f(['0.29','1.01','-0.05']),125);assert.equal(f(['1','2.5']),350);assert.equal(f([]),0);for(const x of ['NaN','1e2','1.999','',null])assert.throws(()=>f([x]),TypeError);`],

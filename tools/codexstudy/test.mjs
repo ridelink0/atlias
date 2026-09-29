@@ -22,6 +22,7 @@ eq(report.comparisons[0].pairedStats.plain.perSolved,20);
 eq(report.comparisons[0].rawRatio.bootLo,null);
 eq(summarize([row('a','plain',null)]).excluded.length,1);
 eq(summarize([row('a','plain',-1)]).excluded.length,1);
+eq(summarize([{...row('a','plain',1),valid:false,invalidReason:'ambiguous contract'}]).excluded[0].reason,'ambiguous contract');
 assert.throws(()=>summarize([row('a','plain',1),row('a','plain',1)]),/duplicate/);n++;
 eq(summarize([row('a','plain',10),{...row('a','atlias',20),timedOut:true}]).comparisons.length,0);
 eq(summarize([row('a','plain',10),row('a','atlias',20),{...row('a','plain',10),repeat:2},{...row('a','atlias',20),repeat:2}]).comparisons[0].semanticFamilies,1);

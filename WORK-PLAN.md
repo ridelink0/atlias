@@ -31,8 +31,8 @@ Final suite and adversarial outcomes are recorded after the final run. This file
 ## September 29 Windows completion record
 
 - Final functional suite: 1399/1399 across 203 suites; isolated install 30/30. Adversarial feature checks 155/155; fixed eager Python assertion-message evaluation and added its regression.
-- Native benchmark protocol 24/24; corpus 96/96 checks on 24 workloads/12 semantic families. Claude study helpers 26/26.
-- Native Codex pilot: 3 matched families, plain 3/3 vs Atlias 2/3, raw input ratio 1.171x; no efficiency gain or credible small-sample interval. Unicode treatment is unmatched. Sanitized rows and protocol limits are committed beside the README.
+- Native benchmark protocol 25/25; corpus 96/96 checks on 24 workloads/12 semantic families. Claude study helpers 26/26.
+- Native Codex pilot: 2 eligible matched families, both 2/2, raw input ratio 1.281x; both money arms excluded for a contract ambiguity with original metrics retained; no efficiency gain or credible small-sample interval. Unicode treatment is unmatched. Sanitized rows and protocol limits are committed beside the README.
 - UFS corpus: 24 real-browser seed/reference checks, 12 workloads/six families. Only plain FAQ completed: no paired result, no quality winner.
 - README audit: all six owned plugins, zero broken relative README paths. Source-command/manifest and package checks recorded separately in each PR.
 - Model calls stopped at the shared allowance cap; paid credits remain off. Do not start new deep research. GPU repeated local-model gate remains unfinished; standalone Computer Use wiring and Stage B council integration remain unbuilt. No release, default change or ship-bar claim.

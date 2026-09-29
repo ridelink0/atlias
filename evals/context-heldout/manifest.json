@@ -5,13 +5,13 @@
       "id": "context-money-8",
       "file": "evals/context-heldout/context-money-8.json",
       "source": "authored-context",
-      "sha256": "2d125441278876f07106acfc926a71493bb56d1e619bbe948c5b862c0ec76e27"
+      "sha256": "34bde3af8eb2fc486dd50617b883a35b9f4ff41e9f953478f4727635ead2b1d9"
     },
     {
       "id": "context-money-64",
       "file": "evals/context-heldout/context-money-64.json",
       "source": "authored-context",
-      "sha256": "05f01514f37e60b33df60242c66139d54bcb76af895e1ce70d75b10207c183e7"
+      "sha256": "26b34aa5519477d7abf9357a8753b4c81a43d9c582dc104fd9232a65fcc3e01a"
     },
     {
       "id": "context-versions-8",

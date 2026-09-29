@@ -1,56 +1,65 @@
 {
   "stats": {
-    "plain": {
+    "atlias": {
       "n": 3,
       "solved": 3,
-      "promptRaw": 310834,
-      "perSolved": 103611.33333333333,
-      "peak": 20542
+      "promptRaw": 363363,
+      "perSolved": 121121,
+      "peak": 23143
     },
-    "atlias": {
-      "n": 4,
-      "solved": 3,
-      "promptRaw": 493827,
-      "perSolved": 164609,
-      "peak": 23680
+    "plain": {
+      "n": 2,
+      "solved": 2,
+      "promptRaw": 182316,
+      "perSolved": 91158,
+      "peak": 20253
     }
   },
   "comparisons": [
     {
       "arm": "atlias",
-      "pairedRuns": 3,
-      "semanticFamilies": 3,
+      "pairedRuns": 2,
+      "semanticFamilies": 2,
       "pairedStats": {
         "plain": {
-          "n": 3,
-          "solved": 3,
-          "promptRaw": 310834,
-          "perSolved": 103611.33333333333,
-          "contextPeak": 20542
+          "n": 2,
+          "solved": 2,
+          "promptRaw": 182316,
+          "perSolved": 91158,
+          "contextPeak": 20253
         },
         "atlias": {
-          "n": 3,
+          "n": 2,
           "solved": 2,
-          "promptRaw": 364096,
-          "perSolved": 182048,
-          "contextPeak": 23680
+          "promptRaw": 233632,
+          "perSolved": 116816,
+          "contextPeak": 23143
         }
       },
       "rawRatio": {
-        "n": 3,
-        "ratioOfSums": 1.1713519113095736,
+        "n": 2,
+        "ratioOfSums": 1.2814673424164638,
         "bootLo": null,
         "bootHi": null,
-        "geoMean": 1.1817717569129478,
+        "geoMean": 1.2750788562969628,
         "tLo": null,
         "tHi": null,
         "warning": "pilot only: fewer than six semantic families; no credible confidence interval"
       },
-      "plainOnly": [
-        "context-money-8"
-      ],
+      "plainOnly": [],
       "pluginOnly": []
     }
   ],
-  "excluded": []
+  "excluded": [
+    {
+      "task": "context-money-8",
+      "arm": "plain",
+      "reason": "task contract ambiguous: hidden grader accepted integer strings but brief specified one or two decimal places; both arms excluded"
+    },
+    {
+      "task": "context-money-8",
+      "arm": "atlias",
+      "reason": "task contract ambiguous: hidden grader accepted integer strings but brief specified one or two decimal places; both arms excluded"
+    }
+  ]
 }
