@@ -61,7 +61,7 @@ atlias mode sub          # hooks only; typing atlias shows the status
 atlias mode standalone   # agent only; the hooks stay silent in other harnesses
 ```
 
-`atlias` with nothing after it follows the mode: in `both` it asks which you want, with a third choice for settings. `atlias settings` opens a menu over every option, each with a sentence on what it does; `atlias settings list` prints them.
+`atlias` with nothing after it follows the mode: in `both` it shows a short list to pick from (up/down or j/k, 1-3, Enter; q leaves), with settings as the third item. `atlias settings`, and `/settings` in the agent, opens a screen modeled on Claude Code's /config: type to search, the most-used settings first and the rest under short headers, Enter toggles a switch, moves a choice on or opens an edit line, ctrl+r resets to the default, Esc goes back, and every change is saved at once. Where the terminal cannot draw it (a pipe, TERM=dumb) the numbered menu is used instead; `atlias settings list` prints every option with a sentence on what it does.
 
 ## The agent
 

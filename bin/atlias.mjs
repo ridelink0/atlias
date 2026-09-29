@@ -26,6 +26,7 @@ import { logo } from '../lib/logo.mjs';
 import * as bench from '../lib/bench.mjs';
 import * as shortcut from '../lib/shortcut.mjs';
 import * as settings from '../lib/settings.mjs';
+import * as tui from '../lib/tui.mjs';
 import * as skills from '../lib/skills.mjs';
 import { recall, remember } from '../mcp/tools.mjs';
 
@@ -364,9 +365,11 @@ else switch (cmd) {
   }
   case 'settings': {
     if (!process.stdin.isTTY || argv[1] === 'list') { say(settings.format()); break; }
-    const rl = (await import('node:readline/promises')).createInterface({ input: process.stdin, output: process.stdout });
-    process.exitCode = await settings.menu((q) => rl.question(q), say);
-    rl.close();
+    // The settings screen where the terminal can draw it; the numbered menu
+    // where it cannot (output not a terminal, TERM=dumb, an old Windows console).
+    const rl = tui.canDrawScreen() ? null : (await import('node:readline/promises')).createInterface({ input: process.stdin, output: process.stdout });
+    process.exitCode = await tui.openSettings({ ask: (q) => rl.question(q), out: say });
+    if (rl) rl.close();
     break;
   }
   case 'shortcut': {
