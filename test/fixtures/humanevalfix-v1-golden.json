@@ -1,0 +1,304 @@
+{
+  "python": [
+    {
+      "task": {
+        "id": "humanevalfix-python-0",
+        "kind": "humanevalfix-python",
+        "name": "Python/0 add (HumanEvalFix)",
+        "rounds": 14,
+        "protect": [
+          "tests.py",
+          "check.py"
+        ],
+        "files": {
+          "solution.py": "def add(x: int, y: int):\n    \"\"\"Add two numbers.\"\"\"\n    return x - y\n",
+          "tests.py": "\n\nMETADATA = {}\n\n\ndef check(add):\n    assert add(0, 1) == 1\n    assert add(1, 2) == 3\n    assert add(5, 7) == 12\n\ncheck(add)\n",
+          "check.py": "# Runs the program and its tests as one module, as the benchmark does upstream.\nimport pathlib, sys, types\nhere = pathlib.Path(__file__).resolve().parent\nsrc = (here / \"solution.py\").read_text(encoding=\"utf-8\") + \"\\n\\n\" + (here / \"tests.py\").read_text(encoding=\"utf-8\")\nsys.path.insert(0, str(here))\nmod = types.ModuleType(\"__main__\")\nmod.__file__ = str(here / \"solution.py\")\nsys.modules[\"__main__\"] = mod\nexec(compile(src, \"solution.py + tests.py\", \"exec\"), mod.__dict__)\nprint(\"all tests passed\")\n"
+        },
+        "prompt": "Fix the bug in add in solution.py. The tests in tests.py must pass; run them with: python check.py. Do not change tests.py or check.py: they grade the task, and a run that edits them does not count.",
+        "check": [
+          "python",
+          "check.py"
+        ],
+        "timeoutMs": 60000
+      },
+      "reference": "def add(x: int, y: int):\n    \"\"\"Add two numbers.\"\"\"\n    return x + y\n",
+      "stubName": "solution.py"
+    },
+    {
+      "task": {
+        "id": "humanevalfix-python-1",
+        "kind": "humanevalfix-python",
+        "name": "Python/1 is_odd (HumanEvalFix)",
+        "rounds": 14,
+        "protect": [
+          "tests.py",
+          "check.py"
+        ],
+        "files": {
+          "solution.py": "def is_odd(n):\n    \"\"\"True for odd n.\"\"\"\n    return n % 2 == 0\n",
+          "tests.py": "\n\ndef check(is_odd):\n    assert is_odd(3)\n    assert not is_odd(4)\n    assert is_odd(7)\n\ncheck(is_odd)\n",
+          "check.py": "# Runs the program and its tests as one module, as the benchmark does upstream.\nimport pathlib, sys, types\nhere = pathlib.Path(__file__).resolve().parent\nsrc = (here / \"solution.py\").read_text(encoding=\"utf-8\") + \"\\n\\n\" + (here / \"tests.py\").read_text(encoding=\"utf-8\")\nsys.path.insert(0, str(here))\nmod = types.ModuleType(\"__main__\")\nmod.__file__ = str(here / \"solution.py\")\nsys.modules[\"__main__\"] = mod\nexec(compile(src, \"solution.py + tests.py\", \"exec\"), mod.__dict__)\nprint(\"all tests passed\")\n"
+        },
+        "prompt": "Fix the bug in is_odd in solution.py. The tests in tests.py must pass; run them with: python check.py. Do not change tests.py or check.py: they grade the task, and a run that edits them does not count.",
+        "check": [
+          "python",
+          "check.py"
+        ],
+        "timeoutMs": 60000
+      },
+      "reference": "def is_odd(n):\n    \"\"\"True for odd n.\"\"\"\n    return n % 2 == 1\n",
+      "stubName": "solution.py"
+    },
+    {
+      "task": {
+        "id": "humanevalfix-python-2",
+        "kind": "humanevalfix-python",
+        "name": "Python/2 mean (HumanEvalFix)",
+        "rounds": 14,
+        "protect": [
+          "tests.py",
+          "check.py"
+        ],
+        "files": {
+          "solution.py": "def mean(xs):\n    \"\"\"Arithmetic mean.\"\"\"\n    return sum(xs) / (len(xs) + 1)\n",
+          "tests.py": "\n\ndef check(mean):\n    assert abs(mean([1, 2, 3]) - 2.0) < 1e-6\n    assert abs(2.5 - mean([2, 3])) <= 1e-6\n    assert abs(mean([1e-3, 3e-3]) - 2e-3) < 1e-9\n\ncheck(mean)\n",
+          "check.py": "# Runs the program and its tests as one module, as the benchmark does upstream.\nimport pathlib, sys, types\nhere = pathlib.Path(__file__).resolve().parent\nsrc = (here / \"solution.py\").read_text(encoding=\"utf-8\") + \"\\n\\n\" + (here / \"tests.py\").read_text(encoding=\"utf-8\")\nsys.path.insert(0, str(here))\nmod = types.ModuleType(\"__main__\")\nmod.__file__ = str(here / \"solution.py\")\nsys.modules[\"__main__\"] = mod\nexec(compile(src, \"solution.py + tests.py\", \"exec\"), mod.__dict__)\nprint(\"all tests passed\")\n"
+        },
+        "prompt": "Fix the bug in mean in solution.py. The tests in tests.py must pass; run them with: python check.py. Do not change tests.py or check.py: they grade the task, and a run that edits them does not count.",
+        "check": [
+          "python",
+          "check.py"
+        ],
+        "timeoutMs": 60000
+      },
+      "reference": "def mean(xs):\n    \"\"\"Arithmetic mean.\"\"\"\n    return sum(xs) / len(xs)\n",
+      "stubName": "solution.py"
+    },
+    {
+      "task": {
+        "id": "humanevalfix-python-3",
+        "kind": "humanevalfix-python",
+        "name": "Python/3 sort_desc (HumanEvalFix)",
+        "rounds": 14,
+        "protect": [
+          "tests.py",
+          "check.py"
+        ],
+        "files": {
+          "solution.py": "def sort_desc(xs):\n    \"\"\"Descending copy.\"\"\"\n    return sorted(xs)\n",
+          "tests.py": "\n\ndef check(sort_desc):\n    assert sort_desc(\n        [3, 1, 2]\n    ) == [3, 2, 1]\n    assert [2, 1] == sort_desc([1, 2])\n    assert sort_desc([]) == []\n\ncheck(sort_desc)\n",
+          "check.py": "# Runs the program and its tests as one module, as the benchmark does upstream.\nimport pathlib, sys, types\nhere = pathlib.Path(__file__).resolve().parent\nsrc = (here / \"solution.py\").read_text(encoding=\"utf-8\") + \"\\n\\n\" + (here / \"tests.py\").read_text(encoding=\"utf-8\")\nsys.path.insert(0, str(here))\nmod = types.ModuleType(\"__main__\")\nmod.__file__ = str(here / \"solution.py\")\nsys.modules[\"__main__\"] = mod\nexec(compile(src, \"solution.py + tests.py\", \"exec\"), mod.__dict__)\nprint(\"all tests passed\")\n"
+        },
+        "prompt": "Fix the bug in sort_desc in solution.py. The tests in tests.py must pass; run them with: python check.py. Do not change tests.py or check.py: they grade the task, and a run that edits them does not count.",
+        "check": [
+          "python",
+          "check.py"
+        ],
+        "timeoutMs": 60000
+      },
+      "reference": "def sort_desc(xs):\n    \"\"\"Descending copy.\"\"\"\n    return sorted(xs, reverse=True)\n",
+      "stubName": "solution.py"
+    },
+    {
+      "task": {
+        "id": "humanevalfix-python-4",
+        "kind": "humanevalfix-python",
+        "name": "Python/4 double (HumanEvalFix)",
+        "rounds": 14,
+        "protect": [
+          "tests.py",
+          "check.py"
+        ],
+        "files": {
+          "solution.py": "def double(n):\n    \"\"\"Twice n.\"\"\"\n    return n + 2\n",
+          "tests.py": "\n\ndef check(double):\n    assert double(2) == 4, \"two\"\n    assert double(1) == 2 and double(3) == 6\n    assert double(0) is not None\n    assert double(1) != 3\n    assert 0 < double(1) < 3\n    assert double(2) in (4, 5)\n    assert (double(1) == 2) if True else False\n    assert double(5) == 10\n\ncheck(double)\n",
+          "check.py": "# Runs the program and its tests as one module, as the benchmark does upstream.\nimport pathlib, sys, types\nhere = pathlib.Path(__file__).resolve().parent\nsrc = (here / \"solution.py\").read_text(encoding=\"utf-8\") + \"\\n\\n\" + (here / \"tests.py\").read_text(encoding=\"utf-8\")\nsys.path.insert(0, str(here))\nmod = types.ModuleType(\"__main__\")\nmod.__file__ = str(here / \"solution.py\")\nsys.modules[\"__main__\"] = mod\nexec(compile(src, \"solution.py + tests.py\", \"exec\"), mod.__dict__)\nprint(\"all tests passed\")\n"
+        },
+        "prompt": "Fix the bug in double in solution.py. The tests in tests.py must pass; run them with: python check.py. Do not change tests.py or check.py: they grade the task, and a run that edits them does not count.",
+        "check": [
+          "python",
+          "check.py"
+        ],
+        "timeoutMs": 60000
+      },
+      "reference": "def double(n):\n    \"\"\"Twice n.\"\"\"\n    return n * 2\n",
+      "stubName": "solution.py"
+    },
+    {
+      "task": {
+        "id": "humanevalfix-python-5",
+        "kind": "humanevalfix-python",
+        "name": "Python/5 join_eq (HumanEvalFix)",
+        "rounds": 14,
+        "protect": [
+          "tests.py",
+          "check.py"
+        ],
+        "files": {
+          "solution.py": "def join_eq(a, b):\n    \"\"\"a==b, joined.\"\"\"\n    return a + \"=\" + b\n",
+          "tests.py": "\n\ndef check(join_eq):\n    assert join_eq(\"x\", \"y\") == \"x==y\"  # a, b == c\n    assert join_eq('a,b', \"#\") == 'a,b==#'\n\ncheck(join_eq)\n",
+          "check.py": "# Runs the program and its tests as one module, as the benchmark does upstream.\nimport pathlib, sys, types\nhere = pathlib.Path(__file__).resolve().parent\nsrc = (here / \"solution.py\").read_text(encoding=\"utf-8\") + \"\\n\\n\" + (here / \"tests.py\").read_text(encoding=\"utf-8\")\nsys.path.insert(0, str(here))\nmod = types.ModuleType(\"__main__\")\nmod.__file__ = str(here / \"solution.py\")\nsys.modules[\"__main__\"] = mod\nexec(compile(src, \"solution.py + tests.py\", \"exec\"), mod.__dict__)\nprint(\"all tests passed\")\n"
+        },
+        "prompt": "Fix the bug in join_eq in solution.py. The tests in tests.py must pass; run them with: python check.py. Do not change tests.py or check.py: they grade the task, and a run that edits them does not count.",
+        "check": [
+          "python",
+          "check.py"
+        ],
+        "timeoutMs": 60000
+      },
+      "reference": "def join_eq(a, b):\n    \"\"\"a==b, joined.\"\"\"\n    return a + \"==\" + b\n",
+      "stubName": "solution.py"
+    },
+    {
+      "task": {
+        "id": "humanevalfix-python-6",
+        "kind": "humanevalfix-python",
+        "name": "Python/6 triple (HumanEvalFix)",
+        "rounds": 14,
+        "protect": [
+          "tests.py",
+          "check.py"
+        ],
+        "files": {
+          "solution.py": "def triple(n):\n    \"\"\"Three times n.\"\"\"\n    return n * 2\n",
+          "tests.py": "\n\ndef check(candidate):\n    for i in range(3):\n        assert candidate(i) == i * 3\n    assert abs(candidate(-1) - -3.0) < 1e-6\n\ncheck(triple)\n",
+          "check.py": "# Runs the program and its tests as one module, as the benchmark does upstream.\nimport pathlib, sys, types\nhere = pathlib.Path(__file__).resolve().parent\nsrc = (here / \"solution.py\").read_text(encoding=\"utf-8\") + \"\\n\\n\" + (here / \"tests.py\").read_text(encoding=\"utf-8\")\nsys.path.insert(0, str(here))\nmod = types.ModuleType(\"__main__\")\nmod.__file__ = str(here / \"solution.py\")\nsys.modules[\"__main__\"] = mod\nexec(compile(src, \"solution.py + tests.py\", \"exec\"), mod.__dict__)\nprint(\"all tests passed\")\n"
+        },
+        "prompt": "Fix the bug in triple in solution.py. The tests in tests.py must pass; run them with: python check.py. Do not change tests.py or check.py: they grade the task, and a run that edits them does not count.",
+        "check": [
+          "python",
+          "check.py"
+        ],
+        "timeoutMs": 60000
+      },
+      "reference": "def triple(n):\n    \"\"\"Three times n.\"\"\"\n    return n * 3\n",
+      "stubName": "solution.py"
+    },
+    {
+      "task": {
+        "id": "humanevalfix-python-7",
+        "kind": "humanevalfix-python",
+        "name": "Python/7 span (HumanEvalFix)",
+        "rounds": 14,
+        "protect": [
+          "tests.py",
+          "check.py"
+        ],
+        "files": {
+          "solution.py": "def span(n):\n    \"\"\"Range and its size.\"\"\"\n    return list(range(n)), n + 1\n",
+          "tests.py": "\n\ndef check(span):\n    assert span(400) == (list(range(400)), 400)\n\ncheck(span)\n",
+          "check.py": "# Runs the program and its tests as one module, as the benchmark does upstream.\nimport pathlib, sys, types\nhere = pathlib.Path(__file__).resolve().parent\nsrc = (here / \"solution.py\").read_text(encoding=\"utf-8\") + \"\\n\\n\" + (here / \"tests.py\").read_text(encoding=\"utf-8\")\nsys.path.insert(0, str(here))\nmod = types.ModuleType(\"__main__\")\nmod.__file__ = str(here / \"solution.py\")\nsys.modules[\"__main__\"] = mod\nexec(compile(src, \"solution.py + tests.py\", \"exec\"), mod.__dict__)\nprint(\"all tests passed\")\n"
+        },
+        "prompt": "Fix the bug in span in solution.py. The tests in tests.py must pass; run them with: python check.py. Do not change tests.py or check.py: they grade the task, and a run that edits them does not count.",
+        "check": [
+          "python",
+          "check.py"
+        ],
+        "timeoutMs": 60000
+      },
+      "reference": "def span(n):\n    \"\"\"Range and its size.\"\"\"\n    return list(range(n)), n\n",
+      "stubName": "solution.py"
+    },
+    {
+      "task": {
+        "id": "humanevalfix-python-8",
+        "kind": "humanevalfix-python",
+        "name": "Python/8 clamp (HumanEvalFix)",
+        "rounds": 14,
+        "protect": [
+          "tests.py",
+          "check.py"
+        ],
+        "files": {
+          "solution.py": "import math\n\ndef clamp(x, lo, hi):\n    \"\"\"assert clamp(1, 0, 2) == 1\"\"\"\n    return max(lo, min(hi, x)) + 1\n",
+          "tests.py": "SEED = 7\n\n\ndef check(clamp):\n    assert clamp(5, 0, 3) == 3\n    assert clamp(-1, 0, 3) == 0\n\ncheck(clamp)\n",
+          "check.py": "# Runs the program and its tests as one module, as the benchmark does upstream.\nimport pathlib, sys, types\nhere = pathlib.Path(__file__).resolve().parent\nsrc = (here / \"solution.py\").read_text(encoding=\"utf-8\") + \"\\n\\n\" + (here / \"tests.py\").read_text(encoding=\"utf-8\")\nsys.path.insert(0, str(here))\nmod = types.ModuleType(\"__main__\")\nmod.__file__ = str(here / \"solution.py\")\nsys.modules[\"__main__\"] = mod\nexec(compile(src, \"solution.py + tests.py\", \"exec\"), mod.__dict__)\nprint(\"all tests passed\")\n"
+        },
+        "prompt": "Fix the bug in clamp in solution.py. The tests in tests.py must pass; run them with: python check.py. Do not change tests.py or check.py: they grade the task, and a run that edits them does not count.",
+        "check": [
+          "python",
+          "check.py"
+        ],
+        "timeoutMs": 60000
+      },
+      "reference": "import math\n\ndef clamp(x, lo, hi):\n    \"\"\"assert clamp(1, 0, 2) == 1\"\"\"\n    return max(lo, min(hi, x))\n",
+      "stubName": "solution.py"
+    },
+    {
+      "task": {
+        "id": "humanevalfix-python-9",
+        "kind": "humanevalfix-python",
+        "name": "Python/9 ident (HumanEvalFix)",
+        "rounds": 14,
+        "protect": [
+          "tests.py",
+          "check.py"
+        ],
+        "files": {
+          "solution.py": "def ident(x):\n    \"\"\"Return x.\"\"\"\n    return None\n",
+          "tests.py": "\n\ndef check(ident):\n    assert 1 == 1\n    x = 1; assert ident(x) == 1\n    assert ident(2) == 2\n\ncheck(ident)\n",
+          "check.py": "# Runs the program and its tests as one module, as the benchmark does upstream.\nimport pathlib, sys, types\nhere = pathlib.Path(__file__).resolve().parent\nsrc = (here / \"solution.py\").read_text(encoding=\"utf-8\") + \"\\n\\n\" + (here / \"tests.py\").read_text(encoding=\"utf-8\")\nsys.path.insert(0, str(here))\nmod = types.ModuleType(\"__main__\")\nmod.__file__ = str(here / \"solution.py\")\nsys.modules[\"__main__\"] = mod\nexec(compile(src, \"solution.py + tests.py\", \"exec\"), mod.__dict__)\nprint(\"all tests passed\")\n"
+        },
+        "prompt": "Fix the bug in ident in solution.py. The tests in tests.py must pass; run them with: python check.py. Do not change tests.py or check.py: they grade the task, and a run that edits them does not count.",
+        "check": [
+          "python",
+          "check.py"
+        ],
+        "timeoutMs": 60000
+      },
+      "reference": "def ident(x):\n    \"\"\"Return x.\"\"\"\n    return x\n",
+      "stubName": "solution.py"
+    }
+  ],
+  "js": {
+    "task": {
+      "id": "humanevalfix-js-0",
+      "kind": "humanevalfix-js",
+      "name": "JavaScript/0 add (HumanEvalFix)",
+      "rounds": 14,
+      "protect": [
+        "tests.js",
+        "check.js"
+      ],
+      "files": {
+        "solution.js": "\nconst add = (a, b) => {\n  return a - b\n}\n",
+        "tests.js": "console.assert = (cond, ...msg) => { if (!cond) throw new Error('assertion failed' + (msg.length ? ': ' + msg.join(' ') : '')) };\nconst testAdd = () => {\n  console.assert(add(2, 3) === 5)\n}\n\ntestAdd()\n",
+        "check.js": "// Runs the program and its tests in one scope, as the benchmark does upstream.\nconst fs = require('fs');\nconst path = require('path');\nconst src = fs.readFileSync(path.join(__dirname, \"solution.js\"), 'utf8') + '\\n' + fs.readFileSync(path.join(__dirname, \"tests.js\"), 'utf8');\nnew Function('require', 'module', 'exports', '__dirname', src)(require, module, exports, __dirname);\nconsole.log('all tests passed');\n"
+      },
+      "prompt": "Fix the bug in add in solution.js. The tests in tests.js must pass; run them with: node check.js. Do not change tests.js or check.js: they grade the task, and a run that edits them does not count.",
+      "check": [
+        "node",
+        "check.js"
+      ],
+      "timeoutMs": 60000
+    },
+    "reference": "\nconst add = (a, b) => {\n  return a + b\n}\n",
+    "stubName": "solution.js"
+  },
+  "python20": {
+    "task": {
+      "id": "humanevalfix-python-0",
+      "kind": "humanevalfix-python",
+      "name": "Python/0 add (HumanEvalFix)",
+      "rounds": 20,
+      "protect": [
+        "tests.py",
+        "check.py"
+      ],
+      "files": {
+        "solution.py": "def add(x: int, y: int):\n    \"\"\"Add two numbers.\"\"\"\n    return x - y\n",
+        "tests.py": "\n\nMETADATA = {}\n\n\ndef check(add):\n    assert add(0, 1) == 1\n    assert add(1, 2) == 3\n    assert add(5, 7) == 12\n\ncheck(add)\n",
+        "check.py": "# Runs the program and its tests as one module, as the benchmark does upstream.\nimport pathlib, sys, types\nhere = pathlib.Path(__file__).resolve().parent\nsrc = (here / \"solution.py\").read_text(encoding=\"utf-8\") + \"\\n\\n\" + (here / \"tests.py\").read_text(encoding=\"utf-8\")\nsys.path.insert(0, str(here))\nmod = types.ModuleType(\"__main__\")\nmod.__file__ = str(here / \"solution.py\")\nsys.modules[\"__main__\"] = mod\nexec(compile(src, \"solution.py + tests.py\", \"exec\"), mod.__dict__)\nprint(\"all tests passed\")\n"
+      },
+      "prompt": "Fix the bug in add in solution.py. The tests in tests.py must pass; run them with: python check.py. Do not change tests.py or check.py: they grade the task, and a run that edits them does not count.",
+      "check": [
+        "python",
+        "check.py"
+      ],
+      "timeoutMs": 60000
+    },
+    "reference": "def add(x: int, y: int):\n    \"\"\"Add two numbers.\"\"\"\n    return x + y\n",
+    "stubName": "solution.py"
+  }
+}

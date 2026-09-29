@@ -981,13 +981,19 @@ await (await import('./sandbox-suites.mjs')).default({ suite, asyncSuite, check,
 await (await import('./exit-suites.mjs')).default({ suite, asyncSuite, check, core, agentMod, TMP, fs, path });
 await (await import('./context-suites.mjs')).default({ asyncSuite, check, agentMod, TMP, fs, path });
 await (await import('./editbench-suites.mjs')).default({ asyncSuite, check, skip, TMP, fs, path });
+await (await import('./hefix-v2-suites.mjs')).default({ asyncSuite, check, skip, TMP, fs, path });
 await (await import('./tier-suites.mjs')).default({ asyncSuite, check, TMP, ROOT, fs, path, spawnSync });
 await (await import('./proc-suites.mjs')).default({ asyncSuite, check, skip, TMP, ROOT, fs, path });
 await (await import('./control-suites.mjs')).default({ suite, asyncSuite, check, TMP, ROOT, fs, path, spawnSync });
 await (await import('./lean-suites.mjs')).default({ suite, check, brief, TMP, ROOT, fs, path });
 await (await import('./gatecheck-suites.mjs')).default({ suite, check, skip, core, gate, router, track, TMP, fs, path });
+await (await import('./visual-suites.mjs')).default({ suite, check, core, brief, router, hosts, TMP, ROOT, fs, path });
 await (await import('./sametext-suites.mjs')).default({ suite, asyncSuite, check, core, agentMod, TMP, fs, path });
+await (await import('./ollama-profile-suites.mjs')).default({ asyncSuite, check, core, TMP, fs, path });
+await (await import('./council-suites.mjs')).default({ asyncSuite, check, core, ROOT, TMP, fs, path, spawnSync });
+await (await import('./score-suites.mjs')).default({ asyncSuite, check, ROOT, TMP, fs, path, spawnSync });
 await (await import('./ui-suites.mjs')).default({ suite, asyncSuite, check, core, ROOT, fs, path });
+await (await import('./claude-engine-suites.mjs')).default({ suite, check, core, agentMod, TMP, fs, path });
 await (await import('./coverage-suites.mjs')).default({ suite, check, ROOT, fs, path });
 
 let failed = 0;

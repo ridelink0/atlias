@@ -4,6 +4,7 @@
 //   atlias uninstall [--all|--codex|--antigravity|--gemini]
 //   atlias doctor | status | brief [--host codex] | test | version
 //   atlias tiers | eval [--tier smoke|main|big] [--sample N] | compare <a.json> <b.json>
+//   atlias score pack <report.json...> --out <dir> | verify <dir>   the public score package
 //   atlias polyglot | editbench | refactorbench <path>   convert somebody else's benchmark
 //   atlias shortcut [install|uninstall|status]   the atlias command in any terminal
 //   atlias mode [both|sub|standalone] | settings [list]
@@ -70,9 +71,11 @@ const HELP = {
     'started, and whatever a task left running in the background is ended when the task is scored (ATLIAS_EVAL_REAP=0 turns that off).',
   ],
   compare: ['usage: atlias compare <a.json> <b.json>   two runs saved with atlias eval --save, paired task by task'],
+  council: ['usage: atlias council replay <report.json...> [--json]   simulate the check-selected retry over reports saved with atlias eval --save: one --repeat 3 report, or three reports from three runs'],
+  score: ['usage: atlias score pack <report.json...> --out <dir> [--corpus <dir> | --tier <name>] [--names a,b]   one report (a score) or two (an A/B) saved with atlias eval --save, into a folder with lock.json, rows.jsonl, stats.json, SCORE.md and the re-run commands', '       atlias score verify <dir> [--corpus <dir> | --tier <name>]   recompute the stats from the rows and check the lock against the corpus files; exit 1 on a mismatch'],
   tiers: ['usage: atlias tiers   the benchmark tiers, which are on this machine, and how to get the rest'],
   polyglot: ['usage: atlias polyglot <path to a polyglot-benchmark clone> [--lang python] [--out <dir>] [--limit N] [--only name,name]'],
-  editbench: ['usage: atlias editbench <rows.jsonl> --bench canitedit|humanevalfix [--variant lazy|descriptive] [--lang python|js] [--out <dir>] [--limit N] [--only id,id] [--rounds N]'],
+  editbench: ['usage: atlias editbench <rows.jsonl> --bench canitedit|humanevalfix [--variant lazy|descriptive] [--lang python|js] [--v2] [--out <dir>] [--limit N] [--only id,id] [--rounds N]'],
   refactorbench: ['usage: atlias refactorbench <path to refactor-benchmark/refactor-benchmark> [--out <dir>] [--limit N] [--only name,name] [--max-bytes 40960] [--rounds 16]'],
   agent: ['usage: atlias agent [--engine claude|codex|openai|ollama|echo] [--once "<prompt>"] [--resume [id]] [--sandbox]'],
   exec: ['usage: atlias exec "<prompt>" [--engine claude|codex|openai|ollama|echo] [--resume [id]] [--sandbox] [--json]   (or pipe the prompt in)'],
@@ -236,6 +239,38 @@ else switch (cmd) {
     say(evals2.formatCompare(evals2.compare(A, B), aName, bName));
     break;
   }
+  case 'score': {
+    const score = await import('../lib/score.mjs');
+    const taken = new Set();
+    for (const f of ['--out', '--corpus', '--tier', '--names']) { const i = argv.indexOf(f); if (i >= 0) taken.add(i + 1); }
+    const rest = argv.slice(1).filter((a, i) => !a.startsWith('--') && !taken.has(i + 1));
+    const sub = rest[0];
+    if (sub === 'pack' && rest.length >= 2 && optVal('--out')) {
+      try {
+        const out = score.pack(rest.slice(1).map((f) => path.resolve(f)), path.resolve(optVal('--out')), { corpus: optVal('--corpus') || '', tier: optVal('--tier') || '', names: (optVal('--names') || '').split(',').filter(Boolean) });
+        say([`wrote ${path.resolve(optVal('--out'))}: lock.json, rows.jsonl, stats.json, SCORE.md, reports/`, ...out.stats.arms.map((s) => `${s.arm}: ${s.passed} of ${s.tasks}`), 'check it with: atlias score verify ' + optVal('--out')]);
+      } catch (e) { say(`atlias score pack: ${e.message}`); process.exitCode = 1; }
+    } else if (sub === 'verify' && rest.length === 2) {
+      const v = score.verify(path.resolve(rest[1]), { corpus: optVal('--corpus') || '', tier: optVal('--tier') || '' });
+      say([v.ok ? 'score package verified: the stats match the rows and every task file matches the lock.' : `score package does NOT verify (${v.problems.length}):`, ...v.problems.map((x) => `  - ${x}`), ...v.notes.map((x) => `  note: ${x}`)]);
+      if (!v.ok) process.exitCode = 1;
+    } else { say(HELP.score); process.exitCode = 1; }
+    break;
+  }
+  case 'council': {
+    const council = await import('../lib/council.mjs');
+    const rest = argv.slice(1).filter((a) => !a.startsWith('--'));
+    if (rest[0] !== 'replay' || rest.length < 2) { say(HELP.council); process.exitCode = 1; break; }
+    const reps = [];
+    for (const f of rest.slice(1)) {
+      try { reps.push(JSON.parse(fs.readFileSync(path.resolve(f), 'utf8'))); } catch (e) { say(`could not read ${f}: ${e.message}`); process.exitCode = 1; }
+    }
+    if (process.exitCode) break;
+    const out = council.replay(reps);
+    say(argv.includes('--json') ? [JSON.stringify(out, null, 2)] : council.formatReplay(out));
+    if (!out.ok) process.exitCode = 1;
+    break;
+  }
   // Somebody else's benchmark, converted into tasks this machine can run, with
   // every task proved to fail as shipped and pass with its own reference
   // solution before it is written.
@@ -296,16 +331,18 @@ else switch (cmd) {
     for (const f of valued) { const i = argv.indexOf(f); if (i >= 0) skip.add(i + 1); }
     const file = argv.slice(1).find((a, i) => !a.startsWith('--') && !skip.has(i + 1));
     const kind = optVal('--bench');
-    if (!file || !['canitedit', 'humanevalfix'].includes(kind)) { say('usage: atlias editbench <rows.jsonl> --bench canitedit|humanevalfix [--variant lazy|descriptive] [--lang python|js] [--out <dir>] [--limit N] [--only id,id] [--rounds N]'); process.exitCode = 1; break; }
+    if (!file || !['canitedit', 'humanevalfix'].includes(kind)) { say('usage: atlias editbench <rows.jsonl> --bench canitedit|humanevalfix [--variant lazy|descriptive] [--lang python|js] [--v2] [--out <dir>] [--limit N] [--only id,id] [--rounds N]'); process.exitCode = 1; break; }
+    const v2 = flag('--v2');
+    if (v2 && (kind !== 'humanevalfix' || (optVal('--lang') || 'python') !== 'python')) { say('--v2 is a Python HumanEvalFix mode: atlias editbench <rows.jsonl> --bench humanevalfix --lang python --v2'); process.exitCode = 1; break; }
     const variant = optVal('--variant') || 'lazy';
     const lang = optVal('--lang') || 'python';
-    const out = optVal('--out') || path.join(ROOT, 'evals', kind, kind === 'canitedit' ? variant : lang);
+    const out = optVal('--out') || path.join(ROOT, 'evals', kind, kind === 'canitedit' ? variant : `${lang}${v2 ? '-v2' : ''}`);
     const rows = eb.readJsonl(path.resolve(file));
     if (!rows.length) { say(`no rows in ${file}`); process.exitCode = 1; break; }
     const limit = parseInt(optVal('--limit') || '0', 10) || 0;
     const only = String(optVal('--only') || '').split(',').map((s) => s.trim()).filter(Boolean);
     say(`converting ${rows.length} ${kind} row(s) from ${file}. Each one has to fail as shipped and pass with the benchmark's own reference here before it is kept.`);
-    const result = eb.convertRows(rows, kind, out, { variant, lang, limit, only, rounds: Math.max(0, parseInt(optVal('--rounds') || '0', 10) || 0) });
+    const result = eb.convertRows(rows, kind, out, { variant, lang, v2, limit, only, rounds: Math.max(0, parseInt(optVal('--rounds') || '0', 10) || 0) });
     say(eb.report(result));
     process.exitCode = result.wrote.length ? 0 : 1;
     break;

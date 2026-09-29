@@ -96,6 +96,34 @@ evals/humanevalfix/js` runs it. Expect it to be slow to convert: a buggy stub
 that loops forever costs three proof attempts, each retried once, at the task's
 60-second timeout.
 
+### HumanEvalFix v2 (the check prints expected and actual)
+
+NEXTGEN-5 row 7. The same 164 Python tasks, but a failing assertion says what
+it expected and what it got instead of a bare `AssertionError`:
+`AssertionError: expected 3, got 2 for add(1, 2)`. The prompt, the solution
+stub, the runner and the round budget are v1's; only `tests.py` differs, so v1
+(`evals/humanevalfix/python`) is the content-free control arm. Regenerate on
+the PC, from the same `hef-python.jsonl` as v1, into its own folder (never over
+v1):
+
+    atlias editbench hef-python.jsonl --bench humanevalfix --lang python --v2
+
+The tasks land in `evals/humanevalfix/python-v2` (`--out` changes it) as
+`humanevalfix-python-v2-<n>`; each is proved to fail as shipped and pass with
+the benchmark's reference, as v1 is, so the run takes about the same 0.5 h.
+Run it with `atlias eval --corpus evals/humanevalfix/python-v2`.
+
+Three assert shapes are rewritten: `assert f(x) == y`, `assert f(x)` and
+`assert not f(x)`, and `assert abs(f(x) - y) < eps` (or `<=`). Any other shape
+keeps its v1 assertion: a message, `and`/`or`, `is`/`in`, a chain, `!=`, no call
+to the function, a semicolon, or brackets that do not balance. The converter's
+last lines give the count, for example `v2: N assertion(s) now print the call,
+the expected value and the actual value; M kept the v1 assertion (and/or: 3; ...)`.
+Copy those two numbers into the run's notes: they say how much of the corpus
+the arm changed. The cloud built this against ten fixture rows (21 rewritten, 9
+fall back; `test/hefix-v2-suites.mjs`), not the real dataset, so the real
+fallback share is unmeasured until that command runs. Only Python has a v2.
+
 ### Aider refactor-benchmark (big-file tier)
 
 [Aider-AI/refactor-benchmark](https://github.com/Aider-AI/refactor-benchmark)
