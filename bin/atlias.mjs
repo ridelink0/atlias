@@ -70,6 +70,7 @@ const HELP = {
     'started, and whatever a task left running in the background is ended when the task is scored (ATLIAS_EVAL_REAP=0 turns that off).',
   ],
   compare: ['usage: atlias compare <a.json> <b.json>   two runs saved with atlias eval --save, paired task by task'],
+  council: ['usage: atlias council replay <report.json...> [--json]   simulate the check-selected retry over reports saved with atlias eval --save: one --repeat 3 report, or three reports from three runs'],
   tiers: ['usage: atlias tiers   the benchmark tiers, which are on this machine, and how to get the rest'],
   polyglot: ['usage: atlias polyglot <path to a polyglot-benchmark clone> [--lang python] [--out <dir>] [--limit N] [--only name,name]'],
   editbench: ['usage: atlias editbench <rows.jsonl> --bench canitedit|humanevalfix [--variant lazy|descriptive] [--lang python|js] [--v2] [--out <dir>] [--limit N] [--only id,id] [--rounds N]'],
@@ -234,6 +235,20 @@ else switch (cmd) {
     // otherwise print as "X 3/9 against X 4/9"; the file names tell them apart.
     if (aName === bName) { aName = `${aName} (${path.basename(files[0])})`; bName = `${bName} (${path.basename(files[1])})`; }
     say(evals2.formatCompare(evals2.compare(A, B), aName, bName));
+    break;
+  }
+  case 'council': {
+    const council = await import('../lib/council.mjs');
+    const rest = argv.slice(1).filter((a) => !a.startsWith('--'));
+    if (rest[0] !== 'replay' || rest.length < 2) { say(HELP.council); process.exitCode = 1; break; }
+    const reps = [];
+    for (const f of rest.slice(1)) {
+      try { reps.push(JSON.parse(fs.readFileSync(path.resolve(f), 'utf8'))); } catch (e) { say(`could not read ${f}: ${e.message}`); process.exitCode = 1; }
+    }
+    if (process.exitCode) break;
+    const out = council.replay(reps);
+    say(argv.includes('--json') ? [JSON.stringify(out, null, 2)] : council.formatReplay(out));
+    if (!out.ok) process.exitCode = 1;
     break;
   }
   // Somebody else's benchmark, converted into tasks this machine can run, with
