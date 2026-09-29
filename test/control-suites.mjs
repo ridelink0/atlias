@@ -104,6 +104,14 @@ export default async function controlSuites({ suite, asyncSuite, check, TMP, ROO
     const mixed = spawnSync(process.execPath, [bin, 'eval', '--engine', 'echo', 'add-function', '--outlive-parent', '--save', saved, '--resume'], { encoding: 'utf8', env: noFlagEnv(), timeout: 60000 });
     check('--resume will not add rows to a report another arm wrote', mixed.status === 2 && /ran with flags probeFlag=true .*Refusing to mix them/.test(mixed.stdout) && JSON.parse(fs.readFileSync(saved, 'utf8')).results.length === 0,
       { happened: `exit ${mixed.status}: ${(mixed.stdout || mixed.stderr).slice(-300)}`, why: 'A resumed run that mixes two arms\' rows is a report of neither arm.', fix: 'The --resume check compares the saved flags.values with flagStamp().values.' });
+    // A flag registered after a run was saved is off in it, so a later run with
+    // every flag off is the same arm; here the saved run knew a flag this code
+    // no longer has, left at its default.
+    const earlier = path.join(TMP, 'flag-resume-earlier.json');
+    fs.writeFileSync(earlier, JSON.stringify({ partial: true, results: [], engine: 'echo', model: '', tries: 1, flags: { values: { retiredFlag: false }, changed: [], from: {}, env: {}, unknown: [], bad: [] } }));
+    const carried = spawnSync(process.execPath, [bin, 'eval', '--engine', 'echo', 'add-function', '--outlive-parent', '--save', earlier, '--resume'], { encoding: 'utf8', env: noFlagEnv(), timeout: 60000 });
+    check('--resume carries on a run whose flags were all at their default, whichever flags each code registered', carried.status !== 2 && !/Refusing to mix/.test(carried.stdout) && /--resume: nothing to carry on from/.test(carried.stdout),
+      { happened: `exit ${carried.status}: ${(carried.stdout || carried.stderr).slice(0, 300)}`, why: 'Rows 4 to 8 each register a flag, off; a baseline saved before one of them is still the control, and refusing it says "none set" against "none set".', fix: 'The --resume check uses core.sameFlags, which compares the flags both stamps know and requires any other to be at its default.' });
     // The hooks run inside Claude Code in the environment it was started in; a
     // session says in atlias's log which flags it ran with.
     const home = path.join(TMP, 'flag-hook-home');
@@ -186,6 +194,10 @@ export default async function controlSuites({ suite, asyncSuite, check, TMP, ROO
       { happened: text.split(NL).filter((l) => /ledger|cache|Flags/.test(l)).join(' | '), why: 'The comparison is what a RESULT comment quotes; a number it does not print is not in the result.', fix: 'costLines prints the ledger and cache rows; formatCompare prints flagLine for both.' });
     const same = evals.formatCompare(evals.compare({ ...now }, { ...now }, { rng: () => 0.5, rounds: 50 }), 'x', 'y');
     const mini = evals.formatCompare(evals.compare({ results: [row('t1', true, { promptTotal: 5 })] }, { results: [row('t1', true, { promptTotal: 5 })] }, { rng: () => 0.5, rounds: 50 }), 'x', 'y');
+    const stampOf = (values, changed) => ({ values, changed, from: {}, env: {}, unknown: [], bad: [] });
+    const later = (flags) => evals.formatCompare(evals.compare({ ...now, flags: stampOf({}, []) }, { ...now, flags }, { rng: () => 0.5, rounds: 50 }), 'base', 'arm');
+    check('a baseline saved before a flag existed and a later run with it off have the same flags; with it on they do not', /Both runs had the same flags/.test(later(stampOf({ probeFlag: false }, []))) && !/Both runs had the same flags/.test(later(stampOf({ probeFlag: true }, ['probeFlag']))) && core.sameFlags(stampOf({ a: false }, []), stampOf({ b: 0 }, [])) && !core.sameFlags(stampOf({ a: false }, []), stampOf({ a: true }, ['a'])) && !core.sameFlags(null, stampOf({}, [])),
+      { happened: later(stampOf({ probeFlag: false }, [])).split(NL).filter((l) => /flags/i.test(l)).join(' | '), why: 'Every later arm is compared with row 1\'s baseline, saved before its flag was registered; the flags-off rerun of that arm must read as the control, not as a different configuration.', fix: 'formatCompare uses core.sameFlags: flags both stamps know must match, and one only a stamp knows must be at its default there.' });
     check('two runs with the same flags say so, and a harness with no ledger prints no ledger row', /Both runs had the same flags/.test(same) && !/ledger:/.test(mini) && !/Flags:/.test(mini),
       { happened: `${same.split(NL).filter((l) => /flags/i.test(l)).join(' | ')} || ${mini.split(NL).filter((l) => /ledger|Flags/.test(l)).join(' | ')}`, why: 'A rerun of the control against itself is the noise floor, and should read as that.', fix: 'formatCompare compares the two stamps\' values.' });
   });
