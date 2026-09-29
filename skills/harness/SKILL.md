@@ -1,6 +1,6 @@
 ---
 name: atlias
-description: "Use when the task touches memory across sessions (remember, recall, what did we decide, last time), a handoff or progress note, a session digest or Dream consolidation, the knowledge graph of a project (how does X work, what depends on Y), verifying changed files, or the health of the atlias sub-harness in Claude Code, Codex, Antigravity or Gemini CLI."
+description: "Use for memory across sessions (remember, recall, what did we decide), the handoff note, session digests and Dream, the project's knowledge graph (how X works, what depends on Y), or atlias's health."
 ---
 
 # atlias

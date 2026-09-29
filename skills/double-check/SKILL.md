@@ -1,6 +1,6 @@
 ---
 name: double-check
-description: "Use before declaring any code change done, when the atlias gate holds a reply for a second pass, or when asked to bug-check, verify, review your own change, or check for everything. Two passes: functional proof, then an adversarial hunt. Also use when tests fail and you need to turn the failure into a fix."
+description: "Use before calling a code change done, when the atlias gate holds a reply for a second pass, or when asked to verify, bug-check or review your own change, or to turn a failing test into a fix."
 ---
 
 # double-check

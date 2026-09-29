@@ -229,7 +229,11 @@ export default async function controlSuites({ suite, asyncSuite, check, TMP, ROO
       check(`${name}: every request is byte for byte the baseline's`, got.requests.length === want.requests.length && bad.length === 0,
         { happened: `${got.requests.length} requests against ${want.requests.length}; first differing request ${bad[0]} at character ${at}: baseline ${JSON.stringify((want.requests[bad[0]] || '').slice(Math.max(0, at - 60), at + 80))} now ${JSON.stringify((got.requests[bad[0]] || '').slice(Math.max(0, at - 60), at + 80))}`, why: 'Row 1\'s baseline runs are the control for every later arm only while the code with its flags off asks the model exactly what that code asked. A difference here means a change landed without a flag, and the control is gone.', fix: 'Put the change behind a flag in DEFAULTS.flags. If the change to flags-off behaviour is meant, re-record with node test/golden.mjs --write and say in the commit that the baseline must be re-run.' });
       for (const part of ['row', 'report']) {
-        const moved = Object.keys(want[part]).filter((k) => JSON.stringify(want[part][k]) !== JSON.stringify(got[part][k]));
+        // The report's flag stamp is the same configuration by core.sameFlags,
+        // the rule --resume and compare use: a flag registered since the
+        // fixture was recorded, left at its default, is no difference.
+        const same = (k) => (part === 'report' && k === 'flags' ? core.sameFlags(want[part][k], got[part][k]) : JSON.stringify(want[part][k]) === JSON.stringify(got[part][k]));
+        const moved = Object.keys(want[part]).filter((k) => !same(k));
         const allowed = part === 'row' ? LEDGER_ROW : LEDGER_REPORT;
         const added = Object.keys(got[part]).filter((k) => !(k in want[part]) && !allowed.includes(k));
         check(`${name}: the ${part} holds every baseline field unchanged, and nothing new but the ledger`, moved.length === 0 && added.length === 0,
