@@ -987,6 +987,10 @@ await (await import('./control-suites.mjs')).default({ suite, asyncSuite, check,
 await (await import('./lean-suites.mjs')).default({ suite, check, brief, TMP, ROOT, fs, path });
 await (await import('./gatecheck-suites.mjs')).default({ suite, check, skip, core, gate, router, track, TMP, fs, path });
 await (await import('./sametext-suites.mjs')).default({ suite, asyncSuite, check, core, agentMod, TMP, fs, path });
+await (await import('./smallmodel-suites.mjs')).default({ suite, asyncSuite, check, core, agentMod, TMP, fs, path });
+await (await import('./explain-suites.mjs')).default({ suite, check, skip, TMP, fs, path });
+await (await import('./direct-suites.mjs')).default({ suite, asyncSuite, check, skip });
+await (await import('./council-suites.mjs')).default({ suite, asyncSuite, check });
 await (await import('./ui-suites.mjs')).default({ suite, asyncSuite, check, core, ROOT, fs, path });
 await (await import('./coverage-suites.mjs')).default({ suite, check, ROOT, fs, path });
 

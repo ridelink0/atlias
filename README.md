@@ -208,7 +208,7 @@ Plain semantic versioning: patch for a fix, minor for a feature or a behaviour c
 - The OpenAI-compatible engine is tested against a local server that speaks the wire format, not against a live paid endpoint in CI.
 - The extra harnesses' config shapes follow each tool's documentation and are marked UNVERIFIED in `lib/hosts-extra.mjs`; only Claude Code and Codex are pinned to source.
 - Antigravity has no hook API, so it gets the MCP server and the instruction block only.
-- Whether atlias raises task success is unmeasured; see [docs/RESEARCH.md](docs/RESEARCH.md).
+- Whether atlias raises task success is measured once and not yet replicated: on 250 HumanEvalFix and CanItEdit tasks with qwen2.5-coder:7b, a pre-release build solved 59 against mini-swe-agent's 41 (36 one-way flips against 18), one run per side; a three-repeat rerun is in progress. Inside Claude Code it has not cut tokens: 1.00x to 1.06x of plain Claude Code on 50 tasks. See [docs/NEXTGEN-5.md](docs/NEXTGEN-5.md) and [docs/RESEARCH.md](docs/RESEARCH.md).
 
 ## Built on
 
