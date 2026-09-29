@@ -55,6 +55,12 @@ export function leakedKeys(env) {
 // plus, `atlias@abc1234+ATLIAS_FOO=1,ATLIAS_BAR=0`. Flags become environment
 // variables of the nested run, which is how NEXTGEN-5 says a flagged arm is
 // switched on ("a config key that can also be set from the environment").
+// The --arms list: arms are separated by commas, and so are one arm's flags,
+// so a comma starts a new arm only where `plain` or `atlias@` follows it.
+export function splitArms(list) {
+  return String(list || '').split(/,(?=\s*(?:plain\s*(?:,|$)|atlias@))/).map((s) => s.trim()).filter(Boolean);
+}
+
 export function parseArm(spec) {
   const s = String(spec || '').trim();
   if (s === 'plain') return { name: 'plain', kind: 'plain', ref: '', flags: {} };
@@ -313,6 +319,31 @@ export function hookCallsOf(stream) {
   }
   for (const [id, f] of finished) if (!started.has(id)) calls.push({ id, event: f.event, name: f.name, outcome: f.outcome || f.subtype, cancelled: /cancel/i.test(f.outcome || f.subtype) });
   return calls;
+}
+
+// The SessionStart brief a run was given, from its hook_response in the
+// stream: its length in characters, and whether it is the lean one
+// (flags.leanBrief drops the list of MCP tool names from its first line).
+export function briefOf(stream) {
+  for (const r of stream || []) {
+    if (!r || r.type !== 'system' || r.subtype !== 'hook_response' || !/^SessionStart/.test(String(r.hook_event || r.hook_name || ''))) continue;
+    let text = '';
+    try { text = String(((JSON.parse(String(r.output || '{}')).hookSpecificOutput) || {}).additionalContext || ''); } catch { text = ''; }
+    if (!/\[atlias /.test(text)) continue;
+    return { chars: text.length, lean: !/harness_recall, harness_remember/.test(text), gateRunsCheck: /atlias runs `[^`]+` when you finish/.test(text) };
+  }
+  return null;
+}
+
+// Checks atlias's gate ran itself (flags.gateRunsCheck), from the session
+// event logs under the run's own HOME: each is a shell event with from 'gate'.
+export function gateChecksOf(home) {
+  const dir = path.join(home, '.atlias', 'sessions');
+  let names = [];
+  try { names = fs.readdirSync(dir).filter((f) => f.endsWith('.jsonl')); } catch { return []; }
+  return names.flatMap((f) => readJsonl(path.join(dir, f)))
+    .filter((e) => e && e.kind === 'shell' && e.from === 'gate')
+    .map((e) => ({ command: String(e.command || ''), outcome: String(e.outcome || '') }));
 }
 
 // Cancelled hook calls the transcript itself records (Claude Code writes an

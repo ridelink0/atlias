@@ -9,7 +9,7 @@ import os from 'node:os';
 import path from 'node:path';
 import * as S from './lib.mjs';
 import { isCheck, isRun, portableCheck } from './run.mjs';
-import { comparePair, byArm, summarize, markdown } from './summary.mjs';
+import { comparePair, byArm, summarize, markdown, barVerdict } from './summary.mjs';
 import { select, parseTake } from './select.mjs';
 
 let passed = 0, failed = 0;
@@ -58,6 +58,14 @@ test('arms parse: plain, atlias at a ref, atlias with flags', () => {
   assert.deepEqual(f.flags, { ATLIAS_LEAN_BRIEF: '1', ATLIAS_GATE_RUNS_CHECK: '1' });
   assert.throws(() => S.parseArm('atlias@abc+FOO=1'), /not an ATLIAS_/);
   assert.throws(() => S.parseArm('mini'), /no arm/);
+});
+
+test('an arm list splits between arms, not between one arm\'s flags', () => {
+  assert.deepEqual(S.splitArms('plain,atlias@abc,atlias@abc+ATLIAS_FLAG_A=1,ATLIAS_FLAG_B=1'),
+    ['plain', 'atlias@abc', 'atlias@abc+ATLIAS_FLAG_A=1,ATLIAS_FLAG_B=1']);
+  assert.deepEqual(S.splitArms('atlias@abc+ATLIAS_FLAG_A=1,ATLIAS_FLAG_B=0,plain'), ['atlias@abc+ATLIAS_FLAG_A=1,ATLIAS_FLAG_B=0', 'plain']);
+  assert.deepEqual(S.splitArms('plain'), ['plain']);
+  assert.deepEqual(S.parseArm(S.splitArms('plain,atlias@x+ATLIAS_FLAG_A=1,ATLIAS_FLAG_B=1')[1]).flags, { ATLIAS_FLAG_A: '1', ATLIAS_FLAG_B: '1' });
 });
 
 test('the two arms get the same argv except the plugin folder', () => {
@@ -303,6 +311,38 @@ test('the sampler picks the same tasks for the same seed, per source', () => {
     const other = select(take, 'seed-2', { root });
     assert.notDeepEqual(one.tasks.map((t) => t.id), other.tasks.map((t) => t.id));
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
+});
+
+test('the brief and the gate\'s own checks are read from a run\'s files', () => {
+  const hr = (text) => ({ type: 'system', subtype: 'hook_response', hook_event: 'SessionStart', output: JSON.stringify({ hookSpecificOutput: { additionalContext: text } }) });
+  const full = S.briefOf([hr('[atlias 3.8.1] Tools: MCP server "atlias" (harness_recall, harness_remember, x)')]);
+  assert.equal(full.lean, false); assert.equal(full.gateRunsCheck, false);
+  const lean = S.briefOf([{ type: 'system', subtype: 'init' }, hr('[atlias 3.8.1] its tools are the MCP server. atlias runs `python3 check.py` when you finish')]);
+  assert.equal(lean.lean, true); assert.equal(lean.gateRunsCheck, true);
+  assert.equal(S.briefOf([{ type: 'system', subtype: 'init' }]), null);
+  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'ccstudy-gate-'));
+  try {
+    assert.deepEqual(S.gateChecksOf(home), []);
+    fs.mkdirSync(path.join(home, '.atlias', 'sessions'), { recursive: true });
+    fs.writeFileSync(path.join(home, '.atlias', 'sessions', 'a.jsonl'), [
+      { kind: 'shell', command: 'python check.py', verify: true, outcome: 'unknown' },
+      { kind: 'shell', command: 'python3 check.py', verify: true, outcome: 'pass', from: 'gate' },
+      { kind: 'shell', command: 'python3 check.py', verify: true, outcome: 'fail', from: 'gate' },
+    ].map((e) => JSON.stringify(e)).join('\n') + '\n');
+    assert.deepEqual(S.gateChecksOf(home).map((c) => c.outcome), ['pass', 'fail']);
+  } finally { fs.rmSync(home, { recursive: true, force: true }); }
+});
+
+test('row 4\'s bar: pass, fail, or inside the noise', () => {
+  const c = (ratioOfSums, bootLo, bootHi, onlyA = []) => ({ onlyA, raw: { n: 50, ratioOfSums, bootLo, bootHi } });
+  assert.equal(barVerdict(c(1.00, 0.94, 1.06)).verdict, 'pass');
+  assert.equal(barVerdict(c(1.05, 0.99, 1.12)).verdict, 'pass');
+  assert.equal(barVerdict(c(1.08, 1.01, 1.16)).verdict, 'inside the noise');
+  assert.equal(barVerdict(c(1.12, 1.07, 1.18)).verdict, 'fail');
+  assert.equal(barVerdict(c(1.00, 0.80, 1.30)).verdict, 'fail');
+  assert.equal(barVerdict(c(1.00, 0.94, 1.06, ['t1'])).verdict, 'inside the noise');
+  assert.equal(barVerdict(c(1.00, 0.94, 1.06, ['1', '2', '3', '4', '5', '6'])).verdict, 'fail');
+  assert.equal(barVerdict({ onlyA: [], raw: { n: 0 } }).verdict, 'no pairs');
 });
 
 console.log(`\n${passed}/${passed + failed} ccstudy checks passed.`);

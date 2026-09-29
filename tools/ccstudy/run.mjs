@@ -17,7 +17,7 @@ import os from 'node:os';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { spawn, spawnSync } from 'node:child_process';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import * as S from './lib.mjs';
 import { score, tamper } from '../../lib/eval.mjs';
 import { looksLikeVerification } from '../../lib/core.mjs';
@@ -184,6 +184,8 @@ export function analyzeRun({ base, sessionId, arm }) {
   const holds = S.holdsOf(mainRows, isCheck, isRun);
   const hookCalls = S.hookCallsOf(stream);
   const cancelledT = S.cancelledInTranscript(allRows);
+  const brief = S.briefOf(stream);
+  const gateChecks = S.gateChecksOf(home);
   return {
     promptRaw: tokens.promptRaw, promptBilled: Math.round(tokens.promptBilled),
     input: tokens.input, cacheRead: tokens.cacheRead, cacheWrite: tokens.cacheWrite, cacheWrite5m: tokens.cacheWrite5m, cacheWrite1h: tokens.cacheWrite1h, output: tokens.output,
@@ -201,6 +203,12 @@ export function analyzeRun({ base, sessionId, arm }) {
     holdsNoCheckFalse: holds.filter((h) => h.falseNoCheck).length,
     holdsNoCheckFalseBroad: holds.filter((h) => h.falseNoCheckBroad).length,
     holdDetail: holds,
+    briefChars: brief ? brief.chars : null,
+    briefLean: brief ? brief.lean : null,
+    briefSaysGateRunsCheck: brief ? brief.gateRunsCheck : null,
+    gateChecks: gateChecks.length,
+    gateChecksFailed: gateChecks.filter((c) => c.outcome === 'fail').length,
+    gateCheckDetail: gateChecks,
     hookCalls: hookCalls.length,
     hookCallsCancelled: hookCalls.filter((c) => c.cancelled).length,
     hookCancelledByEvent: hookCalls.filter((c) => c.cancelled).reduce((acc, c) => { acc[c.event || c.name] = (acc[c.event || c.name] || 0) + 1; return acc; }, {}),
@@ -254,15 +262,24 @@ async function main(argv) {
   const concurrency = Math.max(1, Number(opt(argv, '--concurrency', '3')));
   const only = opt(argv, '--only') ? new Set(opt(argv, '--only').split(',')) : null;
   fs.mkdirSync(out, { recursive: true });
-  const arms = opt(argv, '--arms', 'plain').split(',').map((s) => S.parseArm(s));
+  const arms = S.splitArms(opt(argv, '--arms', 'plain')).map((s) => S.parseArm(s));
   for (const a of arms) if (a.kind === 'atlias') Object.assign(a, materializeArm(a.ref, work));
+  // A flag the arm's own checkout does not know, or a value it cannot parse,
+  // would run that arm as the control and score it as the change: stop first.
+  for (const a of arms) {
+    if (a.kind !== 'atlias' || !Object.keys(a.flags).length) continue;
+    const core = await import(pathToFileURL(path.join(a.dir, 'lib', 'core.mjs')).href);
+    const e = core.envFlags(a.flags);
+    if (e.unknown.length || e.bad.length) throw new Error(`arm ${a.name}: atlias@${a.short} does not know ${[...e.unknown, ...e.bad.map((b) => b.error)].join('; ')}`);
+    a.flagValues = e.values;
+  }
   let tasks = loadTaskList(tasksFile);
   if (only) tasks = tasks.filter((t) => only.has(t.id));
   const rowsFile = path.join(out, 'rows.jsonl');
   const done = new Set(S.readJsonl(rowsFile).map((r) => `${r.arm}|${r.task}`));
   const jobs = [];
   for (const t of tasks) for (const a of arms) if (!done.has(`${a.name}|${t.id}`)) jobs.push({ t, a });
-  fs.writeFileSync(path.join(out, 'arms.json'), `${JSON.stringify(arms.map((a) => ({ name: a.name, kind: a.kind, ref: a.ref, sha: a.sha || '', version: a.version || '', flags: a.flags, pluginDir: a.dir || '' })), null, 2)}\n`);
+  fs.writeFileSync(path.join(out, 'arms.json'), `${JSON.stringify(arms.map((a) => ({ name: a.name, kind: a.kind, ref: a.ref, sha: a.sha || '', version: a.version || '', flags: a.flags, flagValues: a.flagValues || {}, pluginDir: a.dir || '' })), null, 2)}\n`);
   console.log(`${jobs.length} run(s) to do (${done.size} already in ${rowsFile}); spend so far $${readSpend(spendFile).toFixed(4)}, cap $${cap}, stop at $${stopAt}`);
   // The dearest run seen so far; before any, --first-estimate.
   const firstEstimate = Number(opt(argv, '--first-estimate', '1'));
