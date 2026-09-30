@@ -102,6 +102,38 @@ export default async function hostSuites({ suite, check, PROJECT }) {
     check('after the denial the pattern starts over, as the message says', sixth && sixth.hookSpecificOutput.permissionDecision === 'deny' && seventh === null, { happened: JSON.stringify([sixth && sixth.hookSpecificOutput.permissionDecision, seventh && seventh.hookSpecificOutput.permissionDecision]), why: 'A guard that keeps denying after promising a reset is a guard people turn off.', fix: 'Scan only after the last alternating deny.' });
   });
 
+  suite('clock guard expert', 'changing clock results and static loop boundaries on both hosts', () => {
+    const call = (sid, tool, input = {}) => ({ session_id: sid, cwd: PROJECT, tool_name: tool, tool_input: input });
+    const verify = (name, condition) => check(name, condition, { happened: 'Clock loop-boundary assertion failed: ' + name, why: 'Only known empty-input timestamps change; static loops and dangerous commands must still be guarded.', fix: 'Check clock keys and both history filters without broadening the exemption.' });
+    for (const host of ['claude', 'codex']) {
+      for (const alias of ['clockcurr_time', 'clock__curr_time', 'clock.curr_time', 'mcp__clock__curr_time']) {
+        const sid = `clock-${host}-${alias}`;
+        const answers = Array.from({ length: 7 }, () => guard.preTool(call(sid, alias), host));
+        verify(`${host} accepts repeated timestamps from ${alias}`, answers.every((r) => r === null));
+        verify(`${host} retains clock events for audit: ${alias}`, core.events(sid).filter((e) => e.kind === 'tool').length === 7);
+      }
+      const sid = `clock-interleaved-${host}`;
+      const read = call(sid, 'Read', { file_path: 'fixed.js' });
+      const answers = [read, call(sid, 'clockcurr_time'), read, call(sid, 'clock__curr_time'), read, call(sid, 'clockcurr_time')].map((p) => guard.preTool(p, host));
+      verify(`${host} does not treat timestamps interleaved with reads as a static alternating loop`, answers.every((r) => r === null));
+      const fourth = guard.preTool(read, host);
+      verify(`${host} still denies the fourth identical read`, fourth?.hookSpecificOutput.permissionDecision === 'deny');
+      const alternating = `clock-static-pair-${host}`;
+      const pair = ['Read', 'Grep', 'Read', 'Grep', 'Read', 'Grep'];
+      const pairAnswers = pair.map((tool) => {
+        guard.preTool(call(alternating, 'clock.curr_time'), host);
+        return guard.preTool(call(alternating, tool, { pattern: 'fixed' }), host);
+      });
+      verify(`${host} still catches static alternating loops with clock calls between them`, pairAnswers.slice(0, 5).every((r) => r === null) && /back and forth/.test(pairAnswers[5]?.hookSpecificOutput.permissionDecisionReason));
+      for (const [tool, input] of [['clockcurr_time', { arbitrary: true }], ['other_clockcurr_time', {}]]) {
+        const answers = Array.from({ length: 4 }, () => guard.preTool(call(`clock-boundary-${host}-${tool}`, tool, input), host));
+        verify(`${host} does not exempt nonempty inputs or lookalike clocks: ${tool}`, answers.slice(0, 3).every((r) => r === null) && answers[3]?.hookSpecificOutput.permissionDecision === 'deny');
+      }
+      const dangerous = guard.preTool(call(`clock-shell-${host}`, 'Bash', { command: 'echo clockcurr_time; git reset --hard' }), host);
+      verify(`${host} still guards destructive shell commands mentioning clocks`, dangerous?.hookSpecificOutput.permissionDecision === (host === 'claude' ? 'ask' : 'deny'));
+    }
+  });
+
   suite('approval expert', 'destructive commands on hosts that cannot ask', () => {
     const cmd = 'git push --force origin main';
     const sid = 'codex-destructive';
