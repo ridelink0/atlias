@@ -1,0 +1,67 @@
+{
+  "stats": {
+    "plain": {
+      "n": 16,
+      "solved": 16,
+      "promptRaw": 2000603,
+      "perSolved": 125037.6875,
+      "peak": 23060
+    },
+    "atlias": {
+      "n": 15,
+      "solved": 15,
+      "promptRaw": 1490053,
+      "perSolved": 99336.86666666667,
+      "peak": 26664
+    }
+  },
+  "comparisons": [
+    {
+      "arm": "atlias",
+      "pairedRuns": 15,
+      "semanticFamilies": 12,
+      "pairedStats": {
+        "plain": {
+          "n": 15,
+          "solved": 15,
+          "promptRaw": 1842286,
+          "perSolved": 122819.06666666667,
+          "contextPeak": 23060
+        },
+        "atlias": {
+          "n": 15,
+          "solved": 15,
+          "promptRaw": 1490053,
+          "perSolved": 99336.86666666667,
+          "contextPeak": 26664
+        }
+      },
+      "rawRatio": {
+        "n": 12,
+        "ratioOfSums": 0.8088065588079159,
+        "bootLo": 0.7067958372352956,
+        "bootHi": 0.9551517686913515,
+        "geoMean": 0.816480371332605,
+        "tLo": 0.6900684196813938,
+        "tHi": 0.9660494202578027
+      },
+      "plainOnly": [],
+      "pluginOnly": []
+    }
+  ],
+  "excluded": [],
+  "pairedTokens": {
+    "plain": {
+      "raw": 1842286,
+      "cached": 1416832,
+      "uncached": 425454,
+      "output": 25209
+    },
+    "atlias": {
+      "raw": 1490053,
+      "cached": 1273088,
+      "uncached": 216965,
+      "output": 18908
+    }
+  }
+}
