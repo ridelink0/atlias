@@ -5,7 +5,7 @@ description: "Use before calling a code change done, when the atlias gate holds 
 
 # double-check
 
-Use the session's changed-file list; fetch harness_progress only if missing.
+Use the session's changed-file list; fetch harness_progress only if missing. If Git reports no repository, stop Git calls and re-read the recorded changed files.
 
 Pass 1: run the smallest real check that would fail for a wrong change and read its result: project test/sweep or request against the app. Syntax floor: node --check, JSON.parse, py_compile, harness_verify. Unread results are unverified.
 
