@@ -1,0 +1,63 @@
+{
+  "source": "0e29833460e466ec80c503129b90808a0c206bf9",
+  "method": "reconstructed initial task files with the archived source packer; matched generated hash/length and complete user/developer text, not only a marker",
+  "checked": 7,
+  "evidence": [
+    {
+      "task": "context-money-64",
+      "repeat": 1,
+      "chars": 770,
+      "sha": "2181224f0253dbef",
+      "generated": true,
+      "delivered": true
+    },
+    {
+      "task": "context-versions-64",
+      "repeat": 1,
+      "chars": 679,
+      "sha": "d1421f4774665193",
+      "generated": true,
+      "delivered": true
+    },
+    {
+      "task": "context-intervals-64",
+      "repeat": 1,
+      "chars": 640,
+      "sha": "740ee1706bb443be",
+      "generated": true,
+      "delivered": true
+    },
+    {
+      "task": "context-unicode-64",
+      "repeat": 1,
+      "chars": 641,
+      "sha": "19cbfdd2a66d6b66",
+      "generated": true,
+      "delivered": true
+    },
+    {
+      "task": "context-paths-64",
+      "repeat": 1,
+      "chars": 767,
+      "sha": "1da44b5dd289941e",
+      "generated": true,
+      "delivered": true
+    },
+    {
+      "task": "context-merge-64",
+      "repeat": 1,
+      "chars": 762,
+      "sha": "532f2bec241d89c4",
+      "generated": true,
+      "delivered": true
+    },
+    {
+      "task": "context-ttl-64",
+      "repeat": 1,
+      "chars": 833,
+      "sha": "01eac22945bdd755",
+      "generated": true,
+      "delivered": true
+    }
+  ]
+}

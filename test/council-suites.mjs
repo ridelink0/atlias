@@ -1,11 +1,11 @@
 // The council, Stage A (docs/research/Atlias councils and UFS packs.md, build
 // item 1): flags.council, the selector and sequential runner in lib/council.mjs,
 // and `atlias council replay`, which simulates the check-selected retry over
-// saved eval reports with no model. Stage B (the hook in atlias eval) is not
-// built, so acceptance tests A2-A7 and A10 wait for it; A1 is the existing golden
-// check in test/control-suites.mjs (council is registered, off, and it passes
-// unchanged); A8, A9 and A11 are
-// here, and the runner is tested with scripted candidates.
+// saved eval reports with no model. Stage B's eval integration is exercised in
+// test/council-eval-suites.mjs; the saved plan dropped the exec/sandbox hook A10.
+// The existing control suite checks baseline request bytes and original fields
+// with its declared ledger additions; the old fixture is never rewritten.
+// A8, A9 and the sequential runner's scripted checks are here.
 import * as council from '../lib/council.mjs';
 import * as settings from '../lib/settings.mjs';
 
@@ -98,6 +98,12 @@ export default async function councilSuites({ asyncSuite, check, core, ROOT, TMP
     check('a candidate whose run throws counts as a fail, not a crash', rb.chosen === 2 && rb.candidates[0].error === 'model gone',
       { happened: JSON.stringify(rb), why: 'An engine error in one resample must not lose the others.', fix: 'Catch around run and check inside runCandidates.' });
     fs.rmSync(rb.winnerDir, { recursive: true, force: true });
+    const creation = scripted({ 1: { ok: false, chars: 7, prompt: 11 } });
+    const make = creation.opts.makeDir;
+    creation.opts.makeDir = i => { if (i === 2) throw new Error('workspace unavailable'); return make(i); };
+    const rc = await council.runCandidates(creation.opts);
+    check('a later workspace failure preserves prior cost and disposes prior losers', rc.ran === 1 && rc.chosen === null && rc.creationError?.i === 2 && rc.creationError.message === 'workspace unavailable' && rc.candidates[0].promptTotal === 11 && left(creation).length === 0,
+      { happened: JSON.stringify(rc), why: 'An allocation failure must not abandon completed attempts or their cost.', fix: 'Stop creation with an explicit error and execute the normal loser cleanup.' });
   });
 
   await asyncSuite('council expert', 'replay does the arithmetic by hand (A9)', async () => {

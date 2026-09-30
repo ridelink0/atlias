@@ -1,49 +1,49 @@
 {
   "stats": {
     "plain": {
-      "n": 19,
-      "solved": 19,
-      "promptRaw": 2349517,
-      "perSolved": 123658.78947368421,
+      "n": 24,
+      "solved": 24,
+      "promptRaw": 3016429,
+      "perSolved": 125684.54166666667,
       "peak": 23135
     },
     "atlias": {
-      "n": 19,
-      "solved": 19,
-      "promptRaw": 1846772,
-      "perSolved": 97198.52631578948,
+      "n": 24,
+      "solved": 24,
+      "promptRaw": 2454205,
+      "perSolved": 102258.54166666667,
       "peak": 26664
     }
   },
   "comparisons": [
     {
       "arm": "atlias",
-      "pairedRuns": 19,
+      "pairedRuns": 24,
       "semanticFamilies": 12,
       "pairedStats": {
         "plain": {
-          "n": 19,
-          "solved": 19,
-          "promptRaw": 2349517,
-          "perSolved": 123658.78947368421,
+          "n": 24,
+          "solved": 24,
+          "promptRaw": 3016429,
+          "perSolved": 125684.54166666667,
           "contextPeak": 23135
         },
         "atlias": {
-          "n": 19,
-          "solved": 19,
-          "promptRaw": 1846772,
-          "perSolved": 97198.52631578948,
+          "n": 24,
+          "solved": 24,
+          "promptRaw": 2454205,
+          "perSolved": 102258.54166666667,
           "contextPeak": 26664
         }
       },
       "rawRatio": {
         "n": 12,
-        "ratioOfSums": 0.7860219781342292,
-        "bootLo": 0.7014179098964414,
-        "bootHi": 0.8994074847195438,
-        "geoMean": 0.791731994403116,
-        "tLo": 0.6891022252463758,
-        "tHi": 0.9096466793985768
+        "ratioOfSums": 0.813612718880504,
+        "bootLo": 0.7225519288175971,
+        "bootHi": 0.9266982448014003,
+        "geoMean": 0.8056525847066701,
+        "tLo": 0.6947619305665138,
+        "tHi": 0.934242448654717
       },
       "plainOnly": [],
       "pluginOnly": []
@@ -52,16 +52,16 @@
   "excluded": [],
   "pairedTokens": {
     "plain": {
-      "raw": 2349517,
-      "cached": 1775872,
-      "uncached": 573645,
-      "output": 32067
+      "raw": 3016429,
+      "cached": 2284800,
+      "uncached": 731629,
+      "output": 40398
     },
     "atlias": {
-      "raw": 1846772,
-      "cached": 1564288,
-      "uncached": 282484,
-      "output": 24569
+      "raw": 2454205,
+      "cached": 2114176,
+      "uncached": 340029,
+      "output": 31182
     }
   }
 }

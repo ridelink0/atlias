@@ -408,6 +408,7 @@ suite('reliability expert', 'hook budgets', () => {
   check('one interpreter probe is short', core.PROBE_MS <= 5000 && core.PROBE_BUDGET_MS <= 10000, { happened: 'probe ' + core.PROBE_MS + 'ms, budget ' + core.PROBE_BUDGET_MS + 'ms', why: 'On Windows a bare python stub can stall; six of those at fifteen seconds is a minute and a half.', fix: 'Keep PROBE_MS and PROBE_BUDGET_MS small.' });
   const cachePath = path.join(process.env.ATLIAS_HOME, 'python.json');
   const saved = fs.existsSync(cachePath) ? fs.readFileSync(cachePath, 'utf8') : null;
+  fs.mkdirSync(path.dirname(cachePath), { recursive: true });
   fs.writeFileSync(cachePath, JSON.stringify({ path: null, checked: Date.now() }));
   const t0 = Date.now();
   const miss = core.findPython();
@@ -416,6 +417,8 @@ suite('reliability expert', 'hook budgets', () => {
   if (saved) fs.writeFileSync(cachePath, saved); else fs.unlinkSync(cachePath);
   check('counting files survives a directory that is not there', graphMod.countCodeFiles(path.join(TMP, 'no-such-dir'), 10) === 0, { happened: String(graphMod.countCodeFiles(path.join(TMP, 'no-such-dir'), 10)), why: 'A cwd can disappear between the hook firing and the walk starting.', fix: 'The walk swallows readdir errors and moves on.' });
   check('counting files honours its own wall clock', graphMod.countCodeFiles(ROOT, 100000, 0) <= 100000, { happened: 'walk ignored a zero budget', why: 'On a monorepo an unbounded walk stalls the brief that the host is waiting for.', fix: 'Check the deadline at the top of the loop in countCodeFiles.' });
+  // Warm this fixture explicitly; filtered runs have no earlier brief to do it.
+  brief.build({ cwd: PROJECT, session_id: sid('budget-warmup'), source: 'startup' }, 'claude');
   const b0 = Date.now();
   brief.build({ cwd: PROJECT, session_id: sid('budget'), source: 'startup' }, 'claude');
   const bms = Date.now() - b0;
@@ -991,6 +994,7 @@ await (await import('./visual-suites.mjs')).default({ suite, check, core, brief,
 await (await import('./sametext-suites.mjs')).default({ suite, asyncSuite, check, core, agentMod, TMP, fs, path });
 await (await import('./ollama-profile-suites.mjs')).default({ asyncSuite, check, core, TMP, fs, path });
 await (await import('./council-suites.mjs')).default({ asyncSuite, check, core, ROOT, TMP, fs, path, spawnSync });
+await (await import('./council-eval-suites.mjs')).default({ asyncSuite, check, TMP, fs, path });
 await (await import('./score-suites.mjs')).default({ asyncSuite, check, ROOT, TMP, fs, path, spawnSync });
 await (await import('./smallmodel-suites.mjs')).default({ suite, asyncSuite, check, core, agentMod, TMP, fs, path });
 await (await import('./explain-suites.mjs')).default({ suite, check, skip, TMP, fs, path });
