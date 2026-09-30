@@ -2,4 +2,4 @@
 /evals/context-heldout/** text eol=lf
 /evals/results/native-codex/** text eol=lf
 /evals/results/round5/pc-mt-three-repeats-2026-09-30/** text eol=lf
-/evals/results/round5/pc-mt-three-repeats-2026-09-30/reports/*.json -text
+/evals/results/round5/pc-mt-three-repeats-2026-09-30/reports/*.json -text whitespace=cr-at-eol
