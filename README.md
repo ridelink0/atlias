@@ -53,7 +53,7 @@ or, from an installed copy, `atlias shortcut install`, which puts the command in
 
 Experimental lean installation (`flags.leanBrief` enabled) can reuse native plugin hooks whose source, registration, matcher and configured trust are verified. It preserves global coverage for stale, disabled, untrusted or incomplete native events. The isolated native CLI install reused eight events, including SessionStart, and retained global PostToolUse coverage because the native matcher is narrower. A native model smoke received exactly one Codex startup brief and the complete context pack, then passed its protected task without bypassing hook trust. Token effects of this installation change remain unmeasured. [Delivery evidence](evals/results/native-codex/native-hook-registration-2026-09-30/REPORT.md).
 
-Lean mode also shortens MCP descriptions for both hosts: the serialized ten-tool catalog is **2,837 vs 3,565 characters**, a **20.42% reduction**. Tool names, argument schemas and dispatch stay identical. Real stdio protocol checks cover Claude Code and Codex profiles; model-token effects of this metadata change remain unmeasured.
+Lean mode also shortens MCP descriptions for both hosts: the serialized ten-tool catalog is **2,837 vs 3,565 characters**, a **20.42% reduction**. Tool names, argument schemas and dispatch stay identical. Actual Codex and Claude Code clients confirm activation in isolated, model-free checks. Codex installation forwards the lean flag through its MCP environment allowlist; unset and explicit-off controls retain the full catalog. Model-token effects remain unmeasured. [Client evidence](evals/results/native-codex/native-mcp-catalog-2026-09-30/REPORT.md).
 
 **Every other harness on the machine**: `atlias install`. It writes only into harnesses whose config folder already exists, marks every block it adds, and `atlias uninstall` removes exactly those. `atlias doctor` checks all of it, including that typing `atlias` finds the command.
 
@@ -106,7 +106,7 @@ Hosts: **Claude Code** (plugin), **Codex** (hooks, MCP, AGENTS.md), **Antigravit
 node test/run.mjs
 ```
 
-The Windows integration check passed 1,399 checks across 203 suites, each written from one expert's point of view, and each failure printed as what happened, why it matters and how to fix it. A coverage suite fails the run if any exported function is not exercised by a test through its own module, so a feature cannot arrive untested. Host payloads are pinned to the hosts' own source code, not to guesses. CI runs everything on Linux, macOS and Windows under Node 18, 20 and 22, plus a sandboxed install that parses every config atlias writes with a real parser and proves that uninstall leaves other tools' entries alone.
+The Windows integration check passed 1,462 checks across 209 suites, each written from one expert's point of view, and each failure printed as what happened, why it matters and how to fix it. A coverage suite fails the run if any exported function is not exercised by a test through its own module, so a feature cannot arrive untested. Host payloads are pinned to the hosts' own source code, not to guesses. CI runs everything on Linux, macOS and Windows under Node 18, 20 and 22, plus a sandboxed install that parses every config atlias writes with a real parser and proves that uninstall leaves other tools' entries alone.
 
 ## What it refuses to pretend
 

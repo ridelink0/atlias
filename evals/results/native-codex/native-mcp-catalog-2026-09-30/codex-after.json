@@ -1,0 +1,63 @@
+{
+  "source": "39a535aea1ae97161cff226220414ec276026a80",
+  "nativeClient": true,
+  "modelCalls": 0,
+  "evidence": [
+    {
+      "mode": "control",
+      "source": "39a535aea1ae97161cff226220414ec276026a80",
+      "nativeCLI": "0.159.0",
+      "modelCalls": 0,
+      "tools": 10,
+      "fullMatch": true,
+      "leanMatch": false,
+      "expectedLean": false,
+      "catalogChars": 3565,
+      "status": null,
+      "toolsError": null,
+      "authFilePresent": false
+    },
+    {
+      "mode": "env-lean",
+      "source": "39a535aea1ae97161cff226220414ec276026a80",
+      "nativeCLI": "0.159.0",
+      "modelCalls": 0,
+      "tools": 10,
+      "fullMatch": false,
+      "leanMatch": true,
+      "expectedLean": true,
+      "catalogChars": 2837,
+      "status": null,
+      "toolsError": null,
+      "authFilePresent": false
+    },
+    {
+      "mode": "saved-lean",
+      "source": "39a535aea1ae97161cff226220414ec276026a80",
+      "nativeCLI": "0.159.0",
+      "modelCalls": 0,
+      "tools": 10,
+      "fullMatch": false,
+      "leanMatch": true,
+      "expectedLean": true,
+      "catalogChars": 2837,
+      "status": null,
+      "toolsError": null,
+      "authFilePresent": false
+    },
+    {
+      "mode": "saved-lean-env-off",
+      "source": "39a535aea1ae97161cff226220414ec276026a80",
+      "nativeCLI": "0.159.0",
+      "modelCalls": 0,
+      "tools": 10,
+      "fullMatch": true,
+      "leanMatch": false,
+      "expectedLean": false,
+      "catalogChars": 3565,
+      "status": null,
+      "toolsError": null,
+      "authFilePresent": false
+    }
+  ]
+}

@@ -43,6 +43,10 @@ export default async function councilSuites({ asyncSuite, check, core, ROOT, TMP
       && !council.shouldConvene({ flagOn: true, check: {}, checkResult: { outcome: 'unfinished' } })
       && !council.shouldConvene({ flagOn: true, check: {} }),
       { happened: 'see the cases', why: 'No check means a vote; an unfinished check gives no signal to select with; a passing check needs no help.', fix: 'shouldConvene requires flagOn, a check, and checkResult.outcome === "fail".' });
+    const noSignal = [{ outcome: 'unfinished', pass: false }, { outcome: 'pass', pass: false }, { pass: false }, { outcome: 'fail', timedOut: true }, { outcome: 'fail', ran: false }, { outcome: 'fail', pass: true }];
+    check('unfinished, missing, timed-out and contradictory results cannot authorize retries', noSignal.every(checkResult => !council.shouldConvene({ flagOn: true, check: {}, checkResult }))
+      && council.shouldConvene({ flagOn: true, check: {}, checkResult: { outcome: 'fail', ran: true, pass: false } }),
+      { happened: 'six no-signal cases and a real failed check', why: 'A generic false pass field also describes timeouts and missing checks; retrying those spends model calls without a selection signal.', fix: 'Require the explicit fail outcome and reject conflicting pass, timeout or not-run markers.' });
     const picked = council.pick([{ i: 1, visiblePass: false }, { i: 2, visiblePass: true, tampered: true }, { i: 3, visiblePass: true }, { i: 4, visiblePass: true }]);
     check('pick takes the first visible pass without tamper, in index order, else null', picked && picked.i === 3 && council.pick([{ i: 1, visiblePass: true, tampered: true }, { i: 2, visiblePass: false }]) === null && council.pick([]) === null,
       { happened: JSON.stringify(picked), why: 'A candidate that rewrote the test to exit 0 passes the check and must still lose.', fix: 'pick filters on visiblePass === true and !tampered, and returns the first.' });

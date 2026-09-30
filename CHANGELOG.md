@@ -2,8 +2,9 @@
 
 ## Unreleased
 
+- Council Stage A's retry selector now requires an explicit failed check. An unfinished or missing outcome with `pass: false`, a timeout, a not-run marker or contradictory pass cannot authorize retries. Six adversarial cases cover these rejected signals; the Stage B eval hook still waits for the saved-repeat replay gate.
 - Lean Codex installation can reuse native Atlias hooks instead of registering each event twice. It requires an enabled installed plugin reported by the native CLI, matching runtime source, canonical complete matchers and configured trust. Missing, stale, disabled or unverified events keep their existing global coverage. An isolated native model smoke received one Codex startup brief and the complete pack, then passed its protected task without bypassing hook trust. This remains opt-in through `leanBrief`; token effects are not yet measured.
-- Lean MCP descriptions retain all ten tools and exact argument schemas for both hosts. Serialized catalog size is 2,837 vs 3,565 characters, 20.42% smaller; real stdio controls and dispatch checks pass. Model-token savings from this metadata change are unmeasured.
+- Lean MCP descriptions retain all ten tools and exact argument schemas for both hosts. Serialized catalog size is 2,837 vs 3,565 characters, 20.42% smaller; actual Codex and Claude Code client activation and real stdio dispatch checks pass. Codex installation forwards ATLIAS_FLAG_LEAN_BRIEF by name through its MCP environment allowlist, preserving explicit-off precedence. Model-token savings from this metadata change are unmeasured.
 
 - Experimental task-context selection deduplicates and prioritizes requirements before applying the eight-root budget, and discloses excess roots. Both Claude Code and Codex hooks are covered; the flag stays off by default.
 - Shorter shared skills preserve memory, graph and double-check behavior. The lean Codex block now skips index reads when SessionStart explicitly reports no saved memory, while still recovering omitted or truncated indexes. Wording changes have no measured model-token saving yet.
