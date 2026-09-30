@@ -106,7 +106,7 @@ Hosts: **Claude Code** (plugin), **Codex** (hooks, MCP, AGENTS.md), **Antigravit
 node test/run.mjs
 ```
 
-The Windows integration check passed 1,462 checks across 209 suites, each written from one expert's point of view, and each failure printed as what happened, why it matters and how to fix it. A coverage suite fails the run if any exported function is not exercised by a test through its own module, so a feature cannot arrive untested. Host payloads are pinned to the hosts' own source code, not to guesses. CI runs everything on Linux, macOS and Windows under Node 18, 20 and 22, plus a sandboxed install that parses every config atlias writes with a real parser and proves that uninstall leaves other tools' entries alone.
+The Windows integration check passed 1,473 checks across 210 suites, each written from one expert's point of view, and each failure printed as what happened, why it matters and how to fix it. A coverage suite fails the run if any exported function is not exercised by a test through its own module, so a feature cannot arrive untested. Host payloads are pinned to the hosts' own source code, not to guesses. CI runs everything on Linux, macOS and Windows under Node 18, 20 and 22, plus a sandboxed install that parses every config atlias writes with a real parser and proves that uninstall leaves other tools' entries alone.
 
 ## What it refuses to pretend
 
@@ -127,7 +127,8 @@ Gev's current primary comparison is **native Codex versus Codex + Atlias**. A ne
 
 | Measurement | Result | What it establishes |
 |---|---|---|
-| Native Codex lean-catalog cd5c8e1, 12 families, 15 matched pairs | Plain **15/15**, Atlias **15/15**; input **1,842,286 vs 1,490,053**; peak **23,060 vs 26,664** | Input ratio **0.80881**; peak **15.63% change**. 31/48calls, incomplete; queryv2 separate from old grades, no catalog-only attribution. [Evidence](evals/results/native-codex/codex-atlias-lean-catalog-2026-09-30/REPORT.md). |
+| Local qwen7B three-repeat majority, source0067096, 252 matched tasks | Mini **31/252**, Atlias **45/252** by majority; 27 gains/13 losses, **p=0.03848** | Six completed reports; **8.29% more total input**, 25.47% less input per original solved attempt. Council oracle predicts **1.45x tokens per solve**. Historical grader hashes unavailable; no public/native-host claim. [Evidence](evals/results/round5/pc-mt-three-repeats-2026-09-30/REPORT.md). |
+| Native Codex lean-catalog cd5c8e1, 12 families, 19 matched pairs | Plain **19/19**, Atlias **19/19**; input **2,349,517 vs 1,846,772**; peak **23,135 vs 26,664** | Input ratio **0.78602**; peak **15.25% higher**. 38/48calls, incomplete; queryv2 separate from old grades, no catalog-only attribution. [Evidence](evals/results/native-codex/codex-atlias-lean-catalog-2026-09-30/REPORT.md). |
 | Native Codex wider task-context 72e6ff5, 12 families, 24 matched pairs | Original grades plain **22/24**, Atlias **22/24**; input **2,344,337 vs 1,723,477**; peak **22,674 vs 26,663** | **26.48% less input**; peak **17.59% higher**. 48/48 calls; query contract ambiguity retained and separately analyzed. Authored diagnostic. [Evidence](evals/results/native-codex/codex-atlias-wide-2026-09-30/REPORT.md). |
 | Native Codex task-context candidate 46c12af, 6 families, 12 matched pairs | Plain **12/12**, Atlias **12/12**; input **1,176,432 vs 835,528**; peak **22,044 vs 24,170** | **28.98% less input**; peak change **9.64%**. 24/24 calls; two repeats per family. Authored diagnostic; no general efficiency or Claude-model claim. [Evidence](evals/results/native-codex/codex-atlias-pack-2026-09-30/REPORT.md). |
 | Native Codex on-demand candidate 2c9e929, six families, ten matched pairs | Both **10/10**; input **922,870 vs 1,117,073**; peak **22,031 vs 27,135** | **21.04% more input**. Planned 12 pairs; allowance cap stopped after ten. Repeats are unequal; all results retained. [Evidence](evals/results/native-codex/codex-atlias-context-2026-09-30/REPORT.md). |
@@ -170,7 +171,7 @@ atlias score verify score --tier main
 atlias council replay run1.json run2.json run3.json
 ```
 
-The score package pins task files and original reports, carries per-task rows and statistics, and prints re-run commands. Council replay accepts fresh attempts from one build, model and flag configuration; it is an oracle upper bound when the visible check differs from the grader. Neither command runs a benchmark model.
+Score format 2 pins seeded files, hidden grader bodies, instructions, task budgets and original reports, carries per-task rows and statistics, and prints re-run commands. Verification rejects format 1 and unknown formats; repack explicitly from the original reports and corpus. A new lock cannot establish historical grader identity when the original run did not record it. Council replay accepts fresh attempts from one build, model and flag configuration; it is an oracle upper bound when the visible check differs from the grader. Neither command runs a benchmark model.
 
 Code the model wrote runs under a watchdog: at its limit (two minutes for a shell
 command, the task's own limit for the check) it is ended with every process it
@@ -246,7 +247,7 @@ Plain semantic versioning: patch for a fix, minor for a feature or a behaviour c
 - The OpenAI-compatible engine is tested against a local server that speaks the wire format, not against a live paid endpoint in CI.
 - The extra harnesses' config shapes follow each tool's documentation and are marked UNVERIFIED in `lib/hosts-extra.mjs`; only Claude Code and Codex are pinned to source.
 - Antigravity has no hook API, so it gets the MCP server and the instruction block only.
-- Whether atlias raises task success is measured once and not yet replicated: on 250 HumanEvalFix and CanItEdit tasks with qwen2.5-coder:7b, a pre-release build solved 59 against mini-swe-agent's 41 (36 one-way flips against 18), one run per side; a three-repeat rerun is in progress. Inside Claude Code it has not cut tokens: 1.00x to 1.06x of plain Claude Code on 50 tasks. See [docs/NEXTGEN-5.md](docs/NEXTGEN-5.md) and [docs/RESEARCH.md](docs/RESEARCH.md).
+- Task success has local-model evidence: on 250 HumanEvalFix and CanItEdit tasks with qwen2.5-coder:7b, a pre-release build solved 59 against mini-swe-agent's 41 (36 one-way flips against 18), one run per side. A later three-repeat comparison on 252 shared tasks produced majority scores 45 vs 31 (27 gains, 13 losses, p=0.03848); the older task set differs, historical grader hashes are unavailable, and total input rose 8.29%. Inside Claude Code it has not cut tokens: 1.00x to 1.06x of plain Claude Code on 50 tasks. See [three-repeat evidence](evals/results/round5/pc-mt-three-repeats-2026-09-30/REPORT.md), [docs/NEXTGEN-5.md](docs/NEXTGEN-5.md) and [docs/RESEARCH.md](docs/RESEARCH.md).
 
 ## Built on
 

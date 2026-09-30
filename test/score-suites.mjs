@@ -157,6 +157,50 @@ export default async function scoreSuites({ asyncSuite, check, ROOT, TMP, fs, pa
     check('an edited copy of a report fails', score.verify(d6).problems.some((p) => /reports\/arm-a\.json changed/.test(p)), { happened: 'verified', why: 'The reports are what the rows came from.', fix: 'verify().' });
   });
 
+  await asyncSuite('score expert', 'hidden grading and task budgets cannot drift behind an unchanged seed', async () => {
+    const taskFile = path.join(corpusDir, 't1.json');
+    const original = fs.readFileSync(taskFile, 'utf8');
+    const task = JSON.parse(original);
+    task.hidden = { 'grader.mjs': 'process.exit(0);', 'other.mjs': 'export const x = 1;' };
+    task.rounds = 12; task.timeoutMs = 30000;
+    fs.writeFileSync(taskFile, JSON.stringify(task));
+    try {
+      const dir = fresh();
+      const before = score.taskDigest(task);
+      check('format 2 pins hidden hashes and an unchanged pack verifies', readJson(dir, 'lock.json').format === 2 && Object.keys(before.hidden).length === 2 && score.verify(dir).ok,
+        { happened: JSON.stringify(before), why: 'Hidden checks determine the score.', fix: 'Pin grader bodies in taskDigest().' });
+      for (const mutate of [t => { t.hidden['grader.mjs'] = 'process.exit(1);'; }, t => { delete t.hidden['grader.mjs']; }, t => { t.hidden['new.mjs'] = 'process.exit(1);'; }]) {
+        const altered = structuredClone(task); mutate(altered);
+        fs.writeFileSync(taskFile, JSON.stringify(altered));
+        const result = score.verify(dir);
+        check('hidden-only edits, removals and additions fail with the grader name', !result.ok && result.problems.some(p => /task t1 changed.*hidden:/.test(p)),
+          { happened: JSON.stringify(result), why: 'A fixed seed does not imply a fixed hidden grade.', fix: 'Hash the complete hidden map.' });
+      }
+      for (const field of ['rounds', 'timeoutMs']) {
+        fs.writeFileSync(taskFile, JSON.stringify({ ...task, [field]: task[field] + 1 }));
+        const result = score.verify(dir);
+        check(`${field}-only changes fail verification`, !result.ok && result.problems.some(p => /task budget/.test(p)),
+          { happened: JSON.stringify(result), why: 'Changing the task budget changes the experiment.', fix: 'Pin task execution budgets.' });
+      }
+      fs.writeFileSync(taskFile, JSON.stringify({ ...task, hidden: Object.fromEntries(Object.entries(task.hidden).reverse()) }));
+      check('restoring the grader with reordered keys verifies', score.verify(dir).ok,
+        { happened: 'failed', why: 'Object key order is not grader identity.', fix: 'Sort file maps before hashing.' });
+      const special = { ...task, files: Object.fromEntries([['__proto__', 'seed']]), hidden: Object.fromEntries([['__proto__', 'grader']]) };
+      const specialDigest = score.taskDigest(special);
+      check('prototype-named seeded and hidden files retain content identity', Object.hasOwn(specialDigest.files, '__proto__') && Object.hasOwn(specialDigest.hidden, '__proto__')
+        && specialDigest.sha256 !== score.taskDigest({ ...special, files: Object.fromEntries([['__proto__', 'changed seed']]) }).sha256
+        && specialDigest.sha256 !== score.taskDigest({ ...special, hidden: Object.fromEntries([['__proto__', 'changed grader']]) }).sha256,
+        { happened: JSON.stringify(specialDigest), why: 'Object setters must not silently discard a filename and its grader hash.', fix: 'Build file maps with Object.fromEntries().' });
+      for (const format of [1, 999, undefined]) {
+        const lock = readJson(dir, 'lock.json'); lock.format = format;
+        fs.writeFileSync(path.join(dir, 'lock.json'), JSON.stringify(lock));
+        const result = score.verify(dir);
+        check('legacy, unknown and missing formats require explicit repacking', !result.ok && result.problems.some(p => /unsupported score format.*Repack/.test(p)),
+          { happened: JSON.stringify(result), why: 'Older locks omit graders; accepting them silently overstates integrity.', fix: 'Validate lock.format before computing statistics.' });
+      }
+    } finally { fs.writeFileSync(taskFile, original); }
+  });
+
   await asyncSuite('score expert', 'the command line packs, verifies, and exits 1 on a mismatch', async () => {
     const out = path.join(base, 'cli-pack');
     const p = cli('pack', fileA, fileB, '--out', out, '--corpus', corpusDir);
