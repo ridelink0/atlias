@@ -53,6 +53,8 @@ or, from an installed copy, `atlias shortcut install`, which puts the command in
 
 Experimental lean installation (`flags.leanBrief` enabled) can reuse native plugin hooks whose source, registration, matcher and configured trust are verified. It preserves global coverage for stale, disabled, untrusted or incomplete native events. The isolated native CLI install reused eight events, including SessionStart, and retained global PostToolUse coverage because the native matcher is narrower. A native model smoke received exactly one Codex startup brief and the complete context pack, then passed its protected task without bypassing hook trust. Token effects of this installation change remain unmeasured. [Delivery evidence](evals/results/native-codex/native-hook-registration-2026-09-30/REPORT.md).
 
+Lean mode also shortens MCP descriptions for both hosts: the serialized ten-tool catalog is **2,837 vs 3,565 characters**, a **20.42% reduction**. Tool names, argument schemas and dispatch stay identical. Real stdio protocol checks cover Claude Code and Codex profiles; model-token effects of this metadata change remain unmeasured.
+
 **Every other harness on the machine**: `atlias install`. It writes only into harnesses whose config folder already exists, marks every block it adds, and `atlias uninstall` removes exactly those. `atlias doctor` checks all of it, including that typing `atlias` finds the command.
 
 ## Sub-harness, agent, or both

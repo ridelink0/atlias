@@ -3,7 +3,7 @@
 // The same tools reach Claude Code (plugin .mcp.json), Codex (config.toml) and
 // Antigravity / Gemini CLI (mcp_config.json / settings.json).
 import { VERSION, log } from '../lib/core.mjs';
-import { TOOLS, callTool } from './tools.mjs';
+import { toolCatalog, callTool } from './tools.mjs';
 
 let buf = '';
 // A message is one line. Without a ceiling, a client that never sends a
@@ -18,7 +18,7 @@ export function handle(msg) {
   if (method === 'initialize') return reply(id, { protocolVersion: (params && params.protocolVersion) || '2025-06-18', capabilities: { tools: {} }, serverInfo: { name: 'atlias', version: VERSION } });
   if (typeof method === 'string' && method.startsWith('notifications/')) return;
   if (method === 'ping') return reply(id, {});
-  if (method === 'tools/list') return reply(id, { tools: TOOLS });
+  if (method === 'tools/list') return reply(id, { tools: toolCatalog() });
   if (method === 'tools/call') {
     const name = params && params.name;
     try {

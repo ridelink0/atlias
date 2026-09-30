@@ -114,6 +114,25 @@ export const TOOLS = [
   { name: 'harness_status', description: 'Health of the harness and its host integrations, with a fix for every failing check.', inputSchema: { type: 'object', properties: { cwd: { type: 'string' } } } },
 ];
 
+const LEAN_DESCRIPTIONS = {
+  harness_recall: 'Search shared memory, recent digests and the graph before reading files or asking Gev to repeat facts.',
+  harness_remember: 'Save and index a durable preference, correction, decision or reference shared by all hosts; never restate code.',
+  harness_progress: 'get: read the handoff. set: save the next step for compaction or recovery.',
+  harness_verify: 'Check JavaScript, JSON and Python syntax. Behaviour tests and an adversarial read are still required.',
+  harness_digest: 'show: pending session digests. ack: mark consolidated only after saving durable facts with harness_remember.',
+  graph_query: 'Query project code/docs relationships cheaply. Requires graphify-out/graph.json.',
+  graph_affected: 'Find reverse dependencies of a graph node before a risky edit.',
+  graph_explain: 'Explain one graph node and its neighbours.',
+  harness_bench: 'Read-only local brief/graph token and guard/gate measurements; calls no model.',
+  harness_status: 'Check harness and host health, with fixes for failures.',
+};
+
+// Keep every tool and argument schema. Lean mode changes descriptive text only;
+// the full catalog remains the default and the implementation dispatch is shared.
+export function toolCatalog(lean = Boolean(config().flags?.leanBrief)) {
+  return lean ? TOOLS.map(t => ({ ...t, description: LEAN_DESCRIPTIONS[t.name] || t.description })) : TOOLS;
+}
+
 export function callTool(name, args = {}) {
   const cwd = args.cwd || process.cwd();
   const cfg = config();

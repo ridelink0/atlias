@@ -1001,6 +1001,7 @@ await (await import('./coverage-suites.mjs')).default({ suite, check, ROOT, fs, 
 await (await import('./task-context-suites.mjs')).default({ suite, check, TMP, ROOT, fs, path });
 await (await import('./dual-cache-suites.mjs')).default({ suite, check, TMP, fs, path });
 await (await import('./native-hook-ownership-suites.mjs')).default({ suite, check, ROOT, TMP, fs, path });
+await (await import('./lean-catalog-suites.mjs')).default({ suite, check, ROOT, TMP, fs, path });
 
 let failed = 0;
 for (const r of results) {
