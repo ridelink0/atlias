@@ -6,7 +6,7 @@
   "effort": "medium",
   "lean": true,
   "taskContext": true,
-  "repeats": 1,
+  "repeats": 2,
   "tasks": [
     {
       "id": "context-money-8",
@@ -39,7 +39,7 @@
       "family": "merge"
     }
   ],
-  "jobs": 12,
+  "jobs": 24,
   "order": "alternate plain/plugin order by task and repeat",
   "paidCredits": "account setting must remain off"
 }
