@@ -1,49 +1,49 @@
 {
   "stats": {
     "plain": {
-      "n": 16,
-      "solved": 16,
-      "promptRaw": 1766989,
-      "perSolved": 110436.8125,
+      "n": 18,
+      "solved": 18,
+      "promptRaw": 1992970,
+      "perSolved": 110720.55555555556,
       "peak": 22934
     },
     "atlias": {
-      "n": 14,
-      "solved": 14,
-      "promptRaw": 1722293,
-      "perSolved": 123020.92857142857,
-      "peak": 22773
+      "n": 18,
+      "solved": 18,
+      "promptRaw": 2312991,
+      "perSolved": 128499.5,
+      "peak": 23343
     }
   },
   "comparisons": [
     {
       "arm": "atlias",
-      "pairedRuns": 14,
+      "pairedRuns": 17,
       "semanticFamilies": 11,
       "pairedStats": {
         "plain": {
-          "n": 14,
-          "solved": 14,
-          "promptRaw": 1544296,
-          "perSolved": 110306.85714285714,
+          "n": 17,
+          "solved": 17,
+          "promptRaw": 1862154,
+          "perSolved": 109538.4705882353,
           "contextPeak": 22934
         },
         "atlias": {
-          "n": 14,
-          "solved": 14,
-          "promptRaw": 1722293,
-          "perSolved": 123020.92857142857,
-          "contextPeak": 22773
+          "n": 17,
+          "solved": 17,
+          "promptRaw": 2232325,
+          "perSolved": 131313.23529411765,
+          "contextPeak": 23343
         }
       },
       "rawRatio": {
         "n": 11,
-        "ratioOfSums": 1.115260934432259,
-        "bootLo": 0.9096288322328622,
-        "bootHi": 1.3695597027776996,
-        "geoMean": 1.084019962175291,
-        "tLo": 0.8191849425375348,
-        "tHi": 1.4344737279404725
+        "ratioOfSums": 1.1987864591220705,
+        "bootLo": 0.9881932594294149,
+        "bootHi": 1.4434228100838382,
+        "geoMean": 1.1771809717273314,
+        "tLo": 0.9181016984622773,
+        "tHi": 1.5093698688477502
       },
       "plainOnly": [],
       "pluginOnly": []
@@ -60,36 +60,36 @@
   "protocolComplete": false,
   "pairedTokens": {
     "plain": {
-      "raw": 1544296,
-      "cached": 1150464,
-      "uncached": 393832,
-      "output": 22557
+      "raw": 1862154,
+      "cached": 1393152,
+      "uncached": 469002,
+      "output": 27974
     },
     "atlias": {
-      "raw": 1722293,
-      "cached": 1537024,
-      "uncached": 185269,
-      "output": 19353
+      "raw": 2232325,
+      "cached": 1991808,
+      "uncached": 240517,
+      "output": 24079
     }
   },
   "allRecorded": {
     "plain": {
-      "calls": 16,
-      "solved": 16,
+      "calls": 18,
+      "solved": 18,
       "invalid": 0,
-      "promptRaw": 1766989,
-      "cachedInput": 1306624,
-      "output": 24772,
+      "promptRaw": 1992970,
+      "cachedInput": 1489152,
+      "output": 29418,
       "peak": 22934
     },
     "atlias": {
-      "calls": 15,
-      "solved": 15,
+      "calls": 19,
+      "solved": 19,
       "invalid": 1,
-      "promptRaw": 1801251,
-      "cachedInput": 1599232,
-      "output": 20633,
-      "peak": 22773
+      "promptRaw": 2391949,
+      "cachedInput": 2117632,
+      "output": 26612,
+      "peak": 23343
     }
   }
 }

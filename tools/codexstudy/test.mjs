@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';import os from 'node:os';import path from 'node:path';
-import {usageOf,flowOf,jobsOf,contained,validateResume,limitsOf,profileEnv,taskContextReceived} from './run.mjs';import {loadTaskList} from '../ccstudy/run.mjs';
+import {usageOf,flowOf,jobsOf,contained,validateResume,limitsOf,profileEnv,taskContextReceived,skillIsolation,skillConfigPaths} from './run.mjs';import {loadTaskList} from '../ccstudy/run.mjs';
 import {summarize} from './summary.mjs';
 import {spawnSync} from 'node:child_process';
 let n=0;const eq=(a,b)=>{assert.deepEqual(a,b);n++;};
@@ -17,6 +17,10 @@ eq(usageOf([count({...u,input_tokens:50},20),count(u,40)]).contextMean,30);
 const jobs=jobsOf([{id:'a'},{id:'b'}],3);eq(jobs.length,12);eq(jobs.slice(0,2).map(x=>x.arm),['plain','plugin']);eq(jobs.slice(4,6).map(x=>x.arm),['plugin','plain']);
 const root=fs.mkdtempSync(path.join(os.tmpdir(),'gev-study-test-'));
 const plan={sha:'x',plugin:'atlias',model:'x',effort:'medium',lean:false,tasks:[{id:'a',sha256:'old'}]};
+eq(skillIsolation(null),'file-path-v1');eq(skillIsolation(plan),'directory-path-legacy');
+validateResume(plan,{...plan,skillsIsolation:'directory-path-legacy'});n++;
+assert.throws(()=>validateResume(plan,{...plan,skillsIsolation:'file-path-v1'}),/skill isolation/);n++;
+assert.throws(()=>skillIsolation({skillsIsolation:'unknown'}),/unknown/);n++;
 eq(profileEnv(true),{ATLIAS_FLAG_LEAN_BRIEF:'1',ATLIAS_FLAG_GATE_RUNS_CHECK:'1'});
 eq(profileEnv(false),{});
 eq(profileEnv(false,true),{ATLIAS_FLAG_TASK_CONTEXT:'1'});
@@ -44,6 +48,9 @@ assert.throws(()=>summarize([row('a','plain',1),row('a','plain',1)]),/duplicate/
 eq(summarize([row('a','plain',10),{...row('a','atlias',20),timedOut:true}]).comparisons.length,0);
 eq(summarize([row('a','plain',10),row('a','atlias',20),{...row('a','plain',10),repeat:2},{...row('a','atlias',20),repeat:2}]).comparisons[0].semanticFamilies,1);
 try{
+  const skillDir=path.join(root,'skill');fs.mkdirSync(skillDir);fs.writeFileSync(path.join(skillDir,'SKILL.md'),'# Fixture');
+  eq(skillConfigPaths([skillDir],'directory-path-legacy'),[skillDir]);
+  eq(skillConfigPaths([skillDir],'file-path-v1').every(p=>fs.statSync(p).isFile()),true);
   const envCheck=spawnSync(process.execPath,['--input-type=module','-e',`import {config} from ${JSON.stringify(new URL('../../lib/core.mjs',import.meta.url).href)};console.log(JSON.stringify(config().flags));`],{encoding:'utf8',env:{...process.env,ATLIAS_HOME:path.join(root,'state'),...profileEnv(true,true)}});
   assert.equal(envCheck.status,0);const actualFlags=JSON.parse(envCheck.stdout);eq([actualFlags.leanBrief,actualFlags.gateRunsCheck,actualFlags.taskContext],[true,true,true]);
   assert.throws(()=>contained(root,'../outside'));n++;assert.throws(()=>contained(root,root));n++;

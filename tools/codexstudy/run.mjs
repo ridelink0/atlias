@@ -11,7 +11,9 @@ import { runAsync } from '../../lib/proc.mjs';
 import {flagEnvName} from '../../lib/core.mjs';
 const ROOT=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../..');
 const opt=(a,k,d='')=>a.includes(k)?a[a.indexOf(k)+1]:d;
-export function validateResume(old,plan){if(['sha','plugin','model','effort','lean'].some(k=>old[k]!==plan[k])||Boolean(old.taskContext)!==Boolean(plan.taskContext)||JSON.stringify(old.tasks)!==JSON.stringify(plan.tasks))throw new Error('resume would mix plugin/model/effort/flags or task hashes; choose a new output directory');if(Number.isSafeInteger(old.repeats)&&plan.repeats<old.repeats)throw new Error('resume cannot decrease repeats; retain or extend the existing plan');}
+export function skillIsolation(plan){const mode=plan?(plan.skillsIsolation??'directory-path-legacy'):'file-path-v1';if(!['directory-path-legacy','file-path-v1'].includes(mode))throw new Error('unknown skill isolation mode');return mode;}
+export function skillConfigPaths(directories,mode){skillIsolation({skillsIsolation:mode});return directories.map(p=>mode==='file-path-v1'?path.join(p,'SKILL.md'):p);}
+export function validateResume(old,plan){if(['sha','plugin','model','effort','lean'].some(k=>old[k]!==plan[k])||Boolean(old.taskContext)!==Boolean(plan.taskContext)||skillIsolation(old)!==skillIsolation(plan)||JSON.stringify(old.tasks)!==JSON.stringify(plan.tasks))throw new Error('resume would mix plugin/model/effort/flags, skill isolation or task hashes; choose a new output directory');if(Number.isSafeInteger(old.repeats)&&plan.repeats<old.repeats)throw new Error('resume cannot decrease repeats; retain or extend the existing plan');}
 export function limitsOf(a){const stopPercent=Number(opt(a,'--stop-percent','60')),timeoutMin=Number(opt(a,'--timeout-min','12'));if(!Number.isFinite(stopPercent)||stopPercent<=0||stopPercent>100||!Number.isFinite(timeoutMin)||timeoutMin<=0)throw new Error('stop percentage must be in (0,100] and timeout minutes must be positive and finite');return {stopPercent,timeoutMin};}
 export function profileEnv(lean,taskContext=false){return {...(lean?{[flagEnvName('leanBrief')]:'1',[flagEnvName('gateRunsCheck')]:'1'}:{}),...(taskContext?{[flagEnvName('taskContext')]:'1'}:{})};}
 export function taskContextReceived(events){return events.some(r=>r.type==='response_item'&&r.payload?.type==='message'&&['developer','user'].includes(r.payload.role)&&JSON.stringify(r.payload.content).includes('[atlias task context]'));}
@@ -56,12 +58,14 @@ export async function main(a){
   if(!Number.isSafeInteger(repeats)||repeats<1||repeats>3||!tasks.length)throw new Error('need tasks and 1..3 repeats');
   for(const t of tasks)for(const rel of [...Object.keys(t.files||{}),...Object.keys(t.hidden||{}),...(t.protect||[])])contained(path.resolve('task-root'),rel);
   const out=path.resolve(opt(a,'--out','D:/harness-work/runs/codex-plugin-study'));
+  const planFile=path.join(out,'plan.json');
+  const priorPlan=fs.existsSync(planFile)?JSON.parse(fs.readFileSync(planFile)):null;
+  const skillsIsolation=skillIsolation(priorPlan);
   const model=opt(a,'--model','gpt-6.1-sol'),effort=opt(a,'--effort','medium');
   const lean=a.includes('--lean');
   const taskContext=a.includes('--task-context');
-  const plan={engine:'native Codex CLI',plugin:plugin.name,sha,model,effort,lean,taskContext,repeats,tasks:tasks.map(t=>({id:t.id,sha256:t.taskSha256,family:t.family})),jobs:jobsOf(tasks,repeats).length,order:'alternate plain/plugin order by task and repeat',paidCredits:'account setting must remain off'};
+  const plan={engine:'native Codex CLI',plugin:plugin.name,sha,model,effort,lean,taskContext,repeats,tasks:tasks.map(t=>({id:t.id,sha256:t.taskSha256,family:t.family})),jobs:jobsOf(tasks,repeats).length,order:'alternate plain/plugin order by task and repeat',paidCredits:'account setting must remain off',...(skillsIsolation==='file-path-v1'?{skillsIsolation}:{})};
   fs.mkdirSync(out,{recursive:true});
-  const planFile=path.join(out,'plan.json');
   if(fs.existsSync(planFile)&&fs.existsSync(path.join(out,'rows.jsonl')))validateResume(JSON.parse(fs.readFileSync(planFile)),plan);
   fs.writeFileSync(planFile,JSON.stringify(plan,null,2)+'\n');
   if(!a.includes('--run')){console.log(JSON.stringify(plan,null,2));return;}
@@ -91,7 +95,7 @@ export async function main(a){
     const env=childEnv(process.env,{home});env.CODEX_HOME=codexHome;env.ATLIAS_HOME=path.join(home,'.atlias');
     if(job.arm==='plugin')Object.assign(env,profileEnv(lean,taskContext));
     const globalSkills=[path.join(process.env.USERPROFILE||process.env.HOME,'.agents','skills'),path.join(process.env.USERPROFILE||process.env.HOME,'.codex','skills')].flatMap(root=>fs.existsSync(root)?fs.readdirSync(root).filter(n=>fs.existsSync(path.join(root,n,'SKILL.md'))).map(n=>path.join(root,n)):[]);
-    const overrides=globalSkills.map(p=>`{ path = ${JSON.stringify(p.replaceAll('\\','/'))}, enabled = false }`).join(', ');
+    const overrides=skillConfigPaths(globalSkills,skillsIsolation).map(p=>`{ path = ${JSON.stringify(p.replaceAll('\\','/'))}, enabled = false }`).join(', ');
     fs.writeFileSync(path.join(codexHome,'config.toml'),`model_reasoning_effort = "${effort}"\nservice_tier = "default"\nskills.config = [${overrides}]\n[features]\nhooks = true\napps = false\n`);
     fs.writeFileSync(path.join(codexHome,'AGENTS.md'),'The user is Gev. Start replies with "Okay Gev". No emojis. Make only requested changes. Check functionality, then adversarial edge cases. Use node --check, never tsc.\n');
     if(job.arm==='plugin'){
