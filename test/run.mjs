@@ -999,6 +999,7 @@ await (await import('./ui-suites.mjs')).default({ suite, asyncSuite, check, core
 await (await import('./claude-engine-suites.mjs')).default({ suite, check, core, agentMod, TMP, fs, path });
 await (await import('./coverage-suites.mjs')).default({ suite, check, ROOT, fs, path });
 await (await import('./task-context-suites.mjs')).default({ suite, check, TMP, ROOT, fs, path });
+await (await import('./dual-cache-suites.mjs')).default({ suite, check, TMP, fs, path });
 
 let failed = 0;
 for (const r of results) {
