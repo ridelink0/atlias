@@ -28,6 +28,9 @@ assert.throws(()=>validateResume(plan,{...plan,taskContext:true}),/flags/);n++;
 eq(limitsOf([]),{stopPercent:60,timeoutMin:12});
 for(const args of [['--stop-percent','NaN'],['--stop-percent','101'],['--timeout-min','Infinity'],['--timeout-min','0']]){assert.throws(()=>limitsOf(args),/finite/);n++;}
 validateResume(plan,{...plan,repeats:3});n++;
+validateResume({...plan,repeats:2},{...plan,repeats:2});n++;
+validateResume({...plan,repeats:2},{...plan,repeats:3});n++;
+assert.throws(()=>validateResume({...plan,repeats:2},{...plan,repeats:1}),/decrease repeats/);n++;
 assert.throws(()=>validateResume(plan,{...plan,tasks:[{id:'a',sha256:'new'}]}),/task hashes/);n++;
 const row=(task,arm,promptRaw,solved=true)=>({task,family:task,arm,promptRaw,solved,valid:true,exitCode:0,repeat:1});
 const report=summarize([row('a','plain',10),row('a','atlias',20,false),row('b','plain',30),row('b','atlias',40),row('unmatched','atlias',500)]);
