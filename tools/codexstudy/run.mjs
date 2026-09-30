@@ -124,7 +124,7 @@ export async function main(a){
     row.proof.taskContextDelivered=taskContextReceived(events);
     row.proof.taskContextGenerated=hookLogs.flatMap(readJsonl).some(r=>r.kind==='task-context');
     if(row.taskContext&&!(row.proof.taskContextDelivered&&row.proof.taskContextGenerated)){row.valid=false;row.invalidReason='task-context flag requested but generated and delivered prompt context were not both recorded';}
-    fs.appendFileSync(rowsFile,JSON.stringify(row)+'\n');console.log(`${row.solved?'PASS':'FAIL'} ${row.arm} ${row.task}: raw=${row.promptRaw}, peak=${row.contextPeak}, valid=${valid}`);
+    fs.appendFileSync(rowsFile,JSON.stringify(row)+'\n');console.log(`${row.solved?'PASS':'FAIL'} ${row.arm} ${row.task}: raw=${row.promptRaw}, peak=${row.contextPeak}, valid=${row.valid}`);
     // The account token is never retained in benchmark artifacts after the call.
     fs.rmSync(path.join(codexHome,'auth.json'),{force:true});
     if(!row.valid||usage.promptRaw===null||proc.timedOut||proc.code!==0)throw new Error('pilot/protocol failed; inspect retained artifacts before spending again');

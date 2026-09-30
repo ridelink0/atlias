@@ -1,67 +1,95 @@
 {
   "stats": {
     "plain": {
-      "n": 7,
-      "solved": 7,
-      "promptRaw": 732844,
-      "perSolved": 104692,
+      "n": 9,
+      "solved": 9,
+      "promptRaw": 978672,
+      "perSolved": 108741.33333333333,
       "peak": 22934
     },
     "atlias": {
-      "n": 7,
-      "solved": 7,
-      "promptRaw": 890337,
-      "perSolved": 127191,
+      "n": 8,
+      "solved": 8,
+      "promptRaw": 988999,
+      "perSolved": 123624.875,
       "peak": 22773
     }
   },
   "comparisons": [
     {
       "arm": "atlias",
-      "pairedRuns": 7,
-      "semanticFamilies": 7,
+      "pairedRuns": 8,
+      "semanticFamilies": 8,
       "pairedStats": {
         "plain": {
-          "n": 7,
-          "solved": 7,
-          "promptRaw": 732844,
-          "perSolved": 104692,
+          "n": 8,
+          "solved": 8,
+          "promptRaw": 847856,
+          "perSolved": 105982,
           "contextPeak": 22934
         },
         "atlias": {
-          "n": 7,
-          "solved": 7,
-          "promptRaw": 890337,
-          "perSolved": 127191,
+          "n": 8,
+          "solved": 8,
+          "promptRaw": 988999,
+          "perSolved": 123624.875,
           "contextPeak": 22773
         }
       },
       "rawRatio": {
-        "n": 7,
-        "ratioOfSums": 1.2149065831200092,
-        "bootLo": 0.8307618614731161,
-        "bootHi": 1.6407048333734127,
-        "geoMean": 1.100768170799706,
-        "tLo": 0.6735935457686102,
-        "tHi": 1.7988452731730376
+        "n": 8,
+        "ratioOfSums": 1.1664704855541508,
+        "bootLo": 0.8298169653978007,
+        "bootHi": 1.5739983994220923,
+        "geoMean": 1.0669884671441183,
+        "tLo": 0.7027177408500904,
+        "tHi": 1.6200877291661
       },
       "plainOnly": [],
       "pluginOnly": []
     }
   ],
-  "excluded": [],
+  "excluded": [
+    {
+      "task": "context-pagination-64",
+      "arm": "atlias",
+      "reason": "task-context flag requested but generated and delivered prompt context were not both recorded"
+    }
+  ],
+  "plannedCallsComplete": false,
+  "protocolComplete": false,
   "pairedTokens": {
     "plain": {
-      "raw": 732844,
-      "cached": 538112,
-      "uncached": 194732,
-      "output": 11522
+      "raw": 847856,
+      "cached": 621312,
+      "uncached": 226544,
+      "output": 13389
     },
     "atlias": {
-      "raw": 890337,
-      "cached": 795648,
-      "uncached": 94689,
-      "output": 9908
+      "raw": 988999,
+      "cached": 884736,
+      "uncached": 104263,
+      "output": 11200
+    }
+  },
+  "allRecorded": {
+    "plain": {
+      "calls": 9,
+      "solved": 9,
+      "invalid": 0,
+      "promptRaw": 978672,
+      "cachedInput": 717312,
+      "output": 14833,
+      "peak": 22934
+    },
+    "atlias": {
+      "calls": 9,
+      "solved": 9,
+      "invalid": 1,
+      "promptRaw": 1067957,
+      "cachedInput": 946944,
+      "output": 12480,
+      "peak": 22773
     }
   }
 }

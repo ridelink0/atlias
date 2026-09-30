@@ -1,7 +1,7 @@
 {
   "source": "0e29833460e466ec80c503129b90808a0c206bf9",
   "method": "reconstructed initial task files with the archived source packer; matched generated hash/length and complete user/developer text, not only a marker",
-  "checked": 7,
+  "checked": 8,
   "evidence": [
     {
       "task": "context-money-64",
@@ -56,6 +56,14 @@
       "repeat": 1,
       "chars": 833,
       "sha": "01eac22945bdd755",
+      "generated": true,
+      "delivered": true
+    },
+    {
+      "task": "context-csv-64",
+      "repeat": 1,
+      "chars": 730,
+      "sha": "9dd0b543f3f5a75b",
       "generated": true,
       "delivered": true
     }
