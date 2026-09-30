@@ -137,13 +137,15 @@
       "id": "context-query-8",
       "file": "evals/context-heldout/context-query-8.json",
       "source": "authored-context",
-      "sha256": "533b41c4a53db3a875ebae0649c7649e09e52941b992a95e471b9c94704047f6"
+      "sha256": "2871db7830acc24d601a2ab4666a1f754dce68ddfafead93b5542336b2931bde",
+      "contractVersion": 2
     },
     {
       "id": "context-query-64",
       "file": "evals/context-heldout/context-query-64.json",
       "source": "authored-context",
-      "sha256": "8f549dc9798a396430d9eda381f6cfa58d87a8abac6c0e46d7c7768f91b5d7a2"
+      "sha256": "af69244083373e4af3bb47908be0ace4fadf6e4a5eb844b87ae623e447c65c1a",
+      "contractVersion": 2
     }
   ]
 }
