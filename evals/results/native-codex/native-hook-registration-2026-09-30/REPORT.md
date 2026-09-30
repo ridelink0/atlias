@@ -1,0 +1,7 @@
+# Native hook registration check for Gev
+
+Source 6ac9b6b7a1f5fa0950c7572d5236dfa4d2e2ad8e, native Codex CLI0.159.0, isolated temporary profile and local marketplace. No model calls, account login changes, paid credits or live configuration edits.
+
+The native CLI installed Atlias and reported it enabled. A control install registered all nine global events. The opt-in lean install then reused eight native events, including SessionStart and UserPromptSubmit, while retaining one complete global PostToolUse handler because the native matcher is narrower. Unrelated hooks, native trust records and the MCP server were preserved. The initial smoke expectation of nine reused events was incorrect; the retained ninth handler is required. That failure is preserved in local scratch, and the corrected native API/configuration audit passed.
+
+This is an installation/registration check, not a coding benchmark or proof that native startup context reached a model. End-to-end delivery and token effects remain unmeasured. The working older native copy fails the runtime-source compatibility check and is not changed. Unit adversarial cases cover stale/oversized source, disabled plugins/groups/events, narrowed matchers, missing trust, unsafe versions, malformed API results and flag-off idempotence. Windows full1451/1451 across208 suites and sandbox install30/30 passed; new-head CI must be verified separately.
