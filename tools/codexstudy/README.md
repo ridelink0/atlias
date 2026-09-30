@@ -30,6 +30,13 @@ documented `install --codex` adapter; the other arm gets no Atlias hooks, MCP,
 skills, or instructions. `--lean` measures the existing lean-brief and gate-runs-
 check experiment in a separate output directory; it does not change defaults.
 
+`--task-context` measures the default-off prompt-scoped context pack alongside
+any selected lean flags. Its plan and each row record that flag. A treatment is
+invalid unless the hook both generated the pack and the native transcript shows
+it delivered as user/developer context. The same pack is wired to Claude Code's
+UserPromptSubmit event; the two real host adapters are tested locally. A native
+Codex result does not establish a Claude-model token saving.
+
 The driver checks the shared Codex allowance before each run and stops at
 60 percent used by default (`--stop-percent N`). This cap includes the lead
 session. It never enables paid credits. Task hashes are checked before launch,

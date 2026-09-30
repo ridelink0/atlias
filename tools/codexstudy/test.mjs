@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';import os from 'node:os';import path from 'node:path';
-import {usageOf,flowOf,jobsOf,contained,validateResume,limitsOf,profileEnv} from './run.mjs';import {loadTaskList} from '../ccstudy/run.mjs';
+import {usageOf,flowOf,jobsOf,contained,validateResume,limitsOf,profileEnv,taskContextReceived} from './run.mjs';import {loadTaskList} from '../ccstudy/run.mjs';
 import {summarize} from './summary.mjs';
 import {spawnSync} from 'node:child_process';
 let n=0;const eq=(a,b)=>{assert.deepEqual(a,b);n++;};
@@ -19,6 +19,12 @@ const root=fs.mkdtempSync(path.join(os.tmpdir(),'gev-study-test-'));
 const plan={sha:'x',plugin:'atlias',model:'x',effort:'medium',lean:false,tasks:[{id:'a',sha256:'old'}]};
 eq(profileEnv(true),{ATLIAS_FLAG_LEAN_BRIEF:'1',ATLIAS_FLAG_GATE_RUNS_CHECK:'1'});
 eq(profileEnv(false),{});
+eq(profileEnv(false,true),{ATLIAS_FLAG_TASK_CONTEXT:'1'});
+eq(taskContextReceived([{type:'response_item',payload:{type:'message',role:'developer',content:[{text:'[atlias task context] source'}]}}]),true);
+eq(taskContextReceived([{type:'response_item',payload:{type:'message',role:'assistant',content:[{text:'[atlias task context] source'}]}}]),false);
+eq(taskContextReceived([call('exec','[atlias task context]','fake')]),false);
+eq(profileEnv(true,true),{ATLIAS_FLAG_LEAN_BRIEF:'1',ATLIAS_FLAG_GATE_RUNS_CHECK:'1',ATLIAS_FLAG_TASK_CONTEXT:'1'});
+assert.throws(()=>validateResume(plan,{...plan,taskContext:true}),/flags/);n++;
 eq(limitsOf([]),{stopPercent:60,timeoutMin:12});
 for(const args of [['--stop-percent','NaN'],['--stop-percent','101'],['--timeout-min','Infinity'],['--timeout-min','0']]){assert.throws(()=>limitsOf(args),/finite/);n++;}
 validateResume(plan,{...plan,repeats:3});n++;
@@ -35,8 +41,8 @@ assert.throws(()=>summarize([row('a','plain',1),row('a','plain',1)]),/duplicate/
 eq(summarize([row('a','plain',10),{...row('a','atlias',20),timedOut:true}]).comparisons.length,0);
 eq(summarize([row('a','plain',10),row('a','atlias',20),{...row('a','plain',10),repeat:2},{...row('a','atlias',20),repeat:2}]).comparisons[0].semanticFamilies,1);
 try{
-  const envCheck=spawnSync(process.execPath,['--input-type=module','-e',`import {config} from ${JSON.stringify(new URL('../../lib/core.mjs',import.meta.url).href)};console.log(JSON.stringify(config().flags));`],{encoding:'utf8',env:{...process.env,ATLIAS_HOME:path.join(root,'state'),...profileEnv(true)}});
-  assert.equal(envCheck.status,0);const actualFlags=JSON.parse(envCheck.stdout);eq([actualFlags.leanBrief,actualFlags.gateRunsCheck],[true,true]);
+  const envCheck=spawnSync(process.execPath,['--input-type=module','-e',`import {config} from ${JSON.stringify(new URL('../../lib/core.mjs',import.meta.url).href)};console.log(JSON.stringify(config().flags));`],{encoding:'utf8',env:{...process.env,ATLIAS_HOME:path.join(root,'state'),...profileEnv(true,true)}});
+  assert.equal(envCheck.status,0);const actualFlags=JSON.parse(envCheck.stdout);eq([actualFlags.leanBrief,actualFlags.gateRunsCheck,actualFlags.taskContext],[true,true,true]);
   assert.throws(()=>contained(root,'../outside'));n++;assert.throws(()=>contained(root,root));n++;
   fs.writeFileSync(path.join(root,'task.json'),JSON.stringify({id:'x'}));fs.writeFileSync(path.join(root,'list.json'),JSON.stringify({tasks:[{id:'x',file:'task.json',sha256:'changed'}]}));assert.throws(()=>loadTaskList(path.join(root,'list.json'),root),/hash/);n++;
 }finally{fs.rmSync(root,{recursive:true,force:true});}

@@ -11,9 +11,10 @@ import { runAsync } from '../../lib/proc.mjs';
 import {flagEnvName} from '../../lib/core.mjs';
 const ROOT=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../..');
 const opt=(a,k,d='')=>a.includes(k)?a[a.indexOf(k)+1]:d;
-export function validateResume(old,plan){if(['sha','plugin','model','effort','lean'].some(k=>old[k]!==plan[k])||JSON.stringify(old.tasks)!==JSON.stringify(plan.tasks))throw new Error('resume would mix plugin/model/effort/flags or task hashes; choose a new output directory');}
+export function validateResume(old,plan){if(['sha','plugin','model','effort','lean'].some(k=>old[k]!==plan[k])||Boolean(old.taskContext)!==Boolean(plan.taskContext)||JSON.stringify(old.tasks)!==JSON.stringify(plan.tasks))throw new Error('resume would mix plugin/model/effort/flags or task hashes; choose a new output directory');}
 export function limitsOf(a){const stopPercent=Number(opt(a,'--stop-percent','60')),timeoutMin=Number(opt(a,'--timeout-min','12'));if(!Number.isFinite(stopPercent)||stopPercent<=0||stopPercent>100||!Number.isFinite(timeoutMin)||timeoutMin<=0)throw new Error('stop percentage must be in (0,100] and timeout minutes must be positive and finite');return {stopPercent,timeoutMin};}
-export function profileEnv(lean){return lean?{[flagEnvName('leanBrief')]:'1',[flagEnvName('gateRunsCheck')]:'1'}:{};}
+export function profileEnv(lean,taskContext=false){return {...(lean?{[flagEnvName('leanBrief')]:'1',[flagEnvName('gateRunsCheck')]:'1'}:{}),...(taskContext?{[flagEnvName('taskContext')]:'1'}:{})};}
+export function taskContextReceived(events){return events.some(r=>r.type==='response_item'&&r.payload?.type==='message'&&['developer','user'].includes(r.payload.role)&&JSON.stringify(r.payload.content).includes('[atlias task context]'));}
 function sync(bin,args,options={}){const r=spawnSync(bin,args,{encoding:'utf8',windowsHide:true,timeout:120000,...options});if(r.status!==0)throw new Error(`${bin} failed: ${(r.stderr||r.stdout||r.error||'').toString().slice(-700)}`);return r.stdout.trim();}
 export function usageOf(rows){
   const counts=rows.filter(r=>r.type==='event_msg'&&r.payload?.type==='token_count'&&r.payload.info);
@@ -57,7 +58,8 @@ export async function main(a){
   const out=path.resolve(opt(a,'--out','D:/harness-work/runs/codex-plugin-study'));
   const model=opt(a,'--model','gpt-6.1-sol'),effort=opt(a,'--effort','medium');
   const lean=a.includes('--lean');
-  const plan={engine:'native Codex CLI',plugin:plugin.name,sha,model,effort,lean,repeats,tasks:tasks.map(t=>({id:t.id,sha256:t.taskSha256,family:t.family})),jobs:jobsOf(tasks,repeats).length,order:'alternate plain/plugin order by task and repeat',paidCredits:'account setting must remain off'};
+  const taskContext=a.includes('--task-context');
+  const plan={engine:'native Codex CLI',plugin:plugin.name,sha,model,effort,lean,taskContext,repeats,tasks:tasks.map(t=>({id:t.id,sha256:t.taskSha256,family:t.family})),jobs:jobsOf(tasks,repeats).length,order:'alternate plain/plugin order by task and repeat',paidCredits:'account setting must remain off'};
   fs.mkdirSync(out,{recursive:true});
   const planFile=path.join(out,'plan.json');
   if(fs.existsSync(planFile)&&fs.existsSync(path.join(out,'rows.jsonl')))validateResume(JSON.parse(fs.readFileSync(planFile)),plan);
@@ -87,7 +89,7 @@ export async function main(a){
     const home=path.join(base,'home'),ws=path.join(base,'ws'),codexHome=path.join(home,'.codex');fs.mkdirSync(codexHome,{recursive:true});fs.mkdirSync(ws,{recursive:true});
     writeFiles(ws,job.task.files);
     const env=childEnv(process.env,{home});env.CODEX_HOME=codexHome;env.ATLIAS_HOME=path.join(home,'.atlias');
-    if(job.arm==='plugin')Object.assign(env,profileEnv(lean));
+    if(job.arm==='plugin')Object.assign(env,profileEnv(lean,taskContext));
     const globalSkills=[path.join(process.env.USERPROFILE||process.env.HOME,'.agents','skills'),path.join(process.env.USERPROFILE||process.env.HOME,'.codex','skills')].flatMap(root=>fs.existsSync(root)?fs.readdirSync(root).filter(n=>fs.existsSync(path.join(root,n,'SKILL.md'))).map(n=>path.join(root,n)):[]);
     const overrides=globalSkills.map(p=>`{ path = ${JSON.stringify(p.replaceAll('\\','/'))}, enabled = false }`).join(', ');
     fs.writeFileSync(path.join(codexHome,'config.toml'),`model_reasoning_effort = "${effort}"\nservice_tier = "default"\nskills.config = [${overrides}]\n[features]\nhooks = true\napps = false\n`);
@@ -118,10 +120,14 @@ export async function main(a){
     const actualModels=[...new Set(events.filter(r=>r.type==='turn_context').map(r=>r.payload.model).filter(Boolean))];
     const valid=!blocked&&actualModels.length===1&&actualModels[0]===model&&(job.arm==='plain'?!proof.hooksConfigured&&!proof.mcpConfigured:(plugin.name==='atlias'?proof.hooksConfigured&&proof.mcpConfigured&&proof.hookEvents>0:proof.pluginEnabled));
     const row={...usage,...flowOf(events),task:job.task.id,family:job.task.family||job.task.id,repeat:job.repeat,arm:job.arm==='plain'?'plain':plugin.name,sha:job.arm==='plain'?'':sha,taskSha256:job.task.taskSha256,model,effort,lean:job.arm==='plugin'&&lean,cliVersion:sync(bin,['--version'],{env}),solved:grade.pass&&!cheat.files.length&&!proc.timedOut&&proc.code===0,valid,proof,checkOutput:grade.output,tampered:cheat.files,exitCode:proc.code,timedOut:proc.timedOut,ms:Date.now()-started,base,compactions:events.filter(r=>r.type==='compacted').length,at:new Date().toISOString()};
+    row.taskContext=job.arm==='plugin'&&taskContext;
+    row.proof.taskContextDelivered=taskContextReceived(events);
+    row.proof.taskContextGenerated=hookLogs.flatMap(readJsonl).some(r=>r.kind==='task-context');
+    if(row.taskContext&&!(row.proof.taskContextDelivered&&row.proof.taskContextGenerated)){row.valid=false;row.invalidReason='task-context flag requested but generated and delivered prompt context were not both recorded';}
     fs.appendFileSync(rowsFile,JSON.stringify(row)+'\n');console.log(`${row.solved?'PASS':'FAIL'} ${row.arm} ${row.task}: raw=${row.promptRaw}, peak=${row.contextPeak}, valid=${valid}`);
     // The account token is never retained in benchmark artifacts after the call.
     fs.rmSync(path.join(codexHome,'auth.json'),{force:true});
-    if(!valid||usage.promptRaw===null||proc.timedOut||proc.code!==0)throw new Error('pilot/protocol failed; inspect retained artifacts before spending again');
+    if(!row.valid||usage.promptRaw===null||proc.timedOut||proc.code!==0)throw new Error('pilot/protocol failed; inspect retained artifacts before spending again');
   }
 }
 if(process.argv[1]===fileURLToPath(import.meta.url))main(process.argv.slice(2)).catch(e=>{console.error(e.message);process.exitCode=1;});

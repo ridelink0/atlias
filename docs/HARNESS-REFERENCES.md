@@ -9,6 +9,8 @@ Reviewed source, September 29, 2026; implementation review, not a new deep-resea
 
 Both projects use MIT licensing. These changes use the architectural ideas and Atlias's existing code; no third-party implementation was copied.
 
+The default-off `flags.taskContext` now applies Claude Harness's requirements-first, dependency-closed packing to both Claude Code and Codex prompt hooks. It includes only small whole files explicitly named in the prompt and their static JavaScript imports. Real paths are deduplicated; hidden, credential, external, binary and oversized files are excluded. A source group is rejected as a whole if a prerequisite cannot fit. The rendered pack is capped at 10,000 characters and eight files, with omissions stated. Existing graph answers keep priority. This is a new implementation using Atlias's own code; it is not the reference's module engine or a measured saving yet.
+
 Following the reference's latency-measurement approach, a local Windows Node hook probe ran seven fresh sessions per event. PreToolUse took103–155ms, PostToolUse102–170ms and prompt104–158ms. This does not explain the long pending-cell waits in the recorded native study and does not justify a hook-dispatch rewrite on its own. The latest comparison retained eleven one-second wait polls and3.332x input use; longer waits and on-demand context require fresh matched model measurements before claiming a saving.
 
 Native startup inspection also confirms the lean home instruction block and SessionStart brief reached Codex. Its --ignore-rules option only skips execpolicy .rules, according to the installed CLI's help. This corrects the earlier uncertainty in the trial notes.

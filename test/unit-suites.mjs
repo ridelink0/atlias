@@ -4,6 +4,7 @@
 // Loaded by test/run.mjs after it has pointed ATLIAS_HOME, CLAUDE_CONFIG_DIR
 // and CODEX_HOME at a temp directory, so nothing here touches a real home.
 import http from 'node:http';
+import { spawnSync } from 'node:child_process';
 import * as core from '../lib/core.mjs';
 import * as gate from '../lib/gate.mjs';
 import * as graph from '../lib/graph.mjs';
@@ -20,11 +21,43 @@ import * as settings from '../lib/settings.mjs';
 import * as shortcut from '../lib/shortcut.mjs';
 import * as track from '../lib/track.mjs';
 import * as usage from '../lib/usage.mjs';
+import * as guard from '../lib/guard.mjs';
 
 export default async function unitSuites({ suite, asyncSuite, check, PROJECT, TMP, fs, path }) {
   const U = path.join(TMP, 'unit');
   const NL = String.fromCharCode(10);
   const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+  suite('host detection expert', 'session markers beat migrated plugin locations', () => {
+    const keys=['CLAUDE_PLUGIN_ROOT','CLAUDE_PROJECT_DIR','CLAUDE_CODE_SESSION_ID','CODEX_HOME','CODEX_SANDBOX','CODEX_THREAD_ID','GEMINI_CLI','GEMINI_SESSION_ID'];
+    const before=Object.fromEntries(keys.map(k=>[k,process.env[k]]));
+    try {
+      keys.forEach(k=>delete process.env[k]);process.env.CLAUDE_PLUGIN_ROOT='migrated-plugin';process.env.CLAUDE_PROJECT_DIR='migrated-project';process.env.CODEX_THREAD_ID='native-thread';
+      const host=core.detectHost(['node','hooks.mjs','pre-tool']);
+      check('a native Codex thread wins over a Claude-compatible plugin path', host==='codex' && !guard.CAN_ASK.has(host), {happened:host,why:'Misidentifying Codex as Claude chooses the unsupported ask verdict, which Codex fails open.',fix:'Prefer a native session marker over an installation path.'});
+      const env={...process.env,ATLIAS_HOME:path.join(U,'host-state')};
+      const payload=JSON.stringify({session_id:'mixed-host-proof',cwd:PROJECT,tool_name:'Bash',tool_input:{command:'npm publish'}});
+      const result=spawnSync(process.execPath,[path.join(core.ROOT,'lib/hooks.mjs'),'pre-tool'],{env,input:payload,encoding:'utf8',windowsHide:true,timeout:15000});
+      let decision=null;try{decision=JSON.parse(result.stdout).hookSpecificOutput.permissionDecision;}catch{}
+      check('the real migrated hook denies an unsupported destructive ask under Codex', result.status===0 && decision==='deny', {happened:`exit ${result.status}: ${result.stdout||result.stderr}`,why:'Host resolution must reach the production guard output, not only its display label.',fix:'Run the hook with the mixed environment and preserve Codex denial semantics.'});
+      process.env.CLAUDE_CODE_SESSION_ID='claude-session';
+      const codexTranscript={transcript_path:path.join(core.CODEX_DIR,'sessions','2026','nested.jsonl')};
+      const claudeTranscript={transcript_path:path.join(core.CLAUDE_DIR,'projects','project','nested.jsonl')};
+      check('event transcripts resolve either nested client despite inherited session markers', core.detectHost([],codexTranscript)==='codex' && core.detectHost([],claudeTranscript)==='claude', {happened:'transcript host resolution',why:'A client launched from another client can inherit both session markers.',fix:'Use the event transcript under the configured client root before environment hints.'});
+      const childDecision=(transcript,id,args=[])=>{
+        const child=spawnSync(process.execPath,[path.join(core.ROOT,'lib/hooks.mjs'),'pre-tool',...args],{env:{...process.env,CODEX_HOME:core.CODEX_DIR,CLAUDE_CONFIG_DIR:core.CLAUDE_DIR,ATLIAS_HOME:path.join(U,'host-state')},input:JSON.stringify({session_id:id,cwd:PROJECT,tool_name:'Bash',tool_input:{command:'npm publish'},...transcript}),encoding:'utf8',windowsHide:true,timeout:15000});
+        try{return child.status===0?JSON.parse(child.stdout).hookSpecificOutput.permissionDecision:null;}catch{return null;}
+      };
+      check('real Claude and Codex hooks retain their distinct destructive-command verdicts', childDecision(claudeTranscript,'nested-claude')==='ask' && childDecision(codexTranscript,'nested-codex')==='deny', {happened:'nested hook decisions',why:'A label-only fix can still dispatch the wrong adapter.',fix:'Resolve host after reading the production event payload.'});
+      check('explicit host overrides even an opposing event transcript', core.detectHost(['--host','claude'],codexTranscript)==='claude' && childDecision(codexTranscript,'explicit-claude',['--host','claude'])==='ask', {happened:'explicit host verdict',why:'Installed adapters intentionally provide authoritative --host values.',fix:'Keep explicit selection ahead of transcript inference.'});
+      check('nearby directory names, traversal and malformed transcript hints do not spoof a host', [path.join(core.CODEX_DIR,'sessions-other','x.jsonl'),path.join(core.CODEX_DIR,'sessions','..','other','x.jsonl'),'sessions/x.jsonl',42].every(transcript_path=>core.detectHost([],{transcript_path})==='claude'), {happened:'ambiguous transcript hints',why:'Only an absolute path inside the configured sessions root identifies Codex.',fix:'Normalize paths, require a directory boundary and retain environment fallback.'});
+      check('explicit host selection still overrides every environment hint', core.detectHost(['node','hooks.mjs','stop','--host','gemini'])==='gemini', {happened:core.detectHost(['node','hooks.mjs','stop','--host','gemini']),why:'Nested clients and adapters can explicitly resolve ambiguous inherited session markers.',fix:'Keep --host as the first branch.'});
+      delete process.env.CODEX_THREAD_ID;process.env.CODEX_HOME='shared-config';
+      check('a real Claude session still wins over a shared Codex config location', core.detectHost(['node','hooks.mjs'])==='claude', {happened:core.detectHost(['node','hooks.mjs']),why:'A configuration directory does not identify the active client.',fix:'Prefer session markers over configuration paths.'});
+      keys.forEach(k=>delete process.env[k]);process.env.CLAUDE_PLUGIN_ROOT='claude-plugin';
+      check('legacy plugin-only host detection is preserved', core.detectHost(['node','hooks.mjs'])==='claude', {happened:core.detectHost(['node','hooks.mjs']),why:'Claude plugins without a session marker must still use the existing adapter.',fix:'Retain the old fallback order after strong markers.'});
+    } finally {for(const k of keys){if(before[k]===undefined)delete process.env[k];else process.env[k]=before[k];}}
+  });
 
   await asyncSuite('file helper expert', 'the file and process helpers', async () => {
     const dir = core.ensureDir(path.join(U, 'a', 'b'));
