@@ -1,0 +1,67 @@
+{
+  "source": "0e29833460e466ec80c503129b90808a0c206bf9",
+  "task": "context-ttl-64",
+  "taskSha256": "af143b09c13ba6eddb26b22a43b710a1b1fd6d21c17327eff0a4f4769a42fb28",
+  "repeat": 1,
+  "arm": "atlias",
+  "model": "gpt-6.1-sol",
+  "effort": "medium",
+  "cliVersion": "codex-cli 0.159.0",
+  "originalRollouts": [
+    {
+      "file": "rollout-2026-09-30T13-30-38-01a0f395-3745-7a31-bb41-9d471980af8e.jsonl",
+      "sha256": "c263f86bbc961bfccd26f2008ffaca390b74f0038a2ba1f38722ac81a412f6b3"
+    }
+  ],
+  "plain": {
+    "promptRaw": 93490,
+    "peak": 21670,
+    "solved": true
+  },
+  "atlias": {
+    "promptRaw": 220062,
+    "peak": 21357,
+    "solved": true,
+    "outerToolCalls": 10,
+    "waitCalls": 7,
+    "shortWaitCalls": 4,
+    "waits": [
+      {
+        "name": "wait",
+        "yieldTimeMs": 1000,
+        "argumentsSha256": "31abf8587c3a98cb7d4d4a927d88e32fe52df50cfd30c8b2ff972ea16a803237"
+      },
+      {
+        "name": "wait",
+        "yieldTimeMs": 1000,
+        "argumentsSha256": "81d143b27b523fc678496debe794cceb4eaaf597b614faa3edcb898aa5af3e0c"
+      },
+      {
+        "name": "wait",
+        "yieldTimeMs": 1000,
+        "argumentsSha256": "07b342e8ed461a35257e792d948bd34333f6adfce2c026453b8abfc41543a354"
+      },
+      {
+        "name": "wait",
+        "yieldTimeMs": 1000,
+        "argumentsSha256": "07b342e8ed461a35257e792d948bd34333f6adfce2c026453b8abfc41543a354"
+      },
+      {
+        "name": "wait",
+        "yieldTimeMs": 10000,
+        "argumentsSha256": "113f2249473bbcc7b1bb2831fc0e9c84c9acfc87c668b7ebabc9bd06b14e2db8"
+      },
+      {
+        "name": "wait",
+        "yieldTimeMs": 10000,
+        "argumentsSha256": "a7d5747ba46aa7947bda392078a710dac4683fd909dccbd622b2401330116be3"
+      },
+      {
+        "name": "wait",
+        "yieldTimeMs": 10000,
+        "argumentsSha256": "9f22c7194cf087e8170a3023d1870c61f75eaff08416f9ab04ffa12606111523"
+      }
+    ]
+  },
+  "observation": "The pinned source guidance names exec_command/write_stdin waits, while this row made seven outer wait calls including four below10seconds. A newer candidate can explicitly cover outer-cell waits; neither this trace nor a counterfactual calculation establishes isolated model-token savings."
+}
