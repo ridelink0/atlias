@@ -38,7 +38,8 @@ Timeouts, policy-denied commands, missing usage and failed installation evidence
 stop the driver; they must not be presented as model-performance losses.
 
 Reports retain raw input tokens (including cache reads), cached input, output,
-peak and mean request context, compactions, CLI version, task hash, plugin SHA,
+peak and mean request context, outer tool calls and requested wait durations,
+compactions, CLI version, task hash, plugin SHA,
 protected-file changes, hidden verdict, and hook evidence. Missing usage is
 null. Credentials are removed immediately after a model call; raw profiles and
 transcripts are local scratch artifacts and must not be committed.

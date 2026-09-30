@@ -6,6 +6,8 @@ const NL = String.fromCharCode(10);
 
 export default async function ({ suite, check, brief, TMP, ROOT, fs, path }) {
   const hosts = await import('../lib/hosts.mjs');
+  const core = await import('../lib/core.mjs');
+  const progress = await import('../lib/progress.mjs');
   const withEnv = (vars, fn) => {
     const before = {};
     for (const k of Object.keys(vars)) { before[k] = process.env[k]; if (vars[k] == null) delete process.env[k]; else process.env[k] = vars[k]; }
@@ -46,9 +48,13 @@ export default async function ({ suite, check, brief, TMP, ROOT, fs, path }) {
     check('lean, the Claude Code brief is at least 350 characters shorter, under 1000, and the same on every build', lean.length <= off.length - 350 && lean.length < 1000 && lean === build(empty, 'claude', { [LEAN]: '1' }), { happened: `${off.length} characters off, ${lean.length} lean`, why: 'NEXTGEN-5 row 4 aims at the fixed text paid on every request; a cut nobody counted is not a cut, and a brief that changes between builds cannot be cached as a prompt prefix.', fix: 'Check what brief.build adds under leanBrief.' });
     const offCodex = build(empty, 'codex', {});
     const leanCodex = build(empty, 'codex', { [LEAN]: '1' });
+    check('a fresh Codex project explicitly skips absent saved-context lookups', /No saved memory/.test(leanCodex) && /fresh task, skip recall\/handoff lookups/.test(leanCodex) && /without discovering graph tools/.test(leanCodex), {happened:leanCodex,why:'On-demand context should not cause extra discovery calls when no saved context exists.',fix:'State the absence explicitly without removing useful context from populated projects.'});
     check('lean Codex skips unavailable graph lookups, sequences edits before checks and avoids rapid polling', /No graph is available yet/.test(leanCodex) && /await edit then checks/.test(leanCodex) && /never parallelize dependent/.test(leanCodex) && /Wait 30000 ms on running cells/.test(leanCodex), {happened:leanCodex.slice(-650),why:'Unavailable graph lookups, separate check turns and rapid polls resend context without improving the result.',fix:'Keep graph availability, sequential batching and a bounded longer wait in the lean Codex rule.'});
     const graphed=project({'graphify-out/graph.json':'{"nodes":[],"edges":[]}'});
     check('lean keeps graph-first navigation when a graph exists', build(graphed,'codex',{[LEAN]:'1'}).includes(brief.RULES[0]), {happened:'graph navigation was omitted',why:'The saving should remove an unavailable lookup, not useful knowledge navigation.',fix:'Use the original graph rule when graph.status reports an existing graph.'});
+    const populated=project();const memoryDir=core.claudeMemoryDir(populated);fs.mkdirSync(memoryDir,{recursive:true});fs.writeFileSync(path.join(memoryDir,'MEMORY.md'),'- [Saved requirement](requirement.md) - preserve the existing API\n');fs.mkdirSync(path.dirname(progress.notePath(populated)),{recursive:true});fs.writeFileSync(progress.notePath(populated),'Existing handoff: preserve the protected contract.');
+    const supplied=build(populated,'codex',{[LEAN]:'1'});
+    check('on-demand guidance preserves a populated index and supplied handoff', supplied.includes('Saved requirement') && supplied.includes('Existing handoff: preserve the protected contract.') && !supplied.includes('No saved memory'), {happened:supplied,why:'Avoiding absent-context lookups must not hide actual saved context.',fix:'Only use the fresh-project guidance when the index is absent.'});
     check('lean does the same for the other hosts, and keeps their memory section', leanCodex.length <= offCodex.length - 350 && /## Memory/.test(leanCodex) && !TOOL_NAMES.some((t) => leanCodex.split(NL)[0].includes(t)), { happened: `${offCodex.length} off, ${leanCodex.length} lean`, why: 'Codex has no shared memory of its own; the section is how it finds harness_remember.', fix: 'Only the tool line, Companions and the done rule change.' });
   });
 

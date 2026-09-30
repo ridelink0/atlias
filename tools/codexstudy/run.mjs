@@ -23,6 +23,13 @@ export function usageOf(rows){
   for(const r of counts){const key=JSON.stringify(r.payload.info.total_token_usage);if(seen.has(key))continue;seen.add(key);const n=r.payload.info.last_token_usage?.input_tokens;if(Number.isFinite(n))ctx.push(n);}
   return {promptRaw:total.input_tokens??null,cachedInput:total.cached_input_tokens??null,output:total.output_tokens??null,contextPeak:ctx.length?Math.max(...ctx):null,contextMean:ctx.length?ctx.reduce((a,b)=>a+b,0)/ctx.length:null,tokenSamples:ctx.length};
 }
+export function flowOf(rows){
+  const ids=new Set(),calls=[];
+  for(const r of rows){const c=r.type==='response_item'?r.payload:null;if(!c||!['function_call','custom_tool_call'].includes(c.type))continue;const id=c.call_id||c.id;if(id&&ids.has(id))continue;if(id)ids.add(id);calls.push(c);}
+  const waits=calls.filter(c=>/(^|\.)wait$/.test(c.name||''));
+  const delays=waits.map(c=>{try{return JSON.parse(c.arguments||'{}').yield_time_ms;}catch{return null;}}).filter(n=>Number.isFinite(n)&&n>=0);
+  return {outerToolCalls:calls.length,waitCalls:waits.length,shortWaitCalls:delays.filter(n=>n>=0&&n<10000).length,minRequestedWaitMs:delays.length?Math.min(...delays):null};
+}
 export function jobsOf(tasks,repeats){
   const jobs=[];for(let repeat=1;repeat<=repeats;repeat++)for(let i=0;i<tasks.length;i++){
     const arms=(i+repeat)%2?['plain','plugin']:['plugin','plain'];
@@ -110,7 +117,7 @@ export async function main(a){
     const blocked=streamRows.some(r=>/blocked by policy|workspace is read-only/.test(JSON.stringify(r)));
     const actualModels=[...new Set(events.filter(r=>r.type==='turn_context').map(r=>r.payload.model).filter(Boolean))];
     const valid=!blocked&&actualModels.length===1&&actualModels[0]===model&&(job.arm==='plain'?!proof.hooksConfigured&&!proof.mcpConfigured:(plugin.name==='atlias'?proof.hooksConfigured&&proof.mcpConfigured&&proof.hookEvents>0:proof.pluginEnabled));
-    const row={...usage,task:job.task.id,family:job.task.family||job.task.id,repeat:job.repeat,arm:job.arm==='plain'?'plain':plugin.name,sha:job.arm==='plain'?'':sha,taskSha256:job.task.taskSha256,model,effort,lean:job.arm==='plugin'&&lean,cliVersion:sync(bin,['--version'],{env}),solved:grade.pass&&!cheat.files.length&&!proc.timedOut&&proc.code===0,valid,proof,checkOutput:grade.output,tampered:cheat.files,exitCode:proc.code,timedOut:proc.timedOut,ms:Date.now()-started,base,compactions:events.filter(r=>r.type==='compacted').length,at:new Date().toISOString()};
+    const row={...usage,...flowOf(events),task:job.task.id,family:job.task.family||job.task.id,repeat:job.repeat,arm:job.arm==='plain'?'plain':plugin.name,sha:job.arm==='plain'?'':sha,taskSha256:job.task.taskSha256,model,effort,lean:job.arm==='plugin'&&lean,cliVersion:sync(bin,['--version'],{env}),solved:grade.pass&&!cheat.files.length&&!proc.timedOut&&proc.code===0,valid,proof,checkOutput:grade.output,tampered:cheat.files,exitCode:proc.code,timedOut:proc.timedOut,ms:Date.now()-started,base,compactions:events.filter(r=>r.type==='compacted').length,at:new Date().toISOString()};
     fs.appendFileSync(rowsFile,JSON.stringify(row)+'\n');console.log(`${row.solved?'PASS':'FAIL'} ${row.arm} ${row.task}: raw=${row.promptRaw}, peak=${row.contextPeak}, valid=${valid}`);
     // The account token is never retained in benchmark artifacts after the call.
     fs.rmSync(path.join(codexHome,'auth.json'),{force:true});

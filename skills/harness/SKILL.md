@@ -5,7 +5,7 @@ description: "Use for memory across sessions (remember, recall, what did we deci
 
 # atlias
 
-SessionStart already supplies memory, graph status, rules and any handoff. Use that context; fetch a handoff only when resuming or when the existing note is missing.
+SessionStart supplies memory, graph status, rules and any handoff. Use it. Fetch an existing handoff only when resuming without one supplied. A fresh project with no saved memory, handoff or graph needs no context-tool discovery; read task files directly.
 
 - Recall a durable fact: harness_recall {query}.
 - Save one atomic fact: harness_remember {name, type, description, body}; type is user, feedback, project or reference. Use a short kebab-case name.

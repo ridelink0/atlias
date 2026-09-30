@@ -1,11 +1,16 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';import os from 'node:os';import path from 'node:path';
-import {usageOf,jobsOf,contained,validateResume,limitsOf,profileEnv} from './run.mjs';import {loadTaskList} from '../ccstudy/run.mjs';
+import {usageOf,flowOf,jobsOf,contained,validateResume,limitsOf,profileEnv} from './run.mjs';import {loadTaskList} from '../ccstudy/run.mjs';
 import {summarize} from './summary.mjs';
 import {spawnSync} from 'node:child_process';
 let n=0;const eq=(a,b)=>{assert.deepEqual(a,b);n++;};
 const count=(total,last)=>({type:'event_msg',payload:{type:'token_count',info:{total_token_usage:total,last_token_usage:{input_tokens:last}}}});
 eq(usageOf([]).promptRaw,null);
+const call=(name,args,id)=>({type:'response_item',payload:{type:'function_call',name,arguments:args,call_id:id}});
+eq(flowOf([]),{outerToolCalls:0,waitCalls:0,shortWaitCalls:0,minRequestedWaitMs:null});
+const pending=call('functions.wait','{"yield_time_ms":1000}','poll');
+eq(flowOf([pending,pending,call('wait','{"yield_time_ms":30000}','later'),call('exec','{}','read')]),{outerToolCalls:3,waitCalls:2,shortWaitCalls:1,minRequestedWaitMs:1000});
+eq(flowOf([call('wait','bad','x'),call('wait','{"yield_time_ms":"1000"}','y'),call('wait','{"yield_time_ms":-1}','z')]),{outerToolCalls:3,waitCalls:3,shortWaitCalls:0,minRequestedWaitMs:null});
 const u={input_tokens:123,cached_input_tokens:100,output_tokens:9};
 eq(usageOf([count(u,30),count(u,30)]),{promptRaw:123,cachedInput:100,output:9,contextPeak:30,contextMean:30,tokenSamples:1});
 eq(usageOf([count({...u,input_tokens:50},20),count(u,40)]).contextMean,30);

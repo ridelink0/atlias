@@ -6,6 +6,6 @@ Plain used111270 raw input tokens and peak20323. Atlias used370750 and peak24379
 
 The Atlias rollout made11 functions.wait calls, repeatedly requesting1000ms yields while tool cells were running. This visibly added context-bearing rounds. Runtime load and other task behavior can also affect the comparison; this is a diagnosis, not a causal cost estimate. A subsequent lean Codex instruction now requests30000ms waits on running cells; its model effect is unmeasured. The larger cheaper-with-same-outcome goal is not achieved.
 
-The runner uses --ignore-rules in both arms; do not assume an installed home instruction block's influence without inspecting the effective startup context. Both arms share63 startup skill descriptions; Atlias adds two. Full-access disposable workspaces are not security sandboxes. Hidden graders are written after model stop. Credentials were removed and only sanitized plan/metrics/summary are published.
+The runner uses --ignore-rules in both arms. The CLI's help confirms this disables execpolicy .rules files, not AGENTS.md; inspection of this treatment's retained startup messages confirms both the lean installed instruction block and lean SessionStart brief were loaded. Both arms share63 startup skill descriptions; Atlias adds two. Full-access disposable workspaces are not security sandboxes. Hidden graders are written after model stop. Credentials were removed and only sanitized plan/metrics/summary are published.
 
 Recompute: node tools/codexstudy/summary.mjs evals/results/native-codex/codex-atlias-host-2026-09-29/rows.jsonl
