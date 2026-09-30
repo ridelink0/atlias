@@ -1,49 +1,49 @@
 {
   "stats": {
     "plain": {
-      "n": 22,
-      "solved": 21,
-      "promptRaw": 2159797,
-      "perSolved": 102847.47619047618,
+      "n": 24,
+      "solved": 22,
+      "promptRaw": 2344337,
+      "perSolved": 106560.77272727272,
       "peak": 22674
     },
     "atlias": {
-      "n": 22,
-      "solved": 21,
-      "promptRaw": 1564908,
-      "perSolved": 74519.42857142857,
+      "n": 24,
+      "solved": 22,
+      "promptRaw": 1723477,
+      "perSolved": 78339.86363636363,
       "peak": 26663
     }
   },
   "comparisons": [
     {
       "arm": "atlias",
-      "pairedRuns": 22,
+      "pairedRuns": 24,
       "semanticFamilies": 12,
       "pairedStats": {
         "plain": {
-          "n": 22,
-          "solved": 21,
-          "promptRaw": 2159797,
-          "perSolved": 102847.47619047618,
+          "n": 24,
+          "solved": 22,
+          "promptRaw": 2344337,
+          "perSolved": 106560.77272727272,
           "contextPeak": 22674
         },
         "atlias": {
-          "n": 22,
-          "solved": 21,
-          "promptRaw": 1564908,
-          "perSolved": 74519.42857142857,
+          "n": 24,
+          "solved": 22,
+          "promptRaw": 1723477,
+          "perSolved": 78339.86363636363,
           "contextPeak": 26663
         }
       },
       "rawRatio": {
         "n": 12,
-        "ratioOfSums": 0.7245625399053708,
-        "bootLo": 0.6298972363833484,
-        "bootHi": 0.8528350731426396,
-        "geoMean": 0.7250346502292334,
-        "tLo": 0.6082952279815519,
-        "tHi": 0.8641778199992214
+        "ratioOfSums": 0.7351660618759163,
+        "bootLo": 0.6410911870898405,
+        "bootHi": 0.8540346868709087,
+        "geoMean": 0.7223740359874458,
+        "tLo": 0.6185702219865459,
+        "tHi": 0.843597427294425
       },
       "plainOnly": [],
       "pluginOnly": []

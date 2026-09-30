@@ -1,7 +1,7 @@
 {
   "source": "72e6ff5c47f9f84e779aaac3a87b93f3e436690b",
   "method": "reconstructed initial task files with the archived source packer; matched generated hash/length and complete user/developer text, not only a marker",
-  "checked": 22,
+  "checked": 24,
   "evidence": [
     {
       "task": "context-money-64",
@@ -176,6 +176,22 @@
       "repeat": 2,
       "chars": 737,
       "sha": "bf561da97badbfec",
+      "generated": true,
+      "delivered": true
+    },
+    {
+      "task": "context-dedupe-64",
+      "repeat": 2,
+      "chars": 754,
+      "sha": "52198b9111ffba37",
+      "generated": true,
+      "delivered": true
+    },
+    {
+      "task": "context-query-64",
+      "repeat": 2,
+      "chars": 782,
+      "sha": "b5753bb3ed5cd1a5",
       "generated": true,
       "delivered": true
     }
