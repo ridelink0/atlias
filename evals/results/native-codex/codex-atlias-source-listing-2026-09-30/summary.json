@@ -1,49 +1,49 @@
 {
   "stats": {
     "plain": {
-      "n": 9,
-      "solved": 9,
-      "promptRaw": 978672,
-      "perSolved": 108741.33333333333,
+      "n": 16,
+      "solved": 16,
+      "promptRaw": 1766989,
+      "perSolved": 110436.8125,
       "peak": 22934
     },
     "atlias": {
-      "n": 8,
-      "solved": 8,
-      "promptRaw": 988999,
-      "perSolved": 123624.875,
+      "n": 14,
+      "solved": 14,
+      "promptRaw": 1722293,
+      "perSolved": 123020.92857142857,
       "peak": 22773
     }
   },
   "comparisons": [
     {
       "arm": "atlias",
-      "pairedRuns": 8,
-      "semanticFamilies": 8,
+      "pairedRuns": 14,
+      "semanticFamilies": 11,
       "pairedStats": {
         "plain": {
-          "n": 8,
-          "solved": 8,
-          "promptRaw": 847856,
-          "perSolved": 105982,
+          "n": 14,
+          "solved": 14,
+          "promptRaw": 1544296,
+          "perSolved": 110306.85714285714,
           "contextPeak": 22934
         },
         "atlias": {
-          "n": 8,
-          "solved": 8,
-          "promptRaw": 988999,
-          "perSolved": 123624.875,
+          "n": 14,
+          "solved": 14,
+          "promptRaw": 1722293,
+          "perSolved": 123020.92857142857,
           "contextPeak": 22773
         }
       },
       "rawRatio": {
-        "n": 8,
-        "ratioOfSums": 1.1664704855541508,
-        "bootLo": 0.8298169653978007,
-        "bootHi": 1.5739983994220923,
-        "geoMean": 1.0669884671441183,
-        "tLo": 0.7027177408500904,
-        "tHi": 1.6200877291661
+        "n": 11,
+        "ratioOfSums": 1.115260934432259,
+        "bootLo": 0.9096288322328622,
+        "bootHi": 1.3695597027776996,
+        "geoMean": 1.084019962175291,
+        "tLo": 0.8191849425375348,
+        "tHi": 1.4344737279404725
       },
       "plainOnly": [],
       "pluginOnly": []
@@ -60,35 +60,35 @@
   "protocolComplete": false,
   "pairedTokens": {
     "plain": {
-      "raw": 847856,
-      "cached": 621312,
-      "uncached": 226544,
-      "output": 13389
+      "raw": 1544296,
+      "cached": 1150464,
+      "uncached": 393832,
+      "output": 22557
     },
     "atlias": {
-      "raw": 988999,
-      "cached": 884736,
-      "uncached": 104263,
-      "output": 11200
+      "raw": 1722293,
+      "cached": 1537024,
+      "uncached": 185269,
+      "output": 19353
     }
   },
   "allRecorded": {
     "plain": {
-      "calls": 9,
-      "solved": 9,
+      "calls": 16,
+      "solved": 16,
       "invalid": 0,
-      "promptRaw": 978672,
-      "cachedInput": 717312,
-      "output": 14833,
+      "promptRaw": 1766989,
+      "cachedInput": 1306624,
+      "output": 24772,
       "peak": 22934
     },
     "atlias": {
-      "calls": 9,
-      "solved": 9,
+      "calls": 15,
+      "solved": 15,
       "invalid": 1,
-      "promptRaw": 1067957,
-      "cachedInput": 946944,
-      "output": 12480,
+      "promptRaw": 1801251,
+      "cachedInput": 1599232,
+      "output": 20633,
       "peak": 22773
     }
   }
