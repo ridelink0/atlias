@@ -5,16 +5,16 @@ description: "Use for memory across sessions (remember, recall, what did we deci
 
 # atlias
 
-SessionStart supplies memory, graph status, rules and any handoff. Use it. Fetch an existing handoff only when resuming without one supplied. A fresh project with no saved memory, handoff or graph needs no context-tool discovery; read task files directly.
+Reuse SessionStart memory, graph status, rules and handoff. If it says no saved context, read task files without tool discovery. Fetch a handoff only when resuming without one supplied.
 
 - Recall a durable fact: harness_recall {query}.
-- Save one atomic fact: harness_remember {name, type, description, body}; type is user, feedback, project or reference. Use a short kebab-case name.
+- Save a fact: harness_remember {name, type, description, body}; type: user|feedback|project|reference, short kebab-case name.
 - Read a missing handoff: harness_progress {action: "get"}. Changed plan or impending compaction: {action: "set", text}.
 - With a graph available: graph_query {question}, then open its named files. Before a risky change: graph_affected {node}.
 - Syntax floor: harness_verify {paths}; report unsupported or unverified files honestly.
-- Consolidate pending sessions: harness_digest {action: "show"}, save durable facts, then {action: "ack"}.
+- Digests: harness_digest {action: "show"}; save durable facts, then {action: "ack"}.
 - Health or cost: harness_status or harness_bench. CLI equivalents: node <plugin>/bin/atlias.mjs recall|remember|progress|dream|graph|doctor|status.
 
-Never repeat a failed identical call. Confirm destructive commands. Run a real functional check, then re-read every changed file adversarially; fix findings and repeat the affected check. End with: "Pass 1: <check> passed. Pass 2: <findings or edge cases checked>."
+Do not repeat failed identical calls. Confirm destructive commands. Run a functional check, adversarially re-read every changed file, fix findings and rerun affected checks. End: "Pass 1: <check> passed. Pass 2: <findings or edge cases checked>."
 
-Memory is shared with Claude Code. Save lasting preferences, corrections and decisions, not transient status or facts already recorded by code/docs. Prefer updating an existing fact; replace corrections, use absolute dates, and discard resolved one-off incidents. Keep Signal, Novel, Important, Persistent facts.
+Shared Claude Code memory: save lasting preferences, corrections and decisions; skip transient status and code/docs facts. Update existing facts, replace corrections, use absolute dates and remove resolved incidents. Keep Signal, Novel, Important, Persistent facts.
