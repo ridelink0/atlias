@@ -33,6 +33,8 @@ Every valid treatment proves the hook generated its pack AND it reached a user/d
 
 This candidate remains default off, with no release or global activation. No Claude-model savings are inferred; native Claude calls are unavailable while its weekly allowance is exhausted. Earlier expensive trials remain in the README. Source46c12af passed Windows checks; its POSIX separator regression was fixed separately atb12bce8. Later compatibility and wording fixes are not relabeled as the measured source.
 
+The independent [exact-context audit](context-audit.json) reconstructed the initial files with the archived packer, then matched every treatment's generated hash/length and complete delivered text: 12/12 passed. A marker alone was insufficient for this audit.
+
 Recompute: `node tools/codexstudy/summary.mjs evals/results/native-codex/codex-atlias-pack-2026-09-30/rows.jsonl`.
 
 Re-run from this repository with native Codex: `node tools/codexstudy/run.mjs --tasks evals/results/native-codex/codex-atlias-pack-2026-09-30/tasks.json --task-root . --pairs 6 --repeat 2 --lean --task-context --ref 46c12af --out <fresh-output> --codex <native-codex-executable> --stop-percent 80 --run`. Account usage can stop before completion; do not enable paid credits. Task inputs are the committed evals/context-heldout files named in tasks.json.

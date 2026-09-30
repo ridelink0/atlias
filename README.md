@@ -28,7 +28,7 @@ The most expensive thing an agent does is say it finished when it did not. atlia
 | adds a function nothing calls | the definition, and that no other line names it |
 | saves a file that does not parse | the parser's own error |
 | repeats a call, or swaps between two calls | the loop, stopped with what to change |
-| runs `rm -rf ~`, a force push, a dropped table | a question to the user first, in Claude Code, Codex, Gemini CLI and the atlias agent |
+| runs `rm -rf ~`, a force push, a dropped table | confirmation in Claude Code, Gemini CLI and the atlias agent; Codex blocks the command with a reason because its hook adapter does not support an approval question |
 
 Every finding names what happened, why it matters and how to fix it, and the gate says how to mark one as a false alarm. Nothing it checks is claimed: a TypeScript file it cannot parse is named as unchecked, a test run whose outcome it cannot read is recorded as unknown, never as a pass.
 
@@ -50,6 +50,8 @@ or, from an installed copy, `atlias shortcut install`, which puts the command in
 ```
 
 **Codex**: `codex plugin marketplace add ridelink0/atlias` lists it in Codex's own plugin browser (Codex reads the same marketplace file), and `atlias install --codex` adds the hooks and the MCP server.
+
+Experimental lean installation (`flags.leanBrief` enabled) can reuse native plugin hooks whose source, registration, matcher and configured trust are verified. It preserves global coverage for stale, disabled, untrusted or incomplete native events. The isolated native CLI install reused eight events, including SessionStart, and retained global PostToolUse coverage because the native matcher is narrower. This avoids duplicate registration; model delivery and token effects of this installation change remain unmeasured.
 
 **Every other harness on the machine**: `atlias install`. It writes only into harnesses whose config folder already exists, marks every block it adds, and `atlias uninstall` removes exactly those. `atlias doctor` checks all of it, including that typing `atlias` finds the command.
 

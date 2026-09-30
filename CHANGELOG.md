@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Lean Codex installation can reuse native Atlias hooks instead of registering each event twice. It requires an enabled installed plugin reported by the native CLI, matching runtime source, canonical complete matchers and configured trust. Missing, stale, disabled or unverified events keep their existing global coverage. This remains opt-in through `leanBrief`; native-only model delivery and token effects are not yet measured.
+
 - Experimental task-context selection deduplicates and prioritizes requirements before applying the eight-root budget, and discloses excess roots. Both Claude Code and Codex hooks are covered; the flag stays off by default.
 - Shorter shared skills preserve memory, graph and double-check behavior. The lean Codex block now skips index reads when SessionStart explicitly reports no saved memory, while still recovering omitted or truncated indexes. Wording changes have no measured model-token saving yet.
 
