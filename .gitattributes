@@ -6,3 +6,4 @@
 /evals/results/round5/pc-mt-three-repeats-2026-09-30/** text eol=lf
 /evals/results/round5/pc-mt-three-repeats-2026-09-30/reports/*.json -text whitespace=cr-at-eol
 /evals/results/round5/pc-14b-single-2026-10-01/*.json -text whitespace=cr-at-eol
+/evals/factuality-variants-heldout/** text eol=lf

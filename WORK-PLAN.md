@@ -1,3 +1,7 @@
+# Windows variant hash fix for Gev, 2026-10-01T23:53:17.240Z
+
+Independent12-case corpus has131passedcontrols/0models; secondpass FOUND actualWindowsCRLFmanifesthash failure. Scoped LF attribute fixed it; ALL12 Git core.autocrlf=true filtered hashes nowmatch. New source needs ownCI; do not launchmodels untilfreshheadroom/sourceplan prerequisites. Current88%meter lastknown; no newlongwork, originalstudies/installedsnapshotunchanged.
+
 # Independent provenance corpus for Gev, 2026-10-01T23:50:54.194Z
 
 Progress:12 NEWcases/fourfamilies at tools/codexstudy/factuality-variants-corpus.mjs and evals/factuality-variants-heldout;131model-free controls PASS and adversarial empty/falsy/gap/citation/check/source-ID/hidden-placement/original-byte checks PASS. Original16cases/closed64ledger unchanged. Shared runtime candidate020 exactCI36941842698 GREEN9 remains the installed-neutral precursor; this corpus commit needs OWN newCI including131controls. New48-call per-host plan described in docs/FACTUALITY-QUALITY-PLAN.md, source/driver/modelmedium/flags/prompts/grades/order/delivery mustfreeze BEFOREmodels;0newattempts and execution/auditnotyetimplemented. Do not resume closed studies or reuse controls. Full-source/gold accessibility under ordinary filesystem tools is a contamination limitation; no public benchmark/perfectisolation/parity claim. Installed3726 staysenabled/pinned, no promotion/rollback.
