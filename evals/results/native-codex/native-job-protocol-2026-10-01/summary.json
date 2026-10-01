@@ -1,0 +1,85 @@
+{
+  "modelCalls": 0,
+  "evidence": [
+    {
+      "root": "D:/harness-work/native-job-codex-notice-aware-1001",
+      "result": {
+        "modelCalls": 0,
+        "results": [
+          {
+            "host": "codex",
+            "modelCalls": 0,
+            "localRequests": 1,
+            "completePacketDelivered": true,
+            "replacementInstructionsDelivered": true,
+            "parsedAndValidated": true,
+            "nativeNotices": [
+              "Model metadata for `gpt-6.1-sol` not found. Defaulting to fallback metadata; this can degrade performance and cause issues."
+            ],
+            "metadataParity": "not established; owned custom provider uses fallback metadata",
+            "packetSha256": "17f15e8c1788301e50cd06a3f7e312465610386f742adeb56706b6aecedf06f7",
+            "instructionSha256": "0dd43d614010fa7dd24e4f0d1679827d2d32797e37d31e9d73786a83e9d59b9a",
+            "instructionsChars": 535,
+            "inputChars": 3687,
+            "toolsChars": 1729,
+            "toolNames": [
+              "request_user_input",
+              "view_image"
+            ],
+            "status": {
+              "code": 0,
+              "signal": null
+            }
+          }
+        ],
+        "limitation": "Owned local fixture, no inference. Metadata is not model-token saving or general feature parity; no live user configuration or auth was copied. Native profile remains experimental."
+      },
+      "requestSha256": "520b051458e6f118ca6c06f7ac6374ab0bfbf4a2965b4459b014bbf7bb1eb24f"
+    },
+    {
+      "root": "D:/harness-work/native-job-profile-claude-bare-1001",
+      "result": {
+        "modelCalls": 0,
+        "results": [
+          {
+            "host": "claude",
+            "modelCalls": 0,
+            "localRequests": 1,
+            "completePacketDelivered": true,
+            "replacementInstructionsDelivered": true,
+            "parsedAndValidated": true,
+            "packetSha256": "17f15e8c1788301e50cd06a3f7e312465610386f742adeb56706b6aecedf06f7",
+            "instructionSha256": "0dd43d614010fa7dd24e4f0d1679827d2d32797e37d31e9d73786a83e9d59b9a",
+            "instructionsChars": 824,
+            "inputChars": 563,
+            "toolsChars": 2,
+            "toolNames": [],
+            "status": {
+              "code": 0,
+              "signal": null
+            }
+          }
+        ],
+        "limitation": "Owned local fixture, no inference. Metadata is not model-token saving or general feature parity; no live user configuration or auth was copied. Native profile remains experimental."
+      },
+      "requestSha256": "946059ff8a896b3405e008c45cfcf1ce2bc720927c77582d8dd5ae4b6db92e2d"
+    }
+  ],
+  "sourceFileDigests": {
+    "lib/native-job.mjs": "6c4496d9c120f92b36e456f4fdf66bdc163dbfce1bae0429e132eede2256c30d",
+    "lib/native-job-check.mjs": "991f697d3f61a667e76ba67737d5ed1d7601beeaa2f3ef8b448849a2ee59c2ec",
+    "tools/native-job/probe.mjs": "8050b9b8470b8d9d3c547c57c6d540e86b179e2d30f0344f14043315c553a39a"
+  },
+  "preservedFailures": [
+    "Initial non-bare Claude startup timed out before an HTTP request.",
+    "Original unsupported tools.view_image configuration produced an ignored-setting warning; removed.",
+    "Two strict fixture attempts classified custom-provider fallback metadata as a configuration failure; all raw transcripts retained.",
+    "Current fixture explicitly reports missing metadata parity; it does not prove native inference savings."
+  ],
+  "limitations": [
+    "Owned local scripted responses, no inference.",
+    "Claude bare fake-key fixture is not subscription-mode activation.",
+    "Codex residual tool metadata retained; not zero-tool/general feature parity.",
+    "Every previous failure stays available; no original model row or grade repaired."
+  ]
+}

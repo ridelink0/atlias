@@ -1001,6 +1001,7 @@ await (await import('./explain-suites.mjs')).default({ suite, check, skip, TMP, 
 await (await import('./direct-suites.mjs')).default({ suite, asyncSuite, check, skip });
 await (await import('./ui-suites.mjs')).default({ suite, asyncSuite, check, core, ROOT, fs, path });
 await (await import('./claude-engine-suites.mjs')).default({ suite, check, core, agentMod, TMP, fs, path });
+await (await import('./native-job-suites.mjs')).default({ suite, check, ROOT, fs, path });
 await (await import('./coverage-suites.mjs')).default({ suite, check, ROOT, fs, path });
 await (await import('./task-context-suites.mjs')).default({ suite, check, TMP, ROOT, fs, path });
 await (await import('./dual-cache-suites.mjs')).default({ suite, check, TMP, fs, path });

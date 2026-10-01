@@ -37,6 +37,11 @@ jobs:
           node tools/ccstudy/test.mjs
           node tools/codexstudy/test.mjs
           node tools/codexstudy/corpus-test.mjs
+          node tools/codexstudy/behavior-test.mjs
+          node tools/omniscience/test.mjs
+          node tools/native-job/test.mjs
+          node tools/native-job/runner-test.mjs
+          node tools/codexstudy/broker-test.mjs
       - name: the command line answers
         shell: bash
         run: |

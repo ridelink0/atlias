@@ -1,7 +1,7 @@
 {
   "source": "0e29833460e466ec80c503129b90808a0c206bf9",
   "method": "reconstructed initial task files with the archived source packer; matched generated hash/length and complete user/developer text, not only a marker",
-  "checked": 18,
+  "checked": 23,
   "evidence": [
     {
       "task": "context-money-64",
@@ -144,6 +144,46 @@
       "repeat": 2,
       "chars": 833,
       "sha": "01eac22945bdd755",
+      "generated": true,
+      "delivered": true
+    },
+    {
+      "task": "context-csv-64",
+      "repeat": 2,
+      "chars": 730,
+      "sha": "9dd0b543f3f5a75b",
+      "generated": true,
+      "delivered": true
+    },
+    {
+      "task": "context-pagination-64",
+      "repeat": 2,
+      "chars": 893,
+      "sha": "468cfb693d82668b",
+      "generated": true,
+      "delivered": true
+    },
+    {
+      "task": "context-topology-64",
+      "repeat": 2,
+      "chars": 737,
+      "sha": "bf561da97badbfec",
+      "generated": true,
+      "delivered": true
+    },
+    {
+      "task": "context-dedupe-64",
+      "repeat": 2,
+      "chars": 754,
+      "sha": "52198b9111ffba37",
+      "generated": true,
+      "delivered": true
+    },
+    {
+      "task": "context-query-64",
+      "repeat": 2,
+      "chars": 891,
+      "sha": "540ef889722b6e8e",
       "generated": true,
       "delivered": true
     }
