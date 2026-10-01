@@ -1,10 +1,18 @@
 # Benchmark pattern and implementation plan for Gev
 
-The target is20x less usage with the same required outputs or better on BOTH native hosts;5x is the minimum milestone. Existing studies do not meet either threshold. Source7d is closed at48calls with both original failures retained. The next study measures a substantive bounded-job transport change.
+The target is20x less usage with the same required outputs and normal-host capabilities or better on BOTH native hosts;5x is the minimum milestone. The completed independent-batch study achieves17.19x less uncached input plus output on twelve bounded task families. It has reduced capabilities and no Claude-model or subscription-usage proof, so the actual goal remains unfinished.
+
+## Latest demonstrated cause and next candidate
+
+Source7b is CLOSED26/26:24 new plain controls and2 whole twelve-job batches, all24 members per arm solved with the original protected grades and1260 additional cases. Full26 independent input/instruction/source/counter/auth audits use the same frozen ledger as the [publication](../evals/results/native-codex/codex-atlias-independent-batch-2026-10-01/REPORT.md). Raw input85.36x and total65.77x reduction do not establish subscription savings; uncached input plus output is17.19x. Only TWO coupled batch observations were measured. SourceD7's broader workflow study is CLOSED24/24 and retains its unfavorable raw-input and context results; uncached input plus output improves only1.55x.
+
+The next default-off dictionary transport retains complete task, instruction and source strings, interns exact duplicate strings, and uses per-job file indices instead of model-copied per-file hashes. The broker restores hashes from the immutable original packet before validation and staging. It implements bounded-job transport and stable shared context ideas from the pinned Gray and Claude Harness references; it does not copy their code or discard requirements.51 model-free binding controls and actual BOTH-client localhost delivery checks pass. Claude bare/fake-key checks do not establish subscription OAuth activation. Byte reductions do not establish model-token savings. A NEW26-attempt matched study must use its own source/driver hash and exact nine-job CI, preserve every original contract/case, and include24 fresh controls. The driver requires the original closed source7b full audit before dictionary inference. No old study is resumed or regraded.
+
+Dictionary transport remains experimental and opt-in. Full-host routing, broader capabilities, factuality and actual Claude-model comparisons are separate unfinished gates; improving a narrow worker must not silently replace normal tools or promote a default.
 
 ## Observed pattern
 
-Gev's capability requirement is a separate [capability and efficiency gate](CAPABILITY-AND-EFFICIENCY-GATES.md). Six new full-workflow families have independent grader controls; their model comparisons are unmeasured. The narrower bounded worker cannot establish normal native-host parity. Finish source07 unchanged, then use NEW pinned studies for broader workflows and capability-preserving routing. No default promotion follows from partial raw-token savings.
+Gev's capability requirement is a separate [capability and efficiency gate](CAPABILITY-AND-EFFICIENCY-GATES.md). SourceD7's six full-workflow families have completed original model comparisons and independent full audits. The narrower bounded worker cannot establish normal native-host parity. Source07 and source7b are closed; only NEW pinned studies may measure broader workflows and capability-preserving routing. No default promotion follows from raw-token savings.
 
 | Completed native source | Matched pairs | Raw input change | Peak change |
 |---|---:|---:|---:|

@@ -7,6 +7,7 @@ import { spawn } from 'node:child_process';
 import { prepareJob, JOB_INSTRUCTIONS, validateEdits, digest } from '../../lib/native-job.mjs';
 import { childEnv } from '../ccstudy/lib.mjs';
 import {prepareBatch,validateBatch,BATCH_INSTRUCTIONS,BATCH_RESPONSE_SCHEMA} from '../../lib/native-job-batch.mjs';
+import {prepareDictionary,decodeDictionary,DICTIONARY_INSTRUCTIONS,DICTIONARY_RESPONSE_SCHEMA} from '../../lib/native-job-dictionary.mjs';
 const [out, codex, claude] = process.argv.slice(2);
 if (!out || !codex || !claude || fs.existsSync(out)) throw Error('usage: probe.mjs <unused-out> <native-codex> <native-claude>');
 fs.mkdirSync(out, { recursive: true });
@@ -14,14 +15,18 @@ const source = path.join(out, 'source'); fs.mkdirSync(source);
 fs.writeFileSync(path.join(source, 'api.mjs'), 'export const value = 1;');
 const spec={root:source,task:'Change value to2.',instructions:['The user is Gev. Start replies with Okay Gev. No emojis.','Functional verification then an adversarial hunt; preserve concurrent edits.'],readPaths:['api.mjs'],writePaths:['api.mjs']};
 const batchMode=process.argv.includes('--batch');
+const dictionaryMode=process.argv.includes('--dictionary');if(dictionaryMode&&!batchMode)throw Error('--dictionary requires --batch');
 const jobsIndex=process.argv.indexOf('--jobs-json'),jobsFile=jobsIndex<0?'':process.argv[jobsIndex+1];
 if(jobsIndex>=0&&(!batchMode||!jobsFile||jobsFile.startsWith('--')))throw Error('--jobs-json requires --batch and an explicit source-only jobs JSON');
 let job;
 if(jobsFile){job=prepareBatch(JSON.parse(fs.readFileSync(jobsFile,'utf8')).jobs);}
 else if(batchMode){const second=path.join(out,'second-source');fs.mkdirSync(second);fs.writeFileSync(path.join(second,'api.mjs'),'export const value = 1;');job=prepareBatch([{...spec,id:'a'},{...spec,id:'b',root:second}]);}else job=prepareJob(spec);
-const workerInstructions=batchMode?BATCH_INSTRUCTIONS:JOB_INSTRUCTIONS;
+const dictionary=dictionaryMode?prepareDictionary(job.jobs.map(({id,job:member})=>({id,root:member.root,task:member.packet.task,instructions:member.packet.instructions,readPaths:member.packet.files.map(f=>f.path),writePaths:member.packet.files.filter(f=>f.writable).map(f=>f.path)}))):null;
+if(dictionary)job={...job,serialized:dictionary.serialized,input:dictionary.input};
+const workerInstructions=dictionary?DICTIONARY_INSTRUCTIONS:batchMode?BATCH_INSTRUCTIONS:JOB_INSTRUCTIONS;
+const batchSchema=dictionary?DICTIONARY_RESPONSE_SCHEMA:BATCH_RESPONSE_SCHEMA;
 const edit=single=>({path:'api.mjs',beforeSha256:single.packet.files[0].sha256,text:'export const value = 2;'});
-const reply=JSON.stringify(batchMode?{batchSha256:job.batchSha256,jobs:job.jobs.map(({id,job:single})=>({id,packetSha256:single.packetSha256,edits:jobsFile?[]:[edit(single)]}))}:{packetSha256:job.packetSha256,edits:[edit(job)]});
+const reply=JSON.stringify(dictionary?{batchSha256:job.batchSha256,jobs:job.jobs.map(({id})=>({id,edits:jobsFile?[]:[{fileIndex:0,text:'export const value = 2;'}]}))}:batchMode?{batchSha256:job.batchSha256,jobs:job.jobs.map(({id,job:single})=>({id,packetSha256:single.packetSha256,edits:jobsFile?[]:[edit(single)]}))}:{packetSha256:job.packetSha256,edits:[edit(job)]});
 const requests = [], results = [];
 const server = http.createServer(async (req, res) => {
   if (req.method !== 'POST') { res.writeHead(404); res.end(); return; }
@@ -71,7 +76,7 @@ try {
     }
     const instructionFile = path.join(folder, 'instructions.md'); fs.writeFileSync(instructionFile, workerInstructions);
     const schemaFile=path.join(folder,'response-schema.json');
-    if(batchMode)fs.writeFileSync(schemaFile,JSON.stringify(BATCH_RESPONSE_SCHEMA));
+    if(batchMode)fs.writeFileSync(schemaFile,JSON.stringify(batchSchema));
     let args;
     if (host === 'codex') {
       const skillFiles = [path.join(process.env.USERPROFILE, '.agents/skills'), path.join(process.env.USERPROFILE, '.codex/skills')].flatMap(p => fs.existsSync(p) ? fs.readdirSync(p).map(n => path.join(p, n, 'SKILL.md')).filter(f => fs.existsSync(f)) : []);
@@ -101,14 +106,14 @@ try {
     const texts = host === 'codex' ? last.input.flatMap(x => (x.content || []).filter(p => typeof p.text === 'string').map(p => p.text)) : last.messages.flatMap(x => Array.isArray(x.content) ? x.content.filter(p => typeof p.text === 'string').map(p => p.text) : [x.content]);
     assert.ok(texts.some(text => text.includes(job.serialized)), 'complete packet not delivered');
     assert.ok(texts.some(text => text.includes(job.input)), 'hash-bound input envelope not delivered');
-    if(batchMode && host==='codex')assert.deepEqual(last.text?.format?.schema,BATCH_RESPONSE_SCHEMA,'actual runner batch schema must reach the native request');
+    if(batchMode && host==='codex')assert.deepEqual(last.text?.format?.schema,batchSchema,'actual runner batch schema must reach the native request');
     const instructions = host === 'codex' ? last.instructions : JSON.stringify(last.system);
     assert.ok(host === 'codex' ? instructions === workerInstructions : (last.system || []).some(p => p.text === workerInstructions), 'replacement instructions not delivered exactly');
     const events = stdout.split('\n').filter(Boolean).flatMap(line => { try { return [JSON.parse(line)]; } catch { return []; } });
     const notices = events.filter(e => e.item?.type === 'error').map(e => e.item.message);
     assert.ok(!notices.some(message => /unrecognized configuration setting|invalid.*config/i.test(message)), 'native configuration error must not be ignored');
     const output = host === 'codex' ? events.filter(e => e.type === 'item.completed' && e.item?.type === 'agent_message').at(-1)?.item.text : events.filter(e => e.type === 'result').at(-1)?.result;
-    assert.equal(output, reply); if(batchMode)validateBatch(job,output);else validateEdits(job,output);
+    assert.equal(output, reply); if(dictionary)decodeDictionary(dictionary,output);else if(batchMode)validateBatch(job,output);else validateEdits(job,output);
     results.push({ host, modelCalls: 0, localRequests: bodies.length, completePacketDelivered: true, replacementInstructionsDelivered: true, parsedAndValidated: true, nativeNotices: notices, metadataParity: notices.some(m => /fallback metadata/.test(m)) ? 'not established; owned custom provider uses fallback metadata' : 'unmeasured', packetSha256: job.packetSha256??job.batchSha256, ...(batchMode?{jobs:job.jobs.length,batchSha256:job.batchSha256}:{}), instructionSha256: digest(workerInstructions), instructionsChars: instructions.length, inputChars: JSON.stringify(host === 'codex' ? last.input : last.messages).length, toolsChars: JSON.stringify(last.tools || []).length, toolNames: (last.tools || []).map(t => t.name || t.type), status });
     console.log(JSON.stringify(results.at(-1)));
   }

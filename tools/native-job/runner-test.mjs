@@ -45,6 +45,13 @@ try {
   assert.equal(batchPlan.jobs.length,2);checks++;
   assert.equal(batchPlan.calls,0);checks++;
   assert.notEqual(run(path.join(second,'unsafe-batch-output')).status,0);checks++;
+  const dictOut=path.join(root,'dictionary-prepared'),dictPrepared=run(dictOut,['--dictionary']);assert.equal(dictPrepared.status,0,dictPrepared.stderr);checks++;
+  const dictPlan=JSON.parse(fs.readFileSync(path.join(dictOut,'plan.json')));assert.equal(dictPlan.profile,'experimental-independent-dictionary-v1');checks++;assert.equal(dictPlan.calls,0);checks++;
+  assert.equal(JSON.parse(fs.readFileSync(path.join(dictOut,'input-envelope.json'))).protocol,'dictionary-v1');checks++;assert.equal(JSON.parse(fs.readFileSync(path.join(dictOut,'original-batch-packet.json'))).jobs.length,2);checks++;
+  fs.writeFileSync(meter,'console.log(JSON.stringify({snapshotFetchedAt:Date.now(),windows:[{percentUsed:0}]}))');
+  const dictFailure=path.join(root,'dictionary-failure'),df=run(dictFailure,['--dictionary','--run','--usage-cli',meter,'--subscription-auth',auth]);assert.equal(df.status,1,df.stderr);checks++;
+  const dictResult=JSON.parse(fs.readFileSync(path.join(dictFailure,'result.json')));assert.equal(dictResult.calls,1);checks++;assert.equal(dictResult.authRemoved,true);checks++;assert.equal(dictResult.staged,null);checks++;
+  fs.writeFileSync(input,JSON.stringify(spec));assert.notEqual(run(path.join(root,'dictionary-single'),['--dictionary']).status,0);checks++;
   const partial={model:spec.model,effort:spec.effort,jobs:[{...spec,id:'a',checks:{functional:['node','--check','api.mjs'],adversarial:['node','--check','api.mjs']}},{...spec,root:second,id:'b'}]};
   fs.writeFileSync(input,JSON.stringify(partial));assert.notEqual(run(path.join(root,'partial-checks')).status,0);checks++;
   console.log(`${checks} native-runner preparation/failure/accounting controls passed; zero model calls.`);

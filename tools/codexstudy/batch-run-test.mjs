@@ -1,6 +1,11 @@
 import assert from 'node:assert/strict';import fs from 'node:fs';import os from 'node:os';import path from 'node:path';import crypto from 'node:crypto';
-import {prerequisites,recipe,gradingResult,sourceSnapshot,parseRollouts,studyRows} from './batch-run.mjs';
+import {prerequisites,recipe,gradingResult,sourceSnapshot,parseRollouts,studyRows,transportProfile,dictionaryPrerequisite} from './batch-run.mjs';
 const hash=x=>crypto.createHash('sha256').update(x).digest('hex');let checks=0;
+assert.deepEqual(transportProfile().runnerFlags,[]);checks++;assert.deepEqual(transportProfile('dictionary-v1').runnerFlags,['--dictionary']);checks++;assert.throws(()=>transportProfile('unknown'));checks++;
+const published=new URL('../../evals/results/native-codex/codex-atlias-independent-batch-2026-10-01/',import.meta.url),previousBytes=fs.readFileSync(new URL('rows.jsonl',published)),previousAudit=JSON.parse(fs.readFileSync(new URL('AUDIT.json',published)));
+assert.equal(dictionaryPrerequisite(previousAudit,previousBytes).precedingBatchLedgerSha256,hash(previousBytes));checks++;
+for(const change of [x=>x.source='other',x=>x.complete=false,x=>x.ledgerSha256='wrong',x=>x.audits.pop(),x=>x.counters.qualityPassed=false,x=>x.counters.costsKnown=false,x=>x.audits[0].authRemoved=false,x=>x.audits[0].members[0].solved=false,x=>x.audits[1]=structuredClone(x.audits[0]),x=>x.audits[0].costs.raw++,x=>x.audits[0].members.pop()]){const x=structuredClone(previousAudit);change(x);assert.throws(()=>dictionaryPrerequisite(x,previousBytes));checks++;}
+assert.throws(()=>dictionaryPrerequisite(previousAudit,Buffer.from('changed ledger')));checks++;
 const source='d7e614ccfb1d18437d96b0a33f65778989a2d534',candidate='candidate';
 const plan={sha:source,jobs:24,repeats:2,model:'gpt-6.1-sol',effort:'medium',tasks:Array.from({length:6},(_,i)=>({id:'task'+i,sha256:'hash'+i}))};
 const rows=plan.tasks.flatMap(t=>[1,2].flatMap(repeat=>['plain','atlias'].map(arm=>({task:t.id,repeat,arm,taskSha256:t.sha256,sha:arm==='plain'?'':source,model:plan.model,effort:plan.effort,valid:true,solved:true,exitCode:0,timedOut:false}))));

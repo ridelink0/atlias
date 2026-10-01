@@ -5,17 +5,21 @@ import { spawn, spawnSync } from 'node:child_process';
 import { prepareJob, JOB_INSTRUCTIONS, RESPONSE_SCHEMA, stageJob, assertJobUnchanged, digest } from '../../lib/native-job.mjs';
 import { verifyStagedJob } from '../../lib/native-job-check.mjs';
 import {prepareBatch,assertBatchUnchanged,stageBatch,batchStageSnapshot,BATCH_INSTRUCTIONS,BATCH_RESPONSE_SCHEMA} from '../../lib/native-job-batch.mjs';
+import {prepareDictionary,assertDictionaryUnchanged,stageDictionary,DICTIONARY_INSTRUCTIONS,DICTIONARY_RESPONSE_SCHEMA} from '../../lib/native-job-dictionary.mjs';
 import { childEnv, readJsonl } from '../ccstudy/lib.mjs';
 const args = process.argv.slice(2);
 const opt = name => { const i = args.indexOf(name); return i < 0 ? '' : args[i + 1] || ''; };
 const host = opt('--host'), input = opt('--job'), out = opt('--out'), native = opt('--native');
 if (!['codex', 'claude'].includes(host) || !input || !out || !native) throw Error('usage: run.mjs --host codex|claude --job <explicit-job.json> --out <unused-directory> --native <executable> [--run]');
-const spec = JSON.parse(fs.readFileSync(input)), batch = Object.hasOwn(spec,'jobs') ? prepareBatch(spec.jobs) : null;
-const job = batch ? {...batch,packetSha256:batch.batchSha256} : prepareJob(spec);
+const spec = JSON.parse(fs.readFileSync(input));
+if(args.includes('--dictionary')&&!Object.hasOwn(spec,'jobs'))throw Error('--dictionary requires explicit independent jobs');
+const dictionary=args.includes('--dictionary')?prepareDictionary(spec.jobs):null;
+const batch = dictionary?.batch ?? (Object.hasOwn(spec,'jobs') ? prepareBatch(spec.jobs) : null);
+const job = batch ? {...batch,...(dictionary?{serialized:dictionary.serialized,input:dictionary.input}:{}),packetSha256:batch.batchSha256} : prepareJob(spec);
 const roots = batch ? batch.jobs.map(x=>x.job.root) : [job.root];
-const workerInstructions = batch ? BATCH_INSTRUCTIONS : JOB_INSTRUCTIONS;
-const responseSchema = batch ? BATCH_RESPONSE_SCHEMA : RESPONSE_SCHEMA;
-const unchanged = () => batch ? assertBatchUnchanged(batch) : assertJobUnchanged(job);
+const workerInstructions = dictionary?DICTIONARY_INSTRUCTIONS:batch ? BATCH_INSTRUCTIONS : JOB_INSTRUCTIONS;
+const responseSchema = dictionary?DICTIONARY_RESPONSE_SCHEMA:batch ? BATCH_RESPONSE_SCHEMA : RESPONSE_SCHEMA;
+const unchanged = () => dictionary?assertDictionaryUnchanged(dictionary):batch ? assertBatchUnchanged(batch) : assertJobUnchanged(job);
 if(batch && spec.jobs.some(x=>x.checks) && !spec.jobs.every(x=>x.checks))throw Error('batch checks must cover every job or be omitted explicitly');
 if (!spec.model || typeof spec.model !== 'string' || !['low','medium','high','xhigh','max'].includes(spec.effort)) throw Error('pin model and effort explicitly');
 const outputParent = fs.realpathSync(path.dirname(path.resolve(out))), outputPath = path.join(outputParent, path.basename(out));
@@ -24,8 +28,10 @@ if (fs.existsSync(out)) throw Error('preserve previous attempt');
 fs.mkdirSync(out, { recursive: true });
 fs.writeFileSync(path.join(out, 'packet.json'), job.serialized);
 fs.writeFileSync(path.join(out, 'input-envelope.json'), job.input);
+if(dictionary)fs.writeFileSync(path.join(out,'original-batch-packet.json'),batch.serialized);
 const plan = { host, model: spec.model, effort: spec.effort, packetSha256: job.packetSha256, instructionSha256: digest(workerInstructions), native, calls: 0, paidCredits: false, automaticRetries: false, profile: batch ? 'experimental-independent-batch-v1' : 'experimental-bounded-patch-v1', ...(batch ? {batchSha256:batch.batchSha256,jobs:batch.jobs.map(x=>({id:x.id,packetSha256:x.job.packetSha256})),accounting:'One whole native attempt for all jobs; never divide away failed job costs.'} : {}), limitations: ['Reduced native capabilities, not general feature parity.', 'Claude subscription profile delivery remains unverified.', 'Native residual tools require transcript audit; no zero-tool guarantee.', 'Staging/check success does not apply edits to the live project.'] };
 fs.writeFileSync(path.join(out, 'plan.json'), JSON.stringify(plan, null, 2));
+if(dictionary){plan.profile='experimental-independent-dictionary-v1';plan.transportSha256=dictionary.transportSha256;plan.codec='dictionary-v1';fs.writeFileSync(path.join(out,'plan.json'),JSON.stringify(plan,null,2));}
 if (!args.includes('--run')) { console.log(JSON.stringify({ status: 'prepared-unmeasured', modelCalls: 0, out })); process.exit(0); }
 // Meter failure, absent windows or an exhausted window fails closed.
 const meter = opt('--usage-cli');
@@ -80,7 +86,7 @@ const configurationError = nativeNotices.some(message => /unrecognized configura
 const toolEvents = events.filter(e => host === 'codex' ? e.item && !['agent_message', 'reasoning', 'error'].includes(e.item.type) : e.type === 'assistant' && e.message?.content?.some(c => /tool_use/.test(c.type || '')));
 const tokenSummary = host === 'codex' ? events.filter(e => e.type === 'turn.completed').at(-1)?.usage : events.filter(e => e.type === 'result').at(-1)?.modelUsage;
 let staged = null, verification = null, error = '', qualityFailure = '';
-try { if (status.code !== 0 || timedOut || outputExceeded || configurationError || toolEvents.length || typeof response !== 'string') throw Error('native attempt incomplete, misconfigured, tool-using, oversized or malformed; never silently retry'); staged = batch ? stageBatch(batch,response,path.join(out,'stage')) : stageJob(job, response, path.join(out, 'stage')); } catch (e) { error = e.message; }
+try { if (status.code !== 0 || timedOut || outputExceeded || configurationError || toolEvents.length || typeof response !== 'string') throw Error('native attempt incomplete, misconfigured, tool-using, oversized or malformed; never silently retry'); staged = dictionary?stageDictionary(dictionary,response,path.join(out,'stage')):batch ? stageBatch(batch,response,path.join(out,'stage')) : stageJob(job, response, path.join(out, 'stage')); } catch (e) { error = e.message; }
 if(staged) try {
   if(batch && spec.jobs.every(x=>x.checks)){
     const snapshot=batchStageSnapshot(batch,staged);

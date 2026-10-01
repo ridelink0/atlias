@@ -1,8 +1,24 @@
 import * as bounded from '../lib/native-job.mjs';
 import * as checked from '../lib/native-job-check.mjs';
 import * as batches from '../lib/native-job-batch.mjs';
+import * as dictionary from '../lib/native-job-dictionary.mjs';
 import os from 'node:os';
 export default function register({suite,check,fs,path}) {
+  suite('complete dictionary transport','broker binding preserves every original job',()=>{
+    const root=fs.mkdtempSync(path.join(os.tmpdir(),'gev-core-dictionary-'));
+    const note=(name,ok)=>check(name,ok,{happened:name,why:'Compact transport cannot discard required task or source information.',fix:'Preserve complete strings and reject unbound edits.'});
+    try{
+      const specs=['a','b'].map(id=>{const dir=path.join(root,id);fs.mkdirSync(dir);fs.writeFileSync(path.join(dir,'api.mjs'),'export const value=1;');return {id,root:dir,task:'Set value to2.',instructions:['Gev: preserve required behavior.'],readPaths:['api.mjs'],writePaths:['api.mjs']};});
+      const state=dictionary.prepareDictionary(specs);dictionary.assertDictionaryUnchanged(state);
+      const expanded=dictionary.expandDictionary(state.packet);
+      note('every complete original task is preserved',expanded.every((x,i)=>x.task===specs[i].task));
+      note('identical complete source is interned without truncation',state.packet.strings.filter(s=>s==='export const value=1;').length===1&&expanded.every(x=>x.files[0].text==='export const value=1;'));
+      const raw=JSON.stringify({batchSha256:state.batch.batchSha256,jobs:specs.map(s=>({id:s.id,edits:[{fileIndex:0,text:'export const value=2;'}]}))});
+      note('broker restores original per-file hash',JSON.parse(dictionary.decodeDictionary(state,raw)).jobs[0].edits[0].beforeSha256===state.batch.jobs[0].job.packet.files[0].sha256);
+      const staged=dictionary.stageDictionary(state,raw,path.join(root,'stage'));
+      note('replacement stages correctly while live source is preserved',fs.readFileSync(path.join(staged.stages[0].staged.stage,'api.mjs'),'utf8')==='export const value=2;'&&fs.readFileSync(path.join(specs[0].root,'api.mjs'),'utf8')==='export const value=1;');
+    }finally{const resolved=fs.realpathSync(root);if(path.dirname(resolved)!==fs.realpathSync(os.tmpdir())||!path.basename(resolved).startsWith('gev-core-dictionary-'))throw Error('unexpected cleanup path');fs.rmSync(resolved,{recursive:true,force:true});}
+  });
   suite('independent native batches','complete independent packets and protected stages',()=>{
     const root=fs.mkdtempSync(path.join(os.tmpdir(),'gev-core-batch-'));
     const note=(name,ok)=>check(name,ok,{happened:name,why:'A batch must preserve every job and source rather than hiding failures in aggregate savings.',fix:'Check complete packet binding, disjoint staging and caller-owned verification.'});

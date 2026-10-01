@@ -1,0 +1,5 @@
+# Complete dictionary delivery for Gev
+
+Actual native Codex and Claude Code each made one owned localhost request with zero inference. All twelve original tasks, source bodies and user instructions were delivered in the exact dictionary envelope, SHA256 afb2e13d14b6cadb1c1389591717fd45941d89d257b068e244955467c4b24000. Both replies parsed and passed broker validation; Codex's actual JSON response schema and both hosts' exact worker instructions were checked.
+
+The dictionary envelope contains 8183 UTF-8 bytes versus 20949 in the original batch envelope. This does not measure model tokens or quality. The fixture returns no edits and cannot establish task completion. Claude uses bare mode and a fake local key, so actual subscription OAuth activation remains unverified. Codex's custom-provider fallback metadata and its residual request_user_input/view_image tools are retained; no zero-tool or normal-capability claim is made. The original source7b full model study remains separately published and unchanged.
