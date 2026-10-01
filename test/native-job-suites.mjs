@@ -11,7 +11,7 @@ export default function register({suite,check,fs,path}) {
       const instructions=['The user is Gev. Start replies with Okay Gev. No emojis.'];
       const job=bounded.prepareJob({root:source,task:'Change value to2.',instructions,readPaths:['api.mjs'],writePaths:['api.mjs']});
       note('complete user rules are preserved',JSON.stringify(job.packet.instructions)===JSON.stringify(instructions));
-      note('normal source path resolves',bounded.safeJobPath(source,'api.mjs')===path.join(source,'api.mjs'));
+      note('normal source path resolves to the actual file',bounded.safeJobPath(source,'api.mjs')===fs.realpathSync(path.join(source,'api.mjs')));
       note('traversal is rejected',rejects(()=>bounded.safeJobPath(source,'../escape')));
       bounded.assertJobUnchanged(job);note('source snapshot validates',true);
       const raw=JSON.stringify({packetSha256:job.packetSha256,edits:[{path:'api.mjs',beforeSha256:job.packet.files[0].sha256,text:'export const value=2;'}]});
