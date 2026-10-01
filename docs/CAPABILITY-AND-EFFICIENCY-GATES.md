@@ -15,7 +15,7 @@ The new `tools/codexstudy/capability-corpus.mjs` generates six authored workflow
 | Large dependency discovery | Follow a40-module import chain and preserve immutable wrappers | Retrieval and source selection beyond packet limits |
 | Durable state restart | Correct data survives a fresh process, including duplicate and prototype-looking keys | State engineering, filesystem and process lifecycle |
 
-The43 model-free controls establish broken-seed rejection, reference acceptance, broken replacement rejection, immutable-contract detection, manifest hashing and real packet limits. These are grader controls, not model performance. The bounded-patch v1 profile rejects new-file and more-than32-file requests; passing its twelve function-repair families cannot substitute for this workflow gate.
+The44 model-free controls establish broken-seed rejection, reference acceptance, broken replacement rejection, immutable-contract detection, manifest hashing and real packet limits. These are grader controls, not model performance. The bounded-patch v1 profile rejects new-file and more-than32-file requests; passing its twelve function-repair families cannot substitute for this workflow gate.
 
 Before a capability-preserving optimization, record the normal host's actual delivered tools, instruction layers, permissions and integrations. Retain required tools and APIs. Route a task outside an explicitly complete bounded scope to the normal native workflow before inference; never silently truncate input or remove abilities. If escalation follows an attempt, retain both attempts and costs. Routing is a requirement until an implemented router and actual host evidence demonstrate it; it is not claimed as shipped.
 

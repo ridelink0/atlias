@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
+import {fileURLToPath} from 'node:url';
 import {capabilityTasks,writeCapabilityCorpus} from './capability-corpus.mjs';
 import {writeFiles,loadTaskList} from '../ccstudy/run.mjs';
 import {score,tamper} from '../../lib/eval.mjs';
@@ -14,6 +15,9 @@ try {
   const manifest=writeCapabilityCorpus(root),loaded=loadTaskList(path.join(root,'evals/capability-heldout/manifest.json'),root);
   assert.deepEqual(loaded.map(x=>x.id),fixtures.map(x=>x.task.id));checks++;
   assert.deepEqual(writeCapabilityCorpus(root),manifest);checks++;
+  const repoRoot=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../..');
+  const checkedIn=loadTaskList(path.join(repoRoot,'evals/capability-heldout/manifest.json'),repoRoot);
+  assert.deepEqual(checkedIn.map(x=>x.taskSha256),loaded.map(x=>x.taskSha256));checks++;
   for(const {task,reference} of fixtures){
     const base=path.join(root,task.id);fs.mkdirSync(base);writeFiles(base,task.files);
     assert.equal(fs.existsSync(path.join(base,'protected-grade.mjs')),false);checks++;
