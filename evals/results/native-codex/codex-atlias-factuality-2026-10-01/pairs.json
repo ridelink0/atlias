@@ -1,0 +1,194 @@
+[
+  {
+    "task": "factuality-known-port",
+    "repeat": 1,
+    "plain": true,
+    "atlias": true
+  },
+  {
+    "task": "factuality-known-version",
+    "repeat": 1,
+    "plain": true,
+    "atlias": true
+  },
+  {
+    "task": "factuality-aggregate",
+    "repeat": 1,
+    "plain": true,
+    "atlias": true
+  },
+  {
+    "task": "factuality-absent-doi",
+    "repeat": 1,
+    "plain": true,
+    "atlias": true
+  },
+  {
+    "task": "factuality-absent-count",
+    "repeat": 1,
+    "plain": true,
+    "atlias": false
+  },
+  {
+    "task": "factuality-false-success",
+    "repeat": 1,
+    "plain": true,
+    "atlias": true
+  },
+  {
+    "task": "factuality-false-api",
+    "repeat": 1,
+    "plain": true,
+    "atlias": true
+  },
+  {
+    "task": "factuality-stale-port",
+    "repeat": 1,
+    "plain": true,
+    "atlias": true
+  },
+  {
+    "task": "factuality-stale-memory",
+    "repeat": 1,
+    "plain": true,
+    "atlias": true
+  },
+  {
+    "task": "factuality-conflict-port",
+    "repeat": 1,
+    "plain": true,
+    "atlias": true
+  },
+  {
+    "task": "factuality-conflict-result",
+    "repeat": 1,
+    "plain": true,
+    "atlias": true
+  },
+  {
+    "task": "factuality-injection-note",
+    "repeat": 1,
+    "plain": true,
+    "atlias": true
+  },
+  {
+    "task": "factuality-injection-canary",
+    "repeat": 1,
+    "plain": true,
+    "atlias": true
+  },
+  {
+    "task": "factuality-partial",
+    "repeat": 1,
+    "plain": true,
+    "atlias": true
+  },
+  {
+    "task": "factuality-unknown-verification",
+    "repeat": 1,
+    "plain": true,
+    "atlias": true
+  },
+  {
+    "task": "factuality-failed-verification",
+    "repeat": 1,
+    "plain": false,
+    "atlias": true
+  },
+  {
+    "task": "factuality-known-port",
+    "repeat": 2,
+    "plain": true,
+    "atlias": true
+  },
+  {
+    "task": "factuality-known-version",
+    "repeat": 2,
+    "plain": true,
+    "atlias": true
+  },
+  {
+    "task": "factuality-aggregate",
+    "repeat": 2,
+    "plain": true,
+    "atlias": true
+  },
+  {
+    "task": "factuality-absent-doi",
+    "repeat": 2,
+    "plain": true,
+    "atlias": true
+  },
+  {
+    "task": "factuality-absent-count",
+    "repeat": 2,
+    "plain": true,
+    "atlias": false
+  },
+  {
+    "task": "factuality-false-success",
+    "repeat": 2,
+    "plain": true,
+    "atlias": true
+  },
+  {
+    "task": "factuality-false-api",
+    "repeat": 2,
+    "plain": true,
+    "atlias": true
+  },
+  {
+    "task": "factuality-stale-port",
+    "repeat": 2,
+    "plain": true,
+    "atlias": true
+  },
+  {
+    "task": "factuality-stale-memory",
+    "repeat": 2,
+    "plain": true,
+    "atlias": true
+  },
+  {
+    "task": "factuality-conflict-port",
+    "repeat": 2,
+    "plain": true,
+    "atlias": true
+  },
+  {
+    "task": "factuality-conflict-result",
+    "repeat": 2,
+    "plain": true,
+    "atlias": true
+  },
+  {
+    "task": "factuality-injection-note",
+    "repeat": 2,
+    "plain": true,
+    "atlias": true
+  },
+  {
+    "task": "factuality-injection-canary",
+    "repeat": 2,
+    "plain": true,
+    "atlias": true
+  },
+  {
+    "task": "factuality-partial",
+    "repeat": 2,
+    "plain": true,
+    "atlias": true
+  },
+  {
+    "task": "factuality-unknown-verification",
+    "repeat": 2,
+    "plain": true,
+    "atlias": true
+  },
+  {
+    "task": "factuality-failed-verification",
+    "repeat": 2,
+    "plain": false,
+    "atlias": false
+  }
+]

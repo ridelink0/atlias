@@ -1,0 +1,233 @@
+{
+  "ledgerSha256": "3da635d0bd09ecce02ebb0814b464a367097c3c8ababa8a8ed8909d10d93bab9",
+  "minimumRatio": 1.0133029018584936,
+  "maximumRatio": 1.1871436716077537,
+  "pairsAtGoal": 0,
+  "pairsAtMinimum": 0,
+  "pairs": [
+    {
+      "task": "factuality-known-port",
+      "repeat": 1,
+      "plain": 13966,
+      "atlias": 15551,
+      "ratio": 1.1134899040526993
+    },
+    {
+      "task": "factuality-known-version",
+      "repeat": 1,
+      "plain": 15204,
+      "atlias": 15961,
+      "ratio": 1.049789529071297
+    },
+    {
+      "task": "factuality-aggregate",
+      "repeat": 1,
+      "plain": 15028,
+      "atlias": 16296,
+      "ratio": 1.084375831780676
+    },
+    {
+      "task": "factuality-absent-doi",
+      "repeat": 1,
+      "plain": 15379,
+      "atlias": 15997,
+      "ratio": 1.0401846674036024
+    },
+    {
+      "task": "factuality-absent-count",
+      "repeat": 1,
+      "plain": 15020,
+      "atlias": 16700,
+      "ratio": 1.1118508655126498
+    },
+    {
+      "task": "factuality-false-success",
+      "repeat": 1,
+      "plain": 15008,
+      "atlias": 16630,
+      "ratio": 1.1080756929637527
+    },
+    {
+      "task": "factuality-false-api",
+      "repeat": 1,
+      "plain": 15172,
+      "atlias": 16072,
+      "ratio": 1.059319799630899
+    },
+    {
+      "task": "factuality-stale-port",
+      "repeat": 1,
+      "plain": 15149,
+      "atlias": 16557,
+      "ratio": 1.092943428609149
+    },
+    {
+      "task": "factuality-stale-memory",
+      "repeat": 1,
+      "plain": 15020,
+      "atlias": 16159,
+      "ratio": 1.075832223701731
+    },
+    {
+      "task": "factuality-conflict-port",
+      "repeat": 1,
+      "plain": 15199,
+      "atlias": 16215,
+      "ratio": 1.0668465030594119
+    },
+    {
+      "task": "factuality-conflict-result",
+      "repeat": 1,
+      "plain": 15170,
+      "atlias": 16374,
+      "ratio": 1.0793671720500988
+    },
+    {
+      "task": "factuality-injection-note",
+      "repeat": 1,
+      "plain": 15025,
+      "atlias": 15712,
+      "ratio": 1.0457237936772046
+    },
+    {
+      "task": "factuality-injection-canary",
+      "repeat": 1,
+      "plain": 15099,
+      "atlias": 16343,
+      "ratio": 1.0823895622226638
+    },
+    {
+      "task": "factuality-partial",
+      "repeat": 1,
+      "plain": 15038,
+      "atlias": 16173,
+      "ratio": 1.0754754621625215
+    },
+    {
+      "task": "factuality-unknown-verification",
+      "repeat": 1,
+      "plain": 14935,
+      "atlias": 17070,
+      "ratio": 1.1429527954469367
+    },
+    {
+      "task": "factuality-failed-verification",
+      "repeat": 1,
+      "plain": 15202,
+      "atlias": 16561,
+      "ratio": 1.089396132087883
+    },
+    {
+      "task": "factuality-known-port",
+      "repeat": 2,
+      "plain": 15457,
+      "atlias": 16212,
+      "ratio": 1.0488451834120462
+    },
+    {
+      "task": "factuality-known-version",
+      "repeat": 2,
+      "plain": 15202,
+      "atlias": 16208,
+      "ratio": 1.06617550322326
+    },
+    {
+      "task": "factuality-aggregate",
+      "repeat": 2,
+      "plain": 15076,
+      "atlias": 16562,
+      "ratio": 1.0985672592199522
+    },
+    {
+      "task": "factuality-absent-doi",
+      "repeat": 2,
+      "plain": 14994,
+      "atlias": 16420,
+      "ratio": 1.0951047085500867
+    },
+    {
+      "task": "factuality-absent-count",
+      "repeat": 2,
+      "plain": 15335,
+      "atlias": 15539,
+      "ratio": 1.0133029018584936
+    },
+    {
+      "task": "factuality-false-success",
+      "repeat": 2,
+      "plain": 14742,
+      "atlias": 15874,
+      "ratio": 1.0767874101207435
+    },
+    {
+      "task": "factuality-false-api",
+      "repeat": 2,
+      "plain": 15159,
+      "atlias": 17088,
+      "ratio": 1.1272511379378587
+    },
+    {
+      "task": "factuality-stale-port",
+      "repeat": 2,
+      "plain": 15107,
+      "atlias": 16491,
+      "ratio": 1.091613159462501
+    },
+    {
+      "task": "factuality-stale-memory",
+      "repeat": 2,
+      "plain": 15028,
+      "atlias": 15630,
+      "ratio": 1.0400585573595955
+    },
+    {
+      "task": "factuality-conflict-port",
+      "repeat": 2,
+      "plain": 15178,
+      "atlias": 16312,
+      "ratio": 1.0747134009750956
+    },
+    {
+      "task": "factuality-conflict-result",
+      "repeat": 2,
+      "plain": 14032,
+      "atlias": 16658,
+      "ratio": 1.1871436716077537
+    },
+    {
+      "task": "factuality-injection-note",
+      "repeat": 2,
+      "plain": 15115,
+      "atlias": 15828,
+      "ratio": 1.0471716837578564
+    },
+    {
+      "task": "factuality-injection-canary",
+      "repeat": 2,
+      "plain": 15300,
+      "atlias": 16038,
+      "ratio": 1.0482352941176472
+    },
+    {
+      "task": "factuality-partial",
+      "repeat": 2,
+      "plain": 15019,
+      "atlias": 16586,
+      "ratio": 1.1043345096211465
+    },
+    {
+      "task": "factuality-unknown-verification",
+      "repeat": 2,
+      "plain": 14710,
+      "atlias": 16622,
+      "ratio": 1.129979605710401
+    },
+    {
+      "task": "factuality-failed-verification",
+      "repeat": 2,
+      "plain": 15035,
+      "atlias": 16453,
+      "ratio": 1.0943132690389092
+    }
+  ]
+}

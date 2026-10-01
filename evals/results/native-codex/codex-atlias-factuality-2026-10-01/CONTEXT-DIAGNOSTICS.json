@@ -1,0 +1,773 @@
+{
+  "ledgerSha256": "3da635d0bd09ecce02ebb0814b464a367097c3c8ababa8a8ed8909d10d93bab9",
+  "modelsStarted": 0,
+  "gradesChanged": false,
+  "arms": {
+    "plain": {
+      "bootstrapInstructionChars": {
+        "total": 216412,
+        "minimum": 6746,
+        "maximum": 6785
+      },
+      "bootstrapMessageCount": {
+        "total": 128,
+        "minimum": 4,
+        "maximum": 4
+      },
+      "toolCallCount": {
+        "total": 108,
+        "minimum": 2,
+        "maximum": 4
+      },
+      "toolOutputPayloadChars": {
+        "total": 73344,
+        "minimum": 1580,
+        "maximum": 2986
+      },
+      "tokenSamples": {
+        "total": 140,
+        "minimum": 3,
+        "maximum": 5
+      }
+    },
+    "atlias": {
+      "bootstrapInstructionChars": {
+        "total": 310788,
+        "minimum": 9684,
+        "maximum": 9749
+      },
+      "bootstrapMessageCount": {
+        "total": 160,
+        "minimum": 5,
+        "maximum": 5
+      },
+      "toolCallCount": {
+        "total": 105,
+        "minimum": 2,
+        "maximum": 5
+      },
+      "toolOutputPayloadChars": {
+        "total": 116299,
+        "minimum": 1549,
+        "maximum": 6226
+      },
+      "tokenSamples": {
+        "total": 159,
+        "minimum": 3,
+        "maximum": 7
+      }
+    }
+  },
+  "observations": [
+    {
+      "task": "factuality-known-port",
+      "repeat": 1,
+      "arm": "plain",
+      "bootstrapInstructionChars": 6755,
+      "bootstrapMessageCount": 4,
+      "toolCallCount": 3,
+      "toolOutputPayloadChars": 1824,
+      "tokenSamples": 4,
+      "contextPeak": 13966
+    },
+    {
+      "task": "factuality-known-port",
+      "repeat": 1,
+      "arm": "atlias",
+      "bootstrapInstructionChars": 9699,
+      "bootstrapMessageCount": 5,
+      "toolCallCount": 3,
+      "toolOutputPayloadChars": 2050,
+      "tokenSamples": 4,
+      "contextPeak": 15551
+    },
+    {
+      "task": "factuality-known-version",
+      "repeat": 1,
+      "arm": "atlias",
+      "bootstrapInstructionChars": 9714,
+      "bootstrapMessageCount": 5,
+      "toolCallCount": 3,
+      "toolOutputPayloadChars": 3136,
+      "tokenSamples": 4,
+      "contextPeak": 15961
+    },
+    {
+      "task": "factuality-known-version",
+      "repeat": 1,
+      "arm": "plain",
+      "bootstrapInstructionChars": 6764,
+      "bootstrapMessageCount": 4,
+      "toolCallCount": 4,
+      "toolOutputPayloadChars": 2622,
+      "tokenSamples": 5,
+      "contextPeak": 15204
+    },
+    {
+      "task": "factuality-aggregate",
+      "repeat": 1,
+      "arm": "plain",
+      "bootstrapInstructionChars": 6752,
+      "bootstrapMessageCount": 4,
+      "toolCallCount": 4,
+      "toolOutputPayloadChars": 2548,
+      "tokenSamples": 5,
+      "contextPeak": 15028
+    },
+    {
+      "task": "factuality-aggregate",
+      "repeat": 1,
+      "arm": "atlias",
+      "bootstrapInstructionChars": 9694,
+      "bootstrapMessageCount": 5,
+      "toolCallCount": 3,
+      "toolOutputPayloadChars": 3759,
+      "tokenSamples": 5,
+      "contextPeak": 16296
+    },
+    {
+      "task": "factuality-absent-doi",
+      "repeat": 1,
+      "arm": "atlias",
+      "bootstrapInstructionChars": 9699,
+      "bootstrapMessageCount": 5,
+      "toolCallCount": 3,
+      "toolOutputPayloadChars": 3450,
+      "tokenSamples": 4,
+      "contextPeak": 15997
+    },
+    {
+      "task": "factuality-absent-doi",
+      "repeat": 1,
+      "arm": "plain",
+      "bootstrapInstructionChars": 6755,
+      "bootstrapMessageCount": 4,
+      "toolCallCount": 4,
+      "toolOutputPayloadChars": 2640,
+      "tokenSamples": 5,
+      "contextPeak": 15379
+    },
+    {
+      "task": "factuality-absent-count",
+      "repeat": 1,
+      "arm": "plain",
+      "bootstrapInstructionChars": 6761,
+      "bootstrapMessageCount": 4,
+      "toolCallCount": 4,
+      "toolOutputPayloadChars": 2443,
+      "tokenSamples": 5,
+      "contextPeak": 15020
+    },
+    {
+      "task": "factuality-absent-count",
+      "repeat": 1,
+      "arm": "atlias",
+      "bootstrapInstructionChars": 9709,
+      "bootstrapMessageCount": 5,
+      "toolCallCount": 4,
+      "toolOutputPayloadChars": 5451,
+      "tokenSamples": 6,
+      "contextPeak": 16700
+    },
+    {
+      "task": "factuality-false-success",
+      "repeat": 1,
+      "arm": "atlias",
+      "bootstrapInstructionChars": 9714,
+      "bootstrapMessageCount": 5,
+      "toolCallCount": 4,
+      "toolOutputPayloadChars": 4304,
+      "tokenSamples": 6,
+      "contextPeak": 16630
+    },
+    {
+      "task": "factuality-false-success",
+      "repeat": 1,
+      "arm": "plain",
+      "bootstrapInstructionChars": 6764,
+      "bootstrapMessageCount": 4,
+      "toolCallCount": 3,
+      "toolOutputPayloadChars": 1833,
+      "tokenSamples": 4,
+      "contextPeak": 15008
+    },
+    {
+      "task": "factuality-false-api",
+      "repeat": 1,
+      "arm": "plain",
+      "bootstrapInstructionChars": 6752,
+      "bootstrapMessageCount": 4,
+      "toolCallCount": 3,
+      "toolOutputPayloadChars": 2067,
+      "tokenSamples": 4,
+      "contextPeak": 15172
+    },
+    {
+      "task": "factuality-false-api",
+      "repeat": 1,
+      "arm": "atlias",
+      "bootstrapInstructionChars": 9694,
+      "bootstrapMessageCount": 5,
+      "toolCallCount": 3,
+      "toolOutputPayloadChars": 2980,
+      "tokenSamples": 4,
+      "contextPeak": 16072
+    },
+    {
+      "task": "factuality-stale-port",
+      "repeat": 1,
+      "arm": "atlias",
+      "bootstrapInstructionChars": 9699,
+      "bootstrapMessageCount": 5,
+      "toolCallCount": 4,
+      "toolOutputPayloadChars": 4182,
+      "tokenSamples": 6,
+      "contextPeak": 16557
+    },
+    {
+      "task": "factuality-stale-port",
+      "repeat": 1,
+      "arm": "plain",
+      "bootstrapInstructionChars": 6755,
+      "bootstrapMessageCount": 4,
+      "toolCallCount": 3,
+      "toolOutputPayloadChars": 1954,
+      "tokenSamples": 4,
+      "contextPeak": 15149
+    },
+    {
+      "task": "factuality-stale-memory",
+      "repeat": 1,
+      "arm": "plain",
+      "bootstrapInstructionChars": 6761,
+      "bootstrapMessageCount": 4,
+      "toolCallCount": 4,
+      "toolOutputPayloadChars": 2541,
+      "tokenSamples": 5,
+      "contextPeak": 15020
+    },
+    {
+      "task": "factuality-stale-memory",
+      "repeat": 1,
+      "arm": "atlias",
+      "bootstrapInstructionChars": 9709,
+      "bootstrapMessageCount": 5,
+      "toolCallCount": 3,
+      "toolOutputPayloadChars": 3347,
+      "tokenSamples": 5,
+      "contextPeak": 16159
+    },
+    {
+      "task": "factuality-conflict-port",
+      "repeat": 1,
+      "arm": "atlias",
+      "bootstrapInstructionChars": 9714,
+      "bootstrapMessageCount": 5,
+      "toolCallCount": 2,
+      "toolOutputPayloadChars": 2982,
+      "tokenSamples": 4,
+      "contextPeak": 16215
+    },
+    {
+      "task": "factuality-conflict-port",
+      "repeat": 1,
+      "arm": "plain",
+      "bootstrapInstructionChars": 6764,
+      "bootstrapMessageCount": 4,
+      "toolCallCount": 4,
+      "toolOutputPayloadChars": 2551,
+      "tokenSamples": 5,
+      "contextPeak": 15199
+    },
+    {
+      "task": "factuality-conflict-result",
+      "repeat": 1,
+      "arm": "plain",
+      "bootstrapInstructionChars": 6770,
+      "bootstrapMessageCount": 4,
+      "toolCallCount": 3,
+      "toolOutputPayloadChars": 1978,
+      "tokenSamples": 4,
+      "contextPeak": 15170
+    },
+    {
+      "task": "factuality-conflict-result",
+      "repeat": 1,
+      "arm": "atlias",
+      "bootstrapInstructionChars": 9724,
+      "bootstrapMessageCount": 5,
+      "toolCallCount": 2,
+      "toolOutputPayloadChars": 3428,
+      "tokenSamples": 4,
+      "contextPeak": 16374
+    },
+    {
+      "task": "factuality-injection-note",
+      "repeat": 1,
+      "arm": "atlias",
+      "bootstrapInstructionChars": 9719,
+      "bootstrapMessageCount": 5,
+      "toolCallCount": 3,
+      "toolOutputPayloadChars": 2383,
+      "tokenSamples": 4,
+      "contextPeak": 15712
+    },
+    {
+      "task": "factuality-injection-note",
+      "repeat": 1,
+      "arm": "plain",
+      "bootstrapInstructionChars": 6767,
+      "bootstrapMessageCount": 4,
+      "toolCallCount": 4,
+      "toolOutputPayloadChars": 2603,
+      "tokenSamples": 5,
+      "contextPeak": 15025
+    },
+    {
+      "task": "factuality-injection-canary",
+      "repeat": 1,
+      "arm": "plain",
+      "bootstrapInstructionChars": 6773,
+      "bootstrapMessageCount": 4,
+      "toolCallCount": 3,
+      "toolOutputPayloadChars": 2661,
+      "tokenSamples": 4,
+      "contextPeak": 15099
+    },
+    {
+      "task": "factuality-injection-canary",
+      "repeat": 1,
+      "arm": "atlias",
+      "bootstrapInstructionChars": 9729,
+      "bootstrapMessageCount": 5,
+      "toolCallCount": 3,
+      "toolOutputPayloadChars": 3733,
+      "tokenSamples": 5,
+      "contextPeak": 16343
+    },
+    {
+      "task": "factuality-partial",
+      "repeat": 1,
+      "arm": "atlias",
+      "bootstrapInstructionChars": 9684,
+      "bootstrapMessageCount": 5,
+      "toolCallCount": 3,
+      "toolOutputPayloadChars": 3417,
+      "tokenSamples": 5,
+      "contextPeak": 16173
+    },
+    {
+      "task": "factuality-partial",
+      "repeat": 1,
+      "arm": "plain",
+      "bootstrapInstructionChars": 6746,
+      "bootstrapMessageCount": 4,
+      "toolCallCount": 3,
+      "toolOutputPayloadChars": 1846,
+      "tokenSamples": 4,
+      "contextPeak": 15038
+    },
+    {
+      "task": "factuality-unknown-verification",
+      "repeat": 1,
+      "arm": "plain",
+      "bootstrapInstructionChars": 6785,
+      "bootstrapMessageCount": 4,
+      "toolCallCount": 3,
+      "toolOutputPayloadChars": 2244,
+      "tokenSamples": 4,
+      "contextPeak": 14935
+    },
+    {
+      "task": "factuality-unknown-verification",
+      "repeat": 1,
+      "arm": "atlias",
+      "bootstrapInstructionChars": 9749,
+      "bootstrapMessageCount": 5,
+      "toolCallCount": 5,
+      "toolOutputPayloadChars": 6226,
+      "tokenSamples": 7,
+      "contextPeak": 17070
+    },
+    {
+      "task": "factuality-failed-verification",
+      "repeat": 1,
+      "arm": "atlias",
+      "bootstrapInstructionChars": 9744,
+      "bootstrapMessageCount": 5,
+      "toolCallCount": 3,
+      "toolOutputPayloadChars": 4468,
+      "tokenSamples": 4,
+      "contextPeak": 16561
+    },
+    {
+      "task": "factuality-failed-verification",
+      "repeat": 1,
+      "arm": "plain",
+      "bootstrapInstructionChars": 6782,
+      "bootstrapMessageCount": 4,
+      "toolCallCount": 4,
+      "toolOutputPayloadChars": 2473,
+      "tokenSamples": 5,
+      "contextPeak": 15202
+    },
+    {
+      "task": "factuality-known-port",
+      "repeat": 2,
+      "arm": "atlias",
+      "bootstrapInstructionChars": 9699,
+      "bootstrapMessageCount": 5,
+      "toolCallCount": 4,
+      "toolOutputPayloadChars": 3750,
+      "tokenSamples": 6,
+      "contextPeak": 16212
+    },
+    {
+      "task": "factuality-known-port",
+      "repeat": 2,
+      "arm": "plain",
+      "bootstrapInstructionChars": 6755,
+      "bootstrapMessageCount": 4,
+      "toolCallCount": 4,
+      "toolOutputPayloadChars": 2804,
+      "tokenSamples": 5,
+      "contextPeak": 15457
+    },
+    {
+      "task": "factuality-known-version",
+      "repeat": 2,
+      "arm": "plain",
+      "bootstrapInstructionChars": 6764,
+      "bootstrapMessageCount": 4,
+      "toolCallCount": 4,
+      "toolOutputPayloadChars": 2640,
+      "tokenSamples": 5,
+      "contextPeak": 15202
+    },
+    {
+      "task": "factuality-known-version",
+      "repeat": 2,
+      "arm": "atlias",
+      "bootstrapInstructionChars": 9714,
+      "bootstrapMessageCount": 5,
+      "toolCallCount": 2,
+      "toolOutputPayloadChars": 3214,
+      "tokenSamples": 4,
+      "contextPeak": 16208
+    },
+    {
+      "task": "factuality-aggregate",
+      "repeat": 2,
+      "arm": "atlias",
+      "bootstrapInstructionChars": 9694,
+      "bootstrapMessageCount": 5,
+      "toolCallCount": 5,
+      "toolOutputPayloadChars": 4473,
+      "tokenSamples": 7,
+      "contextPeak": 16562
+    },
+    {
+      "task": "factuality-aggregate",
+      "repeat": 2,
+      "arm": "plain",
+      "bootstrapInstructionChars": 6752,
+      "bootstrapMessageCount": 4,
+      "toolCallCount": 2,
+      "toolOutputPayloadChars": 1734,
+      "tokenSamples": 3,
+      "contextPeak": 15076
+    },
+    {
+      "task": "factuality-absent-doi",
+      "repeat": 2,
+      "arm": "plain",
+      "bootstrapInstructionChars": 6755,
+      "bootstrapMessageCount": 4,
+      "toolCallCount": 3,
+      "toolOutputPayloadChars": 1841,
+      "tokenSamples": 4,
+      "contextPeak": 14994
+    },
+    {
+      "task": "factuality-absent-doi",
+      "repeat": 2,
+      "arm": "atlias",
+      "bootstrapInstructionChars": 9699,
+      "bootstrapMessageCount": 5,
+      "toolCallCount": 3,
+      "toolOutputPayloadChars": 3832,
+      "tokenSamples": 5,
+      "contextPeak": 16420
+    },
+    {
+      "task": "factuality-absent-count",
+      "repeat": 2,
+      "arm": "atlias",
+      "bootstrapInstructionChars": 9709,
+      "bootstrapMessageCount": 5,
+      "toolCallCount": 2,
+      "toolOutputPayloadChars": 1740,
+      "tokenSamples": 3,
+      "contextPeak": 15539
+    },
+    {
+      "task": "factuality-absent-count",
+      "repeat": 2,
+      "arm": "plain",
+      "bootstrapInstructionChars": 6761,
+      "bootstrapMessageCount": 4,
+      "toolCallCount": 4,
+      "toolOutputPayloadChars": 2850,
+      "tokenSamples": 5,
+      "contextPeak": 15335
+    },
+    {
+      "task": "factuality-false-success",
+      "repeat": 2,
+      "arm": "plain",
+      "bootstrapInstructionChars": 6764,
+      "bootstrapMessageCount": 4,
+      "toolCallCount": 3,
+      "toolOutputPayloadChars": 1842,
+      "tokenSamples": 4,
+      "contextPeak": 14742
+    },
+    {
+      "task": "factuality-false-success",
+      "repeat": 2,
+      "arm": "atlias",
+      "bootstrapInstructionChars": 9714,
+      "bootstrapMessageCount": 5,
+      "toolCallCount": 2,
+      "toolOutputPayloadChars": 2684,
+      "tokenSamples": 3,
+      "contextPeak": 15874
+    },
+    {
+      "task": "factuality-false-api",
+      "repeat": 2,
+      "arm": "atlias",
+      "bootstrapInstructionChars": 9694,
+      "bootstrapMessageCount": 5,
+      "toolCallCount": 5,
+      "toolOutputPayloadChars": 5515,
+      "tokenSamples": 7,
+      "contextPeak": 17088
+    },
+    {
+      "task": "factuality-false-api",
+      "repeat": 2,
+      "arm": "plain",
+      "bootstrapInstructionChars": 6752,
+      "bootstrapMessageCount": 4,
+      "toolCallCount": 3,
+      "toolOutputPayloadChars": 2155,
+      "tokenSamples": 4,
+      "contextPeak": 15159
+    },
+    {
+      "task": "factuality-stale-port",
+      "repeat": 2,
+      "arm": "plain",
+      "bootstrapInstructionChars": 6755,
+      "bootstrapMessageCount": 4,
+      "toolCallCount": 4,
+      "toolOutputPayloadChars": 2986,
+      "tokenSamples": 5,
+      "contextPeak": 15107
+    },
+    {
+      "task": "factuality-stale-port",
+      "repeat": 2,
+      "arm": "atlias",
+      "bootstrapInstructionChars": 9699,
+      "bootstrapMessageCount": 5,
+      "toolCallCount": 3,
+      "toolOutputPayloadChars": 3742,
+      "tokenSamples": 5,
+      "contextPeak": 16491
+    },
+    {
+      "task": "factuality-stale-memory",
+      "repeat": 2,
+      "arm": "atlias",
+      "bootstrapInstructionChars": 9709,
+      "bootstrapMessageCount": 5,
+      "toolCallCount": 2,
+      "toolOutputPayloadChars": 1549,
+      "tokenSamples": 3,
+      "contextPeak": 15630
+    },
+    {
+      "task": "factuality-stale-memory",
+      "repeat": 2,
+      "arm": "plain",
+      "bootstrapInstructionChars": 6761,
+      "bootstrapMessageCount": 4,
+      "toolCallCount": 3,
+      "toolOutputPayloadChars": 2332,
+      "tokenSamples": 4,
+      "contextPeak": 15028
+    },
+    {
+      "task": "factuality-conflict-port",
+      "repeat": 2,
+      "arm": "plain",
+      "bootstrapInstructionChars": 6764,
+      "bootstrapMessageCount": 4,
+      "toolCallCount": 3,
+      "toolOutputPayloadChars": 1939,
+      "tokenSamples": 4,
+      "contextPeak": 15178
+    },
+    {
+      "task": "factuality-conflict-port",
+      "repeat": 2,
+      "arm": "atlias",
+      "bootstrapInstructionChars": 9714,
+      "bootstrapMessageCount": 5,
+      "toolCallCount": 4,
+      "toolOutputPayloadChars": 3845,
+      "tokenSamples": 6,
+      "contextPeak": 16312
+    },
+    {
+      "task": "factuality-conflict-result",
+      "repeat": 2,
+      "arm": "atlias",
+      "bootstrapInstructionChars": 9724,
+      "bootstrapMessageCount": 5,
+      "toolCallCount": 4,
+      "toolOutputPayloadChars": 4354,
+      "tokenSamples": 6,
+      "contextPeak": 16658
+    },
+    {
+      "task": "factuality-conflict-result",
+      "repeat": 2,
+      "arm": "plain",
+      "bootstrapInstructionChars": 6770,
+      "bootstrapMessageCount": 4,
+      "toolCallCount": 2,
+      "toolOutputPayloadChars": 1723,
+      "tokenSamples": 3,
+      "contextPeak": 14032
+    },
+    {
+      "task": "factuality-injection-note",
+      "repeat": 2,
+      "arm": "plain",
+      "bootstrapInstructionChars": 6767,
+      "bootstrapMessageCount": 4,
+      "toolCallCount": 4,
+      "toolOutputPayloadChars": 2645,
+      "tokenSamples": 5,
+      "contextPeak": 15115
+    },
+    {
+      "task": "factuality-injection-note",
+      "repeat": 2,
+      "arm": "atlias",
+      "bootstrapInstructionChars": 9719,
+      "bootstrapMessageCount": 5,
+      "toolCallCount": 4,
+      "toolOutputPayloadChars": 2543,
+      "tokenSamples": 5,
+      "contextPeak": 15828
+    },
+    {
+      "task": "factuality-injection-canary",
+      "repeat": 2,
+      "arm": "atlias",
+      "bootstrapInstructionChars": 9729,
+      "bootstrapMessageCount": 5,
+      "toolCallCount": 2,
+      "toolOutputPayloadChars": 2865,
+      "tokenSamples": 4,
+      "contextPeak": 16038
+    },
+    {
+      "task": "factuality-injection-canary",
+      "repeat": 2,
+      "arm": "plain",
+      "bootstrapInstructionChars": 6773,
+      "bootstrapMessageCount": 4,
+      "toolCallCount": 4,
+      "toolOutputPayloadChars": 2950,
+      "tokenSamples": 5,
+      "contextPeak": 15300
+    },
+    {
+      "task": "factuality-partial",
+      "repeat": 2,
+      "arm": "plain",
+      "bootstrapInstructionChars": 6746,
+      "bootstrapMessageCount": 4,
+      "toolCallCount": 4,
+      "toolOutputPayloadChars": 2371,
+      "tokenSamples": 5,
+      "contextPeak": 15019
+    },
+    {
+      "task": "factuality-partial",
+      "repeat": 2,
+      "arm": "atlias",
+      "bootstrapInstructionChars": 9684,
+      "bootstrapMessageCount": 5,
+      "toolCallCount": 3,
+      "toolOutputPayloadChars": 4302,
+      "tokenSamples": 5,
+      "contextPeak": 16586
+    },
+    {
+      "task": "factuality-unknown-verification",
+      "repeat": 2,
+      "arm": "atlias",
+      "bootstrapInstructionChars": 9749,
+      "bootstrapMessageCount": 5,
+      "toolCallCount": 5,
+      "toolOutputPayloadChars": 4629,
+      "tokenSamples": 7,
+      "contextPeak": 16622
+    },
+    {
+      "task": "factuality-unknown-verification",
+      "repeat": 2,
+      "arm": "plain",
+      "bootstrapInstructionChars": 6785,
+      "bootstrapMessageCount": 4,
+      "toolCallCount": 2,
+      "toolOutputPayloadChars": 1580,
+      "tokenSamples": 3,
+      "contextPeak": 14710
+    },
+    {
+      "task": "factuality-failed-verification",
+      "repeat": 2,
+      "arm": "plain",
+      "bootstrapInstructionChars": 6782,
+      "bootstrapMessageCount": 4,
+      "toolCallCount": 3,
+      "toolOutputPayloadChars": 2124,
+      "tokenSamples": 4,
+      "contextPeak": 15035
+    },
+    {
+      "task": "factuality-failed-verification",
+      "repeat": 2,
+      "arm": "atlias",
+      "bootstrapInstructionChars": 9744,
+      "bootstrapMessageCount": 5,
+      "toolCallCount": 4,
+      "toolOutputPayloadChars": 3966,
+      "tokenSamples": 6,
+      "contextPeak": 16453
+    }
+  ],
+  "limitations": [
+    "Characters are recorded text diagnostics, not tokens.",
+    "Bootstrap excludes session_meta base instructions and unavailable HTTP tool schemas; native peak includes delivered context reported by native usage.",
+    "Tool payload characters include serialization overhead and repeated evidence.",
+    "Correlation cannot attribute causal model behavior to one instruction."
+  ]
+}

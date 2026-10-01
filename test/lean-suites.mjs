@@ -61,6 +61,16 @@ export default async function ({ suite, check, brief, TMP, ROOT, fs, path }) {
     check('lean does the same for the other hosts, and keeps their memory section', leanCodex.length <= offCodex.length - 350 && /## Memory/.test(leanCodex) && !TOOL_NAMES.some((t) => leanCodex.split(NL)[0].includes(t)), { happened: `${offCodex.length} off, ${leanCodex.length} lean`, why: 'Codex has no shared memory of its own; the section is how it finds harness_remember.', fix: 'Only the tool line, Companions and the done rule change.' });
   });
 
+  suite('lean evidence and context', 'compact both-host guidance keeps provenance and required work', () => {
+    const empty = project();
+    for (const host of ['codex', 'claude']) {
+      const off = build(empty, host, { [LEAN]: '0' });
+      const lean = build(empty, host, { [LEAN]: '1' });
+      check(host + ' lean names evidence gaps without inventing supported facts', /Ground claims\/checks in evidence; cite support\/gaps; label unknowns; answer supported parts/.test(lean) && off.includes(brief.RULES[4]), { happened: lean, why: 'An unknown answer still needs inspected provenance when the contract asks for it; citation guidance must not require fabricated evidence or universal abstention.', fix: 'Keep support, gaps, uncertainty and useful supported answers together.' });
+      check(host + ' lean retains both verification passes, changed-plan recovery and no repeated failed calls', lean.includes(brief.PASS_LINE) && /smallest real check/.test(lean) && /each changed file adversarially/.test(lean) && /Save changed plans with harness_progress before compaction or long work/.test(lean) && /Do not repeat answered\/failed calls; change input or approach/.test(lean), { happened: lean, why: 'Shorter startup context must not lose checks, durable state or loop protection.', fix: 'Preserve all required work in compact guidance.' });
+    }
+  });
+
   suite('lean brief expert', 'the brief says when the gate will run the check', () => {
     check('doneRule is the old rule with no flag, loses the gate sentence when lean, and names a check it is given', brief.doneRule() === brief.RULES[2] && !/The gate holds/.test(brief.doneRule({ lean: true })) && /atlias runs `sh run_tests.sh` when you finish/.test(brief.doneRule({ check: 'sh run_tests.sh' })) && /The gate holds/.test(brief.doneRule({ check: 'sh run_tests.sh' })), { happened: [brief.doneRule({ lean: true }), brief.doneRule({ check: 'sh run_tests.sh' })].join(' | '), why: 'Each flag changes only its own part of the rule, so either can be measured alone.', fix: 'doneRule in lib/brief.mjs.' });
     const he = project({ 'main.py': 'x = 1\n', 'tests.py': 'assert x == 1\n', 'check.py': 'print(1)\n' });

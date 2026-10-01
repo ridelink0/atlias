@@ -1,0 +1,15 @@
+{
+  "failure": {
+    "error": "Expected values to be strictly equal:\n\nfalse !== true\n",
+    "modelsStarted": 0,
+    "gradesChanged": false
+  },
+  "explanation": {
+    "reason": "Auditor expected plan.lean=true on plain controls. Original plain lean=false is intentional; plan lean applies only to Atlias.",
+    "modelsStarted": 0,
+    "originalGradesChanged": false,
+    "originalFailureRetained": true
+  },
+  "correctedAudit": "D:/harness-work/runs/source3726-factuality-complete64-audit-corrected-1001",
+  "originalGradesChanged": false
+}

@@ -1,6 +1,6 @@
 # Capability and efficiency gates for Gev
 
-20x less usage is the actual target; 5x is only a minimum milestone. A cheaper worker that cannot perform the control host's task is not a success. Original bounded-worker studies are diagnostics, not capability-preserving host comparisons. No finite corpus proves every possible task or universal output equivalence.
+Gev requires separate20x targets for token consumption AND full native peak context, alongside actual allowance savings;5x is only a minimum milestone. A cheaper worker that cannot perform the control host's task is not a success. Original bounded-worker studies are diagnostics, not capability-preserving host comparisons. No finite corpus proves every possible task or universal output equivalence.
 
 SourceD7's full-tool caller-context comparison is CLOSED24/24, both12/12 original workflow outputs passed, but uncached input plus output improves only1.55x and peak increases30.13%. Source7b's independent bounded batches are CLOSED26/26 with17.19x less uncached input plus output and24/24 outputs per arm. The source75 dictionary comparison is CLOSED26/26 with21.40x less uncached input plus output and24/24 outputs per arm, full26 independent audits and the same frozen ledger publication. These results demonstrate different scopes: reduced tools and two coupled batches cannot replace the full-tool workflow gate. The dictionary profile remains default-off; normal-host and BOTH-host subscription parity remain unproved.
 
@@ -33,6 +33,12 @@ Before a capability-preserving optimization, record the normal host's actual del
 4. Reconcile generated and FULL delivered context/instructions against the SAME frozen ledger as the publisher, actual native counters and authentication cleanup. Catalog characters are not model tokens.
 5. Publish raw, cached and uncached input, output, total, peak context, requests and wall time. Raw counts containing cached input are not subscription allowance consumption. State every denominator. A12x raw ratio is not20x usage.
 6. Report minimum and goal separately. The allowance target requires a defensible host-specific usage measure, ratios at most0.20 and0.05 respectively, and same-or-better outputs and demonstrated capability coverage on BOTH hosts. Unavailable Claude evidence is unverified, not extrapolated from Codex.
+
+## Explicit context target
+
+The Atlias/plain peak-context ratio must be at most0.05, with the same required outputs and demonstrated normal capability coverage. Record each matched task/repeat's native peak, the overall maximum in each arm and the worst paired ratio. Publish all peaks, including failed, invalid, escalated and unfavorable attempts. No cumulative-input, cache, character, packing or batching ratio substitutes for native peak context. Include native foundation, instructions, tool messages and required evidence; report unavailable tool-schema proof explicitly. Fixed stock instruction/tool overhead can limit achievable peak reduction, so feasibility must be measured without silently removing required capabilities or redefining the denominator.
+
+Source3726's completed64-call audit shows maximum peaks15457 plain versus17088 Atlias (ratio1.10552),30 versus29 strict passes and1.69x less uncached input plus output. The source75 dictionary's21.40x token result does not establish this context target or normal/BOTH-host capabilities.
 
 ## Engineering coverage and next interventions
 
