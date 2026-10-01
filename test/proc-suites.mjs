@@ -35,6 +35,17 @@ export default async function procSuites({ asyncSuite, check, skip, TMP, ROOT, f
   const idler = (file, lifetimeMs = 60000) => `${node} -e "require('fs').writeFileSync(${JSON.stringify(file).replace(/"/g, "'")}, String(process.pid)); setInterval(() => {}, 1000); setTimeout(() => process.exit(0), ${lifetimeMs})"`;
 
   await asyncSuite('process tree expert', 'code that never stops is stopped with everything it started', async () => {
+    const key='GEV_PROC_PARENT_ONLY_CANARY',prior=process.env[key];process.env[key]='parent-only';
+    try {
+      const env={...process.env,GEV_PROC_EXPLICIT_CANARY:'explicit'};delete env[key];
+      const code="process.stdout.write(JSON.stringify({parent:process.env.GEV_PROC_PARENT_ONLY_CANARY??null,explicit:process.env.GEV_PROC_EXPLICIT_CANARY??null}))";
+      const isolated=await proc.runAsync(process.execPath,['-e',code],{env,replaceEnv:true,timeoutMs:30000});
+      const merged=await proc.runAsync(process.execPath,['-e',code],{env,timeoutMs:30000});
+      check('explicit replacement survives the watchdog without restoring parent keys',isolated.status===0&&JSON.parse(isolated.stdout).parent===null&&JSON.parse(isolated.stdout).explicit==='explicit',{happened:isolated.stdout,why:'Native benchmark isolation must not restore coordinating-session settings or credentials.',fix:'Pass the exact supplied environment through the watchdog.'});
+      check('ordinary callers retain environment overlay behavior',merged.status===0&&JSON.parse(merged.stdout).parent==='parent-only',{happened:merged.stdout,why:'An opt-in study fix must preserve existing shell callers.',fix:'Keep overlay semantics as the default.'});
+      let refused=false;try{proc.runAsync(process.execPath,[],{replaceEnv:true});}catch{refused=true;}
+      check('replacement without an explicit environment fails before spawning',refused,{happened:refused,why:'An absent environment must not silently restore the parent.',fix:'Require the caller to supply replacement keys.'});
+    } finally {if(prior===undefined)delete process.env[key];else process.env[key]=prior;}
     // 1. The eval check itself, on a candidate that loops for ever and has
     // started a helper process of its own, as python's multiprocessing would.
     const helperPid = pidFile();

@@ -50,7 +50,7 @@ export function jobsOf(tasks,repeats){
 export function contained(root,rel){const p=path.resolve(root,rel);if(p===root||!p.startsWith(path.resolve(root)+path.sep))throw new Error(`unsafe task path ${rel}`);return p;}
 function filesUnder(root){if(!fs.existsSync(root))return [];return fs.readdirSync(root,{withFileTypes:true}).flatMap(e=>e.isDirectory()?filesUnder(path.join(root,e.name)):[path.join(root,e.name)]);}
 async function run(bin,args,{env,cwd,stream,stderr,timeoutMs}){
-  const r=await runAsync(bin,args,{env,cwd,timeoutMs,maxBuffer:32*1024*1024});
+  const r=await runAsync(bin,args,{env,replaceEnv:true,cwd,timeoutMs,maxBuffer:32*1024*1024});
   fs.writeFileSync(stream,r.stdout||'');fs.writeFileSync(stderr,r.stderr||'');
   return {code:r.status,timedOut:r.timedOut};
 }
