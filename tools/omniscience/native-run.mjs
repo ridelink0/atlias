@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { DATASET,hash,PUBLISHER_CARD_SHA256 } from './protocol.mjs';
+import { DATASET,hash,PUBLISHER_CARD_SHA256,prepareDataset,questionPrompt,semanticJudgeTemplate,renderSemanticJudge } from './protocol.mjs';
 import { nativeSession,normalizeAnswer,FACTUAL_INSTRUCTIONS } from './native-session.mjs';
 const ROOT=fileURLToPath(new URL('../../',import.meta.url));
 const value=(args,name)=>{const i=args.indexOf(name);return i<0?'':args[i+1]||'';};
@@ -34,6 +34,22 @@ export async function main(args){
   if(fs.existsSync(planFile)&&JSON.stringify(JSON.parse(fs.readFileSync(planFile)))!==JSON.stringify(plan))throw Error('existing plan differs; never mutate it');
   if(!fs.existsSync(planFile))fs.writeFileSync(planFile,JSON.stringify(plan,null,2));
   if(!args.includes('--run')){console.log(JSON.stringify({status:'prepared-unmeasured',calls:0,jobs:jobs.length,plannedQuestions:600,out}));return;}
+  // Bind execution to the actual pinned CSV, not caller-editable plan hashes.
+  const csv=value(args,'--dataset');if(!csv)throw Error('--run requires the exact pinned --dataset CSV; zero calls');
+  const dataset=prepareDataset(fs.readFileSync(csv));
+  if(!judge){
+    const expected=dataset.questions.map(q=>({...q,prompt:questionPrompt(q)}));
+    if(hash(JSON.stringify(expected))!==JSON.parse(fs.readFileSync(path.join(prepared,'plan.json'))).questionManifestSha256)throw Error('answer manifest differs from actual pinned dataset');
+  }else{
+    const responseLedger=value(args,'--solver-ledger'),card=value(args,'--publisher-card');
+    if(!responseLedger||!card||hash(fs.readFileSync(responseLedger))!==plan.responseLedgerSha256)throw Error('judge requires exact frozen --solver-ledger and --publisher-card');
+    const template=semanticJudgeTemplate(fs.readFileSync(card,'utf8'));if(hash(template)!==plan.templateSha256)throw Error('semantic template differs');
+    const answers=fs.readFileSync(responseLedger,'utf8').split('\n').filter(Boolean).map(JSON.parse);
+    for(const job of jobs){
+      const q=dataset.questions.find(q=>q.id===job.questionId),gold=dataset.gold.find(g=>g.id===job.questionId),answer=answers.find(r=>r.id===job.questionId&&r.host===job.solverHost&&r.arm===job.solverArm);
+      if(!q||!gold||!answer||answer.responseSha256!==job.responseSha256||hash(answer.response)!==job.responseSha256||job.prompt!==renderSemanticJudge(template,{question:q.question,target:gold.answer,response:answer.response}))throw Error('protected judge prompt differs from actual dataset/gold/response');
+    }
+  }
   for(const file of ['protocol.mjs','native-session.mjs','native-run.mjs']){
     const tracked=spawnSync('git',['-C',ROOT,'show',`${plan.sourceSha}:tools/omniscience/${file}`],{windowsHide:true});
     if(tracked.status!==0||hash(tracked.stdout)!==hash(fs.readFileSync(new URL(file,import.meta.url))))throw Error('commit current native adapter before model execution');
