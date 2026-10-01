@@ -36,6 +36,17 @@ try {
   assert.equal(c.status, 1); checks++;
   assert.equal(JSON.parse(fs.readFileSync(path.join(blocked, 'plan.json'))).calls, 0); checks++;
   assert.equal(fs.existsSync(path.join(blocked, 'home')), false); checks++;
+  const second=path.join(root,'second');fs.mkdirSync(second);fs.writeFileSync(path.join(second,'api.mjs'),'export const value=1;');
+  fs.writeFileSync(input,JSON.stringify({model:spec.model,effort:spec.effort,jobs:[{...spec,id:'a'},{...spec,root:second,id:'b'}]}));
+  const batchOut=path.join(root,'batch-prepared'),batchPrepared=run(batchOut);
+  assert.equal(batchPrepared.status,0,batchPrepared.stderr);checks++;
+  const batchPlan=JSON.parse(fs.readFileSync(path.join(batchOut,'plan.json')));
+  assert.equal(batchPlan.profile,'experimental-independent-batch-v1');checks++;
+  assert.equal(batchPlan.jobs.length,2);checks++;
+  assert.equal(batchPlan.calls,0);checks++;
+  assert.notEqual(run(path.join(second,'unsafe-batch-output')).status,0);checks++;
+  const partial={model:spec.model,effort:spec.effort,jobs:[{...spec,id:'a',checks:{functional:['node','--check','api.mjs'],adversarial:['node','--check','api.mjs']}},{...spec,root:second,id:'b'}]};
+  fs.writeFileSync(input,JSON.stringify(partial));assert.notEqual(run(path.join(root,'partial-checks')).status,0);checks++;
   console.log(`${checks} native-runner preparation/failure/accounting controls passed; zero model calls.`);
 } finally {
   const resolved = fs.realpathSync(root); assert.equal(path.dirname(resolved), fs.realpathSync(os.tmpdir())); assert.ok(path.basename(resolved).startsWith('gev-native-runner-'));
