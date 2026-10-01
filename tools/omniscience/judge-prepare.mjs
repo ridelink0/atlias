@@ -24,7 +24,7 @@ for (const row of responses) {
   prompts.push({ identity, host: row.host, arm: row.arm, id: row.id, questionSha256: q.questionSha256, responseSha256: row.responseSha256, prompt, promptSha256: hash(prompt) });
 }
 const completeAnswers = ['codex','claude'].flatMap(host => ['plain','atlias'].map(arm => ({ host, arm, validAnswers: prompts.filter(p => p.host === host && p.arm === arm).length, planned: questions.length })));
-const manifest = { benchmark: plan.benchmark, dataset: plan.dataset, modelCalls: 0, status: 'judge prompts prepared; semantic judge execution unmeasured', responseLedgerSha256: hash(bytes), publisherCardSha256: hash(card), templateSha256: hash(template), completeAnswers, invalid, limitation: 'Imported answer validity is not independently verified native execution. This directory contains gold and MUST remain outside contestant homes/workspaces/context. No score before actual pinned judge execution and complete grading.' };
+const manifest = { benchmark: plan.benchmark, dataset: plan.dataset, modelCalls: 0, status: 'judge prompts prepared; semantic judge execution unmeasured', responseLedgerSha256: hash(bytes), publisherCardSha256: hash(card), templateSha256: hash(template), judgePromptsSha256: hash(JSON.stringify(prompts)), completeAnswers, invalid, limitation: 'Imported answer validity is not independently verified native execution. This directory contains gold and MUST remain outside contestant homes/workspaces/context. No score before actual pinned judge execution and complete grading.' };
 fs.mkdirSync(out, { recursive: true });
 fs.writeFileSync(path.join(out, 'judge-prompts.json'), JSON.stringify(prompts, null, 2));
 fs.writeFileSync(path.join(out, 'plan.json'), JSON.stringify(manifest, null, 2));
