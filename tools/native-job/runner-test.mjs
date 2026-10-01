@@ -12,7 +12,7 @@ try {
   const source = path.join(root, 'source'); fs.mkdirSync(source); fs.writeFileSync(path.join(source, 'api.mjs'), 'export const value=1;');
   const spec = { root: source, task: 'Change value to2.', instructions: ['The user is Gev. No emojis.'], readPaths: ['api.mjs'], writePaths: ['api.mjs'], model: 'gpt-6.1-sol', effort: 'medium' };
   const input = path.join(root, 'job.json'); fs.writeFileSync(input, JSON.stringify(spec));
-  const meter = path.join(root, 'fake-meter.mjs'); fs.writeFileSync(meter, 'console.log(JSON.stringify({windows:[{label:"fixture",percentUsed:0}]}))');
+  const meter = path.join(root, 'fake-meter.mjs'); fs.writeFileSync(meter, 'console.log(JSON.stringify({snapshotFetchedAt:Date.now(),windows:[{label:"fixture",percentUsed:0}]}))');
   const auth = path.join(root, 'fake-auth.json'); fs.writeFileSync(auth, JSON.stringify({ tokens: { access_token: 'fixture-no-actual-token' } }));
   const runner = fileURLToPath(new URL('./run.mjs', import.meta.url));
   const run = (out, flags = []) => spawnSync(process.execPath, [runner, '--host', 'codex', '--job', input, '--out', out, '--native', process.execPath, ...flags], { encoding: 'utf8', windowsHide: true, timeout: 30000 });

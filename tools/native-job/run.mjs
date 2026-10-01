@@ -33,6 +33,7 @@ if (!meter) throw Error('--run requires the prescribed --usage-cli');
 const usageProcess = spawnSync(process.execPath, [meter, '--host', host, '--json', ...(host==='codex'?['--refresh']:[])], { encoding: 'utf8', windowsHide: true, timeout: 45000, maxBuffer: 1024 * 1024 });
 if (usageProcess.status !== 0) throw Error('fresh allowance unavailable; no native call');
 const usage = JSON.parse(usageProcess.stdout), windows = usage.windows;
+if(host==='codex'&&(!Number.isFinite(usage.snapshotFetchedAt)||Date.now()-usage.snapshotFetchedAt>60000||usage.snapshotFetchedAt-Date.now()>5000))throw Error('fresh live Codex snapshot required; stale fallback cannot authorize inference');
 if (!Array.isArray(windows) || !windows.length || windows.some(w => !Number.isFinite(w.percentUsed) || w.percentUsed >= 90)) throw Error('insufficient fresh allowance; no native call');
 const home = path.join(out, 'home'), ws = path.join(out, 'native-ws'); fs.mkdirSync(home); fs.mkdirSync(ws);
 const env = childEnv(process.env, { home });

@@ -1,7 +1,35 @@
 import * as bounded from '../lib/native-job.mjs';
 import * as checked from '../lib/native-job-check.mjs';
+import * as batches from '../lib/native-job-batch.mjs';
 import os from 'node:os';
 export default function register({suite,check,fs,path}) {
+  suite('independent native batches','complete independent packets and protected stages',()=>{
+    const root=fs.mkdtempSync(path.join(os.tmpdir(),'gev-core-batch-'));
+    const note=(name,ok)=>check(name,ok,{happened:name,why:'A batch must preserve every job and source rather than hiding failures in aggregate savings.',fix:'Check complete packet binding, disjoint staging and caller-owned verification.'});
+    const rejects=fn=>{try{fn();return false}catch{return true}};
+    try{
+      const specs=['a','b'].map(id=>{const dir=path.join(root,id);fs.mkdirSync(dir);fs.writeFileSync(path.join(dir,'api.mjs'),'export const value=1;');return {id,root:dir,task:'Set value to2.',instructions:['Gev: preserve source and run both checks.'],readPaths:['api.mjs'],writePaths:['api.mjs']}});
+      const batch=batches.prepareBatch(specs);
+      note('every complete task and instruction is retained',batch.packet.jobs.every((x,i)=>x.packet.task===specs[i].task&&JSON.stringify(x.packet.instructions)===JSON.stringify(specs[i].instructions)));
+      batches.assertBatchUnchanged(batch);note('original batch source binding validates',true);
+      const response={batchSha256:batch.batchSha256,jobs:batch.jobs.map(({id,job})=>({id,packetSha256:job.packetSha256,edits:[{path:'api.mjs',beforeSha256:job.packet.files[0].sha256,text:'export const value=2;'}]}))};
+      note('complete replies validate for every member',batches.validateBatch(batch,JSON.stringify(response)).length===2);
+      note('missing members cannot be hidden as a successful batch',rejects(()=>batches.validateBatch(batch,JSON.stringify({...response,jobs:response.jobs.slice(0,1)}))));
+      const stage=batches.stageBatch(batch,JSON.stringify(response),path.join(root,'stage'));
+      const snapshot=batches.batchStageSnapshot(batch,stage);
+      for(const {id,job} of batch.jobs){
+        const member=stage.stages.find(x=>x.id===id).staged;
+        const result=checked.verifyStagedJob(job,member,{functional:[process.execPath,'--check','api.mjs'],adversarial:[process.execPath,'-e','import("./api.mjs").then(m=>{if(m.value!==2)process.exit(1)})']},{env:{}});
+        note(`${id} passes real functional and adversarial commands`,result.status==='verified-stage');
+        note(`${id} leaves all staged sources unchanged`,batches.batchStageSnapshot(batch,stage)===snapshot);
+      }
+      fs.writeFileSync(path.join(stage.stages[1].staged.stage,'api.mjs'),'export const value=99;');
+      note('a cross-member stage mutation is visible',batches.batchStageSnapshot(batch,stage)!==snapshot);
+      note('a stage inside any live member is refused',rejects(()=>batches.stageBatch(batch,JSON.stringify(response),path.join(specs[0].root,'unsafe'))));
+      fs.writeFileSync(path.join(specs[1].root,'api.mjs'),'concurrent change');
+      note('concurrent change blocks later batch consumption',rejects(()=>batches.assertBatchUnchanged(batch)));
+    }finally{const resolved=fs.realpathSync(root);if(path.dirname(resolved)!==fs.realpathSync(os.tmpdir())||!path.basename(resolved).startsWith('gev-core-batch-'))throw Error('unexpected cleanup path');fs.rmSync(resolved,{recursive:true,force:true})}
+  });
   suite('bounded native jobs', 'preserve source and verify staged replacements',()=>{
     const root=fs.mkdtempSync(path.join(os.tmpdir(),'gev-core-native-job-'));
     const source=path.join(root,'source');fs.mkdirSync(source);fs.writeFileSync(path.join(source,'api.mjs'),'export const value=1;');
