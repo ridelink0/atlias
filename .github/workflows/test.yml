@@ -40,6 +40,7 @@ jobs:
           node tools/codexstudy/behavior-test.mjs
           node tools/codexstudy/capability-test.mjs
           node tools/codexstudy/factuality-test.mjs
+          node tools/codexstudy/factuality-variants-test.mjs
           node tools/omniscience/test.mjs
           node tools/omniscience/native-test.mjs
           node tools/native-job/test.mjs
