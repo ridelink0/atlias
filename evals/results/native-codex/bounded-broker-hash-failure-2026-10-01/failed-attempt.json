@@ -1,0 +1,43 @@
+{
+  "host": "codex",
+  "model": "gpt-6.1-sol",
+  "effort": "medium",
+  "packetSha256": "7f3c02d6b315fe52c9dc20724fb7011533f4b5186a2c997d79b7bec814277f0c",
+  "instructionSha256": "0dd43d614010fa7dd24e4f0d1679827d2d32797e37d31e9d73786a83e9d59b9a",
+  "native": "C:/Users/OWNER/AppData/Local/OpenAI/Codex/bin/ca9abb0b4d8ac692/codex.exe",
+  "calls": 1,
+  "paidCredits": false,
+  "automaticRetries": false,
+  "profile": "experimental-bounded-patch-v1",
+  "limitations": [
+    "Reduced native capabilities, not general feature parity.",
+    "Claude subscription profile delivery remains unverified.",
+    "Native residual tools require transcript audit; no zero-tool guarantee.",
+    "Staging/check success does not apply edits to the live project."
+  ],
+  "status": {
+    "code": 0,
+    "signal": null
+  },
+  "timedOut": false,
+  "outputExceeded": false,
+  "configurationError": false,
+  "nativeNotices": [],
+  "toolEvents": 0,
+  "nativeReportedUsage": {
+    "input_tokens": 5779,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 151,
+    "reasoning_output_tokens": 130
+  },
+  "responseSha256": "70d1426e3fb3c6052db1049128b8b3749384526db69b6c64f8f7f927afdc05fa",
+  "staged": null,
+  "verification": null,
+  "error": "response not bound to packet",
+  "qualityFailure": "",
+  "protocolValid": false,
+  "authRemoved": true,
+  "verified": false,
+  "limitation": "All costs retained, including failed attempts. A completed wrong solution stays protocol-valid and unsolved, not excluded. Token summary needs native transcript reconciliation. Checks are finite and edits are never applied to the live project."
+}

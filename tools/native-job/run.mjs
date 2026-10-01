@@ -16,6 +16,7 @@ if (outputRelative === '' || (!outputRelative.startsWith('..' + path.sep) && out
 if (fs.existsSync(out)) throw Error('preserve previous attempt');
 fs.mkdirSync(out, { recursive: true });
 fs.writeFileSync(path.join(out, 'packet.json'), job.serialized);
+fs.writeFileSync(path.join(out, 'input-envelope.json'), job.input);
 const plan = { host, model: spec.model, effort: spec.effort, packetSha256: job.packetSha256, instructionSha256: digest(JOB_INSTRUCTIONS), native, calls: 0, paidCredits: false, automaticRetries: false, profile: 'experimental-bounded-patch-v1', limitations: ['Reduced native capabilities, not general feature parity.', 'Claude subscription profile delivery remains unverified.', 'Native residual tools require transcript audit; no zero-tool guarantee.', 'Staging/check success does not apply edits to the live project.'] };
 fs.writeFileSync(path.join(out, 'plan.json'), JSON.stringify(plan, null, 2));
 if (!args.includes('--run')) { console.log(JSON.stringify({ status: 'prepared-unmeasured', modelCalls: 0, out })); process.exit(0); }
@@ -57,7 +58,7 @@ try {
   plan.calls = 1; fs.writeFileSync(path.join(out, 'plan.json'), JSON.stringify(plan, null, 2));
   const child = spawn(native, argv, { cwd: ws, env, windowsHide: true, stdio: ['pipe','pipe','pipe'] });
   child.stdout.on('data', d => { fs.appendFileSync(streamFile, d); streamBytes += d.length; if (streamBytes > 8 * 1024 * 1024) { outputExceeded = true; child.kill(); } else stdout += d; });
-  child.stderr.on('data', d => { fs.appendFileSync(stderrFile, d); }); child.stdin.on('error', () => {}); child.stdin.end(job.serialized);
+  child.stderr.on('data', d => { fs.appendFileSync(stderrFile, d); }); child.stdin.on('error', () => {}); child.stdin.end(job.input);
   const timer = setTimeout(() => { timedOut = true; child.kill(); }, 10 * 60000);
   status = await new Promise(resolve => { child.on('error', e => resolve({ code: null, error: e.code })); child.on('close', (code, signal) => resolve({ code, signal })); }); clearTimeout(timer);
 } finally {

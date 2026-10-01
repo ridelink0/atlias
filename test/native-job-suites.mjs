@@ -11,6 +11,9 @@ export default function register({suite,check,fs,path}) {
       const instructions=['The user is Gev. Start replies with Okay Gev. No emojis.'];
       const job=bounded.prepareJob({root:source,task:'Change value to2.',instructions,readPaths:['api.mjs'],writePaths:['api.mjs']});
       note('complete user rules are preserved',JSON.stringify(job.packet.instructions)===JSON.stringify(instructions));
+      const envelope=JSON.parse(job.input);
+      note('worker receives broker-computed packet hash',envelope.packetSha256===bounded.digest(JSON.stringify(envelope.packet)));
+      note('tampered envelope is rejected',rejects(()=>bounded.assertJobUnchanged({...job,input:JSON.stringify({...envelope,packetSha256:bounded.digest('wrong')})})));
       note('normal source path resolves to the actual file',bounded.safeJobPath(source,'api.mjs')===fs.realpathSync(path.join(source,'api.mjs')));
       note('traversal is rejected',rejects(()=>bounded.safeJobPath(source,'../escape')));
       bounded.assertJobUnchanged(job);note('source snapshot validates',true);

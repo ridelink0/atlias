@@ -17,6 +17,10 @@ try {
   const response = { packetSha256: job.packetSha256, edits: [{ path: 'src/api.mjs', beforeSha256: digest(original), text: 'export const value = 2;' }] };
   ok(() => assert.deepEqual(job.packet.instructions, options.instructions));
   ok(() => assert.equal(job.packet.task, options.task));
+  const envelope = JSON.parse(job.input);
+  ok(() => assert.equal(envelope.packetSha256, digest(JSON.stringify(envelope.packet))));
+  ok(() => assert.deepEqual(envelope.packet, job.packet));
+  ok(() => assert.throws(() => assertJobUnchanged({ ...job, input: JSON.stringify({ ...envelope, packetSha256: digest('wrong') }) }), /envelope/));
   ok(() => assert.equal(validateEdits(job, JSON.stringify(response)).length, 1));
   const stage = stageJob(job, JSON.stringify(response), path.join(root, 'stage'));
   ok(() => assert.equal(fs.readFileSync(path.join(stage.stage, 'src/api.mjs'), 'utf8'), response.edits[0].text));

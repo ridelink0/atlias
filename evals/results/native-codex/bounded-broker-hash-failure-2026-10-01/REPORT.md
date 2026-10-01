@@ -1,0 +1,5 @@
+# Bounded broker protocol failure for Gev
+
+Source64abdd0, original48-call plan remains unchanged. Two attempted calls are retained;46unattempted rows are held because the transport is deterministically incomplete. This is not a completed study, reduced benchmark plan or efficiency result. The control solved all114adversarial cases at87,276raw input. The treatment used5,779raw input but returned empty packetSha256/edits and failed protocol binding; its71/114cases and protected-grade failure remain. Native exit0 is not protocol success. Ledger SHA256db89050728e9d634f621f3747f47230bcf28b8249185151d2100af7cf378a0af.
+
+The model received the complete packet/custom instructions but was asked to echo a hash that was never supplied, while tools were disabled. The corrected source supplies a broker-computed hash outside the hashed packet, checks that envelope against the source packet, and requires full envelope delivery. This changes transport and requires a NEW separately pinned study; never retry, repair or regrade this original attempt. All costs are retained and no5x/20x/Claude-model claim is made.

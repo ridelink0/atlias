@@ -79,7 +79,7 @@ try {
     const child = spawn(host === 'codex' ? codex : claude, args, { cwd: ws, env, windowsHide: true, stdio: ['pipe', 'pipe', 'pipe'] });
     let stdout = '', stderr = '';
     child.stdout.on('data', d => stdout += d); child.stderr.on('data', d => stderr += d);
-    child.stdin.on('error', () => {}); child.stdin.end(job.serialized);
+    child.stdin.on('error', () => {}); child.stdin.end(job.input);
     // Only terminate this owned child handle on timeout, never a Windows PID.
     const timer = setTimeout(() => child.kill(), 90000);
     const status = await new Promise((resolve, reject) => { child.on('error', reject); child.on('close', (code, signal) => resolve({ code, signal })); }); clearTimeout(timer);
@@ -89,6 +89,7 @@ try {
     assert.equal(status.code, 0, `${host}: signal=${status.signal} ${stderr.slice(-600)}`); assert.ok(last, 'actual native request absent');
     const texts = host === 'codex' ? last.input.flatMap(x => (x.content || []).filter(p => typeof p.text === 'string').map(p => p.text)) : last.messages.flatMap(x => Array.isArray(x.content) ? x.content.filter(p => typeof p.text === 'string').map(p => p.text) : [x.content]);
     assert.ok(texts.some(text => text.includes(job.serialized)), 'complete packet not delivered');
+    assert.ok(texts.some(text => text.includes(job.input)), 'hash-bound input envelope not delivered');
     const instructions = host === 'codex' ? last.instructions : JSON.stringify(last.system);
     assert.ok(host === 'codex' ? instructions === JOB_INSTRUCTIONS : (last.system || []).some(p => p.text === JOB_INSTRUCTIONS), 'replacement instructions not delivered exactly');
     const events = stdout.split('\n').filter(Boolean).flatMap(line => { try { return [JSON.parse(line)]; } catch { return []; } });
