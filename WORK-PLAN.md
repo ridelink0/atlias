@@ -1,3 +1,7 @@
+# Allowance boundary for Gev, 2026-10-01T23:55:06.379Z
+
+Fresh prescribed Codex meter: fivehour91%used/9%left/~15estimatedturns, reset2026-10-02T02:17:11Z (Oct1 21:17:11Chicago). No newmodels, checks, CIpolls or implementation begun after this reading; standing below10%rule requires cleanhandoff. Previous goal turn made progress:12independentvariants/131controls, WindowsCRLFhashbug fixed/all12hashes verified, README/PR updated, commits2003e56/e65562b pushed. NEXT after freshheadroom: inspect e65562b OWN exactCI, preserve all closed/held studies, then implement/freeze NEW48call per-host variant execution+full independent audit prerequisites before inference. Installed3726staysenabled/pinned; source020runtimeCIgreen9/1595, newer variantheadCIUNVERIFIED. Goal tokenANDpeakcontext20x/sameoutputs/normalcapabilities/BOTHhosts remainsunfinished. SAME21:19Chicagoheartbeat remainsafterverifiedreset, no duplicate/resetredemption/paidcredits/DR/subagents/UsageLimitsfixes. Fullcheckpointbelow.
+
 # Windows variant hash fix for Gev, 2026-10-01T23:53:17.240Z
 
 Independent12-case corpus has131passedcontrols/0models; secondpass FOUND actualWindowsCRLFmanifesthash failure. Scoped LF attribute fixed it; ALL12 Git core.autocrlf=true filtered hashes nowmatch. New source needs ownCI; do not launchmodels untilfreshheadroom/sourceplan prerequisites. Current88%meter lastknown; no newlongwork, originalstudies/installedsnapshotunchanged.
