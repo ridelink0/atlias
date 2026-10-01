@@ -38,10 +38,12 @@ jobs:
           node tools/codexstudy/test.mjs
           node tools/codexstudy/corpus-test.mjs
           node tools/codexstudy/behavior-test.mjs
+          node tools/codexstudy/capability-test.mjs
           node tools/omniscience/test.mjs
           node tools/omniscience/native-test.mjs
           node tools/native-job/test.mjs
           node tools/native-job/runner-test.mjs
+          node tools/native-job/allowance-schedule-test.mjs
           node tools/codexstudy/broker-test.mjs
       - name: the command line answers
         shell: bash

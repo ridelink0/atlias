@@ -4,6 +4,8 @@ The target is20x less usage with the same required outputs or better on BOTH nat
 
 ## Observed pattern
 
+Gev's capability requirement is a separate [capability and efficiency gate](CAPABILITY-AND-EFFICIENCY-GATES.md). Six new full-workflow families have independent grader controls; their model comparisons are unmeasured. The narrower bounded worker cannot establish normal native-host parity. Finish source07 unchanged, then use NEW pinned studies for broader workflows and capability-preserving routing. No default promotion follows from partial raw-token savings.
+
 | Completed native source | Matched pairs | Raw input change | Peak change |
 |---|---:|---:|---:|
 |46c12af|12|28.98% less|9.64% higher|

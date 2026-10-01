@@ -1,0 +1,45 @@
+# Capability and efficiency gates for Gev
+
+20x less usage is the actual target; 5x is only a minimum milestone. A cheaper worker that cannot perform the control host's task is not a success. Original bounded-worker studies are diagnostics, not capability-preserving host comparisons. No finite corpus proves every possible task or universal output equivalence.
+
+## Separate capability gate
+
+The new `tools/codexstudy/capability-corpus.mjs` generates six authored workflow families in `evals/capability-heldout`. Checks require complete results rather than a short answer or a passing startup smoke. Both native hosts can load this manifest with their existing native study drivers. Use full native tools in both arms, identical model, effort, task bytes, user rules and grading; pin a NEW source and plan after source07 closes. Do not feed the gold reference or hidden grader to the solver. Claude inference waits for a fresh meter permitting it.
+
+| Family | Required result | Capability exercised |
+|---|---|---|
+| Multi-file new API | Preserve legacy behavior, create a strict module and migrate a caller | New files, compatibility, cross-file edits |
+| CLI encoding and paths | JSON Lines output, nonzero errors with no partial stdout | Shell, BOM/CRLF, spaces and non-ASCII paths |
+| Async cancellation | Sequential work, abort boundaries and original error identity | Async debugging, cancellation, runtime verification |
+| Untrusted evidence | Tenant isolation despite malicious repository notes | Instruction boundaries, security, immutable evidence |
+| Large dependency discovery | Follow a40-module import chain and preserve immutable wrappers | Retrieval and source selection beyond packet limits |
+| Durable state restart | Correct data survives a fresh process, including duplicate and prototype-looking keys | State engineering, filesystem and process lifecycle |
+
+The43 model-free controls establish broken-seed rejection, reference acceptance, broken replacement rejection, immutable-contract detection, manifest hashing and real packet limits. These are grader controls, not model performance. The bounded-patch v1 profile rejects new-file and more-than32-file requests; passing its twelve function-repair families cannot substitute for this workflow gate.
+
+Before a capability-preserving optimization, record the normal host's actual delivered tools, instruction layers, permissions and integrations. Retain required tools and APIs. Route a task outside an explicitly complete bounded scope to the normal native workflow before inference; never silently truncate input or remove abilities. If escalation follows an attempt, retain both attempts and costs. Routing is a requirement until an implemented router and actual host evidence demonstrate it; it is not claimed as shipped.
+
+## Evidence required for an efficiency claim
+
+1. Freeze contracts, independent protected graders, expected outputs, permitted changes, source, model, effort, flags, task order and full repeat count before inference.
+2. Retain every attempt. Publish failed, invalid, unfavorable, unmatched and escalated costs. Never select only the successful fast path or retry an unfavorable result away.
+3. Require per-task quality evidence. Equal aggregate grades can conceal regressions. A completed wrong answer is a failure, not an abstention or proof of parity.
+4. Reconcile generated and FULL delivered context/instructions against the SAME frozen ledger as the publisher, actual native counters and authentication cleanup. Catalog characters are not model tokens.
+5. Publish raw, cached and uncached input, output, total, peak context, requests and wall time. Raw counts containing cached input are not subscription allowance consumption. State every denominator. A12x raw ratio is not20x usage.
+6. Report minimum and goal separately. The allowance target requires a defensible host-specific usage measure, ratios at most0.20 and0.05 respectively, and same-or-better outputs and demonstrated capability coverage on BOTH hosts. Unavailable Claude evidence is unverified, not extrapolated from Codex.
+
+## Engineering coverage and next interventions
+
+| Area | Existing mechanism / evidence | Next measurable gate |
+|---|---|---|
+| Context engineering | Requirements-first complete-file packs, memory/graph retrieval, delivery audits | Full workflow discovery and source completeness, peak context on longer tasks |
+| Token engineering | Lean metadata, fewer rounds, default-off bounded worker | Separate prefix, source, tool output and output costs; new pinned batching study |
+| Harness engineering | Both-host hooks/MCP, guards, immutable resumes | Required tool/instruction/permission parity with ordinary host configuration |
+| Retrieval and memory engineering | Shared memory, progress, graph-first context | Multi-session recall, stale/concurrent state and compaction recovery |
+| Tool and state engineering | Bounded jobs, staged edits, source hashes, caller checks | New-file, process, restart, cancellation and full workflow coverage |
+| Evaluation engineering | Protected grades,1260 independent cases, all-attempt ledgers | Six new families, taskwise regressions and host activation audits |
+| Factuality engineering | Pinned AA public600 and protected semantic-judge adapters | Actual closed-book activation, correct abstention and full cost accounting |
+| Security engineering | Paths, secrets, concurrent-edit guards, evidence as data | Prompt injection, authorization, tampering and escalation failures |
+| Reliability and scheduling | Live meters and one existing heartbeat | Convert reset timestamps in America/Chicago; re-anchor on verified changes |
+
+This inventory exposes gaps; it does not claim every AI engineering discipline or every model capability is implemented. Prioritize demonstrated repeated-prefix/request costs and capability failures instead of unchanged studies. Gray's bounded-job/small-surface ideas and Claude Harness's requirements-first, budgeted/hash-deduplicated packing remain the [pinned references](HARNESS-REFERENCES.md). Preserve the original host's capabilities while testing those ideas.

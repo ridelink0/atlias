@@ -123,6 +123,8 @@ The Windows integration check passed 1,530 checks across 219 suites, each writte
 
 Gev's actual target is **20x less usage with exactly the same required outputs or better**. **5x is the minimum milestone**, not completion. Neither target has been achieved. [Measurement and quality requirements](docs/EFFICIENCY-TARGET.md).
 
+The target also requires preserving normal host capabilities. [Six new workflow families and capability gates](docs/CAPABILITY-AND-EFFICIENCY-GATES.md) cover new-file/multi-file changes, CLI encoding and paths, async cancellation, malicious repository notes, a40-module dependency chain and persistence across process restarts.43 model-free grader/manifest controls pass; native model comparisons are unmeasured. The compact bounded worker cannot cover every native workflow, and its results do not prove general capability parity.
+
 Measurements below use saved runs, not feature promises. A ratio below 1.0 means fewer prompt tokens per solved task. Confidence intervals are paired bootstrap 95% unless stated otherwise.
 
 Gev's current primary comparison is **native Codex versus Codex + Atlias**. The [24-workload corpus and reproducible runner](tools/codexstudy/README.md) covers 12 semantic families with small and large archive variants. Five repeated comparisons below have completed their declared calls; source0e and source7d retain their failed deliveries and process failures. Source7d measures ordered execution with corrected common skill isolation. The [benchmark-pattern plan](docs/BENCHMARK-PATTERN-PLAN.md) targets the repeated context prefix and model rounds rather than more wording-only repetitions. These authored diagnostics have not established a release gate.

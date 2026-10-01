@@ -1,0 +1,31 @@
+{
+  "id": "capability-async-cancellation",
+  "family": "async-cancellation",
+  "kind": "native-workflow-capability",
+  "capabilities": [
+    "read",
+    "edit",
+    "shell",
+    "async-debugging"
+  ],
+  "prompt": "Implement docs/contract.md completely. Inspect the project and use the native tools needed to edit, create files, and verify the result. Preserve existing public behavior and user instructions. Do not edit package.json, smoke.mjs, contract or immutable evidence. The smoke is not a correctness test. Add and run your own relevant tests. Do not claim checks you did not run.",
+  "files": {
+    "package.json": "{\"type\":\"module\",\"scripts\":{\"test\":\"node smoke.mjs\"}}",
+    "docs/contract.md": "Fix src/work.mjs mapSeries(values,fn,signal). Await fn(value,index) sequentially, preserve order and do not mutate values. If already aborted, reject with an Error whose name is AbortError without invoking fn. Check abort before every item; reject after the current item finishes if cancellation occurred. Preserve original fn errors and do not start subsequent items. No timers or polling required.\n",
+    "smoke.mjs": "console.log('Use the contract to add meaningful checks; this smoke only checks startup.');\n",
+    "src/work.mjs": "export async function mapSeries(xs,fn,signal){return Promise.all(xs.map(fn))}\n"
+  },
+  "hidden": {
+    "protected-grade.mjs": "import assert from 'node:assert/strict';\nimport {mapSeries} from './src/work.mjs';const xs=[3,2,1],calls=[];let active=0;assert.deepEqual(await mapSeries(xs,async(x,i)=>{assert.equal(active++,0);await Promise.resolve();active--;calls.push(i);return x*2}),[6,4,2]);assert.deepEqual(xs,[3,2,1]);assert.deepEqual(calls,[0,1,2]);assert.deepEqual(await mapSeries([],()=>{throw Error('unused')}),[]);let n=0;const a=new AbortController();a.abort();await assert.rejects(mapSeries([1],()=>n++,a.signal),{name:'AbortError'});assert.equal(n,0);const b=new AbortController();await assert.rejects(mapSeries([1,2],async()=>{n++;b.abort();return 1},b.signal),{name:'AbortError'});assert.equal(n,1);const original=new Error('original');await assert.rejects(mapSeries([1,2],()=>{throw original}),e=>e===original);"
+  },
+  "protect": [
+    "package.json",
+    "docs/contract.md",
+    "smoke.mjs"
+  ],
+  "check": [
+    "node",
+    "protected-grade.mjs"
+  ],
+  "timeoutMs": 20000
+}

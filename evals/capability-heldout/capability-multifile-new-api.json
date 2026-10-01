@@ -1,0 +1,34 @@
+{
+  "id": "capability-multifile-new-api",
+  "family": "multifile-new-api",
+  "kind": "native-workflow-capability",
+  "capabilities": [
+    "read",
+    "edit",
+    "create",
+    "shell",
+    "dependency-discovery"
+  ],
+  "prompt": "Implement docs/contract.md completely. Inspect the project and use the native tools needed to edit, create files, and verify the result. Preserve existing public behavior and user instructions. Do not edit package.json, smoke.mjs, contract or immutable evidence. The smoke is not a correctness test. Add and run your own relevant tests. Do not claim checks you did not run.",
+  "files": {
+    "package.json": "{\"type\":\"module\",\"scripts\":{\"test\":\"node smoke.mjs\"}}",
+    "docs/contract.md": "Keep src/legacy.mjs parse(value) returning a number for signed integer strings and throwing TypeError for anything else. Create src/strict.mjs exporting parseStrict(value): return a safe integer or throw TypeError, with no coercion or exponent/decimal syntax. Change src/service.mjs total(values) to use strict parsing and reject an unsafe accumulated total. Do not change legacy behavior.\n",
+    "smoke.mjs": "console.log('Use the contract to add meaningful checks; this smoke only checks startup.');\n",
+    "src/legacy.mjs": "export const parse=x=>{if(typeof x!=='string'||!/^[-]?\\d+$/.test(x))throw new TypeError('integer');return Number(x)};\n",
+    "src/service.mjs": "import {parse} from './legacy.mjs';export const total=xs=>xs.reduce((s,x)=>s+parse(x),0);\n"
+  },
+  "hidden": {
+    "protected-grade.mjs": "import assert from 'node:assert/strict';\nimport {parse} from './src/legacy.mjs';import {parseStrict} from './src/strict.mjs';import {total} from './src/service.mjs';assert.equal(parse('9007199254740993'),Number('9007199254740993'));for(const x of ['0','-12','003'])assert.equal(parseStrict(x),Number(x));for(const x of ['9007199254740993','1e2','2.0','',null,2])assert.throws(()=>parseStrict(x),TypeError);assert.equal(total(['10','-3','2']),9);assert.equal(total([]),0);assert.throws(()=>total(['9007199254740991','1']),TypeError);"
+  },
+  "protect": [
+    "package.json",
+    "docs/contract.md",
+    "smoke.mjs",
+    "src/legacy.mjs"
+  ],
+  "check": [
+    "node",
+    "protected-grade.mjs"
+  ],
+  "timeoutMs": 20000
+}
