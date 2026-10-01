@@ -10,10 +10,13 @@ export function snapshotOf(raw,observedAt=Date.now()){
   const binding=report.windows.find(w=>w.label==='5-hour');if(!binding||Date.parse(report.utilization?.five_hour?.resets_at)!==binding.resetsAt||report.utilization?.five_hour?.utilization!==binding.percentUsed)throw Error('five-hour reset timestamps must agree');
   return {schema:'atlias-allowance-observation-v1',observedAt,snapshotFetchedAt:report.snapshotFetchedAt,paidCreditsEnabled:false,rawSha256:crypto.createHash('sha256').update(raw).digest('hex'),windows:report.windows.map(w=>({label:w.label,percentUsed:w.percentUsed,resetsAt:w.resetsAt})),settings:report.settings||null,limitations:'Account-wide meter; neither token prices nor process-specific billing. Parent, other chats and remote activity may contribute.'};
 }
+function validateObservation(o){
+  if(o?.schema!=='atlias-allowance-observation-v1'||o.paidCreditsEnabled!==false||!Number.isFinite(o.observedAt)||!Number.isFinite(o.snapshotFetchedAt)||o.observedAt-o.snapshotFetchedAt>60000||o.snapshotFetchedAt-o.observedAt>5000||!/^([a-f0-9]{64})$/.test(o.rawSha256||'')||!Array.isArray(o.windows)||!o.windows.length||o.windows.some(w=>!w||typeof w.label!=='string'||!w.label||!Number.isFinite(w.percentUsed)||w.percentUsed<0||w.percentUsed>100||!Number.isFinite(w.resetsAt)||w.resetsAt<=o.observedAt)||new Set(o.windows.map(w=>w.label)).size!==o.windows.length||!o.windows.some(w=>w.label==='5-hour'))throw Error('valid original meter observations required');
+}
 export function intervalOf(before,after,{isolated=false,completed,required,elapsedMs}={}){
   if(before?.schema!=='atlias-allowance-observation-v1'||after?.schema!==before.schema)throw Error('recorded observation schema required');
   if(!Number.isSafeInteger(completed)||!Number.isSafeInteger(required)||completed<0||required<1||completed>required||!Number.isFinite(elapsedMs)||elapsedMs<0)throw Error('verified task counts and elapsed duration required');
-  for(const observation of [before,after])if(observation.paidCreditsEnabled!==false||!Array.isArray(observation.windows)||observation.windows.some(w=>typeof w.label!=='string'||!w.label||!Number.isFinite(w.percentUsed)||w.percentUsed<0||w.percentUsed>100||!Number.isFinite(w.resetsAt))||new Set(observation.windows.map(w=>w.label)).size!==observation.windows.length)throw Error('valid original meter observations required');
+  for(const observation of [before,after])validateObservation(observation);
   const start=before.windows.find(w=>w.label==='5-hour'),end=after.windows.find(w=>w.label==='5-hour');if(!start||!end)throw Error('five-hour observations required');
   const delta=end.percentUsed-start.percentUsed,reasons=[];
   if(!Number.isFinite(before.observedAt)||!Number.isFinite(after.observedAt)||after.observedAt<before.observedAt)throw Error('chronological observation times required');
@@ -26,7 +29,8 @@ export function intervalOf(before,after,{isolated=false,completed,required,elaps
   return {eligible,reasons,completed,required,elapsedMs,observedPercentDelta:delta,percentDeltaBounds:eligible?[delta-1,delta+1]:null,completedTasksPerPercent:eligible?completed/delta:null,limitations:'One percentage point is reserved for meter rounding. Elapsed wall time does not establish time to exhaustion or causality; taskwise control parity and account-isolation evidence are separate gates.'};
 }
 export function appendObservation(ledger,record){
-  if(fs.existsSync(ledger)){const prior=fs.readFileSync(ledger,'utf8');if(prior&&!prior.endsWith('\n'))throw Error('preserve partial observation ledger; do not append');for(const line of prior.split('\n').filter(Boolean))if(JSON.parse(line).schema!==record.schema)throw Error('preserve incompatible observation ledger');}
+  validateObservation(record);
+  if(fs.existsSync(ledger)){const prior=fs.readFileSync(ledger,'utf8');if(prior&&!prior.endsWith('\n'))throw Error('preserve partial observation ledger; do not append');for(const line of prior.split('\n').filter(Boolean))validateObservation(JSON.parse(line));}
   fs.appendFileSync(ledger,JSON.stringify(record)+'\n',{encoding:'utf8'});
 }
 export function main(args,env=process.env){

@@ -27,7 +27,7 @@ for(const bad of [null,101,NaN]){const x=structuredClone(after);x.windows[0].per
 const unknownPaid=structuredClone(after);unknownPaid.paidCreditsEnabled=null;assert.throws(()=>intervalOf(before,unknownPaid,options),/original/);checks++;
 assert.throws(()=>intervalOf(before,after,{...options,elapsedMs:60001}),/exceeds/);checks++;
 const temp=fs.mkdtempSync(path.join(os.tmpdir(),'gev-allowance-observation-')),ledger=path.join(temp,'café observation.jsonl');appendObservation(ledger,before);appendObservation(ledger,after);assert.equal(fs.readFileSync(ledger,'utf8').trim().split('\n').length,2);checks++;
-for(const bad of ['{','{}\n',JSON.stringify(before)]){fs.writeFileSync(ledger,bad);assert.throws(()=>appendObservation(ledger,after));assert.equal(fs.readFileSync(ledger,'utf8'),bad);checks+=2;}
+for(const bad of ['{','{}\n',JSON.stringify({schema:before.schema})+'\n',JSON.stringify(before)]){fs.writeFileSync(ledger,bad);assert.throws(()=>appendObservation(ledger,after));assert.equal(fs.readFileSync(ledger,'utf8'),bad);checks+=2;}
 // Retain the temporary malformed-ledger fixtures for inspection. No model calls.
 const duplicates=report();duplicates.windows.push(duplicates.windows[0]);reject(duplicates,/unique/);
 assert.throws(()=>main(['--host codex --refresh --json'],{}),/exactly/);checks++;
