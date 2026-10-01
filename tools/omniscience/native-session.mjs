@@ -23,13 +23,17 @@ export function toolCallsFrom(host,events){
   if(host==='claude')return events.filter(e=>e.type==='assistant').reduce((n,e)=>n+(e.message?.content||[]).filter(c=>c.type==='tool_use').length,0);
   throw Error('unknown native host');
 }
+export function nativeAllowance(report,host,now=Date.now()){
+  if(!['codex','claude'].includes(host)||!Number.isFinite(now)||!Number.isFinite(report?.snapshotFetchedAt)||now-report.snapshotFetchedAt>60000||report.snapshotFetchedAt-now>5000||!Array.isArray(report.windows)||!report.windows.length||report.windows.some(w=>!Number.isFinite(w.percentUsed)||w.percentUsed<0||w.percentUsed>=90))throw Error('fresh sufficient allowance headroom required; zero calls');
+  const off=host==='codex'?report.codexCredits?.enabled===false:report.utilization?.extra_usage?.is_enabled===false;
+  if(!off)throw Error('paid credits must be explicitly off; zero calls');
+}
 export async function nativeSession({host,model,effort,native,prompt,system='',out,usageCli,authFile}){
   if(!['codex','claude'].includes(host)||!model||!['low','medium','high','xhigh','max'].includes(effort)||typeof prompt!=='string'||!prompt||typeof system!=='string'||!native||!authFile||!usageCli||typeof out!=='string'||!out||fs.existsSync(out))throw Error('explicit unused native session and pinned host/model/effort required');
   out=path.resolve(out);
-  const meter=spawnSync(process.execPath,[usageCli,'--host',host,'--json'],{encoding:'utf8',windowsHide:true,timeout:45000});
+  const meter=spawnSync(process.execPath,[usageCli,'--host',host,...(host==='codex'?['--refresh']:[]),'--json'],{encoding:'utf8',windowsHide:true,timeout:45000});
   if(meter.status!==0)throw Error('fresh allowance unavailable; zero calls');
-  const windows=JSON.parse(meter.stdout).windows;
-  if(!Array.isArray(windows)||!windows.length||windows.some(w=>!Number.isFinite(w.percentUsed)||w.percentUsed>=90))throw Error('insufficient headroom; zero calls');
+  nativeAllowance(JSON.parse(meter.stdout),host);
   const auth=JSON.parse(fs.readFileSync(authFile));
   if(host==='codex'?(auth.OPENAI_API_KEY||!auth.tokens?.access_token):!auth.claudeAiOauth?.accessToken)throw Error('subscription OAuth required; API-key billing refused');
   fs.mkdirSync(out,{recursive:true});

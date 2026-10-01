@@ -8,6 +8,12 @@ export default async function integritySuites({ suite, check, core, gate, track,
   const sid = (n) => 'integrity-' + n;
 
   suite('claims expert', 'what a reply claims', () => {
+    for (const text of ['All tests pass. Deployment unverified.', 'Deployment is unverified, but tests pass.', 'Tests pass, deployment unverified.', 'Tests pass and deployment is unverified.', 'I could not run the tests. All checks pass.']) {
+      check('independent positive claim: ' + text, integrity.hasPassClaim(text), { happened: text, why: 'An unrelated uncertainty statement must not hide a false verification claim.', fix: 'Scope honesty to its own clause.' });
+    }
+    for (const text of ['I could not verify whether tests pass.', 'Not all tests pass.', 'Tests do not pass.', 'Deployment unverified.', 'I did not run tests.', 'Do tests pass?', 'If tests pass, release.', 'I cannot say tests pass.']) {
+      check('honest or negative claim: ' + text, !integrity.hasPassClaim(text), { happened: text, why: 'Honesty and failure reports must remain allowed.', fix: 'Keep disclaimer and negation handling local.' });
+    }
     check('a finished-work reply is recognised as a claim', ['Done.', 'I implemented the export.', 'Fixed the parser.', 'It works now.'].every((t) => integrity.DONE_RE.test(t)), { happened: ['Done.', 'I implemented the export.', 'Fixed the parser.', 'It works now.'].filter((t) => !integrity.DONE_RE.test(t)).join(' | ') || 'all recognised', why: 'A claim the gate cannot see is a claim it cannot hold to evidence.', fix: 'Extend DONE_RE.' });
     check('a passing-tests reply is recognised as a claim', ['All tests pass.', 'The build succeeded.', 'Tests are green.', 'No test failures.'].every((t) => integrity.PASS_CLAIM_RE.test(t)), { happened: ['All tests pass.', 'The build succeeded.', 'Tests are green.', 'No test failures.'].filter((t) => !integrity.PASS_CLAIM_RE.test(t)).join(' | ') || 'all recognised', why: 'This is the claim users trust most and check least.', fix: 'Extend PASS_CLAIM_RE.' });
     check('an honest reply is not treated as a claim', integrity.HONEST_RE.test('I made the change but could not run the tests.') && integrity.HONEST_RE.test('This is untested.'), { happened: 'honest wording was not recognised', why: 'Saying plainly that something is unverified is the behaviour the gate wants, and punishing it teaches the opposite.', fix: 'Extend HONEST_RE.' });
@@ -49,6 +55,16 @@ export default async function integritySuites({ suite, check, core, gate, track,
     check('the atlias verify tool counts as a check', integrity.verificationAfterLastEdit([edit, { kind: 'tool', tool: 'mcp__plugin_atlias_atlias__harness_verify' }]), { happened: 'not counted', why: 'It is a real check, and ignoring it would punish using it.', fix: 'isVerifyEvent accepts harness_verify.' });
     const noRun = integrity.check({ cwd: PROJECT, turn: [edit], last: 'Done. All tests pass.', files: [], flags: {} });
     check('claiming tests pass with no run is caught', noRun.some((f) => f.flag === 'passclaim' && /no check ran/.test(f.text)), { happened: JSON.stringify(noRun).slice(0, 200), why: 'A result that was never produced is a claim, not evidence.', fix: 'Check the anyRun branch in check().' });
+    for (const last of ['All tests pass. Deployment unverified.', 'Deployment unverified, but tests pass.']) {
+      const findings = integrity.check({ cwd: PROJECT, turn: [edit], last, files: [], flags: {} });
+      check('mixed disclaimer still requires evidence: ' + last, findings.some(f => f.flag === 'passclaim'), { happened: JSON.stringify(findings), why: 'The full gate must catch the wording regression, not only a helper.', fix: 'Use hasPassClaim in check().' });
+    }
+    const unknown = integrity.check({ cwd: PROJECT, turn: [{ ...ran, outcome: 'unknown' }], last: 'Tests pass.', files: [], flags: {} });
+    check('an unknown result cannot substantiate success', unknown.some(f => f.flag === 'passclaim' && /unknown/.test(f.text)), { happened: JSON.stringify(unknown), why: 'An attempted check and a successful check are different evidence.', fix: 'Require the latest recorded verification to pass.' });
+    const passed = integrity.check({ cwd: PROJECT, turn: [ran], last: 'Tests pass. Deployment unverified.', files: [], flags: {} });
+    check('supported success with separate uncertainty stays allowed', passed.length === 0, { happened: JSON.stringify(passed), why: 'The guard must preserve truthful useful reporting.', fix: 'Match each positive claim to a recorded outcome.' });
+    const stale = integrity.check({ cwd: PROJECT, turn: [ran,edit], last: 'Tests pass.', files: [], flags: {} });
+    check('success before a newer edit cannot verify current state', stale.some(f => f.flag === 'passclaim' && /latest edit/.test(f.text)), { happened: JSON.stringify(stale), why: 'A real historical pass is not evidence for a later change.', fix: 'Require verification after the latest edit.' });
     const failed = integrity.check({ cwd: PROJECT, turn: [edit, { kind: 'shell', verify: true, command: 'npm test', outcome: 'fail', excerpt: 'Tests: 2 failed' }], last: 'All tests pass now.', files: [], flags: {} });
     check('claiming tests pass after a failing run is caught, with the failure quoted', failed.some((f) => f.flag === 'passclaim' && /2 failed/.test(f.text)), { happened: JSON.stringify(failed).slice(0, 200), why: 'This is the most expensive wrong answer, because the user stops looking.', fix: 'Compare the claim with lastVerification().outcome.' });
     const done = integrity.check({ cwd: PROJECT, turn: [ran, edit], last: 'Done, the feature is implemented.', files: [path.join(PROJECT, 'a.mjs')], flags: {}, cfg: { stubs: false, weakenedTests: false, unwired: false } });

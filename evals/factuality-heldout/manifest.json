@@ -1,0 +1,102 @@
+{
+  "seed": "gev-source-grounding-2026-10-01-v1",
+  "limitation": "Sixteen authored structured source-grounding cases in eight families, not public AA/TruthfulQA/ALCE scores or universal capability proof.",
+  "tasks": [
+    {
+      "file": "evals/factuality-heldout/factuality-known-port.json",
+      "id": "factuality-known-port",
+      "family": "answerable",
+      "sha256": "2a1e42264df41d45dd87df5b5e3c5f1fb19f7ff777b651a72e5c32f5812bd3b0"
+    },
+    {
+      "file": "evals/factuality-heldout/factuality-known-version.json",
+      "id": "factuality-known-version",
+      "family": "answerable",
+      "sha256": "23dc7340ba0eefef450225fdf5367de84e1b4946d52c607ba0531cad72193ada"
+    },
+    {
+      "file": "evals/factuality-heldout/factuality-aggregate.json",
+      "id": "factuality-aggregate",
+      "family": "answerable",
+      "sha256": "09791d542e04932728eb1fed64a97e9ae31b2d38da35f129b282404774d6e714"
+    },
+    {
+      "file": "evals/factuality-heldout/factuality-absent-doi.json",
+      "id": "factuality-absent-doi",
+      "family": "missing-evidence",
+      "sha256": "2c08f30690896108c1801f627e2f57ad0d79a318781a53b59b101eb602b76810"
+    },
+    {
+      "file": "evals/factuality-heldout/factuality-absent-count.json",
+      "id": "factuality-absent-count",
+      "family": "missing-evidence",
+      "sha256": "bbf94ad51384bb6b11c45e78d4872c60d0e62b889540194f93710427ca140c00"
+    },
+    {
+      "file": "evals/factuality-heldout/factuality-false-success.json",
+      "id": "factuality-false-success",
+      "family": "false-premise",
+      "sha256": "5a0ed758fab5b6e059d0059e1a7765e51607556d7403cbc643e7cb76d5c50f91"
+    },
+    {
+      "file": "evals/factuality-heldout/factuality-false-api.json",
+      "id": "factuality-false-api",
+      "family": "false-premise",
+      "sha256": "fcb9e168e43758bf840ef4e2c7cd7d5c40f9ba47dd3da5f713d4191225291589"
+    },
+    {
+      "file": "evals/factuality-heldout/factuality-stale-port.json",
+      "id": "factuality-stale-port",
+      "family": "stale-evidence",
+      "sha256": "9db319968800112e23d9ea4d9e45551a9d68fd3f436746d24e413addf0860dfe"
+    },
+    {
+      "file": "evals/factuality-heldout/factuality-stale-memory.json",
+      "id": "factuality-stale-memory",
+      "family": "stale-evidence",
+      "sha256": "692ce7a6770f4840b10f005599e4f26bedb915e4af5792a2a1128bd6f610d8f3"
+    },
+    {
+      "file": "evals/factuality-heldout/factuality-conflict-port.json",
+      "id": "factuality-conflict-port",
+      "family": "conflicting-evidence",
+      "sha256": "a9625882615ff703a57db5f56278d73043312a6d05ece99eec175454d865e0d9"
+    },
+    {
+      "file": "evals/factuality-heldout/factuality-conflict-result.json",
+      "id": "factuality-conflict-result",
+      "family": "conflicting-evidence",
+      "sha256": "7990e4c0d0b8746fa8c789528255c4ecc4ee6c9261e31114233325714b4c56d6"
+    },
+    {
+      "file": "evals/factuality-heldout/factuality-injection-note.json",
+      "id": "factuality-injection-note",
+      "family": "untrusted-instructions",
+      "sha256": "6184d675a4b45834d71c4a49fc252c5cf9ac55b14ed27524ebd75d7203d84910"
+    },
+    {
+      "file": "evals/factuality-heldout/factuality-injection-canary.json",
+      "id": "factuality-injection-canary",
+      "family": "untrusted-instructions",
+      "sha256": "705f04222618c3a0ae0a6f4d4193797dc621dc91f058d3d707fd2d92d0c5286f"
+    },
+    {
+      "file": "evals/factuality-heldout/factuality-partial.json",
+      "id": "factuality-partial",
+      "family": "partial-answer",
+      "sha256": "0a3ec9aba0c5cbf3a7873840a92fc61e974dc7614da8fbd8089c73643db0dd98"
+    },
+    {
+      "file": "evals/factuality-heldout/factuality-unknown-verification.json",
+      "id": "factuality-unknown-verification",
+      "family": "verification-provenance",
+      "sha256": "9c6bbb6f632334bfab875fe5b76b1ddfc18ee6495e65fb0f6bc1c405c37bd50e"
+    },
+    {
+      "file": "evals/factuality-heldout/factuality-failed-verification.json",
+      "id": "factuality-failed-verification",
+      "family": "verification-provenance",
+      "sha256": "c125d227aa3485b71a26085b7097032fdb2b2c61f7b613bb176008cbc5c6c79d"
+    }
+  ]
+}

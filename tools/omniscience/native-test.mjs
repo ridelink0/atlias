@@ -4,11 +4,17 @@ import path from 'node:path';
 import assert from 'node:assert/strict';
 import { DATASET,hash,PUBLISHER_CARD_SHA256 } from './protocol.mjs';
 import { loadNativePlan,main } from './native-run.mjs';
-import { normalizeAnswer,responseFrom,toolCallsFrom,nativeSession } from './native-session.mjs';
+import { normalizeAnswer,responseFrom,toolCallsFrom,nativeSession,nativeAllowance } from './native-session.mjs';
 import { nativeReport } from './native-report.mjs';
 let checks=0;const ok=fn=>{fn();checks++;};
 const root=fs.mkdtempSync(path.join(os.tmpdir(),'gev-aa-native-'));
 try{
+  const now=Date.now(),fresh={snapshotFetchedAt:now,windows:[{percentUsed:1}],codexCredits:{enabled:false},utilization:{extra_usage:{is_enabled:false}}};
+  for(const host of ['codex','claude']){
+    ok(()=>assert.doesNotThrow(()=>nativeAllowance(fresh,host,now)));
+    for(const bad of [{...fresh,snapshotFetchedAt:now-60001},{...fresh,snapshotFetchedAt:now+5001},{...fresh,snapshotFetchedAt:undefined},{...fresh,windows:[]},...[-1,90,101,NaN].map(percentUsed=>({...fresh,windows:[{percentUsed}]}))])ok(()=>assert.throws(()=>nativeAllowance(bad,host,now),/headroom/));
+    ok(()=>assert.throws(()=>nativeAllowance({...fresh,codexCredits:{enabled:true},utilization:{extra_usage:{is_enabled:true}}},host,now),/explicitly off/));
+  }
   const prepared=path.join(root,'prepared');fs.mkdirSync(prepared);
   const questions=Array.from({length:600},(_,i)=>({id:'fixture-'+i,questionSha256:hash('q'+i),prompt:'Question fixture '+i}));
   const original={benchmark:'AA-Omniscience-Public',dataset:DATASET,questionManifestSha256:hash(JSON.stringify(questions))};
@@ -64,7 +70,7 @@ try{
   const out=path.join(root,'blocked');
   await assert.rejects(nativeSession({host:'codex',model:'fixture',effort:'medium',native:process.execPath,prompt:'fixture',out,usageCli:meter,authFile:path.join(root,'absent-auth')}),/headroom/);checks++;
   ok(()=>assert.equal(fs.existsSync(out),false));
-  fs.writeFileSync(meter,'console.log(JSON.stringify({windows:[{percentUsed:0}]}))');
+  fs.writeFileSync(meter,'console.log(JSON.stringify({snapshotFetchedAt:Date.now(),windows:[{percentUsed:0}],codexCredits:{enabled:false}}))');
   const auth=path.join(root,'auth.json');fs.writeFileSync(auth,JSON.stringify({OPENAI_API_KEY:'fake-fixture'}));
   await assert.rejects(nativeSession({host:'codex',model:'fixture',effort:'medium',native:process.execPath,prompt:'fixture',out,usageCli:meter,authFile:auth}),/subscription/);checks++;
   ok(()=>assert.equal(fs.existsSync(out),false));
