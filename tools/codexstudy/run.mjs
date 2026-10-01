@@ -3,7 +3,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+import crypto from 'node:crypto';
 import { loadTaskList, writeFiles } from '../ccstudy/run.mjs';
 import { childEnv, readJsonl } from '../ccstudy/lib.mjs';
 import { score, tamper } from '../../lib/eval.mjs';
@@ -13,10 +14,17 @@ const ROOT=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../..');
 const opt=(a,k,d='')=>a.includes(k)?a[a.indexOf(k)+1]:d;
 export function skillIsolation(plan){const mode=plan?(plan.skillsIsolation??'directory-path-legacy'):'file-path-v1';if(!['directory-path-legacy','file-path-v1'].includes(mode))throw new Error('unknown skill isolation mode');return mode;}
 export function skillConfigPaths(directories,mode){skillIsolation({skillsIsolation:mode});return directories.map(p=>mode==='file-path-v1'?path.join(p,'SKILL.md'):p);}
-export function validateResume(old,plan){if(['sha','plugin','model','effort','lean'].some(k=>old[k]!==plan[k])||Boolean(old.taskContext)!==Boolean(plan.taskContext)||skillIsolation(old)!==skillIsolation(plan)||JSON.stringify(old.tasks)!==JSON.stringify(plan.tasks))throw new Error('resume would mix plugin/model/effort/flags, skill isolation or task hashes; choose a new output directory');if(Number.isSafeInteger(old.repeats)&&plan.repeats<old.repeats)throw new Error('resume cannot decrease repeats; retain or extend the existing plan');}
+export function contextTransport(plan){const mode=plan.contextTransport??'native-hook';if(!['native-hook','caller-v1'].includes(mode))throw Error('unknown task context transport');return mode;}
+export function assertFreshAllowance(meter,now=Date.now()){
+  if(!Number.isFinite(meter?.snapshotFetchedAt)||now-meter.snapshotFetchedAt>60000||meter.snapshotFetchedAt-now>5000)throw Error('fresh live Codex snapshot required; no model call started');
+  if(!Array.isArray(meter.windows)||!meter.windows.length||meter.windows.some(w=>!Number.isFinite(w.percentUsed)||w.percentUsed<0||w.percentUsed>100))throw Error('all quota windows must be known; no model call started');
+  if(meter.codexCredits?.enabled!==false)throw Error('paid credits must be explicitly off; no model call started');
+}
+export function validateResume(old,plan){if(['sha','plugin','model','effort','lean'].some(k=>old[k]!==plan[k])||Boolean(old.taskContext)!==Boolean(plan.taskContext)||contextTransport(old)!==contextTransport(plan)||(contextTransport(plan)==='caller-v1'&&old.driverSha256!==plan.driverSha256)||skillIsolation(old)!==skillIsolation(plan)||JSON.stringify(old.tasks)!==JSON.stringify(plan.tasks))throw new Error('resume would mix plugin/model/effort/flags, context transport/driver, skill isolation or task hashes; choose a new output directory');if(Number.isSafeInteger(old.repeats)&&plan.repeats<old.repeats)throw new Error('resume cannot decrease repeats; retain or extend the existing plan');}
 export function limitsOf(a){const stopPercent=Number(opt(a,'--stop-percent','60')),timeoutMin=Number(opt(a,'--timeout-min','12'));if(!Number.isFinite(stopPercent)||stopPercent<=0||stopPercent>100||!Number.isFinite(timeoutMin)||timeoutMin<=0)throw new Error('stop percentage must be in (0,100] and timeout minutes must be positive and finite');return {stopPercent,timeoutMin};}
 export function profileEnv(lean,taskContext=false){return {...(lean?{[flagEnvName('leanBrief')]:'1',[flagEnvName('gateRunsCheck')]:'1'}:{}),...(taskContext?{[flagEnvName('taskContext')]:'1'}:{})};}
 export function taskContextReceived(events){return events.some(r=>r.type==='response_item'&&r.payload?.type==='message'&&['developer','user'].includes(r.payload.role)&&JSON.stringify(r.payload.content).includes('[atlias task context]'));}
+export function inputReceived(events,input){return typeof input==='string'&&input.length>0&&events.some(r=>r.type==='response_item'&&r.payload?.type==='message'&&r.payload.role==='user'&&Array.isArray(r.payload.content)&&r.payload.content.some(c=>typeof c.text==='string'&&c.text.includes(input)));}
 function sync(bin,args,options={}){const r=spawnSync(bin,args,{encoding:'utf8',windowsHide:true,timeout:120000,...options});if(r.status!==0)throw new Error(`${bin} failed: ${(r.stderr||r.stdout||r.error||'').toString().slice(-700)}`);return r.stdout.trim();}
 export function usageOf(rows){
   const counts=rows.filter(r=>r.type==='event_msg'&&r.payload?.type==='token_count'&&r.payload.info);
@@ -64,7 +72,9 @@ export async function main(a){
   const model=opt(a,'--model','gpt-6.1-sol'),effort=opt(a,'--effort','medium');
   const lean=a.includes('--lean');
   const taskContext=a.includes('--task-context');
-  const plan={engine:'native Codex CLI',plugin:plugin.name,sha,model,effort,lean,taskContext,repeats,tasks:tasks.map(t=>({id:t.id,sha256:t.taskSha256,family:t.family})),jobs:jobsOf(tasks,repeats).length,order:'alternate plain/plugin order by task and repeat',paidCredits:'account setting must remain off',...(skillsIsolation==='file-path-v1'?{skillsIsolation}:{})};
+  const transport=contextTransport({contextTransport:opt(a,'--context-transport','native-hook')});
+  if(transport==='caller-v1'&&(!taskContext||plugin.name!=='atlias'))throw Error('caller-v1 requires Atlias and explicit --task-context');
+  const plan={engine:'native Codex CLI',plugin:plugin.name,sha,model,effort,lean,taskContext,repeats,tasks:tasks.map(t=>({id:t.id,sha256:t.taskSha256,family:t.family})),jobs:jobsOf(tasks,repeats).length,order:'alternate plain/plugin order by task and repeat',paidCredits:'account setting must remain off',...(transport==='caller-v1'?{contextTransport:transport,driverSha256:crypto.createHash('sha256').update(fs.readFileSync(fileURLToPath(import.meta.url))).digest('hex')}:{}),...(skillsIsolation==='file-path-v1'?{skillsIsolation}:{})};
   fs.mkdirSync(out,{recursive:true});
   if(fs.existsSync(planFile)&&fs.existsSync(path.join(out,'rows.jsonl')))validateResume(JSON.parse(fs.readFileSync(planFile)),plan);
   fs.writeFileSync(planFile,JSON.stringify(plan,null,2)+'\n');
@@ -77,13 +87,19 @@ export async function main(a){
   const archiveStamp=path.join(out,'plugin-sha.txt');
   if(!fs.existsSync(archive)){fs.mkdirSync(archive);sync('git',['-C',repo,'archive','--format=tar','-o',path.join(out,'plugin.tar'),sha]);sync('tar',['-xf',path.join(out,'plugin.tar'),'-C',archive]);fs.writeFileSync(archiveStamp,sha+'\n');}
   else if(!fs.existsSync(archiveStamp)||fs.readFileSync(archiveStamp,'utf8').trim()!==sha)throw new Error('archived plugin provenance missing or changed; preserve this run and choose a new output directory');
+  const prepareInput=transport==='caller-v1'?(await import(pathToFileURL(path.join(archive,'lib/task-context.mjs')))).nativeInput:null;
+  if(transport==='caller-v1'&&typeof prepareInput!=='function')throw Error('pinned source does not support caller-v1; no model calls started');
+  // Check every expected pack before spending even a control call. No hidden
+  // grader files or gold enter these source-only preflight workspaces.
+  if(prepareInput)for(const task of tasks){const preflight=contained(path.join(out,'context-preflight'),task.id);if(!fs.existsSync(preflight))writeFiles(preflight,task.files);if(!prepareInput(preflight,task.prompt).context)throw Error('expected caller context absent; no model calls started');}
   const rowsFile=path.join(out,'rows.jsonl'),old=readJsonl(rowsFile);
   for(const row of old){const task=plan.tasks.find(t=>t.id===row.task);if(!task||task.sha256!==row.taskSha256)throw new Error('saved row task hash differs from the plan');}
   const done=new Set(old.map(r=>`${r.task}|${r.repeat}|${r.arm==='plain'?'plain':'plugin'}`));
   for(const job of jobsOf(tasks,repeats)){
     if(done.has(`${job.task.id}|${job.repeat}|${job.arm}`))continue;
     // Read the account meter before each run. Parent and test calls share it.
-    const meter=JSON.parse(sync(process.execPath,[opt(a,'--usage-script','C:/Users/OWNER/Downloads/claude-code-usage-limits/skills/usage-limits/scripts/usage.js'),'--host','codex','--json']));
+    const meter=JSON.parse(sync(process.execPath,[opt(a,'--usage-script','C:/Users/OWNER/Downloads/claude-code-usage-limits/skills/usage-limits/scripts/usage.js'),'--host','codex','--refresh','--json']));
+    assertFreshAllowance(meter);
     const windows=meter.windows||[];
     if(!windows.length)throw new Error('quota windows unavailable; no model call started');
     if(windows.some(w=>!Number.isFinite(w.percentUsed)))throw new Error('quota percentage unknown; no model call started');
@@ -93,7 +109,11 @@ export async function main(a){
     const home=path.join(base,'home'),ws=path.join(base,'ws'),codexHome=path.join(home,'.codex');fs.mkdirSync(codexHome,{recursive:true});fs.mkdirSync(ws,{recursive:true});
     writeFiles(ws,job.task.files);
     const env=childEnv(process.env,{home});env.CODEX_HOME=codexHome;env.ATLIAS_HOME=path.join(home,'.atlias');
-    if(job.arm==='plugin')Object.assign(env,profileEnv(lean,taskContext));
+    if(job.arm==='plugin')Object.assign(env,profileEnv(lean,taskContext&&transport==='native-hook'));
+    if(job.arm==='plugin'&&transport==='caller-v1')env[flagEnvName('taskContext')]='0';
+    const prepared=job.arm==='plugin'&&prepareInput?prepareInput(ws,job.task.prompt):{context:'',input:job.task.prompt};
+    if(job.arm==='plugin'&&prepareInput&&!prepared.context)throw Error('expected caller context absent; no model call started');
+    if(prepareInput){fs.writeFileSync(path.join(base,'native-input.txt'),prepared.input);fs.writeFileSync(path.join(base,'generated-context.txt'),prepared.context);}
     const globalSkills=[path.join(process.env.USERPROFILE||process.env.HOME,'.agents','skills'),path.join(process.env.USERPROFILE||process.env.HOME,'.codex','skills')].flatMap(root=>fs.existsSync(root)?fs.readdirSync(root).filter(n=>fs.existsSync(path.join(root,n,'SKILL.md'))).map(n=>path.join(root,n)):[]);
     const overrides=skillConfigPaths(globalSkills,skillsIsolation).map(p=>`{ path = ${JSON.stringify(p.replaceAll('\\','/'))}, enabled = false }`).join(', ');
     fs.writeFileSync(path.join(codexHome,'config.toml'),`model_reasoning_effort = "${effort}"\nservice_tier = "default"\nskills.config = [${overrides}]\n[features]\nhooks = true\napps = false\n`);
@@ -108,7 +128,7 @@ export async function main(a){
       }
     }
     fs.copyFileSync(auth,path.join(codexHome,'auth.json'));
-    const args=['--no-daemon','-a','never','exec','--skip-git-repo-check','--ignore-rules','--dangerously-bypass-hook-trust','--json','-s','danger-full-access','-c','features.apps=false','-m',model,'-C',ws,job.task.prompt];
+    const args=['--no-daemon','-a','never','exec','--skip-git-repo-check','--ignore-rules','--dangerously-bypass-hook-trust','--json','-s','danger-full-access','-c','features.apps=false','-m',model,'-C',ws,prepared.input];
     const started=Date.now();console.log(`START ${job.task.id} r${job.repeat} ${job.arm}`);
     let proc;
     try {proc=await run(bin,args,{env,cwd:ws,stream:path.join(base,'stream.jsonl'),stderr:path.join(base,'stderr.txt'),timeoutMs:timeoutMin*60000});}
@@ -127,6 +147,7 @@ export async function main(a){
     row.taskContext=job.arm==='plugin'&&taskContext;
     row.proof.taskContextDelivered=taskContextReceived(events);
     row.proof.taskContextGenerated=hookLogs.flatMap(readJsonl).some(r=>r.kind==='task-context');
+    if(prepareInput){row.contextTransport=transport;row.proof.nativeInputDelivered=inputReceived(events,prepared.input);row.proof.nativeInputSha256=crypto.createHash('sha256').update(prepared.input).digest('hex');row.proof.contextSha256=crypto.createHash('sha256').update(prepared.context).digest('hex');if(row.taskContext){row.proof.taskContextGenerated=prepared.context.length>0;row.proof.taskContextDelivered=row.proof.nativeInputDelivered;row.proof.contextProducer='caller-v1';}if(!row.proof.nativeInputDelivered){row.valid=false;row.invalidReason='exact caller native input not recorded as delivered';}}
     if(row.taskContext&&!(row.proof.taskContextDelivered&&row.proof.taskContextGenerated)){row.valid=false;row.invalidReason='task-context flag requested but generated and delivered prompt context were not both recorded';}
     fs.appendFileSync(rowsFile,JSON.stringify(row)+'\n');console.log(`${row.solved?'PASS':'FAIL'} ${row.arm} ${row.task}: raw=${row.promptRaw}, peak=${row.contextPeak}, valid=${row.valid}`);
     // The account token is never retained in benchmark artifacts after the call.

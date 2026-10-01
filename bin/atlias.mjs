@@ -29,6 +29,7 @@ import * as shortcut from '../lib/shortcut.mjs';
 import * as settings from '../lib/settings.mjs';
 import * as tui from '../lib/tui.mjs';
 import * as skills from '../lib/skills.mjs';
+import { nativeInput } from '../lib/task-context.mjs';
 import { recall, remember } from '../mcp/tools.mjs';
 
 const argv = process.argv.slice(2);
@@ -55,6 +56,12 @@ const shortcutUninstall = () => { const r = shortcut.uninstallShortcut(); return
 // used to be read as one more flag: `atlias eval --help` started a real eval on
 // the default model and left five workspaces behind.
 const HELP = {
+  context: [
+    'usage: atlias context --prompt-file <UTF-8-file> [--cwd <project>] [--json]',
+    '  Read-only, explicit caller-v1 transport for Claude Code or Codex.',
+    '  Prints the entire original task followed by bounded task data; starts no model.',
+    '  Disable the taskContext prompt-hook flag when submitting this prepared input to avoid duplication.',
+  ],
   eval: [
     'usage: atlias eval [task ids] [options]   score tasks: the model works in a scratch copy and the check command decides',
     '  --tier smoke|main|big     a named tier (atlias tiers lists them); default: the shipped smoke tasks',
@@ -432,6 +439,15 @@ else switch (cmd) {
     const g = graph.status(cwd);
     const p = dream.pending(cwd);
     say([`atlias ${VERSION}`, `mode: ${settings.mode()} (atlias mode to change it)`, `state: ${STATE_DIR}`, `project: ${cwd}`, `graph: ${g.exists ? `present, updated ${g.age}` : 'none'}`, `dream pending: ${p.count}`, `handoff note: ${progress.read(cwd) ? progress.notePath(cwd) : 'none yet'}`]);
+    break;
+  }
+  case 'context': {
+    try {
+      const file=optVal('--prompt-file');if(!file)throw Error('--prompt-file is required');
+      const prompt=new TextDecoder('utf-8',{fatal:true,ignoreBOM:true}).decode(fs.readFileSync(file));
+      const prepared=nativeInput(path.resolve(optVal('--cwd')||cwd),prompt);
+      process.stdout.write(flag('--json')?JSON.stringify({transport:'caller-v1',...prepared})+'\n':prepared.input);
+    } catch(e) { process.stderr.write(`atlias context: ${e.message}\n`);process.exitCode=1; }
     break;
   }
   case 'brief': say(brief.build({ cwd, session_id: 'cli', source: 'startup' }, after('--host') || 'claude')); break;

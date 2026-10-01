@@ -7,6 +7,21 @@ export default function({suite,check,TMP,ROOT,fs,path}) {
     write('docs/contract.md','Preserve the public API.');write('src/api.mjs',"export { repair } from './policy.mjs';");write('src/policy.mjs','export const repair = x => x;');
     const prompt='Fix src/api.mjs to satisfy docs/contract.md.';
     const packed=taskContext.pack(root,prompt);
+    const native=taskContext.nativeInput(root,prompt);
+    check('explicit native input preserves the entire original task and adds exactly the pack',native.prompt===prompt&&native.context===packed&&native.input===prompt+'\n\n'+packed,{happened:native,why:'Context delivery must not replace user requirements or native host instructions.',fix:'Append the exact task data after the untouched prompt.'});
+    const unicode='  Gev\r\nRead docs/contract.md\nPreserve café and 雪.  ';
+    check('native transport preserves whitespace, line endings and Unicode',taskContext.nativeInput(root,unicode).input.startsWith(unicode+'\n\n'),{happened:'prompt bytes',why:'Normalizing task text changes its contract.',fix:'Preserve the supplied string verbatim.'});
+    check('unsupported scope and slash commands retain the original task',taskContext.nativeInput(root,'Hello Gev').input==='Hello Gev'&&taskContext.nativeInput(root,'/clear docs/contract.md').context==='',{happened:'empty pack',why:'Context packing cannot silently remove unsupported native workflows.',fix:'Keep the complete original prompt with no additional data.'});
+    let bad=0;for(const p of [null,{},'', ' \r\n'])try{taskContext.nativeInput(root,p);}catch{bad++;}
+    check('missing and empty native tasks are rejected',bad===4,{happened:bad,why:'An empty prompt may launch unintended interactive host behavior.',fix:'Require a nonempty explicit task.'});
+    const promptFile=path.join(root,'native prompt 雪.txt');fs.writeFileSync(promptFile,'\uFEFF'+unicode);
+    const cli=(args)=>spawnSync(process.execPath,[path.join(ROOT,'bin/atlias.mjs'),'context',...args],{encoding:'utf8',windowsHide:true,timeout:15000,env:{...process.env,ATLIAS_HOME:path.join(TMP,'native-context-cli')}});
+    const preparedCli=cli(['--prompt-file',promptFile,'--cwd',root,'--json']);
+    check('CLI preparation preserves BOM and complete text on Windows paths without model calls',preparedCli.status===0&&JSON.parse(preparedCli.stdout).input===taskContext.nativeInput(root,'\uFEFF'+unicode).input,{happened:preparedCli.stderr,why:'Prompt file decoding must not silently discard source bytes or split Unicode paths.',fix:'Decode strict UTF-8 and preserve the BOM.'});
+    const plainCli=cli(['--prompt-file',promptFile,'--cwd',root]);
+    check('plain CLI output adds no extra trailing newline',plainCli.status===0&&plainCli.stdout===taskContext.nativeInput(root,'\uFEFF'+unicode).input,{happened:plainCli.stderr,why:'The submitted input must match its recorded preparation exactly.',fix:'Write the prepared input verbatim.'});
+    fs.writeFileSync(promptFile,Buffer.from([0xff]));const invalidCli=cli(['--prompt-file',promptFile]);const missingCli=cli([]);
+    check('CLI preparation fails closed for invalid UTF-8 and missing task files',invalidCli.status===1&&invalidCli.stdout===''&&missingCli.status===1&&missingCli.stdout==='',{happened:invalidCli.stderr+missingCli.stderr,why:'A preparation failure must not emit a partial task to a host.',fix:'Reject unreadable or undecodable task data before printing.'});
     check('requirements precede the complete local dependency group, including sentence-ending paths',packed.includes('--- docs/contract.md ---')&&packed.includes('src/policy.mjs')&&packed.indexOf('docs/contract.md')<packed.indexOf('src/policy.mjs')&&packed.indexOf('src/policy.mjs')<packed.indexOf('src/api.mjs'),{happened:packed,why:'The API re-export alone cannot replace discovery of its implementation.',fix:'Pack the static dependency closure after the requirements.'});
     check('repeated references and import cycles are finite and deduplicated',taskContext.pack(root,prompt+' src/api.mjs').split('--- src/api.mjs ---').length===2,{happened:'duplicate roots',why:'Duplicate files waste prompt budget.',fix:'Deduplicate real paths.'});
     const repeated=taskContext.pack(root,Array(12).fill('src/api.mjs').join(' ')+' docs/contract.md');

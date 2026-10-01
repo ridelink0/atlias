@@ -1,0 +1,140 @@
+{
+  "source": "d73fa9614a928d39e8f00b8d34eb2253c04aa1b8",
+  "plan": {
+    "engine": "native Codex CLI",
+    "plugin": "atlias",
+    "sha": "d73fa9614a928d39e8f00b8d34eb2253c04aa1b8",
+    "model": "gpt-6.1-sol",
+    "effort": "medium",
+    "lean": true,
+    "taskContext": true,
+    "repeats": 2,
+    "tasks": [
+      {
+        "id": "capability-multifile-new-api",
+        "sha256": "1f7738797f9e5e36ccf4d167b5ef3d4217ee241d7d3c49647886910f7d21bc6e",
+        "family": "multifile-new-api"
+      },
+      {
+        "id": "capability-cli-encoding-paths",
+        "sha256": "3c8d4e7a339d912f31f1904a640b263218ed025b0efffc0ad09b511ef062527b",
+        "family": "cli-encoding-paths"
+      },
+      {
+        "id": "capability-async-cancellation",
+        "sha256": "e93d4680a2987a33dbde5d8fb5a6e0ee2e779a1542ca257996b901f1a4471db8",
+        "family": "async-cancellation"
+      },
+      {
+        "id": "capability-untrusted-evidence",
+        "sha256": "417316a4ba87c025ba4f40160d7a9e6a96a30eb43c21844aa725f064652a3e01",
+        "family": "untrusted-evidence"
+      },
+      {
+        "id": "capability-large-dependency-discovery",
+        "sha256": "8e072d77787a6b836d24403bf54a0ed1b5eae0a663610361c833f943aa1be907",
+        "family": "large-dependency-discovery"
+      },
+      {
+        "id": "capability-durable-state-restart",
+        "sha256": "6b09bda41495ab917b0bbc33194e2a17c32e0f686bb322d03c647719a6e384bc",
+        "family": "durable-state-restart"
+      }
+    ],
+    "jobs": 24,
+    "order": "alternate plain/plugin order by task and repeat",
+    "paidCredits": "account setting must remain off",
+    "skillsIsolation": "file-path-v1"
+  },
+  "ledgerSha256": "ecbb29eacc64f9565186f2af6eefe4afacdf487067c8734b7eac1bfbf352a65c",
+  "attempts": 2,
+  "remainingHeld": 22,
+  "costs": [
+    {
+      "arm": "plain",
+      "valid": true,
+      "solved": true,
+      "promptRaw": 90063,
+      "cachedInput": 51456,
+      "output": 2573,
+      "peak": 17829,
+      "base": "D:\\harness-work\\runs\\codex-atlias-capability-workflows-core-1001\\runs\\capability-multifile-new-api\\r1-plain"
+    },
+    {
+      "arm": "atlias",
+      "valid": false,
+      "solved": true,
+      "promptRaw": 102442,
+      "cachedInput": 88960,
+      "output": 2936,
+      "peak": 21225,
+      "base": "D:\\harness-work\\runs\\codex-atlias-capability-workflows-core-1001\\runs\\capability-multifile-new-api\\r1-plugin"
+    }
+  ],
+  "modelFreeProbes": [
+    {
+      "name": "native-hook-capability-current-flags-1001",
+      "source": "d73fa9614a928d39e8f00b8d34eb2253c04aa1b8",
+      "modelCalls": 0,
+      "backend": "owned local HTTP/SSE fixture only, no model",
+      "status": {
+        "code": 0,
+        "signal": null
+      },
+      "ms": 49562,
+      "requests": [
+        {
+          "url": "/v1/responses",
+          "fullPack": true,
+          "sha256": "5c0c93017996642373f9b4f0d5f0f2dfe081eafef354f612a9bbbed533ae8b95"
+        }
+      ],
+      "expectedChars": 861,
+      "expectedSha256": "19fd34d65029e3e60b3e51cf12572aa04b09d22067a389148c165510565c09f9",
+      "stderrChars": 1069
+    },
+    {
+      "name": "native-hook-capability-installed-1001",
+      "source": "d73fa9614a928d39e8f00b8d34eb2253c04aa1b8",
+      "modelCalls": 0,
+      "backend": "owned local HTTP/SSE fixture only, no model",
+      "status": {
+        "code": 0,
+        "signal": null
+      },
+      "ms": 45051,
+      "requests": [
+        {
+          "url": "/v1/responses",
+          "fullPack": true,
+          "sha256": "0d51a38875b731f110151e2916d5138e742e59e8f327bbf058791cd4ffe17ce8"
+        }
+      ],
+      "expectedChars": 861,
+      "expectedSha256": "19fd34d65029e3e60b3e51cf12572aa04b09d22067a389148c165510565c09f9",
+      "stderrChars": 39
+    },
+    {
+      "name": "native-hook-capability-native-model-metadata-1001",
+      "source": "d73fa9614a928d39e8f00b8d34eb2253c04aa1b8",
+      "modelCalls": 0,
+      "backend": "owned local HTTP/SSE fixture only, no model",
+      "status": {
+        "code": 0,
+        "signal": null
+      },
+      "ms": 42364,
+      "requests": [
+        {
+          "url": "/v1/responses",
+          "fullPack": true,
+          "sha256": "ad5cb09455d3c57cf41b9987099e29b0f08f4184936abcbe4e95224c4e480779"
+        }
+      ],
+      "expectedChars": 861,
+      "expectedSha256": "19fd34d65029e3e60b3e51cf12572aa04b09d22067a389148c165510565c09f9",
+      "stderrChars": 39
+    }
+  ],
+  "limitation": "Current-source local delivery passes do not explain the live missing prompt event or prove model savings."
+}
