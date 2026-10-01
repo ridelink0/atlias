@@ -46,6 +46,7 @@ jobs:
           node tools/native-job/allowance-schedule-test.mjs
           node tools/native-job/batch-test.mjs
           node tools/codexstudy/broker-test.mjs
+          node tools/codexstudy/batch-protocol-test.mjs
       - name: the command line answers
         shell: bash
         run: |
