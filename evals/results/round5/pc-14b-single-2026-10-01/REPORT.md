@@ -1,5 +1,7 @@
 # Completed local14B single repeat for Gev
 
+Saved JSON bytes are preserved with scoped Git attributes. The initial publication commit normalized the mini report's CRLF bytes; BYTE-PRESERVATION.json retains that failed blob hash and the verified correction. The working originals and original grades were never modified.
+
 The original single GPU chain has completed both saved reports with252 unique matching corpus IDs:164 HumanEvalFix Python and88 CanItEdit lazy. Original scores remain Atlias119/252 and mini-swe-agent77/252, with59 gains and17 losses. Every original row is retained. No inference, repair or regrading was used for this publication. Per-task budgets match exactly (12 or14); Atlias's top-level25 is an unused default, not an actual unequal budget.
 
 Atlias input4384763 versus mini5154755: 14.94% less total input. Output269457 versus260174; peak11003 versus16356. Input per original solved task is44.96% lower, a different denominator from total usage and from equal-output comparisons. Both saved providers record per-request token arrays that reconcile to the saved per-task totals. This is one repeat on one machine/model and not a20x or same-output result. Failures and losses remain included.
