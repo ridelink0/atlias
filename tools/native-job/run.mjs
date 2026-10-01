@@ -2,7 +2,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawn, spawnSync } from 'node:child_process';
-import { prepareJob, JOB_INSTRUCTIONS, stageJob, assertJobUnchanged, digest } from '../../lib/native-job.mjs';
+import { prepareJob, JOB_INSTRUCTIONS, RESPONSE_SCHEMA, stageJob, assertJobUnchanged, digest } from '../../lib/native-job.mjs';
 import { verifyStagedJob } from '../../lib/native-job-check.mjs';
 import { childEnv, readJsonl } from '../ccstudy/lib.mjs';
 const args = process.argv.slice(2);
@@ -35,12 +35,13 @@ if (!auth) throw Error('explicit subscription-auth required; no API keys');
 const authData = JSON.parse(fs.readFileSync(auth));
 let authCopy, argv;
 const instructions = path.join(out, 'instructions.md'); fs.writeFileSync(instructions, JOB_INSTRUCTIONS);
+const schema = path.join(out, 'response-schema.json'); fs.writeFileSync(schema, JSON.stringify(RESPONSE_SCHEMA));
 if (host === 'codex') {
   if (authData.OPENAI_API_KEY || !authData.tokens?.access_token) throw Error('Codex subscription auth required; API-key billing refused');
   authCopy = path.join(env.CODEX_HOME, 'auth.json');
   const skills = [path.join(process.env.USERPROFILE || process.env.HOME, '.agents/skills'), path.join(process.env.USERPROFILE || process.env.HOME, '.codex/skills')].flatMap(p => fs.existsSync(p) ? fs.readdirSync(p).map(n => path.join(p, n, 'SKILL.md')).filter(f => fs.existsSync(f)) : []);
   fs.writeFileSync(path.join(env.CODEX_HOME, 'config.toml'), `model = ${JSON.stringify(spec.model)}\nmodel_reasoning_effort = ${JSON.stringify(spec.effort)}\nmodel_instructions_file = ${JSON.stringify(instructions.replaceAll('\\','/'))}\nweb_search = "disabled"\nskills.config = [${skills.map(f => `{path=${JSON.stringify(f.replaceAll('\\','/'))},enabled=false}`).join(',')}]\n[features]\napps=false\nhooks=false\nshell_tool=false\nmulti_agent=false\ngoals=false\ncode_mode.enabled=false\n`);
-  argv = ['--no-daemon', '-a', 'never', 'exec', '--skip-git-repo-check', '--ignore-rules', '--json', '-s', 'read-only', '-C', ws, '-'];
+  argv = ['--no-daemon', '-a', 'never', 'exec', '--skip-git-repo-check', '--ignore-rules', '--json', '--output-schema', schema, '-s', 'read-only', '-C', ws, '-'];
 } else {
   if (!authData.claudeAiOauth?.accessToken) throw Error('Claude subscription OAuth required; API-key billing refused');
   authCopy = path.join(env.CLAUDE_CONFIG_DIR, '.credentials.json');
