@@ -1,0 +1,5 @@
+# Installed Codex candidate for Gev
+
+Candidate 3726bb874a5889616bf27624ebf008dc46ccd5df was downloaded from Gev’s GitHub Atlias repository into an independent checkout and installed for Codex. The nine global Atlias event registrations and MCP use that checkout. The older native Codex Atlias registration is disabled to prevent duplicate execution; cache contents remain intact. Backed-up installation checks preserved Claude settings, unrelated Codex hooks/settings and Usage Limits. A real stdio initialize/tools-list handshake returned ten tools; zero model calls were made.
+
+This verifies installation and server protocol, not actual model quality, a freshly reloaded desktop session, longer working time or subscription savings. Existing chats can retain already-loaded hooks. The initial unsupported --dry-run invocation performed an actual installation before its backup; the subsequent pinned installation was backed up and verified. See the [account-meter protocol](../../../..//docs/CODEX-ALLOWANCE-COMPARISON.md). Private configuration backups and usage reports remain local.
