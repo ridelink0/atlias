@@ -17,4 +17,4 @@ const unknown=wholeBatchCosts(rows.map((r,i)=>i===13?{...r,promptRaw:null,cached
 const partialCounter=wholeBatchCosts(rows.map((r,i)=>i===13?{...r,promptRaw:null,cachedInput:null,output:999}:r),plan);check(partialCounter.arms['atlias-batch'].output===1009&&!partialCounter.ratioEligible);check(partialCounter.arms['atlias-batch'].unknownCounters.output===0&&partialCounter.arms['atlias-batch'].unknownCounters.promptRaw===1);
 const partial=wholeBatchCosts(rows.slice(0,13),plan);check(!partial.closed&&!partial.ratioEligible);check(wholeBatchCosts([],plan).recorded===0);
 const noGrade=wholeBatchCosts(rows.map((r,i)=>i===12?{...r,members:r.members.map(m=>({...m,solved:null}))}:r),plan);check(!noGrade.qualityPassed);
-console.log(`${n} whole-batch plan/accounting controls passed; zero model calls; execution driver remains unimplemented.`);
+console.log(`${n} whole-batch plan/accounting controls passed; zero model calls; native batch savings remain unmeasured.`);

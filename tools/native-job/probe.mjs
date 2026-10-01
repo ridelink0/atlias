@@ -14,11 +14,14 @@ const source = path.join(out, 'source'); fs.mkdirSync(source);
 fs.writeFileSync(path.join(source, 'api.mjs'), 'export const value = 1;');
 const spec={root:source,task:'Change value to2.',instructions:['The user is Gev. Start replies with Okay Gev. No emojis.','Functional verification then an adversarial hunt; preserve concurrent edits.'],readPaths:['api.mjs'],writePaths:['api.mjs']};
 const batchMode=process.argv.includes('--batch');
+const jobsIndex=process.argv.indexOf('--jobs-json'),jobsFile=jobsIndex<0?'':process.argv[jobsIndex+1];
+if(jobsIndex>=0&&(!batchMode||!jobsFile||jobsFile.startsWith('--')))throw Error('--jobs-json requires --batch and an explicit source-only jobs JSON');
 let job;
-if(batchMode){const second=path.join(out,'second-source');fs.mkdirSync(second);fs.writeFileSync(path.join(second,'api.mjs'),'export const value = 1;');job=prepareBatch([{...spec,id:'a'},{...spec,id:'b',root:second}]);}else job=prepareJob(spec);
+if(jobsFile){job=prepareBatch(JSON.parse(fs.readFileSync(jobsFile,'utf8')).jobs);}
+else if(batchMode){const second=path.join(out,'second-source');fs.mkdirSync(second);fs.writeFileSync(path.join(second,'api.mjs'),'export const value = 1;');job=prepareBatch([{...spec,id:'a'},{...spec,id:'b',root:second}]);}else job=prepareJob(spec);
 const workerInstructions=batchMode?BATCH_INSTRUCTIONS:JOB_INSTRUCTIONS;
 const edit=single=>({path:'api.mjs',beforeSha256:single.packet.files[0].sha256,text:'export const value = 2;'});
-const reply=JSON.stringify(batchMode?{batchSha256:job.batchSha256,jobs:job.jobs.map(({id,job:single})=>({id,packetSha256:single.packetSha256,edits:[edit(single)]}))}:{packetSha256:job.packetSha256,edits:[edit(job)]});
+const reply=JSON.stringify(batchMode?{batchSha256:job.batchSha256,jobs:job.jobs.map(({id,job:single})=>({id,packetSha256:single.packetSha256,edits:jobsFile?[]:[edit(single)]}))}:{packetSha256:job.packetSha256,edits:[edit(job)]});
 const requests = [], results = [];
 const server = http.createServer(async (req, res) => {
   if (req.method !== 'POST') { res.writeHead(404); res.end(); return; }
@@ -90,7 +93,7 @@ try {
     child.stdin.on('error', () => {}); child.stdin.end(job.input);
     // Only terminate this owned child handle on timeout, never a Windows PID.
     const timer = setTimeout(() => child.kill(), 90000);
-    const status = await new Promise((resolve, reject) => { child.on('error', reject); child.on('close', (code, signal) => resolve({ code, signal })); }); clearTimeout(timer);
+    let status;try{status = await new Promise((resolve, reject) => { child.on('error', reject); child.on('close', (code, signal) => resolve({ code, signal })); });}finally{clearTimeout(timer);}
     fs.writeFileSync(path.join(folder, 'stream.jsonl'), stdout); fs.writeFileSync(path.join(folder, 'stderr.txt'), stderr);
     const captured = requests.slice(before); fs.writeFileSync(path.join(folder, 'requests.json'), JSON.stringify(captured, null, 2));
     const bodies = captured.map(r => r.body), last = bodies.at(-1);
@@ -106,7 +109,7 @@ try {
     assert.ok(!notices.some(message => /unrecognized configuration setting|invalid.*config/i.test(message)), 'native configuration error must not be ignored');
     const output = host === 'codex' ? events.filter(e => e.type === 'item.completed' && e.item?.type === 'agent_message').at(-1)?.item.text : events.filter(e => e.type === 'result').at(-1)?.result;
     assert.equal(output, reply); if(batchMode)validateBatch(job,output);else validateEdits(job,output);
-    results.push({ host, modelCalls: 0, localRequests: bodies.length, completePacketDelivered: true, replacementInstructionsDelivered: true, parsedAndValidated: true, nativeNotices: notices, metadataParity: notices.some(m => /fallback metadata/.test(m)) ? 'not established; owned custom provider uses fallback metadata' : 'unmeasured', packetSha256: job.packetSha256, instructionSha256: digest(workerInstructions), instructionsChars: instructions.length, inputChars: JSON.stringify(host === 'codex' ? last.input : last.messages).length, toolsChars: JSON.stringify(last.tools || []).length, toolNames: (last.tools || []).map(t => t.name || t.type), status });
+    results.push({ host, modelCalls: 0, localRequests: bodies.length, completePacketDelivered: true, replacementInstructionsDelivered: true, parsedAndValidated: true, nativeNotices: notices, metadataParity: notices.some(m => /fallback metadata/.test(m)) ? 'not established; owned custom provider uses fallback metadata' : 'unmeasured', packetSha256: job.packetSha256??job.batchSha256, ...(batchMode?{jobs:job.jobs.length,batchSha256:job.batchSha256}:{}), instructionSha256: digest(workerInstructions), instructionsChars: instructions.length, inputChars: JSON.stringify(host === 'codex' ? last.input : last.messages).length, toolsChars: JSON.stringify(last.tools || []).length, toolNames: (last.tools || []).map(t => t.name || t.type), status });
     console.log(JSON.stringify(results.at(-1)));
   }
 } finally { server.closeAllConnections(); await new Promise(resolve => server.close(resolve)); }
