@@ -1,0 +1,1933 @@
+{
+  "modelsStarted": 0,
+  "createdAt": "2026-10-02T04:24:00.803Z",
+  "provenance": "Exploratory working-source local native fixtures. Runtime snapshots were not frozen before all probes; no exact-source causal model claim.",
+  "reports": [
+    {
+      "name": "native-inline-hook-sourceC26-payload-capture-1002",
+      "arms": [
+        {
+          "arm": "pass",
+          "status": {
+            "code": 0,
+            "signal": null
+          },
+          "localRequests": 3,
+          "checks": [
+            {
+              "t": 1790912247309,
+              "kind": "shell",
+              "command": "node -e \"const actual=2;if(actual!==2)throw Error('mismatch');console.log('checked');\"",
+              "verify": true,
+              "outcome": "unknown"
+            }
+          ],
+          "modelsStarted": 0,
+          "authAbsent": true,
+          "captures": [
+            {
+              "file": "payload-post-tool-1790912247191.json",
+              "sha256": "42c84fbe417678667fae766a4517c8fe4ccce0c9a19eeadc7f0ed0fb5dc47a40",
+              "event": "PostToolUse",
+              "tool": "Bash",
+              "input": {
+                "command": "node -e \"const actual=2;if(actual!==2)throw Error('mismatch');console.log('checked');\""
+              },
+              "response": "checked\n",
+              "sessionId": "01a0faaf-bb03-7be1-b5f7-d2ef5c8fd3cb",
+              "turnId": "01a0faaf-bbcf-7413-80e9-2908139b3697"
+            },
+            {
+              "file": "payload-stop-1790912251743.json",
+              "sha256": "9e6eb7053f4905839663a15359ee8b4965b8926e842062805d621e76421fbfa0",
+              "event": "Stop",
+              "sessionId": "01a0faaf-bb03-7be1-b5f7-d2ef5c8fd3cb",
+              "turnId": "01a0faaf-bbcf-7413-80e9-2908139b3697"
+            },
+            {
+              "file": "payload-stop-1790912252468.json",
+              "sha256": "4a319ed9aec9632ab6c65c46186a2a101678f5a0072944274a31a2b44753fee9",
+              "event": "Stop",
+              "sessionId": "01a0faaf-bb03-7be1-b5f7-d2ef5c8fd3cb",
+              "turnId": "01a0faaf-bbcf-7413-80e9-2908139b3697"
+            }
+          ],
+          "rollouts": [
+            {
+              "file": "rollout-2026-10-01T22-36-55-01a0faaf-bb03-7be1-b5f7-d2ef5c8fd3cb.jsonl",
+              "sha256": "db29dbe9922463d2485ddb07930f653cda588d7695a5d6bc3cdfc92b49e28c42",
+              "events": [
+                {
+                  "timestamp": "2026-10-02T03:36:56.101Z",
+                  "ordinal": 1,
+                  "type": "event_msg",
+                  "payload": {
+                    "type": "task_started",
+                    "turn_id": "01a0faaf-bbcf-7413-80e9-2908139b3697",
+                    "root_turn_id": "01a0faaf-bbcf-7413-80e9-2908139b3697",
+                    "started_at": 1790912216,
+                    "model_context_window": 258400,
+                    "collaboration_mode_kind": "default"
+                  }
+                },
+                {
+                  "timestamp": "2026-10-02T03:37:22.049Z",
+                  "ordinal": 11,
+                  "type": "event_msg",
+                  "payload": {
+                    "type": "item_completed",
+                    "thread_id": "01a0faaf-bb03-7be1-b5f7-d2ef5c8fd3cb",
+                    "turn_id": "01a0faaf-bbcf-7413-80e9-2908139b3697",
+                    "item": {
+                      "type": "CommandExecution",
+                      "id": "call_gev_pass",
+                      "process_id": "48526",
+                      "command": [
+                        "C:\\Users\\OWNER\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+                        "-Command",
+                        "node -e \"const actual=2;if(actual!==2)throw Error('mismatch');console.log('checked');\""
+                      ],
+                      "cwd": "file:///D:/harness-work/runs/native-inline-hook-sourceC26-payload-capture-1002/pass/ws",
+                      "parsed_cmd": [
+                        {
+                          "type": "unknown",
+                          "cmd": "node -e \"const actual=2;if(actual!==2)throw Error('mismatch');console.log('checked');\""
+                        }
+                      ],
+                      "source": "unified_exec_startup",
+                      "status": "completed",
+                      "stdout": "checked\n",
+                      "stderr": "",
+                      "aggregated_output": "checked\n",
+                      "exit_code": 0,
+                      "duration": {
+                        "secs": 1,
+                        "nanos": 84352700
+                      },
+                      "formatted_output": "checked\n"
+                    },
+                    "started_at_ms": 1790912240964,
+                    "completed_at_ms": 1790912242049
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "arm": "fail",
+          "status": {
+            "code": 0,
+            "signal": null
+          },
+          "localRequests": 3,
+          "checks": [
+            {
+              "t": 1790912295181,
+              "kind": "shell",
+              "command": "node -e \"const actual=3;if(actual!==2)throw Error('mismatch');console.log('checked');\"",
+              "verify": true,
+              "outcome": "fail",
+              "excerpt": "Node.js v22.21.0"
+            }
+          ],
+          "modelsStarted": 0,
+          "authAbsent": true,
+          "captures": [
+            {
+              "file": "payload-post-tool-1790912295032.json",
+              "sha256": "a85d3ddb817b3788580515dc01cda0a4b665040dd76d3c8f8f281d3f6535f14f",
+              "event": "PostToolUse",
+              "tool": "Bash",
+              "input": {
+                "command": "node -e \"const actual=3;if(actual!==2)throw Error('mismatch');console.log('checked');\""
+              },
+              "response": "[eval]:1\r\nconst actual=3;if(actual!==2)throw Error('mismatch');console.log('checked');\r\n                             ^\r\n\r\nError: mismatch\r\n    at [eval]:1:36\r\n    at runScriptInThisContext (node:internal/vm:209:10)\r\n    at node:internal/process/execution:446:12\r\n    at [eval]-wrapper:6:24\r\n    at runScriptInContext (node:internal/process/execution:444:60)\r\n    at evalFunction (node:internal/process/execution:279:30)\r\n    at evalTypeScript (node:internal/process/execution:291:3)\r\n    at node:internal/main/eval_string:74:3\r\n\r\nNode.js v22.21.0\r\n",
+              "sessionId": "01a0fab0-6af8-7693-8a8a-79c645992f94",
+              "turnId": "01a0fab0-6bf1-7cd2-ac9e-af4f0aaff413"
+            },
+            {
+              "file": "payload-stop-1790912299815.json",
+              "sha256": "d8b4793869700870fa678c8f7383bdfdc4d69afcbb6db3be0e49df2c0f93929d",
+              "event": "Stop",
+              "sessionId": "01a0fab0-6af8-7693-8a8a-79c645992f94",
+              "turnId": "01a0fab0-6bf1-7cd2-ac9e-af4f0aaff413"
+            },
+            {
+              "file": "payload-stop-1790912300637.json",
+              "sha256": "206a024ba87a2dfbe8fc084e16466b36a8054bd31a9bd46d54bb46ba6b99bf7d",
+              "event": "Stop",
+              "sessionId": "01a0fab0-6af8-7693-8a8a-79c645992f94",
+              "turnId": "01a0fab0-6bf1-7cd2-ac9e-af4f0aaff413"
+            }
+          ],
+          "rollouts": [
+            {
+              "file": "rollout-2026-10-01T22-37-40-01a0fab0-6af8-7693-8a8a-79c645992f94.jsonl",
+              "sha256": "982a8019d5b1ec7f2eb11eb417d4e2d49324a13360c5c4575b10b90bfb36a9b8",
+              "events": [
+                {
+                  "timestamp": "2026-10-02T03:37:41.199Z",
+                  "ordinal": 1,
+                  "type": "event_msg",
+                  "payload": {
+                    "type": "task_started",
+                    "turn_id": "01a0fab0-6bf1-7cd2-ac9e-af4f0aaff413",
+                    "root_turn_id": "01a0fab0-6bf1-7cd2-ac9e-af4f0aaff413",
+                    "started_at": 1790912261,
+                    "model_context_window": 258400,
+                    "collaboration_mode_kind": "default"
+                  }
+                },
+                {
+                  "timestamp": "2026-10-02T03:38:09.402Z",
+                  "ordinal": 11,
+                  "type": "event_msg",
+                  "payload": {
+                    "type": "item_completed",
+                    "thread_id": "01a0fab0-6af8-7693-8a8a-79c645992f94",
+                    "turn_id": "01a0fab0-6bf1-7cd2-ac9e-af4f0aaff413",
+                    "item": {
+                      "type": "CommandExecution",
+                      "id": "call_gev_fail",
+                      "process_id": "23599",
+                      "command": [
+                        "C:\\Users\\OWNER\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+                        "-Command",
+                        "node -e \"const actual=3;if(actual!==2)throw Error('mismatch');console.log('checked');\""
+                      ],
+                      "cwd": "file:///D:/harness-work/runs/native-inline-hook-sourceC26-payload-capture-1002/fail/ws",
+                      "parsed_cmd": [
+                        {
+                          "type": "unknown",
+                          "cmd": "node -e \"const actual=3;if(actual!==2)throw Error('mismatch');console.log('checked');\""
+                        }
+                      ],
+                      "source": "unified_exec_startup",
+                      "status": "failed",
+                      "stdout": "[eval]:1\r\nconst actual=3;if(actual!==2)throw Error('mismatch');console.log('checked');\r\n                             ^\r\n\r\nError: mismatch\r\n    at [eval]:1:36\r\n    at runScriptInThisContext (node:internal/vm:209:10)\r\n    at node:internal/process/execution:446:12\r\n    at [eval]-wrapper:6:24\r\n    at runScriptInContext (node:internal/process/execution:444:60)\r\n    at evalFunction (node:internal/process/execution:279:30)\r\n    at evalTypeScript (node:internal/process/execution:291:3)\r\n    at node:internal/main/eval_string:74:3\r\n\r\nNode.js v22.21.0\r\n",
+                      "stderr": "",
+                      "aggregated_output": "[eval]:1\r\nconst actual=3;if(actual!==2)throw Error('mismatch');console.log('checked');\r\n                             ^\r\n\r\nError: mismatch\r\n    at [eval]:1:36\r\n    at runScriptInThisContext (node:internal/vm:209:10)\r\n    at node:internal/process/execution:446:12\r\n    at [eval]-wrapper:6:24\r\n    at runScriptInContext (node:internal/process/execution:444:60)\r\n    at evalFunction (node:internal/process/execution:279:30)\r\n    at evalTypeScript (node:internal/process/execution:291:3)\r\n    at node:internal/main/eval_string:74:3\r\n\r\nNode.js v22.21.0\r\n",
+                      "exit_code": 1,
+                      "duration": {
+                        "secs": 1,
+                        "nanos": 167236600
+                      },
+                      "formatted_output": "[eval]:1\r\nconst actual=3;if(actual!==2)throw Error('mismatch');console.log('checked');\r\n                             ^\r\n\r\nError: mismatch\r\n    at [eval]:1:36\r\n    at runScriptInThisContext (node:internal/vm:209:10)\r\n    at node:internal/process/execution:446:12\r\n    at [eval]-wrapper:6:24\r\n    at runScriptInContext (node:internal/process/execution:444:60)\r\n    at evalFunction (node:internal/process/execution:279:30)\r\n    at evalTypeScript (node:internal/process/execution:291:3)\r\n    at node:internal/main/eval_string:74:3\r\n\r\nNode.js v22.21.0\r\n"
+                    },
+                    "started_at_ms": 1790912288235,
+                    "completed_at_ms": 1790912289402
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "limitation": null
+    },
+    {
+      "name": "native-inline-custom-exec-capture-1002",
+      "arms": [
+        {
+          "arm": "pass",
+          "status": {
+            "code": 0,
+            "signal": null
+          },
+          "localRequests": 3,
+          "checks": [
+            {
+              "t": 1790912959065,
+              "kind": "shell",
+              "command": "node -e \"const actual=2;if(actual!==2)throw Error('mismatch');console.log('checked');\"",
+              "verify": true,
+              "outcome": "unknown"
+            }
+          ],
+          "modelsStarted": 0,
+          "authAbsent": true,
+          "captures": [
+            {
+              "file": "payload-post-tool-1790912958717.json",
+              "sha256": "e727d1fae7cfa3d2d71f7f49d903fee637402b5929c93e0443f2bcdbec89333e",
+              "event": "PostToolUse",
+              "tool": "Bash",
+              "input": {
+                "command": "node -e \"const actual=2;if(actual!==2)throw Error('mismatch');console.log('checked');\""
+              },
+              "response": "checked\n",
+              "sessionId": "01a0faba-80e1-7b13-84fe-82f9e8f18a6b",
+              "turnId": "01a0faba-81c9-7471-9837-ced5668ea63f"
+            },
+            {
+              "file": "payload-stop-1790912964166.json",
+              "sha256": "943f42e94917b1d0f44455e81b736d839c27a56b0e8303f89772c59f08d73378",
+              "event": "Stop",
+              "sessionId": "01a0faba-80e1-7b13-84fe-82f9e8f18a6b",
+              "turnId": "01a0faba-81c9-7471-9837-ced5668ea63f"
+            },
+            {
+              "file": "payload-stop-1790912964967.json",
+              "sha256": "f2fb98cd9db2ffeb76618acaec264de875d4781361e864021d90024fbc674b57",
+              "event": "Stop",
+              "sessionId": "01a0faba-80e1-7b13-84fe-82f9e8f18a6b",
+              "turnId": "01a0faba-81c9-7471-9837-ced5668ea63f"
+            }
+          ],
+          "rollouts": [
+            {
+              "file": "rollout-2026-10-01T22-48-41-01a0faba-80e1-7b13-84fe-82f9e8f18a6b.jsonl",
+              "sha256": "7a6f3215720c40ee397c6488f76490fb8ee1d726b7d418f548d4d8830e410a00",
+              "events": [
+                {
+                  "timestamp": "2026-10-02T03:48:42.164Z",
+                  "ordinal": 1,
+                  "type": "event_msg",
+                  "payload": {
+                    "type": "task_started",
+                    "turn_id": "01a0faba-81c9-7471-9837-ced5668ea63f",
+                    "root_turn_id": "01a0faba-81c9-7471-9837-ced5668ea63f",
+                    "started_at": 1790912922,
+                    "model_context_window": 258400,
+                    "collaboration_mode_kind": "default"
+                  }
+                },
+                {
+                  "timestamp": "2026-10-02T03:49:12.495Z",
+                  "ordinal": 11,
+                  "type": "event_msg",
+                  "payload": {
+                    "type": "item_completed",
+                    "thread_id": "01a0faba-80e1-7b13-84fe-82f9e8f18a6b",
+                    "turn_id": "01a0faba-81c9-7471-9837-ced5668ea63f",
+                    "item": {
+                      "type": "CommandExecution",
+                      "id": "exec-b87f09bf-5dde-40c8-b97c-4b87afbdaaf4",
+                      "process_id": "6964",
+                      "command": [
+                        "C:\\Users\\OWNER\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+                        "-Command",
+                        "node -e \"const actual=2;if(actual!==2)throw Error('mismatch');console.log('checked');\""
+                      ],
+                      "cwd": "file:///D:/harness-work/runs/native-inline-custom-exec-capture-1002/pass/ws",
+                      "parsed_cmd": [
+                        {
+                          "type": "unknown",
+                          "cmd": "node -e \"const actual=2;if(actual!==2)throw Error('mismatch');console.log('checked');\""
+                        }
+                      ],
+                      "source": "unified_exec_startup",
+                      "status": "completed",
+                      "stdout": "checked\n",
+                      "stderr": "",
+                      "aggregated_output": "checked\n",
+                      "exit_code": 0,
+                      "duration": {
+                        "secs": 1,
+                        "nanos": 56823300
+                      },
+                      "formatted_output": "checked\n"
+                    },
+                    "started_at_ms": 1790912951438,
+                    "completed_at_ms": 1790912952495
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "arm": "fail",
+          "status": {
+            "code": 0,
+            "signal": null
+          },
+          "localRequests": 3,
+          "checks": [
+            {
+              "t": 1790913019611,
+              "kind": "shell",
+              "command": "node -e \"const actual=3;if(actual!==2)throw Error('mismatch');console.log('checked');\"",
+              "verify": true,
+              "outcome": "fail",
+              "excerpt": "Node.js v22.21.0"
+            }
+          ],
+          "modelsStarted": 0,
+          "authAbsent": true,
+          "captures": [
+            {
+              "file": "payload-post-tool-1790913018945.json",
+              "sha256": "3613a41da9a9aa7b089dea57efc2075d30f6611a6ecb28eb6108718ab01e09f7",
+              "event": "PostToolUse",
+              "tool": "Bash",
+              "input": {
+                "command": "node -e \"const actual=3;if(actual!==2)throw Error('mismatch');console.log('checked');\""
+              },
+              "response": "[eval]:1\r\nconst actual=3;if(actual!==2)throw Error('mismatch');console.log('checked');\r\n                             ^\r\n\r\nError: mismatch\r\n    at [eval]:1:36\r\n    at runScriptInThisContext (node:internal/vm:209:10)\r\n    at node:internal/process/execution:446:12\r\n    at [eval]-wrapper:6:24\r\n    at runScriptInContext (node:internal/process/execution:444:60)\r\n    at evalFunction (node:internal/process/execution:279:30)\r\n    at evalTypeScript (node:internal/process/execution:291:3)\r\n    at node:internal/main/eval_string:74:3\r\n\r\nNode.js v22.21.0\r\n",
+              "sessionId": "01a0fabb-48db-7723-a8a8-b8a976a186f6",
+              "turnId": "01a0fabb-499a-7781-b453-bc6b8b201ff0"
+            },
+            {
+              "file": "payload-stop-1790913024597.json",
+              "sha256": "35e80e219b1685040ebdbd86e27a16d6973d233c92e3483727fc7e8ddeb3b98c",
+              "event": "Stop",
+              "sessionId": "01a0fabb-48db-7723-a8a8-b8a976a186f6",
+              "turnId": "01a0fabb-499a-7781-b453-bc6b8b201ff0"
+            },
+            {
+              "file": "payload-stop-1790913025511.json",
+              "sha256": "d3c79b1c20ac8b5df72d74893b1067a2bddffb8dc180cb507933a1c469dbb358",
+              "event": "Stop",
+              "sessionId": "01a0fabb-48db-7723-a8a8-b8a976a186f6",
+              "turnId": "01a0fabb-499a-7781-b453-bc6b8b201ff0"
+            }
+          ],
+          "rollouts": [
+            {
+              "file": "rollout-2026-10-01T22-49-33-01a0fabb-48db-7723-a8a8-b8a976a186f6.jsonl",
+              "sha256": "3c45ddd354ba2ff1dd4c9c96499b9713179f8f7b5da17e0c3c5f91ae1197274a",
+              "events": [
+                {
+                  "timestamp": "2026-10-02T03:49:35.694Z",
+                  "ordinal": 1,
+                  "type": "event_msg",
+                  "payload": {
+                    "type": "task_started",
+                    "turn_id": "01a0fabb-499a-7781-b453-bc6b8b201ff0",
+                    "root_turn_id": "01a0fabb-499a-7781-b453-bc6b8b201ff0",
+                    "started_at": 1790912973,
+                    "model_context_window": 258400,
+                    "collaboration_mode_kind": "default"
+                  }
+                },
+                {
+                  "timestamp": "2026-10-02T03:50:13.787Z",
+                  "ordinal": 11,
+                  "type": "event_msg",
+                  "payload": {
+                    "type": "item_completed",
+                    "thread_id": "01a0fabb-48db-7723-a8a8-b8a976a186f6",
+                    "turn_id": "01a0fabb-499a-7781-b453-bc6b8b201ff0",
+                    "item": {
+                      "type": "CommandExecution",
+                      "id": "exec-c4773afd-3278-40d2-9251-61acbd613ca2",
+                      "process_id": "19295",
+                      "command": [
+                        "C:\\Users\\OWNER\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+                        "-Command",
+                        "node -e \"const actual=3;if(actual!==2)throw Error('mismatch');console.log('checked');\""
+                      ],
+                      "cwd": "file:///D:/harness-work/runs/native-inline-custom-exec-capture-1002/fail/ws",
+                      "parsed_cmd": [
+                        {
+                          "type": "unknown",
+                          "cmd": "node -e \"const actual=3;if(actual!==2)throw Error('mismatch');console.log('checked');\""
+                        }
+                      ],
+                      "source": "unified_exec_startup",
+                      "status": "failed",
+                      "stdout": "[eval]:1\r\nconst actual=3;if(actual!==2)throw Error('mismatch');console.log('checked');\r\n                             ^\r\n\r\nError: mismatch\r\n    at [eval]:1:36\r\n    at runScriptInThisContext (node:internal/vm:209:10)\r\n    at node:internal/process/execution:446:12\r\n    at [eval]-wrapper:6:24\r\n    at runScriptInContext (node:internal/process/execution:444:60)\r\n    at evalFunction (node:internal/process/execution:279:30)\r\n    at evalTypeScript (node:internal/process/execution:291:3)\r\n    at node:internal/main/eval_string:74:3\r\n\r\nNode.js v22.21.0\r\n",
+                      "stderr": "",
+                      "aggregated_output": "[eval]:1\r\nconst actual=3;if(actual!==2)throw Error('mismatch');console.log('checked');\r\n                             ^\r\n\r\nError: mismatch\r\n    at [eval]:1:36\r\n    at runScriptInThisContext (node:internal/vm:209:10)\r\n    at node:internal/process/execution:446:12\r\n    at [eval]-wrapper:6:24\r\n    at runScriptInContext (node:internal/process/execution:444:60)\r\n    at evalFunction (node:internal/process/execution:279:30)\r\n    at evalTypeScript (node:internal/process/execution:291:3)\r\n    at node:internal/main/eval_string:74:3\r\n\r\nNode.js v22.21.0\r\n",
+                      "exit_code": 1,
+                      "duration": {
+                        "secs": 0,
+                        "nanos": 477343000
+                      },
+                      "formatted_output": "[eval]:1\r\nconst actual=3;if(actual!==2)throw Error('mismatch');console.log('checked');\r\n                             ^\r\n\r\nError: mismatch\r\n    at [eval]:1:36\r\n    at runScriptInThisContext (node:internal/vm:209:10)\r\n    at node:internal/process/execution:446:12\r\n    at [eval]-wrapper:6:24\r\n    at runScriptInContext (node:internal/process/execution:444:60)\r\n    at evalFunction (node:internal/process/execution:279:30)\r\n    at evalTypeScript (node:internal/process/execution:291:3)\r\n    at node:internal/main/eval_string:74:3\r\n\r\nNode.js v22.21.0\r\n"
+                    },
+                    "started_at_ms": 1790913013309,
+                    "completed_at_ms": 1790913013787
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "limitation": null
+    },
+    {
+      "name": "native-inline-custom-metadata-recovered-1002",
+      "arms": [
+        {
+          "arm": "pass",
+          "status": {
+            "code": 0,
+            "signal": null
+          },
+          "localRequests": 2,
+          "checks": [
+            {
+              "t": 1790913683455,
+              "kind": "shell",
+              "command": "node -e \"const actual=2;if(actual!==2)throw Error('mismatch');console.log('checked');\"",
+              "verify": true,
+              "outcome": "unknown"
+            },
+            {
+              "t": 1790913689088,
+              "kind": "shell",
+              "command": "node -e \"const actual=2;if(actual!==2)throw Error('mismatch');console.log('checked');\"",
+              "verify": true,
+              "outcome": "pass",
+              "from": "transcript"
+            }
+          ],
+          "modelsStarted": 0,
+          "authAbsent": true,
+          "captures": [
+            {
+              "file": "payload-post-tool-1790913683260.json",
+              "sha256": "ba5d1258a4cf0b4800264b7a418745afda19c87b083c7387862c283679214258",
+              "event": "PostToolUse",
+              "tool": "Bash",
+              "input": {
+                "command": "node -e \"const actual=2;if(actual!==2)throw Error('mismatch');console.log('checked');\""
+              },
+              "response": "checked\n",
+              "sessionId": "01a0fac5-8a34-72f3-bdf2-a3ad72f302d7",
+              "turnId": "01a0fac5-8aeb-7d00-a42b-3e5f00b44df2"
+            },
+            {
+              "file": "payload-stop-1790913688871.json",
+              "sha256": "7dd20fa02f59593009aad227126646dae564e2721366d5c20a439338b69cdab1",
+              "event": "Stop",
+              "sessionId": "01a0fac5-8a34-72f3-bdf2-a3ad72f302d7",
+              "turnId": "01a0fac5-8aeb-7d00-a42b-3e5f00b44df2"
+            }
+          ],
+          "rollouts": [
+            {
+              "file": "rollout-2026-10-01T23-00-45-01a0fac5-8a34-72f3-bdf2-a3ad72f302d7.jsonl",
+              "sha256": "fc1a3dce4fbda71cdecf47b9e212319d9f95b38fa4d6ef6dd52ee0813ab90651",
+              "events": [
+                {
+                  "timestamp": "2026-10-02T04:00:45.370Z",
+                  "ordinal": 1,
+                  "type": "event_msg",
+                  "payload": {
+                    "type": "task_started",
+                    "turn_id": "01a0fac5-8aeb-7d00-a42b-3e5f00b44df2",
+                    "root_turn_id": "01a0fac5-8aeb-7d00-a42b-3e5f00b44df2",
+                    "started_at": 1790913645,
+                    "model_context_window": 258400,
+                    "collaboration_mode_kind": "default"
+                  }
+                },
+                {
+                  "timestamp": "2026-10-02T04:01:18.078Z",
+                  "ordinal": 11,
+                  "type": "event_msg",
+                  "payload": {
+                    "type": "item_completed",
+                    "thread_id": "01a0fac5-8a34-72f3-bdf2-a3ad72f302d7",
+                    "turn_id": "01a0fac5-8aeb-7d00-a42b-3e5f00b44df2",
+                    "item": {
+                      "type": "CommandExecution",
+                      "id": "exec-a3333913-70e2-49df-b530-cd0a76f61c14",
+                      "process_id": "90782",
+                      "command": [
+                        "C:\\Users\\OWNER\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+                        "-Command",
+                        "node -e \"const actual=2;if(actual!==2)throw Error('mismatch');console.log('checked');\""
+                      ],
+                      "cwd": "file:///D:/harness-work/runs/native-inline-custom-metadata-recovered-1002/pass/ws",
+                      "parsed_cmd": [
+                        {
+                          "type": "unknown",
+                          "cmd": "node -e \"const actual=2;if(actual!==2)throw Error('mismatch');console.log('checked');\""
+                        }
+                      ],
+                      "source": "unified_exec_startup",
+                      "status": "completed",
+                      "stdout": "checked\n",
+                      "stderr": "",
+                      "aggregated_output": "checked\n",
+                      "exit_code": 0,
+                      "duration": {
+                        "secs": 0,
+                        "nanos": 941768600
+                      },
+                      "formatted_output": "checked\n"
+                    },
+                    "started_at_ms": 1790913677135,
+                    "completed_at_ms": 1790913678078
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "arm": "fail",
+          "status": {
+            "code": 0,
+            "signal": null
+          },
+          "localRequests": 3,
+          "checks": [
+            {
+              "t": 1790913734687,
+              "kind": "shell",
+              "command": "node -e \"const actual=3;if(actual!==2)throw Error('mismatch');console.log('checked');\"",
+              "verify": true,
+              "outcome": "fail",
+              "excerpt": "Node.js v22.21.0"
+            }
+          ],
+          "modelsStarted": 0,
+          "authAbsent": true,
+          "captures": [
+            {
+              "file": "payload-post-tool-1790913734222.json",
+              "sha256": "57fa536172c97bd2f32e8e9f03f8b96e48cefb42d1f969567e02ccb1f04dc7a2",
+              "event": "PostToolUse",
+              "tool": "Bash",
+              "input": {
+                "command": "node -e \"const actual=3;if(actual!==2)throw Error('mismatch');console.log('checked');\""
+              },
+              "response": "[eval]:1\r\nconst actual=3;if(actual!==2)throw Error('mismatch');console.log('checked');\r\n                             ^\r\n\r\nError: mismatch\r\n    at [eval]:1:36\r\n    at runScriptInThisContext (node:internal/vm:209:10)\r\n    at node:internal/process/execution:446:12\r\n    at [eval]-wrapper:6:24\r\n    at runScriptInContext (node:internal/process/execution:444:60)\r\n    at evalFunction (node:internal/process/execution:279:30)\r\n    at evalTypeScript (node:internal/process/execution:291:3)\r\n    at node:internal/main/eval_string:74:3\r\n\r\nNode.js v22.21.0\r\n",
+              "sessionId": "01a0fac6-55bb-7320-a876-0ad0cba2776d",
+              "turnId": "01a0fac6-56f1-74c2-a63f-3c2179675282"
+            },
+            {
+              "file": "payload-stop-1790913740935.json",
+              "sha256": "fab0cb286e749438e6431dec43b259b30aa14c49d7d69d8e4806176b1ee0d7f4",
+              "event": "Stop",
+              "sessionId": "01a0fac6-55bb-7320-a876-0ad0cba2776d",
+              "turnId": "01a0fac6-56f1-74c2-a63f-3c2179675282"
+            },
+            {
+              "file": "payload-stop-1790913742394.json",
+              "sha256": "fa254c22b5c85ebb1b8378440db39b379a7b92ad64a5f38b590b2a1aa2f4359a",
+              "event": "Stop",
+              "sessionId": "01a0fac6-55bb-7320-a876-0ad0cba2776d",
+              "turnId": "01a0fac6-56f1-74c2-a63f-3c2179675282"
+            }
+          ],
+          "rollouts": [
+            {
+              "file": "rollout-2026-10-01T23-01-37-01a0fac6-55bb-7320-a876-0ad0cba2776d.jsonl",
+              "sha256": "bf81bbf1d7d85f1d17245b428e57014ca19f2a9f3b99b14859ae0fbe58fe9039",
+              "events": [
+                {
+                  "timestamp": "2026-10-02T04:01:37.633Z",
+                  "ordinal": 1,
+                  "type": "event_msg",
+                  "payload": {
+                    "type": "task_started",
+                    "turn_id": "01a0fac6-56f1-74c2-a63f-3c2179675282",
+                    "root_turn_id": "01a0fac6-56f1-74c2-a63f-3c2179675282",
+                    "started_at": 1790913697,
+                    "model_context_window": 258400,
+                    "collaboration_mode_kind": "default"
+                  }
+                },
+                {
+                  "timestamp": "2026-10-02T04:02:08.131Z",
+                  "ordinal": 11,
+                  "type": "event_msg",
+                  "payload": {
+                    "type": "item_completed",
+                    "thread_id": "01a0fac6-55bb-7320-a876-0ad0cba2776d",
+                    "turn_id": "01a0fac6-56f1-74c2-a63f-3c2179675282",
+                    "item": {
+                      "type": "CommandExecution",
+                      "id": "exec-a74144ad-8349-410f-a1d8-31e042da71d3",
+                      "process_id": "64484",
+                      "command": [
+                        "C:\\Users\\OWNER\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+                        "-Command",
+                        "node -e \"const actual=3;if(actual!==2)throw Error('mismatch');console.log('checked');\""
+                      ],
+                      "cwd": "file:///D:/harness-work/runs/native-inline-custom-metadata-recovered-1002/fail/ws",
+                      "parsed_cmd": [
+                        {
+                          "type": "unknown",
+                          "cmd": "node -e \"const actual=3;if(actual!==2)throw Error('mismatch');console.log('checked');\""
+                        }
+                      ],
+                      "source": "unified_exec_startup",
+                      "status": "failed",
+                      "stdout": "[eval]:1\r\nconst actual=3;if(actual!==2)throw Error('mismatch');console.log('checked');\r\n                             ^\r\n\r\nError: mismatch\r\n    at [eval]:1:36\r\n    at runScriptInThisContext (node:internal/vm:209:10)\r\n    at node:internal/process/execution:446:12\r\n    at [eval]-wrapper:6:24\r\n    at runScriptInContext (node:internal/process/execution:444:60)\r\n    at evalFunction (node:internal/process/execution:279:30)\r\n    at evalTypeScript (node:internal/process/execution:291:3)\r\n    at node:internal/main/eval_string:74:3\r\n\r\nNode.js v22.21.0\r\n",
+                      "stderr": "",
+                      "aggregated_output": "[eval]:1\r\nconst actual=3;if(actual!==2)throw Error('mismatch');console.log('checked');\r\n                             ^\r\n\r\nError: mismatch\r\n    at [eval]:1:36\r\n    at runScriptInThisContext (node:internal/vm:209:10)\r\n    at node:internal/process/execution:446:12\r\n    at [eval]-wrapper:6:24\r\n    at runScriptInContext (node:internal/process/execution:444:60)\r\n    at evalFunction (node:internal/process/execution:279:30)\r\n    at evalTypeScript (node:internal/process/execution:291:3)\r\n    at node:internal/main/eval_string:74:3\r\n\r\nNode.js v22.21.0\r\n",
+                      "exit_code": 1,
+                      "duration": {
+                        "secs": 2,
+                        "nanos": 49696800
+                      },
+                      "formatted_output": "[eval]:1\r\nconst actual=3;if(actual!==2)throw Error('mismatch');console.log('checked');\r\n                             ^\r\n\r\nError: mismatch\r\n    at [eval]:1:36\r\n    at runScriptInThisContext (node:internal/vm:209:10)\r\n    at node:internal/process/execution:446:12\r\n    at [eval]-wrapper:6:24\r\n    at runScriptInContext (node:internal/process/execution:444:60)\r\n    at evalFunction (node:internal/process/execution:279:30)\r\n    at evalTypeScript (node:internal/process/execution:291:3)\r\n    at node:internal/main/eval_string:74:3\r\n\r\nNode.js v22.21.0\r\n"
+                    },
+                    "started_at_ms": 1790913726081,
+                    "completed_at_ms": 1790913728131
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "limitation": null
+    },
+    {
+      "name": "native-inline-patch-metadata-capture-1002",
+      "arms": [
+        {
+          "arm": "pass",
+          "status": {
+            "code": 0,
+            "signal": null
+          },
+          "localRequests": 3,
+          "checks": [],
+          "modelsStarted": 0,
+          "authAbsent": true,
+          "captures": [
+            {
+              "file": "payload-stop-1790914107343.json",
+              "sha256": "50450be7088a47f65aa7e60f212221024926a09aaa7ab216c90699b614e0be3c",
+              "event": "Stop",
+              "sessionId": "01a0facc-3845-7642-9fb0-2a7e75b19ca6",
+              "turnId": "01a0facc-3948-7473-8476-be0504e661b9"
+            },
+            {
+              "file": "payload-stop-1790914111573.json",
+              "sha256": "f5301e10086b7e648fea7eaf5566a9377d431db56e20b420e9161f155b48d3b7",
+              "event": "Stop",
+              "sessionId": "01a0facc-3845-7642-9fb0-2a7e75b19ca6",
+              "turnId": "01a0facc-3948-7473-8476-be0504e661b9"
+            }
+          ],
+          "rollouts": [
+            {
+              "file": "rollout-2026-10-01T23-08-02-01a0facc-3845-7642-9fb0-2a7e75b19ca6.jsonl",
+              "sha256": "61621076788fd41824d5d7b162922d03e16c2547e75f220bd12c79d9563098c9",
+              "events": [
+                {
+                  "timestamp": "2026-10-02T04:08:03.232Z",
+                  "ordinal": 1,
+                  "type": "event_msg",
+                  "payload": {
+                    "type": "task_started",
+                    "turn_id": "01a0facc-3948-7473-8476-be0504e661b9",
+                    "root_turn_id": "01a0facc-3948-7473-8476-be0504e661b9",
+                    "started_at": 1790914083,
+                    "model_context_window": 258400,
+                    "collaboration_mode_kind": "default"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "arm": "fail",
+          "status": {
+            "code": 0,
+            "signal": null
+          },
+          "localRequests": 3,
+          "checks": [],
+          "modelsStarted": 0,
+          "authAbsent": true,
+          "captures": [
+            {
+              "file": "payload-stop-1790914140442.json",
+              "sha256": "f62cfe2d2bbbcbb253b0aebdbbffce0400c7e8ad0d316531526ddd9a6ebe5b67",
+              "event": "Stop",
+              "sessionId": "01a0facc-c7b7-7102-a43f-f22fd0dc935d",
+              "turnId": "01a0facc-c8d2-7363-889c-5eca8ef7f764"
+            },
+            {
+              "file": "payload-stop-1790914145470.json",
+              "sha256": "153bdc40007c151be3fa4e52a9b440b02fcf52a9859c5f9abeb452bbca572e95",
+              "event": "Stop",
+              "sessionId": "01a0facc-c7b7-7102-a43f-f22fd0dc935d",
+              "turnId": "01a0facc-c8d2-7363-889c-5eca8ef7f764"
+            }
+          ],
+          "rollouts": [
+            {
+              "file": "rollout-2026-10-01T23-08-39-01a0facc-c7b7-7102-a43f-f22fd0dc935d.jsonl",
+              "sha256": "790644ef217985f0ba79ba935945a4dd328713ff67710d0795724dbd7b2c1e0c",
+              "events": [
+                {
+                  "timestamp": "2026-10-02T04:08:39.975Z",
+                  "ordinal": 1,
+                  "type": "event_msg",
+                  "payload": {
+                    "type": "task_started",
+                    "turn_id": "01a0facc-c8d2-7363-889c-5eca8ef7f764",
+                    "root_turn_id": "01a0facc-c8d2-7363-889c-5eca8ef7f764",
+                    "started_at": 1790914119,
+                    "model_context_window": 258400,
+                    "collaboration_mode_kind": "default"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "limitation": {
+        "modelsStarted": 0,
+        "reason": "The fallback metadata for gpt-6.1-sol does not expose apply_patch. Both local code-mode scripts failed before running a command. These are retained protocol failures, not check outcomes.",
+        "next": "New separately declared local provider probe uses existing cached gpt-6-sol tool metadata to inspect FileChange events; no real model or metadata substitution."
+      }
+    },
+    {
+      "name": "native-inline-patch-stock-metadata-capture-1002",
+      "arms": [
+        {
+          "arm": "pass",
+          "status": {
+            "code": 0,
+            "signal": null
+          },
+          "localRequests": 3,
+          "checks": [],
+          "modelsStarted": 0,
+          "authAbsent": true,
+          "captures": [
+            {
+              "file": "payload-stop-1790914228912.json",
+              "sha256": "464d3b370d6f6db75c976e4e0a146d3716715972d57f52626e45dce029a45cd2",
+              "event": "Stop",
+              "sessionId": "01a0face-1c8f-7052-aa26-e9345835116a",
+              "turnId": "01a0face-1d5f-7773-a51f-91ae0e67d6fd"
+            },
+            {
+              "file": "payload-stop-1790914235410.json",
+              "sha256": "c840e653ecc45d3b2e02c5cce5beb0ed307e3e49b0fa29e3c490d28f90af2114",
+              "event": "Stop",
+              "sessionId": "01a0face-1c8f-7052-aa26-e9345835116a",
+              "turnId": "01a0face-1d5f-7773-a51f-91ae0e67d6fd"
+            }
+          ],
+          "rollouts": [
+            {
+              "file": "rollout-2026-10-01T23-10-06-01a0face-1c8f-7052-aa26-e9345835116a.jsonl",
+              "sha256": "aece6816b98af091464ac86a56388ea4672db67a8a4a64a44c340d67081e4000",
+              "events": [
+                {
+                  "timestamp": "2026-10-02T04:10:07.172Z",
+                  "ordinal": 1,
+                  "type": "event_msg",
+                  "payload": {
+                    "type": "task_started",
+                    "turn_id": "01a0face-1d5f-7773-a51f-91ae0e67d6fd",
+                    "root_turn_id": "01a0face-1d5f-7773-a51f-91ae0e67d6fd",
+                    "started_at": 1790914207,
+                    "model_context_window": 258400,
+                    "collaboration_mode_kind": "default"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "arm": "fail",
+          "status": {
+            "code": 0,
+            "signal": null
+          },
+          "localRequests": 3,
+          "checks": [],
+          "modelsStarted": 0,
+          "authAbsent": true,
+          "captures": [
+            {
+              "file": "payload-stop-1790914264511.json",
+              "sha256": "0f81b326a8e5b627c9a537ff58883f2c41ae22205e5db3c8842eadc64737e0c3",
+              "event": "Stop",
+              "sessionId": "01a0face-af11-79f1-864b-36716eb7ba88",
+              "turnId": "01a0face-aff4-7313-bc69-1e2b86c1f137"
+            },
+            {
+              "file": "payload-stop-1790914268615.json",
+              "sha256": "39d2c42b94dcbc095776aac34c957680747b057a4449f0b9706771b098494215",
+              "event": "Stop",
+              "sessionId": "01a0face-af11-79f1-864b-36716eb7ba88",
+              "turnId": "01a0face-aff4-7313-bc69-1e2b86c1f137"
+            }
+          ],
+          "rollouts": [
+            {
+              "file": "rollout-2026-10-01T23-10-44-01a0face-af11-79f1-864b-36716eb7ba88.jsonl",
+              "sha256": "9a8595499128b3073c15fcd7e87f83b8c4da7737a99e811607b35d7ece7f345d",
+              "events": [
+                {
+                  "timestamp": "2026-10-02T04:10:44.699Z",
+                  "ordinal": 1,
+                  "type": "event_msg",
+                  "payload": {
+                    "type": "task_started",
+                    "turn_id": "01a0face-aff4-7313-bc69-1e2b86c1f137",
+                    "root_turn_id": "01a0face-aff4-7313-bc69-1e2b86c1f137",
+                    "started_at": 1790914244,
+                    "model_context_window": 258400,
+                    "collaboration_mode_kind": "default"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "limitation": {
+        "modelsStarted": 0,
+        "reason": "The fixture incorrectly required a tools field on stock metadata request. It crashed on tools.map before emitting any patch/check. Three requests all omitted tools. Warmup attribution is unproven; retained original failed fixture.",
+        "next": "New local provider probe accepts omitted catalog field, preserves scripted tool invocation and inspects actual execution events."
+      }
+    },
+    {
+      "name": "native-inline-patch-optional-catalog-capture-1002",
+      "arms": [
+        {
+          "arm": "pass",
+          "status": {
+            "code": 0,
+            "signal": null
+          },
+          "localRequests": 3,
+          "checks": [
+            {
+              "t": 1790914391580,
+              "kind": "shell",
+              "command": "node -e \"const actual=2;if(actual!==2)throw Error('mismatch');console.log('checked');\"",
+              "verify": true,
+              "outcome": "unknown"
+            }
+          ],
+          "modelsStarted": 0,
+          "authAbsent": true,
+          "captures": [
+            {
+              "file": "payload-post-tool-1790914384786.json",
+              "sha256": "f1d951b75402a4d8e53abb1c82c4a2d9ad4298202d28b8f62efbb7869a5c7bcb",
+              "event": "PostToolUse",
+              "tool": "apply_patch",
+              "input": {
+                "command": "*** Begin Patch\n*** Add File: checked.mjs\n+export const value = 2;\n*** End Patch"
+              },
+              "response": "Exit code: 0\nWall time: 0 seconds\nOutput:\nSuccess. Updated the following files:\nA checked.mjs\n",
+              "sessionId": "01a0fad0-6016-73b3-a985-4b9b29abcfd1",
+              "turnId": "01a0fad0-60e3-76d1-bdee-f6b96af136da"
+            },
+            {
+              "file": "payload-post-tool-1790914391403.json",
+              "sha256": "989ed8d5852563327fac56278d1be1b82ee7e274ee4a0dfaa139f8a08ee89cab",
+              "event": "PostToolUse",
+              "tool": "Bash",
+              "input": {
+                "command": "node -e \"const actual=2;if(actual!==2)throw Error('mismatch');console.log('checked');\""
+              },
+              "response": "checked\n",
+              "sessionId": "01a0fad0-6016-73b3-a985-4b9b29abcfd1",
+              "turnId": "01a0fad0-60e3-76d1-bdee-f6b96af136da"
+            },
+            {
+              "file": "payload-stop-1790914397572.json",
+              "sha256": "ebef98ecf23bffcd7ae9fd2f703eca78274f7457c4f73eb32b40f8d6945e388d",
+              "event": "Stop",
+              "sessionId": "01a0fad0-6016-73b3-a985-4b9b29abcfd1",
+              "turnId": "01a0fad0-60e3-76d1-bdee-f6b96af136da"
+            },
+            {
+              "file": "payload-stop-1790914398751.json",
+              "sha256": "beb67e0140ad26c150a8983ecc3d2a85a1aa25d4f40d76d2cdcd06abe94df3ff",
+              "event": "Stop",
+              "sessionId": "01a0fad0-6016-73b3-a985-4b9b29abcfd1",
+              "turnId": "01a0fad0-60e3-76d1-bdee-f6b96af136da"
+            }
+          ],
+          "rollouts": [
+            {
+              "file": "rollout-2026-10-01T23-12-35-01a0fad0-6016-73b3-a985-4b9b29abcfd1.jsonl",
+              "sha256": "1c28efa17142714f07757d881fdc98f9d264e0ea5be02376e5606895e66e0f22",
+              "events": [
+                {
+                  "timestamp": "2026-10-02T04:12:35.517Z",
+                  "ordinal": 1,
+                  "type": "event_msg",
+                  "payload": {
+                    "type": "task_started",
+                    "turn_id": "01a0fad0-60e3-76d1-bdee-f6b96af136da",
+                    "root_turn_id": "01a0fad0-60e3-76d1-bdee-f6b96af136da",
+                    "started_at": 1790914355,
+                    "model_context_window": 258400,
+                    "collaboration_mode_kind": "default"
+                  }
+                },
+                {
+                  "timestamp": "2026-10-02T04:12:59.542Z",
+                  "ordinal": 13,
+                  "type": "event_msg",
+                  "payload": {
+                    "type": "item_completed",
+                    "thread_id": "01a0fad0-6016-73b3-a985-4b9b29abcfd1",
+                    "turn_id": "01a0fad0-60e3-76d1-bdee-f6b96af136da",
+                    "item": {
+                      "type": "FileChange",
+                      "id": "exec-9ce9ca90-52c3-4bc3-a9d2-36522e91386c",
+                      "changes": {
+                        "D:\\harness-work\\runs\\native-inline-patch-optional-catalog-capture-1002\\pass\\ws\\checked.mjs": {
+                          "type": "add",
+                          "content": "export const value = 2;\n"
+                        }
+                      },
+                      "status": "completed",
+                      "stdout": "Success. Updated the following files:\nA checked.mjs\n",
+                      "stderr": ""
+                    },
+                    "started_at_ms": 1790914379540,
+                    "completed_at_ms": 1790914379542
+                  }
+                },
+                {
+                  "timestamp": "2026-10-02T04:13:10.836Z",
+                  "ordinal": 14,
+                  "type": "event_msg",
+                  "payload": {
+                    "type": "item_completed",
+                    "thread_id": "01a0fad0-6016-73b3-a985-4b9b29abcfd1",
+                    "turn_id": "01a0fad0-60e3-76d1-bdee-f6b96af136da",
+                    "item": {
+                      "type": "CommandExecution",
+                      "id": "exec-e329b7d7-b17a-4ebb-91e1-e9f130676ddd",
+                      "process_id": "19215",
+                      "command": [
+                        "C:\\Users\\OWNER\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+                        "-Command",
+                        "node -e \"const actual=2;if(actual!==2)throw Error('mismatch');console.log('checked');\""
+                      ],
+                      "cwd": "file:///D:/harness-work/runs/native-inline-patch-optional-catalog-capture-1002/pass/ws",
+                      "parsed_cmd": [
+                        {
+                          "type": "unknown",
+                          "cmd": "node -e \"const actual=2;if(actual!==2)throw Error('mismatch');console.log('checked');\""
+                        }
+                      ],
+                      "source": "unified_exec_startup",
+                      "status": "completed",
+                      "stdout": "checked\n",
+                      "stderr": "",
+                      "aggregated_output": "checked\n",
+                      "exit_code": 0,
+                      "duration": {
+                        "secs": 0,
+                        "nanos": 609751800
+                      },
+                      "formatted_output": "checked\n"
+                    },
+                    "started_at_ms": 1790914390226,
+                    "completed_at_ms": 1790914390836
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "arm": "fail",
+          "status": {
+            "code": 0,
+            "signal": null
+          },
+          "localRequests": 3,
+          "checks": [
+            {
+              "t": 1790914442085,
+              "kind": "shell",
+              "command": "node -e \"const actual=3;if(actual!==2)throw Error('mismatch');console.log('checked');\"",
+              "verify": true,
+              "outcome": "fail",
+              "excerpt": "Node.js v22.21.0"
+            }
+          ],
+          "modelsStarted": 0,
+          "authAbsent": true,
+          "captures": [
+            {
+              "file": "payload-post-tool-1790914435979.json",
+              "sha256": "001bbd750555274ece43cd9fa1fedc5adff232c5c14bc029e8d862ce3ab87722",
+              "event": "PostToolUse",
+              "tool": "apply_patch",
+              "input": {
+                "command": "*** Begin Patch\n*** Add File: checked.mjs\n+export const value = 2;\n*** End Patch"
+              },
+              "response": "Exit code: 0\nWall time: 0 seconds\nOutput:\nSuccess. Updated the following files:\nA checked.mjs\n",
+              "sessionId": "01a0fad1-286b-71e2-9849-a0825e6545cd",
+              "turnId": "01a0fad1-2951-7003-a502-531c86f1f31b"
+            },
+            {
+              "file": "payload-post-tool-1790914441958.json",
+              "sha256": "97f8421d112dc3d4dac450ecc6e32bd03743b2f88d3ef66828e2b192e19230ad",
+              "event": "PostToolUse",
+              "tool": "Bash",
+              "input": {
+                "command": "node -e \"const actual=3;if(actual!==2)throw Error('mismatch');console.log('checked');\""
+              },
+              "response": "[eval]:1\r\nconst actual=3;if(actual!==2)throw Error('mismatch');console.log('checked');\r\n                             ^\r\n\r\nError: mismatch\r\n    at [eval]:1:36\r\n    at runScriptInThisContext (node:internal/vm:209:10)\r\n    at node:internal/process/execution:446:12\r\n    at [eval]-wrapper:6:24\r\n    at runScriptInContext (node:internal/process/execution:444:60)\r\n    at evalFunction (node:internal/process/execution:279:30)\r\n    at evalTypeScript (node:internal/process/execution:291:3)\r\n    at node:internal/main/eval_string:74:3\r\n\r\nNode.js v22.21.0\r\n",
+              "sessionId": "01a0fad1-286b-71e2-9849-a0825e6545cd",
+              "turnId": "01a0fad1-2951-7003-a502-531c86f1f31b"
+            },
+            {
+              "file": "payload-stop-1790914446734.json",
+              "sha256": "1433572bbd907a1beaf1d3503b52cc21bf4b1ebfd9cbc31032b10bbbc173ddf7",
+              "event": "Stop",
+              "sessionId": "01a0fad1-286b-71e2-9849-a0825e6545cd",
+              "turnId": "01a0fad1-2951-7003-a502-531c86f1f31b"
+            },
+            {
+              "file": "payload-stop-1790914447540.json",
+              "sha256": "5aae942cbac4845e40de9c37262fec787064f5843a8850744026662da7b1afd1",
+              "event": "Stop",
+              "sessionId": "01a0fad1-286b-71e2-9849-a0825e6545cd",
+              "turnId": "01a0fad1-2951-7003-a502-531c86f1f31b"
+            }
+          ],
+          "rollouts": [
+            {
+              "file": "rollout-2026-10-01T23-13-26-01a0fad1-286b-71e2-9849-a0825e6545cd.jsonl",
+              "sha256": "d5e39b6285cc9932b18fc199bd0e946b5a9c8219365c6fbede205290712408fd",
+              "events": [
+                {
+                  "timestamp": "2026-10-02T04:13:26.815Z",
+                  "ordinal": 1,
+                  "type": "event_msg",
+                  "payload": {
+                    "type": "task_started",
+                    "turn_id": "01a0fad1-2951-7003-a502-531c86f1f31b",
+                    "root_turn_id": "01a0fad1-2951-7003-a502-531c86f1f31b",
+                    "started_at": 1790914406,
+                    "model_context_window": 258400,
+                    "collaboration_mode_kind": "default"
+                  }
+                },
+                {
+                  "timestamp": "2026-10-02T04:13:50.421Z",
+                  "ordinal": 13,
+                  "type": "event_msg",
+                  "payload": {
+                    "type": "item_completed",
+                    "thread_id": "01a0fad1-286b-71e2-9849-a0825e6545cd",
+                    "turn_id": "01a0fad1-2951-7003-a502-531c86f1f31b",
+                    "item": {
+                      "type": "FileChange",
+                      "id": "exec-37774d8f-41db-47fc-a31e-31f7bbfafcdb",
+                      "changes": {
+                        "D:\\harness-work\\runs\\native-inline-patch-optional-catalog-capture-1002\\fail\\ws\\checked.mjs": {
+                          "type": "add",
+                          "content": "export const value = 2;\n"
+                        }
+                      },
+                      "status": "completed",
+                      "stdout": "Success. Updated the following files:\nA checked.mjs\n",
+                      "stderr": ""
+                    },
+                    "started_at_ms": 1790914430418,
+                    "completed_at_ms": 1790914430421
+                  }
+                },
+                {
+                  "timestamp": "2026-10-02T04:14:01.450Z",
+                  "ordinal": 14,
+                  "type": "event_msg",
+                  "payload": {
+                    "type": "item_completed",
+                    "thread_id": "01a0fad1-286b-71e2-9849-a0825e6545cd",
+                    "turn_id": "01a0fad1-2951-7003-a502-531c86f1f31b",
+                    "item": {
+                      "type": "CommandExecution",
+                      "id": "exec-174566a4-f489-4f04-b2e9-564ca0395f2f",
+                      "process_id": "95985",
+                      "command": [
+                        "C:\\Users\\OWNER\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+                        "-Command",
+                        "node -e \"const actual=3;if(actual!==2)throw Error('mismatch');console.log('checked');\""
+                      ],
+                      "cwd": "file:///D:/harness-work/runs/native-inline-patch-optional-catalog-capture-1002/fail/ws",
+                      "parsed_cmd": [
+                        {
+                          "type": "unknown",
+                          "cmd": "node -e \"const actual=3;if(actual!==2)throw Error('mismatch');console.log('checked');\""
+                        }
+                      ],
+                      "source": "unified_exec_startup",
+                      "status": "failed",
+                      "stdout": "[eval]:1\r\nconst actual=3;if(actual!==2)throw Error('mismatch');console.log('checked');\r\n                             ^\r\n\r\nError: mismatch\r\n    at [eval]:1:36\r\n    at runScriptInThisContext (node:internal/vm:209:10)\r\n    at node:internal/process/execution:446:12\r\n    at [eval]-wrapper:6:24\r\n    at runScriptInContext (node:internal/process/execution:444:60)\r\n    at evalFunction (node:internal/process/execution:279:30)\r\n    at evalTypeScript (node:internal/process/execution:291:3)\r\n    at node:internal/main/eval_string:74:3\r\n\r\nNode.js v22.21.0\r\n",
+                      "stderr": "",
+                      "aggregated_output": "[eval]:1\r\nconst actual=3;if(actual!==2)throw Error('mismatch');console.log('checked');\r\n                             ^\r\n\r\nError: mismatch\r\n    at [eval]:1:36\r\n    at runScriptInThisContext (node:internal/vm:209:10)\r\n    at node:internal/process/execution:446:12\r\n    at [eval]-wrapper:6:24\r\n    at runScriptInContext (node:internal/process/execution:444:60)\r\n    at evalFunction (node:internal/process/execution:279:30)\r\n    at evalTypeScript (node:internal/process/execution:291:3)\r\n    at node:internal/main/eval_string:74:3\r\n\r\nNode.js v22.21.0\r\n",
+                      "exit_code": 1,
+                      "duration": {
+                        "secs": 0,
+                        "nanos": 484896900
+                      },
+                      "formatted_output": "[eval]:1\r\nconst actual=3;if(actual!==2)throw Error('mismatch');console.log('checked');\r\n                             ^\r\n\r\nError: mismatch\r\n    at [eval]:1:36\r\n    at runScriptInThisContext (node:internal/vm:209:10)\r\n    at node:internal/process/execution:446:12\r\n    at [eval]-wrapper:6:24\r\n    at runScriptInContext (node:internal/process/execution:444:60)\r\n    at evalFunction (node:internal/process/execution:279:30)\r\n    at evalTypeScript (node:internal/process/execution:291:3)\r\n    at node:internal/main/eval_string:74:3\r\n\r\nNode.js v22.21.0\r\n"
+                    },
+                    "started_at_ms": 1790914440964,
+                    "completed_at_ms": 1790914441449
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "limitation": null
+    },
+    {
+      "name": "native-inline-update-stock-capture-1002",
+      "arms": [
+        {
+          "arm": "pass",
+          "status": {
+            "code": 0,
+            "signal": null
+          },
+          "localRequests": 3,
+          "checks": [
+            {
+              "t": 1790914579199,
+              "kind": "shell",
+              "command": "node -e \"const actual=2;if(actual!==2)throw Error('mismatch');console.log('checked');\"",
+              "verify": true,
+              "outcome": "unknown"
+            }
+          ],
+          "modelsStarted": 0,
+          "authAbsent": true,
+          "captures": [
+            {
+              "file": "payload-post-tool-1790914569801.json",
+              "sha256": "e7d54f7310236301fa200358b778c0cd21cd9180f53a22197ee508666244e24c",
+              "event": "PostToolUse",
+              "tool": "apply_patch",
+              "input": {
+                "command": "*** Begin Patch\n*** Add File: checked.mjs\n+export const value = 1;\n*** End Patch"
+              },
+              "response": "Exit code: 0\nWall time: 0 seconds\nOutput:\nSuccess. Updated the following files:\nA checked.mjs\n",
+              "sessionId": "01a0fad3-25ba-71e1-81db-02b1337fb677",
+              "turnId": "01a0fad3-26c9-7531-b8f4-c2cfb3ee1451"
+            },
+            {
+              "file": "payload-post-tool-1790914571849.json",
+              "sha256": "785b0b22c342242d7175b76933dd86c2100a1c30900714b449fe7f5173757d4a",
+              "event": "PostToolUse",
+              "tool": "apply_patch",
+              "input": {
+                "command": "*** Begin Patch\n*** Update File: checked.mjs\n@@\n-export const value = 1;\n+export const value = 2;\n*** End Patch"
+              },
+              "response": "Exit code: 0\nWall time: 0 seconds\nOutput:\nSuccess. Updated the following files:\nM checked.mjs\n",
+              "sessionId": "01a0fad3-25ba-71e1-81db-02b1337fb677",
+              "turnId": "01a0fad3-26c9-7531-b8f4-c2cfb3ee1451"
+            },
+            {
+              "file": "payload-post-tool-1790914578930.json",
+              "sha256": "f9cbcc8b4e843465944828b3ad1444ba4bb5631b480bcadbb0c79f579081fd49",
+              "event": "PostToolUse",
+              "tool": "Bash",
+              "input": {
+                "command": "node -e \"const actual=2;if(actual!==2)throw Error('mismatch');console.log('checked');\""
+              },
+              "response": "checked\n",
+              "sessionId": "01a0fad3-25ba-71e1-81db-02b1337fb677",
+              "turnId": "01a0fad3-26c9-7531-b8f4-c2cfb3ee1451"
+            },
+            {
+              "file": "payload-stop-1790914585325.json",
+              "sha256": "ae9a6fb1ab244a99b1a150bab4571367378a242006f8e13e8fb907b71eedf0bd",
+              "event": "Stop",
+              "sessionId": "01a0fad3-25ba-71e1-81db-02b1337fb677",
+              "turnId": "01a0fad3-26c9-7531-b8f4-c2cfb3ee1451"
+            },
+            {
+              "file": "payload-stop-1790914586764.json",
+              "sha256": "6150c9985da4c0a1d93e0d6df45161beea5ad153dab8cdbfb00c118b5f23948b",
+              "event": "Stop",
+              "sessionId": "01a0fad3-25ba-71e1-81db-02b1337fb677",
+              "turnId": "01a0fad3-26c9-7531-b8f4-c2cfb3ee1451"
+            }
+          ],
+          "rollouts": [
+            {
+              "file": "rollout-2026-10-01T23-15-36-01a0fad3-25ba-71e1-81db-02b1337fb677.jsonl",
+              "sha256": "aafd43113fbc0868242c06d53e83e06c91c3d9a965682d3c8b015575251149bd",
+              "events": [
+                {
+                  "timestamp": "2026-10-02T04:15:37.275Z",
+                  "ordinal": 1,
+                  "type": "event_msg",
+                  "payload": {
+                    "type": "task_started",
+                    "turn_id": "01a0fad3-26c9-7531-b8f4-c2cfb3ee1451",
+                    "root_turn_id": "01a0fad3-26c9-7531-b8f4-c2cfb3ee1451",
+                    "started_at": 1790914537,
+                    "model_context_window": 258400,
+                    "collaboration_mode_kind": "default"
+                  }
+                },
+                {
+                  "timestamp": "2026-10-02T04:16:03.612Z",
+                  "ordinal": 13,
+                  "type": "event_msg",
+                  "payload": {
+                    "type": "item_completed",
+                    "thread_id": "01a0fad3-25ba-71e1-81db-02b1337fb677",
+                    "turn_id": "01a0fad3-26c9-7531-b8f4-c2cfb3ee1451",
+                    "item": {
+                      "type": "FileChange",
+                      "id": "exec-e51a404f-689e-4a6b-9d0c-6fb74e15cbb5",
+                      "changes": {
+                        "D:\\harness-work\\runs\\native-inline-update-stock-capture-1002\\pass\\ws\\checked.mjs": {
+                          "type": "add",
+                          "content": "export const value = 1;\n"
+                        }
+                      },
+                      "status": "completed",
+                      "stdout": "Success. Updated the following files:\nA checked.mjs\n",
+                      "stderr": ""
+                    },
+                    "started_at_ms": 1790914563609,
+                    "completed_at_ms": 1790914563611
+                  }
+                },
+                {
+                  "timestamp": "2026-10-02T04:16:11.226Z",
+                  "ordinal": 14,
+                  "type": "event_msg",
+                  "payload": {
+                    "type": "item_completed",
+                    "thread_id": "01a0fad3-25ba-71e1-81db-02b1337fb677",
+                    "turn_id": "01a0fad3-26c9-7531-b8f4-c2cfb3ee1451",
+                    "item": {
+                      "type": "FileChange",
+                      "id": "exec-1f19aae0-8907-49c4-ba84-e87735a7d1ce",
+                      "changes": {
+                        "D:\\harness-work\\runs\\native-inline-update-stock-capture-1002\\pass\\ws\\checked.mjs": {
+                          "type": "update",
+                          "unified_diff": "@@ -1 +1 @@\n-export const value = 1;\n+export const value = 2;\n",
+                          "move_path": null
+                        }
+                      },
+                      "status": "completed",
+                      "stdout": "Success. Updated the following files:\nM checked.mjs\n",
+                      "stderr": ""
+                    },
+                    "started_at_ms": 1790914571224,
+                    "completed_at_ms": 1790914571226
+                  }
+                },
+                {
+                  "timestamp": "2026-10-02T04:16:17.797Z",
+                  "ordinal": 15,
+                  "type": "event_msg",
+                  "payload": {
+                    "type": "item_completed",
+                    "thread_id": "01a0fad3-25ba-71e1-81db-02b1337fb677",
+                    "turn_id": "01a0fad3-26c9-7531-b8f4-c2cfb3ee1451",
+                    "item": {
+                      "type": "CommandExecution",
+                      "id": "exec-6c718c37-83a7-481e-bc46-c93ac3d4dbf8",
+                      "process_id": "45577",
+                      "command": [
+                        "C:\\Users\\OWNER\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+                        "-Command",
+                        "node -e \"const actual=2;if(actual!==2)throw Error('mismatch');console.log('checked');\""
+                      ],
+                      "cwd": "file:///D:/harness-work/runs/native-inline-update-stock-capture-1002/pass/ws",
+                      "parsed_cmd": [
+                        {
+                          "type": "unknown",
+                          "cmd": "node -e \"const actual=2;if(actual!==2)throw Error('mismatch');console.log('checked');\""
+                        }
+                      ],
+                      "source": "unified_exec_startup",
+                      "status": "completed",
+                      "stdout": "checked\n",
+                      "stderr": "",
+                      "aggregated_output": "checked\n",
+                      "exit_code": 0,
+                      "duration": {
+                        "secs": 0,
+                        "nanos": 484329100
+                      },
+                      "formatted_output": "checked\n"
+                    },
+                    "started_at_ms": 1790914577311,
+                    "completed_at_ms": 1790914577795
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "arm": "fail",
+          "status": {
+            "code": 0,
+            "signal": null
+          },
+          "localRequests": 3,
+          "checks": [
+            {
+              "t": 1790914639602,
+              "kind": "shell",
+              "command": "node -e \"const actual=3;if(actual!==2)throw Error('mismatch');console.log('checked');\"",
+              "verify": true,
+              "outcome": "fail",
+              "excerpt": "Node.js v22.21.0"
+            }
+          ],
+          "modelsStarted": 0,
+          "authAbsent": true,
+          "captures": [
+            {
+              "file": "payload-post-tool-1790914629228.json",
+              "sha256": "1e5cfe4bed426b9eea834dd42114e71a27fb4ff8784371654e233d5d0080551d",
+              "event": "PostToolUse",
+              "tool": "apply_patch",
+              "input": {
+                "command": "*** Begin Patch\n*** Add File: checked.mjs\n+export const value = 1;\n*** End Patch"
+              },
+              "response": "Exit code: 0\nWall time: 0 seconds\nOutput:\nSuccess. Updated the following files:\nA checked.mjs\n",
+              "sessionId": "01a0fad4-0b00-78a1-960b-04b216895931",
+              "turnId": "01a0fad4-0c4f-7f61-860e-f7aba1d21fcd"
+            },
+            {
+              "file": "payload-post-tool-1790914631187.json",
+              "sha256": "146e3aa460c4b5312b4d312736eea0431623c498a61ea23e12d5d103a6e68525",
+              "event": "PostToolUse",
+              "tool": "apply_patch",
+              "input": {
+                "command": "*** Begin Patch\n*** Update File: checked.mjs\n@@\n-export const value = 1;\n+export const value = 2;\n*** End Patch"
+              },
+              "response": "Exit code: 0\nWall time: 0 seconds\nOutput:\nSuccess. Updated the following files:\nM checked.mjs\n",
+              "sessionId": "01a0fad4-0b00-78a1-960b-04b216895931",
+              "turnId": "01a0fad4-0c4f-7f61-860e-f7aba1d21fcd"
+            },
+            {
+              "file": "payload-post-tool-1790914639152.json",
+              "sha256": "cda3a36ce1c0daa5c6ad7362f0177c88c0d57e75c911f30f63d510ecd3c209a2",
+              "event": "PostToolUse",
+              "tool": "Bash",
+              "input": {
+                "command": "node -e \"const actual=3;if(actual!==2)throw Error('mismatch');console.log('checked');\""
+              },
+              "response": "[eval]:1\r\nconst actual=3;if(actual!==2)throw Error('mismatch');console.log('checked');\r\n                             ^\r\n\r\nError: mismatch\r\n    at [eval]:1:36\r\n    at runScriptInThisContext (node:internal/vm:209:10)\r\n    at node:internal/process/execution:446:12\r\n    at [eval]-wrapper:6:24\r\n    at runScriptInContext (node:internal/process/execution:444:60)\r\n    at evalFunction (node:internal/process/execution:279:30)\r\n    at evalTypeScript (node:internal/process/execution:291:3)\r\n    at node:internal/main/eval_string:74:3\r\n\r\nNode.js v22.21.0\r\n",
+              "sessionId": "01a0fad4-0b00-78a1-960b-04b216895931",
+              "turnId": "01a0fad4-0c4f-7f61-860e-f7aba1d21fcd"
+            },
+            {
+              "file": "payload-stop-1790914645695.json",
+              "sha256": "9aa363f4ed8be95bd0f54e839d11a3750d9871476dfe85a6d7cd71d4b3458e50",
+              "event": "Stop",
+              "sessionId": "01a0fad4-0b00-78a1-960b-04b216895931",
+              "turnId": "01a0fad4-0c4f-7f61-860e-f7aba1d21fcd"
+            },
+            {
+              "file": "payload-stop-1790914646963.json",
+              "sha256": "e25a567599a87bf9380c42f9153e59f89a4eaa6541fa4142e116d8a017109fba",
+              "event": "Stop",
+              "sessionId": "01a0fad4-0b00-78a1-960b-04b216895931",
+              "turnId": "01a0fad4-0c4f-7f61-860e-f7aba1d21fcd"
+            }
+          ],
+          "rollouts": [
+            {
+              "file": "rollout-2026-10-01T23-16-35-01a0fad4-0b00-78a1-960b-04b216895931.jsonl",
+              "sha256": "39624e1927ba0b2abb870e9d9c9074810af7a18ed11c5a70cc75394d83293775",
+              "events": [
+                {
+                  "timestamp": "2026-10-02T04:16:36.035Z",
+                  "ordinal": 1,
+                  "type": "event_msg",
+                  "payload": {
+                    "type": "task_started",
+                    "turn_id": "01a0fad4-0c4f-7f61-860e-f7aba1d21fcd",
+                    "root_turn_id": "01a0fad4-0c4f-7f61-860e-f7aba1d21fcd",
+                    "started_at": 1790914595,
+                    "model_context_window": 258400,
+                    "collaboration_mode_kind": "default"
+                  }
+                },
+                {
+                  "timestamp": "2026-10-02T04:17:03.275Z",
+                  "ordinal": 13,
+                  "type": "event_msg",
+                  "payload": {
+                    "type": "item_completed",
+                    "thread_id": "01a0fad4-0b00-78a1-960b-04b216895931",
+                    "turn_id": "01a0fad4-0c4f-7f61-860e-f7aba1d21fcd",
+                    "item": {
+                      "type": "FileChange",
+                      "id": "exec-032356cf-9523-42cc-990a-57f45d0ed789",
+                      "changes": {
+                        "D:\\harness-work\\runs\\native-inline-update-stock-capture-1002\\fail\\ws\\checked.mjs": {
+                          "type": "add",
+                          "content": "export const value = 1;\n"
+                        }
+                      },
+                      "status": "completed",
+                      "stdout": "Success. Updated the following files:\nA checked.mjs\n",
+                      "stderr": ""
+                    },
+                    "started_at_ms": 1790914623274,
+                    "completed_at_ms": 1790914623275
+                  }
+                },
+                {
+                  "timestamp": "2026-10-02T04:17:10.465Z",
+                  "ordinal": 14,
+                  "type": "event_msg",
+                  "payload": {
+                    "type": "item_completed",
+                    "thread_id": "01a0fad4-0b00-78a1-960b-04b216895931",
+                    "turn_id": "01a0fad4-0c4f-7f61-860e-f7aba1d21fcd",
+                    "item": {
+                      "type": "FileChange",
+                      "id": "exec-128ea1ac-fea3-411f-b121-c84a85437872",
+                      "changes": {
+                        "D:\\harness-work\\runs\\native-inline-update-stock-capture-1002\\fail\\ws\\checked.mjs": {
+                          "type": "update",
+                          "unified_diff": "@@ -1 +1 @@\n-export const value = 1;\n+export const value = 2;\n",
+                          "move_path": null
+                        }
+                      },
+                      "status": "completed",
+                      "stdout": "Success. Updated the following files:\nM checked.mjs\n",
+                      "stderr": ""
+                    },
+                    "started_at_ms": 1790914630462,
+                    "completed_at_ms": 1790914630465
+                  }
+                },
+                {
+                  "timestamp": "2026-10-02T04:17:18.382Z",
+                  "ordinal": 15,
+                  "type": "event_msg",
+                  "payload": {
+                    "type": "item_completed",
+                    "thread_id": "01a0fad4-0b00-78a1-960b-04b216895931",
+                    "turn_id": "01a0fad4-0c4f-7f61-860e-f7aba1d21fcd",
+                    "item": {
+                      "type": "CommandExecution",
+                      "id": "exec-8acd0767-41f8-4d9f-9f98-58e82f4047ab",
+                      "process_id": "36500",
+                      "command": [
+                        "C:\\Users\\OWNER\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+                        "-Command",
+                        "node -e \"const actual=3;if(actual!==2)throw Error('mismatch');console.log('checked');\""
+                      ],
+                      "cwd": "file:///D:/harness-work/runs/native-inline-update-stock-capture-1002/fail/ws",
+                      "parsed_cmd": [
+                        {
+                          "type": "unknown",
+                          "cmd": "node -e \"const actual=3;if(actual!==2)throw Error('mismatch');console.log('checked');\""
+                        }
+                      ],
+                      "source": "unified_exec_startup",
+                      "status": "failed",
+                      "stdout": "[eval]:1\r\nconst actual=3;if(actual!==2)throw Error('mismatch');console.log('checked');\r\n                             ^\r\n\r\nError: mismatch\r\n    at [eval]:1:36\r\n    at runScriptInThisContext (node:internal/vm:209:10)\r\n    at node:internal/process/execution:446:12\r\n    at [eval]-wrapper:6:24\r\n    at runScriptInContext (node:internal/process/execution:444:60)\r\n    at evalFunction (node:internal/process/execution:279:30)\r\n    at evalTypeScript (node:internal/process/execution:291:3)\r\n    at node:internal/main/eval_string:74:3\r\n\r\nNode.js v22.21.0\r\n",
+                      "stderr": "",
+                      "aggregated_output": "[eval]:1\r\nconst actual=3;if(actual!==2)throw Error('mismatch');console.log('checked');\r\n                             ^\r\n\r\nError: mismatch\r\n    at [eval]:1:36\r\n    at runScriptInThisContext (node:internal/vm:209:10)\r\n    at node:internal/process/execution:446:12\r\n    at [eval]-wrapper:6:24\r\n    at runScriptInContext (node:internal/process/execution:444:60)\r\n    at evalFunction (node:internal/process/execution:279:30)\r\n    at evalTypeScript (node:internal/process/execution:291:3)\r\n    at node:internal/main/eval_string:74:3\r\n\r\nNode.js v22.21.0\r\n",
+                      "exit_code": 1,
+                      "duration": {
+                        "secs": 0,
+                        "nanos": 783284800
+                      },
+                      "formatted_output": "[eval]:1\r\nconst actual=3;if(actual!==2)throw Error('mismatch');console.log('checked');\r\n                             ^\r\n\r\nError: mismatch\r\n    at [eval]:1:36\r\n    at runScriptInThisContext (node:internal/vm:209:10)\r\n    at node:internal/process/execution:446:12\r\n    at [eval]-wrapper:6:24\r\n    at runScriptInContext (node:internal/process/execution:444:60)\r\n    at evalFunction (node:internal/process/execution:279:30)\r\n    at evalTypeScript (node:internal/process/execution:291:3)\r\n    at node:internal/main/eval_string:74:3\r\n\r\nNode.js v22.21.0\r\n"
+                    },
+                    "started_at_ms": 1790914637598,
+                    "completed_at_ms": 1790914638382
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "limitation": null
+    },
+    {
+      "name": "native-inline-update-recovered-1002",
+      "arms": [
+        {
+          "arm": "pass",
+          "status": {
+            "code": 0,
+            "signal": null
+          },
+          "localRequests": 2,
+          "checks": [
+            {
+              "t": 1790914812552,
+              "kind": "shell",
+              "command": "node -e \"const actual=2;if(actual!==2)throw Error('mismatch');console.log('checked');\"",
+              "verify": true,
+              "outcome": "unknown"
+            },
+            {
+              "t": 1790914818886,
+              "kind": "shell",
+              "command": "node -e \"const actual=2;if(actual!==2)throw Error('mismatch');console.log('checked');\"",
+              "verify": true,
+              "outcome": "pass",
+              "from": "transcript"
+            }
+          ],
+          "modelsStarted": 0,
+          "authAbsent": true,
+          "captures": [
+            {
+              "file": "payload-post-tool-1790914803531.json",
+              "sha256": "9c63c27064abb22091fa77fd7c1bd8ca08dc307444ffb9e706e34f3325146bfa",
+              "event": "PostToolUse",
+              "tool": "apply_patch",
+              "input": {
+                "command": "*** Begin Patch\n*** Add File: checked.mjs\n+export const value = 1;\n*** End Patch"
+              },
+              "response": "Exit code: 0\nWall time: 0 seconds\nOutput:\nSuccess. Updated the following files:\nA checked.mjs\n",
+              "sessionId": "01a0fad6-ba47-74b3-b822-e7d07eaddc0f",
+              "turnId": "01a0fad6-bb2e-75f0-bff9-9fb835fe32eb"
+            },
+            {
+              "file": "payload-post-tool-1790914805545.json",
+              "sha256": "f4fbdaa848d71dbab229aef4dd6174c5a0c01df785f2b9e40f8e6f8fa93e7640",
+              "event": "PostToolUse",
+              "tool": "apply_patch",
+              "input": {
+                "command": "*** Begin Patch\n*** Update File: checked.mjs\n@@\n-export const value = 1;\n+export const value = 2;\n*** End Patch"
+              },
+              "response": "Exit code: 0\nWall time: 0 seconds\nOutput:\nSuccess. Updated the following files:\nM checked.mjs\n",
+              "sessionId": "01a0fad6-ba47-74b3-b822-e7d07eaddc0f",
+              "turnId": "01a0fad6-bb2e-75f0-bff9-9fb835fe32eb"
+            },
+            {
+              "file": "payload-post-tool-1790914812367.json",
+              "sha256": "7ef066f64efb35dcfdb672dcff5496e8406fc5ee7788fd7285b96e19e4ef6afb",
+              "event": "PostToolUse",
+              "tool": "Bash",
+              "input": {
+                "command": "node -e \"const actual=2;if(actual!==2)throw Error('mismatch');console.log('checked');\""
+              },
+              "response": "checked\n",
+              "sessionId": "01a0fad6-ba47-74b3-b822-e7d07eaddc0f",
+              "turnId": "01a0fad6-bb2e-75f0-bff9-9fb835fe32eb"
+            },
+            {
+              "file": "payload-stop-1790914818629.json",
+              "sha256": "f2dd26fe5bcadacf56f6a65592b3db03e41e352c829e207e51d0f3b4a836789e",
+              "event": "Stop",
+              "sessionId": "01a0fad6-ba47-74b3-b822-e7d07eaddc0f",
+              "turnId": "01a0fad6-bb2e-75f0-bff9-9fb835fe32eb"
+            }
+          ],
+          "rollouts": [
+            {
+              "file": "rollout-2026-10-01T23-19-31-01a0fad6-ba47-74b3-b822-e7d07eaddc0f.jsonl",
+              "sha256": "efec1f6fe5d899df64617b28a9af6291b99e3442419f5ff46318685863d01480",
+              "events": [
+                {
+                  "timestamp": "2026-10-02T04:19:31.825Z",
+                  "ordinal": 1,
+                  "type": "event_msg",
+                  "payload": {
+                    "type": "task_started",
+                    "turn_id": "01a0fad6-bb2e-75f0-bff9-9fb835fe32eb",
+                    "root_turn_id": "01a0fad6-bb2e-75f0-bff9-9fb835fe32eb",
+                    "started_at": 1790914771,
+                    "model_context_window": 258400,
+                    "collaboration_mode_kind": "default"
+                  }
+                },
+                {
+                  "timestamp": "2026-10-02T04:19:57.634Z",
+                  "ordinal": 13,
+                  "type": "event_msg",
+                  "payload": {
+                    "type": "item_completed",
+                    "thread_id": "01a0fad6-ba47-74b3-b822-e7d07eaddc0f",
+                    "turn_id": "01a0fad6-bb2e-75f0-bff9-9fb835fe32eb",
+                    "item": {
+                      "type": "FileChange",
+                      "id": "exec-89ac4442-97f0-4570-9ca4-eca0cf9fef44",
+                      "changes": {
+                        "D:\\harness-work\\runs\\native-inline-update-recovered-1002\\pass\\ws\\checked.mjs": {
+                          "type": "add",
+                          "content": "export const value = 1;\n"
+                        }
+                      },
+                      "status": "completed",
+                      "stdout": "Success. Updated the following files:\nA checked.mjs\n",
+                      "stderr": ""
+                    },
+                    "started_at_ms": 1790914797616,
+                    "completed_at_ms": 1790914797634
+                  }
+                },
+                {
+                  "timestamp": "2026-10-02T04:20:04.847Z",
+                  "ordinal": 14,
+                  "type": "event_msg",
+                  "payload": {
+                    "type": "item_completed",
+                    "thread_id": "01a0fad6-ba47-74b3-b822-e7d07eaddc0f",
+                    "turn_id": "01a0fad6-bb2e-75f0-bff9-9fb835fe32eb",
+                    "item": {
+                      "type": "FileChange",
+                      "id": "exec-4f019310-476d-4e54-8a2c-337f9c04725c",
+                      "changes": {
+                        "D:\\harness-work\\runs\\native-inline-update-recovered-1002\\pass\\ws\\checked.mjs": {
+                          "type": "update",
+                          "unified_diff": "@@ -1 +1 @@\n-export const value = 1;\n+export const value = 2;\n",
+                          "move_path": null
+                        }
+                      },
+                      "status": "completed",
+                      "stdout": "Success. Updated the following files:\nM checked.mjs\n",
+                      "stderr": ""
+                    },
+                    "started_at_ms": 1790914804845,
+                    "completed_at_ms": 1790914804847
+                  }
+                },
+                {
+                  "timestamp": "2026-10-02T04:20:11.832Z",
+                  "ordinal": 15,
+                  "type": "event_msg",
+                  "payload": {
+                    "type": "item_completed",
+                    "thread_id": "01a0fad6-ba47-74b3-b822-e7d07eaddc0f",
+                    "turn_id": "01a0fad6-bb2e-75f0-bff9-9fb835fe32eb",
+                    "item": {
+                      "type": "CommandExecution",
+                      "id": "exec-c06fd18c-3205-49ef-a64c-5f3efe5ef5c6",
+                      "process_id": "77688",
+                      "command": [
+                        "C:\\Users\\OWNER\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+                        "-Command",
+                        "node -e \"const actual=2;if(actual!==2)throw Error('mismatch');console.log('checked');\""
+                      ],
+                      "cwd": "file:///D:/harness-work/runs/native-inline-update-recovered-1002/pass/ws",
+                      "parsed_cmd": [
+                        {
+                          "type": "unknown",
+                          "cmd": "node -e \"const actual=2;if(actual!==2)throw Error('mismatch');console.log('checked');\""
+                        }
+                      ],
+                      "source": "unified_exec_startup",
+                      "status": "completed",
+                      "stdout": "checked\n",
+                      "stderr": "",
+                      "aggregated_output": "checked\n",
+                      "exit_code": 0,
+                      "duration": {
+                        "secs": 0,
+                        "nanos": 579177500
+                      },
+                      "formatted_output": "checked\n"
+                    },
+                    "started_at_ms": 1790914811252,
+                    "completed_at_ms": 1790914811832
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "arm": "fail",
+          "status": {
+            "code": 0,
+            "signal": null
+          },
+          "localRequests": 3,
+          "checks": [
+            {
+              "t": 1790914870031,
+              "kind": "shell",
+              "command": "node -e \"const actual=3;if(actual!==2)throw Error('mismatch');console.log('checked');\"",
+              "verify": true,
+              "outcome": "fail",
+              "excerpt": "Node.js v22.21.0"
+            }
+          ],
+          "modelsStarted": 0,
+          "authAbsent": true,
+          "captures": [
+            {
+              "file": "payload-post-tool-1790914859356.json",
+              "sha256": "80f6effa3176e63ddb0b572c9b00440508a3819e4a863fa3a5f1b16b8d7f1daf",
+              "event": "PostToolUse",
+              "tool": "apply_patch",
+              "input": {
+                "command": "*** Begin Patch\n*** Add File: checked.mjs\n+export const value = 1;\n*** End Patch"
+              },
+              "response": "Exit code: 0\nWall time: 0 seconds\nOutput:\nSuccess. Updated the following files:\nA checked.mjs\n",
+              "sessionId": "01a0fad7-93a1-7d03-9adc-52745995cdfa",
+              "turnId": "01a0fad7-94a4-77b3-b672-a3ecdaaba986"
+            },
+            {
+              "file": "payload-post-tool-1790914861931.json",
+              "sha256": "fd47d88ad8fe22dc456a2fdbb460852d58ceda32f8a87c4377c33665c743fead",
+              "event": "PostToolUse",
+              "tool": "apply_patch",
+              "input": {
+                "command": "*** Begin Patch\n*** Update File: checked.mjs\n@@\n-export const value = 1;\n+export const value = 2;\n*** End Patch"
+              },
+              "response": "Exit code: 0\nWall time: 0 seconds\nOutput:\nSuccess. Updated the following files:\nM checked.mjs\n",
+              "sessionId": "01a0fad7-93a1-7d03-9adc-52745995cdfa",
+              "turnId": "01a0fad7-94a4-77b3-b672-a3ecdaaba986"
+            },
+            {
+              "file": "payload-post-tool-1790914869884.json",
+              "sha256": "fb099c8378b0d029826e24aaa283ab850757e55a41464ef46629bb300cc0e97d",
+              "event": "PostToolUse",
+              "tool": "Bash",
+              "input": {
+                "command": "node -e \"const actual=3;if(actual!==2)throw Error('mismatch');console.log('checked');\""
+              },
+              "response": "[eval]:1\r\nconst actual=3;if(actual!==2)throw Error('mismatch');console.log('checked');\r\n                             ^\r\n\r\nError: mismatch\r\n    at [eval]:1:36\r\n    at runScriptInThisContext (node:internal/vm:209:10)\r\n    at node:internal/process/execution:446:12\r\n    at [eval]-wrapper:6:24\r\n    at runScriptInContext (node:internal/process/execution:444:60)\r\n    at evalFunction (node:internal/process/execution:279:30)\r\n    at evalTypeScript (node:internal/process/execution:291:3)\r\n    at node:internal/main/eval_string:74:3\r\n\r\nNode.js v22.21.0\r\n",
+              "sessionId": "01a0fad7-93a1-7d03-9adc-52745995cdfa",
+              "turnId": "01a0fad7-94a4-77b3-b672-a3ecdaaba986"
+            },
+            {
+              "file": "payload-stop-1790914874834.json",
+              "sha256": "e7aa9436909c1242ec8796f26271158fdf9bb36b92d2d72a38eaee3190c9ec3c",
+              "event": "Stop",
+              "sessionId": "01a0fad7-93a1-7d03-9adc-52745995cdfa",
+              "turnId": "01a0fad7-94a4-77b3-b672-a3ecdaaba986"
+            },
+            {
+              "file": "payload-stop-1790914875769.json",
+              "sha256": "e5ca15fd34fc2960d0747e28ba792d24159be7d6eba1c70d590a4d5fba62a782",
+              "event": "Stop",
+              "sessionId": "01a0fad7-93a1-7d03-9adc-52745995cdfa",
+              "turnId": "01a0fad7-94a4-77b3-b672-a3ecdaaba986"
+            }
+          ],
+          "rollouts": [
+            {
+              "file": "rollout-2026-10-01T23-20-27-01a0fad7-93a1-7d03-9adc-52745995cdfa.jsonl",
+              "sha256": "25be1aba85203320a84a1667f28907569f597fcf99bbada8a12fcb429032c9f7",
+              "events": [
+                {
+                  "timestamp": "2026-10-02T04:20:27.525Z",
+                  "ordinal": 1,
+                  "type": "event_msg",
+                  "payload": {
+                    "type": "task_started",
+                    "turn_id": "01a0fad7-94a4-77b3-b672-a3ecdaaba986",
+                    "root_turn_id": "01a0fad7-94a4-77b3-b672-a3ecdaaba986",
+                    "started_at": 1790914827,
+                    "model_context_window": 258400,
+                    "collaboration_mode_kind": "default"
+                  }
+                },
+                {
+                  "timestamp": "2026-10-02T04:20:53.224Z",
+                  "ordinal": 13,
+                  "type": "event_msg",
+                  "payload": {
+                    "type": "item_completed",
+                    "thread_id": "01a0fad7-93a1-7d03-9adc-52745995cdfa",
+                    "turn_id": "01a0fad7-94a4-77b3-b672-a3ecdaaba986",
+                    "item": {
+                      "type": "FileChange",
+                      "id": "exec-66e4be4d-adf5-496e-9ed2-513b688ba932",
+                      "changes": {
+                        "D:\\harness-work\\runs\\native-inline-update-recovered-1002\\fail\\ws\\checked.mjs": {
+                          "type": "add",
+                          "content": "export const value = 1;\n"
+                        }
+                      },
+                      "status": "completed",
+                      "stdout": "Success. Updated the following files:\nA checked.mjs\n",
+                      "stderr": ""
+                    },
+                    "started_at_ms": 1790914853204,
+                    "completed_at_ms": 1790914853224
+                  }
+                },
+                {
+                  "timestamp": "2026-10-02T04:21:01.139Z",
+                  "ordinal": 14,
+                  "type": "event_msg",
+                  "payload": {
+                    "type": "item_completed",
+                    "thread_id": "01a0fad7-93a1-7d03-9adc-52745995cdfa",
+                    "turn_id": "01a0fad7-94a4-77b3-b672-a3ecdaaba986",
+                    "item": {
+                      "type": "FileChange",
+                      "id": "exec-b6f9c68e-4e55-44f5-aac8-c0c052e8b55b",
+                      "changes": {
+                        "D:\\harness-work\\runs\\native-inline-update-recovered-1002\\fail\\ws\\checked.mjs": {
+                          "type": "update",
+                          "unified_diff": "@@ -1 +1 @@\n-export const value = 1;\n+export const value = 2;\n",
+                          "move_path": null
+                        }
+                      },
+                      "status": "completed",
+                      "stdout": "Success. Updated the following files:\nM checked.mjs\n",
+                      "stderr": ""
+                    },
+                    "started_at_ms": 1790914861136,
+                    "completed_at_ms": 1790914861139
+                  }
+                },
+                {
+                  "timestamp": "2026-10-02T04:21:09.144Z",
+                  "ordinal": 15,
+                  "type": "event_msg",
+                  "payload": {
+                    "type": "item_completed",
+                    "thread_id": "01a0fad7-93a1-7d03-9adc-52745995cdfa",
+                    "turn_id": "01a0fad7-94a4-77b3-b672-a3ecdaaba986",
+                    "item": {
+                      "type": "CommandExecution",
+                      "id": "exec-733496c8-5807-4b62-9987-62b8fefd6d2d",
+                      "process_id": "13909",
+                      "command": [
+                        "C:\\Users\\OWNER\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+                        "-Command",
+                        "node -e \"const actual=3;if(actual!==2)throw Error('mismatch');console.log('checked');\""
+                      ],
+                      "cwd": "file:///D:/harness-work/runs/native-inline-update-recovered-1002/fail/ws",
+                      "parsed_cmd": [
+                        {
+                          "type": "unknown",
+                          "cmd": "node -e \"const actual=3;if(actual!==2)throw Error('mismatch');console.log('checked');\""
+                        }
+                      ],
+                      "source": "unified_exec_startup",
+                      "status": "failed",
+                      "stdout": "[eval]:1\r\nconst actual=3;if(actual!==2)throw Error('mismatch');console.log('checked');\r\n                             ^\r\n\r\nError: mismatch\r\n    at [eval]:1:36\r\n    at runScriptInThisContext (node:internal/vm:209:10)\r\n    at node:internal/process/execution:446:12\r\n    at [eval]-wrapper:6:24\r\n    at runScriptInContext (node:internal/process/execution:444:60)\r\n    at evalFunction (node:internal/process/execution:279:30)\r\n    at evalTypeScript (node:internal/process/execution:291:3)\r\n    at node:internal/main/eval_string:74:3\r\n\r\nNode.js v22.21.0\r\n",
+                      "stderr": "",
+                      "aggregated_output": "[eval]:1\r\nconst actual=3;if(actual!==2)throw Error('mismatch');console.log('checked');\r\n                             ^\r\n\r\nError: mismatch\r\n    at [eval]:1:36\r\n    at runScriptInThisContext (node:internal/vm:209:10)\r\n    at node:internal/process/execution:446:12\r\n    at [eval]-wrapper:6:24\r\n    at runScriptInContext (node:internal/process/execution:444:60)\r\n    at evalFunction (node:internal/process/execution:279:30)\r\n    at evalTypeScript (node:internal/process/execution:291:3)\r\n    at node:internal/main/eval_string:74:3\r\n\r\nNode.js v22.21.0\r\n",
+                      "exit_code": 1,
+                      "duration": {
+                        "secs": 1,
+                        "nanos": 138824200
+                      },
+                      "formatted_output": "[eval]:1\r\nconst actual=3;if(actual!==2)throw Error('mismatch');console.log('checked');\r\n                             ^\r\n\r\nError: mismatch\r\n    at [eval]:1:36\r\n    at runScriptInThisContext (node:internal/vm:209:10)\r\n    at node:internal/process/execution:446:12\r\n    at [eval]-wrapper:6:24\r\n    at runScriptInContext (node:internal/process/execution:444:60)\r\n    at evalFunction (node:internal/process/execution:279:30)\r\n    at evalTypeScript (node:internal/process/execution:291:3)\r\n    at node:internal/main/eval_string:74:3\r\n\r\nNode.js v22.21.0\r\n"
+                    },
+                    "started_at_ms": 1790914868005,
+                    "completed_at_ms": 1790914869144
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "limitation": null
+    }
+  ]
+}
