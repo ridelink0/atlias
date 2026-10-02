@@ -1,6 +1,6 @@
 # Bounded source evidence for Gev
 
-`atlias evidence` is an explicit read-only CLI candidate. It returns exact numbered UTF-8 lines, their original line endings and the SHA256 of the raw file. It starts no model and adds no default MCP tool or schema. It is not yet included in the independently installed bbf6 snapshot.
+`atlias evidence` is an explicit read-only CLI candidate. The v2 JSON response returns exact UTF-8 `text`, its `firstLine`/`lastLine` range, original line endings and the SHA256 of the raw file. It starts no model and adds no default MCP tool or schema. It is not yet included in the independently installed bbf6 snapshot.
 
 ```text
 node bin/atlias.mjs evidence --root <project> --file docs/contract.md --max-lines 20 --max-bytes 4096 --json
@@ -9,7 +9,9 @@ node bin/atlias.mjs evidence --root <project> --file docs/contract.md --first-li
 
 The first page can omit the expected hash. Every continuation requires it; a changed file is rejected rather than mixing snapshots. `nextLine:null` means the end of this file was reached. `complete:true` means this ONE response contains the entire file, including an empty file. A last continuation can have `endOfFile:true` while `complete:false`. No intermediate page can claim every requirement was read. Combine all pages with the same hash before claiming a complete source.
 
-Defaults:40 lines and8,192 response bytes. The JSON response plus newline is bounded; escaped characters and metadata count. Explicit limits are1–200 lines and1,024–65,536 bytes. Files must be regular UTF-8 text of at most1MiB. Whole lines are retained; an oversized single line is rejected with an explicit message, rather than silently truncating it. An ordinary host read remains available. Original BOM and line endings are retained in the line records, and the hash always identifies original bytes.
+Defaults:40 lines and8,192 response bytes. The JSON response plus newline is bounded; escaped characters and metadata count. Explicit limits are1–200 lines and1,024–65,536 bytes. Files must be regular UTF-8 text of at most1MiB. Whole lines are retained; an oversized single line is rejected with an explicit message, rather than silently truncating it. An ordinary host read remains available. Original BOM and line endings are retained in `text`, and the hash always identifies original bytes.
+
+The original v1 real-file probe reconstructed a10,018-byte source through five pages totalling16,528 response bytes, about65% more than the raw file. That unfavorable diagnostic is retained at `D:/harness-work/runs/source-evidence-real-probe-1002/RESULT.json`. V2 removes repeated per-line field names while retaining the exact text and range. Metadata/JSON escaping can still cost more than a complete ordinary read. Use bounded retrieval only when a range is actually sufficient; required full-source coverage remains required. These are response-byte diagnostics, not model-token or native-context measurements.
 
 Explicit relative Windows separators are normalized. Absolute paths, traversal, ADS, reserved Windows device names, links, protected paths and unsupported/binary files are rejected. Files changed during the read are rejected. These checks bound this helper's reads; they do not make an arbitrary workspace a hostile-process sandbox or recognize every possible sensitive filename.
 
