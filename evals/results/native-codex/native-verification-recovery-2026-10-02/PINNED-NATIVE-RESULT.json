@@ -1,0 +1,53 @@
+{
+  "results": [
+    {
+      "arm": "pass",
+      "status": {
+        "code": 0,
+        "signal": null
+      },
+      "localRequests": 2,
+      "checks": [
+        {
+          "t": 1790915308427,
+          "kind": "shell",
+          "command": "node -e \"const actual=2;if(actual!==2)throw Error('mismatch');console.log('checked');\"",
+          "verify": true,
+          "outcome": "unknown"
+        },
+        {
+          "t": 1790915313922,
+          "kind": "shell",
+          "command": "node -e \"const actual=2;if(actual!==2)throw Error('mismatch');console.log('checked');\"",
+          "verify": true,
+          "outcome": "pass",
+          "from": "transcript"
+        }
+      ],
+      "modelsStarted": 0,
+      "authAbsent": true
+    },
+    {
+      "arm": "fail",
+      "status": {
+        "code": 0,
+        "signal": null
+      },
+      "localRequests": 3,
+      "checks": [
+        {
+          "t": 1790915368643,
+          "kind": "shell",
+          "command": "node -e \"const actual=3;if(actual!==2)throw Error('mismatch');console.log('checked');\"",
+          "verify": true,
+          "outcome": "fail",
+          "excerpt": "Node.js v22.21.0"
+        }
+      ],
+      "modelsStarted": 0,
+      "authAbsent": true
+    }
+  ],
+  "modelsStarted": 0,
+  "limitation": "Owned local provider executes a safe fixture command through the native client. No real OAuth/model, quality, savings or full stock-profile parity proof."
+}

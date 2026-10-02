@@ -1,0 +1,4 @@
+{
+  "status": "retained audit failure",
+  "reason": "Initial verifier required archive bytes to equal Git blob bytes. Inspection distinguishes archive CRLF conversion before any corrected canonical verification. No model rerun, source mutation or claimed proof from this failure."
+}

@@ -1,0 +1,44 @@
+{
+  "run": 36964600425,
+  "headSha": "280f8d460339bf1ce2d8d09207fbbb0cbf558d9b",
+  "status": "completed",
+  "conclusion": "success",
+  "jobs": [
+    {
+      "name": "macos-latest / node 22",
+      "conclusion": "success"
+    },
+    {
+      "name": "ubuntu-latest / node 20",
+      "conclusion": "success"
+    },
+    {
+      "name": "ubuntu-latest / node 18",
+      "conclusion": "success"
+    },
+    {
+      "name": "windows-latest / node 20",
+      "conclusion": "success"
+    },
+    {
+      "name": "macos-latest / node 18",
+      "conclusion": "success"
+    },
+    {
+      "name": "ubuntu-latest / node 22",
+      "conclusion": "success"
+    },
+    {
+      "name": "macos-latest / node 20",
+      "conclusion": "success"
+    },
+    {
+      "name": "windows-latest / node 22",
+      "conclusion": "success"
+    },
+    {
+      "name": "windows-latest / node 18",
+      "conclusion": "success"
+    }
+  ]
+}
