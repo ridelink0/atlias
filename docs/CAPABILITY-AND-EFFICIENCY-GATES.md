@@ -67,3 +67,6 @@ The adversarial review also found that the study's generic async launcher merged
 ## Additional host support to do
 
 - [ ] Add Atlias support for ChatGPT web and other browser-based AI chat sites and comparable interfaces. Gev requested this on October1,2026. Follow the current factuality, normal-capability, token and peak-context priorities first. Web-host integration is unimplemented; verify actual integration and capabilities on each supported platform before claiming it works.
+
+- [ ] Verify and improve Atlias support in Antigravity, including existing MCP/instruction integration, working features, context delivery and capability preservation. Existing adapters do not establish end-to-end functionality.
+- [ ] Run a small, budgeted Antigravity comparison with Claude Opus 4.6 after verifying access to the included model allowance and its fresh quota. Gev authorized limited testing on October1,2026 because that plan is small. Keep paid credits off, cap attempts before inference and retain every result/cost; do not substitute this provider/model into an already frozen Codex or Claude Code study. Claude Code's exhausted weekly allowance remains a separate restriction.

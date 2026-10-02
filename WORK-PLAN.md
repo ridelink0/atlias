@@ -1,3 +1,7 @@
+# Antigravity and limited Opus to-do for Gev, 2026-10-02T00:07:40.762Z
+
+Gev requested Antigravity coverage and authorized SMALL LIMITED ClaudeOpus4.6 testing on its included small plan. Both uncheckedTODOs added to docs/CAPABILITY-AND-EFFICIENCY-GATES.md alongsideChatGPTweb/comparableinterfaces. VerifyexistingAGadapterendtoend andactualprovider/model/quotaprior to modest separatelypinned comparison; paidOFF, predeclareattemptcap, retainallcosts. Do not infer ClaudeCodeweeklyavailability or changeongoingCodex48source/model. Functionaltextcheck/adversarialscope/limits/statusreadpassed, no AG/Opusmodelcallstarted. CurrentCodex48driver77822 confirmedlive: firstwrong-environmentmatchedpair originalvalid/solvedboth, plainraw54897peak14093 versusAtliasraw78993peak16479, unfavorablecostsretained. Thirdcall missing-identifier r1Atlias START observed; originalprefixunmatched/fullauditpending, no20xqualityclaim. InspectSAMEhandle/log/process beforeonlymissingresume, no duplicate/retries/regrade. Handoffsavedforcutoff.
+
 # Web-host to-do and live study for Gev, 2026-10-02T00:05:25.563Z
 
 Gev requested adding ChatGPT web and other browser-based AI chat sites/comparable interfaces to Atlias TO-DO. Recorded unchecked in docs/CAPABILITY-AND-EFFICIENCY-GATES.md after currentfactuality/capability/token/contextpriorities; no implementationclaim. Functional textcheck and adversarial priority/unchecked-status read passed; no newruntimechanges.
