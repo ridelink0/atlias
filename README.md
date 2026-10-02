@@ -110,6 +110,8 @@ The default-off `flags.briefIndexPointer` keeps the non-Claude startup memory in
 
 [Desktop candidate evidence](evals/results/native-codex/desktop-efficiency-candidate-2026-10-02/REPORT.md): sourcebbf6 has1,695 local checks,78 accounting controls and its own nine-job CI. It is installed in an independent backed-up Codex snapshot; experimental flags stay off and the current cached MCP connection still requires reconnection. Source280's original29/48 study is held because its exact native executable was removed by the app update; a different executable cannot finish that unchanged comparison.
 
+The later [source-evidence CLI candidate](docs/SOURCE-EVIDENCE.md) returns bounded exact lines with source hashes and explicit pagination, rejects changed snapshots and adds no default MCP catalog overhead. It is not yet installed in bbf6; model quality and savings remain unmeasured.
+
 ```
 node test/run.mjs
 ```

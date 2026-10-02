@@ -1011,6 +1011,7 @@ await (await import('./dual-cache-suites.mjs')).default({ suite, check, TMP, fs,
 await (await import('./native-hook-ownership-suites.mjs')).default({ suite, check, ROOT, TMP, fs, path });
 await (await import('./lean-catalog-suites.mjs')).default({ suite, check, ROOT, TMP, fs, path });
 await (await import('./session-report-suites.mjs')).default({ asyncSuite, check, TMP, fs, path });
+await (await import('./source-evidence-suites.mjs')).default({ suite, check, TMP, fs, path });
 
 let failed = 0;
 for (const r of results) {

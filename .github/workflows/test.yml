@@ -48,6 +48,7 @@ jobs:
           node tools/native-job/allowance-schedule-test.mjs
           node tools/native-job/allowance-record-test.mjs
           node tools/native-job/session-report-test.mjs
+          node tools/source-evidence/test.mjs
           node tools/native-job/batch-test.mjs
           node tools/native-job/dictionary-test.mjs
           node tools/codexstudy/broker-test.mjs
