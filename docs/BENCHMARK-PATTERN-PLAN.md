@@ -52,3 +52,10 @@ A later candidate may apply the pinned Claude Harness reference's content-addres
 ## Sources
 
 [Pinned Gray and Claude Harness mechanisms](HARNESS-REFERENCES.md) supply bounded-job, small-surface and requirements-first context ideas. No third-party implementation was copied. [OpenAI configuration reference](https://developers.openai.com/codex/config-reference/) documents code-mode configuration and model_instructions_file. [AA dataset](https://huggingface.co/datasets/ArtificialAnalysis/AA-Omniscience-Public), [current methodology](https://artificialanalysis.ai/methodology/intelligence-benchmarking), and [paper equations](https://arxiv.org/html/2511.13029v1#S2.SS4) define the factuality track. The requested Gemini4Argon URL did not load through the source reader; no Gemini score is inferred.
+
+
+## Measured first-request constraint
+
+[Closed sourcee655 startup diagnostics](../evals/results/native-codex/context-startup-constraint-2026-10-02/REPORT.md) show first native input13408–13422 plain,14919–14937 Atlias. Its20x maximum-peak target is763.85. Fewer later rounds cannot meet that threshold in this unchanged profile; context-delivery architecture must be measured separately without removing full native overhead or losing capabilities. No broad lower-bound claim or change to original grades.
+
+The NEW source28048-call study remains frozen/live. Its first original task revealed real PowerShell here-string-piped Node checks trackedverify:false. Separate local classification probes found printed node-e-assert labels still falsely accepted by the legacy path. Retained read-only traces guide the NEXT conservative executable-command/stdin check repair, preserving native failure/unknown/edit order. Do not modify the live source280 plan, reuse its controls, retry failures or start another model study before closure/audit.
