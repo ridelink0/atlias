@@ -108,6 +108,8 @@ The default-off `flags.briefIndexPointer` keeps the non-Claude startup memory in
 
 `harness_progress set` preserves the complete handoff on disk and returns a short persistence receipt; `get` still returns the full note. This removes redundant response text, with no measured model-token or allowance claim. Inline-check recognition now declines printed assertion strings and potentially skipped shell branches, and accepts supported literal PowerShell stdin checks. Classification still requires a genuine successful execution result; it is not a general semantic proof that arbitrary scripts test the intended behavior.
 
+[Desktop candidate evidence](evals/results/native-codex/desktop-efficiency-candidate-2026-10-02/REPORT.md): sourcebbf6 has1,695 local checks,78 accounting controls and its own nine-job CI. It is installed in an independent backed-up Codex snapshot; experimental flags stay off and the current cached MCP connection still requires reconnection. Source280's original29/48 study is held because its exact native executable was removed by the app update; a different executable cannot finish that unchanged comparison.
+
 ```
 node test/run.mjs
 ```
