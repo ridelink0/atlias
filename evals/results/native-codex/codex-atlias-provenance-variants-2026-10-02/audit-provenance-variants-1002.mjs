@@ -1,0 +1,42 @@
+// Read-only independent audit. Never executes model outputs or protected grades.
+import fs from 'node:fs';import path from 'node:path';import assert from 'node:assert/strict';import crypto from 'node:crypto';import {isDeepStrictEqual} from 'node:util';import {pathToFileURL} from 'node:url';
+const root='D:/harness-work/runs/codex-atlias-provenance-variants-1002';const [ledger,out]=process.argv.slice(2);
+assert.ok(ledger&&out&&!fs.existsSync(out),'use a frozen ledger and unused audit output');fs.mkdirSync(out,{recursive:true});
+import {verifySource} from './verify-provenance-source-1002.mjs';
+const hash=x=>crypto.createHash('sha256').update(x).digest('hex');
+const walk=dir=>fs.readdirSync(dir,{withFileTypes:true}).flatMap(e=>e.isDirectory()?walk(path.join(dir,e.name)):e.isFile()?[path.join(dir,e.name)]:[]);
+try {
+  const bytes=fs.readFileSync(ledger);assert.ok(bytes.equals(fs.readFileSync(root+'/rows.jsonl')));const rows=bytes.toString('utf8').trim().split('\n').map(JSON.parse),plan=JSON.parse(fs.readFileSync(root+'/plan.json'));
+  assert.equal(plan.sha,'e65562bc872debc4278ccf5bdda34cce9ec8e869');assert.equal(plan.jobs,48);assert.equal(plan.repeats,2);assert.equal(plan.tasks.length,12);assert.equal(plan.taskContext,false);assert.equal(plan.lean,true);assert.equal(rows.length,48);const sourceProof=verifySource(root,out);
+  const {factualityVariants}=await import(pathToFileURL(root+'/plugin/tools/codexstudy/factuality-variants-corpus.mjs'));const fixtures=new Map(factualityVariants().map(x=>[x.task.id,x]));
+  const {usageOf}=await import(pathToFileURL(root+'/plugin/tools/codexstudy/run.mjs'));
+  const seen=new Set(),audits=[];
+  for(const row of rows){
+    const key=row.task+'|'+row.repeat+'|'+row.arm;assert.ok(!seen.has(key));seen.add(key);assert.ok([1,2].includes(row.repeat));assert.ok(['plain','atlias'].includes(row.arm));
+    const declared=plan.tasks.find(t=>t.id===row.task),fixture=fixtures.get(row.task);assert.ok(declared&&fixture);assert.equal(row.taskSha256,declared.sha256);assert.equal(hash(fs.readFileSync(root+'/plugin/evals/factuality-variants-heldout/'+row.task+'.json')),declared.sha256);
+    assert.equal(path.resolve(row.base),path.resolve(root,'runs',row.task,'r'+row.repeat+'-'+(row.arm==='plain'?'plain':'plugin')));assert.equal(row.sha,row.arm==='plain'?'':plan.sha);assert.equal(row.model,plan.model);assert.equal(row.effort,plan.effort);assert.equal(row.lean,row.arm==='atlias'&&plan.lean);assert.equal(row.taskContext,plan.taskContext);assert.equal(typeof row.valid,'boolean');assert.equal(typeof row.solved,'boolean');assert.ok(Number.isFinite(row.ms)&&row.ms>=0);
+    const files=walk(row.base+'/home/.codex/sessions').filter(f=>f.endsWith('.jsonl'));const events=files.flatMap(f=>fs.readFileSync(f,'utf8').split('\n').filter(Boolean).map(JSON.parse));
+    const metas=events.filter(e=>e.type==='session_meta');assert.equal(metas.length,1);const instructions=metas[0].payload.base_instructions.text;assert.ok(instructions);
+    assert.ok(events.some(e=>e.type==='response_item'&&e.payload.role==='user'&&e.payload.content?.some(c=>c.text?.includes(fixture.task.prompt))),'complete delivered question');
+    const models=[...new Set(events.filter(e=>e.type==='turn_context').map(e=>e.payload.model))];assert.deepEqual(models,[plan.model]);
+    const counts=events.filter(e=>e.type==='event_msg'&&e.payload?.type==='token_count'&&e.payload.info?.total_token_usage);const usage=counts.at(-1)?.payload.info.total_token_usage;assert.ok(usage);
+    for(const [field,key]of [['promptRaw','input_tokens'],['cachedInput','cached_input_tokens'],['output','output_tokens']])assert.equal(row[field],usage[key]);
+    const reconciled=usageOf(events);assert.equal(row.contextPeak,reconciled.contextPeak);assert.equal(row.tokenSamples,reconciled.tokenSamples);for(const field of ['promptRaw','cachedInput','output','contextPeak'])assert.ok(Number.isFinite(row[field])&&row[field]>=0);
+    assert.ok(row.cachedInput<=row.promptRaw,'cache counters cannot exceed input');assert.ok(!fs.existsSync(row.base+'/home/.codex/auth.json'));
+    if(row.arm==='plain')assert.ok(!JSON.stringify(events).includes('Ground claims/checks in evidence; cite support/gaps; label unknowns; answer supported parts.'),'control must not receive Atlias evidence rule');
+    for(const [rel,expected]of Object.entries(fixture.task.files))assert.equal(fs.readFileSync(path.join(row.base,'ws',rel),'utf8'),expected);
+    for(const [rel,expected]of Object.entries(fixture.task.hidden))assert.equal(fs.readFileSync(path.join(row.base,'ws',rel),'utf8'),expected);
+    if(row.arm==='atlias')assert.ok(events.some(e=>e.type==='response_item'&&['developer','user'].includes(e.payload?.role)&&e.payload.content?.some(c=>c.text?.includes('Ground claims/checks in evidence; cite support/gaps; label unknowns; answer supported parts.'))),'new evidence rule must reach an actual native instruction message');
+    let actual=null,parseError=null;try{actual=JSON.parse(fs.readFileSync(path.join(row.base,'ws','answer.json'),'utf8'));}catch(e){parseError=e.code||e.name;}
+    const expected=JSON.parse(fixture.reference['answer.json']);
+    const shape=actual!==null&&!Array.isArray(actual)&&typeof actual==='object'&&isDeepStrictEqual(Object.keys(actual).sort(),['citations','status','value']);
+    // These diagnostics supplement, and never replace, each original grader.
+    audits.push({key,task:row.task,family:fixture.task.family,repeat:row.repeat,arm:row.arm,valid:row.valid,originalSolved:row.solved,shapeValid:shape,parseError,valueCorrect:shape&&isDeepStrictEqual(actual.value,expected.value),statusCorrect:shape&&actual.status===expected.status,citationsCorrect:shape&&isDeepStrictEqual(actual.citations,expected.citations),expectedStatus:expected.status,fullQuestionDelivered:true,evidenceUnchanged:true,protectedGraderUnchanged:true,ruleDelivered:row.arm==='atlias',instructionSha256:hash(instructions),authRemoved:true,costs:{raw:row.promptRaw,cached:row.cachedInput,output:row.output,uncachedPlusOutput:row.promptRaw-row.cachedInput+row.output,peak:row.contextPeak,inferenceWallMs:row.ms},rollouts:files.map(f=>({file:f,sha256:hash(fs.readFileSync(f))}))});
+  }
+  for(const task of plan.tasks)for(const repeat of [1,2]){
+    const pair=audits.filter(a=>a.task===task.id&&a.repeat===repeat);assert.equal(pair.length,2);assert.equal(pair[0].instructionSha256,pair[1].instructionSha256,'ordinary native foundation instructions must match');
+  }
+  const arms=Object.fromEntries(['plain','atlias'].map(arm=>{const a=audits.filter(r=>r.arm===arm);return [arm,{attempts:a.length,valid:a.filter(r=>r.valid).length,originalSolved:a.filter(r=>r.originalSolved).length,invalidFormats:a.filter(r=>!r.shapeValid).length,valueCorrect:a.filter(r=>r.valueCorrect).length,statusCorrect:a.filter(r=>r.statusCorrect).length,citationsCorrect:a.filter(r=>r.citationsCorrect).length,usefulSupportedAnswers:a.filter(r=>['supported','partial'].includes(r.expectedStatus)&&r.valueCorrect&&r.statusCorrect).length,raw:a.reduce((n,r)=>n+r.costs.raw,0),cached:a.reduce((n,r)=>n+r.costs.cached,0),output:a.reduce((n,r)=>n+r.costs.output,0),uncachedPlusOutput:a.reduce((n,r)=>n+r.costs.uncachedPlusOutput,0),peak:Math.max(...a.map(r=>r.costs.peak)),inferenceWallMs:a.reduce((n,r)=>n+r.costs.inferenceWallMs,0)}];}));
+  const audit={source:plan.sha,ledgerSha256:hash(bytes),complete:true,attempts:48,sourceProof,arms,audits,limitations:['Authored structured source-grounding diagnostics, not public or free-form hallucination scores.','All original grader results and costs retained; no regrading or retries.','Full question/evidence/rule/native foundation delivery verified; live HTTP tool schemas and all integrations remain unverified.','No universal capability, Claude model quality or subscription-usage parity claim.']};
+  fs.writeFileSync(out+'/rows.jsonl',bytes,{flag:'wx'});fs.writeFileSync(out+'/AUDIT.json',JSON.stringify(audit,null,2)+'\n',{flag:'wx'});console.log(JSON.stringify({complete:true,ledgerSha256:audit.ledgerSha256,arms}));
+}catch(e){fs.writeFileSync(out+'/FAILURE.json',JSON.stringify({error:e.message,modelsStarted:0,gradesChanged:false},null,2)+'\n');throw e;}

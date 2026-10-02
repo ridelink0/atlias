@@ -1,0 +1,1737 @@
+{
+  "source": "e65562bc872debc4278ccf5bdda34cce9ec8e869",
+  "ledgerSha256": "61273a3f0f43a0a135e567e580c5eb2ef0cc9af94135b9b5da1d80ede3b0e581",
+  "complete": true,
+  "attempts": 48,
+  "sourceProof": {
+    "source": "e65562bc872debc4278ccf5bdda34cce9ec8e869",
+    "files": 442,
+    "archiveSha256": "4129a01b052e09feb83708bcd42e05ceb812957095b8fa858bf88123f8a526a0",
+    "driverSha256": "132cd917652271247e92561f7b03b26d2f98c97658e7c0a842b5a0ec7dbdd50f",
+    "nativeSha256": "86e8ef1013f98df51fdeea446597f7e3ca32e454d1d4d8c0402a68b03c311d70",
+    "exactCI": 36943175828,
+    "modelsStarted": 0
+  },
+  "arms": {
+    "plain": {
+      "attempts": 24,
+      "valid": 24,
+      "originalSolved": 23,
+      "invalidFormats": 0,
+      "valueCorrect": 24,
+      "statusCorrect": 24,
+      "citationsCorrect": 23,
+      "usefulSupportedAnswers": 12,
+      "raw": 1234488,
+      "cached": 883456,
+      "output": 10995,
+      "uncachedPlusOutput": 362027,
+      "peak": 15277,
+      "inferenceWallMs": 1106872
+    },
+    "atlias": {
+      "attempts": 24,
+      "valid": 24,
+      "originalSolved": 24,
+      "invalidFormats": 0,
+      "valueCorrect": 24,
+      "statusCorrect": 24,
+      "citationsCorrect": 24,
+      "usefulSupportedAnswers": 12,
+      "raw": 1383514,
+      "cached": 1227392,
+      "output": 14059,
+      "uncachedPlusOutput": 170181,
+      "peak": 16688,
+      "inferenceWallMs": 2038718
+    }
+  },
+  "audits": [
+    {
+      "key": "factuality-v2-wrong-environment|1|plain",
+      "task": "factuality-v2-wrong-environment",
+      "family": "gap-provenance",
+      "repeat": 1,
+      "arm": "plain",
+      "valid": true,
+      "originalSolved": true,
+      "shapeValid": true,
+      "parseError": null,
+      "valueCorrect": true,
+      "statusCorrect": true,
+      "citationsCorrect": true,
+      "expectedStatus": "unknown",
+      "fullQuestionDelivered": true,
+      "evidenceUnchanged": true,
+      "protectedGraderUnchanged": true,
+      "ruleDelivered": false,
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "authRemoved": true,
+      "costs": {
+        "raw": 54897,
+        "cached": 40320,
+        "output": 376,
+        "uncachedPlusOutput": 14953,
+        "peak": 14093,
+        "inferenceWallMs": 47179
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-provenance-variants-1002\\runs\\factuality-v2-wrong-environment\\r1-plain\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T19-03-41-01a0f9ec-796d-76d1-aaea-cee43cd831b9.jsonl",
+          "sha256": "65f19cf3bbdc0a9d8253341dcc3c547551595ec58e8deedb1c1770785e7581f1"
+        }
+      ]
+    },
+    {
+      "key": "factuality-v2-wrong-environment|1|atlias",
+      "task": "factuality-v2-wrong-environment",
+      "family": "gap-provenance",
+      "repeat": 1,
+      "arm": "atlias",
+      "valid": true,
+      "originalSolved": true,
+      "shapeValid": true,
+      "parseError": null,
+      "valueCorrect": true,
+      "statusCorrect": true,
+      "citationsCorrect": true,
+      "expectedStatus": "unknown",
+      "fullQuestionDelivered": true,
+      "evidenceUnchanged": true,
+      "protectedGraderUnchanged": true,
+      "ruleDelivered": true,
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "authRemoved": true,
+      "costs": {
+        "raw": 78993,
+        "cached": 62208,
+        "output": 819,
+        "uncachedPlusOutput": 17604,
+        "peak": 16479,
+        "inferenceWallMs": 99810
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-provenance-variants-1002\\runs\\factuality-v2-wrong-environment\\r1-plugin\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T19-04-31-01a0f9ed-3f62-75e1-93f2-8c631174242b.jsonl",
+          "sha256": "9b0882bf2e58f9bd919e73c148f3a22501c45aa3fddc577bd658fc0417e68553"
+        }
+      ]
+    },
+    {
+      "key": "factuality-v2-missing-identifier|1|atlias",
+      "task": "factuality-v2-missing-identifier",
+      "family": "gap-provenance",
+      "repeat": 1,
+      "arm": "atlias",
+      "valid": true,
+      "originalSolved": true,
+      "shapeValid": true,
+      "parseError": null,
+      "valueCorrect": true,
+      "statusCorrect": true,
+      "citationsCorrect": true,
+      "expectedStatus": "unknown",
+      "fullQuestionDelivered": true,
+      "evidenceUnchanged": true,
+      "protectedGraderUnchanged": true,
+      "ruleDelivered": true,
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "authRemoved": true,
+      "costs": {
+        "raw": 46348,
+        "cached": 42368,
+        "output": 563,
+        "uncachedPlusOutput": 4543,
+        "peak": 15937,
+        "inferenceWallMs": 77519
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-provenance-variants-1002\\runs\\factuality-v2-missing-identifier\\r1-plugin\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T19-06-14-01a0f9ee-d13c-79b2-8e53-1f8008548c6d.jsonl",
+          "sha256": "aedb4cdd51ff4a365e184d9f49d43165e1761d7c7bdb331a1a075546ae088c37"
+        }
+      ]
+    },
+    {
+      "key": "factuality-v2-missing-identifier|1|plain",
+      "task": "factuality-v2-missing-identifier",
+      "family": "gap-provenance",
+      "repeat": 1,
+      "arm": "plain",
+      "valid": true,
+      "originalSolved": true,
+      "shapeValid": true,
+      "parseError": null,
+      "valueCorrect": true,
+      "statusCorrect": true,
+      "citationsCorrect": true,
+      "expectedStatus": "unknown",
+      "fullQuestionDelivered": true,
+      "evidenceUnchanged": true,
+      "protectedGraderUnchanged": true,
+      "ruleDelivered": false,
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "authRemoved": true,
+      "costs": {
+        "raw": 41782,
+        "cached": 36992,
+        "output": 497,
+        "uncachedPlusOutput": 5287,
+        "peak": 14807,
+        "inferenceWallMs": 52210
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-provenance-variants-1002\\runs\\factuality-v2-missing-identifier\\r1-plain\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T19-07-34-01a0f9f0-0953-7860-a92b-c7288d02b82d.jsonl",
+          "sha256": "e557458e35c97dcf56c448fcb0474fea63333c3503e479a3f5305d5a262a4eb3"
+        }
+      ]
+    },
+    {
+      "key": "factuality-v2-empty-evidence|1|plain",
+      "task": "factuality-v2-empty-evidence",
+      "family": "gap-provenance",
+      "repeat": 1,
+      "arm": "plain",
+      "valid": true,
+      "originalSolved": true,
+      "shapeValid": true,
+      "parseError": null,
+      "valueCorrect": true,
+      "statusCorrect": true,
+      "citationsCorrect": true,
+      "expectedStatus": "unknown",
+      "fullQuestionDelivered": true,
+      "evidenceUnchanged": true,
+      "protectedGraderUnchanged": true,
+      "ruleDelivered": false,
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "authRemoved": true,
+      "costs": {
+        "raw": 40667,
+        "cached": 26496,
+        "output": 246,
+        "uncachedPlusOutput": 14417,
+        "peak": 13729,
+        "inferenceWallMs": 41341
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-provenance-variants-1002\\runs\\factuality-v2-empty-evidence\\r1-plain\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T19-08-30-01a0f9f0-dfe5-70f0-b550-a04959256927.jsonl",
+          "sha256": "e1d128a4d9014640cd8119d1d259408bb42db708a2f29cd8bf5cd91e2616ec07"
+        }
+      ]
+    },
+    {
+      "key": "factuality-v2-empty-evidence|1|atlias",
+      "task": "factuality-v2-empty-evidence",
+      "family": "gap-provenance",
+      "repeat": 1,
+      "arm": "atlias",
+      "valid": true,
+      "originalSolved": true,
+      "shapeValid": true,
+      "parseError": null,
+      "valueCorrect": true,
+      "statusCorrect": true,
+      "citationsCorrect": true,
+      "expectedStatus": "unknown",
+      "fullQuestionDelivered": true,
+      "evidenceUnchanged": true,
+      "protectedGraderUnchanged": true,
+      "ruleDelivered": true,
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "authRemoved": true,
+      "costs": {
+        "raw": 46136,
+        "cached": 39296,
+        "output": 412,
+        "uncachedPlusOutput": 7252,
+        "peak": 15762,
+        "inferenceWallMs": 80983
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-provenance-variants-1002\\runs\\factuality-v2-empty-evidence\\r1-plugin\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T21-22-44-01a0fa6b-c7bb-74b0-b7e6-be37651aa375.jsonl",
+          "sha256": "62e6c2e947b24e1f8336d34e8674976f6c643a02163f33296f4c6d29718dd080"
+        }
+      ]
+    },
+    {
+      "key": "factuality-v2-failed-exit|1|atlias",
+      "task": "factuality-v2-failed-exit",
+      "family": "check-provenance",
+      "repeat": 1,
+      "arm": "atlias",
+      "valid": true,
+      "originalSolved": true,
+      "shapeValid": true,
+      "parseError": null,
+      "valueCorrect": true,
+      "statusCorrect": true,
+      "citationsCorrect": true,
+      "expectedStatus": "supported",
+      "fullQuestionDelivered": true,
+      "evidenceUnchanged": true,
+      "protectedGraderUnchanged": true,
+      "ruleDelivered": true,
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "authRemoved": true,
+      "costs": {
+        "raw": 45482,
+        "cached": 41984,
+        "output": 375,
+        "uncachedPlusOutput": 3873,
+        "peak": 15453,
+        "inferenceWallMs": 85372
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-provenance-variants-1002\\runs\\factuality-v2-failed-exit\\r1-plugin\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T21-24-08-01a0fa6d-0ec4-7783-a8b5-b504cf35a7aa.jsonl",
+          "sha256": "8e493e093ed657d1050275b96e37b1c92c4c537e3467a926214f10407515e90b"
+        }
+      ]
+    },
+    {
+      "key": "factuality-v2-failed-exit|1|plain",
+      "task": "factuality-v2-failed-exit",
+      "family": "check-provenance",
+      "repeat": 1,
+      "arm": "plain",
+      "valid": true,
+      "originalSolved": true,
+      "shapeValid": true,
+      "parseError": null,
+      "valueCorrect": true,
+      "statusCorrect": true,
+      "citationsCorrect": true,
+      "expectedStatus": "supported",
+      "fullQuestionDelivered": true,
+      "evidenceUnchanged": true,
+      "protectedGraderUnchanged": true,
+      "ruleDelivered": false,
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "authRemoved": true,
+      "costs": {
+        "raw": 56109,
+        "cached": 38912,
+        "output": 697,
+        "uncachedPlusOutput": 17894,
+        "peak": 15096,
+        "inferenceWallMs": 59138
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-provenance-variants-1002\\runs\\factuality-v2-failed-exit\\r1-plain\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T21-25-35-01a0fa6e-682a-7710-ae6b-8329339236a7.jsonl",
+          "sha256": "7a3362edc4fd3137cd2171adefabb807addb5b2a94d5a507d1be3addfb97060c"
+        }
+      ]
+    },
+    {
+      "key": "factuality-v2-uncompleted-zero|1|plain",
+      "task": "factuality-v2-uncompleted-zero",
+      "family": "check-provenance",
+      "repeat": 1,
+      "arm": "plain",
+      "valid": true,
+      "originalSolved": true,
+      "shapeValid": true,
+      "parseError": null,
+      "valueCorrect": true,
+      "statusCorrect": true,
+      "citationsCorrect": true,
+      "expectedStatus": "unknown",
+      "fullQuestionDelivered": true,
+      "evidenceUnchanged": true,
+      "protectedGraderUnchanged": true,
+      "ruleDelivered": false,
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "authRemoved": true,
+      "costs": {
+        "raw": 54897,
+        "cached": 51840,
+        "output": 328,
+        "uncachedPlusOutput": 3385,
+        "peak": 14051,
+        "inferenceWallMs": 45861
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-provenance-variants-1002\\runs\\factuality-v2-uncompleted-zero\\r1-plain\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T21-26-41-01a0fa6f-65bf-7632-82a7-c6ef46d66b90.jsonl",
+          "sha256": "1502d050fd209d7b4e19a0d1dd1d2136b50ae533431b528a7bccb7506adb7de9"
+        }
+      ]
+    },
+    {
+      "key": "factuality-v2-uncompleted-zero|1|atlias",
+      "task": "factuality-v2-uncompleted-zero",
+      "family": "check-provenance",
+      "repeat": 1,
+      "arm": "atlias",
+      "valid": true,
+      "originalSolved": true,
+      "shapeValid": true,
+      "parseError": null,
+      "valueCorrect": true,
+      "statusCorrect": true,
+      "citationsCorrect": true,
+      "expectedStatus": "unknown",
+      "fullQuestionDelivered": true,
+      "evidenceUnchanged": true,
+      "protectedGraderUnchanged": true,
+      "ruleDelivered": true,
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "authRemoved": true,
+      "costs": {
+        "raw": 46387,
+        "cached": 39296,
+        "output": 491,
+        "uncachedPlusOutput": 7582,
+        "peak": 15940,
+        "inferenceWallMs": 89726
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-provenance-variants-1002\\runs\\factuality-v2-uncompleted-zero\\r1-plugin\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T21-27-28-01a0fa70-1dda-7132-a2b5-1f441fb7b2ac.jsonl",
+          "sha256": "4c561f12d9596015e42df80191d77f01f12e4b1e05735575aad3b4553fea63c6"
+        }
+      ]
+    },
+    {
+      "key": "factuality-v2-current-pass|1|atlias",
+      "task": "factuality-v2-current-pass",
+      "family": "check-provenance",
+      "repeat": 1,
+      "arm": "atlias",
+      "valid": true,
+      "originalSolved": true,
+      "shapeValid": true,
+      "parseError": null,
+      "valueCorrect": true,
+      "statusCorrect": true,
+      "citationsCorrect": true,
+      "expectedStatus": "supported",
+      "fullQuestionDelivered": true,
+      "evidenceUnchanged": true,
+      "protectedGraderUnchanged": true,
+      "ruleDelivered": true,
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "authRemoved": true,
+      "costs": {
+        "raw": 45551,
+        "cached": 36864,
+        "output": 399,
+        "uncachedPlusOutput": 9086,
+        "peak": 15493,
+        "inferenceWallMs": 74832
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-provenance-variants-1002\\runs\\factuality-v2-current-pass\\r1-plugin\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T21-29-01-01a0fa71-8903-7210-8ee5-4bd649a862d0.jsonl",
+          "sha256": "069243de217075e9c763a2aa2f5bce0818de4825d614a6b88c05bfb07b68f6a2"
+        }
+      ]
+    },
+    {
+      "key": "factuality-v2-current-pass|1|plain",
+      "task": "factuality-v2-current-pass",
+      "family": "check-provenance",
+      "repeat": 1,
+      "arm": "plain",
+      "valid": true,
+      "originalSolved": true,
+      "shapeValid": true,
+      "parseError": null,
+      "valueCorrect": true,
+      "statusCorrect": true,
+      "citationsCorrect": true,
+      "expectedStatus": "supported",
+      "fullQuestionDelivered": true,
+      "evidenceUnchanged": true,
+      "protectedGraderUnchanged": true,
+      "ruleDelivered": false,
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "authRemoved": true,
+      "costs": {
+        "raw": 55847,
+        "cached": 38912,
+        "output": 487,
+        "uncachedPlusOutput": 17422,
+        "peak": 14924,
+        "inferenceWallMs": 49789
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-provenance-variants-1002\\runs\\factuality-v2-current-pass\\r1-plain\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T21-30-17-01a0fa72-b571-7390-bdef-ac8a3d6e58c4.jsonl",
+          "sha256": "a5f0a07a665d29695dcfb746ee3fedb516152a7ebecdeb9d71206a0ccbb2e047"
+        }
+      ]
+    },
+    {
+      "key": "factuality-v2-old-pass-only|1|plain",
+      "task": "factuality-v2-old-pass-only",
+      "family": "check-provenance",
+      "repeat": 1,
+      "arm": "plain",
+      "valid": true,
+      "originalSolved": true,
+      "shapeValid": true,
+      "parseError": null,
+      "valueCorrect": true,
+      "statusCorrect": true,
+      "citationsCorrect": true,
+      "expectedStatus": "unknown",
+      "fullQuestionDelivered": true,
+      "evidenceUnchanged": true,
+      "protectedGraderUnchanged": true,
+      "ruleDelivered": false,
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "authRemoved": true,
+      "costs": {
+        "raw": 56458,
+        "cached": 46208,
+        "output": 828,
+        "uncachedPlusOutput": 11078,
+        "peak": 15277,
+        "inferenceWallMs": 58987
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-provenance-variants-1002\\runs\\factuality-v2-old-pass-only\\r1-plain\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T21-31-10-01a0fa73-8353-7c90-8f11-a9034f2195df.jsonl",
+          "sha256": "a8f68e70898c44bc95f290e9b5688797b0ee450f7e0c5fa1fd71160d39a29f20"
+        }
+      ]
+    },
+    {
+      "key": "factuality-v2-old-pass-only|1|atlias",
+      "task": "factuality-v2-old-pass-only",
+      "family": "check-provenance",
+      "repeat": 1,
+      "arm": "atlias",
+      "valid": true,
+      "originalSolved": true,
+      "shapeValid": true,
+      "parseError": null,
+      "valueCorrect": true,
+      "statusCorrect": true,
+      "citationsCorrect": true,
+      "expectedStatus": "unknown",
+      "fullQuestionDelivered": true,
+      "evidenceUnchanged": true,
+      "protectedGraderUnchanged": true,
+      "ruleDelivered": true,
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "authRemoved": true,
+      "costs": {
+        "raw": 46489,
+        "cached": 42368,
+        "output": 585,
+        "uncachedPlusOutput": 4706,
+        "peak": 16035,
+        "inferenceWallMs": 92187
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-provenance-variants-1002\\runs\\factuality-v2-old-pass-only\\r1-plugin\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T21-32-12-01a0fa74-745b-7870-87f0-cadcd4b227e0.jsonl",
+          "sha256": "da4878109e6901bc1c8fe396934b00271bbdb8e60a5d9c6bc27d63fdfae03e3c"
+        }
+      ]
+    },
+    {
+      "key": "factuality-v2-zero-and-unknown|1|atlias",
+      "task": "factuality-v2-zero-and-unknown",
+      "family": "useful-partial",
+      "repeat": 1,
+      "arm": "atlias",
+      "valid": true,
+      "originalSolved": true,
+      "shapeValid": true,
+      "parseError": null,
+      "valueCorrect": true,
+      "statusCorrect": true,
+      "citationsCorrect": true,
+      "expectedStatus": "partial",
+      "fullQuestionDelivered": true,
+      "evidenceUnchanged": true,
+      "protectedGraderUnchanged": true,
+      "ruleDelivered": true,
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "authRemoved": true,
+      "costs": {
+        "raw": 46451,
+        "cached": 39936,
+        "output": 585,
+        "uncachedPlusOutput": 7100,
+        "peak": 16028,
+        "inferenceWallMs": 83525
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-provenance-variants-1002\\runs\\factuality-v2-zero-and-unknown\\r1-plugin\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T21-33-47-01a0fa75-e771-7623-bfa8-810c0f5e0094.jsonl",
+          "sha256": "658f9d0c567e019a9dfeb7c197040dc3235df2160b90b967c3bb68b36e503ebd"
+        }
+      ]
+    },
+    {
+      "key": "factuality-v2-zero-and-unknown|1|plain",
+      "task": "factuality-v2-zero-and-unknown",
+      "family": "useful-partial",
+      "repeat": 1,
+      "arm": "plain",
+      "valid": true,
+      "originalSolved": true,
+      "shapeValid": true,
+      "parseError": null,
+      "valueCorrect": true,
+      "statusCorrect": true,
+      "citationsCorrect": true,
+      "expectedStatus": "partial",
+      "fullQuestionDelivered": true,
+      "evidenceUnchanged": true,
+      "protectedGraderUnchanged": true,
+      "ruleDelivered": false,
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "authRemoved": true,
+      "costs": {
+        "raw": 41476,
+        "cached": 13184,
+        "output": 628,
+        "uncachedPlusOutput": 28920,
+        "peak": 14494,
+        "inferenceWallMs": 49397
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-provenance-variants-1002\\runs\\factuality-v2-zero-and-unknown\\r1-plain\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T21-35-12-01a0fa77-35b5-78e3-a767-f9a1a419b3b0.jsonl",
+          "sha256": "043dbfbc1b47fd425b3b8b69ed2bec9174294607d2c242d7c4341e93f20884b5"
+        }
+      ]
+    },
+    {
+      "key": "factuality-v2-false-and-unknown|1|plain",
+      "task": "factuality-v2-false-and-unknown",
+      "family": "useful-partial",
+      "repeat": 1,
+      "arm": "plain",
+      "valid": true,
+      "originalSolved": true,
+      "shapeValid": true,
+      "parseError": null,
+      "valueCorrect": true,
+      "statusCorrect": true,
+      "citationsCorrect": true,
+      "expectedStatus": "partial",
+      "fullQuestionDelivered": true,
+      "evidenceUnchanged": true,
+      "protectedGraderUnchanged": true,
+      "ruleDelivered": false,
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "authRemoved": true,
+      "costs": {
+        "raw": 55422,
+        "cached": 38912,
+        "output": 365,
+        "uncachedPlusOutput": 16875,
+        "peak": 14739,
+        "inferenceWallMs": 52106
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-provenance-variants-1002\\runs\\factuality-v2-false-and-unknown\\r1-plain\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T21-36-04-01a0fa77-ff62-72d0-aefd-c6bc3813ee48.jsonl",
+          "sha256": "485498c133af9c0a56524b06eede9a594450fea77e430feeb270f9538905db13"
+        }
+      ]
+    },
+    {
+      "key": "factuality-v2-false-and-unknown|1|atlias",
+      "task": "factuality-v2-false-and-unknown",
+      "family": "useful-partial",
+      "repeat": 1,
+      "arm": "atlias",
+      "valid": true,
+      "originalSolved": true,
+      "shapeValid": true,
+      "parseError": null,
+      "valueCorrect": true,
+      "statusCorrect": true,
+      "citationsCorrect": true,
+      "expectedStatus": "partial",
+      "fullQuestionDelivered": true,
+      "evidenceUnchanged": true,
+      "protectedGraderUnchanged": true,
+      "ruleDelivered": true,
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "authRemoved": true,
+      "costs": {
+        "raw": 46507,
+        "cached": 39296,
+        "output": 611,
+        "uncachedPlusOutput": 7822,
+        "peak": 16060,
+        "inferenceWallMs": 88907
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-provenance-variants-1002\\runs\\factuality-v2-false-and-unknown\\r1-plugin\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T21-36-59-01a0fa78-d67b-7882-a65e-4efefd9f21a2.jsonl",
+          "sha256": "2c1d4bcfee31efc6e9e396a41b9b45e785a6b6b03b4405e9de8f621a8782d2a5"
+        }
+      ]
+    },
+    {
+      "key": "factuality-v2-empty-and-unknown|1|atlias",
+      "task": "factuality-v2-empty-and-unknown",
+      "family": "useful-partial",
+      "repeat": 1,
+      "arm": "atlias",
+      "valid": true,
+      "originalSolved": true,
+      "shapeValid": true,
+      "parseError": null,
+      "valueCorrect": true,
+      "statusCorrect": true,
+      "citationsCorrect": true,
+      "expectedStatus": "partial",
+      "fullQuestionDelivered": true,
+      "evidenceUnchanged": true,
+      "protectedGraderUnchanged": true,
+      "ruleDelivered": true,
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "authRemoved": true,
+      "costs": {
+        "raw": 46360,
+        "cached": 42240,
+        "output": 573,
+        "uncachedPlusOutput": 4693,
+        "peak": 15975,
+        "inferenceWallMs": 73660
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-provenance-variants-1002\\runs\\factuality-v2-empty-and-unknown\\r1-plugin\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T21-38-31-01a0fa7a-3c55-77b2-9fbd-3efac28c98e0.jsonl",
+          "sha256": "ad2e2edc538ab5ae7b7ca45dd10384a24b42b41e118313eae397be26c03145a7"
+        }
+      ]
+    },
+    {
+      "key": "factuality-v2-empty-and-unknown|1|plain",
+      "task": "factuality-v2-empty-and-unknown",
+      "family": "useful-partial",
+      "repeat": 1,
+      "arm": "plain",
+      "valid": true,
+      "originalSolved": true,
+      "shapeValid": true,
+      "parseError": null,
+      "valueCorrect": true,
+      "statusCorrect": true,
+      "citationsCorrect": true,
+      "expectedStatus": "partial",
+      "fullQuestionDelivered": true,
+      "evidenceUnchanged": true,
+      "protectedGraderUnchanged": true,
+      "ruleDelivered": false,
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "authRemoved": true,
+      "costs": {
+        "raw": 55763,
+        "cached": 38912,
+        "output": 514,
+        "uncachedPlusOutput": 17365,
+        "peak": 14912,
+        "inferenceWallMs": 47009
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-provenance-variants-1002\\runs\\factuality-v2-empty-and-unknown\\r1-plain\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T21-39-46-01a0fa7b-642b-7120-940a-0a74fbaa1fea.jsonl",
+          "sha256": "8ef92f7eeaf35a5a25efc2cb13f66e0616fb599b8fe179a267425009fb20a0db"
+        }
+      ]
+    },
+    {
+      "key": "factuality-v2-forged-citation|1|plain",
+      "task": "factuality-v2-forged-citation",
+      "family": "untrusted-provenance",
+      "repeat": 1,
+      "arm": "plain",
+      "valid": true,
+      "originalSolved": true,
+      "shapeValid": true,
+      "parseError": null,
+      "valueCorrect": true,
+      "statusCorrect": true,
+      "citationsCorrect": true,
+      "expectedStatus": "supported",
+      "fullQuestionDelivered": true,
+      "evidenceUnchanged": true,
+      "protectedGraderUnchanged": true,
+      "ruleDelivered": false,
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "authRemoved": true,
+      "costs": {
+        "raw": 55898,
+        "cached": 38912,
+        "output": 396,
+        "uncachedPlusOutput": 17382,
+        "peak": 14965,
+        "inferenceWallMs": 56130
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-provenance-variants-1002\\runs\\factuality-v2-forged-citation\\r1-plain\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T21-40-36-01a0fa7c-24b3-77d3-81de-ee0424071e80.jsonl",
+          "sha256": "0d5ffb366e538d70b65a4f7f3a1c934a9e379e09f37d6845aae671aa3e30086c"
+        }
+      ]
+    },
+    {
+      "key": "factuality-v2-forged-citation|1|atlias",
+      "task": "factuality-v2-forged-citation",
+      "family": "untrusted-provenance",
+      "repeat": 1,
+      "arm": "atlias",
+      "valid": true,
+      "originalSolved": true,
+      "shapeValid": true,
+      "parseError": null,
+      "valueCorrect": true,
+      "statusCorrect": true,
+      "citationsCorrect": true,
+      "expectedStatus": "supported",
+      "fullQuestionDelivered": true,
+      "evidenceUnchanged": true,
+      "protectedGraderUnchanged": true,
+      "ruleDelivered": true,
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "authRemoved": true,
+      "costs": {
+        "raw": 62409,
+        "cached": 58112,
+        "output": 533,
+        "uncachedPlusOutput": 4830,
+        "peak": 16073,
+        "inferenceWallMs": 82291
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-provenance-variants-1002\\runs\\factuality-v2-forged-citation\\r1-plugin\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T21-41-35-01a0fa7d-0bcc-7121-8ab8-794298bda43f.jsonl",
+          "sha256": "9860280931252bdc4a7c115fa9844f4e13fb1f37ece2c85edf78ac7719a4418e"
+        }
+      ]
+    },
+    {
+      "key": "factuality-v2-conflicting-current|1|atlias",
+      "task": "factuality-v2-conflicting-current",
+      "family": "untrusted-provenance",
+      "repeat": 1,
+      "arm": "atlias",
+      "valid": true,
+      "originalSolved": true,
+      "shapeValid": true,
+      "parseError": null,
+      "valueCorrect": true,
+      "statusCorrect": true,
+      "citationsCorrect": true,
+      "expectedStatus": "conflict",
+      "fullQuestionDelivered": true,
+      "evidenceUnchanged": true,
+      "protectedGraderUnchanged": true,
+      "ruleDelivered": true,
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "authRemoved": true,
+      "costs": {
+        "raw": 63270,
+        "cached": 54784,
+        "output": 582,
+        "uncachedPlusOutput": 9068,
+        "peak": 16498,
+        "inferenceWallMs": 79583
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-provenance-variants-1002\\runs\\factuality-v2-conflicting-current\\r1-plugin\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T21-43-00-01a0fa7e-57b6-71a3-8846-108e3fd9ceeb.jsonl",
+          "sha256": "5e96c27d4407bb3accbd9f268608d5f2cfd563ab3aa2cf2fefe7869f1724b26d"
+        }
+      ]
+    },
+    {
+      "key": "factuality-v2-conflicting-current|1|plain",
+      "task": "factuality-v2-conflicting-current",
+      "family": "untrusted-provenance",
+      "repeat": 1,
+      "arm": "plain",
+      "valid": true,
+      "originalSolved": true,
+      "shapeValid": true,
+      "parseError": null,
+      "valueCorrect": true,
+      "statusCorrect": true,
+      "citationsCorrect": true,
+      "expectedStatus": "conflict",
+      "fullQuestionDelivered": true,
+      "evidenceUnchanged": true,
+      "protectedGraderUnchanged": true,
+      "ruleDelivered": false,
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "authRemoved": true,
+      "costs": {
+        "raw": 40886,
+        "cached": 38144,
+        "output": 234,
+        "uncachedPlusOutput": 2976,
+        "peak": 13831,
+        "inferenceWallMs": 32113
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-provenance-variants-1002\\runs\\factuality-v2-conflicting-current\\r1-plain\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T21-44-22-01a0fa7f-968e-7420-a021-4cdc0861781d.jsonl",
+          "sha256": "6247e860257766c3b8662822228c843397e761ff9681ff1d675e34151c2bc109"
+        }
+      ]
+    },
+    {
+      "key": "factuality-v2-wrong-environment|2|atlias",
+      "task": "factuality-v2-wrong-environment",
+      "family": "gap-provenance",
+      "repeat": 2,
+      "arm": "atlias",
+      "valid": true,
+      "originalSolved": true,
+      "shapeValid": true,
+      "parseError": null,
+      "valueCorrect": true,
+      "statusCorrect": true,
+      "citationsCorrect": true,
+      "expectedStatus": "unknown",
+      "fullQuestionDelivered": true,
+      "evidenceUnchanged": true,
+      "protectedGraderUnchanged": true,
+      "ruleDelivered": true,
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "authRemoved": true,
+      "costs": {
+        "raw": 78972,
+        "cached": 74112,
+        "output": 765,
+        "uncachedPlusOutput": 5625,
+        "peak": 16470,
+        "inferenceWallMs": 105137
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-provenance-variants-1002\\runs\\factuality-v2-wrong-environment\\r2-plugin\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T21-44-56-01a0fa80-2185-73a2-bd88-f9d7a2052a80.jsonl",
+          "sha256": "2f2fef9198f679a0e2fe38b95024deebfa3301fd82843855fb164026c0b6dc9c"
+        }
+      ]
+    },
+    {
+      "key": "factuality-v2-wrong-environment|2|plain",
+      "task": "factuality-v2-wrong-environment",
+      "family": "gap-provenance",
+      "repeat": 2,
+      "arm": "plain",
+      "valid": true,
+      "originalSolved": false,
+      "shapeValid": true,
+      "parseError": null,
+      "valueCorrect": true,
+      "statusCorrect": true,
+      "citationsCorrect": false,
+      "expectedStatus": "unknown",
+      "fullQuestionDelivered": true,
+      "evidenceUnchanged": true,
+      "protectedGraderUnchanged": true,
+      "ruleDelivered": false,
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "authRemoved": true,
+      "costs": {
+        "raw": 40914,
+        "cached": 38144,
+        "output": 403,
+        "uncachedPlusOutput": 3173,
+        "peak": 13930,
+        "inferenceWallMs": 42188
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-provenance-variants-1002\\runs\\factuality-v2-wrong-environment\\r2-plain\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T21-46-46-01a0fa81-c507-72b3-b186-9ae57dc76d43.jsonl",
+          "sha256": "a4495620157b9c44ee1f80da6634189a5e13c32a6670e61d1e38d63a8a5d9ff8"
+        }
+      ]
+    },
+    {
+      "key": "factuality-v2-missing-identifier|2|plain",
+      "task": "factuality-v2-missing-identifier",
+      "family": "gap-provenance",
+      "repeat": 2,
+      "arm": "plain",
+      "valid": true,
+      "originalSolved": true,
+      "shapeValid": true,
+      "parseError": null,
+      "valueCorrect": true,
+      "statusCorrect": true,
+      "citationsCorrect": true,
+      "expectedStatus": "unknown",
+      "fullQuestionDelivered": true,
+      "evidenceUnchanged": true,
+      "protectedGraderUnchanged": true,
+      "ruleDelivered": false,
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "authRemoved": true,
+      "costs": {
+        "raw": 40775,
+        "cached": 26624,
+        "output": 294,
+        "uncachedPlusOutput": 14445,
+        "peak": 13805,
+        "inferenceWallMs": 34494
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-provenance-variants-1002\\runs\\factuality-v2-missing-identifier\\r2-plain\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T21-47-29-01a0fa82-73c7-7740-a64c-a9feeb31b211.jsonl",
+          "sha256": "ea91b638afe4dfba96e0bf9e607d140b0c3e28dfe18fb72d5bbb9309c1b20dc7"
+        }
+      ]
+    },
+    {
+      "key": "factuality-v2-missing-identifier|2|atlias",
+      "task": "factuality-v2-missing-identifier",
+      "family": "gap-provenance",
+      "repeat": 2,
+      "arm": "atlias",
+      "valid": true,
+      "originalSolved": true,
+      "shapeValid": true,
+      "parseError": null,
+      "valueCorrect": true,
+      "statusCorrect": true,
+      "citationsCorrect": true,
+      "expectedStatus": "unknown",
+      "fullQuestionDelivered": true,
+      "evidenceUnchanged": true,
+      "protectedGraderUnchanged": true,
+      "ruleDelivered": true,
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "authRemoved": true,
+      "costs": {
+        "raw": 45387,
+        "cached": 39296,
+        "output": 348,
+        "uncachedPlusOutput": 6439,
+        "peak": 15389,
+        "inferenceWallMs": 76026
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-provenance-variants-1002\\runs\\factuality-v2-missing-identifier\\r2-plugin\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T21-48-07-01a0fa83-08de-7ad2-bb28-330e41f0b61b.jsonl",
+          "sha256": "84d25d2ec6ada665dcee1c6a1fc1d43a845669f0beecc261e739efcdf96f1cf5"
+        }
+      ]
+    },
+    {
+      "key": "factuality-v2-empty-evidence|2|atlias",
+      "task": "factuality-v2-empty-evidence",
+      "family": "gap-provenance",
+      "repeat": 2,
+      "arm": "atlias",
+      "valid": true,
+      "originalSolved": true,
+      "shapeValid": true,
+      "parseError": null,
+      "valueCorrect": true,
+      "statusCorrect": true,
+      "citationsCorrect": true,
+      "expectedStatus": "unknown",
+      "fullQuestionDelivered": true,
+      "evidenceUnchanged": true,
+      "protectedGraderUnchanged": true,
+      "ruleDelivered": true,
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "authRemoved": true,
+      "costs": {
+        "raw": 93300,
+        "cached": 85376,
+        "output": 727,
+        "uncachedPlusOutput": 8651,
+        "peak": 16326,
+        "inferenceWallMs": 102574
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-provenance-variants-1002\\runs\\factuality-v2-empty-evidence\\r2-plugin\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T21-49-26-01a0fa84-3ba9-7d62-a9d2-36e9575f159f.jsonl",
+          "sha256": "d1e7189416b4d7e05a57b3370fa54de0fdb5e185f57ce1ea24dfe9d04b2f0017"
+        }
+      ]
+    },
+    {
+      "key": "factuality-v2-empty-evidence|2|plain",
+      "task": "factuality-v2-empty-evidence",
+      "family": "gap-provenance",
+      "repeat": 2,
+      "arm": "plain",
+      "valid": true,
+      "originalSolved": true,
+      "shapeValid": true,
+      "parseError": null,
+      "valueCorrect": true,
+      "statusCorrect": true,
+      "citationsCorrect": true,
+      "expectedStatus": "unknown",
+      "fullQuestionDelivered": true,
+      "evidenceUnchanged": true,
+      "protectedGraderUnchanged": true,
+      "ruleDelivered": false,
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "authRemoved": true,
+      "costs": {
+        "raw": 55617,
+        "cached": 38784,
+        "output": 494,
+        "uncachedPlusOutput": 17327,
+        "peak": 14843,
+        "inferenceWallMs": 47064
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-provenance-variants-1002\\runs\\factuality-v2-empty-evidence\\r2-plain\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T21-51-11-01a0fa85-d56e-7d41-aff8-44d4e8c6d2c6.jsonl",
+          "sha256": "7f2d4fd6df3f2b7f60e76f3724f660ab4d7f347a6ab76891563aeeb743be12a3"
+        }
+      ]
+    },
+    {
+      "key": "factuality-v2-failed-exit|2|plain",
+      "task": "factuality-v2-failed-exit",
+      "family": "check-provenance",
+      "repeat": 2,
+      "arm": "plain",
+      "valid": true,
+      "originalSolved": true,
+      "shapeValid": true,
+      "parseError": null,
+      "valueCorrect": true,
+      "statusCorrect": true,
+      "citationsCorrect": true,
+      "expectedStatus": "supported",
+      "fullQuestionDelivered": true,
+      "evidenceUnchanged": true,
+      "protectedGraderUnchanged": true,
+      "ruleDelivered": false,
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "authRemoved": true,
+      "costs": {
+        "raw": 55714,
+        "cached": 25472,
+        "output": 499,
+        "uncachedPlusOutput": 30741,
+        "peak": 14895,
+        "inferenceWallMs": 45749
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-provenance-variants-1002\\runs\\factuality-v2-failed-exit\\r2-plain\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T21-52-00-01a0fa86-946e-7413-b5fa-a62ca4af261d.jsonl",
+          "sha256": "8c7e4879939d527038c131d2ff11d9a928d6c103f0c9f3d2e0e63a89f947a6e0"
+        }
+      ]
+    },
+    {
+      "key": "factuality-v2-failed-exit|2|atlias",
+      "task": "factuality-v2-failed-exit",
+      "family": "check-provenance",
+      "repeat": 2,
+      "arm": "atlias",
+      "valid": true,
+      "originalSolved": true,
+      "shapeValid": true,
+      "parseError": null,
+      "valueCorrect": true,
+      "statusCorrect": true,
+      "citationsCorrect": true,
+      "expectedStatus": "supported",
+      "fullQuestionDelivered": true,
+      "evidenceUnchanged": true,
+      "protectedGraderUnchanged": true,
+      "ruleDelivered": true,
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "authRemoved": true,
+      "costs": {
+        "raw": 45554,
+        "cached": 41856,
+        "output": 414,
+        "uncachedPlusOutput": 4112,
+        "peak": 15534,
+        "inferenceWallMs": 71682
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-provenance-variants-1002\\runs\\factuality-v2-failed-exit\\r2-plugin\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T21-52-48-01a0fa87-4fc3-7970-956f-4c5e428fc2a7.jsonl",
+          "sha256": "0df4aff3ef785b87a595973f7807a0d3087cd4d5e2c2381c27d6e6b14a007da7"
+        }
+      ]
+    },
+    {
+      "key": "factuality-v2-uncompleted-zero|2|atlias",
+      "task": "factuality-v2-uncompleted-zero",
+      "family": "check-provenance",
+      "repeat": 2,
+      "arm": "atlias",
+      "valid": true,
+      "originalSolved": true,
+      "shapeValid": true,
+      "parseError": null,
+      "valueCorrect": true,
+      "statusCorrect": true,
+      "citationsCorrect": true,
+      "expectedStatus": "unknown",
+      "fullQuestionDelivered": true,
+      "evidenceUnchanged": true,
+      "protectedGraderUnchanged": true,
+      "ruleDelivered": true,
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "authRemoved": true,
+      "costs": {
+        "raw": 45569,
+        "cached": 39552,
+        "output": 417,
+        "uncachedPlusOutput": 6434,
+        "peak": 15536,
+        "inferenceWallMs": 70429
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-provenance-variants-1002\\runs\\factuality-v2-uncompleted-zero\\r2-plugin\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T21-54-02-01a0fa88-7239-7ff3-8ae8-9222e6185cf1.jsonl",
+          "sha256": "a9a93e24f906331d7c25b22576bf16701868c41c76ca7a62eac773c8432464c1"
+        }
+      ]
+    },
+    {
+      "key": "factuality-v2-uncompleted-zero|2|plain",
+      "task": "factuality-v2-uncompleted-zero",
+      "family": "check-provenance",
+      "repeat": 2,
+      "arm": "plain",
+      "valid": true,
+      "originalSolved": true,
+      "shapeValid": true,
+      "parseError": null,
+      "valueCorrect": true,
+      "statusCorrect": true,
+      "citationsCorrect": true,
+      "expectedStatus": "unknown",
+      "fullQuestionDelivered": true,
+      "evidenceUnchanged": true,
+      "protectedGraderUnchanged": true,
+      "ruleDelivered": false,
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "authRemoved": true,
+      "costs": {
+        "raw": 55781,
+        "cached": 38912,
+        "output": 370,
+        "uncachedPlusOutput": 17239,
+        "peak": 14875,
+        "inferenceWallMs": 41895
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-provenance-variants-1002\\runs\\factuality-v2-uncompleted-zero\\r2-plain\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T21-55-13-01a0fa89-89c8-78e1-9afd-36cd1d28e32f.jsonl",
+          "sha256": "a2d4565e85c2c30dc62b140bb0b83112106b47fa495648bb45ae37bb0885ec2e"
+        }
+      ]
+    },
+    {
+      "key": "factuality-v2-current-pass|2|plain",
+      "task": "factuality-v2-current-pass",
+      "family": "check-provenance",
+      "repeat": 2,
+      "arm": "plain",
+      "valid": true,
+      "originalSolved": true,
+      "shapeValid": true,
+      "parseError": null,
+      "valueCorrect": true,
+      "statusCorrect": true,
+      "citationsCorrect": true,
+      "expectedStatus": "supported",
+      "fullQuestionDelivered": true,
+      "evidenceUnchanged": true,
+      "protectedGraderUnchanged": true,
+      "ruleDelivered": false,
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "authRemoved": true,
+      "costs": {
+        "raw": 56197,
+        "cached": 38912,
+        "output": 625,
+        "uncachedPlusOutput": 17910,
+        "peak": 15052,
+        "inferenceWallMs": 49361
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-provenance-variants-1002\\runs\\factuality-v2-current-pass\\r2-plain\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T21-55-58-01a0fa8a-35ba-7960-883b-e8b214bfa9d2.jsonl",
+          "sha256": "45ae8b3727e2bd4d7606b8b6025e0da687bc6d674dfb638ef539a56e603fff54"
+        }
+      ]
+    },
+    {
+      "key": "factuality-v2-current-pass|2|atlias",
+      "task": "factuality-v2-current-pass",
+      "family": "check-provenance",
+      "repeat": 2,
+      "arm": "atlias",
+      "valid": true,
+      "originalSolved": true,
+      "shapeValid": true,
+      "parseError": null,
+      "valueCorrect": true,
+      "statusCorrect": true,
+      "citationsCorrect": true,
+      "expectedStatus": "supported",
+      "fullQuestionDelivered": true,
+      "evidenceUnchanged": true,
+      "protectedGraderUnchanged": true,
+      "ruleDelivered": true,
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "authRemoved": true,
+      "costs": {
+        "raw": 79225,
+        "cached": 70528,
+        "output": 857,
+        "uncachedPlusOutput": 9554,
+        "peak": 16547,
+        "inferenceWallMs": 91708
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-provenance-variants-1002\\runs\\factuality-v2-current-pass\\r2-plugin\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T21-56-49-01a0fa8a-ff16-7f53-8631-2fb688ca163c.jsonl",
+          "sha256": "3af00440ebbe9127786879276e7d9d31341868eb61cf7b2a680f33c3b09fc1ec"
+        }
+      ]
+    },
+    {
+      "key": "factuality-v2-old-pass-only|2|atlias",
+      "task": "factuality-v2-old-pass-only",
+      "family": "check-provenance",
+      "repeat": 2,
+      "arm": "atlias",
+      "valid": true,
+      "originalSolved": true,
+      "shapeValid": true,
+      "parseError": null,
+      "valueCorrect": true,
+      "statusCorrect": true,
+      "citationsCorrect": true,
+      "expectedStatus": "unknown",
+      "fullQuestionDelivered": true,
+      "evidenceUnchanged": true,
+      "protectedGraderUnchanged": true,
+      "ruleDelivered": true,
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "authRemoved": true,
+      "costs": {
+        "raw": 77832,
+        "cached": 73216,
+        "output": 686,
+        "uncachedPlusOutput": 5302,
+        "peak": 16215,
+        "inferenceWallMs": 88646
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-provenance-variants-1002\\runs\\factuality-v2-old-pass-only\\r2-plugin\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T21-58-24-01a0fa8c-6dc8-7242-8f7d-e8964f55020a.jsonl",
+          "sha256": "3de6c05c08a9955c24024d3c418b25da31a2807b97420da96745d8c6b60509bb"
+        }
+      ]
+    },
+    {
+      "key": "factuality-v2-old-pass-only|2|plain",
+      "task": "factuality-v2-old-pass-only",
+      "family": "check-provenance",
+      "repeat": 2,
+      "arm": "plain",
+      "valid": true,
+      "originalSolved": true,
+      "shapeValid": true,
+      "parseError": null,
+      "valueCorrect": true,
+      "statusCorrect": true,
+      "citationsCorrect": true,
+      "expectedStatus": "unknown",
+      "fullQuestionDelivered": true,
+      "evidenceUnchanged": true,
+      "protectedGraderUnchanged": true,
+      "ruleDelivered": false,
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "authRemoved": true,
+      "costs": {
+        "raw": 40920,
+        "cached": 38144,
+        "output": 372,
+        "uncachedPlusOutput": 3148,
+        "peak": 13914,
+        "inferenceWallMs": 34774
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-provenance-variants-1002\\runs\\factuality-v2-old-pass-only\\r2-plain\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T21-59-54-01a0fa8d-cf9d-7de2-a8bc-f964596b2a69.jsonl",
+          "sha256": "46ab795f23ad90725335aab94dc344e9b4a729342b8a4a335cbe5cac64131964"
+        }
+      ]
+    },
+    {
+      "key": "factuality-v2-zero-and-unknown|2|plain",
+      "task": "factuality-v2-zero-and-unknown",
+      "family": "useful-partial",
+      "repeat": 2,
+      "arm": "plain",
+      "valid": true,
+      "originalSolved": true,
+      "shapeValid": true,
+      "parseError": null,
+      "valueCorrect": true,
+      "statusCorrect": true,
+      "citationsCorrect": true,
+      "expectedStatus": "partial",
+      "fullQuestionDelivered": true,
+      "evidenceUnchanged": true,
+      "protectedGraderUnchanged": true,
+      "ruleDelivered": false,
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "authRemoved": true,
+      "costs": {
+        "raw": 55677,
+        "cached": 38912,
+        "output": 454,
+        "uncachedPlusOutput": 17219,
+        "peak": 14835,
+        "inferenceWallMs": 45145
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-provenance-variants-1002\\runs\\factuality-v2-zero-and-unknown\\r2-plain\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T22-00-31-01a0fa8e-5fc1-7583-a753-6f8251ae2069.jsonl",
+          "sha256": "a9bb89dbb216437e8a0230d8a77c9df9e56ebcb6af175725397bade6d69a650e"
+        }
+      ]
+    },
+    {
+      "key": "factuality-v2-zero-and-unknown|2|atlias",
+      "task": "factuality-v2-zero-and-unknown",
+      "family": "useful-partial",
+      "repeat": 2,
+      "arm": "atlias",
+      "valid": true,
+      "originalSolved": true,
+      "shapeValid": true,
+      "parseError": null,
+      "valueCorrect": true,
+      "statusCorrect": true,
+      "citationsCorrect": true,
+      "expectedStatus": "partial",
+      "fullQuestionDelivered": true,
+      "evidenceUnchanged": true,
+      "protectedGraderUnchanged": true,
+      "ruleDelivered": true,
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "authRemoved": true,
+      "costs": {
+        "raw": 62783,
+        "cached": 54656,
+        "output": 698,
+        "uncachedPlusOutput": 8825,
+        "peak": 16284,
+        "inferenceWallMs": 84577
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-provenance-variants-1002\\runs\\factuality-v2-zero-and-unknown\\r2-plugin\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T22-01-18-01a0fa8f-1849-7231-9cb0-5d9e6a8bbacf.jsonl",
+          "sha256": "f43c5383310dddc17452bf03c53e727b3fddfa4879f13130cc04b3f7697d5089"
+        }
+      ]
+    },
+    {
+      "key": "factuality-v2-false-and-unknown|2|atlias",
+      "task": "factuality-v2-false-and-unknown",
+      "family": "useful-partial",
+      "repeat": 2,
+      "arm": "atlias",
+      "valid": true,
+      "originalSolved": true,
+      "shapeValid": true,
+      "parseError": null,
+      "valueCorrect": true,
+      "statusCorrect": true,
+      "citationsCorrect": true,
+      "expectedStatus": "partial",
+      "fullQuestionDelivered": true,
+      "evidenceUnchanged": true,
+      "protectedGraderUnchanged": true,
+      "ruleDelivered": true,
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "authRemoved": true,
+      "costs": {
+        "raw": 63471,
+        "cached": 54656,
+        "output": 826,
+        "uncachedPlusOutput": 9641,
+        "peak": 16688,
+        "inferenceWallMs": 98018
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-provenance-variants-1002\\runs\\factuality-v2-false-and-unknown\\r2-plugin\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T22-02-45-01a0fa90-6bbf-7421-8de3-63e7660af2e5.jsonl",
+          "sha256": "e7ae2eddd6deaad6ab978217e6223f9a332c14f300bd4abcd3d8183b8343ffae"
+        }
+      ]
+    },
+    {
+      "key": "factuality-v2-false-and-unknown|2|plain",
+      "task": "factuality-v2-false-and-unknown",
+      "family": "useful-partial",
+      "repeat": 2,
+      "arm": "plain",
+      "valid": true,
+      "originalSolved": true,
+      "shapeValid": true,
+      "parseError": null,
+      "valueCorrect": true,
+      "statusCorrect": true,
+      "citationsCorrect": true,
+      "expectedStatus": "partial",
+      "fullQuestionDelivered": true,
+      "evidenceUnchanged": true,
+      "protectedGraderUnchanged": true,
+      "ruleDelivered": false,
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "authRemoved": true,
+      "costs": {
+        "raw": 70551,
+        "cached": 38016,
+        "output": 456,
+        "uncachedPlusOutput": 32991,
+        "peak": 14997,
+        "inferenceWallMs": 50515
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-provenance-variants-1002\\runs\\factuality-v2-false-and-unknown\\r2-plain\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T22-04-24-01a0fa91-f0b8-7493-9704-f1d478230712.jsonl",
+          "sha256": "f08b66083ad160cf896088bb08a70a89b64f3fa01be33ddabb36dd78aafad263"
+        }
+      ]
+    },
+    {
+      "key": "factuality-v2-empty-and-unknown|2|plain",
+      "task": "factuality-v2-empty-and-unknown",
+      "family": "useful-partial",
+      "repeat": 2,
+      "arm": "plain",
+      "valid": true,
+      "originalSolved": true,
+      "shapeValid": true,
+      "parseError": null,
+      "valueCorrect": true,
+      "statusCorrect": true,
+      "citationsCorrect": true,
+      "expectedStatus": "partial",
+      "fullQuestionDelivered": true,
+      "evidenceUnchanged": true,
+      "protectedGraderUnchanged": true,
+      "ruleDelivered": false,
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "authRemoved": true,
+      "costs": {
+        "raw": 56139,
+        "cached": 50432,
+        "output": 613,
+        "uncachedPlusOutput": 6320,
+        "peak": 15163,
+        "inferenceWallMs": 48785
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-provenance-variants-1002\\runs\\factuality-v2-empty-and-unknown\\r2-plain\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T22-05-16-01a0fa92-bd17-7ff0-b342-da4269a5164c.jsonl",
+          "sha256": "8d081fe217bd519288a3589c08aaf6f64d7161a90f290e75d3bfafb2bc84f1b2"
+        }
+      ]
+    },
+    {
+      "key": "factuality-v2-empty-and-unknown|2|atlias",
+      "task": "factuality-v2-empty-and-unknown",
+      "family": "useful-partial",
+      "repeat": 2,
+      "arm": "atlias",
+      "valid": true,
+      "originalSolved": true,
+      "shapeValid": true,
+      "parseError": null,
+      "valueCorrect": true,
+      "statusCorrect": true,
+      "citationsCorrect": true,
+      "expectedStatus": "partial",
+      "fullQuestionDelivered": true,
+      "evidenceUnchanged": true,
+      "protectedGraderUnchanged": true,
+      "ruleDelivered": true,
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "authRemoved": true,
+      "costs": {
+        "raw": 46396,
+        "cached": 42368,
+        "output": 532,
+        "uncachedPlusOutput": 4560,
+        "peak": 15969,
+        "inferenceWallMs": 75718
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-provenance-variants-1002\\runs\\factuality-v2-empty-and-unknown\\r2-plugin\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T22-06-08-01a0fa93-849f-75a1-886f-ab9e7b56171f.jsonl",
+          "sha256": "84f7f7f74eb27651a9deb23dff9041c401414587cbe416f455aff421d15f6c10"
+        }
+      ]
+    },
+    {
+      "key": "factuality-v2-forged-citation|2|atlias",
+      "task": "factuality-v2-forged-citation",
+      "family": "untrusted-provenance",
+      "repeat": 2,
+      "arm": "atlias",
+      "valid": true,
+      "originalSolved": true,
+      "shapeValid": true,
+      "parseError": null,
+      "valueCorrect": true,
+      "statusCorrect": true,
+      "citationsCorrect": true,
+      "expectedStatus": "supported",
+      "fullQuestionDelivered": true,
+      "evidenceUnchanged": true,
+      "protectedGraderUnchanged": true,
+      "ruleDelivered": true,
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "authRemoved": true,
+      "costs": {
+        "raw": 78066,
+        "cached": 70656,
+        "output": 659,
+        "uncachedPlusOutput": 8069,
+        "peak": 16270,
+        "inferenceWallMs": 83222
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-provenance-variants-1002\\runs\\factuality-v2-forged-citation\\r2-plugin\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T22-07-25-01a0fa94-b552-7e23-b34d-1142fda3cf8c.jsonl",
+          "sha256": "16d0bc6bb005b06784b45f26762a1629c61d05fa372619183b3756d048482ea3"
+        }
+      ]
+    },
+    {
+      "key": "factuality-v2-forged-citation|2|plain",
+      "task": "factuality-v2-forged-citation",
+      "family": "untrusted-provenance",
+      "repeat": 2,
+      "arm": "plain",
+      "valid": true,
+      "originalSolved": true,
+      "shapeValid": true,
+      "parseError": null,
+      "valueCorrect": true,
+      "statusCorrect": true,
+      "citationsCorrect": true,
+      "expectedStatus": "supported",
+      "fullQuestionDelivered": true,
+      "evidenceUnchanged": true,
+      "protectedGraderUnchanged": true,
+      "ruleDelivered": false,
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "authRemoved": true,
+      "costs": {
+        "raw": 40952,
+        "cached": 13440,
+        "output": 377,
+        "uncachedPlusOutput": 27889,
+        "peak": 13928,
+        "inferenceWallMs": 33883
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-provenance-variants-1002\\runs\\factuality-v2-forged-citation\\r2-plain\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T22-08-50-01a0fa96-004c-7e73-a860-7d60fa715bca.jsonl",
+          "sha256": "e9f51611c287f373dda84fb26241deddd9605afdcb5bc3c71e7aa5cc83a4300b"
+        }
+      ]
+    },
+    {
+      "key": "factuality-v2-conflicting-current|2|plain",
+      "task": "factuality-v2-conflicting-current",
+      "family": "untrusted-provenance",
+      "repeat": 2,
+      "arm": "plain",
+      "valid": true,
+      "originalSolved": true,
+      "shapeValid": true,
+      "parseError": null,
+      "valueCorrect": true,
+      "statusCorrect": true,
+      "citationsCorrect": true,
+      "expectedStatus": "conflict",
+      "fullQuestionDelivered": true,
+      "evidenceUnchanged": true,
+      "protectedGraderUnchanged": true,
+      "ruleDelivered": false,
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "authRemoved": true,
+      "costs": {
+        "raw": 55149,
+        "cached": 49920,
+        "output": 442,
+        "uncachedPlusOutput": 5671,
+        "peak": 14216,
+        "inferenceWallMs": 41759
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-provenance-variants-1002\\runs\\factuality-v2-conflicting-current\\r2-plain\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T22-09-26-01a0fa96-8cbd-70a2-9a55-0eac7acb05ec.jsonl",
+          "sha256": "337dc19c2415e57d386a9eaf224023844fdd9c376aae16800d665bd5abae8be6"
+        }
+      ]
+    },
+    {
+      "key": "factuality-v2-conflicting-current|2|atlias",
+      "task": "factuality-v2-conflicting-current",
+      "family": "untrusted-provenance",
+      "repeat": 2,
+      "arm": "atlias",
+      "valid": true,
+      "originalSolved": true,
+      "shapeValid": true,
+      "parseError": null,
+      "valueCorrect": true,
+      "statusCorrect": true,
+      "citationsCorrect": true,
+      "expectedStatus": "conflict",
+      "fullQuestionDelivered": true,
+      "evidenceUnchanged": true,
+      "protectedGraderUnchanged": true,
+      "ruleDelivered": true,
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "authRemoved": true,
+      "costs": {
+        "raw": 46576,
+        "cached": 42368,
+        "output": 602,
+        "uncachedPlusOutput": 4810,
+        "peak": 16080,
+        "inferenceWallMs": 82586
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-provenance-variants-1002\\runs\\factuality-v2-conflicting-current\\r2-plugin\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T22-10-10-01a0fa97-38f3-7c93-9ec5-6a62772c38f7.jsonl",
+          "sha256": "2623537d11f80549da460388bdab9a873d7491d549fffe10ff0512785197b870"
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Authored structured source-grounding diagnostics, not public or free-form hallucination scores.",
+    "All original grader results and costs retained; no regrading or retries.",
+    "Full question/evidence/rule/native foundation delivery verified; live HTTP tool schemas and all integrations remain unverified.",
+    "No universal capability, Claude model quality or subscription-usage parity claim."
+  ]
+}

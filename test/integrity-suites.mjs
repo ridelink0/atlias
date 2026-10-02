@@ -7,6 +7,28 @@ export default async function integritySuites({ suite, check, core, gate, track,
   const NL = String.fromCharCode(10);
   const sid = (n) => 'integrity-' + n;
 
+  suite('inline conditional validation', 'record real node inline checks without printed or unreachable claims', () => {
+    const good = 'node -e "const actual=2; if(actual!==2) throw Error(\'mismatch\');"';
+    const positives = [good, good.replace('node ', '"C:\\Program Files\\nodejs\\node.exe" '), good.replace('throw Error', 'throw new Error'), good.replace("throw Error('mismatch');", "{throw Error('mismatch');}"), 'node --eval "if(JSON.stringify([1])!==JSON.stringify([1])) throw TypeError(\'bad\');"', 'Get-Content answer.json\n'+good];
+    for(const command of positives) check('inline conditional recognized '+command.slice(0,55), core.looksLikeVerification(command), {happened:command,why:'A completed evidence/output assertion must be tracked without an unnecessary rerun.',fix:'Recognize the executable top-level conditional throw.'});
+    const negatives = ['node -e "console.log(\'if(x!==2) throw Error()\');"', 'node -e "/* if(x!==2) throw Error() */ console.log(1);"', 'node -e "// if(x!==2) throw Error()"', 'echo '+good, 'node -e "throw Error(\'operational failure\');"', 'node -e "function unused(){if(x!==2) throw Error()}"', 'node -e "if(false){if(x!==2) throw Error()}"', 'node -e "if(false) if(x!==2) throw Error()"', 'node -e "process.exit(0); if(x!==2) throw Error()"', 'node -e "if(false && x!==2) throw Error()"', 'node -e "const p=/if(x!==2)throw Error()/;"', 'node -e "if(x!==2) throw Error()', 'node -e "console.log(\'check passed\');"'];
+    for(const command of negatives) check('fake conditional rejected '+command.slice(0,55), !core.looksLikeVerification(command), {happened:command,why:'Printed, commented, unreachable, malformed and operational code cannot serve as evidence of verification.',fix:'Decline ambiguous inline scripts; do not infer success.'});
+    for(const exit_code of [0,null]) check('uncaught node validation error survives masked/unknown shell exit '+exit_code, integrity.verdict({tool_response:{stderr:'Error: mismatch\n    at [eval]:1:35\n',exit_code}}).outcome==='fail', {happened:'masked node exception',why:'A later PowerShell read may return exit0 even though the inline check threw; stderr must retain that failure.',fix:'Recognize an uncaught JavaScript error stack independently of final shell status.'});
+    check('ordinary error discussion is not an uncaught node failure', integrity.verdict({tool_response:{stdout:'Error: this record describes a prior deployment failure',exit_code:0}}).outcome==='pass', {happened:'discussion incorrectly failed',why:'An error label without a stack is data, not evidence that this check failed.',fix:'Require the adjacent native stack frame.'});
+    const observed=JSON.parse(fs.readFileSync(path.join(core.ROOT,'evals/results/native-codex/inline-verification-false-alarm-2026-10-02/OBSERVATION.json'),'utf8'));
+    check('the retained original conditional command is recognized without rerunning its model output',core.looksLikeVerification(observed.command),{happened:observed.command,why:'The generic repair must cover the actual native false alarm, not just simplified fixtures.',fix:'Classify the original immutable command as verification.'});
+    for(const actual of [2,3]) {
+      const result=spawnSync(process.execPath,['-e',"const actual="+actual+";if(actual!==2)throw Error('mismatch');"],{encoding:'utf8'});
+      check('actual inline validation exit '+actual,integrity.verdict({tool_response:{stdout:result.stdout,stderr:result.stderr,exit_code:result.status}}).outcome===(actual===2?'pass':'fail'),{happened:JSON.stringify({code:result.status,stderr:result.stderr}),why:'Native outcomes must reflect genuine execution success/failure, not invented fixture counters.',fix:'Keep the completed command result as the verdict source.'});
+    }
+    check('a passing inline check before a later edit does not validate the changed state',!integrity.verificationAfterLastEdit([{kind:'shell',verify:true,outcome:'pass'},{kind:'edit',files:['answer.json']}]),{happened:'stale validation accepted',why:'The repair must not relax verification ordering.',fix:'Retain verificationAfterLastEdit ordering.'});
+    for(const tool of ['Bash','exec_command']) for(const [code,want]of [[0,'pass'],[2,'fail'],[null,'unknown']]) {
+      const id='inline-'+tool+'-'+code;router.prompt({session_id:id,cwd:PROJECT,prompt:'validate output'});
+      track.postTool({session_id:id,cwd:PROJECT,tool_name:tool,tool_input:tool==='Bash'?{command:good}:{cmd:good},tool_response:{stdout:'checked',exit_code:code}});
+      const event=gate.turnEvents(id).turn.find(e=>e.kind==='shell');check(tool+' records conditional outcome '+want,event?.verify&&event.outcome===want,{happened:JSON.stringify(event),why:'Recognizing a check must preserve actual failure and unknown outcomes on BOTH host shapes.',fix:'Keep native verdicts independent of command classification.'});
+    }
+  });
+
   suite('claims expert', 'what a reply claims', () => {
     for (const text of ['All tests pass. Deployment unverified.', 'Deployment is unverified, but tests pass.', 'Tests pass, deployment unverified.', 'Tests pass and deployment is unverified.', 'I could not run the tests. All checks pass.']) {
       check('independent positive claim: ' + text, integrity.hasPassClaim(text), { happened: text, why: 'An unrelated uncertainty statement must not hide a false verification claim.', fix: 'Scope honesty to its own clause.' });
