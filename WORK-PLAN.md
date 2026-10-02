@@ -1,3 +1,7 @@
+# Shell-boundary adversarial repair for Gev, 2026-10-02T03:30:16.750Z
+
+Further secondpass FOUND printed quoted semicolon command falselyrecognized; repairedunquotedshellboundary/PowerShellherestring/unsupportedBashheredocdecline.36targetedcontrolsPASS. NEW fullWindowsrun16507/live/log D:/harness-work/atlias-inline-shell-full-1002.log stillpending; do notlaunchmodels untilthisheadownfullcheck/exactCI. Source62ownCI36959998785 wasinprogress,1627pass appliesEARLIERsourceonly. Currentinstalled3726ON andsourcee655closed48 unchanged. Fullclosed48auditpublishedSHA61273a...; no retries/newmodels afterclosure. Nextnewsourcechecks then native realhook/delivery proof/newseparatelypinned causal comparison or publicquality adapters, notunchangedcircles.
+
 # Closed provenance study and checked verification candidate for Gev, 2026-10-02T03:23:52.784Z
 
 Sourcee655 CLOSED48/48, native8536EXIT0/newterminalreceipt at03:11:30Z, no live inference. Original5prefix bytepreserved. Frozenfullledger D:/harness-work/sourceE655-variants-complete48-1002.jsonl SHA61273a3f0f43a0a135e567e580c5eb2ef0cc9af94135b9b5da1d80ede3b0e581; full48independentaudit sourceE655-variants-complete48-audit-1002 and SAMEledgerpublisher COMPLETE. Both24/24valid, plain23/24strict vsAtlias24/24,1citationgain/0losses, values/statuses/usefulparts equal. Raw12.1%MORE/peak9.2%HIGHER, uncached+out2.13xless; no20x/public/Claude/account/generalcapability claim. READMEupdated; alloriginalcosts/gradesimmutable, neverresume/retry/regrade.
