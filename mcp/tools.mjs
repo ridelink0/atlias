@@ -142,7 +142,7 @@ export function callTool(name, args = {}) {
     case 'harness_progress':
       if (args.action === 'set') {
         const merged = progress.applyNext(cwd, args.text || '');
-        return merged ? `next step recorded, the rest of the note kept:\n${merged}` : `next step recorded. There is no handoff note yet; the next reply that changes a file will write one.`;
+        return merged ? `next step recorded at ${progress.notePath(cwd)} (${Buffer.byteLength(merged,'utf8')} bytes). Other sections preserved. Read the full handoff with harness_progress get.` : `next step recorded. There is no handoff note yet; the next reply that changes a file will write one.`;
       }
       return progress.read(cwd) || 'no handoff note yet for this project.';
     case 'harness_verify': return verifyText(cwd, args.paths);

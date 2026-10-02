@@ -7,6 +7,17 @@ export default async function integritySuites({ suite, check, core, gate, track,
   const NL = String.fromCharCode(10);
   const sid = (n) => 'integrity-' + n;
 
+  suite('stdin verification expert','record executed stdin assertions and reject printed inline checks',()=>{
+    const script="const assert=require('node:assert/strict');\nconst value=2;\nassert.strictEqual(value,2);";
+    const command="@'\n"+script+"\n'@ | node --input-type=module";
+    const good=[command,command.replaceAll('\n','\r\n'),command.replace('node --input-type=module','"C:\\Program Files\\nodejs\\node.exe"'), 'node -e "const assert=require(\'assert\'); assert.equal(1,1);"','python -c "from main import f; assert f(2)==3"','python -m unittest'];
+    const bad=["echo 'node -e \"assert(false)\"'","Write-Output 'node -e \"assert(false)\"'",'# comment ; node -e "assert(false)"','node -e "console.log(\'assert(false)\');"','node -e "/* assert(false) */"','node -e "function f(){assert(false)}"','node -e "if(false) assert(false)"',command.replace('assert.strictEqual(value,2);',"console.log('assert(false)');"),command.replace("@'",'Write-Output '+"@'"),command.replace('| node','| Write-Output'),command+' ; echo done'];
+    bad.push('true || node -e "assert(1)"','false && node -e "assert(1)"','true || node -e "if(1!==2) throw Error()"','python -c "\'\'\'\nassert 1\n\'\'\'"','python -c "if False: assert 1"');
+    const detail={happened:'stdin/printed check classification mismatch',why:'A genuine completed assertion needs tracking; printed check text is not execution.',fix:'Recognize only literal executable stdin/inline check forms; leave ambiguity unknown.'};
+    for(const c of good)check('executed assertion recognized '+c.slice(-50),core.looksLikeVerification(c),detail);
+    for(const c of bad)check('printed or unreachable assertion declined '+c.slice(-50),!core.looksLikeVerification(c),detail);
+  });
+
   suite('inline conditional validation', 'record real node inline checks without printed or unreachable claims', () => {
     const good = 'node -e "const actual=2; if(actual!==2) throw Error(\'mismatch\');"';
     const positives = [good, good.replace('node ', '"C:\\Program Files\\nodejs\\node.exe" '), good.replace('throw Error', 'throw new Error'), good.replace("throw Error('mismatch');", "{throw Error('mismatch');}"), 'node --eval "if(JSON.stringify([1])!==JSON.stringify([1])) throw TypeError(\'bad\');"', 'Get-Content answer.json\n'+good];

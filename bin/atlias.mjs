@@ -56,6 +56,11 @@ const shortcutUninstall = () => { const r = shortcut.uninstallShortcut(); return
 // used to be read as one more flag: `atlias eval --help` started a real eval on
 // the default model and left five workspaces behind.
 const HELP = {
+  'session-report': [
+    'usage: atlias session-report --host codex --transcript <rollout.jsonl> [--meter-reports <live-reports.jsonl>] [--json]',
+    '  Read-only recorded native turn time and token counters; starts no model.',
+    '  Optional fresh account observations estimate recent pace, not on/off savings or guaranteed time.',
+  ],
   context: [
     'usage: atlias context --prompt-file <UTF-8-file> [--cwd <project>] [--json]',
     '  Read-only, explicit caller-v1 transport for Claude Code or Codex.',
@@ -439,6 +444,27 @@ else switch (cmd) {
     const g = graph.status(cwd);
     const p = dream.pending(cwd);
     say([`atlias ${VERSION}`, `mode: ${settings.mode()} (atlias mode to change it)`, `state: ${STATE_DIR}`, `project: ${cwd}`, `graph: ${g.exists ? `present, updated ${g.age}` : 'none'}`, `dream pending: ${p.count}`, `handoff note: ${progress.read(cwd) ? progress.notePath(cwd) : 'none yet'}`]);
+    break;
+  }
+  case 'session-report': {
+    try {
+      const values=new Map(),booleans=new Set();
+      for(let i=1;i<argv.length;i++) {
+        const key=argv[i];
+        if(key==='--json'){if(booleans.has(key))throw Error('duplicate option');booleans.add(key);continue;}
+        if(!['--host','--transcript','--meter-reports'].includes(key)||values.has(key)||!argv[i+1]||argv[i+1].startsWith('--'))throw Error('unknown, duplicate or missing option');
+        values.set(key,argv[++i]);
+      }
+      if(values.get('--host')!=='codex'||!values.get('--transcript'))throw Error('--host codex and --transcript are required');
+      const {nativeSessionReport,accountPace}=await import('../lib/session-report.mjs');
+      const result={session:await nativeSessionReport(values.get('--transcript')),account:null};
+      if(values.has('--meter-reports')) {
+        const raw=fs.readFileSync(values.get('--meter-reports'),'utf8').replace(/^\uFEFF/,'');
+        if(raw&&!raw.endsWith('\n'))throw Error('complete meter ledger required');
+        result.account=accountPace(raw.split(/\r?\n/).filter(l=>l.trim()).map(JSON.parse));
+      }
+      say(JSON.stringify(result,null,flag('--json')?0:2));
+    } catch(e) {process.stderr.write(`atlias session-report: ${e.message}\n`);process.exitCode=1;}
     break;
   }
   case 'context': {

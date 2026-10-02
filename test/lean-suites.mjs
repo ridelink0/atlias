@@ -25,6 +25,24 @@ export default async function ({ suite, check, brief, TMP, ROOT, fs, path }) {
   const build = (dir, host, vars) => withEnv({ [LEAN]: null, [GATE]: null, ...vars }, () => brief.build({ cwd: dir, session_id: `lean-${++n}`, source: 'startup' }, host));
   const TOOL_NAMES = ['harness_recall', 'harness_remember', 'harness_progress', 'harness_verify', 'harness_digest', 'graph_query', 'graph_affected', 'graph_explain'];
 
+  suite('on-demand memory expert','brief-index-pointer preserves retrieval and handoff',()=>{
+    const dir=project(),index=path.join(core.claudeMemoryDir(dir),'MEMORY.md');
+    fs.mkdirSync(path.dirname(index),{recursive:true});
+    fs.writeFileSync(index,Array.from({length:90},(_,i)=>`- [Distinct memory ${i}](fact-${i}.md): full memory remains on disk`).join(NL));
+    fs.mkdirSync(path.dirname(progress.notePath(dir)),{recursive:true});
+    fs.writeFileSync(progress.notePath(dir),'Required current work: keep the complete original task and check its result.');
+    const details={happened:'pointer profile violated a startup contract',why:'On-demand context must retain every fact and required behavior.',fix:'Keep index path/read requirement, tools, handoff and disabled identity.'};
+    const off=build(dir,'codex',{'ATLIAS_FLAG_BRIEF_INDEX_POINTER':'0'});
+    const on=build(dir,'codex',{'ATLIAS_FLAG_BRIEF_INDEX_POINTER':'1'});
+    check('disabled flag retains complete original startup bytes',off===build(dir,'codex',{'ATLIAS_FLAG_BRIEF_INDEX_POINTER':null}),details);
+    check('pointer saves over4000 characters without truncating or deleting any memory',on.length<off.length-4000&&!on.includes('Distinct memory')&&on.includes(index)&&fs.readFileSync(index,'utf8').includes('Distinct memory 89'),details);
+    check('both retrieval and durable-state contracts survive',/Read the index, then the files relevant/.test(on)&&/harness_recall/.test(on)&&/harness_remember/.test(on)&&/Required current work/.test(on)&&on.slice(on.indexOf('## Working rules'))===off.slice(off.indexOf('## Working rules')),details);
+    check('Claude already-loaded memory behavior stays byte-identical',build(dir,'claude',{'ATLIAS_FLAG_BRIEF_INDEX_POINTER':'1'})===build(dir,'claude',{'ATLIAS_FLAG_BRIEF_INDEX_POINTER':'0'}),details);
+    const compact=withEnv({'ATLIAS_FLAG_BRIEF_INDEX_POINTER':'1'},()=>brief.build({cwd:dir,source:'compact'},'codex'));
+    check('compaction preserves original handoff and index recovery path',compact.includes(index)&&/Required current work/.test(compact),details);
+    const empty=project();check('missing memory is explicitly absent, never a fabricated pointer',!/no memory entries/.test(build(empty,'codex',{'ATLIAS_FLAG_BRIEF_INDEX_POINTER':'1'})),details);
+  });
+
   suite('lean host instructions', 'Codex reuses supplied startup context with safe missing-context behavior', () => {
     const off = hosts.instructionBlock('codex', { lean: false });
     const lean = hosts.instructionBlock('codex', { lean: true });

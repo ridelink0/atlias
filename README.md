@@ -102,6 +102,12 @@ Hosts: **Claude Code** (plugin), **Codex** (hooks, MCP, AGENTS.md), **Antigravit
 
 ## Tests
 
+Read-only working-time diagnostics are available with `atlias session-report --host codex --transcript <rollout.jsonl> --json`. Optional `--meter-reports <live-reports.jsonl>` estimates recent account pace only when enough matching fresh observations exist. Conversation span, completed-turn time and native token counters are separate; they do not prove on/off allowance savings. See the [measurement contract](docs/CODEX-ALLOWANCE-COMPARISON.md) and [research-to-build plan](docs/DESKTOP-EFFICIENCY-PLAN.md).
+
+The default-off `flags.briefIndexPointer` keeps the non-Claude startup memory index on disk, with its path and required read retained. Handoffs, working rules, tools and the original disabled profile remain intact; Claude Code already loads its index. Model quality, tokens and full-context effects are unmeasured. Ordinary ChatGPT desktop/web integration remains unverified.
+
+`harness_progress set` preserves the complete handoff on disk and returns a short persistence receipt; `get` still returns the full note. This removes redundant response text, with no measured model-token or allowance claim. Inline-check recognition now declines printed assertion strings and potentially skipped shell branches, and accepts supported literal PowerShell stdin checks. Classification still requires a genuine successful execution result; it is not a general semantic proof that arbitrary scripts test the intended behavior.
+
 ```
 node test/run.mjs
 ```

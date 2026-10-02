@@ -297,6 +297,8 @@ async function mcpSuite() {
   if (only.length && !only.some((o) => 'mcp server'.includes(o.toLowerCase()))) return;
   current = { expert: 'MCP expert', name: 'mcp server', passed: 0, failed: [] };
   results.push(current);
+  fs.mkdirSync(path.dirname(progress.notePath(PROJECT)),{recursive:true});
+  fs.writeFileSync(progress.notePath(PROJECT),'# Gev MCP round-trip fixture\n\n## Next\nold step\n');
   const child = spawn(process.execPath, [path.join(ROOT, 'mcp', 'server.mjs')], { env: process.env, cwd: PROJECT });
   const lines = [];
   let buf = '';
@@ -316,7 +318,7 @@ async function mcpSuite() {
   const by = (id) => msgs.find((m) => m.id === id);
   check('initialize answers with serverInfo atlias', by(1) && by(1).result && by(1).result.serverInfo.name === 'atlias', { happened: JSON.stringify(by(1)), why: 'Hosts drop a server that does not complete the handshake.', fix: 'Reply to initialize with protocolVersion, capabilities.tools and serverInfo.' });
   check('tools/list exposes the ten tools', by(2) && by(2).result && by(2).result.tools.length === 10 && by(2).result.tools.every((t) => t.inputSchema && t.inputSchema.type === 'object'), { happened: JSON.stringify(by(2)).slice(0, 200), why: 'Missing or schema-less tools are invisible or rejected by the host.', fix: 'Every TOOLS entry needs name, description and an object inputSchema.' });
-  check('harness_progress set then get round-trips', by(3) && /ship it/.test(by(3).result.content[0].text) && by(4) && /ship it/.test(by(4).result.content[0].text), { happened: JSON.stringify([by(3), by(4)]).slice(0, 300), why: 'The handoff note is the model\'s memory across compaction; a broken round-trip loses it.', fix: 'callTool harness_progress must write next.md and rebuild the note.' });
+  check('harness_progress set then get round-trips', by(3) && /next step recorded/.test(by(3).result.content[0].text) && by(4) && /ship it/.test(by(4).result.content[0].text), { happened: JSON.stringify([by(3), by(4)]).slice(0, 300), why: 'The handoff note is the model\'s memory across compaction; a broken round-trip loses it.', fix: 'callTool harness_progress must write next.md and preserve the complete get response.' });
   check('unknown tool returns isError, not a crash', by(5) && by(5).result && by(5).result.isError === true, { happened: JSON.stringify(by(5)), why: 'A thrown error would kill the server for the whole session.', fix: 'Catch in tools/call and return isError true.' });
   check('unknown method returns JSON-RPC -32601', by(6) && by(6).error && by(6).error.code === -32601, { happened: JSON.stringify(by(6)), why: 'Hosts probe optional methods; a wrong error code can be read as a protocol failure.', fix: 'Return code -32601 for unknown methods with an id.' });
   check('server exits cleanly when stdin closes', await new Promise((res) => { const t = setTimeout(() => res(false), 5000); child.on('exit', (c) => { clearTimeout(t); res(c === 0); }); }), { happened: 'server did not exit within 5 s of stdin end', why: 'Orphaned servers pile up across sessions.', fix: 'process.stdin.on("end") must exit.' });
@@ -631,7 +633,8 @@ suite('state preservation expert', 'state preservation', () => {
   const merged = tools.callTool('harness_progress', { action: 'set', text: 'rotate the staging key before the next run', cwd: PROJECT });
   const after = progress.read(PROJECT);
   check('recording the next step keeps the files, checks and prompts', /parser\.mjs/.test(after) && /npm test/.test(after) && /work on the parser/.test(after), { happened: after, why: 'The tool whose job is to preserve state across a compaction was erasing it, because it rebuilt the note under a session id that had no events.', fix: 'applyNext rewrites only the Next section when a note already exists.' });
-  check('and it records the next step', /rotate the staging key/.test(after) && /rotate the staging key/.test(merged), { happened: after.slice(-200), why: 'Preserving everything and saving nothing is the other failure.', fix: 'Check the Next section rewrite.' });
+  check('and it records the next step', /rotate the staging key/.test(after) && /next step recorded/.test(merged) && tools.callTool('harness_progress',{action:'get',cwd:PROJECT})===after, { happened: after.slice(-200), why: 'Preserving everything and saving nothing is the other failure.', fix: 'Check the Next section rewrite and complete readback.' });
+  check('set acknowledges persistence without duplicating the handoff',merged.includes(progress.notePath(PROJECT))&&merged.includes(Buffer.byteLength(after,'utf8')+' bytes')&&!merged.includes('parser.mjs')&&!merged.includes('rotate the staging key')&&merged.length<400,{happened:merged,why:'Repeating a complete handoff after writing it wastes context without adding information.',fix:'Keep the complete note on disk and available through get; return a persistence receipt.'});
   check('exactly one Next section survives', (after.match(/^## Next$/gm) || []).length === 1, { happened: (after.match(/^## Next$/gm) || []).length + ' sections', why: 'A note with two Next sections tells the next session two different things.', fix: 'Cut at the first Next heading and append one.' });
   const fresh = path.join(TMP, 'fresh-project');
   fs.mkdirSync(fresh, { recursive: true });
@@ -1007,6 +1010,7 @@ await (await import('./task-context-suites.mjs')).default({ suite, check, TMP, R
 await (await import('./dual-cache-suites.mjs')).default({ suite, check, TMP, fs, path });
 await (await import('./native-hook-ownership-suites.mjs')).default({ suite, check, ROOT, TMP, fs, path });
 await (await import('./lean-catalog-suites.mjs')).default({ suite, check, ROOT, TMP, fs, path });
+await (await import('./session-report-suites.mjs')).default({ asyncSuite, check, TMP, fs, path });
 
 let failed = 0;
 for (const r of results) {
