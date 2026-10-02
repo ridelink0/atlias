@@ -1,3 +1,13 @@
+# Gev full-allowance authorization and contract boundary, 2026-10-02T23:22:35.966Z
+
+LATEST Gev: remove90% boundary/use ALL remaining allowance. Corrected V2 DECLARATION now100%, original90proposal retained BEFORE0models; ONLYaccountstop changed, sourceece/native/model/medium/lean/taskContextFALSE/prompts/protectedgrades/48plan unchanged. PaidOFF/freshallwindowmeter still required each call. New separately pinned studies explicitlyauthorized.
+
+V1 workerexec67383 TERMINAL EXIT0 at10/48; NO LIVEworker. Frozen10SHAbdea2207d4a724396bc5345f0652059da9941aac4efd20480f94c83971d99ac0; SAMEledger full10audits/report published at evals/results/native-codex/evidence-contract-defects-2026-10-02. Original2/4/8 prefixes preserved. Originalstrict3/5each; fourvalue/citation-contract failures BOTH areprotocoldefects, notestablishedhallucination. Optional reader0both, raw/peakMORE; no20x proof. Remaining38HELD; NEVERresume/retry/regrade/shrinkV1.
+
+V2 NEWstudy D:/harness-work/runs/codex-atlias-evidence-contract-v2-1002 is48calls/0models BEFORElaunch. Launcher D:/harness-work/run-evidence-contract-v2-1002.mjs checks V1cleanEXIT0, frozen driver/task/nativecopies andsourceECEplan. Corpus16positive14negative+1range controls pass; explicittypes/hash-validextra citations/requiredcoverage, samesourcefixtures isprotocolrepair notnewheldoutclaim. Inspect log/processes beforelaunch/resume, neverduplicate. Stop100/timeout12, ALLfreshcontrols. Futureactualquality/normalcapability/BOTH/token/fullpeak/accountgates remain unfinished. Independent fullinput/instructions/nativeusage/protectedgrade/authaudits needed before claim/publication.
+
+Sourceece37e OWN CI37074375036GREEN9/9/full1697/228/91evidencecontrols; NOTinstalled overbbf6. bbF6ON/single9hooks+MCP/pointerOFF; activecachedMCPstillold3726. Claude cachedquotaold100%notgenuinefresh, noClaude inference. Source28029/48 and19held immutable. Researchgatecomplete/pinnedrefsread, paidOFF/noDR/subagents/UsageLimitsfixes/council/GPU/originallogo changes. SAME21:32Chicagoheartbeattriggernotheadroom. Save terminal/frozen ledger beforecutoff; goalunfinished.
+
 # Separate current-runtime study for Gev, 2026-10-02T23:07:59.034Z
 
 Gev CORRECTED the earlier clarification: NEW separately pinned current-runtime studies are AUTHORIZED. The old source28048-call plan stays incomplete/HELD29/48 with19unattempted; never substitute, retry, regrade or shrink it. Original ledgers, failures and costs stay intact. Research -> plan -> build review remains COMPLETE (Claude completed reports, downloaded pinned Gray9e4d924/ClaudeHarnessd32f5d3).
