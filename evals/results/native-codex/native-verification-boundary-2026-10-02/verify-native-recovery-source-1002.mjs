@@ -1,0 +1,15 @@
+import fs from 'node:fs';import path from 'node:path';import assert from 'node:assert/strict';import crypto from 'node:crypto';import {spawnSync} from 'node:child_process';import {fileURLToPath} from 'node:url';
+const hash=b=>crypto.createHash('sha256').update(b).digest('hex');
+function paths(dir,base=dir){assert.ok(fs.lstatSync(dir).isDirectory(),'archive directory must not be a link');return fs.readdirSync(dir,{withFileTypes:true}).flatMap(e=>{assert.ok(!e.isSymbolicLink(),'unexpected archive link '+e.name);return e.isDirectory()?paths(path.join(dir,e.name),base):e.isFile()?[path.relative(base,path.join(dir,e.name)).replaceAll('\\','/')]:[];});}
+export function verifySource(root,out){
+  const repo='D:/harness-work/atlias-codex-finish',source='280f8d460339bf1ce2d8d09207fbbb0cbf558d9b',execution=JSON.parse(fs.readFileSync(root+'/EXECUTION.json'));
+  assert.equal(execution.source,source);assert.equal(execution.ownCI,36964600425);assert.equal(execution.plannedCalls,48);assert.equal(execution.stopPercent,90);assert.equal(execution.timeoutMinutes,12);assert.equal(execution.model,'gpt-6.1-sol');assert.equal(execution.effort,'medium');assert.equal(execution.lean,true);assert.equal(execution.taskContext,false);
+  assert.equal(hash(fs.readFileSync(repo+'/tools/codexstudy/run.mjs')),execution.driverSha256);assert.equal(hash(fs.readFileSync(execution.native)),execution.nativeSha256);
+  const ci=JSON.parse(fs.readFileSync(root+'/EXACT-CI.json'));assert.equal(ci.headSha,source);assert.equal(ci.conclusion,'success');assert.equal(ci.jobs.length,9);assert.ok(ci.jobs.every(j=>j.conclusion==='success'));
+  const dir=out+'/source-reconstruction';assert.ok(!fs.existsSync(dir));fs.mkdirSync(dir,{recursive:true});const tar=out+'/source-reconstruction.tar';assert.ok(!fs.existsSync(tar));
+  const archive=spawnSync('git',['-C',repo,'archive','--format=tar','-o',tar,source],{encoding:'utf8',windowsHide:true,timeout:60000});assert.equal(archive.status,0,archive.stderr);assert.equal(hash(fs.readFileSync(tar)),hash(fs.readFileSync(root+'/plugin.tar')),'original archived source bytes');
+  const extracted=spawnSync('tar',['-xf',tar,'-C',dir],{encoding:'utf8',windowsHide:true,timeout:60000});assert.equal(extracted.status,0,extracted.stderr);
+  const expected=paths(dir).sort(),actual=paths(root+'/plugin').sort();assert.deepEqual(actual,expected,'no added or removed archived files');for(const rel of expected)assert.ok(fs.readFileSync(dir+'/'+rel).equals(fs.readFileSync(root+'/plugin/'+rel)),rel+' archived source changed');
+  return {source,files:expected.length,archiveSha256:hash(fs.readFileSync(tar)),driverSha256:execution.driverSha256,nativeSha256:execution.nativeSha256,exactCI:execution.ownCI,modelsStarted:0};
+}
+if(process.argv[1]===fileURLToPath(import.meta.url)){const [root,out]=process.argv.slice(2);assert.ok(root&&out&&!fs.existsSync(out));fs.mkdirSync(out);const receipt=verifySource(root,out);fs.writeFileSync(out+'/SOURCE.json',JSON.stringify(receipt,null,2)+'\n',{flag:'wx'});console.log(JSON.stringify(receipt));}
