@@ -2,10 +2,10 @@ import fs from 'node:fs';import path from 'node:path';import {spawn} from 'node:
 import {fileURLToPath} from 'node:url';import {atomic,claim,localUrl} from './runtime.mjs';import {workerEnv} from './worker.mjs';import {hash} from './migrate.mjs';
 
 const root=path.resolve(process.argv[2]||'D:/harness-work/atlias-local-1003');
-const release=claim(path.join(root,'SUPERVISOR.lock'));let worker=null,server=null;
 const env=workerEnv(root),cfg=JSON.parse(fs.readFileSync(path.join(root,'CONFIG.json'),'utf8'));
 localUrl(cfg.url);
 if(!cfg.ollamaSHA256||hash(fs.readFileSync(cfg.ollamaExecutable))!==cfg.ollamaSHA256)throw Error('local runtime executable changed');
+const release=claim(path.join(root,'SUPERVISOR.lock'));let worker=null,server=null;
 const controller=path.dirname(fileURLToPath(import.meta.url));
 function alive(pid){try{process.kill(pid,0);return true;}catch(e){if(e.code==='ESRCH')return false;throw e;}}
 function launch(command,args,log,childEnv){const fd=fs.openSync(path.join(root,log),'a');const p=spawn(command,args,{cwd:root,env:childEnv,windowsHide:true,stdio:['ignore',fd,fd]});fs.closeSync(fd);p.on('error',e=>atomic(path.join(root,'ATTENTION.json'),{at:new Date().toISOString(),error:e.message}));return p;}
