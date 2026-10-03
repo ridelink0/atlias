@@ -13,7 +13,7 @@ export default async function ({suite,check:reportCheck,ROOT,TMP,path}) {
     check('lean catalog is deterministic',wire===JSON.stringify({tools:toolsMod.toolCatalog(true)}));
     const unrelated='model = "test"\n[mcp_servers.other]\ncommand = "preserve"\nenv_vars = ["OTHER_FLAG"]\n';
     const installed=hostsMod.mergeToml(unrelated);
-    check('Codex forwards the lean flag by name without baking its value',installed.includes('env_vars = ["ATLIAS_FLAG_LEAN_BRIEF"]')&&!installed.includes('ATLIAS_FLAG_LEAN_BRIEF ='));
+    check('Codex forwards the lean flag by name without baking its value',/env_vars\s*=\s*\[[^\]]*"ATLIAS_FLAG_LEAN_BRIEF"/.test(installed)&&!installed.includes('ATLIAS_FLAG_LEAN_BRIEF ='));
     check('reinstall preserves unrelated environment policy and remains idempotent',installed.startsWith(unrelated.trimEnd())&&hostsMod.mergeToml(installed)===installed);
     for(const host of ['claude','codex'])for(const enabled of [false,true]){
       const input=[{jsonrpc:'2.0',id:1,method:'initialize'},{jsonrpc:'2.0',id:2,method:'tools/list'},{jsonrpc:'2.0',id:3,method:'tools/call',params:{name:'harness_verify',arguments:{paths:[]}}}].map(JSON.stringify).join('\n')+'\n';

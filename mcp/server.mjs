@@ -4,6 +4,8 @@
 // Antigravity / Gemini CLI (mcp_config.json / settings.json).
 import { VERSION, log } from '../lib/core.mjs';
 import { toolCatalog, callTool } from './tools.mjs';
+// Freeze schemas for this connection; changing saved settings requires restart.
+const catalog = toolCatalog();
 
 let buf = '';
 // A message is one line. Without a ceiling, a client that never sends a
@@ -14,11 +16,12 @@ const reply = (id, result) => send({ jsonrpc: '2.0', id, result });
 const fail = (id, code, message) => send({ jsonrpc: '2.0', id, error: { code, message } });
 
 export function handle(msg) {
+  if (!msg || typeof msg !== 'object' || Array.isArray(msg)) return fail(null, -32600, 'request object required');
   const { id, method, params } = msg;
   if (method === 'initialize') return reply(id, { protocolVersion: (params && params.protocolVersion) || '2025-06-18', capabilities: { tools: {} }, serverInfo: { name: 'atlias', version: VERSION } });
   if (typeof method === 'string' && method.startsWith('notifications/')) return;
   if (method === 'ping') return reply(id, {});
-  if (method === 'tools/list') return reply(id, { tools: toolCatalog() });
+  if (method === 'tools/list') return reply(id, { tools: catalog });
   if (method === 'tools/call') {
     const name = params && params.name;
     try {
