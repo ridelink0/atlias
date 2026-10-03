@@ -9,6 +9,7 @@ import { syntaxReport } from '../lib/gate.mjs';
 import { doctor, formatDoctor } from '../lib/hosts.mjs';
 import * as bench from '../lib/bench.mjs';
 import { doctorRows } from '../lib/hosts-extra.mjs';
+import { discoveryCatalog, discoveryCall } from './discovery.mjs';
 
 const TYPES = new Set(['user', 'feedback', 'project', 'reference']);
 // Names that would collide with the index itself. The filesystem is
@@ -129,11 +130,13 @@ const LEAN_DESCRIPTIONS = {
 
 // Keep every tool and argument schema. Lean mode changes descriptive text only;
 // the full catalog remains the default and the implementation dispatch is shared.
-export function toolCatalog(lean = Boolean(config().flags?.leanBrief)) {
-  return lean ? TOOLS.map(t => ({ ...t, description: LEAN_DESCRIPTIONS[t.name] || t.description })) : TOOLS;
+export function toolCatalog(lean = Boolean(config().flags?.leanBrief), discovery = Boolean(config().flags?.mcpDiscovery)) {
+  const catalog = lean ? TOOLS.map(t => ({ ...t, description: LEAN_DESCRIPTIONS[t.name] || t.description })) : TOOLS;
+  return discovery ? discoveryCatalog(catalog) : catalog;
 }
 
 export function callTool(name, args = {}) {
+  if (name === 'harness') return discoveryCall(toolCatalog(Boolean(config().flags?.leanBrief),false),callTool,args);
   const cwd = args.cwd || process.cwd();
   const cfg = config();
   switch (name) {

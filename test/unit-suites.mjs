@@ -18,12 +18,20 @@ import * as integrity from '../lib/integrity.mjs';
 import * as logoMod from '../lib/logo.mjs';
 import * as loop from '../lib/loop.mjs';
 import * as settings from '../lib/settings.mjs';
+import { discoveryCatalog, discoveryCall } from '../mcp/discovery.mjs';
 import * as shortcut from '../lib/shortcut.mjs';
 import * as track from '../lib/track.mjs';
 import * as usage from '../lib/usage.mjs';
 import * as guard from '../lib/guard.mjs';
 
 export default async function unitSuites({ suite, asyncSuite, check, PROJECT, TMP, fs, path }) {
+  suite('MCP discovery', 'schema routing', () => {
+    const discoveryCheck=(name,ok)=>check(name,ok,{happened:String(ok),why:'Discovery must preserve complete operations while validating routing.',fix:'Preserve original schemas and dispatch bytes.'});
+    const catalog=[{name:'fixture',description:'Gev fixture',inputSchema:{type:'object',properties:{value:{type:'integer'}},required:['value']}}];
+    discoveryCheck('on-demand catalog retains the original operation identifier',discoveryCatalog(catalog)[0].inputSchema.properties.tool.enum[0]==='fixture');
+    discoveryCheck('discovery describe preserves the complete original schema',JSON.stringify(JSON.parse(discoveryCall(catalog,()=>'',{action:'describe',tool:'fixture'})))===JSON.stringify(catalog[0]));
+    discoveryCheck('discovery call preserves validated arguments and original return bytes',discoveryCall(catalog,(name,args)=>name+args.value,{action:'call',tool:'fixture',arguments:{value:42}})==='fixture42');
+  });
   const U = path.join(TMP, 'unit');
   const NL = String.fromCharCode(10);
   const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
