@@ -57,7 +57,7 @@ const shortcutUninstall = () => { const r = shortcut.uninstallShortcut(); return
 // the default model and left five workspaces behind.
 const HELP = {
   evidence: [
-    'usage: atlias evidence --root <project> --file <relative-file> [--first-line N] [--max-lines N] [--max-bytes N] [--expected-sha256 HEX] [--json]',
+    'usage: atlias evidence --root <project> --file <relative-file> [--find LITERAL] [--first-line N] [--max-lines N] [--max-bytes N] [--expected-sha256 HEX] [--json]',
     '  Read-only bounded JSON source lines with a raw-file SHA256 and explicit continuation.',
     '  Continuations require the prior source hash. No model or default MCP catalog change.',
   ],
@@ -455,13 +455,15 @@ else switch (cmd) {
     try {
       const options=new Map();
       for(let i=1;i<argv.length;i++) {
-        const key=argv[i];if(options.has(key))throw Error('duplicate evidence option');
+        let key=argv[i];const inlineFind=key.startsWith('--find=')?key.slice(7):undefined;if(inlineFind!==undefined)key='--find';if(options.has(key))throw Error('duplicate evidence option');
+        if(inlineFind!==undefined){options.set(key,inlineFind);continue;}
         if(key==='--json'){options.set(key,true);continue;}
-        if(!['--root','--file','--first-line','--max-lines','--max-bytes','--expected-sha256'].includes(key)||!argv[i+1]||argv[i+1].startsWith('--'))throw Error('unknown or missing evidence option');
+        if(!['--root','--file','--find','--first-line','--max-lines','--max-bytes','--expected-sha256'].includes(key)||!argv[i+1]||argv[i+1].startsWith('--'))throw Error('unknown or missing evidence option');
         options.set(key,argv[++i]);
       }
       const values={root:options.get('--root'),file:options.get('--file')};
       for(const [key,name]of [['--first-line','firstLine'],['--max-lines','maxLines'],['--max-bytes','maxBytes']])if(options.has(key)){if(!/^[1-9][0-9]*$/.test(options.get(key)))throw Error('positive decimal limits required');values[name]=Number(options.get(key));}
+      if(options.has('--find'))values.findText=options.get('--find');
       if(options.has('--expected-sha256'))values.expectedSha256=options.get('--expected-sha256');
       const {sourceEvidence}=await import('../lib/source-evidence.mjs');say(JSON.stringify(sourceEvidence(values)));
     }catch(e){process.stderr.write(`atlias evidence: ${e.message}\n`);process.exitCode=1;}
