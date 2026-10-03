@@ -1,0 +1,7 @@
+# Native context-policy protocol evidence for Gev
+
+Zero model calls. Both native clients (copied Codex and hashed installed Claude) can activate their tested compaction controls against an owned localhost scripted fixture. Codex default/body profiles send2requests and total sends3 with1summary. Claude two-user-group control sends3requests and early sends4 with1native compact boundary; the earlier one-group too_few_groups failure remains retained. Tested initial tools/foundation equal the control; Codex post-compaction tools/foundation also remain identical. These are protocol checks, not normal universal capability or genuine model/allowance measurements.
+
+Claude cumulative modelUsage includes the synthetic compaction input; summing per-turn usage omits it. Existing Atlias Claude accounting already uses cumulative modelUsage, so that suspected bug was a false alarm. EVIDENCE.json pins full local request/stream receipts and all earlier failures without republishing native prompt text.
+
+Configuration and dry-driver controls pass:51policy controls,85native driver checks,78existing session-accounting controls. Actual binary config/read accepts total/body scopes; unknown scope/field reject. No installed/global configuration changed. [Policy and quality gates](../../../../docs/NATIVE-CONTEXT-POLICY.md) specify the NEW pinned real-model study prerequisites. Public/BOTH-host/model-token/full-peak/subscription20x and25x targets remain unproved.

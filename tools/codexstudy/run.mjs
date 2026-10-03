@@ -10,8 +10,18 @@ import { childEnv, readJsonl } from '../ccstudy/lib.mjs';
 import { score, tamper } from '../../lib/eval.mjs';
 import { runAsync } from '../../lib/proc.mjs';
 import {flagEnvName} from '../../lib/core.mjs';
+import {contextOverrides} from '../native-job/context-policy.mjs';
 const ROOT=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../..');
 const opt=(a,k,d='')=>a.includes(k)?a[a.indexOf(k)+1]:d;
+export function compactPolicyOf(a){
+  const keys=['--compact-limit','--compact-scope'];
+  for(const key of keys)if(a.filter(x=>x===key).length>1)throw Error('duplicate compaction option');
+  for(const key of keys)if(a.includes(key)&&(a[a.indexOf(key)+1]===undefined||a[a.indexOf(key)+1].startsWith('--')))throw Error('compaction option requires a value');
+  if(!a.includes(keys[0])){if(a.includes(keys[1]))throw Error('compaction scope requires a limit');return null;}
+  const limit=opt(a,keys[0]),scope=opt(a,keys[1],'total');
+  if(typeof limit!=='string'||!/^\d+$/.test(limit))throw Error('integer compaction limit required');
+  const policy={limitTokens:Number(limit),scope};contextOverrides('codex',policy);return policy;
+}
 export function skillIsolation(plan){const mode=plan?(plan.skillsIsolation??'directory-path-legacy'):'file-path-v1';if(!['directory-path-legacy','file-path-v1'].includes(mode))throw new Error('unknown skill isolation mode');return mode;}
 export function skillConfigPaths(directories,mode){skillIsolation({skillsIsolation:mode});return directories.map(p=>mode==='file-path-v1'?path.join(p,'SKILL.md'):p);}
 export function contextTransport(plan){const mode=plan.contextTransport??'native-hook';if(!['native-hook','caller-v1'].includes(mode))throw Error('unknown task context transport');return mode;}
@@ -20,7 +30,7 @@ export function assertFreshAllowance(meter,now=Date.now()){
   if(!Array.isArray(meter.windows)||!meter.windows.length||meter.windows.some(w=>!Number.isFinite(w.percentUsed)||w.percentUsed<0||w.percentUsed>100))throw Error('all quota windows must be known; no model call started');
   if(meter.codexCredits?.enabled!==false)throw Error('paid credits must be explicitly off; no model call started');
 }
-export function validateResume(old,plan){if(['sha','plugin','model','effort','lean'].some(k=>old[k]!==plan[k])||Boolean(old.taskContext)!==Boolean(plan.taskContext)||contextTransport(old)!==contextTransport(plan)||(contextTransport(plan)==='caller-v1'&&old.driverSha256!==plan.driverSha256)||skillIsolation(old)!==skillIsolation(plan)||JSON.stringify(old.tasks)!==JSON.stringify(plan.tasks))throw new Error('resume would mix plugin/model/effort/flags, context transport/driver, skill isolation or task hashes; choose a new output directory');if(Number.isSafeInteger(old.repeats)&&plan.repeats<old.repeats)throw new Error('resume cannot decrease repeats; retain or extend the existing plan');}
+export function validateResume(old,plan){if(JSON.stringify(old.contextPolicy??null)!==JSON.stringify(plan.contextPolicy??null)||(plan.contextPolicy&&old.driverSha256!==plan.driverSha256))throw Error('resume would change native compaction policy/driver; choose a new output directory');if(['sha','plugin','model','effort','lean'].some(k=>old[k]!==plan[k])||Boolean(old.taskContext)!==Boolean(plan.taskContext)||contextTransport(old)!==contextTransport(plan)||(contextTransport(plan)==='caller-v1'&&old.driverSha256!==plan.driverSha256)||skillIsolation(old)!==skillIsolation(plan)||JSON.stringify(old.tasks)!==JSON.stringify(plan.tasks))throw new Error('resume would mix plugin/model/effort/flags, context transport/driver, skill isolation or task hashes; choose a new output directory');if(Number.isSafeInteger(old.repeats)&&plan.repeats<old.repeats)throw new Error('resume cannot decrease repeats; retain or extend the existing plan');}
 export function limitsOf(a){const stopPercent=Number(opt(a,'--stop-percent','60')),timeoutMin=Number(opt(a,'--timeout-min','12'));if(!Number.isFinite(stopPercent)||stopPercent<=0||stopPercent>100||!Number.isFinite(timeoutMin)||timeoutMin<=0)throw new Error('stop percentage must be in (0,100] and timeout minutes must be positive and finite');return {stopPercent,timeoutMin};}
 export function profileEnv(lean,taskContext=false){return {...(lean?{[flagEnvName('leanBrief')]:'1',[flagEnvName('gateRunsCheck')]:'1'}:{}),...(taskContext?{[flagEnvName('taskContext')]:'1'}:{})};}
 export function taskContextReceived(events){return events.some(r=>r.type==='response_item'&&r.payload?.type==='message'&&['developer','user'].includes(r.payload.role)&&JSON.stringify(r.payload.content).includes('[atlias task context]'));}
@@ -70,11 +80,13 @@ export async function main(a){
   const priorPlan=fs.existsSync(planFile)?JSON.parse(fs.readFileSync(planFile)):null;
   const skillsIsolation=skillIsolation(priorPlan);
   const model=opt(a,'--model','gpt-6.1-sol'),effort=opt(a,'--effort','medium');
+  const contextPolicy=compactPolicyOf(a);
+  if(contextPolicy&&plugin.name!=='atlias')throw Error('native context experiment requires Atlias');
   const lean=a.includes('--lean');
   const taskContext=a.includes('--task-context');
   const transport=contextTransport({contextTransport:opt(a,'--context-transport','native-hook')});
   if(transport==='caller-v1'&&(!taskContext||plugin.name!=='atlias'))throw Error('caller-v1 requires Atlias and explicit --task-context');
-  const plan={engine:'native Codex CLI',plugin:plugin.name,sha,model,effort,lean,taskContext,repeats,tasks:tasks.map(t=>({id:t.id,sha256:t.taskSha256,family:t.family})),jobs:jobsOf(tasks,repeats).length,order:'alternate plain/plugin order by task and repeat',paidCredits:'account setting must remain off',...(transport==='caller-v1'?{contextTransport:transport,driverSha256:crypto.createHash('sha256').update(fs.readFileSync(fileURLToPath(import.meta.url))).digest('hex')}:{}),...(skillsIsolation==='file-path-v1'?{skillsIsolation}:{})};
+  const plan={engine:'native Codex CLI',plugin:plugin.name,sha,model,effort,lean,taskContext,repeats,tasks:tasks.map(t=>({id:t.id,sha256:t.taskSha256,family:t.family})),jobs:jobsOf(tasks,repeats).length,order:'alternate plain/plugin order by task and repeat',paidCredits:'account setting must remain off',...(transport==='caller-v1'?{contextTransport:transport,driverSha256:crypto.createHash('sha256').update(fs.readFileSync(fileURLToPath(import.meta.url))).digest('hex')}:{}),...(skillsIsolation==='file-path-v1'?{skillsIsolation}:{}),...(contextPolicy?{contextPolicy,driverSha256:crypto.createHash('sha256').update(fs.readFileSync(fileURLToPath(import.meta.url))).digest('hex')}:{})};
   fs.mkdirSync(out,{recursive:true});
   if(fs.existsSync(planFile)&&fs.existsSync(path.join(out,'rows.jsonl')))validateResume(JSON.parse(fs.readFileSync(planFile)),plan);
   fs.writeFileSync(planFile,JSON.stringify(plan,null,2)+'\n');
@@ -127,11 +139,12 @@ export async function main(a){
         sync(bin,['plugin','add',`${plugin.name}@${plugin.name}`],{env,cwd:ws});
       }
     }
-    fs.copyFileSync(auth,path.join(codexHome,'auth.json'));
-    const args=['--no-daemon','-a','never','exec','--skip-git-repo-check','--ignore-rules','--dangerously-bypass-hook-trust','--json','-s','danger-full-access','-c','features.apps=false','-m',model,'-C',ws,prepared.input];
+    const policyArgs=contextOverrides('codex',job.arm==='plugin'?contextPolicy:null).argv;
+    const args=['--no-daemon',...policyArgs,'-a','never','exec','--skip-git-repo-check','--ignore-rules','--dangerously-bypass-hook-trust','--json','-s','danger-full-access','-c','features.apps=false','-m',model,'-C',ws,prepared.input];
+    if(contextPolicy)fs.writeFileSync(path.join(base,'native-argv.json'),JSON.stringify(args,null,2)+'\n');
     const started=Date.now();console.log(`START ${job.task.id} r${job.repeat} ${job.arm}`);
     let proc;
-    try {proc=await run(bin,args,{env,cwd:ws,stream:path.join(base,'stream.jsonl'),stderr:path.join(base,'stderr.txt'),timeoutMs:timeoutMin*60000});}
+    try {fs.copyFileSync(auth,path.join(codexHome,'auth.json'));proc=await run(bin,args,{env,cwd:ws,stream:path.join(base,'stream.jsonl'),stderr:path.join(base,'stderr.txt'),timeoutMs:timeoutMin*60000});}
     finally {fs.rmSync(path.join(codexHome,'auth.json'),{force:true});}
     const rollouts=filesUnder(path.join(codexHome,'sessions')).filter(f=>f.endsWith('.jsonl'));
     const events=rollouts.flatMap(readJsonl),usage=usageOf(events);
@@ -144,6 +157,7 @@ export async function main(a){
     const actualModels=[...new Set(events.filter(r=>r.type==='turn_context').map(r=>r.payload.model).filter(Boolean))];
     const valid=!blocked&&actualModels.length===1&&actualModels[0]===model&&(job.arm==='plain'?!proof.hooksConfigured&&!proof.mcpConfigured:(plugin.name==='atlias'?proof.hooksConfigured&&proof.mcpConfigured&&proof.hookEvents>0:proof.pluginEnabled));
     const row={...usage,...flowOf(events),task:job.task.id,family:job.task.family||job.task.id,repeat:job.repeat,arm:job.arm==='plain'?'plain':plugin.name,sha:job.arm==='plain'?'':sha,taskSha256:job.task.taskSha256,model,effort,lean:job.arm==='plugin'&&lean,cliVersion:sync(bin,['--version'],{env}),solved:grade.pass&&!cheat.files.length&&!proc.timedOut&&proc.code===0,valid,proof,checkOutput:grade.output,tampered:cheat.files,exitCode:proc.code,timedOut:proc.timedOut,ms:Date.now()-started,base,compactions:events.filter(r=>r.type==='compacted').length,at:new Date().toISOString()};
+    if(contextPolicy)row.contextPolicy=job.arm==='plugin'?contextPolicy:null;
     row.taskContext=job.arm==='plugin'&&taskContext;
     row.proof.taskContextDelivered=taskContextReceived(events);
     row.proof.taskContextGenerated=hookLogs.flatMap(readJsonl).some(r=>r.kind==='task-context');

@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';import os from 'node:os';import path from 'node:path';
-import {usageOf,flowOf,jobsOf,contained,validateResume,limitsOf,profileEnv,taskContextReceived,skillIsolation,skillConfigPaths,contextTransport,inputReceived,assertFreshAllowance} from './run.mjs';import {loadTaskList} from '../ccstudy/run.mjs';
+import {usageOf,flowOf,jobsOf,contained,validateResume,limitsOf,profileEnv,taskContextReceived,skillIsolation,skillConfigPaths,contextTransport,inputReceived,assertFreshAllowance,compactPolicyOf} from './run.mjs';import {loadTaskList} from '../ccstudy/run.mjs';
 import {summarize} from './summary.mjs';
 import {spawnSync} from 'node:child_process';
 let n=0;const eq=(a,b)=>{assert.deepEqual(a,b);n++;};
@@ -17,6 +17,14 @@ eq(usageOf([count({...u,input_tokens:50},20),count(u,40)]).contextMean,30);
 const jobs=jobsOf([{id:'a'},{id:'b'}],3);eq(jobs.length,12);eq(jobs.slice(0,2).map(x=>x.arm),['plain','plugin']);eq(jobs.slice(4,6).map(x=>x.arm),['plugin','plain']);
 const root=fs.mkdtempSync(path.join(os.tmpdir(),'gev-study-test-'));
 const plan={sha:'x',plugin:'atlias',model:'x',effort:'medium',lean:false,tasks:[{id:'a',sha256:'old'}]};
+eq(compactPolicyOf([]),null);
+eq(compactPolicyOf(['--compact-limit','32000']),{limitTokens:32000,scope:'total'});
+eq(compactPolicyOf(['--compact-limit','32000','--compact-scope','body_after_prefix']),{limitTokens:32000,scope:'body_after_prefix'});
+for(const a of [['--compact-limit'],['--compact-scope','total'],['--compact-limit','32000','--compact-scope'],['--compact-limit','32000','--compact-limit','40000'],['--compact-limit','32000','--compact-scope','total','--compact-scope','total'],['--compact-limit','NaN'],['--compact-limit','0'],['--compact-limit','32000','--compact-scope','wrong']]){assert.throws(()=>compactPolicyOf(a));n++;}
+const contextPlan={...plan,contextPolicy:{limitTokens:32000,scope:'total'},driverSha256:'pinned-driver'};
+validateResume(contextPlan,{...contextPlan});n++;
+for(const candidate of [plan,{...contextPlan,contextPolicy:{limitTokens:64000,scope:'total'}},{...contextPlan,contextPolicy:{limitTokens:32000,scope:'body_after_prefix'}},{...contextPlan,driverSha256:'changed-driver'}]){assert.throws(()=>validateResume(contextPlan,candidate),/compaction/);n++;}
+assert.throws(()=>validateResume(plan,contextPlan),/compaction/);n++;
 eq(contextTransport(plan),'native-hook');eq(contextTransport({contextTransport:'caller-v1'}),'caller-v1');
 assert.throws(()=>contextTransport({contextTransport:'unknown'}),/unknown/);n++;
 validateResume(plan,{...plan,contextTransport:'native-hook'});n++;
