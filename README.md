@@ -90,6 +90,8 @@ Inside: `/status`, `/diff`, `/review` (the engine reviews the uncommitted change
 
 ## In every host
 
+Gev's [local migration](docs/LOCAL-MIGRATION-PLAN.md) now has a private, byte-verified archive of 46,671 plugin, skill, instruction, session, research and reference files, with on-demand retrieval. The [local continuation runner](tools/local-work/README.md) adds a single-worker lease, durable request/phase receipts, independent controller checks and lazy stdio MCP dispatch to the existing Atlias loop. Original settings and the installed sub-harness remain intact. Copied plugin source is distinct from verified native activation, and local inference alone does not prove normal capability parity or the20x token/context goals. Actual runtime, quality and prolonged recovery gates remain separate.
+
 1. **Session start**: one brief. The handoff note from the last stretch, the memory index, the knowledge graph's hubs, pending Dream digests, and, in Claude Code, where the 5-hour and weekly usage windows stand, from the [usage-limits](https://github.com/ridelink0/claude-code-usage-limits) plugin's last reading, **as information, never as a brake**: the model keeps full quality and scope, and whatever you say about usage decides.
 2. **Each prompt**: silent, unless it is a codebase question and a graph exists, in which case the graph answers in a few hundred tokens before any file is read.
 3. **Before each tool**: silent, unless the call is a loop or the command is destructive. Codex and Gemini CLI cannot pause a tool for the user, so there the command is stopped, the model is told to ask, and the identical command goes through once after you answer.

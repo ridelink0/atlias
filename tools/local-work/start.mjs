@@ -1,0 +1,14 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import {spawn} from 'node:child_process';
+import {fileURLToPath} from 'node:url';
+import {workerEnv} from './worker.mjs';
+const root=path.resolve(process.argv[2]||'D:/harness-work/atlias-local-1003');
+if(fs.existsSync(path.join(root,'ATTENTION.json')))throw Error('Read ATTENTION.json, repair the cause and archive that receipt before resuming');
+if(fs.existsSync(path.join(root,'STOP')))throw Error('operator STOP remains present');
+const script=path.join(path.dirname(fileURLToPath(import.meta.url)),'worker.mjs');
+const args=[script,root,...(process.argv.includes('--once')?['--once']:[])];
+const log=fs.openSync(path.join(root,'WORKER.log'),'a');
+const p=spawn(process.execPath,args,{cwd:root,env:workerEnv(root),windowsHide:true,detached:true,stdio:['ignore',log,log]});
+p.on('error',e=>{console.error(e.message);process.exitCode=1;});p.unref();fs.closeSync(log);
+console.log(JSON.stringify({startedPid:p.pid,log:path.join(root,'WORKER.log'),note:'Check STATUS.json and WORKER.lock for actual health; spawn is not success.'}));
