@@ -1,0 +1,9 @@
+{
+  "originalHash": "825b1271c0d4ebb36731c016d2962f437299321db3c4c614dedfa6dff31d9267",
+  "initialCommit": "85a4c15",
+  "initialGitBlobHash": "594cf1ea086071f2a8335c4c79338fcb6113acd4224410b88d5561e3e0ed98a7",
+  "failure": "Git CRLF normalization changed raw report bytes; source grades and original working bytes unchanged.",
+  "fix": "Scoped -text attribute preserves all saved JSON bytes.",
+  "modelsStarted": 0,
+  "gradesChanged": false
+}

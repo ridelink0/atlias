@@ -1,0 +1,42 @@
+{
+  "seed": "gev-capability-2026-10-01-v1",
+  "limitation": "Six authored workflow diagnostics, not universal capability parity or public benchmark scores.",
+  "tasks": [
+    {
+      "file": "evals/capability-heldout/capability-multifile-new-api.json",
+      "id": "capability-multifile-new-api",
+      "family": "multifile-new-api",
+      "sha256": "1f7738797f9e5e36ccf4d167b5ef3d4217ee241d7d3c49647886910f7d21bc6e"
+    },
+    {
+      "file": "evals/capability-heldout/capability-cli-encoding-paths.json",
+      "id": "capability-cli-encoding-paths",
+      "family": "cli-encoding-paths",
+      "sha256": "3c8d4e7a339d912f31f1904a640b263218ed025b0efffc0ad09b511ef062527b"
+    },
+    {
+      "file": "evals/capability-heldout/capability-async-cancellation.json",
+      "id": "capability-async-cancellation",
+      "family": "async-cancellation",
+      "sha256": "e93d4680a2987a33dbde5d8fb5a6e0ee2e779a1542ca257996b901f1a4471db8"
+    },
+    {
+      "file": "evals/capability-heldout/capability-untrusted-evidence.json",
+      "id": "capability-untrusted-evidence",
+      "family": "untrusted-evidence",
+      "sha256": "417316a4ba87c025ba4f40160d7a9e6a96a30eb43c21844aa725f064652a3e01"
+    },
+    {
+      "file": "evals/capability-heldout/capability-large-dependency-discovery.json",
+      "id": "capability-large-dependency-discovery",
+      "family": "large-dependency-discovery",
+      "sha256": "8e072d77787a6b836d24403bf54a0ed1b5eae0a663610361c833f943aa1be907"
+    },
+    {
+      "file": "evals/capability-heldout/capability-durable-state-restart.json",
+      "id": "capability-durable-state-restart",
+      "family": "durable-state-restart",
+      "sha256": "6b09bda41495ab917b0bbc33194e2a17c32e0f686bb322d03c647719a6e384bc"
+    }
+  ]
+}

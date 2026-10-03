@@ -1,0 +1,14 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import { prepareDataset, questionPrompt, hash } from './protocol.mjs';
+const [csv, out] = process.argv.slice(2);
+if (!csv || !out) throw Error('usage: node tools/omniscience/prepare.mjs <pinned-csv> <unused-output-directory>');
+if (fs.existsSync(out)) throw Error('preserve existing benchmark output');
+const data = prepareDataset(fs.readFileSync(csv));
+const questions = data.questions.map(q => ({ ...q, prompt: questionPrompt(q) }));
+const plan = { benchmark: 'AA-Omniscience-Public', dataset: data.dataset, status: 'prepared; native answering and protected judging unmeasured', plannedQuestions: questions.length, hosts: ['Codex', 'Claude Code'], arms: ['plain', 'atlias'], closedBook: true, paidCredits: false, modelCalls: 0, questionManifestSha256: hash(JSON.stringify(questions)), goldManifestSha256: hash(JSON.stringify(data.gold)), graderIsolation: 'grader-only contents must never be staged into a contestant workspace or context' };
+fs.mkdirSync(path.join(out, 'grader-only'), { recursive: true });
+fs.writeFileSync(path.join(out, 'plan.json'), JSON.stringify(plan, null, 2) + '\n');
+fs.writeFileSync(path.join(out, 'questions.json'), JSON.stringify(questions, null, 2) + '\n');
+fs.writeFileSync(path.join(out, 'grader-only/gold.json'), JSON.stringify(data.gold, null, 2) + '\n');
+console.log(JSON.stringify({ prepared: questions.length, revision: data.dataset.revision, modelCalls: 0, out }));

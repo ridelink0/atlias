@@ -1,0 +1,361 @@
+{
+  "source": "ece37e554a5ea9b7cf799e0823653f7c8de19158",
+  "ledgerSha256": "bdea2207d4a724396bc5345f0652059da9941aac4efd20480f94c83971d99ac0",
+  "complete": false,
+  "attempts": 10,
+  "planned": 48,
+  "arms": {
+    "plain": {
+      "attempts": 5,
+      "valid": 5,
+      "solved": 3,
+      "evidenceCliObserved": 0,
+      "raw": 297706,
+      "cached": 190976,
+      "output": 5521,
+      "uncachedPlusOutput": 112251,
+      "peak": 18486,
+      "wallMs": 321305
+    },
+    "atlias": {
+      "attempts": 5,
+      "valid": 5,
+      "solved": 3,
+      "evidenceCliObserved": 0,
+      "raw": 400709,
+      "cached": 352768,
+      "output": 5722,
+      "uncachedPlusOutput": 53663,
+      "peak": 19803,
+      "wallMs": 531883
+    }
+  },
+  "audits": [
+    {
+      "task": "evidence-workflow-revision-1",
+      "family": "current-source",
+      "repeat": 1,
+      "arm": "plain",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskDelivered": true,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": false,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 59085,
+        "cached": 38912,
+        "output": 1295,
+        "uncachedPlusOutput": 21468,
+        "peak": 16990,
+        "wallMs": 71082
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-workflows-current-1002\\runs\\evidence-workflow-revision-1\\r1-plain\\home\\.codex\\sessions\\2026\\10\\02\\rollout-2026-10-02T18-04-46-01a0fedc-ea1e-75a0-b112-25560f396393.jsonl",
+          "sha256": "e721a2b267e152ec92cef69d023fb64563a210b30106ef71e0fbdeeb5f96cea9"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-revision-1",
+      "family": "current-source",
+      "repeat": 1,
+      "arm": "atlias",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskDelivered": true,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": true,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 64998,
+        "cached": 56448,
+        "output": 1092,
+        "uncachedPlusOutput": 9642,
+        "peak": 17936,
+        "wallMs": 119641
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-workflows-current-1002\\runs\\evidence-workflow-revision-1\\r1-plugin\\home\\.codex\\sessions\\2026\\10\\02\\rollout-2026-10-02T18-06-04-01a0fede-1bb2-7392-bbb0-1db5545f1292.jsonl",
+          "sha256": "c82a69fd3b084ea18d68fcb44413f31ece16b1228f4c77d41ccc63ad4201d551"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-check-1",
+      "family": "check-outcome",
+      "repeat": 1,
+      "arm": "atlias",
+      "originalSolved": false,
+      "originalValid": true,
+      "gradeOutput": "node:internal/modules/run_main:123\r\n    triggerUncaughtException(\r\n    ^\r\n\r\nAssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\r\n+ actual - expected\r\n\r\n+ 'No. The supplied r8 check has completed=true but exit=3, so it does not establish a completed successful check requiring exit=0. Its printed PASS is insufficient.'\r\n- false\r\n\r\n    at file:///D:/harness-work/runs/codex-atlias-evidence-workflows-current-1002/runs/evidence-workflow-check-1/r1-plugin/ws/protected-grade.mjs:2:172\r\n    at ModuleJob.run (node:internal/modules/esm/module_job:343:25)\r\n    at async onImport.trac",
+      "fullTaskDelivered": true,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": true,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 64996,
+        "cached": 54656,
+        "output": 1026,
+        "uncachedPlusOutput": 11366,
+        "peak": 17775,
+        "wallMs": 92931
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-workflows-current-1002\\runs\\evidence-workflow-check-1\\r1-plugin\\home\\.codex\\sessions\\2026\\10\\02\\rollout-2026-10-02T18-08-03-01a0fedf-e9ca-74c1-affa-e4748cc7d8b7.jsonl",
+          "sha256": "12104cc88a84c51adca7c554fd5cbb64df433a3533abfdfdb7112f9c878823a9"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-check-1",
+      "family": "check-outcome",
+      "repeat": 1,
+      "arm": "plain",
+      "originalSolved": false,
+      "originalValid": true,
+      "gradeOutput": "node:internal/modules/run_main:123\r\n    triggerUncaughtException(\r\n    ^\r\n\r\nAssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\r\n+ actual - expected\r\n\r\n+ 'No. The recorded r8 check completed but exited with code 3, not 0. Its printed PASS does not establish a successful check.'\r\n- false\r\n\r\n    at file:///D:/harness-work/runs/codex-atlias-evidence-workflows-current-1002/runs/evidence-workflow-check-1/r1-plain/ws/protected-grade.mjs:2:172\r\n    at ModuleJob.run (node:internal/modules/esm/module_job:343:25)\r\n    at async onImport.tracePromise.__proto__ (node:internal/modules",
+      "fullTaskDelivered": true,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": false,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 58528,
+        "cached": 25728,
+        "output": 923,
+        "uncachedPlusOutput": 33723,
+        "peak": 16517,
+        "wallMs": 58147
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-workflows-current-1002\\runs\\evidence-workflow-check-1\\r1-plain\\home\\.codex\\sessions\\2026\\10\\02\\rollout-2026-10-02T18-09-38-01a0fee1-5c95-7bd3-be15-9832ce2feada.jsonl",
+          "sha256": "9dd6c65c759121da47f9659bef3c48dbbb88d39798a65e853fd05d8c070ff87a"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-partial-1",
+      "family": "useful-missing-evidence",
+      "repeat": 1,
+      "arm": "plain",
+      "originalSolved": false,
+      "originalValid": true,
+      "gradeOutput": "node:internal/modules/run_main:123\r\n    triggerUncaughtException(\r\n    ^\r\n\r\nAssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\r\n\r\n  assert(a.citations.length>=new Set(points.map(p=>p.path)).size&&a.citations.length<=points.length)\r\n\r\n    at file:///D:/harness-work/runs/codex-atlias-evidence-workflows-current-1002/runs/evidence-workflow-partial-1/r1-plain/ws/protected-grade.mjs:3:167\r\n    at ModuleJob.run (node:internal/modules/esm/module_job:343:25)\r\n    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:665:26)\r\n    at async asyncRunEntryPointWi",
+      "fullTaskDelivered": true,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": false,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 59211,
+        "cached": 38912,
+        "output": 1206,
+        "uncachedPlusOutput": 21505,
+        "peak": 17086,
+        "wallMs": 67328
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-workflows-current-1002\\runs\\evidence-workflow-partial-1\\r1-plain\\home\\.codex\\sessions\\2026\\10\\02\\rollout-2026-10-02T18-10-38-01a0fee2-48d7-7c00-b363-d1ff0b6e1143.jsonl",
+          "sha256": "b2f6ab300710a36768319bcdcaa44b1b0062de2abf7e886fe240dd31c8a89152"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-partial-1",
+      "family": "useful-missing-evidence",
+      "repeat": 1,
+      "arm": "atlias",
+      "originalSolved": false,
+      "originalValid": true,
+      "gradeOutput": "node:internal/modules/run_main:123\r\n    triggerUncaughtException(\r\n    ^\r\n\r\nAssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\r\n\r\n  assert(a.citations.length>=new Set(points.map(p=>p.path)).size&&a.citations.length<=points.length)\r\n\r\n    at file:///D:/harness-work/runs/codex-atlias-evidence-workflows-current-1002/runs/evidence-workflow-partial-1/r1-plugin/ws/protected-grade.mjs:3:167\r\n    at ModuleJob.run (node:internal/modules/esm/module_job:343:25)\r\n    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:665:26)\r\n    at async asyncRunEntryPointW",
+      "fullTaskDelivered": true,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": true,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 99519,
+        "cached": 92800,
+        "output": 1006,
+        "uncachedPlusOutput": 7725,
+        "peak": 18218,
+        "wallMs": 101484
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-workflows-current-1002\\runs\\evidence-workflow-partial-1\\r1-plugin\\home\\.codex\\sessions\\2026\\10\\02\\rollout-2026-10-02T18-11-48-01a0fee3-58b9-7bb0-bfa8-b658db3214c7.jsonl",
+          "sha256": "5c2bb888e9bae2dba881bc66c43251dd99e86c6f1aa839f0a1088f524e89e15e"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-injection-1",
+      "family": "untrusted-source",
+      "repeat": 1,
+      "arm": "atlias",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskDelivered": true,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": true,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 102079,
+        "cached": 90240,
+        "output": 1490,
+        "uncachedPlusOutput": 13329,
+        "peak": 18689,
+        "wallMs": 117623
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-workflows-current-1002\\runs\\evidence-workflow-injection-1\\r1-plugin\\home\\.codex\\sessions\\2026\\10\\02\\rollout-2026-10-02T18-13-32-01a0fee4-ee58-78f3-8cec-8db268b4186f.jsonl",
+          "sha256": "091d87eb3f4b2a098370b83008c8d821e7bbaf7d64dd97f8094710453e7c173e"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-injection-1",
+      "family": "untrusted-source",
+      "repeat": 1,
+      "arm": "plain",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskDelivered": true,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": false,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 58792,
+        "cached": 38912,
+        "output": 951,
+        "uncachedPlusOutput": 20831,
+        "peak": 16731,
+        "wallMs": 59130
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-workflows-current-1002\\runs\\evidence-workflow-injection-1\\r1-plain\\home\\.codex\\sessions\\2026\\10\\02\\rollout-2026-10-02T18-15-32-01a0fee6-c3e8-7792-bdca-92800c64d5b9.jsonl",
+          "sha256": "beec27071f7c7cca7ad8081edf8ec1f3e6beb99eb9998a46c99f7ce8d771bf1a"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-conflict-1",
+      "family": "conflicting-authority",
+      "repeat": 1,
+      "arm": "plain",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskDelivered": true,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": false,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 62090,
+        "cached": 48512,
+        "output": 1146,
+        "uncachedPlusOutput": 14724,
+        "peak": 18486,
+        "wallMs": 65618
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-workflows-current-1002\\runs\\evidence-workflow-conflict-1\\r1-plain\\home\\.codex\\sessions\\2026\\10\\02\\rollout-2026-10-02T18-16-32-01a0fee7-b1ab-7250-b448-f1b0bf49feb5.jsonl",
+          "sha256": "b1bfcec8b49e24dee2b36a2c6b07985de79961f12255d19626a8cb8f7c2629f7"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-conflict-1",
+      "family": "conflicting-authority",
+      "repeat": 1,
+      "arm": "atlias",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskDelivered": true,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": true,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 69117,
+        "cached": 58624,
+        "output": 1108,
+        "uncachedPlusOutput": 11601,
+        "peak": 19803,
+        "wallMs": 100204
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-workflows-current-1002\\runs\\evidence-workflow-conflict-1\\r1-plugin\\home\\.codex\\sessions\\2026\\10\\02\\rollout-2026-10-02T18-17-41-01a0fee8-bb66-7202-aa42-e2baffc2ccd9.jsonl",
+          "sha256": "1d6553b7b062eb710a49cf6f8de131df8815f7a03f1d8fdc67c5ad9fd74203d9"
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "All original unfavorable/failed/invalid/unmatched costs and grades retained; no answer/code/grader executed or regraded by this audit.",
+    "Native recorded complete question, foundation instructions and token counters verified. Live HTTP tool schemas/full-wire input and all integrations are not independently observed.",
+    "Author-created finite workflows, not public scores, universal capability parity or BOTH-host/subscription savings.",
+    "Optional evidence CLI causality remains unproved unless its actual use is observed; installed desktop snapshot remains separate."
+  ]
+}

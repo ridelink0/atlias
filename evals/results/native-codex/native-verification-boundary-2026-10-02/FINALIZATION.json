@@ -1,0 +1,15 @@
+{
+  "complete": false,
+  "source": "280f8d460339bf1ce2d8d09207fbbb0cbf558d9b",
+  "frozen": "D:/harness-work/source280-native-recovery-boundary29-1002.jsonl",
+  "ledgerSha256": "1e6eb0d10e5c507c129e2db392c0ceb1498ea7c80145167b5809cda73bbecace",
+  "attempted": 29,
+  "remaining": 19,
+  "terminal": {
+    "code": 0,
+    "signal": null
+  },
+  "auditPublished": false,
+  "modelsStarted": 0,
+  "reason": "Original plan remains unchanged; only unattempted rows may resume after clean stop, fresh quota and source/process checks."
+}

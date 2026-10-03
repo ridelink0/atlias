@@ -1,0 +1,146 @@
+[
+  {
+    "task": "factuality-v2-wrong-environment",
+    "repeat": 1,
+    "plain": true,
+    "atlias": true
+  },
+  {
+    "task": "factuality-v2-missing-identifier",
+    "repeat": 1,
+    "plain": true,
+    "atlias": true
+  },
+  {
+    "task": "factuality-v2-empty-evidence",
+    "repeat": 1,
+    "plain": true,
+    "atlias": true
+  },
+  {
+    "task": "factuality-v2-failed-exit",
+    "repeat": 1,
+    "plain": true,
+    "atlias": true
+  },
+  {
+    "task": "factuality-v2-uncompleted-zero",
+    "repeat": 1,
+    "plain": true,
+    "atlias": true
+  },
+  {
+    "task": "factuality-v2-current-pass",
+    "repeat": 1,
+    "plain": true,
+    "atlias": true
+  },
+  {
+    "task": "factuality-v2-old-pass-only",
+    "repeat": 1,
+    "plain": true,
+    "atlias": true
+  },
+  {
+    "task": "factuality-v2-zero-and-unknown",
+    "repeat": 1,
+    "plain": true,
+    "atlias": true
+  },
+  {
+    "task": "factuality-v2-false-and-unknown",
+    "repeat": 1,
+    "plain": true,
+    "atlias": true
+  },
+  {
+    "task": "factuality-v2-empty-and-unknown",
+    "repeat": 1,
+    "plain": true,
+    "atlias": true
+  },
+  {
+    "task": "factuality-v2-forged-citation",
+    "repeat": 1,
+    "plain": true,
+    "atlias": true
+  },
+  {
+    "task": "factuality-v2-conflicting-current",
+    "repeat": 1,
+    "plain": true,
+    "atlias": true
+  },
+  {
+    "task": "factuality-v2-wrong-environment",
+    "repeat": 2,
+    "plain": false,
+    "atlias": true
+  },
+  {
+    "task": "factuality-v2-missing-identifier",
+    "repeat": 2,
+    "plain": true,
+    "atlias": true
+  },
+  {
+    "task": "factuality-v2-empty-evidence",
+    "repeat": 2,
+    "plain": true,
+    "atlias": true
+  },
+  {
+    "task": "factuality-v2-failed-exit",
+    "repeat": 2,
+    "plain": true,
+    "atlias": true
+  },
+  {
+    "task": "factuality-v2-uncompleted-zero",
+    "repeat": 2,
+    "plain": true,
+    "atlias": true
+  },
+  {
+    "task": "factuality-v2-current-pass",
+    "repeat": 2,
+    "plain": true,
+    "atlias": true
+  },
+  {
+    "task": "factuality-v2-old-pass-only",
+    "repeat": 2,
+    "plain": true,
+    "atlias": true
+  },
+  {
+    "task": "factuality-v2-zero-and-unknown",
+    "repeat": 2,
+    "plain": true,
+    "atlias": true
+  },
+  {
+    "task": "factuality-v2-false-and-unknown",
+    "repeat": 2,
+    "plain": true,
+    "atlias": true
+  },
+  {
+    "task": "factuality-v2-empty-and-unknown",
+    "repeat": 2,
+    "plain": true,
+    "atlias": true
+  },
+  {
+    "task": "factuality-v2-forged-citation",
+    "repeat": 2,
+    "plain": true,
+    "atlias": true
+  },
+  {
+    "task": "factuality-v2-conflicting-current",
+    "repeat": 2,
+    "plain": true,
+    "atlias": true
+  }
+]

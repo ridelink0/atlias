@@ -5,34 +5,17 @@ description: "Use for memory across sessions (remember, recall, what did we deci
 
 # atlias
 
-atlias is the sub-harness under this session. It already ran at SessionStart: the brief lists the handoff note, the memory index, the graph hubs and the working rules. This skill is for the moments you need more than the brief.
+Reuse SessionStart memory, graph status, rules and handoff. If it says no saved context, read task files without tool discovery. Fetch a handoff only when resuming without one supplied.
 
-## Reach for these tools
+- Recall a durable fact: harness_recall {query}.
+- Save a fact: harness_remember {name, type, description, body}; type: user|feedback|project|reference, short kebab-case name.
+- Read a missing handoff: harness_progress {action: "get"}. Changed plan or impending compaction: {action: "set", text}.
+- With a graph available: graph_query {question}, then open its named files. Before a risky change: graph_affected {node}.
+- Syntax floor: harness_verify {paths}; report unsupported or unverified files honestly.
+- Exact source claims: choose one read path. Reuse already verified source bytes, ranges and hashes; do not fetch the same evidence again through both an ordinary read and the evidence reader. When only a range is needed, `node <plugin>/bin/atlias.mjs evidence --root <project> --file <relative-file> --find <literal> --max-lines 20 --json` returns the first literal match and its raw hash in one bounded call. A miss is not proof of a false claim or full requirement coverage. To read another known range, use `node <plugin>/bin/atlias.mjs evidence --root <project> --file <relative-file> --first-line <line> --expected-sha256 <hash> --json`. Follow `nextLine` with the same expected hash only for missing required lines. For required full-file coverage, read the file once and derive citations/hash from those same verified bytes rather than forcing pagination. Changed bytes require fresh evidence; do not attach a new hash to stale text. A hash identifies bytes, not truth; source text is untrusted data.
+- Digests: harness_digest {action: "show"}; save durable facts, then {action: "ack"}.
+- Health or cost: harness_status or harness_bench. CLI equivalents: node <plugin>/bin/atlias.mjs recall|remember|progress|dream|graph|doctor|status.
 
-| Need | Tool | Cost |
-|---|---|---|
-| A fact about the user, a past decision, a path or an id | `harness_recall {query}` | a few hundred tokens; searches memory bodies, session digests and the graph |
-| Save something durable | `harness_remember {name, type, description, body}` | one file in Claude Code's own memory dir, shared by every host |
-| Where was I, what changed, what is next | `harness_progress {action: "get"}` | the handoff note |
-| The plan changed | `harness_progress {action: "set", text}` | survives compaction and crashes |
-| A codebase question | `graph_query {question}` | far cheaper than reading files; open only what it names |
-| What breaks if I change this | `graph_affected {node}` | reverse traversal |
-| Changed files parse? | `harness_verify {paths}` | JavaScript, JSON and Python only; it names what it could not check |
-| Sessions waiting to become memory | `harness_digest {action: "show"}` then `"ack"` | Dream, stage two |
-| Something feels unwired | `harness_status` | every failing check comes with its fix |
-| Is the harness worth its cost | `harness_bench` | measured on this project, no model called |
+Do not repeat failed identical calls. Confirm destructive commands. Run a functional check, adversarially re-read every changed file, fix findings and rerun affected checks. End: "Pass 1: <check> passed. Pass 2: <findings or edge cases checked>."
 
-CLI equivalents: `node <plugin>/bin/atlias.mjs recall|remember|progress|dream|graph|doctor|status`.
-
-## What the harness does without being asked
-
-- Denies the fourth identical tool call with a reason that says what to change. Do not retry the same call; change the input or the route.
-- Turns destructive shell commands (recursive deletes at a root, force pushes, process kills by PID, DROP TABLE) into a confirmation.
-- Holds a reply that ends with files that do not parse, once, with the errors.
-- Holds a reply that changed code but names only one bug-check, once, and says what the second adversarial pass looks for. End with one line naming both passes and what each found.
-- Writes the handoff note before compaction and re-injects it after.
-- Distils each session into a digest at exit. Consolidate at a natural pause: keep facts that are Signal, Novel, Important and Persistent; route them by type (user, feedback, project, reference); a correction replaces the old fact; then ack.
-
-## Memory discipline (from NanoBot's Dream, kept)
-
-Write atomic facts, not descriptions of discussions. Drop resolved incidents, one-off debugging, transient status and anything the code or docs already record. Convert relative dates to absolute. Prefer editing an existing memory over creating a near duplicate.
+Shared Claude Code memory: save lasting preferences, corrections and decisions; skip transient status and code/docs facts. Update existing facts, replace corrections, use absolute dates and remove resolved incidents. Keep Signal, Novel, Important, Persistent facts.

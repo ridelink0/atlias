@@ -1,0 +1,53 @@
+{
+  "stats": {
+    "plain": {
+      "n": 22,
+      "solved": 22,
+      "promptRaw": 2160077,
+      "perSolved": 98185.31818181818,
+      "peak": 22674
+    },
+    "atlias": {
+      "n": 22,
+      "solved": 22,
+      "promptRaw": 1584778,
+      "perSolved": 72035.36363636363,
+      "peak": 26663
+    }
+  },
+  "comparisons": [
+    {
+      "arm": "atlias",
+      "pairedRuns": 22,
+      "semanticFamilies": 11,
+      "pairedStats": {
+        "plain": {
+          "n": 22,
+          "solved": 22,
+          "promptRaw": 2160077,
+          "perSolved": 98185.31818181818,
+          "contextPeak": 22674
+        },
+        "atlias": {
+          "n": 22,
+          "solved": 22,
+          "promptRaw": 1584778,
+          "perSolved": 72035.36363636363,
+          "contextPeak": 26663
+        }
+      },
+      "rawRatio": {
+        "n": 11,
+        "ratioOfSums": 0.7336673646356126,
+        "bootLo": 0.6296630929774587,
+        "bootHi": 0.8618326230628726,
+        "geoMean": 0.7196754053368842,
+        "tLo": 0.6060844693494769,
+        "tHi": 0.8545552893026884
+      },
+      "plainOnly": [],
+      "pluginOnly": []
+    }
+  ],
+  "excluded": []
+}

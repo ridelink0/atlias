@@ -1,0 +1,16 @@
+{
+  "mini": {
+    "input": 16429333,
+    "output": 721543,
+    "solvedAttempts": 106,
+    "inputPerSolvedAttempt": 154993.70754716982
+  },
+  "atlias": {
+    "input": 17790579,
+    "output": 873642,
+    "solvedAttempts": 154,
+    "inputPerSolvedAttempt": 115523.24025974025
+  },
+  "inputRatio": 1.082854611322322,
+  "perSolvedAttemptRatio": 0.7453414857153645
+}

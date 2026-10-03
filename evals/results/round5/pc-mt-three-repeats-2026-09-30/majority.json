@@ -1,0 +1,67 @@
+{
+  "tasks": 252,
+  "mini": 31,
+  "atlias": 45,
+  "gained": [
+    "canitedit-lazy-28_password_strength_checker",
+    "canitedit-lazy-80_circular_queue",
+    "canitedit-lazy-89_palindrome_detector",
+    "canitedit-lazy-91_interest_calculator",
+    "humanevalfix-python-106",
+    "humanevalfix-python-11",
+    "humanevalfix-python-110",
+    "humanevalfix-python-111",
+    "humanevalfix-python-120",
+    "humanevalfix-python-123",
+    "humanevalfix-python-145",
+    "humanevalfix-python-15",
+    "humanevalfix-python-162",
+    "humanevalfix-python-163",
+    "humanevalfix-python-21",
+    "humanevalfix-python-28",
+    "humanevalfix-python-34",
+    "humanevalfix-python-4",
+    "humanevalfix-python-40",
+    "humanevalfix-python-41",
+    "humanevalfix-python-47",
+    "humanevalfix-python-48",
+    "humanevalfix-python-61",
+    "humanevalfix-python-67",
+    "humanevalfix-python-77",
+    "humanevalfix-python-82",
+    "humanevalfix-python-94"
+  ],
+  "lost": [
+    "humanevalfix-python-134",
+    "humanevalfix-python-138",
+    "humanevalfix-python-14",
+    "humanevalfix-python-150",
+    "humanevalfix-python-155",
+    "humanevalfix-python-160",
+    "humanevalfix-python-18",
+    "humanevalfix-python-2",
+    "humanevalfix-python-43",
+    "humanevalfix-python-5",
+    "humanevalfix-python-54",
+    "humanevalfix-python-58",
+    "humanevalfix-python-9"
+  ],
+  "test": {
+    "n": 40,
+    "p": 0.038477308284200325
+  },
+  "wilson": {
+    "mini": {
+      "lo": 0.08803213677720584,
+      "hi": 0.1693208503835999,
+      "rate": 0.12301587301587301,
+      "n": 252
+    },
+    "atlias": {
+      "lo": 0.13621915955545427,
+      "hi": 0.23057654528691696,
+      "rate": 0.17857142857142858,
+      "n": 252
+    }
+  }
+}

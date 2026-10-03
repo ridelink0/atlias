@@ -1,0 +1,74 @@
+{
+  "schema": "gev-evidence-workflows-declaration-v1",
+  "at": "2026-10-02T23:03:39.157Z",
+  "source": "ece37e554a5ea9b7cf799e0823653f7c8de19158",
+  "version": "codex-cli 0.159.0-alpha.12.1",
+  "nativeFiles": [
+    {
+      "name": "codex.exe",
+      "sha256": "1722907aa64401bcc9b34467ef5c2af43f6aef9a5045ef04d11d19dfae4589fb",
+      "bytes": 324622128
+    },
+    {
+      "name": "codex-code-mode-host.exe",
+      "sha256": "a2bebbeaa20b5c997ae4de8dbe4c628d940e0e620088a0b86a3616a6d2c76a2b",
+      "bytes": 74665264
+    },
+    {
+      "name": "codex-command-runner.exe",
+      "sha256": "0fd4c69d1179027b8709115b17a66c1cd672668fc312c28cb14aec1b0da645d6",
+      "bytes": 8208688
+    },
+    {
+      "name": "codex-windows-sandbox-setup.exe",
+      "sha256": "85ec72db5eba909971b8c4e520e8573ce4c11c38392c476c21f16d35239a789b",
+      "bytes": 17683248
+    }
+  ],
+  "driverSha256": "132cd917652271247e92561f7b03b26d2f98c97658e7c0a842b5a0ec7dbdd50f",
+  "manifestSha256": "7086f8212a4147b4be09ebbefd21c811fcfe99a6a7e037627223815fe4071af6",
+  "generatorSha256": "44b13ab868235cda18a6a864ae076b95a081506fd7cca70b8c658d7a6cf7faf7",
+  "taskRoot": "D:/harness-work/runs/evidence-workflows-corpus-1002",
+  "args": [
+    "D:\\harness-work\\atlias-codex-finish\\tools\\codexstudy\\run.mjs",
+    "--tasks",
+    "D:\\harness-work\\runs\\evidence-workflows-corpus-1002\\manifest.json",
+    "--task-root",
+    "D:/harness-work/runs/evidence-workflows-corpus-1002",
+    "--pairs",
+    "12",
+    "--repeat",
+    "2",
+    "--plugin-repo",
+    "D:/harness-work/atlias-codex-finish",
+    "--ref",
+    "ece37e554a5ea9b7cf799e0823653f7c8de19158",
+    "--out",
+    "D:/harness-work/runs/codex-atlias-evidence-workflows-current-1002",
+    "--codex",
+    "D:\\harness-work\\runs\\codex-atlias-evidence-workflows-current-1002\\native\\codex.exe",
+    "--model",
+    "gpt-6.1-sol",
+    "--effort",
+    "medium",
+    "--lean",
+    "--stop-percent",
+    "90",
+    "--timeout-min",
+    "12"
+  ],
+  "modelCalls": 0,
+  "plannedCalls": 48,
+  "stopPercent": 90,
+  "timeoutMin": 12,
+  "taskContext": false,
+  "contextTransport": "native-hook",
+  "limits": [
+    "12 authored workflows, six families and two repeats are not public benchmarks or universal capability proof.",
+    "Stock CLI tools retained; apps disabled identically in both arms and global unrelated skills isolated. This does not establish full desktop integration parity.",
+    "Optional evidence helper use must be observed before attributing retrieval effects; source hashes do not establish truth.",
+    "Independent generated/full-delivered input, instructions/tools, protected grades, native counters and auth cleanup audits required before publication.",
+    "Old source28029/48 and19unattempted remain separate and unchanged. No historical controls or retries.",
+    "No Claude model inference without a genuine fresh meter and real activation; localhost tests are not model proof."
+  ]
+}

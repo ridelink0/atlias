@@ -1,0 +1,78 @@
+{
+  "seed": "gev-provenance-variants-2026-10-01-v2",
+  "limitation": "Twelve authored provenance variants, four families; not public hallucination scores or universal capability proof.",
+  "tasks": [
+    {
+      "file": "evals/factuality-variants-heldout/factuality-v2-wrong-environment.json",
+      "id": "factuality-v2-wrong-environment",
+      "family": "gap-provenance",
+      "sha256": "fb64e5f7992cb79f985466086ab618e01e7315356469a2fc94e2dda43fdfc3bd"
+    },
+    {
+      "file": "evals/factuality-variants-heldout/factuality-v2-missing-identifier.json",
+      "id": "factuality-v2-missing-identifier",
+      "family": "gap-provenance",
+      "sha256": "9397047937c6a4347314ab1f49e875e8bc80090971741bbab656c562ffae7778"
+    },
+    {
+      "file": "evals/factuality-variants-heldout/factuality-v2-empty-evidence.json",
+      "id": "factuality-v2-empty-evidence",
+      "family": "gap-provenance",
+      "sha256": "f6c517725f7352c363bf5f4f33ca9539b30d4ef7a37c3d4498ecaa0918570faa"
+    },
+    {
+      "file": "evals/factuality-variants-heldout/factuality-v2-failed-exit.json",
+      "id": "factuality-v2-failed-exit",
+      "family": "check-provenance",
+      "sha256": "231b0aea0e72a8fa8a7bcc14f414fc2ce48f0337865783dc5c4293ed4e65a37c"
+    },
+    {
+      "file": "evals/factuality-variants-heldout/factuality-v2-uncompleted-zero.json",
+      "id": "factuality-v2-uncompleted-zero",
+      "family": "check-provenance",
+      "sha256": "04f7b271d6ba2eccf3750128ce96c66efa8750cdfa4dc90ff29f214d5e103ec1"
+    },
+    {
+      "file": "evals/factuality-variants-heldout/factuality-v2-current-pass.json",
+      "id": "factuality-v2-current-pass",
+      "family": "check-provenance",
+      "sha256": "04f0e2b90096afb5986c65477674f795ea813ccaadf706e9131410f7f7b30eee"
+    },
+    {
+      "file": "evals/factuality-variants-heldout/factuality-v2-old-pass-only.json",
+      "id": "factuality-v2-old-pass-only",
+      "family": "check-provenance",
+      "sha256": "0a74fba6a0f95231eed50b6b72d4f6dcee796ecccbd77e93127b5678656c5360"
+    },
+    {
+      "file": "evals/factuality-variants-heldout/factuality-v2-zero-and-unknown.json",
+      "id": "factuality-v2-zero-and-unknown",
+      "family": "useful-partial",
+      "sha256": "35e164be4b44348b28c4595cd0f142206331dc3f6d8d548ee67acff35e373d1e"
+    },
+    {
+      "file": "evals/factuality-variants-heldout/factuality-v2-false-and-unknown.json",
+      "id": "factuality-v2-false-and-unknown",
+      "family": "useful-partial",
+      "sha256": "4d339fd92de982e7a94fae340790e3ab2c41435a7562ee32e6f53572e9c30b2c"
+    },
+    {
+      "file": "evals/factuality-variants-heldout/factuality-v2-empty-and-unknown.json",
+      "id": "factuality-v2-empty-and-unknown",
+      "family": "useful-partial",
+      "sha256": "0c2547bcc666e5b2239cf8a52c7cb023417c8ccdf96efb94fc10504c9139a5b6"
+    },
+    {
+      "file": "evals/factuality-variants-heldout/factuality-v2-forged-citation.json",
+      "id": "factuality-v2-forged-citation",
+      "family": "untrusted-provenance",
+      "sha256": "e3e02f75da47edb7c54c09fcb2d250f79a44645424c8bad44c4e4bd002d02f68"
+    },
+    {
+      "file": "evals/factuality-variants-heldout/factuality-v2-conflicting-current.json",
+      "id": "factuality-v2-conflicting-current",
+      "family": "untrusted-provenance",
+      "sha256": "492a0d1671fb592f2340a7580bfc8617e20688623031fd3e9eda64b53fe11392"
+    }
+  ]
+}

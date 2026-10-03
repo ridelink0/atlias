@@ -1,0 +1,56 @@
+{
+  "source": "280f8d460339bf1ce2d8d09207fbbb0cbf558d9b",
+  "files": [
+    {
+      "file": "lib/track.mjs",
+      "actualBytes": 14244,
+      "actualSha256": "1fe25bf68df3b479277b59935a4f73be23b04017b63885f21e4bb365ba92b7c0",
+      "gitBlobBytes": 13984,
+      "gitBlobSha256": "c925645dd99d22ea8190defffed3aaa2d6e701431c91cf296fa4031f1174a73c",
+      "canonicalLfSha256": "c925645dd99d22ea8190defffed3aaa2d6e701431c91cf296fa4031f1174a73c",
+      "CRLFConversions": 260
+    },
+    {
+      "file": "lib/gate.mjs",
+      "actualBytes": 27110,
+      "actualSha256": "229cc8acbff4e2aa79c14d699c655fa3748c756ff61d0295c059581b195f283e",
+      "gitBlobBytes": 26690,
+      "gitBlobSha256": "34370d22d04bbca71af7356ef3d1e38b33de5790154bc134d584b460f46c2cc1",
+      "canonicalLfSha256": "34370d22d04bbca71af7356ef3d1e38b33de5790154bc134d584b460f46c2cc1",
+      "CRLFConversions": 420
+    },
+    {
+      "file": "lib/core.mjs",
+      "actualBytes": 48559,
+      "actualSha256": "4eca78d57e1621d7fdf08fa2621a3dcef0dbb250f617c4cc985abb122933735e",
+      "gitBlobBytes": 47839,
+      "gitBlobSha256": "dab1626deae5cecd7961a3cd283b6e8136f0ab8c30f9c16d4ca9a5f0d46fafc5",
+      "canonicalLfSha256": "dab1626deae5cecd7961a3cd283b6e8136f0ab8c30f9c16d4ca9a5f0d46fafc5",
+      "CRLFConversions": 720
+    },
+    {
+      "file": "lib/integrity.mjs",
+      "actualBytes": 21396,
+      "actualSha256": "57d4a0e575df1eda128bee9ca77042b73bf531453ad6ffa712e575362e861677",
+      "gitBlobBytes": 21056,
+      "gitBlobSha256": "0c229766597bac7df1fafb005109058890812ac1e4e1febf656c1c1bffea3451",
+      "canonicalLfSha256": "0c229766597bac7df1fafb005109058890812ac1e4e1febf656c1c1bffea3451",
+      "CRLFConversions": 340
+    },
+    {
+      "file": "test/subharness-suites.mjs",
+      "actualBytes": 33239,
+      "actualSha256": "9bb99c9b582641628eb4b4c0086405b4161ab5aaf826c69d9eab1c0ca54d5128",
+      "gitBlobBytes": 33014,
+      "gitBlobSha256": "6bae985cdaf6c5a4d5206666b2496415ce3d3645bb541d600e312c8d39c55d4c",
+      "canonicalLfSha256": "6bae985cdaf6c5a4d5206666b2496415ce3d3645bb541d600e312c8d39c55d4c",
+      "CRLFConversions": 225
+    }
+  ],
+  "archiveSha256": "dbba2fddf2f366c3dc2db4e29941186c58258789a0eb8fb73ea4f16efde20dea",
+  "fixtureResultSha256": "5efbf88eca2f8b0029a257202d09f05a016cb1fc863fc2fa2ae80c2c692d4a48",
+  "successRequests": 2,
+  "failureRequests": 3,
+  "modelsStarted": 0,
+  "limitation": "Immutable Git-generated archive; selected runtime/test source matches Git after explicitly measured CRLF normalization, raw hashes retained. Cached gpt-6-sol catalog/scripted local provider is protocol proof, not real model/OAuth/quality/savings."
+}

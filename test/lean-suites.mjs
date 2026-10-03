@@ -5,6 +5,9 @@
 const NL = String.fromCharCode(10);
 
 export default async function ({ suite, check, brief, TMP, ROOT, fs, path }) {
+  const hosts = await import('../lib/hosts.mjs');
+  const core = await import('../lib/core.mjs');
+  const progress = await import('../lib/progress.mjs');
   const withEnv = (vars, fn) => {
     const before = {};
     for (const k of Object.keys(vars)) { before[k] = process.env[k]; if (vars[k] == null) delete process.env[k]; else process.env[k] = vars[k]; }
@@ -22,6 +25,31 @@ export default async function ({ suite, check, brief, TMP, ROOT, fs, path }) {
   const build = (dir, host, vars) => withEnv({ [LEAN]: null, [GATE]: null, ...vars }, () => brief.build({ cwd: dir, session_id: `lean-${++n}`, source: 'startup' }, host));
   const TOOL_NAMES = ['harness_recall', 'harness_remember', 'harness_progress', 'harness_verify', 'harness_digest', 'graph_query', 'graph_affected', 'graph_explain'];
 
+  suite('on-demand memory expert','brief-index-pointer preserves retrieval and handoff',()=>{
+    const dir=project(),index=path.join(core.claudeMemoryDir(dir),'MEMORY.md');
+    fs.mkdirSync(path.dirname(index),{recursive:true});
+    fs.writeFileSync(index,Array.from({length:90},(_,i)=>`- [Distinct memory ${i}](fact-${i}.md): full memory remains on disk`).join(NL));
+    fs.mkdirSync(path.dirname(progress.notePath(dir)),{recursive:true});
+    fs.writeFileSync(progress.notePath(dir),'Required current work: keep the complete original task and check its result.');
+    const details={happened:'pointer profile violated a startup contract',why:'On-demand context must retain every fact and required behavior.',fix:'Keep index path/read requirement, tools, handoff and disabled identity.'};
+    const off=build(dir,'codex',{'ATLIAS_FLAG_BRIEF_INDEX_POINTER':'0'});
+    const on=build(dir,'codex',{'ATLIAS_FLAG_BRIEF_INDEX_POINTER':'1'});
+    check('disabled flag retains complete original startup bytes',off===build(dir,'codex',{'ATLIAS_FLAG_BRIEF_INDEX_POINTER':null}),details);
+    check('pointer saves over4000 characters without truncating or deleting any memory',on.length<off.length-4000&&!on.includes('Distinct memory')&&on.includes(index)&&fs.readFileSync(index,'utf8').includes('Distinct memory 89'),details);
+    check('both retrieval and durable-state contracts survive',/Read the index, then the files relevant/.test(on)&&/harness_recall/.test(on)&&/harness_remember/.test(on)&&/Required current work/.test(on)&&on.slice(on.indexOf('## Working rules'))===off.slice(off.indexOf('## Working rules')),details);
+    check('Claude already-loaded memory behavior stays byte-identical',build(dir,'claude',{'ATLIAS_FLAG_BRIEF_INDEX_POINTER':'1'})===build(dir,'claude',{'ATLIAS_FLAG_BRIEF_INDEX_POINTER':'0'}),details);
+    const compact=withEnv({'ATLIAS_FLAG_BRIEF_INDEX_POINTER':'1'},()=>brief.build({cwd:dir,source:'compact'},'codex'));
+    check('compaction preserves original handoff and index recovery path',compact.includes(index)&&/Required current work/.test(compact),details);
+    const empty=project();check('missing memory is explicitly absent, never a fabricated pointer',!/no memory entries/.test(build(empty,'codex',{'ATLIAS_FLAG_BRIEF_INDEX_POINTER':'1'})),details);
+  });
+
+  suite('lean host instructions', 'Codex reuses supplied startup context with safe missing-context behavior', () => {
+    const off = hosts.instructionBlock('codex', { lean: false });
+    const lean = hosts.instructionBlock('codex', { lean: true });
+    check('the opt-in block saves repeated reads and retains required checks and tools', lean.length < off.length && /no saved memory, skip recall\/index reads/.test(lean) && /Otherwise.*if absent or truncated, read/.test(lean) && /resuming without a supplied handoff/.test(lean) && /When a graph exists/.test(lean) && /no graph, read active files/.test(lean) && ['harness_remember','graph_affected','graph_explain','harness_progress set','harness_verify','harness_digest ack'].every(t=>lean.includes(t)) && /smallest real check/.test(lean) && /adversarially re-read every changed file/.test(lean) && /Confirm destructive/.test(lean), {happened:lean,why:'Context reuse must preserve missing or truncated context recovery without trying to read explicitly absent memory, graph navigation and both verification passes.',fix:'Retain each rule in the opt-in Codex block.'});
+    check('the flag does not alter other hosts or the disabled Codex profile', hosts.instructionBlock('claude',{lean:true}) === hosts.instructionBlock('claude',{lean:false}) && /Read it, then read the files/.test(off) && /get` when you start/.test(off), {happened:off,why:'Only the experimental Codex profile should change.',fix:'Guard the new block with host codex and lean.'});
+  });
+
   suite('lean brief expert', 'the lean brief cuts what every request pays for', () => {
     const empty = project();
     const off = build(empty, 'claude', {});
@@ -38,7 +66,27 @@ export default async function ({ suite, check, brief, TMP, ROOT, fs, path }) {
     check('lean, the Claude Code brief is at least 350 characters shorter, under 1000, and the same on every build', lean.length <= off.length - 350 && lean.length < 1000 && lean === build(empty, 'claude', { [LEAN]: '1' }), { happened: `${off.length} characters off, ${lean.length} lean`, why: 'NEXTGEN-5 row 4 aims at the fixed text paid on every request; a cut nobody counted is not a cut, and a brief that changes between builds cannot be cached as a prompt prefix.', fix: 'Check what brief.build adds under leanBrief.' });
     const offCodex = build(empty, 'codex', {});
     const leanCodex = build(empty, 'codex', { [LEAN]: '1' });
+    check('a fresh Codex project explicitly skips absent saved-context lookups', /No saved memory/.test(leanCodex) && /fresh task, skip recall\/handoff lookups/.test(leanCodex) && /without discovering graph tools/.test(leanCodex), {happened:leanCodex,why:'On-demand context should not cause extra discovery calls when no saved context exists.',fix:'State the absence explicitly without removing useful context from populated projects.'});
+    check('lean Codex skips unavailable graph lookups, sequences edits before checks and avoids rapid polling', /No graph is available yet/.test(leanCodex) && /await edit then checks/.test(leanCodex) && /serialize dependencies/.test(leanCodex) && /exec_command\/write_stdin and functions\.wait: yield_time_ms=30000/.test(leanCodex) && !/functions\.wait/.test(offCodex) && [leanCodex,lean].every(t=>/Exclude graphify-out from source listings/.test(t)) && [offCodex,off].every(t=>!/Exclude graphify-out from source listings/.test(t)), {happened:leanCodex.slice(-650),why:'Unavailable graph lookups, generated cache listings, separate check turns and rapid outer-cell polls resend context without improving the result. Both hosts need bounded source discovery without changing the control.',fix:'Keep graph availability, sequential batching, bounded shell and outer-cell waits and opt-in generated-source exclusion for both hosts.'});
+    const graphed=project({'graphify-out/graph.json':'{"nodes":[],"edges":[]}'});
+    check('lean keeps graph-first navigation when a graph exists', build(graphed,'codex',{[LEAN]:'1'}).includes(brief.RULES[0]), {happened:'graph navigation was omitted',why:'The saving should remove an unavailable lookup, not useful knowledge navigation.',fix:'Use the original graph rule when graph.status reports an existing graph.'});
+    const populated=project();const memoryDir=core.claudeMemoryDir(populated);fs.mkdirSync(memoryDir,{recursive:true});fs.writeFileSync(path.join(memoryDir,'MEMORY.md'),'- [Saved requirement](requirement.md) - preserve the existing API\n');fs.mkdirSync(path.dirname(progress.notePath(populated)),{recursive:true});fs.writeFileSync(progress.notePath(populated),'Existing handoff: preserve the protected contract.');
+    const supplied=build(populated,'codex',{[LEAN]:'1'});
+    check('on-demand guidance preserves a populated index and supplied handoff', supplied.includes('Saved requirement') && supplied.includes('Existing handoff: preserve the protected contract.') && !supplied.includes('No saved memory'), {happened:supplied,why:'Avoiding absent-context lookups must not hide actual saved context.',fix:'Only use the fresh-project guidance when the index is absent.'});
+    fs.writeFileSync(path.join(memoryDir,'MEMORY.md'),Array.from({length:120},(_,i)=>`- [Required note ${i}](note-${i}.md) - ${'preserve the existing contract '.repeat(8)}`).join('\n'));
+    const truncated=build(populated,'codex',{[LEAN]:'1'});
+    check('a truncated supplied index names the full index rather than implying complete context', truncated.includes('Index truncated:') && truncated.includes(path.join(memoryDir,'MEMORY.md')) && truncated.includes('for the full index'), {happened:truncated.slice(-800),why:'Context savings must disclose omitted index entries and preserve the full-index reading requirement.',fix:'Explicitly name the omitted entries and the complete source.'});
     check('lean does the same for the other hosts, and keeps their memory section', leanCodex.length <= offCodex.length - 350 && /## Memory/.test(leanCodex) && !TOOL_NAMES.some((t) => leanCodex.split(NL)[0].includes(t)), { happened: `${offCodex.length} off, ${leanCodex.length} lean`, why: 'Codex has no shared memory of its own; the section is how it finds harness_remember.', fix: 'Only the tool line, Companions and the done rule change.' });
+  });
+
+  suite('lean evidence and context', 'compact both-host guidance keeps provenance and required work', () => {
+    const empty = project();
+    for (const host of ['codex', 'claude']) {
+      const off = build(empty, host, { [LEAN]: '0' });
+      const lean = build(empty, host, { [LEAN]: '1' });
+      check(host + ' lean names evidence gaps without inventing supported facts', /Ground claims\/checks in evidence; cite support\/gaps; label unknowns; answer supported parts/.test(lean) && off.includes(brief.RULES[4]), { happened: lean, why: 'An unknown answer still needs inspected provenance when the contract asks for it; citation guidance must not require fabricated evidence or universal abstention.', fix: 'Keep support, gaps, uncertainty and useful supported answers together.' });
+      check(host + ' lean retains both verification passes, changed-plan recovery and no repeated failed calls', lean.includes(brief.PASS_LINE) && /smallest real check/.test(lean) && /each changed file adversarially/.test(lean) && /Save changed plans with harness_progress before compaction or long work/.test(lean) && /Do not repeat answered\/failed calls; change input or approach/.test(lean), { happened: lean, why: 'Shorter startup context must not lose checks, durable state or loop protection.', fix: 'Preserve all required work in compact guidance.' });
+    }
   });
 
   suite('lean brief expert', 'the brief says when the gate will run the check', () => {

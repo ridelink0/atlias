@@ -1,0 +1,267 @@
+{
+  "modelCalls": 0,
+  "backend": "owned local HTTP/SSE fixture; no inference or subscription calls",
+  "results": [
+    {
+      "name": "control",
+      "status": {
+        "code": 0,
+        "signal": null
+      },
+      "ms": 47238,
+      "modelCalls": 0,
+      "instructionsChars": 17174,
+      "inputChars": 21180,
+      "toolsChars": 18349,
+      "tools": [
+        {
+          "name": "exec_command",
+          "type": "function",
+          "chars": 2635
+        },
+        {
+          "name": "write_stdin",
+          "type": "function",
+          "chars": 784
+        },
+        {
+          "name": "request_user_input",
+          "type": "function",
+          "chars": 1355
+        },
+        {
+          "name": "view_image",
+          "type": "function",
+          "chars": 371
+        },
+        {
+          "name": "multi_agent_v1",
+          "type": "namespace",
+          "chars": 9933
+        },
+        {
+          "name": "get_goal",
+          "type": "function",
+          "chars": 281
+        },
+        {
+          "name": "create_goal",
+          "type": "function",
+          "chars": 760
+        },
+        {
+          "name": "update_goal",
+          "type": "function",
+          "chars": 2172
+        },
+        {
+          "type": "web_search",
+          "chars": 48
+        }
+      ],
+      "inputRoles": [
+        {
+          "role": "developer",
+          "type": "message",
+          "chars": 20209
+        },
+        {
+          "role": "user",
+          "type": "message",
+          "chars": 819
+        },
+        {
+          "role": "user",
+          "type": "message",
+          "chars": 148
+        }
+      ]
+    },
+    {
+      "name": "no-code-mode-host",
+      "status": {
+        "code": 0,
+        "signal": null
+      },
+      "ms": 19592,
+      "modelCalls": 0,
+      "instructionsChars": 17174,
+      "inputChars": 21210,
+      "toolsChars": 18349,
+      "tools": [
+        {
+          "name": "exec_command",
+          "type": "function",
+          "chars": 2635
+        },
+        {
+          "name": "write_stdin",
+          "type": "function",
+          "chars": 784
+        },
+        {
+          "name": "request_user_input",
+          "type": "function",
+          "chars": 1355
+        },
+        {
+          "name": "view_image",
+          "type": "function",
+          "chars": 371
+        },
+        {
+          "name": "multi_agent_v1",
+          "type": "namespace",
+          "chars": 9933
+        },
+        {
+          "name": "get_goal",
+          "type": "function",
+          "chars": 281
+        },
+        {
+          "name": "create_goal",
+          "type": "function",
+          "chars": 760
+        },
+        {
+          "name": "update_goal",
+          "type": "function",
+          "chars": 2172
+        },
+        {
+          "type": "web_search",
+          "chars": 48
+        }
+      ],
+      "inputRoles": [
+        {
+          "role": "developer",
+          "type": "message",
+          "chars": 20219
+        },
+        {
+          "role": "user",
+          "type": "message",
+          "chars": 839
+        },
+        {
+          "role": "user",
+          "type": "message",
+          "chars": 148
+        }
+      ]
+    },
+    {
+      "name": "no-delegation-or-goals",
+      "status": {
+        "code": 0,
+        "signal": null
+      },
+      "ms": 18040,
+      "modelCalls": 0,
+      "instructionsChars": 17174,
+      "inputChars": 21225,
+      "toolsChars": 5199,
+      "tools": [
+        {
+          "name": "exec_command",
+          "type": "function",
+          "chars": 2635
+        },
+        {
+          "name": "write_stdin",
+          "type": "function",
+          "chars": 784
+        },
+        {
+          "name": "request_user_input",
+          "type": "function",
+          "chars": 1355
+        },
+        {
+          "name": "view_image",
+          "type": "function",
+          "chars": 371
+        },
+        {
+          "type": "web_search",
+          "chars": 48
+        }
+      ],
+      "inputRoles": [
+        {
+          "role": "developer",
+          "type": "message",
+          "chars": 20224
+        },
+        {
+          "role": "user",
+          "type": "message",
+          "chars": 849
+        },
+        {
+          "role": "user",
+          "type": "message",
+          "chars": 148
+        }
+      ]
+    },
+    {
+      "name": "combined",
+      "status": {
+        "code": 0,
+        "signal": null
+      },
+      "ms": 14187,
+      "modelCalls": 0,
+      "instructionsChars": 17174,
+      "inputChars": 21183,
+      "toolsChars": 5199,
+      "tools": [
+        {
+          "name": "exec_command",
+          "type": "function",
+          "chars": 2635
+        },
+        {
+          "name": "write_stdin",
+          "type": "function",
+          "chars": 784
+        },
+        {
+          "name": "request_user_input",
+          "type": "function",
+          "chars": 1355
+        },
+        {
+          "name": "view_image",
+          "type": "function",
+          "chars": 371
+        },
+        {
+          "type": "web_search",
+          "chars": 48
+        }
+      ],
+      "inputRoles": [
+        {
+          "role": "developer",
+          "type": "message",
+          "chars": 20210
+        },
+        {
+          "role": "user",
+          "type": "message",
+          "chars": 821
+        },
+        {
+          "role": "user",
+          "type": "message",
+          "chars": 148
+        }
+      ]
+    }
+  ],
+  "limitation": "Metadata characters only. Removing tool capabilities is not feature parity or quality evidence; no model-token saving or20x claim. All configurations isolated; live user settings unchanged."
+}

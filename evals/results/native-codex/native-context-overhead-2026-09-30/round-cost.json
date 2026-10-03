@@ -1,0 +1,1124 @@
+{
+  "source": "0e29833460e466ec80c503129b90808a0c206bf9",
+  "snapshotSha256": "11207ebb0344e32e3cdb467c67dbe46cfce7155574beb07ee6f50a31c93fbe71",
+  "calls": 31,
+  "pairs": [
+    {
+      "task": "context-money-64",
+      "repeat": 1,
+      "controlInput": 112041,
+      "atliasInput": 122067,
+      "ratio": 1.0894850992047553,
+      "requests": [
+        6,
+        6
+      ],
+      "firstInput": [
+        17286,
+        19029
+      ],
+      "fiveXBudget": 22408.2,
+      "twentyXBudget": 5602.05,
+      "observedFirstRequestFitsFiveX": true,
+      "observedFirstRequestFitsTwentyX": false
+    },
+    {
+      "task": "context-versions-64",
+      "repeat": 1,
+      "controlInput": 95574,
+      "atliasInput": 59229,
+      "ratio": 0.6197187519618306,
+      "requests": [
+        5,
+        3
+      ],
+      "firstInput": [
+        17289,
+        19008
+      ],
+      "fiveXBudget": 19114.8,
+      "twentyXBudget": 4778.7,
+      "observedFirstRequestFitsFiveX": true,
+      "observedFirstRequestFitsTwentyX": false
+    },
+    {
+      "task": "context-intervals-64",
+      "repeat": 1,
+      "controlInput": 93731,
+      "atliasInput": 166748,
+      "ratio": 1.7790058785247143,
+      "requests": [
+        5,
+        8
+      ],
+      "firstInput": [
+        17292,
+        19007
+      ],
+      "fiveXBudget": 18746.2,
+      "twentyXBudget": 4686.55,
+      "observedFirstRequestFitsFiveX": false,
+      "observedFirstRequestFitsTwentyX": false
+    },
+    {
+      "task": "context-unicode-64",
+      "repeat": 1,
+      "controlInput": 111003,
+      "atliasInput": 58543,
+      "ratio": 0.5274001603560264,
+      "requests": [
+        6,
+        3
+      ],
+      "firstInput": [
+        17289,
+        19005
+      ],
+      "fiveXBudget": 22200.6,
+      "twentyXBudget": 5550.15,
+      "observedFirstRequestFitsFiveX": true,
+      "observedFirstRequestFitsTwentyX": false
+    },
+    {
+      "task": "context-paths-64",
+      "repeat": 1,
+      "controlInput": 94316,
+      "atliasInput": 101062,
+      "ratio": 1.071525509987701,
+      "requests": [
+        5,
+        5
+      ],
+      "firstInput": [
+        17289,
+        19028
+      ],
+      "fiveXBudget": 18863.2,
+      "twentyXBudget": 4715.8,
+      "observedFirstRequestFitsFiveX": false,
+      "observedFirstRequestFitsTwentyX": false
+    },
+    {
+      "task": "context-merge-64",
+      "repeat": 1,
+      "controlInput": 132689,
+      "atliasInput": 162626,
+      "ratio": 1.2256177980088778,
+      "requests": [
+        7,
+        8
+      ],
+      "firstInput": [
+        17289,
+        19027
+      ],
+      "fiveXBudget": 26537.8,
+      "twentyXBudget": 6634.45,
+      "observedFirstRequestFitsFiveX": true,
+      "observedFirstRequestFitsTwentyX": false
+    },
+    {
+      "task": "context-ttl-64",
+      "repeat": 1,
+      "controlInput": 93490,
+      "atliasInput": 220062,
+      "ratio": 2.3538560273826077,
+      "requests": [
+        5,
+        11
+      ],
+      "firstInput": [
+        17289,
+        19064
+      ],
+      "fiveXBudget": 18698,
+      "twentyXBudget": 4674.5,
+      "observedFirstRequestFitsFiveX": false,
+      "observedFirstRequestFitsTwentyX": false
+    },
+    {
+      "task": "context-csv-64",
+      "repeat": 1,
+      "controlInput": 115012,
+      "atliasInput": 98662,
+      "ratio": 0.8578409209473794,
+      "requests": [
+        6,
+        5
+      ],
+      "firstInput": [
+        17289,
+        19021
+      ],
+      "fiveXBudget": 23002.4,
+      "twentyXBudget": 5750.6,
+      "observedFirstRequestFitsFiveX": true,
+      "observedFirstRequestFitsTwentyX": false
+    },
+    {
+      "task": "context-topology-64",
+      "repeat": 1,
+      "controlInput": 131664,
+      "atliasInput": 181855,
+      "ratio": 1.3812051889658525,
+      "requests": [
+        7,
+        9
+      ],
+      "firstInput": [
+        17289,
+        19022
+      ],
+      "fiveXBudget": 26332.8,
+      "twentyXBudget": 6583.2,
+      "observedFirstRequestFitsFiveX": true,
+      "observedFirstRequestFitsTwentyX": false
+    },
+    {
+      "task": "context-dedupe-64",
+      "repeat": 1,
+      "controlInput": 94783,
+      "atliasInput": 157573,
+      "ratio": 1.662460567823344,
+      "requests": [
+        5,
+        8
+      ],
+      "firstInput": [
+        17292,
+        19037
+      ],
+      "fiveXBudget": 18956.6,
+      "twentyXBudget": 4739.15,
+      "observedFirstRequestFitsFiveX": false,
+      "observedFirstRequestFitsTwentyX": false
+    },
+    {
+      "task": "context-query-64",
+      "repeat": 1,
+      "controlInput": 134477,
+      "atliasInput": 137680,
+      "ratio": 1.023818199394692,
+      "requests": [
+        7,
+        7
+      ],
+      "firstInput": [
+        17286,
+        19050
+      ],
+      "fiveXBudget": 26895.4,
+      "twentyXBudget": 6723.85,
+      "observedFirstRequestFitsFiveX": true,
+      "observedFirstRequestFitsTwentyX": false
+    },
+    {
+      "task": "context-money-64",
+      "repeat": 2,
+      "controlInput": 130280,
+      "atliasInput": 137582,
+      "ratio": 1.056048510899601,
+      "requests": [
+        7,
+        7
+      ],
+      "firstInput": [
+        17286,
+        19029
+      ],
+      "fiveXBudget": 26056,
+      "twentyXBudget": 6514,
+      "observedFirstRequestFitsFiveX": true,
+      "observedFirstRequestFitsTwentyX": false
+    },
+    {
+      "task": "context-versions-64",
+      "repeat": 2,
+      "controlInput": 94017,
+      "atliasInput": 59260,
+      "ratio": 0.6303115394024484,
+      "requests": [
+        5,
+        3
+      ],
+      "firstInput": [
+        17289,
+        19008
+      ],
+      "fiveXBudget": 18803.4,
+      "twentyXBudget": 4700.85,
+      "observedFirstRequestFitsFiveX": false,
+      "observedFirstRequestFitsTwentyX": false
+    },
+    {
+      "task": "context-intervals-64",
+      "repeat": 2,
+      "controlInput": 111219,
+      "atliasInput": 59344,
+      "ratio": 0.5335778958631169,
+      "requests": [
+        6,
+        3
+      ],
+      "firstInput": [
+        17292,
+        19007
+      ],
+      "fiveXBudget": 22243.8,
+      "twentyXBudget": 5560.95,
+      "observedFirstRequestFitsFiveX": true,
+      "observedFirstRequestFitsTwentyX": false
+    }
+  ],
+  "rows": [
+    {
+      "task": "context-money-64",
+      "repeat": 1,
+      "arm": "plain",
+      "valid": true,
+      "solved": true,
+      "promptRaw": 112041,
+      "output": 1383,
+      "firstInput": 17286,
+      "minInput": 17286,
+      "peak": 20562,
+      "requests": 6,
+      "requestSamplesSum": 112041,
+      "samplesSumMatchesTotal": true,
+      "outerCalls": {
+        "exec": 5
+      },
+      "waitCalls": 0,
+      "shortWaitCalls": 0,
+      "compactions": 0,
+      "rollouts": [
+        {
+          "file": "rollout-2026-09-30T12-41-09-01a0f367-e644-7163-9fce-5a95b090f441.jsonl",
+          "sha256": "cca6b5d1cc7c1dae41bb1543bded79c437d3fb4bdda4105a93c79e3d4e770724"
+        }
+      ]
+    },
+    {
+      "task": "context-money-64",
+      "repeat": 1,
+      "arm": "atlias",
+      "valid": true,
+      "solved": true,
+      "promptRaw": 122067,
+      "output": 1410,
+      "firstInput": 19029,
+      "minInput": 19029,
+      "peak": 21219,
+      "requests": 6,
+      "requestSamplesSum": 122067,
+      "samplesSumMatchesTotal": true,
+      "outerCalls": {
+        "exec": 3,
+        "wait": 2
+      },
+      "waitCalls": 2,
+      "shortWaitCalls": 2,
+      "compactions": 0,
+      "rollouts": [
+        {
+          "file": "rollout-2026-09-30T12-43-41-01a0f36a-39fa-7fc2-abd2-7940555e9496.jsonl",
+          "sha256": "1256c740fe6e9b2f3bb0e98b3ef62df0b9198121ec9ec7d85b1548feebb17728"
+        }
+      ]
+    },
+    {
+      "task": "context-versions-64",
+      "repeat": 1,
+      "arm": "atlias",
+      "valid": true,
+      "solved": true,
+      "promptRaw": 59229,
+      "output": 1053,
+      "firstInput": 19008,
+      "minInput": 19008,
+      "peak": 20664,
+      "requests": 3,
+      "requestSamplesSum": 59229,
+      "samplesSumMatchesTotal": true,
+      "outerCalls": {
+        "exec": 2
+      },
+      "waitCalls": 0,
+      "shortWaitCalls": 0,
+      "compactions": 0,
+      "rollouts": [
+        {
+          "file": "rollout-2026-09-30T12-47-23-01a0f36d-9b12-7ea3-a0ee-63a753e284a4.jsonl",
+          "sha256": "623d81f52782417371c57594502e2ac3246764582a8e6dc74b927e39ee27f27e"
+        }
+      ]
+    },
+    {
+      "task": "context-versions-64",
+      "repeat": 1,
+      "arm": "plain",
+      "valid": true,
+      "solved": true,
+      "promptRaw": 95574,
+      "output": 1534,
+      "firstInput": 17289,
+      "minInput": 17289,
+      "peak": 22934,
+      "requests": 5,
+      "requestSamplesSum": 95574,
+      "samplesSumMatchesTotal": true,
+      "outerCalls": {
+        "exec": 4
+      },
+      "waitCalls": 0,
+      "shortWaitCalls": 0,
+      "compactions": 0,
+      "rollouts": [
+        {
+          "file": "rollout-2026-09-30T12-50-37-01a0f370-9475-71a1-a4fe-8c66a0f07b0c.jsonl",
+          "sha256": "646c08f761597257719d06aa4d3fbcb9f6759a4687885d3f91ca5f44619bacfb"
+        }
+      ]
+    },
+    {
+      "task": "context-intervals-64",
+      "repeat": 1,
+      "arm": "plain",
+      "valid": true,
+      "solved": true,
+      "promptRaw": 93731,
+      "output": 1608,
+      "firstInput": 17292,
+      "minInput": 17292,
+      "peak": 20590,
+      "requests": 5,
+      "requestSamplesSum": 93731,
+      "samplesSumMatchesTotal": true,
+      "outerCalls": {
+        "exec": 4
+      },
+      "waitCalls": 0,
+      "shortWaitCalls": 0,
+      "compactions": 0,
+      "rollouts": [
+        {
+          "file": "rollout-2026-09-30T12-58-31-01a0f377-cf2b-78f2-8883-1cc39daa87d2.jsonl",
+          "sha256": "5ea3eedbbb851fa34cb9a6819c1c3916b7863b1feace412bfe05cf6981a3e258"
+        }
+      ]
+    },
+    {
+      "task": "context-intervals-64",
+      "repeat": 1,
+      "arm": "atlias",
+      "valid": true,
+      "solved": true,
+      "promptRaw": 166748,
+      "output": 1474,
+      "firstInput": 19007,
+      "minInput": 19007,
+      "peak": 21980,
+      "requests": 8,
+      "requestSamplesSum": 166748,
+      "samplesSumMatchesTotal": true,
+      "outerCalls": {
+        "exec": 4,
+        "wait": 3
+      },
+      "waitCalls": 3,
+      "shortWaitCalls": 1,
+      "compactions": 0,
+      "rollouts": [
+        {
+          "file": "rollout-2026-09-30T13-00-58-01a0f37a-0f17-74e2-9dd8-2da400882345.jsonl",
+          "sha256": "700f0f0aafd3c26ac13f5e2998bd7b4ea8f5a1d9830bcf5bd4068bb4974bd8e1"
+        }
+      ]
+    },
+    {
+      "task": "context-unicode-64",
+      "repeat": 1,
+      "arm": "atlias",
+      "valid": true,
+      "solved": true,
+      "promptRaw": 58543,
+      "output": 604,
+      "firstInput": 19005,
+      "minInput": 19005,
+      "peak": 20011,
+      "requests": 3,
+      "requestSamplesSum": 58543,
+      "samplesSumMatchesTotal": true,
+      "outerCalls": {
+        "exec": 2
+      },
+      "waitCalls": 0,
+      "shortWaitCalls": 0,
+      "compactions": 0,
+      "rollouts": [
+        {
+          "file": "rollout-2026-09-30T13-05-32-01a0f37e-3c59-7ae1-9129-d40871e54c90.jsonl",
+          "sha256": "0605b53d3f3e200b8fb7d069fe669e68810d991ca06f88f92a8fe7c9ca7a324f"
+        }
+      ]
+    },
+    {
+      "task": "context-unicode-64",
+      "repeat": 1,
+      "arm": "plain",
+      "valid": true,
+      "solved": true,
+      "promptRaw": 111003,
+      "output": 1065,
+      "firstInput": 17289,
+      "minInput": 17289,
+      "peak": 19586,
+      "requests": 6,
+      "requestSamplesSum": 111003,
+      "samplesSumMatchesTotal": true,
+      "outerCalls": {
+        "exec": 5
+      },
+      "waitCalls": 0,
+      "shortWaitCalls": 0,
+      "compactions": 0,
+      "rollouts": [
+        {
+          "file": "rollout-2026-09-30T13-07-55-01a0f380-6c07-7691-9a69-1c822c75f2d2.jsonl",
+          "sha256": "916d3f9fb66c99827bd531103a18dc26835d4b924d234bd6ab39be6dc6754bb1"
+        }
+      ]
+    },
+    {
+      "task": "context-paths-64",
+      "repeat": 1,
+      "arm": "plain",
+      "valid": true,
+      "solved": true,
+      "promptRaw": 94316,
+      "output": 1477,
+      "firstInput": 17289,
+      "minInput": 17289,
+      "peak": 20644,
+      "requests": 5,
+      "requestSamplesSum": 94316,
+      "samplesSumMatchesTotal": true,
+      "outerCalls": {
+        "exec": 4
+      },
+      "waitCalls": 0,
+      "shortWaitCalls": 0,
+      "compactions": 0,
+      "rollouts": [
+        {
+          "file": "rollout-2026-09-30T13-10-29-01a0f382-c5cc-7631-8ab6-bf963ba6cf3c.jsonl",
+          "sha256": "318708cffb5b13cca8b9e1b9d512f9b9656d773ba2d9fed27b9e3bf30bf99c7a"
+        }
+      ]
+    },
+    {
+      "task": "context-paths-64",
+      "repeat": 1,
+      "arm": "atlias",
+      "valid": true,
+      "solved": true,
+      "promptRaw": 101062,
+      "output": 1444,
+      "firstInput": 19028,
+      "minInput": 19028,
+      "peak": 21959,
+      "requests": 5,
+      "requestSamplesSum": 101062,
+      "samplesSumMatchesTotal": true,
+      "outerCalls": {
+        "exec": 2,
+        "wait": 2
+      },
+      "waitCalls": 2,
+      "shortWaitCalls": 2,
+      "compactions": 0,
+      "rollouts": [
+        {
+          "file": "rollout-2026-09-30T13-14-10-01a0f386-2000-73a3-abec-26078318fe39.jsonl",
+          "sha256": "1cb7f22824fc2e6f1d7c3da0a7162616b46303ae705e3b0bfe69744ef6328122"
+        }
+      ]
+    },
+    {
+      "task": "context-merge-64",
+      "repeat": 1,
+      "arm": "atlias",
+      "valid": true,
+      "solved": true,
+      "promptRaw": 162626,
+      "output": 2438,
+      "firstInput": 19027,
+      "minInput": 19027,
+      "peak": 22773,
+      "requests": 8,
+      "requestSamplesSum": 162626,
+      "samplesSumMatchesTotal": true,
+      "outerCalls": {
+        "exec": 3,
+        "wait": 4
+      },
+      "waitCalls": 4,
+      "shortWaitCalls": 4,
+      "compactions": 0,
+      "rollouts": [
+        {
+          "file": "rollout-2026-09-30T13-18-24-01a0f38a-00dd-7091-9623-deda682883f6.jsonl",
+          "sha256": "9db2a11157c83db2ab375c9434438b7ae9ff0a863d94ca3029da5c6f18980c8a"
+        }
+      ]
+    },
+    {
+      "task": "context-merge-64",
+      "repeat": 1,
+      "arm": "plain",
+      "valid": true,
+      "solved": true,
+      "promptRaw": 132689,
+      "output": 3020,
+      "firstInput": 17289,
+      "minInput": 17289,
+      "peak": 21702,
+      "requests": 7,
+      "requestSamplesSum": 132689,
+      "samplesSumMatchesTotal": true,
+      "outerCalls": {
+        "exec": 6
+      },
+      "waitCalls": 0,
+      "shortWaitCalls": 0,
+      "compactions": 0,
+      "rollouts": [
+        {
+          "file": "rollout-2026-09-30T13-23-16-01a0f38e-78bf-7f82-a3fd-481a86defe28.jsonl",
+          "sha256": "f4667580734dffe47628034c18b27ff231cef79ffcc5d1e8d55c18b4fc3517a7"
+        }
+      ]
+    },
+    {
+      "task": "context-ttl-64",
+      "repeat": 1,
+      "arm": "plain",
+      "valid": true,
+      "solved": true,
+      "promptRaw": 93490,
+      "output": 1435,
+      "firstInput": 17289,
+      "minInput": 17289,
+      "peak": 21670,
+      "requests": 5,
+      "requestSamplesSum": 93490,
+      "samplesSumMatchesTotal": true,
+      "outerCalls": {
+        "exec": 4
+      },
+      "waitCalls": 0,
+      "shortWaitCalls": 0,
+      "compactions": 0,
+      "rollouts": [
+        {
+          "file": "rollout-2026-09-30T13-27-55-01a0f392-b8a5-77d3-8044-90600dcc75e7.jsonl",
+          "sha256": "58a23f47fc803aec89f0f2fd80c7b0989d5791f26ec6e2684aa5931503ed803e"
+        }
+      ]
+    },
+    {
+      "task": "context-ttl-64",
+      "repeat": 1,
+      "arm": "atlias",
+      "valid": true,
+      "solved": true,
+      "promptRaw": 220062,
+      "output": 1485,
+      "firstInput": 19064,
+      "minInput": 19064,
+      "peak": 21357,
+      "requests": 11,
+      "requestSamplesSum": 220062,
+      "samplesSumMatchesTotal": true,
+      "outerCalls": {
+        "exec": 3,
+        "wait": 7
+      },
+      "waitCalls": 7,
+      "shortWaitCalls": 4,
+      "compactions": 0,
+      "rollouts": [
+        {
+          "file": "rollout-2026-09-30T13-30-38-01a0f395-3745-7a31-bb41-9d471980af8e.jsonl",
+          "sha256": "c263f86bbc961bfccd26f2008ffaca390b74f0038a2ba1f38722ac81a412f6b3"
+        }
+      ]
+    },
+    {
+      "task": "context-csv-64",
+      "repeat": 1,
+      "arm": "atlias",
+      "valid": true,
+      "solved": true,
+      "promptRaw": 98662,
+      "output": 1292,
+      "firstInput": 19021,
+      "minInput": 19021,
+      "peak": 21145,
+      "requests": 5,
+      "requestSamplesSum": 98662,
+      "samplesSumMatchesTotal": true,
+      "outerCalls": {
+        "exec": 2,
+        "wait": 2
+      },
+      "waitCalls": 2,
+      "shortWaitCalls": 0,
+      "compactions": 0,
+      "rollouts": [
+        {
+          "file": "rollout-2026-09-30T13-35-42-01a0f399-d9c4-7760-a0b6-4a9253d62ac3.jsonl",
+          "sha256": "22fb4c6ffe4240274fc4f1e4dc674e8da175db9d6a0a3290e028384414826871"
+        }
+      ]
+    },
+    {
+      "task": "context-csv-64",
+      "repeat": 1,
+      "arm": "plain",
+      "valid": true,
+      "solved": true,
+      "promptRaw": 115012,
+      "output": 1867,
+      "firstInput": 17289,
+      "minInput": 17289,
+      "peak": 21056,
+      "requests": 6,
+      "requestSamplesSum": 115012,
+      "samplesSumMatchesTotal": true,
+      "outerCalls": {
+        "exec": 4,
+        "wait": 1
+      },
+      "waitCalls": 1,
+      "shortWaitCalls": 1,
+      "compactions": 0,
+      "rollouts": [
+        {
+          "file": "rollout-2026-09-30T13-39-38-01a0f39d-75a6-7463-a822-27471f0692f5.jsonl",
+          "sha256": "6b82444cc62416a8d280d1f3885af35ee964279dee27ac4092b794f8a1738355"
+        }
+      ]
+    },
+    {
+      "task": "context-pagination-64",
+      "repeat": 1,
+      "arm": "plain",
+      "valid": true,
+      "solved": true,
+      "promptRaw": 130816,
+      "output": 1444,
+      "firstInput": 17286,
+      "minInput": 17286,
+      "peak": 20266,
+      "requests": 7,
+      "requestSamplesSum": 130816,
+      "samplesSumMatchesTotal": true,
+      "outerCalls": {
+        "exec": 6
+      },
+      "waitCalls": 0,
+      "shortWaitCalls": 0,
+      "compactions": 0,
+      "rollouts": [
+        {
+          "file": "rollout-2026-09-30T13-43-19-01a0f3a0-d48e-7700-9810-2a028de19134.jsonl",
+          "sha256": "7a45e98dc79185f3eeebcb6c26089ea7243e1c7356057b47c3a37a1547cf0387"
+        }
+      ]
+    },
+    {
+      "task": "context-pagination-64",
+      "repeat": 1,
+      "arm": "atlias",
+      "valid": false,
+      "solved": true,
+      "promptRaw": 78958,
+      "output": 1280,
+      "firstInput": 18856,
+      "minInput": 18856,
+      "peak": 21082,
+      "requests": 4,
+      "requestSamplesSum": 78958,
+      "samplesSumMatchesTotal": true,
+      "outerCalls": {
+        "exec": 3
+      },
+      "waitCalls": 0,
+      "shortWaitCalls": 0,
+      "compactions": 0,
+      "rollouts": [
+        {
+          "file": "rollout-2026-09-30T13-48-21-01a0f3a5-6ddc-7df3-8a8e-5dae8dbae174.jsonl",
+          "sha256": "9b3201f7f851bb99a86170f8c70295460bfbf2f30ff8d96293a059370da5ad6c"
+        }
+      ]
+    },
+    {
+      "task": "context-topology-64",
+      "repeat": 1,
+      "arm": "atlias",
+      "valid": true,
+      "solved": true,
+      "promptRaw": 181855,
+      "output": 1884,
+      "firstInput": 19022,
+      "minInput": 19022,
+      "peak": 22025,
+      "requests": 9,
+      "requestSamplesSum": 181855,
+      "samplesSumMatchesTotal": true,
+      "outerCalls": {
+        "exec": 4,
+        "wait": 4
+      },
+      "waitCalls": 4,
+      "shortWaitCalls": 1,
+      "compactions": 0,
+      "rollouts": [
+        {
+          "file": "rollout-2026-09-30T14-30-06-01a0f3cb-a795-74e3-8e0e-1aa4dd99a4ab.jsonl",
+          "sha256": "e425d836c2289dea97f1ca9e6694da07e30e6a2c478364fbf86dff13bf2a8749"
+        }
+      ]
+    },
+    {
+      "task": "context-topology-64",
+      "repeat": 1,
+      "arm": "plain",
+      "valid": true,
+      "solved": true,
+      "promptRaw": 131664,
+      "output": 1634,
+      "firstInput": 17289,
+      "minInput": 17289,
+      "peak": 20924,
+      "requests": 7,
+      "requestSamplesSum": 131664,
+      "samplesSumMatchesTotal": true,
+      "outerCalls": {
+        "exec": 6
+      },
+      "waitCalls": 0,
+      "shortWaitCalls": 0,
+      "compactions": 0,
+      "rollouts": [
+        {
+          "file": "rollout-2026-09-30T14-35-14-01a0f3d0-5b51-7451-bac3-c1cbf17b29bb.jsonl",
+          "sha256": "2b466783eaf0d6881ac6cf8885bd279db84d3ba9362386569c7eb144e278caff"
+        }
+      ]
+    },
+    {
+      "task": "context-dedupe-64",
+      "repeat": 1,
+      "arm": "plain",
+      "valid": true,
+      "solved": true,
+      "promptRaw": 94783,
+      "output": 1249,
+      "firstInput": 17292,
+      "minInput": 17292,
+      "peak": 21658,
+      "requests": 5,
+      "requestSamplesSum": 94783,
+      "samplesSumMatchesTotal": true,
+      "outerCalls": {
+        "exec": 4
+      },
+      "waitCalls": 0,
+      "shortWaitCalls": 0,
+      "compactions": 0,
+      "rollouts": [
+        {
+          "file": "rollout-2026-09-30T14-38-37-01a0f3d3-72c3-7c12-a941-c9784154b924.jsonl",
+          "sha256": "d89e60295319dde1b0c51e55bdc8d10024ee0b5590fbc71d0af350add8c68ed1"
+        }
+      ]
+    },
+    {
+      "task": "context-dedupe-64",
+      "repeat": 1,
+      "arm": "atlias",
+      "valid": true,
+      "solved": true,
+      "promptRaw": 157573,
+      "output": 1158,
+      "firstInput": 19037,
+      "minInput": 19037,
+      "peak": 21003,
+      "requests": 8,
+      "requestSamplesSum": 157573,
+      "samplesSumMatchesTotal": true,
+      "outerCalls": {
+        "exec": 2,
+        "wait": 5
+      },
+      "waitCalls": 5,
+      "shortWaitCalls": 5,
+      "compactions": 0,
+      "rollouts": [
+        {
+          "file": "rollout-2026-09-30T14-40-58-01a0f3d5-9a86-71b3-b8e9-6c59b5c8cb68.jsonl",
+          "sha256": "6f0499ae74d29a249b7655a4bd99ed7eae9fadebd79ca73d0918adcd1c99a082"
+        }
+      ]
+    },
+    {
+      "task": "context-query-64",
+      "repeat": 1,
+      "arm": "atlias",
+      "valid": true,
+      "solved": true,
+      "promptRaw": 137680,
+      "output": 1356,
+      "firstInput": 19050,
+      "minInput": 19050,
+      "peak": 21153,
+      "requests": 7,
+      "requestSamplesSum": 137680,
+      "samplesSumMatchesTotal": true,
+      "outerCalls": {
+        "exec": 2,
+        "wait": 4
+      },
+      "waitCalls": 4,
+      "shortWaitCalls": 2,
+      "compactions": 0,
+      "rollouts": [
+        {
+          "file": "rollout-2026-09-30T14-44-34-01a0f3d8-e649-7333-b029-4e54f1e07bdd.jsonl",
+          "sha256": "120c994e36ed542a608f368b7c68752be021246c2fc083544ba0110b695e68ba"
+        }
+      ]
+    },
+    {
+      "task": "context-query-64",
+      "repeat": 1,
+      "arm": "plain",
+      "valid": true,
+      "solved": true,
+      "promptRaw": 134477,
+      "output": 1576,
+      "firstInput": 17286,
+      "minInput": 17286,
+      "peak": 21953,
+      "requests": 7,
+      "requestSamplesSum": 134477,
+      "samplesSumMatchesTotal": true,
+      "outerCalls": {
+        "exec": 6
+      },
+      "waitCalls": 0,
+      "shortWaitCalls": 0,
+      "compactions": 0,
+      "rollouts": [
+        {
+          "file": "rollout-2026-09-30T14-49-03-01a0f3dc-ffc2-7d23-b43a-8a09c4fd1ca0.jsonl",
+          "sha256": "e037e5c2713c15d2dc1f7ac6a18e0df0477e7e5d843e1070b03db44f4ce12a85"
+        }
+      ]
+    },
+    {
+      "task": "context-money-64",
+      "repeat": 2,
+      "arm": "atlias",
+      "valid": true,
+      "solved": true,
+      "promptRaw": 137582,
+      "output": 1500,
+      "firstInput": 19029,
+      "minInput": 19029,
+      "peak": 21195,
+      "requests": 7,
+      "requestSamplesSum": 137582,
+      "samplesSumMatchesTotal": true,
+      "outerCalls": {
+        "exec": 2,
+        "wait": 4
+      },
+      "waitCalls": 4,
+      "shortWaitCalls": 4,
+      "compactions": 0,
+      "rollouts": [
+        {
+          "file": "rollout-2026-09-30T14-52-03-01a0f3df-bf62-7ae1-9295-c30266df86b1.jsonl",
+          "sha256": "6bb3e7d3f61331163d8d40903b1052bef9c956780d70c243edba01dd0dcf778d"
+        }
+      ]
+    },
+    {
+      "task": "context-money-64",
+      "repeat": 2,
+      "arm": "plain",
+      "valid": true,
+      "solved": true,
+      "promptRaw": 130280,
+      "output": 1754,
+      "firstInput": 17286,
+      "minInput": 17286,
+      "peak": 20581,
+      "requests": 7,
+      "requestSamplesSum": 130280,
+      "samplesSumMatchesTotal": true,
+      "outerCalls": {
+        "exec": 6
+      },
+      "waitCalls": 0,
+      "shortWaitCalls": 0,
+      "compactions": 0,
+      "rollouts": [
+        {
+          "file": "rollout-2026-09-30T14-56-17-01a0f3e3-a1a1-71c0-95c2-4a9922781fae.jsonl",
+          "sha256": "37cc8b63e39adbc53bcf32bb3072ec7ab0fc8fa291de2b193166386455a427aa"
+        }
+      ]
+    },
+    {
+      "task": "context-versions-64",
+      "repeat": 2,
+      "arm": "plain",
+      "valid": true,
+      "solved": true,
+      "promptRaw": 94017,
+      "output": 1377,
+      "firstInput": 17289,
+      "minInput": 17289,
+      "peak": 21626,
+      "requests": 5,
+      "requestSamplesSum": 94017,
+      "samplesSumMatchesTotal": true,
+      "outerCalls": {
+        "exec": 4
+      },
+      "waitCalls": 0,
+      "shortWaitCalls": 0,
+      "compactions": 0,
+      "rollouts": [
+        {
+          "file": "rollout-2026-09-30T15-00-04-01a0f3e7-165a-7713-86dd-4f26d9614bbb.jsonl",
+          "sha256": "b235a2024b632072109b61616ad270167e5ac150919e72d38983bc2bd86f8b50"
+        }
+      ]
+    },
+    {
+      "task": "context-versions-64",
+      "repeat": 2,
+      "arm": "atlias",
+      "valid": true,
+      "solved": true,
+      "promptRaw": 59260,
+      "output": 1091,
+      "firstInput": 19008,
+      "minInput": 19008,
+      "peak": 20710,
+      "requests": 3,
+      "requestSamplesSum": 59260,
+      "samplesSumMatchesTotal": true,
+      "outerCalls": {
+        "exec": 2
+      },
+      "waitCalls": 0,
+      "shortWaitCalls": 0,
+      "compactions": 0,
+      "rollouts": [
+        {
+          "file": "rollout-2026-09-30T15-02-41-01a0f3e9-7fa6-7ac3-8aae-78c3f0b5ae2f.jsonl",
+          "sha256": "2a0471d8f17484bf6853e34408227286a19ad126a4471353134c8edaeab24452"
+        }
+      ]
+    },
+    {
+      "task": "context-intervals-64",
+      "repeat": 2,
+      "arm": "atlias",
+      "valid": true,
+      "solved": true,
+      "promptRaw": 59344,
+      "output": 1164,
+      "firstInput": 19007,
+      "minInput": 19007,
+      "peak": 20795,
+      "requests": 3,
+      "requestSamplesSum": 59344,
+      "samplesSumMatchesTotal": true,
+      "outerCalls": {
+        "exec": 2
+      },
+      "waitCalls": 0,
+      "shortWaitCalls": 0,
+      "compactions": 0,
+      "rollouts": [
+        {
+          "file": "rollout-2026-09-30T15-05-15-01a0f3eb-d5aa-7400-bc6e-0e4ca03c9ca4.jsonl",
+          "sha256": "9483047727983b27f530a32214c524cf4b56098c7a5dd0ae2517715fcdcdc31e"
+        }
+      ]
+    },
+    {
+      "task": "context-intervals-64",
+      "repeat": 2,
+      "arm": "plain",
+      "valid": true,
+      "solved": true,
+      "promptRaw": 111219,
+      "output": 1578,
+      "firstInput": 17292,
+      "minInput": 17292,
+      "peak": 20539,
+      "requests": 6,
+      "requestSamplesSum": 111219,
+      "samplesSumMatchesTotal": true,
+      "outerCalls": {
+        "exec": 5
+      },
+      "waitCalls": 0,
+      "shortWaitCalls": 0,
+      "compactions": 0,
+      "rollouts": [
+        {
+          "file": "rollout-2026-09-30T15-08-01-01a0f3ee-5d71-7472-98c7-24b5e80edf84.jsonl",
+          "sha256": "bddabc6ab667354eb25afb6b1bd33aa57a07a844965c8a64c0bfd9ab47bf23ce"
+        }
+      ]
+    },
+    {
+      "task": "context-unicode-64",
+      "repeat": 2,
+      "arm": "plain",
+      "valid": true,
+      "solved": true,
+      "promptRaw": 91877,
+      "output": 771,
+      "firstInput": 17289,
+      "minInput": 17289,
+      "peak": 19465,
+      "requests": 5,
+      "requestSamplesSum": 91877,
+      "samplesSumMatchesTotal": true,
+      "outerCalls": {
+        "exec": 4
+      },
+      "waitCalls": 0,
+      "shortWaitCalls": 0,
+      "compactions": 0,
+      "rollouts": [
+        {
+          "file": "rollout-2026-09-30T15-10-53-01a0f3f0-fe6a-7df2-8cdc-43d949bacc29.jsonl",
+          "sha256": "3071fd112e19ae3b660d881f3fdf9ba6c6a1d9fefbc6bf8345cbdc2860753799"
+        }
+      ]
+    }
+  ],
+  "limitation": "Observed request sizes are diagnostics, not architectural lower bounds or counterfactual savings. First request includes task and host overhead. No model call, new grader, output alteration or measured5x/20x claim."
+}

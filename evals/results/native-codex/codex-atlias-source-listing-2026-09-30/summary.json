@@ -1,0 +1,95 @@
+{
+  "stats": {
+    "plain": {
+      "n": 24,
+      "solved": 24,
+      "promptRaw": 2562236,
+      "perSolved": 106759.83333333333,
+      "peak": 22934
+    },
+    "atlias": {
+      "n": 23,
+      "solved": 23,
+      "promptRaw": 2691757,
+      "perSolved": 117032.91304347826,
+      "peak": 23343
+    }
+  },
+  "comparisons": [
+    {
+      "arm": "atlias",
+      "pairedRuns": 23,
+      "semanticFamilies": 12,
+      "pairedStats": {
+        "plain": {
+          "n": 23,
+          "solved": 23,
+          "promptRaw": 2431420,
+          "perSolved": 105713.91304347826,
+          "contextPeak": 22934
+        },
+        "atlias": {
+          "n": 23,
+          "solved": 23,
+          "promptRaw": 2691757,
+          "perSolved": 117032.91304347826,
+          "contextPeak": 23343
+        }
+      },
+      "rawRatio": {
+        "n": 12,
+        "ratioOfSums": 1.1070719990787277,
+        "bootLo": 0.9474786985032468,
+        "bootHi": 1.285426905048112,
+        "geoMean": 1.0650028826411533,
+        "tLo": 0.8971903683328079,
+        "tHi": 1.2642034289129027
+      },
+      "plainOnly": [],
+      "pluginOnly": []
+    }
+  ],
+  "excluded": [
+    {
+      "task": "context-pagination-64",
+      "arm": "atlias",
+      "reason": "task-context flag requested but generated and delivered prompt context were not both recorded"
+    }
+  ],
+  "plannedCallsComplete": true,
+  "protocolComplete": false,
+  "pairedTokens": {
+    "plain": {
+      "raw": 2431420,
+      "cached": 1813760,
+      "uncached": 617660,
+      "output": 36759
+    },
+    "atlias": {
+      "raw": 2691757,
+      "cached": 2363904,
+      "uncached": 327853,
+      "output": 31686
+    }
+  },
+  "allRecorded": {
+    "plain": {
+      "calls": 24,
+      "solved": 24,
+      "invalid": 0,
+      "promptRaw": 2562236,
+      "cachedInput": 1909760,
+      "output": 38203,
+      "peak": 22934
+    },
+    "atlias": {
+      "calls": 24,
+      "solved": 24,
+      "invalid": 1,
+      "promptRaw": 2770715,
+      "cachedInput": 2426112,
+      "output": 32966,
+      "peak": 23343
+    }
+  }
+}

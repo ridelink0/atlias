@@ -1,0 +1,75 @@
+{
+  "engine": "native Codex CLI",
+  "plugin": "atlias",
+  "sha": "0e29833460e466ec80c503129b90808a0c206bf9",
+  "model": "gpt-6.1-sol",
+  "effort": "medium",
+  "lean": true,
+  "taskContext": true,
+  "repeats": 2,
+  "tasks": [
+    {
+      "id": "context-money-64",
+      "sha256": "26b34aa5519477d7abf9357a8753b4c81a43d9c582dc104fd9232a65fcc3e01a",
+      "family": "money"
+    },
+    {
+      "id": "context-versions-64",
+      "sha256": "67388b52292ac7d032d1c95717173768960e55e087b79255e16677b0a60182b7",
+      "family": "versions"
+    },
+    {
+      "id": "context-intervals-64",
+      "sha256": "b4d3e1b723471b4fa66724363ceba6c7127114b2f117a319a5df31a24ef79475",
+      "family": "intervals"
+    },
+    {
+      "id": "context-unicode-64",
+      "sha256": "a3376f3672c82c5b693867c95eb55527bda3d8ce1cdd814e22d106cf1f44d1e0",
+      "family": "unicode"
+    },
+    {
+      "id": "context-paths-64",
+      "sha256": "c0f81ef4385f2289a5469a1deed6eabe55e69c907cd9503aaadbfee06798f9d5",
+      "family": "paths"
+    },
+    {
+      "id": "context-merge-64",
+      "sha256": "c978a5c357f793d379cdb791fad0fbf0b38af2caded17b16d26392800ff09e1b",
+      "family": "merge"
+    },
+    {
+      "id": "context-ttl-64",
+      "sha256": "af143b09c13ba6eddb26b22a43b710a1b1fd6d21c17327eff0a4f4769a42fb28",
+      "family": "ttl"
+    },
+    {
+      "id": "context-csv-64",
+      "sha256": "ccbd9e1d77a74a8a414c49ea3710e066d4650b2e223f0c8ec972fc867d2bc283",
+      "family": "csv"
+    },
+    {
+      "id": "context-pagination-64",
+      "sha256": "a1f20374b91d306c8cad5914bd8f1bc476c55e522ebabdf5ee4392dbd4f6d42e",
+      "family": "pagination"
+    },
+    {
+      "id": "context-topology-64",
+      "sha256": "8148de821d3d3735dabb97f21ba7f3dd65f9f605cb75a5ce398819364b8749ee",
+      "family": "topology"
+    },
+    {
+      "id": "context-dedupe-64",
+      "sha256": "350fdba07aec43bfa61e19d3c618b1809898e7c9d4c361eb42465c54707a48a5",
+      "family": "dedupe"
+    },
+    {
+      "id": "context-query-64",
+      "sha256": "af69244083373e4af3bb47908be0ace4fadf6e4a5eb844b87ae623e447c65c1a",
+      "family": "query"
+    }
+  ],
+  "jobs": 48,
+  "order": "alternate plain/plugin order by task and repeat",
+  "paidCredits": "account setting must remain off"
+}

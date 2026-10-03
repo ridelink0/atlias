@@ -1,0 +1,87 @@
+{
+  "modelCalls": 0,
+  "result": {
+    "modelCalls": 0,
+    "results": [
+      {
+        "host": "codex",
+        "modelCalls": 0,
+        "localRequests": 1,
+        "completePacketDelivered": true,
+        "replacementInstructionsDelivered": true,
+        "parsedAndValidated": true,
+        "nativeNotices": [
+          "Model metadata for `gpt-6.1-sol` not found. Defaulting to fallback metadata; this can degrade performance and cause issues."
+        ],
+        "metadataParity": "not established; owned custom provider uses fallback metadata",
+        "packetSha256": "dc791cd1604fdc48825dedf649e084c10d37bdf6d8c0950bee4903042b20aba2",
+        "jobs": 12,
+        "batchSha256": "dc791cd1604fdc48825dedf649e084c10d37bdf6d8c0950bee4903042b20aba2",
+        "instructionSha256": "324b2bb2944b0886768c52c2af0ed9b74afceac47a1b8c642a7bf585a6d11200",
+        "instructionsChars": 633,
+        "inputChars": 25727,
+        "toolsChars": 1729,
+        "toolNames": [
+          "request_user_input",
+          "view_image"
+        ],
+        "status": {
+          "code": 0,
+          "signal": null
+        }
+      },
+      {
+        "host": "claude",
+        "modelCalls": 0,
+        "localRequests": 1,
+        "completePacketDelivered": true,
+        "replacementInstructionsDelivered": true,
+        "parsedAndValidated": true,
+        "nativeNotices": [],
+        "metadataParity": "unmeasured",
+        "packetSha256": "dc791cd1604fdc48825dedf649e084c10d37bdf6d8c0950bee4903042b20aba2",
+        "jobs": 12,
+        "batchSha256": "dc791cd1604fdc48825dedf649e084c10d37bdf6d8c0950bee4903042b20aba2",
+        "instructionSha256": "324b2bb2944b0886768c52c2af0ed9b74afceac47a1b8c642a7bf585a6d11200",
+        "instructionsChars": 922,
+        "inputChars": 22597,
+        "toolsChars": 2,
+        "toolNames": [],
+        "status": {
+          "code": 0,
+          "signal": null
+        }
+      }
+    ],
+    "limitation": "Owned local fixture, no inference. Metadata is not model-token saving or general feature parity; no live user configuration or auth was copied. Native profile remains experimental."
+  },
+  "sourceWorkingFileSha256": "14ca3f45dc14c87ffce962ae03c64bfc68d213054a1439bd3737f5e3ba5a5e29",
+  "artifacts": [
+    {
+      "file": "RESULT.json",
+      "sha256": "1cb4864cb92807078caf78a54e4e0671b69f846c12e3b248d18e3ff70c0b1df3"
+    },
+    {
+      "file": "codex/requests.json",
+      "sha256": "9cf3dcd77759d89a1668964eefc73af3786ae2d4f250ebe6d64420c6359f7ee3"
+    },
+    {
+      "file": "codex/stream.jsonl",
+      "sha256": "dcecf62660a0274595b85dc90e73290159b0c309c25fc8d8cccd4ad934ebefc9"
+    },
+    {
+      "file": "claude/requests.json",
+      "sha256": "f88dd33cc6bd3c61e7f5a4b26e9717791df4a5d5894328f4803a408cad47d4a7"
+    },
+    {
+      "file": "claude/stream.jsonl",
+      "sha256": "e6074d8b71047eb49e0b446a00d8485adb306d8707c68fb34a9d95ccbc8fa440"
+    }
+  ],
+  "limits": [
+    "Claude bare fake-local-key only; no OAuth activation, real model quality or savings.",
+    "Codex custom provider explicitly reported fallback metadata; production model metadata parity is not established.",
+    "No edits were returned; source task correctness was not evaluated.",
+    "Both actual native clients delivered and parsed the same complete12-job packet, including native Codex structured-output schema."
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "source": "72e6ff5c47f9f84e779aaac3a87b93f3e436690b",
+  "tasks": [
+    "context-query-8",
+    "context-query-64"
+  ],
+  "finding": "The supplied contract does not require stripping an optional leading question mark, but the hidden grader requires that behavior for ?a=1. Both first-repeat arms failed only that assertion. Prompt, grading, task hashes and running rows remain unchanged; do not infer a model-performance loss from this check.",
+  "currentPolicy": "Retain every favorable and unfavorable row and original grade. Report the ambiguity separately, and give both all-row cost totals and a symmetric eligibility analysis if needed. Do not silently drop or rewrite failed grades.",
+  "futurePolicy": "Make optional leading question-mark behavior explicit only in a new version of the task contract with new hashes and a separate comparison. Never mix revised tasks into this running study."
+}

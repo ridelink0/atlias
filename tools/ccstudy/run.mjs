@@ -141,7 +141,8 @@ export async function runOne(task, arm, ctx) {
   const spendNow = await addSpend(ctx.spendFile, analysis.costUsd);
   return {
     arm: arm.name, armKind: arm.kind, sha: arm.sha || '', version: arm.version || '', flags: arm.flags,
-    task: task.id, source: task.source || '', kind: task.kind || '',
+    task: task.id, source: task.source || '', kind: task.kind || '', family: task.family || task.id,
+    taskSha256: task.taskSha256 || '', pluginName: arm.pluginName || 'atlias',
     solved, why: cheat.files.length ? `graded file changed: ${cheat.files.map((f) => `${f.file} ${f.what}`).join(', ')}` : verdict.why,
     checkOutput: String(verdict.output || '').slice(0, 300),
     tampered: cheat.files.map((f) => `${f.file} ${f.what}`),
@@ -168,6 +169,7 @@ export function analyzeRun({ base, sessionId, arm }) {
   const mainRows = mainFile ? S.readJsonl(mainFile) : [];
   const allRows = files.flatMap((f) => S.readJsonl(f).map((r) => (f === mainFile ? r : { ...r, isSidechain: true })));
   const requests = S.requestsOf(allRows);
+  const contexts = requests.filter((q) => !q.sidechain && q.usage).map((q) => S.tokensOf(q.usage).promptRaw);
   let tokens = { ...S.ZERO_TOKENS };
   let subTokens = { ...S.ZERO_TOKENS };
   for (const q of requests) {
@@ -194,6 +196,10 @@ export function analyzeRun({ base, sessionId, arm }) {
     resultPromptRaw: resultTokens.promptRaw,
     costUsd: result && typeof result.total_cost_usd === 'number' ? result.total_cost_usd : 0,
     rounds: requests.filter((q) => !q.sidechain).length,
+    contextPeak: contexts.length ? Math.max(...contexts) : null,
+    contextMean: contexts.length ? contexts.reduce((a, b) => a + b, 0) / contexts.length : null,
+    compactions: mainRows.filter((r) => r.type === 'system' && r.subtype === 'compact_boundary').length,
+    usageComplete: requests.length > 0 && requests.every((q) => q.usage && ['input_tokens', 'cache_read_input_tokens', 'cache_creation_input_tokens', 'output_tokens'].every((k) => Number.isFinite(q.usage[k]))),
     subagentRequests: requests.filter((q) => q.sidechain).length,
     numTurns: result ? result.num_turns ?? null : null,
     holds: holds.length,
@@ -226,11 +232,15 @@ export function analyzeRun({ base, sessionId, arm }) {
   };
 }
 
-export function loadTaskList(file) {
+export function loadTaskList(file, root = REPO) {
   const list = JSON.parse(fs.readFileSync(file, 'utf8'));
   return list.tasks.map((t) => {
-    const task = JSON.parse(fs.readFileSync(path.resolve(REPO, t.file), 'utf8'));
-    return { ...task, source: t.source || '' };
+    const bytes = fs.readFileSync(path.resolve(root, t.file));
+    const sha256 = crypto.createHash('sha256').update(bytes).digest('hex');
+    if (!t.sha256 || t.sha256 !== sha256) throw new Error(`task hash changed or missing: ${t.id}`);
+    const task = JSON.parse(bytes);
+    if (task.id !== t.id) throw new Error(`task id changed: ${t.id}`);
+    return { ...task, source: t.source || '', taskSha256: sha256 };
   });
 }
 

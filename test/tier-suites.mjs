@@ -42,7 +42,7 @@ export default async function tierSuites({ asyncSuite, check, TMP, ROOT, fs, pat
       big.ok === false && /not on this machine/.test(big.why) && big.tasks.length === 0,
       { happened: JSON.stringify(big.why), why: 'A corpus of no tasks scores 0 of 0, and 0 of 0 prints as a clean run.', fix: 'tierTasks returns ok false with the reason.' });
     check('a tier nobody defined is refused with the list of the ones that exist',
-      tiers.resolveTier('enormous').ok === false && /have smoke, main, big/.test(tiers.resolveTier('enormous').why) && tiers.tierNames().length === 3,
+      tiers.resolveTier('enormous').ok === false && /have smoke, main, hefix2, big/.test(tiers.resolveTier('enormous').why) && tiers.tierNames().length === 4,
       { happened: JSON.stringify(tiers.resolveTier('enormous')), why: 'A typo in a tier name must not fall back to some other corpus.', fix: 'resolveTier checks the name against TIERS.' });
 
     const status = tiers.statusLines({ root });

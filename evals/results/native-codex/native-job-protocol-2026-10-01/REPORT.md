@@ -1,0 +1,5 @@
+# Native bounded-packet protocol controls for Gev
+
+Real Codex and Claude Code clients delivered the complete hashed packet and replacement instructions and parsed/validated a scripted reply against an owned localhost fixture. Zero inference calls. Codex retained request_user_input/view_image metadata and used fallback model metadata from the custom provider; metadata parity is unproven. Claude succeeded only in bare fake-key fixture mode after the original non-bare startup timeout; subscription activation remains unverified. The unsupported Codex tools.view_image setting was removed after observing its ignored-setting warning. Strict fixture failures and all raw transcripts remain saved separately.
+
+[Evidence, hashes and limitations](summary.json). Metadata characters are not model tokens, quality, interactive feature parity or20x evidence. The source-bound packet/staging checks passed37 controls; runner preparation/failure/accounting15 and broker recipe64, all without models. New matched inference is still required.

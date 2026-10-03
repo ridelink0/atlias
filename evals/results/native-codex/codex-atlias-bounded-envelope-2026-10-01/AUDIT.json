@@ -1,0 +1,896 @@
+{
+  "source": "07d969cd3e85f939dd623254e71db829167ea3fd",
+  "plannedCalls": 48,
+  "recordedCalls": 48,
+  "complete": true,
+  "ledgerSha256": "de2fc99098fb6251cf9aa87f0873bb182120e9f4bfbce3b0c40809307e599d26",
+  "audits": [
+    {
+      "identity": "context-money-64|1|atlias",
+      "packetSha256": "7f3c02d6b315fe52c9dc20724fb7011533f4b5186a2c997d79b7bec814277f0c",
+      "envelopeSha256": "a435320fdc60d4d00539462a59ec0275e18ae0372c2d1743079c6f35cd842468",
+      "instructionSha256": "f95333c9e7a4168eb5f95046b6b3d1d06e8d16461b5be236caf62f0c7726f924",
+      "fullEnvelopeDelivered": true,
+      "exactInstructionsDelivered": true,
+      "costsReconciled": true,
+      "authRemoved": true,
+      "roleCharacters": [
+        {
+          "role": "developer",
+          "characters": 3307
+        },
+        {
+          "role": "developer",
+          "characters": 2429
+        },
+        {
+          "role": "developer",
+          "characters": 271
+        },
+        {
+          "role": "user",
+          "characters": 607
+        },
+        {
+          "role": "user",
+          "characters": 1722
+        },
+        {
+          "role": "assistant",
+          "characters": 880
+        }
+      ]
+    },
+    {
+      "identity": "context-versions-64|1|atlias",
+      "packetSha256": "6a0df823058d32a57d5be05ada882ca321cf09c7b997966567e31c2a731655f0",
+      "envelopeSha256": "dbee44c8306f7046f13f2ccd11928f7c7aeadceec8fc851a5b773d5f94ba6b95",
+      "instructionSha256": "f95333c9e7a4168eb5f95046b6b3d1d06e8d16461b5be236caf62f0c7726f924",
+      "fullEnvelopeDelivered": true,
+      "exactInstructionsDelivered": true,
+      "costsReconciled": true,
+      "authRemoved": true,
+      "roleCharacters": [
+        {
+          "role": "developer",
+          "characters": 3310
+        },
+        {
+          "role": "developer",
+          "characters": 2429
+        },
+        {
+          "role": "developer",
+          "characters": 271
+        },
+        {
+          "role": "user",
+          "characters": 613
+        },
+        {
+          "role": "user",
+          "characters": 1631
+        },
+        {
+          "role": "assistant",
+          "characters": 758
+        }
+      ]
+    },
+    {
+      "identity": "context-intervals-64|1|atlias",
+      "packetSha256": "6546e9cc691ff14629688e815b132c8ff290eca33dc07d4d3a5a339859c00328",
+      "envelopeSha256": "af2ca2111811c06b942066d2743c44d94a28b6a8de3a4e18d81461dee4961a4e",
+      "instructionSha256": "f95333c9e7a4168eb5f95046b6b3d1d06e8d16461b5be236caf62f0c7726f924",
+      "fullEnvelopeDelivered": true,
+      "exactInstructionsDelivered": true,
+      "costsReconciled": true,
+      "authRemoved": true,
+      "roleCharacters": [
+        {
+          "role": "developer",
+          "characters": 3311
+        },
+        {
+          "role": "developer",
+          "characters": 2429
+        },
+        {
+          "role": "developer",
+          "characters": 271
+        },
+        {
+          "role": "user",
+          "characters": 615
+        },
+        {
+          "role": "user",
+          "characters": 1592
+        },
+        {
+          "role": "assistant",
+          "characters": 1213
+        }
+      ]
+    },
+    {
+      "identity": "context-unicode-64|1|atlias",
+      "packetSha256": "f9819a0b1965394dc4a734c7756bd21effd415e6484a8d3e1efe012efc532bf8",
+      "envelopeSha256": "33100af54729677fd5f06b5c89a3e46a4775a96c7ba8b03341b0d274be8e952e",
+      "instructionSha256": "f95333c9e7a4168eb5f95046b6b3d1d06e8d16461b5be236caf62f0c7726f924",
+      "fullEnvelopeDelivered": true,
+      "exactInstructionsDelivered": true,
+      "costsReconciled": true,
+      "authRemoved": true,
+      "roleCharacters": [
+        {
+          "role": "developer",
+          "characters": 3309
+        },
+        {
+          "role": "developer",
+          "characters": 2429
+        },
+        {
+          "role": "developer",
+          "characters": 271
+        },
+        {
+          "role": "user",
+          "characters": 611
+        },
+        {
+          "role": "user",
+          "characters": 1593
+        },
+        {
+          "role": "assistant",
+          "characters": 300
+        }
+      ]
+    },
+    {
+      "identity": "context-paths-64|1|atlias",
+      "packetSha256": "57c5f8ed7db67dfc9f8aee0e48c5f88137318fa5e8d1d31e0bc7f26d61b73dce",
+      "envelopeSha256": "cb84a5bc2314791aa1cc260abb5701d733a64fd7ed741ba76678e9c2b2bb43ea",
+      "instructionSha256": "f95333c9e7a4168eb5f95046b6b3d1d06e8d16461b5be236caf62f0c7726f924",
+      "fullEnvelopeDelivered": true,
+      "exactInstructionsDelivered": true,
+      "costsReconciled": true,
+      "authRemoved": true,
+      "roleCharacters": [
+        {
+          "role": "developer",
+          "characters": 3307
+        },
+        {
+          "role": "developer",
+          "characters": 2429
+        },
+        {
+          "role": "developer",
+          "characters": 271
+        },
+        {
+          "role": "user",
+          "characters": 607
+        },
+        {
+          "role": "user",
+          "characters": 1719
+        },
+        {
+          "role": "assistant",
+          "characters": 932
+        }
+      ]
+    },
+    {
+      "identity": "context-merge-64|1|atlias",
+      "packetSha256": "02bb4c3a27480ea8877fa0ff78741ad1772dd8be0bff9659885c101d6068169d",
+      "envelopeSha256": "de3262bc92ac09dada69d799f74b8b6642d8f47dcc46e4be7c4d9db5f72edeba",
+      "instructionSha256": "f95333c9e7a4168eb5f95046b6b3d1d06e8d16461b5be236caf62f0c7726f924",
+      "fullEnvelopeDelivered": true,
+      "exactInstructionsDelivered": true,
+      "costsReconciled": true,
+      "authRemoved": true,
+      "roleCharacters": [
+        {
+          "role": "developer",
+          "characters": 3307
+        },
+        {
+          "role": "developer",
+          "characters": 2429
+        },
+        {
+          "role": "developer",
+          "characters": 271
+        },
+        {
+          "role": "user",
+          "characters": 607
+        },
+        {
+          "role": "user",
+          "characters": 1714
+        },
+        {
+          "role": "assistant",
+          "characters": 2435
+        }
+      ]
+    },
+    {
+      "identity": "context-ttl-64|1|atlias",
+      "packetSha256": "a651a06bc75d69b37e0149d96d34bd34c1f90abd8ef0b8474ca79b278d0a7331",
+      "envelopeSha256": "44e8a17619ad1dabd0160e5e4e5bac4f803bd489ba373fe75e6102c12132f513",
+      "instructionSha256": "f95333c9e7a4168eb5f95046b6b3d1d06e8d16461b5be236caf62f0c7726f924",
+      "fullEnvelopeDelivered": true,
+      "exactInstructionsDelivered": true,
+      "costsReconciled": true,
+      "authRemoved": true,
+      "roleCharacters": [
+        {
+          "role": "developer",
+          "characters": 3305
+        },
+        {
+          "role": "developer",
+          "characters": 2429
+        },
+        {
+          "role": "developer",
+          "characters": 271
+        },
+        {
+          "role": "user",
+          "characters": 603
+        },
+        {
+          "role": "user",
+          "characters": 1785
+        },
+        {
+          "role": "assistant",
+          "characters": 759
+        }
+      ]
+    },
+    {
+      "identity": "context-csv-64|1|atlias",
+      "packetSha256": "c5ed553de35be5bab90ec6cf588770017e477f7693bd8f609c28b58faf501e14",
+      "envelopeSha256": "e5aaab252fbb23e3e5b797b0cdbb22f5e00eb7904d853741637a188aeee142f2",
+      "instructionSha256": "f95333c9e7a4168eb5f95046b6b3d1d06e8d16461b5be236caf62f0c7726f924",
+      "fullEnvelopeDelivered": true,
+      "exactInstructionsDelivered": true,
+      "costsReconciled": true,
+      "authRemoved": true,
+      "roleCharacters": [
+        {
+          "role": "developer",
+          "characters": 3305
+        },
+        {
+          "role": "developer",
+          "characters": 2429
+        },
+        {
+          "role": "developer",
+          "characters": 271
+        },
+        {
+          "role": "user",
+          "characters": 603
+        },
+        {
+          "role": "user",
+          "characters": 1682
+        },
+        {
+          "role": "assistant",
+          "characters": 1410
+        }
+      ]
+    },
+    {
+      "identity": "context-pagination-64|1|atlias",
+      "packetSha256": "62c86301503211b825c75bdeebf764503f1b773e9a1feb523f6f3078bfab6515",
+      "envelopeSha256": "92bd9d74df8ba433f6d03c30d7320484650bffb62d1c7ab7d685ae1873ee748d",
+      "instructionSha256": "f95333c9e7a4168eb5f95046b6b3d1d06e8d16461b5be236caf62f0c7726f924",
+      "fullEnvelopeDelivered": true,
+      "exactInstructionsDelivered": true,
+      "costsReconciled": true,
+      "authRemoved": true,
+      "roleCharacters": [
+        {
+          "role": "developer",
+          "characters": 3312
+        },
+        {
+          "role": "developer",
+          "characters": 2429
+        },
+        {
+          "role": "developer",
+          "characters": 271
+        },
+        {
+          "role": "user",
+          "characters": 617
+        },
+        {
+          "role": "user",
+          "characters": 1845
+        },
+        {
+          "role": "assistant",
+          "characters": 662
+        }
+      ]
+    },
+    {
+      "identity": "context-topology-64|1|atlias",
+      "packetSha256": "75065554b3c4c332106af0eae2338b751ca108558b244f417c003f359a36f311",
+      "envelopeSha256": "a49709c6999e8e689b2a69a636b310fb067b169dcbe75263cbc6ea44391bd7d3",
+      "instructionSha256": "f95333c9e7a4168eb5f95046b6b3d1d06e8d16461b5be236caf62f0c7726f924",
+      "fullEnvelopeDelivered": true,
+      "exactInstructionsDelivered": true,
+      "costsReconciled": true,
+      "authRemoved": true,
+      "roleCharacters": [
+        {
+          "role": "developer",
+          "characters": 3310
+        },
+        {
+          "role": "developer",
+          "characters": 2429
+        },
+        {
+          "role": "developer",
+          "characters": 271
+        },
+        {
+          "role": "user",
+          "characters": 613
+        },
+        {
+          "role": "user",
+          "characters": 1689
+        },
+        {
+          "role": "assistant",
+          "characters": 1314
+        }
+      ]
+    },
+    {
+      "identity": "context-dedupe-64|1|atlias",
+      "packetSha256": "f108ab4646ef1ce7a0813d5eaf26efad03d5026a002b102c34428a52d34e82d2",
+      "envelopeSha256": "17c22ffd5442ce33400fbe0ef80a5612bf377c2c2e7216522482d2bacb508617",
+      "instructionSha256": "f95333c9e7a4168eb5f95046b6b3d1d06e8d16461b5be236caf62f0c7726f924",
+      "fullEnvelopeDelivered": true,
+      "exactInstructionsDelivered": true,
+      "costsReconciled": true,
+      "authRemoved": true,
+      "roleCharacters": [
+        {
+          "role": "developer",
+          "characters": 3308
+        },
+        {
+          "role": "developer",
+          "characters": 2429
+        },
+        {
+          "role": "developer",
+          "characters": 271
+        },
+        {
+          "role": "user",
+          "characters": 609
+        },
+        {
+          "role": "user",
+          "characters": 1706
+        },
+        {
+          "role": "assistant",
+          "characters": 652
+        }
+      ]
+    },
+    {
+      "identity": "context-query-64|1|atlias",
+      "packetSha256": "93c05f7c383f93053016abb2b97bc8e3266a6c0b4e624052e2763e9fb005ce1b",
+      "envelopeSha256": "22147c374b89e351b41202950d6f903f7114b180b8163691cc1be5e848c8185a",
+      "instructionSha256": "f95333c9e7a4168eb5f95046b6b3d1d06e8d16461b5be236caf62f0c7726f924",
+      "fullEnvelopeDelivered": true,
+      "exactInstructionsDelivered": true,
+      "costsReconciled": true,
+      "authRemoved": true,
+      "roleCharacters": [
+        {
+          "role": "developer",
+          "characters": 3307
+        },
+        {
+          "role": "developer",
+          "characters": 2429
+        },
+        {
+          "role": "developer",
+          "characters": 271
+        },
+        {
+          "role": "user",
+          "characters": 607
+        },
+        {
+          "role": "user",
+          "characters": 1843
+        },
+        {
+          "role": "assistant",
+          "characters": 792
+        }
+      ]
+    },
+    {
+      "identity": "context-money-64|2|atlias",
+      "packetSha256": "7f3c02d6b315fe52c9dc20724fb7011533f4b5186a2c997d79b7bec814277f0c",
+      "envelopeSha256": "a435320fdc60d4d00539462a59ec0275e18ae0372c2d1743079c6f35cd842468",
+      "instructionSha256": "f95333c9e7a4168eb5f95046b6b3d1d06e8d16461b5be236caf62f0c7726f924",
+      "fullEnvelopeDelivered": true,
+      "exactInstructionsDelivered": true,
+      "costsReconciled": true,
+      "authRemoved": true,
+      "roleCharacters": [
+        {
+          "role": "developer",
+          "characters": 3307
+        },
+        {
+          "role": "developer",
+          "characters": 2429
+        },
+        {
+          "role": "developer",
+          "characters": 271
+        },
+        {
+          "role": "user",
+          "characters": 607
+        },
+        {
+          "role": "user",
+          "characters": 1722
+        },
+        {
+          "role": "assistant",
+          "characters": 726
+        }
+      ]
+    },
+    {
+      "identity": "context-versions-64|2|atlias",
+      "packetSha256": "6a0df823058d32a57d5be05ada882ca321cf09c7b997966567e31c2a731655f0",
+      "envelopeSha256": "dbee44c8306f7046f13f2ccd11928f7c7aeadceec8fc851a5b773d5f94ba6b95",
+      "instructionSha256": "f95333c9e7a4168eb5f95046b6b3d1d06e8d16461b5be236caf62f0c7726f924",
+      "fullEnvelopeDelivered": true,
+      "exactInstructionsDelivered": true,
+      "costsReconciled": true,
+      "authRemoved": true,
+      "roleCharacters": [
+        {
+          "role": "developer",
+          "characters": 3310
+        },
+        {
+          "role": "developer",
+          "characters": 2429
+        },
+        {
+          "role": "developer",
+          "characters": 271
+        },
+        {
+          "role": "user",
+          "characters": 613
+        },
+        {
+          "role": "user",
+          "characters": 1631
+        },
+        {
+          "role": "assistant",
+          "characters": 838
+        }
+      ]
+    },
+    {
+      "identity": "context-intervals-64|2|atlias",
+      "packetSha256": "6546e9cc691ff14629688e815b132c8ff290eca33dc07d4d3a5a339859c00328",
+      "envelopeSha256": "af2ca2111811c06b942066d2743c44d94a28b6a8de3a4e18d81461dee4961a4e",
+      "instructionSha256": "f95333c9e7a4168eb5f95046b6b3d1d06e8d16461b5be236caf62f0c7726f924",
+      "fullEnvelopeDelivered": true,
+      "exactInstructionsDelivered": true,
+      "costsReconciled": true,
+      "authRemoved": true,
+      "roleCharacters": [
+        {
+          "role": "developer",
+          "characters": 3311
+        },
+        {
+          "role": "developer",
+          "characters": 2429
+        },
+        {
+          "role": "developer",
+          "characters": 271
+        },
+        {
+          "role": "user",
+          "characters": 615
+        },
+        {
+          "role": "user",
+          "characters": 1592
+        },
+        {
+          "role": "assistant",
+          "characters": 1237
+        }
+      ]
+    },
+    {
+      "identity": "context-unicode-64|2|atlias",
+      "packetSha256": "f9819a0b1965394dc4a734c7756bd21effd415e6484a8d3e1efe012efc532bf8",
+      "envelopeSha256": "33100af54729677fd5f06b5c89a3e46a4775a96c7ba8b03341b0d274be8e952e",
+      "instructionSha256": "f95333c9e7a4168eb5f95046b6b3d1d06e8d16461b5be236caf62f0c7726f924",
+      "fullEnvelopeDelivered": true,
+      "exactInstructionsDelivered": true,
+      "costsReconciled": true,
+      "authRemoved": true,
+      "roleCharacters": [
+        {
+          "role": "developer",
+          "characters": 3309
+        },
+        {
+          "role": "developer",
+          "characters": 2429
+        },
+        {
+          "role": "developer",
+          "characters": 271
+        },
+        {
+          "role": "user",
+          "characters": 611
+        },
+        {
+          "role": "user",
+          "characters": 1593
+        },
+        {
+          "role": "assistant",
+          "characters": 300
+        }
+      ]
+    },
+    {
+      "identity": "context-paths-64|2|atlias",
+      "packetSha256": "57c5f8ed7db67dfc9f8aee0e48c5f88137318fa5e8d1d31e0bc7f26d61b73dce",
+      "envelopeSha256": "cb84a5bc2314791aa1cc260abb5701d733a64fd7ed741ba76678e9c2b2bb43ea",
+      "instructionSha256": "f95333c9e7a4168eb5f95046b6b3d1d06e8d16461b5be236caf62f0c7726f924",
+      "fullEnvelopeDelivered": true,
+      "exactInstructionsDelivered": true,
+      "costsReconciled": true,
+      "authRemoved": true,
+      "roleCharacters": [
+        {
+          "role": "developer",
+          "characters": 3307
+        },
+        {
+          "role": "developer",
+          "characters": 2429
+        },
+        {
+          "role": "developer",
+          "characters": 271
+        },
+        {
+          "role": "user",
+          "characters": 607
+        },
+        {
+          "role": "user",
+          "characters": 1719
+        },
+        {
+          "role": "assistant",
+          "characters": 959
+        }
+      ]
+    },
+    {
+      "identity": "context-merge-64|2|atlias",
+      "packetSha256": "02bb4c3a27480ea8877fa0ff78741ad1772dd8be0bff9659885c101d6068169d",
+      "envelopeSha256": "de3262bc92ac09dada69d799f74b8b6642d8f47dcc46e4be7c4d9db5f72edeba",
+      "instructionSha256": "f95333c9e7a4168eb5f95046b6b3d1d06e8d16461b5be236caf62f0c7726f924",
+      "fullEnvelopeDelivered": true,
+      "exactInstructionsDelivered": true,
+      "costsReconciled": true,
+      "authRemoved": true,
+      "roleCharacters": [
+        {
+          "role": "developer",
+          "characters": 3307
+        },
+        {
+          "role": "developer",
+          "characters": 2429
+        },
+        {
+          "role": "developer",
+          "characters": 271
+        },
+        {
+          "role": "user",
+          "characters": 607
+        },
+        {
+          "role": "user",
+          "characters": 1714
+        },
+        {
+          "role": "assistant",
+          "characters": 1976
+        }
+      ]
+    },
+    {
+      "identity": "context-ttl-64|2|atlias",
+      "packetSha256": "a651a06bc75d69b37e0149d96d34bd34c1f90abd8ef0b8474ca79b278d0a7331",
+      "envelopeSha256": "44e8a17619ad1dabd0160e5e4e5bac4f803bd489ba373fe75e6102c12132f513",
+      "instructionSha256": "f95333c9e7a4168eb5f95046b6b3d1d06e8d16461b5be236caf62f0c7726f924",
+      "fullEnvelopeDelivered": true,
+      "exactInstructionsDelivered": true,
+      "costsReconciled": true,
+      "authRemoved": true,
+      "roleCharacters": [
+        {
+          "role": "developer",
+          "characters": 3305
+        },
+        {
+          "role": "developer",
+          "characters": 2429
+        },
+        {
+          "role": "developer",
+          "characters": 271
+        },
+        {
+          "role": "user",
+          "characters": 603
+        },
+        {
+          "role": "user",
+          "characters": 1785
+        },
+        {
+          "role": "assistant",
+          "characters": 657
+        }
+      ]
+    },
+    {
+      "identity": "context-csv-64|2|atlias",
+      "packetSha256": "c5ed553de35be5bab90ec6cf588770017e477f7693bd8f609c28b58faf501e14",
+      "envelopeSha256": "e5aaab252fbb23e3e5b797b0cdbb22f5e00eb7904d853741637a188aeee142f2",
+      "instructionSha256": "f95333c9e7a4168eb5f95046b6b3d1d06e8d16461b5be236caf62f0c7726f924",
+      "fullEnvelopeDelivered": true,
+      "exactInstructionsDelivered": true,
+      "costsReconciled": true,
+      "authRemoved": true,
+      "roleCharacters": [
+        {
+          "role": "developer",
+          "characters": 3305
+        },
+        {
+          "role": "developer",
+          "characters": 2429
+        },
+        {
+          "role": "developer",
+          "characters": 271
+        },
+        {
+          "role": "user",
+          "characters": 603
+        },
+        {
+          "role": "user",
+          "characters": 1682
+        },
+        {
+          "role": "assistant",
+          "characters": 1410
+        }
+      ]
+    },
+    {
+      "identity": "context-pagination-64|2|atlias",
+      "packetSha256": "62c86301503211b825c75bdeebf764503f1b773e9a1feb523f6f3078bfab6515",
+      "envelopeSha256": "92bd9d74df8ba433f6d03c30d7320484650bffb62d1c7ab7d685ae1873ee748d",
+      "instructionSha256": "f95333c9e7a4168eb5f95046b6b3d1d06e8d16461b5be236caf62f0c7726f924",
+      "fullEnvelopeDelivered": true,
+      "exactInstructionsDelivered": true,
+      "costsReconciled": true,
+      "authRemoved": true,
+      "roleCharacters": [
+        {
+          "role": "developer",
+          "characters": 3312
+        },
+        {
+          "role": "developer",
+          "characters": 2429
+        },
+        {
+          "role": "developer",
+          "characters": 271
+        },
+        {
+          "role": "user",
+          "characters": 617
+        },
+        {
+          "role": "user",
+          "characters": 1845
+        },
+        {
+          "role": "assistant",
+          "characters": 677
+        }
+      ]
+    },
+    {
+      "identity": "context-topology-64|2|atlias",
+      "packetSha256": "75065554b3c4c332106af0eae2338b751ca108558b244f417c003f359a36f311",
+      "envelopeSha256": "a49709c6999e8e689b2a69a636b310fb067b169dcbe75263cbc6ea44391bd7d3",
+      "instructionSha256": "f95333c9e7a4168eb5f95046b6b3d1d06e8d16461b5be236caf62f0c7726f924",
+      "fullEnvelopeDelivered": true,
+      "exactInstructionsDelivered": true,
+      "costsReconciled": true,
+      "authRemoved": true,
+      "roleCharacters": [
+        {
+          "role": "developer",
+          "characters": 3310
+        },
+        {
+          "role": "developer",
+          "characters": 2429
+        },
+        {
+          "role": "developer",
+          "characters": 271
+        },
+        {
+          "role": "user",
+          "characters": 613
+        },
+        {
+          "role": "user",
+          "characters": 1689
+        },
+        {
+          "role": "assistant",
+          "characters": 1325
+        }
+      ]
+    },
+    {
+      "identity": "context-dedupe-64|2|atlias",
+      "packetSha256": "f108ab4646ef1ce7a0813d5eaf26efad03d5026a002b102c34428a52d34e82d2",
+      "envelopeSha256": "17c22ffd5442ce33400fbe0ef80a5612bf377c2c2e7216522482d2bacb508617",
+      "instructionSha256": "f95333c9e7a4168eb5f95046b6b3d1d06e8d16461b5be236caf62f0c7726f924",
+      "fullEnvelopeDelivered": true,
+      "exactInstructionsDelivered": true,
+      "costsReconciled": true,
+      "authRemoved": true,
+      "roleCharacters": [
+        {
+          "role": "developer",
+          "characters": 3308
+        },
+        {
+          "role": "developer",
+          "characters": 2429
+        },
+        {
+          "role": "developer",
+          "characters": 271
+        },
+        {
+          "role": "user",
+          "characters": 609
+        },
+        {
+          "role": "user",
+          "characters": 1706
+        },
+        {
+          "role": "assistant",
+          "characters": 652
+        }
+      ]
+    },
+    {
+      "identity": "context-query-64|2|atlias",
+      "packetSha256": "93c05f7c383f93053016abb2b97bc8e3266a6c0b4e624052e2763e9fb005ce1b",
+      "envelopeSha256": "22147c374b89e351b41202950d6f903f7114b180b8163691cc1be5e848c8185a",
+      "instructionSha256": "f95333c9e7a4168eb5f95046b6b3d1d06e8d16461b5be236caf62f0c7726f924",
+      "fullEnvelopeDelivered": true,
+      "exactInstructionsDelivered": true,
+      "costsReconciled": true,
+      "authRemoved": true,
+      "roleCharacters": [
+        {
+          "role": "developer",
+          "characters": 3307
+        },
+        {
+          "role": "developer",
+          "characters": 2429
+        },
+        {
+          "role": "developer",
+          "characters": 271
+        },
+        {
+          "role": "user",
+          "characters": 607
+        },
+        {
+          "role": "user",
+          "characters": 1843
+        },
+        {
+          "role": "assistant",
+          "characters": 815
+        }
+      ]
+    }
+  ],
+  "plain": {
+    "pairs": 24,
+    "solved": 24,
+    "input": 2026996,
+    "cached": 1562880,
+    "uncached": 464116,
+    "output": 38877,
+    "total": 2065873,
+    "uncachedPlusOutput": 502993,
+    "peak": 18182
+  },
+  "atlias": {
+    "pairs": 24,
+    "solved": 24,
+    "input": 139846,
+    "cached": 6912,
+    "uncached": 132934,
+    "output": 12356,
+    "total": 152202,
+    "uncachedPlusOutput": 145290,
+    "peak": 5866
+  },
+  "limitation": "Complete declared bounded-worker study, not a normal-host capability or target claim. Raw includes cached tokens; uncached+output is also not subscription allowance pricing. Finite predeclared quality assertions, not universal equivalence. All original failed/unmatched rows remain in frozen ledger."
+}

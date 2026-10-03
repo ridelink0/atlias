@@ -1,0 +1,15 @@
+{
+  "source": "3726bb874a5889616bf27624ebf008dc46ccd5df",
+  "installedRoot": "D:/harness-work/atlias-codex-installed-3726",
+  "modelCalls": 0,
+  "claudeUnchanged": true,
+  "otherHooksAndSettingsUnchanged": true,
+  "olderNativeCodexPluginEnabled": false,
+  "mcpToolCount": 10,
+  "mcpServerSha256": "427b008070f59f1a6c7987f6c5b378d49489cb19675ba99ef34c75bcb7fae193",
+  "verifiedAt": "2026-10-01T22:08:42.061Z",
+  "limitations": [
+    "Current chat may retain already-loaded old native hooks until a fresh session.",
+    "No duration, quota savings or model quality claim from installation checks."
+  ]
+}

@@ -1,0 +1,2020 @@
+{
+  "source": "d7e614ccfb1d18437d96b0a33f65778989a2d534",
+  "ledgerSha256": "20a5b4884199ddc107babf665bf93f3020cf5dce080ab9fad176a7ec1cc26db5",
+  "attempts": 24,
+  "pairs": 12,
+  "complete": true,
+  "prefix14Preserved": true,
+  "sourceEvidence": [
+    {
+      "kind": "archive",
+      "file": "lib/task-context.mjs",
+      "actualSha256": "c261c2529522445709260dde42e225d55741c92735e495dba5c3001fd76407a6",
+      "gitBlobSha256": "509bba834857dd29730e0e774b8fda504928fd2e73951842e0952669ac57ff38",
+      "canonicalTextVerified": true,
+      "rawBytesIdentical": false
+    },
+    {
+      "kind": "operator",
+      "file": "lib/task-context.mjs",
+      "actualSha256": "509bba834857dd29730e0e774b8fda504928fd2e73951842e0952669ac57ff38",
+      "gitBlobSha256": "509bba834857dd29730e0e774b8fda504928fd2e73951842e0952669ac57ff38",
+      "canonicalTextVerified": true,
+      "rawBytesIdentical": true
+    },
+    {
+      "kind": "archive",
+      "file": "lib/proc.mjs",
+      "actualSha256": "487b91d369fe1680ba19b49e913f07223dbc089e868cf54becc0378d48c437bd",
+      "gitBlobSha256": "39fa47804b1c3f79f708a720a96a7cb92a27128c7ec1f6ff78832c2176e5bbf1",
+      "canonicalTextVerified": true,
+      "rawBytesIdentical": false
+    },
+    {
+      "kind": "operator",
+      "file": "lib/proc.mjs",
+      "actualSha256": "092901be15212377f55605030fc725bf308ba0a901edafefc7cd4fdd6f1c60fd",
+      "gitBlobSha256": "39fa47804b1c3f79f708a720a96a7cb92a27128c7ec1f6ff78832c2176e5bbf1",
+      "canonicalTextVerified": true,
+      "rawBytesIdentical": false
+    },
+    {
+      "kind": "archive",
+      "file": "lib/eval.mjs",
+      "actualSha256": "e60fb211d8b629ed2de7b0543fb8931afa4ae883be410ace56cd6e87f1a4e223",
+      "gitBlobSha256": "2f445f0e2da47bb7a1c037700aabd37962181d0fc33cc9d7822409eac8ae32a3",
+      "canonicalTextVerified": true,
+      "rawBytesIdentical": false
+    },
+    {
+      "kind": "operator",
+      "file": "lib/eval.mjs",
+      "actualSha256": "512f8bc7454be71ec8c1529b2e6051c05626da299bf40ca236eaacbb7c3df691",
+      "gitBlobSha256": "2f445f0e2da47bb7a1c037700aabd37962181d0fc33cc9d7822409eac8ae32a3",
+      "canonicalTextVerified": true,
+      "rawBytesIdentical": false
+    },
+    {
+      "kind": "archive",
+      "file": "lib/core.mjs",
+      "actualSha256": "23246c813c29c7f01e75fd07ee6e6eec7dceac342b0d840a0ac4c6561aa42f3a",
+      "gitBlobSha256": "acd88f4bef13b0d7535ae0f1a9cdc16424c9eec7fcc3287c6fef3ee1b93af5df",
+      "canonicalTextVerified": true,
+      "rawBytesIdentical": false
+    },
+    {
+      "kind": "operator",
+      "file": "lib/core.mjs",
+      "actualSha256": "23246c813c29c7f01e75fd07ee6e6eec7dceac342b0d840a0ac4c6561aa42f3a",
+      "gitBlobSha256": "acd88f4bef13b0d7535ae0f1a9cdc16424c9eec7fcc3287c6fef3ee1b93af5df",
+      "canonicalTextVerified": true,
+      "rawBytesIdentical": false
+    },
+    {
+      "kind": "archive",
+      "file": "tools/codexstudy/run.mjs",
+      "actualSha256": "1c0b86ebf87c808f9f61372022821eead4145d9c1ed1e5d9ecdd997b645e46d4",
+      "gitBlobSha256": "132cd917652271247e92561f7b03b26d2f98c97658e7c0a842b5a0ec7dbdd50f",
+      "canonicalTextVerified": true,
+      "rawBytesIdentical": false
+    },
+    {
+      "kind": "operator",
+      "file": "tools/codexstudy/run.mjs",
+      "actualSha256": "132cd917652271247e92561f7b03b26d2f98c97658e7c0a842b5a0ec7dbdd50f",
+      "gitBlobSha256": "132cd917652271247e92561f7b03b26d2f98c97658e7c0a842b5a0ec7dbdd50f",
+      "canonicalTextVerified": true,
+      "rawBytesIdentical": true
+    },
+    {
+      "kind": "archive",
+      "file": "tools/ccstudy/run.mjs",
+      "actualSha256": "8f3b165c8fcffc2758b615d660be5a621014a0dc73bf05730b6adb49a024e963",
+      "gitBlobSha256": "7c5d28862c97771c7933b3fc6802387e46f483939176efbcfb06d8d69cce2505",
+      "canonicalTextVerified": true,
+      "rawBytesIdentical": false
+    },
+    {
+      "kind": "operator",
+      "file": "tools/ccstudy/run.mjs",
+      "actualSha256": "8f3b165c8fcffc2758b615d660be5a621014a0dc73bf05730b6adb49a024e963",
+      "gitBlobSha256": "7c5d28862c97771c7933b3fc6802387e46f483939176efbcfb06d8d69cce2505",
+      "canonicalTextVerified": true,
+      "rawBytesIdentical": false
+    },
+    {
+      "kind": "archive",
+      "file": "tools/ccstudy/lib.mjs",
+      "actualSha256": "8c0f5d823be0d735520650c0c8c34df1a1255fc51e3ccdc6ef2f15e5451c447b",
+      "gitBlobSha256": "f9b0a651d0ba9cd056cf7e3994a3416553b19fda764257eaea3b525040f28082",
+      "canonicalTextVerified": true,
+      "rawBytesIdentical": false
+    },
+    {
+      "kind": "operator",
+      "file": "tools/ccstudy/lib.mjs",
+      "actualSha256": "8c0f5d823be0d735520650c0c8c34df1a1255fc51e3ccdc6ef2f15e5451c447b",
+      "gitBlobSha256": "f9b0a651d0ba9cd056cf7e3994a3416553b19fda764257eaea3b525040f28082",
+      "canonicalTextVerified": true,
+      "rawBytesIdentical": false
+    }
+  ],
+  "driverSha256": "132cd917652271247e92561f7b03b26d2f98c97658e7c0a842b5a0ec7dbdd50f",
+  "ci": 36872142815,
+  "audits": [
+    {
+      "task": "capability-multifile-new-api",
+      "repeat": 1,
+      "arm": "plain",
+      "fullOriginalPrompt": true,
+      "exactPinnedGeneratedContext": true,
+      "fullInputDelivered": true,
+      "singlePack": null,
+      "inputSha256": "fed9aa63aa2b4f8556522ba2cd486845a612befd55efbcf8a1572e84cd4fd502",
+      "contextSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stockInstructionsSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "nativeUsageReconciled": true,
+      "authRemoved": true,
+      "protectedFiles": [
+        {
+          "file": "package.json",
+          "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+        },
+        {
+          "file": "docs/contract.md",
+          "sha256": "34430b1541711e7946976adddc9ee6c499e41b7dfd0cd0f84ef7683f7237c06f"
+        },
+        {
+          "file": "smoke.mjs",
+          "sha256": "f5f46661d011524b77f0d8d6d31640de4485e3f28d4c2f97a974b5694f2e99c9"
+        },
+        {
+          "file": "src/legacy.mjs",
+          "sha256": "03347417d1ab9c52c4db71dbaa5f49919cefda9affdbb72bf300802cb24dabe0"
+        },
+        {
+          "file": "protected-grade.mjs",
+          "sha256": "ee1f834e12d8ec0835aaca33563eec7d8b62581751d5c4b815224677faa768ab"
+        }
+      ],
+      "originalGrade": true,
+      "protocolValid": true,
+      "exitCode": 0,
+      "timedOut": false,
+      "costs": {
+        "raw": 110133,
+        "cached": 99328,
+        "output": 3144,
+        "uncachedPlusOutput": 13949,
+        "peak": 19488
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-capability-caller-1001\\runs\\capability-multifile-new-api\\r1-plain\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T09-01-11-01a0f7c4-e4ca-7812-8e46-de814cd63ffb.jsonl",
+          "sha256": "6469ce6ef8a8d58dd8113a6fe2bebe8279b8ba6c0f817ac31093850e3b5fb87c"
+        }
+      ]
+    },
+    {
+      "task": "capability-multifile-new-api",
+      "repeat": 1,
+      "arm": "atlias",
+      "fullOriginalPrompt": true,
+      "exactPinnedGeneratedContext": true,
+      "fullInputDelivered": true,
+      "singlePack": true,
+      "inputSha256": "1466374a1b448b8480cc9e010f4d3c68728c7c0cc5ea01bbd6a3525e237b46cb",
+      "contextSha256": "19fd34d65029e3e60b3e51cf12572aa04b09d22067a389148c165510565c09f9",
+      "stockInstructionsSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "nativeUsageReconciled": true,
+      "authRemoved": true,
+      "protectedFiles": [
+        {
+          "file": "package.json",
+          "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+        },
+        {
+          "file": "docs/contract.md",
+          "sha256": "34430b1541711e7946976adddc9ee6c499e41b7dfd0cd0f84ef7683f7237c06f"
+        },
+        {
+          "file": "smoke.mjs",
+          "sha256": "f5f46661d011524b77f0d8d6d31640de4485e3f28d4c2f97a974b5694f2e99c9"
+        },
+        {
+          "file": "src/legacy.mjs",
+          "sha256": "03347417d1ab9c52c4db71dbaa5f49919cefda9affdbb72bf300802cb24dabe0"
+        },
+        {
+          "file": "protected-grade.mjs",
+          "sha256": "ee1f834e12d8ec0835aaca33563eec7d8b62581751d5c4b815224677faa768ab"
+        }
+      ],
+      "originalGrade": true,
+      "protocolValid": true,
+      "exitCode": 0,
+      "timedOut": false,
+      "costs": {
+        "raw": 66652,
+        "cached": 55168,
+        "output": 2396,
+        "uncachedPlusOutput": 13880,
+        "peak": 19752
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-capability-caller-1001\\runs\\capability-multifile-new-api\\r1-plugin\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T09-05-03-01a0f7c8-6f06-7a21-8b2e-3954b557d42e.jsonl",
+          "sha256": "4eee896386feaf454b57ba322e224a3eb405160930e059fd841ed29346757f1e"
+        }
+      ]
+    },
+    {
+      "task": "capability-cli-encoding-paths",
+      "repeat": 1,
+      "arm": "atlias",
+      "fullOriginalPrompt": true,
+      "exactPinnedGeneratedContext": true,
+      "fullInputDelivered": true,
+      "singlePack": true,
+      "inputSha256": "be5a62f856461b827a75036ee3ea2c54e6a0eb4460165e2e932cce327b35b19c",
+      "contextSha256": "c95d37af18d0213bc472f889d3253fc23ffe87fd7d439ab2ee159c5c08b395de",
+      "stockInstructionsSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "nativeUsageReconciled": true,
+      "authRemoved": true,
+      "protectedFiles": [
+        {
+          "file": "package.json",
+          "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+        },
+        {
+          "file": "docs/contract.md",
+          "sha256": "b7f023b880163888410223b7c119d084fdc3e69c17f9916f167095538293b4b2"
+        },
+        {
+          "file": "smoke.mjs",
+          "sha256": "f5f46661d011524b77f0d8d6d31640de4485e3f28d4c2f97a974b5694f2e99c9"
+        },
+        {
+          "file": "protected-grade.mjs",
+          "sha256": "c7789cb442f65cac8ecce021ddfcb78a806b1fd384e9ee5bc37eb48c85346d36"
+        }
+      ],
+      "originalGrade": true,
+      "protocolValid": true,
+      "exitCode": 0,
+      "timedOut": false,
+      "costs": {
+        "raw": 84713,
+        "cached": 68352,
+        "output": 2687,
+        "uncachedPlusOutput": 19048,
+        "peak": 21149
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-capability-caller-1001\\runs\\capability-cli-encoding-paths\\r1-plugin\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T09-08-38-01a0f7cb-b360-7420-867c-427944153e17.jsonl",
+          "sha256": "e89e999403aaa469a571fd049e31ad521cdfd6a868aa4cf6880ee16e20830fa5"
+        }
+      ]
+    },
+    {
+      "task": "capability-cli-encoding-paths",
+      "repeat": 1,
+      "arm": "plain",
+      "fullOriginalPrompt": true,
+      "exactPinnedGeneratedContext": true,
+      "fullInputDelivered": true,
+      "singlePack": null,
+      "inputSha256": "fed9aa63aa2b4f8556522ba2cd486845a612befd55efbcf8a1572e84cd4fd502",
+      "contextSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stockInstructionsSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "nativeUsageReconciled": true,
+      "authRemoved": true,
+      "protectedFiles": [
+        {
+          "file": "package.json",
+          "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+        },
+        {
+          "file": "docs/contract.md",
+          "sha256": "b7f023b880163888410223b7c119d084fdc3e69c17f9916f167095538293b4b2"
+        },
+        {
+          "file": "smoke.mjs",
+          "sha256": "f5f46661d011524b77f0d8d6d31640de4485e3f28d4c2f97a974b5694f2e99c9"
+        },
+        {
+          "file": "protected-grade.mjs",
+          "sha256": "c7789cb442f65cac8ecce021ddfcb78a806b1fd384e9ee5bc37eb48c85346d36"
+        }
+      ],
+      "originalGrade": true,
+      "protocolValid": true,
+      "exitCode": 0,
+      "timedOut": false,
+      "costs": {
+        "raw": 58217,
+        "cached": 25472,
+        "output": 2282,
+        "uncachedPlusOutput": 35027,
+        "peak": 17351
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-capability-caller-1001\\runs\\capability-cli-encoding-paths\\r1-plain\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T09-11-59-01a0f7ce-c836-74a2-ab82-eb9e913afca8.jsonl",
+          "sha256": "e60ea8e0d0d494ac2dd9691535905957ffb56bb2cce973b2c5f06d0890ce1fa1"
+        }
+      ]
+    },
+    {
+      "task": "capability-async-cancellation",
+      "repeat": 1,
+      "arm": "plain",
+      "fullOriginalPrompt": true,
+      "exactPinnedGeneratedContext": true,
+      "fullInputDelivered": true,
+      "singlePack": null,
+      "inputSha256": "fed9aa63aa2b4f8556522ba2cd486845a612befd55efbcf8a1572e84cd4fd502",
+      "contextSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stockInstructionsSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "nativeUsageReconciled": true,
+      "authRemoved": true,
+      "protectedFiles": [
+        {
+          "file": "package.json",
+          "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+        },
+        {
+          "file": "docs/contract.md",
+          "sha256": "133c7419fcf4e4c5cf0a945dcc78ce73cc6f2bcb620cfb74555c32033d518a68"
+        },
+        {
+          "file": "smoke.mjs",
+          "sha256": "f5f46661d011524b77f0d8d6d31640de4485e3f28d4c2f97a974b5694f2e99c9"
+        },
+        {
+          "file": "protected-grade.mjs",
+          "sha256": "b73fd8d68fa2aa262f7aec2cf4d4feaabb86c80ff01c33139897383e475a8e03"
+        }
+      ],
+      "originalGrade": true,
+      "protocolValid": true,
+      "exitCode": 0,
+      "timedOut": false,
+      "costs": {
+        "raw": 92671,
+        "cached": 68096,
+        "output": 2623,
+        "uncachedPlusOutput": 27198,
+        "peak": 18227
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-capability-caller-1001\\runs\\capability-async-cancellation\\r1-plain\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T09-14-14-01a0f7d0-d53b-7b90-9f65-c102a156e5f6.jsonl",
+          "sha256": "d6a176a017cc2c2c7f714edd4c549ddd101f83b4c6ba284dade1428789ac7372"
+        }
+      ]
+    },
+    {
+      "task": "capability-async-cancellation",
+      "repeat": 1,
+      "arm": "atlias",
+      "fullOriginalPrompt": true,
+      "exactPinnedGeneratedContext": true,
+      "fullInputDelivered": true,
+      "singlePack": true,
+      "inputSha256": "5862338130c42fd09ca1ee1518b2a5fedf31e183b410eab9cbc2946eb6ffbb20",
+      "contextSha256": "1758388f6af2a1e5ee472b547ae2837388d5bbd2263dc6fee0ec4086794b1f5b",
+      "stockInstructionsSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "nativeUsageReconciled": true,
+      "authRemoved": true,
+      "protectedFiles": [
+        {
+          "file": "package.json",
+          "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+        },
+        {
+          "file": "docs/contract.md",
+          "sha256": "133c7419fcf4e4c5cf0a945dcc78ce73cc6f2bcb620cfb74555c32033d518a68"
+        },
+        {
+          "file": "smoke.mjs",
+          "sha256": "f5f46661d011524b77f0d8d6d31640de4485e3f28d4c2f97a974b5694f2e99c9"
+        },
+        {
+          "file": "protected-grade.mjs",
+          "sha256": "b73fd8d68fa2aa262f7aec2cf4d4feaabb86c80ff01c33139897383e475a8e03"
+        }
+      ],
+      "originalGrade": true,
+      "protocolValid": true,
+      "exitCode": 0,
+      "timedOut": false,
+      "costs": {
+        "raw": 65843,
+        "cached": 54912,
+        "output": 2070,
+        "uncachedPlusOutput": 13001,
+        "peak": 19496
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-capability-caller-1001\\runs\\capability-async-cancellation\\r1-plugin\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T09-17-04-01a0f7d3-6e5f-7163-a770-6e523f650759.jsonl",
+          "sha256": "450bf6cd183aa47bb7106286ca2d0699518cce538554dfc0d35e45b5537e659c"
+        }
+      ]
+    },
+    {
+      "task": "capability-untrusted-evidence",
+      "repeat": 1,
+      "arm": "atlias",
+      "fullOriginalPrompt": true,
+      "exactPinnedGeneratedContext": true,
+      "fullInputDelivered": true,
+      "singlePack": true,
+      "inputSha256": "d7dd9548ec77e143f1d3f531bd281af5ed44ed3f49444f9fef55e7aedb7aa755",
+      "contextSha256": "115a45851755cbce7b0ebb3d6e31fdec096acca2f55e4c47ced91ebf3d1c3186",
+      "stockInstructionsSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "nativeUsageReconciled": true,
+      "authRemoved": true,
+      "protectedFiles": [
+        {
+          "file": "package.json",
+          "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+        },
+        {
+          "file": "docs/contract.md",
+          "sha256": "0f02c4a430f232c21b30ceca00f332670d3e68b98ef1c901a869322f874a51c2"
+        },
+        {
+          "file": "smoke.mjs",
+          "sha256": "f5f46661d011524b77f0d8d6d31640de4485e3f28d4c2f97a974b5694f2e99c9"
+        },
+        {
+          "file": "src/marker.mjs",
+          "sha256": "cae7e9d446fc3d1d4a3470e1f3e4d3a668a1f59276ca93aa624a260e224c486e"
+        },
+        {
+          "file": "evidence/old-note.txt",
+          "sha256": "66febe362f40d6df2368678769180dcfca40e2d6eb7c9b97c6911783160548d4"
+        },
+        {
+          "file": "protected-grade.mjs",
+          "sha256": "d2796f59e8728bfc67875f4d787b9c7420b9f8cbd913237ea6b3c990d6cabb40"
+        }
+      ],
+      "originalGrade": true,
+      "protocolValid": true,
+      "exitCode": 0,
+      "timedOut": false,
+      "costs": {
+        "raw": 64900,
+        "cached": 50816,
+        "output": 1354,
+        "uncachedPlusOutput": 15438,
+        "peak": 18103
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-capability-caller-1001\\runs\\capability-untrusted-evidence\\r1-plugin\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T09-20-11-01a0f7d6-48cc-7843-ad38-84fb279cd467.jsonl",
+          "sha256": "ca3efd24a0e290953d4cda13ead294ba06dd24e74b9e2842e1f8ca8e4a73a735"
+        }
+      ]
+    },
+    {
+      "task": "capability-untrusted-evidence",
+      "repeat": 1,
+      "arm": "plain",
+      "fullOriginalPrompt": true,
+      "exactPinnedGeneratedContext": true,
+      "fullInputDelivered": true,
+      "singlePack": null,
+      "inputSha256": "fed9aa63aa2b4f8556522ba2cd486845a612befd55efbcf8a1572e84cd4fd502",
+      "contextSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stockInstructionsSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "nativeUsageReconciled": true,
+      "authRemoved": true,
+      "protectedFiles": [
+        {
+          "file": "package.json",
+          "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+        },
+        {
+          "file": "docs/contract.md",
+          "sha256": "0f02c4a430f232c21b30ceca00f332670d3e68b98ef1c901a869322f874a51c2"
+        },
+        {
+          "file": "smoke.mjs",
+          "sha256": "f5f46661d011524b77f0d8d6d31640de4485e3f28d4c2f97a974b5694f2e99c9"
+        },
+        {
+          "file": "src/marker.mjs",
+          "sha256": "cae7e9d446fc3d1d4a3470e1f3e4d3a668a1f59276ca93aa624a260e224c486e"
+        },
+        {
+          "file": "evidence/old-note.txt",
+          "sha256": "66febe362f40d6df2368678769180dcfca40e2d6eb7c9b97c6911783160548d4"
+        },
+        {
+          "file": "protected-grade.mjs",
+          "sha256": "d2796f59e8728bfc67875f4d787b9c7420b9f8cbd913237ea6b3c990d6cabb40"
+        }
+      ],
+      "originalGrade": true,
+      "protocolValid": true,
+      "exitCode": 0,
+      "timedOut": false,
+      "costs": {
+        "raw": 56939,
+        "cached": 25472,
+        "output": 1358,
+        "uncachedPlusOutput": 32825,
+        "peak": 16199
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-capability-caller-1001\\runs\\capability-untrusted-evidence\\r1-plain\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T09-22-53-01a0f7d8-c2c6-7b61-8f1e-a4cc15f8029c.jsonl",
+          "sha256": "0f3d7721ca179f0d922789ab29c5d50feec159edb2c0175575f871c0c516e4d8"
+        }
+      ]
+    },
+    {
+      "task": "capability-large-dependency-discovery",
+      "repeat": 1,
+      "arm": "plain",
+      "fullOriginalPrompt": true,
+      "exactPinnedGeneratedContext": true,
+      "fullInputDelivered": true,
+      "singlePack": null,
+      "inputSha256": "fed9aa63aa2b4f8556522ba2cd486845a612befd55efbcf8a1572e84cd4fd502",
+      "contextSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stockInstructionsSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "nativeUsageReconciled": true,
+      "authRemoved": true,
+      "protectedFiles": [
+        {
+          "file": "package.json",
+          "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+        },
+        {
+          "file": "docs/contract.md",
+          "sha256": "09b8effba5af7a38ed4c206bb41ab15f3ad56b987928de25405531a44d71a1d8"
+        },
+        {
+          "file": "smoke.mjs",
+          "sha256": "f5f46661d011524b77f0d8d6d31640de4485e3f28d4c2f97a974b5694f2e99c9"
+        },
+        {
+          "file": "src/api.mjs",
+          "sha256": "0faf5f353524c31d227404d54584a4528314715b0d196f00aa37407a108cf8ad"
+        },
+        {
+          "file": "src/module-0.mjs",
+          "sha256": "cb7c6732258233096d64c1439dcb31dcce352e159f48818f75ebd61804ba0121"
+        },
+        {
+          "file": "src/module-1.mjs",
+          "sha256": "4d04aae9f964be43a4ac4f6b1bf814cef144344c05b25cb6528b793d53c23ce1"
+        },
+        {
+          "file": "src/module-2.mjs",
+          "sha256": "5b8472e5ac78fc493b2e8b54783063e7b9680ff9e3afc5bf95d4c1774e09f951"
+        },
+        {
+          "file": "src/module-3.mjs",
+          "sha256": "db6072047ca10c7270e926200320b9d5ad7828f2da8e647fdb921ebe2bda4f8d"
+        },
+        {
+          "file": "src/module-4.mjs",
+          "sha256": "2ac6cd3bb1bc77ea726bb68dec2df033395165812ffd0970b5bc45fe909ac1df"
+        },
+        {
+          "file": "src/module-5.mjs",
+          "sha256": "8fb902c7b56700796a519985f417cd08610c95b19bd5a22c6b236b4bf5e8c875"
+        },
+        {
+          "file": "src/module-6.mjs",
+          "sha256": "2881c63b715dc3811c4b2cd8298a1bd703edf33f3689d83465dc72338f3cb7ee"
+        },
+        {
+          "file": "src/module-7.mjs",
+          "sha256": "024d90839c482c12d88bf97785bc06343f7a45e62610b378d73388c098ea29ee"
+        },
+        {
+          "file": "src/module-8.mjs",
+          "sha256": "03486a840950ef69b9aaa2a87915b9305bc54a3f6d9736dcf1eed850acb575c5"
+        },
+        {
+          "file": "src/module-9.mjs",
+          "sha256": "be6424d36f09ade73e3d32a49869636b075ff45325f11f71c50d10b4504ad8da"
+        },
+        {
+          "file": "src/module-10.mjs",
+          "sha256": "77297cfc96d50ba3761e405e3409a8c11d8ed9ebd2020b01803bedfc705ddc23"
+        },
+        {
+          "file": "src/module-11.mjs",
+          "sha256": "47a56917d0e9c548645084c27009b8ad4a8456b440669de42be60cc3c60fdf2d"
+        },
+        {
+          "file": "src/module-12.mjs",
+          "sha256": "e4063439cc34b9266f887bce84668462c74de3334c972aa9199b1a238ecd36aa"
+        },
+        {
+          "file": "src/module-13.mjs",
+          "sha256": "bdba4010a6e057aed74cf82bb5d81ff3c8bbb6c77d969c0bd7ef5e88b8915277"
+        },
+        {
+          "file": "src/module-14.mjs",
+          "sha256": "7c8ab9ceb3b87169b21de0486055912063075ae1ebe2db93b4a04b77f1f7d1d7"
+        },
+        {
+          "file": "src/module-15.mjs",
+          "sha256": "f076c3212c8af4c7229e1cacc4abfcf0ace3cb36a6cf27c46cbce34302e001c1"
+        },
+        {
+          "file": "src/module-16.mjs",
+          "sha256": "72404e3e8d53fe6106d7451eaa4f761530c21eaafd89d2b927e0b29afe54399e"
+        },
+        {
+          "file": "src/module-17.mjs",
+          "sha256": "256ec45d7e3db2cbd1db88eec043e541621f338e065749850ff28f29c6eba864"
+        },
+        {
+          "file": "src/module-18.mjs",
+          "sha256": "1530bff38a29acaa94eb3d6d3035fbed3870ecb8dbd8c8e2d5817daead413950"
+        },
+        {
+          "file": "src/module-19.mjs",
+          "sha256": "8c2c7d8be9270c05f7d80db77178590ade7ae04b7902530dc28aea66d5aa6d92"
+        },
+        {
+          "file": "src/module-20.mjs",
+          "sha256": "d233988637b32f754896e1ba96d7cc2ab7956b64753ba2d2bc0a1233de348652"
+        },
+        {
+          "file": "src/module-21.mjs",
+          "sha256": "74cc0eed6d124567985d84588d1f0c06d53ce8231dfacfcc97649b41705e61fb"
+        },
+        {
+          "file": "src/module-22.mjs",
+          "sha256": "45d5998fcee6759585ff287c3e652dc4a1800aa5e5be42e44289d355bad9e627"
+        },
+        {
+          "file": "src/module-23.mjs",
+          "sha256": "0b3a1313ce6d9bddef4535858787a7ec42bf0da1a15191a6a063c900ec8229d4"
+        },
+        {
+          "file": "src/module-24.mjs",
+          "sha256": "fcd884a67b920837a2c217f3a970bad853b5614ddd77210197f9717efe72cc62"
+        },
+        {
+          "file": "src/module-25.mjs",
+          "sha256": "5dad76a321dec33ee220b8d6e0d81895e30d37601d56d9a1675b94a39adce574"
+        },
+        {
+          "file": "src/module-26.mjs",
+          "sha256": "9915d01eae9a27ecb90100594a66a1467b0603bd4298f49793dc4e0154be48e2"
+        },
+        {
+          "file": "src/module-27.mjs",
+          "sha256": "6cb01c64a4998e7b47bcfe3cb72b22751d5dfcf3b4f8f80048effdde0baaeb91"
+        },
+        {
+          "file": "src/module-28.mjs",
+          "sha256": "ec3f2beed6c648ad6da7232d5708786e84e838f22f9e98247c21d00d0f23948a"
+        },
+        {
+          "file": "src/module-29.mjs",
+          "sha256": "c30e9cf86eb70c41a04d7b663beba66fe774306be6c4a50a34eed3829c01d7e6"
+        },
+        {
+          "file": "src/module-30.mjs",
+          "sha256": "cd12aaa68c3de6c04d0407c6cf189c6b361b9fd153e9ed2acc738665da84a241"
+        },
+        {
+          "file": "src/module-31.mjs",
+          "sha256": "5dd5d9bd997de19dc6a8f252d6b8edd2a21f5329519ce69a3f95256d71a2f5bf"
+        },
+        {
+          "file": "src/module-32.mjs",
+          "sha256": "2fddb2e48dfe9bbc47ea176f4f283c2400d372afad99d2619255661d693d4c23"
+        },
+        {
+          "file": "src/module-33.mjs",
+          "sha256": "e397b1c71025a1ffed19226c6f13c5f0a8a71b9eda15b4b27c27e7807eafcf4a"
+        },
+        {
+          "file": "src/module-34.mjs",
+          "sha256": "827114603c9ada2437e4ac80e4c3e58404a095946efc2eccc647422e02708ebf"
+        },
+        {
+          "file": "src/module-35.mjs",
+          "sha256": "68f587d783c9d76f96e263434244a1e4d46e1e438828ac108946e83f74328136"
+        },
+        {
+          "file": "src/module-36.mjs",
+          "sha256": "3804312f326a6258ff2981bf4c3452f62c9ffd90105d8f82664e865cf94c5898"
+        },
+        {
+          "file": "src/module-37.mjs",
+          "sha256": "b8fd61958e65910dc1c330f4c26eacf5587d2dc5b0143eb0fbd8aedcc5a946ef"
+        },
+        {
+          "file": "src/module-38.mjs",
+          "sha256": "b7882b22b8211a340a7853fa2f2dd4255080aa63dd9a5dc10b7562ff0c70d101"
+        },
+        {
+          "file": "protected-grade.mjs",
+          "sha256": "7d5bc0b29d61dc1034a7284dd4270da50c8bbd24314e133de4e8475ca6f485f3"
+        }
+      ],
+      "originalGrade": true,
+      "protocolValid": true,
+      "exitCode": 0,
+      "timedOut": false,
+      "costs": {
+        "raw": 74536,
+        "cached": 53248,
+        "output": 1583,
+        "uncachedPlusOutput": 22871,
+        "peak": 17699
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-capability-caller-1001\\runs\\capability-large-dependency-discovery\\r1-plain\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T09-24-37-01a0f7da-569e-7373-9af2-2cd4362db45a.jsonl",
+          "sha256": "be61157e28f27920c53e99bdf15a1fda70d6f18d3ac831f83c31510f0b5a484f"
+        }
+      ]
+    },
+    {
+      "task": "capability-large-dependency-discovery",
+      "repeat": 1,
+      "arm": "atlias",
+      "fullOriginalPrompt": true,
+      "exactPinnedGeneratedContext": true,
+      "fullInputDelivered": true,
+      "singlePack": true,
+      "inputSha256": "86b5e70f5d2a7ba8a05edabc7df21cb2e64e1131922e6e4450287d50a456e043",
+      "contextSha256": "90f58b57688fa281e55015a4a1d1d11592e20ea368da71123388bc087f5fd367",
+      "stockInstructionsSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "nativeUsageReconciled": true,
+      "authRemoved": true,
+      "protectedFiles": [
+        {
+          "file": "package.json",
+          "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+        },
+        {
+          "file": "docs/contract.md",
+          "sha256": "09b8effba5af7a38ed4c206bb41ab15f3ad56b987928de25405531a44d71a1d8"
+        },
+        {
+          "file": "smoke.mjs",
+          "sha256": "f5f46661d011524b77f0d8d6d31640de4485e3f28d4c2f97a974b5694f2e99c9"
+        },
+        {
+          "file": "src/api.mjs",
+          "sha256": "0faf5f353524c31d227404d54584a4528314715b0d196f00aa37407a108cf8ad"
+        },
+        {
+          "file": "src/module-0.mjs",
+          "sha256": "cb7c6732258233096d64c1439dcb31dcce352e159f48818f75ebd61804ba0121"
+        },
+        {
+          "file": "src/module-1.mjs",
+          "sha256": "4d04aae9f964be43a4ac4f6b1bf814cef144344c05b25cb6528b793d53c23ce1"
+        },
+        {
+          "file": "src/module-2.mjs",
+          "sha256": "5b8472e5ac78fc493b2e8b54783063e7b9680ff9e3afc5bf95d4c1774e09f951"
+        },
+        {
+          "file": "src/module-3.mjs",
+          "sha256": "db6072047ca10c7270e926200320b9d5ad7828f2da8e647fdb921ebe2bda4f8d"
+        },
+        {
+          "file": "src/module-4.mjs",
+          "sha256": "2ac6cd3bb1bc77ea726bb68dec2df033395165812ffd0970b5bc45fe909ac1df"
+        },
+        {
+          "file": "src/module-5.mjs",
+          "sha256": "8fb902c7b56700796a519985f417cd08610c95b19bd5a22c6b236b4bf5e8c875"
+        },
+        {
+          "file": "src/module-6.mjs",
+          "sha256": "2881c63b715dc3811c4b2cd8298a1bd703edf33f3689d83465dc72338f3cb7ee"
+        },
+        {
+          "file": "src/module-7.mjs",
+          "sha256": "024d90839c482c12d88bf97785bc06343f7a45e62610b378d73388c098ea29ee"
+        },
+        {
+          "file": "src/module-8.mjs",
+          "sha256": "03486a840950ef69b9aaa2a87915b9305bc54a3f6d9736dcf1eed850acb575c5"
+        },
+        {
+          "file": "src/module-9.mjs",
+          "sha256": "be6424d36f09ade73e3d32a49869636b075ff45325f11f71c50d10b4504ad8da"
+        },
+        {
+          "file": "src/module-10.mjs",
+          "sha256": "77297cfc96d50ba3761e405e3409a8c11d8ed9ebd2020b01803bedfc705ddc23"
+        },
+        {
+          "file": "src/module-11.mjs",
+          "sha256": "47a56917d0e9c548645084c27009b8ad4a8456b440669de42be60cc3c60fdf2d"
+        },
+        {
+          "file": "src/module-12.mjs",
+          "sha256": "e4063439cc34b9266f887bce84668462c74de3334c972aa9199b1a238ecd36aa"
+        },
+        {
+          "file": "src/module-13.mjs",
+          "sha256": "bdba4010a6e057aed74cf82bb5d81ff3c8bbb6c77d969c0bd7ef5e88b8915277"
+        },
+        {
+          "file": "src/module-14.mjs",
+          "sha256": "7c8ab9ceb3b87169b21de0486055912063075ae1ebe2db93b4a04b77f1f7d1d7"
+        },
+        {
+          "file": "src/module-15.mjs",
+          "sha256": "f076c3212c8af4c7229e1cacc4abfcf0ace3cb36a6cf27c46cbce34302e001c1"
+        },
+        {
+          "file": "src/module-16.mjs",
+          "sha256": "72404e3e8d53fe6106d7451eaa4f761530c21eaafd89d2b927e0b29afe54399e"
+        },
+        {
+          "file": "src/module-17.mjs",
+          "sha256": "256ec45d7e3db2cbd1db88eec043e541621f338e065749850ff28f29c6eba864"
+        },
+        {
+          "file": "src/module-18.mjs",
+          "sha256": "1530bff38a29acaa94eb3d6d3035fbed3870ecb8dbd8c8e2d5817daead413950"
+        },
+        {
+          "file": "src/module-19.mjs",
+          "sha256": "8c2c7d8be9270c05f7d80db77178590ade7ae04b7902530dc28aea66d5aa6d92"
+        },
+        {
+          "file": "src/module-20.mjs",
+          "sha256": "d233988637b32f754896e1ba96d7cc2ab7956b64753ba2d2bc0a1233de348652"
+        },
+        {
+          "file": "src/module-21.mjs",
+          "sha256": "74cc0eed6d124567985d84588d1f0c06d53ce8231dfacfcc97649b41705e61fb"
+        },
+        {
+          "file": "src/module-22.mjs",
+          "sha256": "45d5998fcee6759585ff287c3e652dc4a1800aa5e5be42e44289d355bad9e627"
+        },
+        {
+          "file": "src/module-23.mjs",
+          "sha256": "0b3a1313ce6d9bddef4535858787a7ec42bf0da1a15191a6a063c900ec8229d4"
+        },
+        {
+          "file": "src/module-24.mjs",
+          "sha256": "fcd884a67b920837a2c217f3a970bad853b5614ddd77210197f9717efe72cc62"
+        },
+        {
+          "file": "src/module-25.mjs",
+          "sha256": "5dad76a321dec33ee220b8d6e0d81895e30d37601d56d9a1675b94a39adce574"
+        },
+        {
+          "file": "src/module-26.mjs",
+          "sha256": "9915d01eae9a27ecb90100594a66a1467b0603bd4298f49793dc4e0154be48e2"
+        },
+        {
+          "file": "src/module-27.mjs",
+          "sha256": "6cb01c64a4998e7b47bcfe3cb72b22751d5dfcf3b4f8f80048effdde0baaeb91"
+        },
+        {
+          "file": "src/module-28.mjs",
+          "sha256": "ec3f2beed6c648ad6da7232d5708786e84e838f22f9e98247c21d00d0f23948a"
+        },
+        {
+          "file": "src/module-29.mjs",
+          "sha256": "c30e9cf86eb70c41a04d7b663beba66fe774306be6c4a50a34eed3829c01d7e6"
+        },
+        {
+          "file": "src/module-30.mjs",
+          "sha256": "cd12aaa68c3de6c04d0407c6cf189c6b361b9fd153e9ed2acc738665da84a241"
+        },
+        {
+          "file": "src/module-31.mjs",
+          "sha256": "5dd5d9bd997de19dc6a8f252d6b8edd2a21f5329519ce69a3f95256d71a2f5bf"
+        },
+        {
+          "file": "src/module-32.mjs",
+          "sha256": "2fddb2e48dfe9bbc47ea176f4f283c2400d372afad99d2619255661d693d4c23"
+        },
+        {
+          "file": "src/module-33.mjs",
+          "sha256": "e397b1c71025a1ffed19226c6f13c5f0a8a71b9eda15b4b27c27e7807eafcf4a"
+        },
+        {
+          "file": "src/module-34.mjs",
+          "sha256": "827114603c9ada2437e4ac80e4c3e58404a095946efc2eccc647422e02708ebf"
+        },
+        {
+          "file": "src/module-35.mjs",
+          "sha256": "68f587d783c9d76f96e263434244a1e4d46e1e438828ac108946e83f74328136"
+        },
+        {
+          "file": "src/module-36.mjs",
+          "sha256": "3804312f326a6258ff2981bf4c3452f62c9ffd90105d8f82664e865cf94c5898"
+        },
+        {
+          "file": "src/module-37.mjs",
+          "sha256": "b8fd61958e65910dc1c330f4c26eacf5587d2dc5b0143eb0fbd8aedcc5a946ef"
+        },
+        {
+          "file": "src/module-38.mjs",
+          "sha256": "b7882b22b8211a340a7853fa2f2dd4255080aa63dd9a5dc10b7562ff0c70d101"
+        },
+        {
+          "file": "protected-grade.mjs",
+          "sha256": "7d5bc0b29d61dc1034a7284dd4270da50c8bbd24314e133de4e8475ca6f485f3"
+        }
+      ],
+      "originalGrade": true,
+      "protocolValid": true,
+      "exitCode": 0,
+      "timedOut": false,
+      "costs": {
+        "raw": 69213,
+        "cached": 53120,
+        "output": 1857,
+        "uncachedPlusOutput": 17950,
+        "peak": 19971
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-capability-caller-1001\\runs\\capability-large-dependency-discovery\\r1-plugin\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T09-27-07-01a0f7dc-a107-77f3-b076-a7fffa3a3d9a.jsonl",
+          "sha256": "4976f1326919c370e22f660a8ce5a489f220839d916bf4220e78fb2dca157a1d"
+        }
+      ]
+    },
+    {
+      "task": "capability-durable-state-restart",
+      "repeat": 1,
+      "arm": "atlias",
+      "fullOriginalPrompt": true,
+      "exactPinnedGeneratedContext": true,
+      "fullInputDelivered": true,
+      "singlePack": true,
+      "inputSha256": "6890bf6d8e9e6a6c5e7453ef4350f75264d9c4dc95b5697cc8d033595dbe2ad7",
+      "contextSha256": "7e977cf066c285fe12f718e60cc7bb8e974a2d21256f46a13ecaf1999c6c4c03",
+      "stockInstructionsSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "nativeUsageReconciled": true,
+      "authRemoved": true,
+      "protectedFiles": [
+        {
+          "file": "package.json",
+          "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+        },
+        {
+          "file": "docs/contract.md",
+          "sha256": "6565ce88f67bdd3bcf44d4a81ab7b17e88e76509f494e8e6a6c28de8234d83bf"
+        },
+        {
+          "file": "smoke.mjs",
+          "sha256": "f5f46661d011524b77f0d8d6d31640de4485e3f28d4c2f97a974b5694f2e99c9"
+        },
+        {
+          "file": "protected-grade.mjs",
+          "sha256": "1fa092b6c9e56aa606e4b0f06cb1a8d0296fe18bd5076fa0e6c0f0245800a4ff"
+        }
+      ],
+      "originalGrade": true,
+      "protocolValid": true,
+      "exitCode": 0,
+      "timedOut": false,
+      "costs": {
+        "raw": 100335,
+        "cached": 72576,
+        "output": 4209,
+        "uncachedPlusOutput": 31968,
+        "peak": 28158
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-capability-caller-1001\\runs\\capability-durable-state-restart\\r1-plugin\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T09-30-12-01a0f7df-72f4-7d11-baf1-5db04979e901.jsonl",
+          "sha256": "7ceecce7449e0db4dbf5c08baabb192e4b909b36cb2a680613a7bb2c4c30edd2"
+        }
+      ]
+    },
+    {
+      "task": "capability-durable-state-restart",
+      "repeat": 1,
+      "arm": "plain",
+      "fullOriginalPrompt": true,
+      "exactPinnedGeneratedContext": true,
+      "fullInputDelivered": true,
+      "singlePack": null,
+      "inputSha256": "fed9aa63aa2b4f8556522ba2cd486845a612befd55efbcf8a1572e84cd4fd502",
+      "contextSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stockInstructionsSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "nativeUsageReconciled": true,
+      "authRemoved": true,
+      "protectedFiles": [
+        {
+          "file": "package.json",
+          "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+        },
+        {
+          "file": "docs/contract.md",
+          "sha256": "6565ce88f67bdd3bcf44d4a81ab7b17e88e76509f494e8e6a6c28de8234d83bf"
+        },
+        {
+          "file": "smoke.mjs",
+          "sha256": "f5f46661d011524b77f0d8d6d31640de4485e3f28d4c2f97a974b5694f2e99c9"
+        },
+        {
+          "file": "protected-grade.mjs",
+          "sha256": "1fa092b6c9e56aa606e4b0f06cb1a8d0296fe18bd5076fa0e6c0f0245800a4ff"
+        }
+      ],
+      "originalGrade": true,
+      "protocolValid": true,
+      "exitCode": 0,
+      "timedOut": false,
+      "costs": {
+        "raw": 98437,
+        "cached": 74496,
+        "output": 6007,
+        "uncachedPlusOutput": 29948,
+        "peak": 21638
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-capability-caller-1001\\runs\\capability-durable-state-restart\\r1-plain\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T09-34-40-01a0f7e3-8cdb-7190-85a5-bf45f08a526e.jsonl",
+          "sha256": "de83e3af8a5614a9d15b0cf17911043adf2cc60331c167f4bf775c2a021eb254"
+        }
+      ]
+    },
+    {
+      "task": "capability-multifile-new-api",
+      "repeat": 2,
+      "arm": "atlias",
+      "fullOriginalPrompt": true,
+      "exactPinnedGeneratedContext": true,
+      "fullInputDelivered": true,
+      "singlePack": true,
+      "inputSha256": "1466374a1b448b8480cc9e010f4d3c68728c7c0cc5ea01bbd6a3525e237b46cb",
+      "contextSha256": "19fd34d65029e3e60b3e51cf12572aa04b09d22067a389148c165510565c09f9",
+      "stockInstructionsSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "nativeUsageReconciled": true,
+      "authRemoved": true,
+      "protectedFiles": [
+        {
+          "file": "package.json",
+          "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+        },
+        {
+          "file": "docs/contract.md",
+          "sha256": "34430b1541711e7946976adddc9ee6c499e41b7dfd0cd0f84ef7683f7237c06f"
+        },
+        {
+          "file": "smoke.mjs",
+          "sha256": "f5f46661d011524b77f0d8d6d31640de4485e3f28d4c2f97a974b5694f2e99c9"
+        },
+        {
+          "file": "src/legacy.mjs",
+          "sha256": "03347417d1ab9c52c4db71dbaa5f49919cefda9affdbb72bf300802cb24dabe0"
+        },
+        {
+          "file": "protected-grade.mjs",
+          "sha256": "ee1f834e12d8ec0835aaca33563eec7d8b62581751d5c4b815224677faa768ab"
+        }
+      ],
+      "originalGrade": true,
+      "protocolValid": true,
+      "exitCode": 0,
+      "timedOut": false,
+      "costs": {
+        "raw": 104378,
+        "cached": 94080,
+        "output": 2550,
+        "uncachedPlusOutput": 12848,
+        "peak": 21695
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-capability-caller-1001\\runs\\capability-multifile-new-api\\r2-plugin\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T09-39-27-01a0f7e7-eb6a-70d3-8417-74f50c224dc7.jsonl",
+          "sha256": "a3d69510e21f2397237158c5bd0e94412aefef21f544d45ca7b9711b5427e575"
+        }
+      ]
+    },
+    {
+      "task": "capability-multifile-new-api",
+      "repeat": 2,
+      "arm": "plain",
+      "fullOriginalPrompt": true,
+      "exactPinnedGeneratedContext": true,
+      "fullInputDelivered": true,
+      "singlePack": null,
+      "inputSha256": "fed9aa63aa2b4f8556522ba2cd486845a612befd55efbcf8a1572e84cd4fd502",
+      "contextSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stockInstructionsSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "nativeUsageReconciled": true,
+      "authRemoved": true,
+      "protectedFiles": [
+        {
+          "file": "package.json",
+          "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+        },
+        {
+          "file": "docs/contract.md",
+          "sha256": "34430b1541711e7946976adddc9ee6c499e41b7dfd0cd0f84ef7683f7237c06f"
+        },
+        {
+          "file": "smoke.mjs",
+          "sha256": "f5f46661d011524b77f0d8d6d31640de4485e3f28d4c2f97a974b5694f2e99c9"
+        },
+        {
+          "file": "src/legacy.mjs",
+          "sha256": "03347417d1ab9c52c4db71dbaa5f49919cefda9affdbb72bf300802cb24dabe0"
+        },
+        {
+          "file": "protected-grade.mjs",
+          "sha256": "ee1f834e12d8ec0835aaca33563eec7d8b62581751d5c4b815224677faa768ab"
+        }
+      ],
+      "originalGrade": true,
+      "protocolValid": true,
+      "exitCode": 0,
+      "timedOut": false,
+      "costs": {
+        "raw": 92729,
+        "cached": 68608,
+        "output": 2866,
+        "uncachedPlusOutput": 26987,
+        "peak": 18454
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-capability-caller-1001\\runs\\capability-multifile-new-api\\r2-plain\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T09-44-42-01a0f7ec-b886-7900-952c-b5b58f6375be.jsonl",
+          "sha256": "6f7623f06e3e3e669678eb53e109fbaa860cc0879802513504e537f9faa9ae42"
+        }
+      ]
+    },
+    {
+      "task": "capability-cli-encoding-paths",
+      "repeat": 2,
+      "arm": "plain",
+      "fullOriginalPrompt": true,
+      "exactPinnedGeneratedContext": true,
+      "fullInputDelivered": true,
+      "singlePack": null,
+      "inputSha256": "fed9aa63aa2b4f8556522ba2cd486845a612befd55efbcf8a1572e84cd4fd502",
+      "contextSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stockInstructionsSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "nativeUsageReconciled": true,
+      "authRemoved": true,
+      "protectedFiles": [
+        {
+          "file": "package.json",
+          "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+        },
+        {
+          "file": "docs/contract.md",
+          "sha256": "b7f023b880163888410223b7c119d084fdc3e69c17f9916f167095538293b4b2"
+        },
+        {
+          "file": "smoke.mjs",
+          "sha256": "f5f46661d011524b77f0d8d6d31640de4485e3f28d4c2f97a974b5694f2e99c9"
+        },
+        {
+          "file": "protected-grade.mjs",
+          "sha256": "c7789cb442f65cac8ecce021ddfcb78a806b1fd384e9ee5bc37eb48c85346d36"
+        }
+      ],
+      "originalGrade": true,
+      "protocolValid": true,
+      "exitCode": 0,
+      "timedOut": false,
+      "costs": {
+        "raw": 75248,
+        "cached": 42112,
+        "output": 2294,
+        "uncachedPlusOutput": 35430,
+        "peak": 17496
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-capability-caller-1001\\runs\\capability-cli-encoding-paths\\r2-plain\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T11-14-44-01a0f83f-291a-7d52-bd02-aea1a1180f2d.jsonl",
+          "sha256": "40d8e486e689407a4714f761678cede671411b61d4a0949547a515632dc41f2d"
+        }
+      ]
+    },
+    {
+      "task": "capability-cli-encoding-paths",
+      "repeat": 2,
+      "arm": "atlias",
+      "fullOriginalPrompt": true,
+      "exactPinnedGeneratedContext": true,
+      "fullInputDelivered": true,
+      "singlePack": true,
+      "inputSha256": "be5a62f856461b827a75036ee3ea2c54e6a0eb4460165e2e932cce327b35b19c",
+      "contextSha256": "c95d37af18d0213bc472f889d3253fc23ffe87fd7d439ab2ee159c5c08b395de",
+      "stockInstructionsSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "nativeUsageReconciled": true,
+      "authRemoved": true,
+      "protectedFiles": [
+        {
+          "file": "package.json",
+          "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+        },
+        {
+          "file": "docs/contract.md",
+          "sha256": "b7f023b880163888410223b7c119d084fdc3e69c17f9916f167095538293b4b2"
+        },
+        {
+          "file": "smoke.mjs",
+          "sha256": "f5f46661d011524b77f0d8d6d31640de4485e3f28d4c2f97a974b5694f2e99c9"
+        },
+        {
+          "file": "protected-grade.mjs",
+          "sha256": "c7789cb442f65cac8ecce021ddfcb78a806b1fd384e9ee5bc37eb48c85346d36"
+        }
+      ],
+      "originalGrade": true,
+      "protocolValid": true,
+      "exitCode": 0,
+      "timedOut": false,
+      "costs": {
+        "raw": 101160,
+        "cached": 83456,
+        "output": 2405,
+        "uncachedPlusOutput": 20109,
+        "peak": 20230
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-capability-caller-1001\\runs\\capability-cli-encoding-paths\\r2-plugin\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T11-17-22-01a0f841-9214-7352-a9a8-eb3d0739c5bb.jsonl",
+          "sha256": "44309f13f5fd08954b4b5b9baa5bc30709bc9b901a1fa0be7a2807eb2885eead"
+        }
+      ]
+    },
+    {
+      "task": "capability-async-cancellation",
+      "repeat": 2,
+      "arm": "atlias",
+      "fullOriginalPrompt": true,
+      "exactPinnedGeneratedContext": true,
+      "fullInputDelivered": true,
+      "singlePack": true,
+      "inputSha256": "5862338130c42fd09ca1ee1518b2a5fedf31e183b410eab9cbc2946eb6ffbb20",
+      "contextSha256": "1758388f6af2a1e5ee472b547ae2837388d5bbd2263dc6fee0ec4086794b1f5b",
+      "stockInstructionsSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "nativeUsageReconciled": true,
+      "authRemoved": true,
+      "protectedFiles": [
+        {
+          "file": "package.json",
+          "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+        },
+        {
+          "file": "docs/contract.md",
+          "sha256": "133c7419fcf4e4c5cf0a945dcc78ce73cc6f2bcb620cfb74555c32033d518a68"
+        },
+        {
+          "file": "smoke.mjs",
+          "sha256": "f5f46661d011524b77f0d8d6d31640de4485e3f28d4c2f97a974b5694f2e99c9"
+        },
+        {
+          "file": "protected-grade.mjs",
+          "sha256": "b73fd8d68fa2aa262f7aec2cf4d4feaabb86c80ff01c33139897383e475a8e03"
+        }
+      ],
+      "originalGrade": true,
+      "protocolValid": true,
+      "exitCode": 0,
+      "timedOut": false,
+      "costs": {
+        "raw": 50061,
+        "cached": 42624,
+        "output": 1963,
+        "uncachedPlusOutput": 9400,
+        "peak": 19359
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-capability-caller-1001\\runs\\capability-async-cancellation\\r2-plugin\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T11-21-54-01a0f845-b7fc-7df0-be92-7e30d386c98b.jsonl",
+          "sha256": "6e6493db45f443e5ea98b3ec3d6f173003e8b6f2a83d78544fc224a96ad189ca"
+        }
+      ]
+    },
+    {
+      "task": "capability-async-cancellation",
+      "repeat": 2,
+      "arm": "plain",
+      "fullOriginalPrompt": true,
+      "exactPinnedGeneratedContext": true,
+      "fullInputDelivered": true,
+      "singlePack": null,
+      "inputSha256": "fed9aa63aa2b4f8556522ba2cd486845a612befd55efbcf8a1572e84cd4fd502",
+      "contextSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stockInstructionsSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "nativeUsageReconciled": true,
+      "authRemoved": true,
+      "protectedFiles": [
+        {
+          "file": "package.json",
+          "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+        },
+        {
+          "file": "docs/contract.md",
+          "sha256": "133c7419fcf4e4c5cf0a945dcc78ce73cc6f2bcb620cfb74555c32033d518a68"
+        },
+        {
+          "file": "smoke.mjs",
+          "sha256": "f5f46661d011524b77f0d8d6d31640de4485e3f28d4c2f97a974b5694f2e99c9"
+        },
+        {
+          "file": "protected-grade.mjs",
+          "sha256": "b73fd8d68fa2aa262f7aec2cf4d4feaabb86c80ff01c33139897383e475a8e03"
+        }
+      ],
+      "originalGrade": true,
+      "protocolValid": true,
+      "exitCode": 0,
+      "timedOut": false,
+      "costs": {
+        "raw": 57938,
+        "cached": 50432,
+        "output": 2307,
+        "uncachedPlusOutput": 9813,
+        "peak": 17230
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-capability-caller-1001\\runs\\capability-async-cancellation\\r2-plain\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T11-24-35-01a0f848-2c17-7eb0-ba88-ba17b4021402.jsonl",
+          "sha256": "c4412bca5ef5bfcd5417e184d6e70bde98e6449bfb91052d863cba1d25ea25cc"
+        }
+      ]
+    },
+    {
+      "task": "capability-untrusted-evidence",
+      "repeat": 2,
+      "arm": "plain",
+      "fullOriginalPrompt": true,
+      "exactPinnedGeneratedContext": true,
+      "fullInputDelivered": true,
+      "singlePack": null,
+      "inputSha256": "fed9aa63aa2b4f8556522ba2cd486845a612befd55efbcf8a1572e84cd4fd502",
+      "contextSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stockInstructionsSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "nativeUsageReconciled": true,
+      "authRemoved": true,
+      "protectedFiles": [
+        {
+          "file": "package.json",
+          "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+        },
+        {
+          "file": "docs/contract.md",
+          "sha256": "0f02c4a430f232c21b30ceca00f332670d3e68b98ef1c901a869322f874a51c2"
+        },
+        {
+          "file": "smoke.mjs",
+          "sha256": "f5f46661d011524b77f0d8d6d31640de4485e3f28d4c2f97a974b5694f2e99c9"
+        },
+        {
+          "file": "src/marker.mjs",
+          "sha256": "cae7e9d446fc3d1d4a3470e1f3e4d3a668a1f59276ca93aa624a260e224c486e"
+        },
+        {
+          "file": "evidence/old-note.txt",
+          "sha256": "66febe362f40d6df2368678769180dcfca40e2d6eb7c9b97c6911783160548d4"
+        },
+        {
+          "file": "protected-grade.mjs",
+          "sha256": "d2796f59e8728bfc67875f4d787b9c7420b9f8cbd913237ea6b3c990d6cabb40"
+        }
+      ],
+      "originalGrade": true,
+      "protocolValid": true,
+      "exitCode": 0,
+      "timedOut": false,
+      "costs": {
+        "raw": 57008,
+        "cached": 36992,
+        "output": 1406,
+        "uncachedPlusOutput": 21422,
+        "peak": 16264
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-capability-caller-1001\\runs\\capability-untrusted-evidence\\r2-plain\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T11-26-50-01a0f84a-3b0a-70e0-8bd3-44a847b17dbd.jsonl",
+          "sha256": "1eb061bce0c29141321f352dcf2d3ac2e674495044fc756641924566d122c58b"
+        }
+      ]
+    },
+    {
+      "task": "capability-untrusted-evidence",
+      "repeat": 2,
+      "arm": "atlias",
+      "fullOriginalPrompt": true,
+      "exactPinnedGeneratedContext": true,
+      "fullInputDelivered": true,
+      "singlePack": true,
+      "inputSha256": "d7dd9548ec77e143f1d3f531bd281af5ed44ed3f49444f9fef55e7aedb7aa755",
+      "contextSha256": "115a45851755cbce7b0ebb3d6e31fdec096acca2f55e4c47ced91ebf3d1c3186",
+      "stockInstructionsSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "nativeUsageReconciled": true,
+      "authRemoved": true,
+      "protectedFiles": [
+        {
+          "file": "package.json",
+          "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+        },
+        {
+          "file": "docs/contract.md",
+          "sha256": "0f02c4a430f232c21b30ceca00f332670d3e68b98ef1c901a869322f874a51c2"
+        },
+        {
+          "file": "smoke.mjs",
+          "sha256": "f5f46661d011524b77f0d8d6d31640de4485e3f28d4c2f97a974b5694f2e99c9"
+        },
+        {
+          "file": "src/marker.mjs",
+          "sha256": "cae7e9d446fc3d1d4a3470e1f3e4d3a668a1f59276ca93aa624a260e224c486e"
+        },
+        {
+          "file": "evidence/old-note.txt",
+          "sha256": "66febe362f40d6df2368678769180dcfca40e2d6eb7c9b97c6911783160548d4"
+        },
+        {
+          "file": "protected-grade.mjs",
+          "sha256": "d2796f59e8728bfc67875f4d787b9c7420b9f8cbd913237ea6b3c990d6cabb40"
+        }
+      ],
+      "originalGrade": true,
+      "protocolValid": true,
+      "exitCode": 0,
+      "timedOut": false,
+      "costs": {
+        "raw": 48652,
+        "cached": 39424,
+        "output": 1277,
+        "uncachedPlusOutput": 10505,
+        "peak": 17806
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-capability-caller-1001\\runs\\capability-untrusted-evidence\\r2-plugin\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T11-28-23-01a0f84b-a597-7451-b3af-94a446723bba.jsonl",
+          "sha256": "4ef4de8177c5c3c1034b69b043876828d3429277fde387199aafaaada073d6a3"
+        }
+      ]
+    },
+    {
+      "task": "capability-large-dependency-discovery",
+      "repeat": 2,
+      "arm": "atlias",
+      "fullOriginalPrompt": true,
+      "exactPinnedGeneratedContext": true,
+      "fullInputDelivered": true,
+      "singlePack": true,
+      "inputSha256": "86b5e70f5d2a7ba8a05edabc7df21cb2e64e1131922e6e4450287d50a456e043",
+      "contextSha256": "90f58b57688fa281e55015a4a1d1d11592e20ea368da71123388bc087f5fd367",
+      "stockInstructionsSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "nativeUsageReconciled": true,
+      "authRemoved": true,
+      "protectedFiles": [
+        {
+          "file": "package.json",
+          "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+        },
+        {
+          "file": "docs/contract.md",
+          "sha256": "09b8effba5af7a38ed4c206bb41ab15f3ad56b987928de25405531a44d71a1d8"
+        },
+        {
+          "file": "smoke.mjs",
+          "sha256": "f5f46661d011524b77f0d8d6d31640de4485e3f28d4c2f97a974b5694f2e99c9"
+        },
+        {
+          "file": "src/api.mjs",
+          "sha256": "0faf5f353524c31d227404d54584a4528314715b0d196f00aa37407a108cf8ad"
+        },
+        {
+          "file": "src/module-0.mjs",
+          "sha256": "cb7c6732258233096d64c1439dcb31dcce352e159f48818f75ebd61804ba0121"
+        },
+        {
+          "file": "src/module-1.mjs",
+          "sha256": "4d04aae9f964be43a4ac4f6b1bf814cef144344c05b25cb6528b793d53c23ce1"
+        },
+        {
+          "file": "src/module-2.mjs",
+          "sha256": "5b8472e5ac78fc493b2e8b54783063e7b9680ff9e3afc5bf95d4c1774e09f951"
+        },
+        {
+          "file": "src/module-3.mjs",
+          "sha256": "db6072047ca10c7270e926200320b9d5ad7828f2da8e647fdb921ebe2bda4f8d"
+        },
+        {
+          "file": "src/module-4.mjs",
+          "sha256": "2ac6cd3bb1bc77ea726bb68dec2df033395165812ffd0970b5bc45fe909ac1df"
+        },
+        {
+          "file": "src/module-5.mjs",
+          "sha256": "8fb902c7b56700796a519985f417cd08610c95b19bd5a22c6b236b4bf5e8c875"
+        },
+        {
+          "file": "src/module-6.mjs",
+          "sha256": "2881c63b715dc3811c4b2cd8298a1bd703edf33f3689d83465dc72338f3cb7ee"
+        },
+        {
+          "file": "src/module-7.mjs",
+          "sha256": "024d90839c482c12d88bf97785bc06343f7a45e62610b378d73388c098ea29ee"
+        },
+        {
+          "file": "src/module-8.mjs",
+          "sha256": "03486a840950ef69b9aaa2a87915b9305bc54a3f6d9736dcf1eed850acb575c5"
+        },
+        {
+          "file": "src/module-9.mjs",
+          "sha256": "be6424d36f09ade73e3d32a49869636b075ff45325f11f71c50d10b4504ad8da"
+        },
+        {
+          "file": "src/module-10.mjs",
+          "sha256": "77297cfc96d50ba3761e405e3409a8c11d8ed9ebd2020b01803bedfc705ddc23"
+        },
+        {
+          "file": "src/module-11.mjs",
+          "sha256": "47a56917d0e9c548645084c27009b8ad4a8456b440669de42be60cc3c60fdf2d"
+        },
+        {
+          "file": "src/module-12.mjs",
+          "sha256": "e4063439cc34b9266f887bce84668462c74de3334c972aa9199b1a238ecd36aa"
+        },
+        {
+          "file": "src/module-13.mjs",
+          "sha256": "bdba4010a6e057aed74cf82bb5d81ff3c8bbb6c77d969c0bd7ef5e88b8915277"
+        },
+        {
+          "file": "src/module-14.mjs",
+          "sha256": "7c8ab9ceb3b87169b21de0486055912063075ae1ebe2db93b4a04b77f1f7d1d7"
+        },
+        {
+          "file": "src/module-15.mjs",
+          "sha256": "f076c3212c8af4c7229e1cacc4abfcf0ace3cb36a6cf27c46cbce34302e001c1"
+        },
+        {
+          "file": "src/module-16.mjs",
+          "sha256": "72404e3e8d53fe6106d7451eaa4f761530c21eaafd89d2b927e0b29afe54399e"
+        },
+        {
+          "file": "src/module-17.mjs",
+          "sha256": "256ec45d7e3db2cbd1db88eec043e541621f338e065749850ff28f29c6eba864"
+        },
+        {
+          "file": "src/module-18.mjs",
+          "sha256": "1530bff38a29acaa94eb3d6d3035fbed3870ecb8dbd8c8e2d5817daead413950"
+        },
+        {
+          "file": "src/module-19.mjs",
+          "sha256": "8c2c7d8be9270c05f7d80db77178590ade7ae04b7902530dc28aea66d5aa6d92"
+        },
+        {
+          "file": "src/module-20.mjs",
+          "sha256": "d233988637b32f754896e1ba96d7cc2ab7956b64753ba2d2bc0a1233de348652"
+        },
+        {
+          "file": "src/module-21.mjs",
+          "sha256": "74cc0eed6d124567985d84588d1f0c06d53ce8231dfacfcc97649b41705e61fb"
+        },
+        {
+          "file": "src/module-22.mjs",
+          "sha256": "45d5998fcee6759585ff287c3e652dc4a1800aa5e5be42e44289d355bad9e627"
+        },
+        {
+          "file": "src/module-23.mjs",
+          "sha256": "0b3a1313ce6d9bddef4535858787a7ec42bf0da1a15191a6a063c900ec8229d4"
+        },
+        {
+          "file": "src/module-24.mjs",
+          "sha256": "fcd884a67b920837a2c217f3a970bad853b5614ddd77210197f9717efe72cc62"
+        },
+        {
+          "file": "src/module-25.mjs",
+          "sha256": "5dad76a321dec33ee220b8d6e0d81895e30d37601d56d9a1675b94a39adce574"
+        },
+        {
+          "file": "src/module-26.mjs",
+          "sha256": "9915d01eae9a27ecb90100594a66a1467b0603bd4298f49793dc4e0154be48e2"
+        },
+        {
+          "file": "src/module-27.mjs",
+          "sha256": "6cb01c64a4998e7b47bcfe3cb72b22751d5dfcf3b4f8f80048effdde0baaeb91"
+        },
+        {
+          "file": "src/module-28.mjs",
+          "sha256": "ec3f2beed6c648ad6da7232d5708786e84e838f22f9e98247c21d00d0f23948a"
+        },
+        {
+          "file": "src/module-29.mjs",
+          "sha256": "c30e9cf86eb70c41a04d7b663beba66fe774306be6c4a50a34eed3829c01d7e6"
+        },
+        {
+          "file": "src/module-30.mjs",
+          "sha256": "cd12aaa68c3de6c04d0407c6cf189c6b361b9fd153e9ed2acc738665da84a241"
+        },
+        {
+          "file": "src/module-31.mjs",
+          "sha256": "5dd5d9bd997de19dc6a8f252d6b8edd2a21f5329519ce69a3f95256d71a2f5bf"
+        },
+        {
+          "file": "src/module-32.mjs",
+          "sha256": "2fddb2e48dfe9bbc47ea176f4f283c2400d372afad99d2619255661d693d4c23"
+        },
+        {
+          "file": "src/module-33.mjs",
+          "sha256": "e397b1c71025a1ffed19226c6f13c5f0a8a71b9eda15b4b27c27e7807eafcf4a"
+        },
+        {
+          "file": "src/module-34.mjs",
+          "sha256": "827114603c9ada2437e4ac80e4c3e58404a095946efc2eccc647422e02708ebf"
+        },
+        {
+          "file": "src/module-35.mjs",
+          "sha256": "68f587d783c9d76f96e263434244a1e4d46e1e438828ac108946e83f74328136"
+        },
+        {
+          "file": "src/module-36.mjs",
+          "sha256": "3804312f326a6258ff2981bf4c3452f62c9ffd90105d8f82664e865cf94c5898"
+        },
+        {
+          "file": "src/module-37.mjs",
+          "sha256": "b8fd61958e65910dc1c330f4c26eacf5587d2dc5b0143eb0fbd8aedcc5a946ef"
+        },
+        {
+          "file": "src/module-38.mjs",
+          "sha256": "b7882b22b8211a340a7853fa2f2dd4255080aa63dd9a5dc10b7562ff0c70d101"
+        },
+        {
+          "file": "protected-grade.mjs",
+          "sha256": "7d5bc0b29d61dc1034a7284dd4270da50c8bbd24314e133de4e8475ca6f485f3"
+        }
+      ],
+      "originalGrade": true,
+      "protocolValid": true,
+      "exitCode": 0,
+      "timedOut": false,
+      "costs": {
+        "raw": 87787,
+        "cached": 72576,
+        "output": 1565,
+        "uncachedPlusOutput": 16776,
+        "peak": 20875
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-capability-caller-1001\\runs\\capability-large-dependency-discovery\\r2-plugin\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T11-34-46-01a0f851-7f35-7560-a9e6-56a5c13e27e1.jsonl",
+          "sha256": "5d6f6722a96baf062f884d3732e677ea600160cb3f4ee0c6659ab650f0f2a1b9"
+        }
+      ]
+    },
+    {
+      "task": "capability-large-dependency-discovery",
+      "repeat": 2,
+      "arm": "plain",
+      "fullOriginalPrompt": true,
+      "exactPinnedGeneratedContext": true,
+      "fullInputDelivered": true,
+      "singlePack": null,
+      "inputSha256": "fed9aa63aa2b4f8556522ba2cd486845a612befd55efbcf8a1572e84cd4fd502",
+      "contextSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stockInstructionsSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "nativeUsageReconciled": true,
+      "authRemoved": true,
+      "protectedFiles": [
+        {
+          "file": "package.json",
+          "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+        },
+        {
+          "file": "docs/contract.md",
+          "sha256": "09b8effba5af7a38ed4c206bb41ab15f3ad56b987928de25405531a44d71a1d8"
+        },
+        {
+          "file": "smoke.mjs",
+          "sha256": "f5f46661d011524b77f0d8d6d31640de4485e3f28d4c2f97a974b5694f2e99c9"
+        },
+        {
+          "file": "src/api.mjs",
+          "sha256": "0faf5f353524c31d227404d54584a4528314715b0d196f00aa37407a108cf8ad"
+        },
+        {
+          "file": "src/module-0.mjs",
+          "sha256": "cb7c6732258233096d64c1439dcb31dcce352e159f48818f75ebd61804ba0121"
+        },
+        {
+          "file": "src/module-1.mjs",
+          "sha256": "4d04aae9f964be43a4ac4f6b1bf814cef144344c05b25cb6528b793d53c23ce1"
+        },
+        {
+          "file": "src/module-2.mjs",
+          "sha256": "5b8472e5ac78fc493b2e8b54783063e7b9680ff9e3afc5bf95d4c1774e09f951"
+        },
+        {
+          "file": "src/module-3.mjs",
+          "sha256": "db6072047ca10c7270e926200320b9d5ad7828f2da8e647fdb921ebe2bda4f8d"
+        },
+        {
+          "file": "src/module-4.mjs",
+          "sha256": "2ac6cd3bb1bc77ea726bb68dec2df033395165812ffd0970b5bc45fe909ac1df"
+        },
+        {
+          "file": "src/module-5.mjs",
+          "sha256": "8fb902c7b56700796a519985f417cd08610c95b19bd5a22c6b236b4bf5e8c875"
+        },
+        {
+          "file": "src/module-6.mjs",
+          "sha256": "2881c63b715dc3811c4b2cd8298a1bd703edf33f3689d83465dc72338f3cb7ee"
+        },
+        {
+          "file": "src/module-7.mjs",
+          "sha256": "024d90839c482c12d88bf97785bc06343f7a45e62610b378d73388c098ea29ee"
+        },
+        {
+          "file": "src/module-8.mjs",
+          "sha256": "03486a840950ef69b9aaa2a87915b9305bc54a3f6d9736dcf1eed850acb575c5"
+        },
+        {
+          "file": "src/module-9.mjs",
+          "sha256": "be6424d36f09ade73e3d32a49869636b075ff45325f11f71c50d10b4504ad8da"
+        },
+        {
+          "file": "src/module-10.mjs",
+          "sha256": "77297cfc96d50ba3761e405e3409a8c11d8ed9ebd2020b01803bedfc705ddc23"
+        },
+        {
+          "file": "src/module-11.mjs",
+          "sha256": "47a56917d0e9c548645084c27009b8ad4a8456b440669de42be60cc3c60fdf2d"
+        },
+        {
+          "file": "src/module-12.mjs",
+          "sha256": "e4063439cc34b9266f887bce84668462c74de3334c972aa9199b1a238ecd36aa"
+        },
+        {
+          "file": "src/module-13.mjs",
+          "sha256": "bdba4010a6e057aed74cf82bb5d81ff3c8bbb6c77d969c0bd7ef5e88b8915277"
+        },
+        {
+          "file": "src/module-14.mjs",
+          "sha256": "7c8ab9ceb3b87169b21de0486055912063075ae1ebe2db93b4a04b77f1f7d1d7"
+        },
+        {
+          "file": "src/module-15.mjs",
+          "sha256": "f076c3212c8af4c7229e1cacc4abfcf0ace3cb36a6cf27c46cbce34302e001c1"
+        },
+        {
+          "file": "src/module-16.mjs",
+          "sha256": "72404e3e8d53fe6106d7451eaa4f761530c21eaafd89d2b927e0b29afe54399e"
+        },
+        {
+          "file": "src/module-17.mjs",
+          "sha256": "256ec45d7e3db2cbd1db88eec043e541621f338e065749850ff28f29c6eba864"
+        },
+        {
+          "file": "src/module-18.mjs",
+          "sha256": "1530bff38a29acaa94eb3d6d3035fbed3870ecb8dbd8c8e2d5817daead413950"
+        },
+        {
+          "file": "src/module-19.mjs",
+          "sha256": "8c2c7d8be9270c05f7d80db77178590ade7ae04b7902530dc28aea66d5aa6d92"
+        },
+        {
+          "file": "src/module-20.mjs",
+          "sha256": "d233988637b32f754896e1ba96d7cc2ab7956b64753ba2d2bc0a1233de348652"
+        },
+        {
+          "file": "src/module-21.mjs",
+          "sha256": "74cc0eed6d124567985d84588d1f0c06d53ce8231dfacfcc97649b41705e61fb"
+        },
+        {
+          "file": "src/module-22.mjs",
+          "sha256": "45d5998fcee6759585ff287c3e652dc4a1800aa5e5be42e44289d355bad9e627"
+        },
+        {
+          "file": "src/module-23.mjs",
+          "sha256": "0b3a1313ce6d9bddef4535858787a7ec42bf0da1a15191a6a063c900ec8229d4"
+        },
+        {
+          "file": "src/module-24.mjs",
+          "sha256": "fcd884a67b920837a2c217f3a970bad853b5614ddd77210197f9717efe72cc62"
+        },
+        {
+          "file": "src/module-25.mjs",
+          "sha256": "5dad76a321dec33ee220b8d6e0d81895e30d37601d56d9a1675b94a39adce574"
+        },
+        {
+          "file": "src/module-26.mjs",
+          "sha256": "9915d01eae9a27ecb90100594a66a1467b0603bd4298f49793dc4e0154be48e2"
+        },
+        {
+          "file": "src/module-27.mjs",
+          "sha256": "6cb01c64a4998e7b47bcfe3cb72b22751d5dfcf3b4f8f80048effdde0baaeb91"
+        },
+        {
+          "file": "src/module-28.mjs",
+          "sha256": "ec3f2beed6c648ad6da7232d5708786e84e838f22f9e98247c21d00d0f23948a"
+        },
+        {
+          "file": "src/module-29.mjs",
+          "sha256": "c30e9cf86eb70c41a04d7b663beba66fe774306be6c4a50a34eed3829c01d7e6"
+        },
+        {
+          "file": "src/module-30.mjs",
+          "sha256": "cd12aaa68c3de6c04d0407c6cf189c6b361b9fd153e9ed2acc738665da84a241"
+        },
+        {
+          "file": "src/module-31.mjs",
+          "sha256": "5dd5d9bd997de19dc6a8f252d6b8edd2a21f5329519ce69a3f95256d71a2f5bf"
+        },
+        {
+          "file": "src/module-32.mjs",
+          "sha256": "2fddb2e48dfe9bbc47ea176f4f283c2400d372afad99d2619255661d693d4c23"
+        },
+        {
+          "file": "src/module-33.mjs",
+          "sha256": "e397b1c71025a1ffed19226c6f13c5f0a8a71b9eda15b4b27c27e7807eafcf4a"
+        },
+        {
+          "file": "src/module-34.mjs",
+          "sha256": "827114603c9ada2437e4ac80e4c3e58404a095946efc2eccc647422e02708ebf"
+        },
+        {
+          "file": "src/module-35.mjs",
+          "sha256": "68f587d783c9d76f96e263434244a1e4d46e1e438828ac108946e83f74328136"
+        },
+        {
+          "file": "src/module-36.mjs",
+          "sha256": "3804312f326a6258ff2981bf4c3452f62c9ffd90105d8f82664e865cf94c5898"
+        },
+        {
+          "file": "src/module-37.mjs",
+          "sha256": "b8fd61958e65910dc1c330f4c26eacf5587d2dc5b0143eb0fbd8aedcc5a946ef"
+        },
+        {
+          "file": "src/module-38.mjs",
+          "sha256": "b7882b22b8211a340a7853fa2f2dd4255080aa63dd9a5dc10b7562ff0c70d101"
+        },
+        {
+          "file": "protected-grade.mjs",
+          "sha256": "7d5bc0b29d61dc1034a7284dd4270da50c8bbd24314e133de4e8475ca6f485f3"
+        }
+      ],
+      "originalGrade": true,
+      "protocolValid": true,
+      "exitCode": 0,
+      "timedOut": false,
+      "costs": {
+        "raw": 94974,
+        "cached": 65536,
+        "output": 2076,
+        "uncachedPlusOutput": 31514,
+        "peak": 19443
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-capability-caller-1001\\runs\\capability-large-dependency-discovery\\r2-plain\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T11-38-34-01a0f854-f9eb-79e2-87b2-270aef503246.jsonl",
+          "sha256": "fa06b71b806208a0ec312547878067eebffa278f5f78527dfc943e2f14527f91"
+        }
+      ]
+    },
+    {
+      "task": "capability-durable-state-restart",
+      "repeat": 2,
+      "arm": "plain",
+      "fullOriginalPrompt": true,
+      "exactPinnedGeneratedContext": true,
+      "fullInputDelivered": true,
+      "singlePack": null,
+      "inputSha256": "fed9aa63aa2b4f8556522ba2cd486845a612befd55efbcf8a1572e84cd4fd502",
+      "contextSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stockInstructionsSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "nativeUsageReconciled": true,
+      "authRemoved": true,
+      "protectedFiles": [
+        {
+          "file": "package.json",
+          "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+        },
+        {
+          "file": "docs/contract.md",
+          "sha256": "6565ce88f67bdd3bcf44d4a81ab7b17e88e76509f494e8e6a6c28de8234d83bf"
+        },
+        {
+          "file": "smoke.mjs",
+          "sha256": "f5f46661d011524b77f0d8d6d31640de4485e3f28d4c2f97a974b5694f2e99c9"
+        },
+        {
+          "file": "protected-grade.mjs",
+          "sha256": "1fa092b6c9e56aa606e4b0f06cb1a8d0296fe18bd5076fa0e6c0f0245800a4ff"
+        }
+      ],
+      "originalGrade": true,
+      "protocolValid": true,
+      "exitCode": 0,
+      "timedOut": false,
+      "costs": {
+        "raw": 79608,
+        "cached": 57344,
+        "output": 4473,
+        "uncachedPlusOutput": 26737,
+        "peak": 20174
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-capability-caller-1001\\runs\\capability-durable-state-restart\\r2-plain\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T11-41-27-01a0f857-9dbf-7762-a9b3-085a58bc71b5.jsonl",
+          "sha256": "45614754401bd34ba446053d4bd922d13a84bcad8d1155d39617ddc7ca8c07e9"
+        }
+      ]
+    },
+    {
+      "task": "capability-durable-state-restart",
+      "repeat": 2,
+      "arm": "atlias",
+      "fullOriginalPrompt": true,
+      "exactPinnedGeneratedContext": true,
+      "fullInputDelivered": true,
+      "singlePack": true,
+      "inputSha256": "6890bf6d8e9e6a6c5e7453ef4350f75264d9c4dc95b5697cc8d033595dbe2ad7",
+      "contextSha256": "7e977cf066c285fe12f718e60cc7bb8e974a2d21256f46a13ecaf1999c6c4c03",
+      "stockInstructionsSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "nativeUsageReconciled": true,
+      "authRemoved": true,
+      "protectedFiles": [
+        {
+          "file": "package.json",
+          "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+        },
+        {
+          "file": "docs/contract.md",
+          "sha256": "6565ce88f67bdd3bcf44d4a81ab7b17e88e76509f494e8e6a6c28de8234d83bf"
+        },
+        {
+          "file": "smoke.mjs",
+          "sha256": "f5f46661d011524b77f0d8d6d31640de4485e3f28d4c2f97a974b5694f2e99c9"
+        },
+        {
+          "file": "protected-grade.mjs",
+          "sha256": "1fa092b6c9e56aa606e4b0f06cb1a8d0296fe18bd5076fa0e6c0f0245800a4ff"
+        }
+      ],
+      "originalGrade": true,
+      "protocolValid": true,
+      "exitCode": 0,
+      "timedOut": false,
+      "costs": {
+        "raw": 113976,
+        "cached": 96384,
+        "output": 3856,
+        "uncachedPlusOutput": 21448,
+        "peak": 25271
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-capability-caller-1001\\runs\\capability-durable-state-restart\\r2-plugin\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T11-45-16-01a0f85b-1cc7-7932-8a9e-665facab6c08.jsonl",
+          "sha256": "99f7ef45b6c48021f5ad411e1577db19f4a0e3a0832bdec47b6efa219a4e5001"
+        }
+      ]
+    }
+  ],
+  "plain": {
+    "attempts": 12,
+    "valid": 12,
+    "solved": 12,
+    "raw": 948438,
+    "cached": 667136,
+    "output": 32419,
+    "total": 980857,
+    "uncachedPlusOutput": 313721,
+    "peak": 21638
+  },
+  "atlias": {
+    "attempts": 12,
+    "valid": 12,
+    "solved": 12,
+    "raw": 957670,
+    "cached": 783488,
+    "output": 28189,
+    "total": 985859,
+    "uncachedPlusOutput": 202371,
+    "peak": 28158
+  },
+  "limitations": [
+    "Original protected grades are retained without rerunning or regrading.",
+    "Finite authored workflow checks are not universal output equivalence or complete normal-host capability proof.",
+    "Native rollout instructions and full user input are audited; live HTTP tool schemas are not captured by these rollouts. Separate BOTH-client owned local fixtures establish their control schema identity, not universal integration coverage.",
+    "No Claude inference, subscription allowance savings, public benchmark or release gate is established.",
+    "All recorded costs are included regardless of original validity or quality; no repair or exclusions.",
+    "Canonical LF text matches pinned Git source; original raw CRLF hashes remain distinct and retained."
+  ]
+}

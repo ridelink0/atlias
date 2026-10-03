@@ -1,0 +1,20 @@
+{
+  "ledgerSha256": "20a5b4884199ddc107babf665bf93f3020cf5dce080ab9fad176a7ec1cc26db5",
+  "prefixes": [
+    {
+      "file": "D:/harness-work/sourceD7-caller-prefix2-1001.jsonl",
+      "sha256": "ab55ca05ffca01f940ade138eea6cd3832fbaccb16006fa02bbdf263555051f4",
+      "preserved": true
+    },
+    {
+      "file": "D:/harness-work/sourceD7-caller-boundary14-1001.jsonl",
+      "sha256": "fe1bf47c94da6bc598607394ed0c5af469cb3bfd3e1d7a526e9b12f991e50a39",
+      "preserved": true
+    },
+    {
+      "file": "D:/harness-work/sourceD7-caller-prefix20-after-meter-timeout-1001.jsonl",
+      "sha256": "5e3ecbdb653c6dea11771c55be0780b83fc11a16f8e76c6758fcf12aa3d0f751",
+      "preserved": true
+    }
+  ]
+}

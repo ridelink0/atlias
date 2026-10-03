@@ -1,0 +1,24 @@
+{
+  "engine": "native Codex CLI",
+  "plugin": "atlias",
+  "sha": "609d83c8c931e67b96a6953b1b597e2874d24216",
+  "model": "gpt-6.1-sol",
+  "effort": "medium",
+  "lean": true,
+  "repeats": 1,
+  "tasks": [
+    {
+      "id": "context-versions-8",
+      "sha256": "cab2e2c22c02a80e25f10129abc049adb388b3028cd001265c24f79cfcc69316",
+      "family": "versions"
+    },
+    {
+      "id": "context-intervals-8",
+      "sha256": "16653bfe79d8b32890bc90d72aed99df649231c1432da531c0ff4b26a594b362",
+      "family": "intervals"
+    }
+  ],
+  "jobs": 4,
+  "order": "alternate plain/plugin order by task and repeat",
+  "paidCredits": "account setting must remain off"
+}

@@ -1,0 +1,4 @@
+{
+  "error": "Operator reproducer assumed process.exit(1); actual retained command uses another failure form. Inspect exact command, preserve this failed assumption, use NEW output. No model retry or grading change.",
+  "modelsStarted": 0
+}

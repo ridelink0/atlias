@@ -1,0 +1,1897 @@
+{
+  "source": "81d06a0b25733b0708f78c0032a46e091b5a28bd",
+  "originalPhases": 54,
+  "matchedWholeWorkflows": 9,
+  "nativeFailures": 1,
+  "unattemptedHeld": 18,
+  "closedPlan": false,
+  "audits": [
+    {
+      "task": "regional-provenance",
+      "repeat": 1,
+      "arm": "plain",
+      "originalLedgerSha256": "cb569a96631da872d981542f143418b995ac92aadec4ed3070efe44311632f5d",
+      "audit": {
+        "complete": true,
+        "held": false,
+        "originalAttempts": 3,
+        "results": [
+          {
+            "phase": "revision-1",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "f057fa2e-ad91-4b38-b7e6-2aa00037b614",
+              "stdoutSha256": "3c6f8238b33a443c95671ac8616e47d218ebcc8bef2875ab5c8b36dc3f1c8706"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 56223,
+              "cached_input_tokens": 38912,
+              "output_tokens": 971,
+              "reasoning_output_tokens": 0,
+              "total_tokens": 57194
+            },
+            "recordedFullPeak": 15487,
+            "recordedCompactions": 0,
+            "contextOnlyUpdates": 0,
+            "usageObservations": 4,
+            "snapshotSha256": "9c123eff5c2a7e6bd0c3299f08f0a4948083ca479b18d6f60b6fe6d9abc0b49d"
+          },
+          {
+            "phase": "revision-2",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "6d2096e0-35cc-4817-bb5d-b7a980f1247e",
+              "stdoutSha256": "a5265558f498e32b49373ab4b9bb96e3267c5c51013d8651d90047bc615f42bb"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 104632,
+              "cached_input_tokens": 82304,
+              "output_tokens": 1690,
+              "reasoning_output_tokens": 0,
+              "total_tokens": 106322
+            },
+            "recordedFullPeak": 16717,
+            "recordedCompactions": 0,
+            "contextOnlyUpdates": 0,
+            "usageObservations": 7,
+            "snapshotSha256": "8d77fc3dee94ed71473bb2290222eeb709e2a37ae6dbb59b325d0b10726f0e70"
+          },
+          {
+            "phase": "revision-3",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "e47e5d5c-8d17-41c5-a998-14738a658410",
+              "stdoutSha256": "4d1f9f3488190735a0cd023e038a1c028f045ce49b51423c52407c8e57c2c423"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 156967,
+              "cached_input_tokens": 131712,
+              "output_tokens": 2483,
+              "reasoning_output_tokens": 0,
+              "total_tokens": 159450
+            },
+            "recordedFullPeak": 18107,
+            "recordedCompactions": 0,
+            "contextOnlyUpdates": 0,
+            "usageObservations": 10,
+            "snapshotSha256": "1b2796dd40b80d7cb6037f25b5577eeecfbf77723736da27e668bb5999af068e"
+          }
+        ],
+        "reportedWholeNativeTokens": {
+          "input_tokens": 156967,
+          "cached_input_tokens": 131712,
+          "output_tokens": 2483,
+          "reasoning_output_tokens": 0,
+          "total_tokens": 159450
+        },
+        "wholeTokens": {
+          "input_tokens": 156967,
+          "cached_input_tokens": 131712,
+          "output_tokens": 2483,
+          "reasoning_output_tokens": 0,
+          "total_tokens": 159450
+        },
+        "fullNativePeak": 18107,
+        "scripted": false,
+        "limitations": [
+          "Whole session totals are counted once, not added across phase snapshots.",
+          "Recorded input is not full-wire tool-schema accounting or subscription debit proof.",
+          "Original grades retained; no answer execution or regrading."
+        ]
+      }
+    },
+    {
+      "task": "regional-provenance",
+      "repeat": 1,
+      "arm": "atlias",
+      "originalLedgerSha256": "a2975f445e83a34c7673dc769593939d25cd1e10abc41e295e9e7cbd41ec65ae",
+      "audit": {
+        "complete": true,
+        "held": false,
+        "originalAttempts": 3,
+        "results": [
+          {
+            "phase": "revision-1",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "242e35a2-9e60-4a7d-ac5b-7cd22aeb3a87",
+              "stdoutSha256": "1ab28e29375a660c2339c736d1d9f5a67b5ab40429ff3664b0701ebbe0780989"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 46728,
+              "cached_input_tokens": 42368,
+              "output_tokens": 643,
+              "reasoning_output_tokens": 13,
+              "total_tokens": 47371
+            },
+            "recordedFullPeak": 16257,
+            "recordedCompactions": 0,
+            "contextOnlyUpdates": 0,
+            "usageObservations": 3,
+            "snapshotSha256": "b223b177a539a630ac72aff2e767080dcf2f0fb65b067f9beefb9f86550bfe63"
+          },
+          {
+            "phase": "revision-2",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "1418fae3-578c-45c7-9496-413e5364ca18",
+              "stdoutSha256": "15b6867da1b4a2995d9fb8343c9af64d5b88ca1b7acc79977d7d0a0389c154ed"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 137008,
+              "cached_input_tokens": 123392,
+              "output_tokens": 1736,
+              "reasoning_output_tokens": 56,
+              "total_tokens": 138744
+            },
+            "recordedFullPeak": 18986,
+            "recordedCompactions": 0,
+            "contextOnlyUpdates": 0,
+            "usageObservations": 8,
+            "snapshotSha256": "2dd8a4984daabd2627ce270403d36b214db8994ce52288b2f4328297497f8c8e"
+          },
+          {
+            "phase": "revision-3",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "63d33ff1-250c-45a1-98c3-d17b8fa95c29",
+              "stdoutSha256": "e6471d1122a915a2bc8dd3da1c8d5aead2857251463acbbe3c74e4b7c367783e"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 219964,
+              "cached_input_tokens": 200320,
+              "output_tokens": 2536,
+              "reasoning_output_tokens": 82,
+              "total_tokens": 222500
+            },
+            "recordedFullPeak": 21389,
+            "recordedCompactions": 0,
+            "contextOnlyUpdates": 0,
+            "usageObservations": 12,
+            "snapshotSha256": "ce1a934e5ace12dc0987f33e3e70647e64e0e8d18d5769a675b910fe9ada840a"
+          }
+        ],
+        "reportedWholeNativeTokens": {
+          "input_tokens": 219964,
+          "cached_input_tokens": 200320,
+          "output_tokens": 2536,
+          "reasoning_output_tokens": 82,
+          "total_tokens": 222500
+        },
+        "wholeTokens": {
+          "input_tokens": 219964,
+          "cached_input_tokens": 200320,
+          "output_tokens": 2536,
+          "reasoning_output_tokens": 82,
+          "total_tokens": 222500
+        },
+        "fullNativePeak": 21389,
+        "scripted": false,
+        "limitations": [
+          "Whole session totals are counted once, not added across phase snapshots.",
+          "Recorded input is not full-wire tool-schema accounting or subscription debit proof.",
+          "Original grades retained; no answer execution or regrading."
+        ]
+      }
+    },
+    {
+      "task": "regional-provenance",
+      "repeat": 2,
+      "arm": "plain",
+      "originalLedgerSha256": "e6c664ef4ed00ebbfe12b64cb0d13f7bd1765e3f1b4f8bcb67089681a94f50bc",
+      "audit": {
+        "complete": true,
+        "held": false,
+        "originalAttempts": 3,
+        "results": [
+          {
+            "phase": "revision-1",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "d23e172c-dc25-4c00-ac10-a85ce8ecb2b1",
+              "stdoutSha256": "092f98c8564b41d0b3888a518c47256ea120437ca3eead4896b4b0f6a0a2f28f"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 42349,
+              "cached_input_tokens": 25472,
+              "output_tokens": 933,
+              "reasoning_output_tokens": 0,
+              "total_tokens": 43282
+            },
+            "recordedFullPeak": 15350,
+            "recordedCompactions": 0,
+            "contextOnlyUpdates": 0,
+            "usageObservations": 3,
+            "snapshotSha256": "7e191e2320e36e26216b956f764adacecc85cc5df49f14c96b0c37d5953856f8"
+          },
+          {
+            "phase": "revision-2",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "d55b1c31-13e8-4edc-bd63-eb8386b7cf51",
+              "stdoutSha256": "cbe16e28b45a4cf104d190da897ae87dcb4a1b30ffaa6c9067288a9bc2d28ad1"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 90345,
+              "cached_input_tokens": 68352,
+              "output_tokens": 1653,
+              "reasoning_output_tokens": 0,
+              "total_tokens": 91998
+            },
+            "recordedFullPeak": 16591,
+            "recordedCompactions": 0,
+            "contextOnlyUpdates": 0,
+            "usageObservations": 6,
+            "snapshotSha256": "428439338ce34292277b654e4ea3a3cd030310763493ff55517a0ad3ee0c7519"
+          },
+          {
+            "phase": "revision-3",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "cb4f1eda-5d84-436f-85d9-4b3617a4f1e6",
+              "stdoutSha256": "57a142b2012bf3636cd998ea1b7d2cd29c174ad72ef0f09beb6edfd8f1e9f29f"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 142329,
+              "cached_input_tokens": 117376,
+              "output_tokens": 2445,
+              "reasoning_output_tokens": 0,
+              "total_tokens": 144774
+            },
+            "recordedFullPeak": 17994,
+            "recordedCompactions": 0,
+            "contextOnlyUpdates": 0,
+            "usageObservations": 9,
+            "snapshotSha256": "c2a7fef65ea5eb89ae6a81895a91f5defdafa32a10b8c9b8ba9fae27b3154d24"
+          }
+        ],
+        "reportedWholeNativeTokens": {
+          "input_tokens": 142329,
+          "cached_input_tokens": 117376,
+          "output_tokens": 2445,
+          "reasoning_output_tokens": 0,
+          "total_tokens": 144774
+        },
+        "wholeTokens": {
+          "input_tokens": 142329,
+          "cached_input_tokens": 117376,
+          "output_tokens": 2445,
+          "reasoning_output_tokens": 0,
+          "total_tokens": 144774
+        },
+        "fullNativePeak": 17994,
+        "scripted": false,
+        "limitations": [
+          "Whole session totals are counted once, not added across phase snapshots.",
+          "Recorded input is not full-wire tool-schema accounting or subscription debit proof.",
+          "Original grades retained; no answer execution or regrading."
+        ]
+      }
+    },
+    {
+      "task": "regional-provenance",
+      "repeat": 2,
+      "arm": "atlias",
+      "originalLedgerSha256": "2fadd104d47cf030588c1c3232a0155d12033acaf802163560301daf5e9ffab0",
+      "audit": {
+        "complete": true,
+        "held": false,
+        "originalAttempts": 3,
+        "results": [
+          {
+            "phase": "revision-1",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "fc837903-bfbf-489a-83e6-b29053090cd4",
+              "stdoutSha256": "fdf9ed88cd01d4b8aa2a181d896d1f41cd7f92240c8eeee6b446567a35bfefc5"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 65053,
+              "cached_input_tokens": 57344,
+              "output_tokens": 772,
+              "reasoning_output_tokens": 47,
+              "total_tokens": 65825
+            },
+            "recordedFullPeak": 17059,
+            "recordedCompactions": 0,
+            "contextOnlyUpdates": 0,
+            "usageObservations": 4,
+            "snapshotSha256": "d44e3c446413d396f5e3dd5682a9d9bab48f4560a83bd8e032b3f5fdbac6752a"
+          },
+          {
+            "phase": "revision-2",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "c2d18215-8b5d-4e49-90f3-71da57e0eec5",
+              "stdoutSha256": "1dab35cefa6ed0c29feffecf9552f416e08986a2a2946802f63a950026e64a0a"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 120215,
+              "cached_input_tokens": 106752,
+              "output_tokens": 1363,
+              "reasoning_output_tokens": 47,
+              "total_tokens": 121578
+            },
+            "recordedFullPeak": 18938,
+            "recordedCompactions": 0,
+            "contextOnlyUpdates": 0,
+            "usageObservations": 7,
+            "snapshotSha256": "290f88a8e7f99cf491cdc1439ff820465e135ceabb5d8900ae85f4ee4aabd7ef"
+          },
+          {
+            "phase": "revision-3",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "a1789f20-af47-4f22-9c72-37071597b045",
+              "stdoutSha256": "300ace54906d6ea766b2d1bac6fac2fb387270c7ac2acbe6a32b40261e39e0e7"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 190582,
+              "cached_input_tokens": 158976,
+              "output_tokens": 1969,
+              "reasoning_output_tokens": 47,
+              "total_tokens": 192551
+            },
+            "recordedFullPeak": 25586,
+            "recordedCompactions": 1,
+            "contextOnlyUpdates": 1,
+            "usageObservations": 10,
+            "snapshotSha256": "876e9a6475920d37c8fa799f80701e2488eabf198e5acb537dc86a2444bde2da"
+          }
+        ],
+        "reportedWholeNativeTokens": {
+          "input_tokens": 190582,
+          "cached_input_tokens": 158976,
+          "output_tokens": 1969,
+          "reasoning_output_tokens": 47,
+          "total_tokens": 192551
+        },
+        "wholeTokens": {
+          "input_tokens": 190582,
+          "cached_input_tokens": 158976,
+          "output_tokens": 1969,
+          "reasoning_output_tokens": 47,
+          "total_tokens": 192551
+        },
+        "fullNativePeak": 25586,
+        "scripted": false,
+        "limitations": [
+          "Whole session totals are counted once, not added across phase snapshots.",
+          "Recorded input is not full-wire tool-schema accounting or subscription debit proof.",
+          "Original grades retained; no answer execution or regrading."
+        ]
+      }
+    },
+    {
+      "task": "release-negation",
+      "repeat": 1,
+      "arm": "plain",
+      "originalLedgerSha256": "fa1bbbdcbb2d336df1f83ba2137c9cda249a43891a34c99a1d819dcc74e47ab9",
+      "audit": {
+        "complete": true,
+        "held": false,
+        "originalAttempts": 3,
+        "results": [
+          {
+            "phase": "revision-1",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "94ffca88-8ca5-4d36-8cd3-d40a23cbbddb",
+              "stdoutSha256": "3fefbeca56d3533f79af318d35875cbe12c5449ae9d56a36b3cd91749c3b04c6"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 55923,
+              "cached_input_tokens": 38912,
+              "output_tokens": 690,
+              "reasoning_output_tokens": 0,
+              "total_tokens": 56613
+            },
+            "recordedFullPeak": 15202,
+            "recordedCompactions": 0,
+            "contextOnlyUpdates": 0,
+            "usageObservations": 4,
+            "snapshotSha256": "2d56e803bda13cb3cfa7cde2c39ffef1bafc1433a437521724515083f8f7430f"
+          },
+          {
+            "phase": "revision-2",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "b7ed1853-b57c-4d34-9a80-5f58821caaea",
+              "stdoutSha256": "a4cc40a49cc90b2e0c885f3ac3c8e22077aab5f44400ba2ea79d7242a5540993"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 103474,
+              "cached_input_tokens": 84608,
+              "output_tokens": 1428,
+              "reasoning_output_tokens": 0,
+              "total_tokens": 104902
+            },
+            "recordedFullPeak": 16448,
+            "recordedCompactions": 0,
+            "contextOnlyUpdates": 0,
+            "usageObservations": 7,
+            "snapshotSha256": "7cf33c3e5995cbe53c3152e91c308ffcae177c0632efac8805f5594c42016dc5"
+          },
+          {
+            "phase": "revision-3",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "c09b6ec4-bf9f-469b-9fb4-0c37c4576ac8",
+              "stdoutSha256": "c721a4fbdb1feafa02599d1f5177e3ed5ee4ae09de9f2decaf9d7432cfbf4993"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 154997,
+              "cached_input_tokens": 126080,
+              "output_tokens": 2236,
+              "reasoning_output_tokens": 0,
+              "total_tokens": 157233
+            },
+            "recordedFullPeak": 17840,
+            "recordedCompactions": 0,
+            "contextOnlyUpdates": 0,
+            "usageObservations": 10,
+            "snapshotSha256": "6c4def53ee8cfdfa8673043d61d777e65c04375b3d078be5752ae048a0dd7121"
+          }
+        ],
+        "reportedWholeNativeTokens": {
+          "input_tokens": 154997,
+          "cached_input_tokens": 126080,
+          "output_tokens": 2236,
+          "reasoning_output_tokens": 0,
+          "total_tokens": 157233
+        },
+        "wholeTokens": {
+          "input_tokens": 154997,
+          "cached_input_tokens": 126080,
+          "output_tokens": 2236,
+          "reasoning_output_tokens": 0,
+          "total_tokens": 157233
+        },
+        "fullNativePeak": 17840,
+        "scripted": false,
+        "limitations": [
+          "Whole session totals are counted once, not added across phase snapshots.",
+          "Recorded input is not full-wire tool-schema accounting or subscription debit proof.",
+          "Original grades retained; no answer execution or regrading."
+        ]
+      }
+    },
+    {
+      "task": "release-negation",
+      "repeat": 1,
+      "arm": "atlias",
+      "originalLedgerSha256": "31a20081dcd58cf0b85b2060e9addc3991b7f50fe6a01fdffee0bcba3dc30cdd",
+      "audit": {
+        "complete": true,
+        "held": false,
+        "originalAttempts": 3,
+        "results": [
+          {
+            "phase": "revision-1",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "65bf8192-2bc0-4e11-9df8-15d2102e3a65",
+              "stdoutSha256": "793f4081b92fe40a3750faad32773539c487f0922d8d9aff3fc25096550c409b"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 46538,
+              "cached_input_tokens": 42368,
+              "output_tokens": 663,
+              "reasoning_output_tokens": 22,
+              "total_tokens": 47201
+            },
+            "recordedFullPeak": 16131,
+            "recordedCompactions": 0,
+            "contextOnlyUpdates": 0,
+            "usageObservations": 3,
+            "snapshotSha256": "4ef65359b70b3a5c3b20873fcd07f7fcff314aaaaaad2fc659cc8620c5c4321a"
+          },
+          {
+            "phase": "revision-2",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "b54a0ce1-299a-4137-a863-6cd0074cae97",
+              "stdoutSha256": "d4465ef2a424de5649d9f4e85f14f9f7b119942a69f6fa3324e868c678d8e446"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 136322,
+              "cached_input_tokens": 123648,
+              "output_tokens": 1679,
+              "reasoning_output_tokens": 38,
+              "total_tokens": 138001
+            },
+            "recordedFullPeak": 18832,
+            "recordedCompactions": 0,
+            "contextOnlyUpdates": 0,
+            "usageObservations": 8,
+            "snapshotSha256": "946edf988f574e97c75b7c0814d949558c8e0df32e35010db468d44ee3f82207"
+          },
+          {
+            "phase": "revision-3",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "47983713-2ef1-4400-b166-4eab15562b69",
+              "stdoutSha256": "9c54b5d0142123867c443143496d3072ce2d930b110548adf4c02f56fb02ec38"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 240139,
+              "cached_input_tokens": 221056,
+              "output_tokens": 2727,
+              "reasoning_output_tokens": 38,
+              "total_tokens": 242866
+            },
+            "recordedFullPeak": 21650,
+            "recordedCompactions": 0,
+            "contextOnlyUpdates": 0,
+            "usageObservations": 13,
+            "snapshotSha256": "d0ab59ac0584c66c98755cb008bc52d2d3f0df70b01d0397be4f7e232a865993"
+          }
+        ],
+        "reportedWholeNativeTokens": {
+          "input_tokens": 240139,
+          "cached_input_tokens": 221056,
+          "output_tokens": 2727,
+          "reasoning_output_tokens": 38,
+          "total_tokens": 242866
+        },
+        "wholeTokens": {
+          "input_tokens": 240139,
+          "cached_input_tokens": 221056,
+          "output_tokens": 2727,
+          "reasoning_output_tokens": 38,
+          "total_tokens": 242866
+        },
+        "fullNativePeak": 21650,
+        "scripted": false,
+        "limitations": [
+          "Whole session totals are counted once, not added across phase snapshots.",
+          "Recorded input is not full-wire tool-schema accounting or subscription debit proof.",
+          "Original grades retained; no answer execution or regrading."
+        ]
+      }
+    },
+    {
+      "task": "release-negation",
+      "repeat": 2,
+      "arm": "plain",
+      "originalLedgerSha256": "59483801171b2cac5a25295318d0f2895b7b9b7a183b7583c92680ccde4564e5",
+      "audit": {
+        "complete": true,
+        "held": false,
+        "originalAttempts": 3,
+        "results": [
+          {
+            "phase": "revision-1",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "19230f51-4b98-4bfb-bfb2-f5a83437b836",
+              "stdoutSha256": "269cc099a8579e4b12f4cba0659d7b022c76765c16fb86685380415bca3196c7"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 56226,
+              "cached_input_tokens": 38912,
+              "output_tokens": 937,
+              "reasoning_output_tokens": 0,
+              "total_tokens": 57163
+            },
+            "recordedFullPeak": 15430,
+            "recordedCompactions": 0,
+            "contextOnlyUpdates": 0,
+            "usageObservations": 4,
+            "snapshotSha256": "2508abe0b61b438e4a7437194e4d85d720f9c8db88f54156fee277072c4565ca"
+          },
+          {
+            "phase": "revision-2",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "5bb4fbf6-bd4b-4651-a2ff-d17c320bcc7d",
+              "stdoutSha256": "2690783b7253858af6627e401d1a6ca49320ef356f9e644110c89cc117867221"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 104304,
+              "cached_input_tokens": 82432,
+              "output_tokens": 1614,
+              "reasoning_output_tokens": 0,
+              "total_tokens": 105918
+            },
+            "recordedFullPeak": 16514,
+            "recordedCompactions": 0,
+            "contextOnlyUpdates": 0,
+            "usageObservations": 7,
+            "snapshotSha256": "a8a149918abc1bae99402e145f232648cc1f656bd41d3fb0878e716dc324ca51"
+          },
+          {
+            "phase": "revision-3",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "09a08aa2-aff9-4e40-af6f-3e34c5bd6e1d",
+              "stdoutSha256": "8643481294211863e311e23567c41336310b26c5200aa24b014612f164b29aca"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 155815,
+              "cached_input_tokens": 130944,
+              "output_tokens": 2328,
+              "reasoning_output_tokens": 0,
+              "total_tokens": 158143
+            },
+            "recordedFullPeak": 17708,
+            "recordedCompactions": 0,
+            "contextOnlyUpdates": 0,
+            "usageObservations": 10,
+            "snapshotSha256": "4d060f86987a71c4369ae8144df1e467fa14d6099a19f342a2cac1b181ea4f30"
+          }
+        ],
+        "reportedWholeNativeTokens": {
+          "input_tokens": 155815,
+          "cached_input_tokens": 130944,
+          "output_tokens": 2328,
+          "reasoning_output_tokens": 0,
+          "total_tokens": 158143
+        },
+        "wholeTokens": {
+          "input_tokens": 155815,
+          "cached_input_tokens": 130944,
+          "output_tokens": 2328,
+          "reasoning_output_tokens": 0,
+          "total_tokens": 158143
+        },
+        "fullNativePeak": 17708,
+        "scripted": false,
+        "limitations": [
+          "Whole session totals are counted once, not added across phase snapshots.",
+          "Recorded input is not full-wire tool-schema accounting or subscription debit proof.",
+          "Original grades retained; no answer execution or regrading."
+        ]
+      }
+    },
+    {
+      "task": "release-negation",
+      "repeat": 2,
+      "arm": "atlias",
+      "originalLedgerSha256": "ac6b90d7dc32071274dd0a33e65d0705eef40cb2927299627d7033691f751f7e",
+      "audit": {
+        "complete": true,
+        "held": false,
+        "originalAttempts": 3,
+        "results": [
+          {
+            "phase": "revision-1",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "58aad252-67b4-4b4f-a82d-d1c487df16df",
+              "stdoutSha256": "410d185a5c3d77a7bae58d192bd9b80801f355fccc75bb811b9e3e40eceb0ff9"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 46161,
+              "cached_input_tokens": 39296,
+              "output_tokens": 486,
+              "reasoning_output_tokens": 0,
+              "total_tokens": 46647
+            },
+            "recordedFullPeak": 15858,
+            "recordedCompactions": 0,
+            "contextOnlyUpdates": 0,
+            "usageObservations": 3,
+            "snapshotSha256": "2b432d318666c9991f820676850a9b7ee6600eb26e529aa0ffadacfb05e13f36"
+          },
+          {
+            "phase": "revision-2",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "aba0fcd7-f30f-4388-b266-8e617b5a37e4",
+              "stdoutSha256": "1320e2c5b647a855746db1bbd55e36b26c0a0c6b24823eb05b2fcf79866eca96"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 134173,
+              "cached_input_tokens": 116096,
+              "output_tokens": 1365,
+              "reasoning_output_tokens": 0,
+              "total_tokens": 135538
+            },
+            "recordedFullPeak": 18397,
+            "recordedCompactions": 0,
+            "contextOnlyUpdates": 0,
+            "usageObservations": 8,
+            "snapshotSha256": "84cdf88c59f4ea62add847604110f9541971fe65db68e92134a49ac54015d8b7"
+          },
+          {
+            "phase": "revision-3",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "8d9acfe0-cf83-45ff-b5ae-186c41f3b767",
+              "stdoutSha256": "d07fb11994604a51e9c988a1e88740dc51a17e21a62e8f57dff9369ca8865719"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 235558,
+              "cached_input_tokens": 211328,
+              "output_tokens": 2261,
+              "reasoning_output_tokens": 0,
+              "total_tokens": 237819
+            },
+            "recordedFullPeak": 21098,
+            "recordedCompactions": 0,
+            "contextOnlyUpdates": 0,
+            "usageObservations": 13,
+            "snapshotSha256": "ccad45550ecdce926e1a9ca5fe2f229665c57e9adc38e9e407a5b9b81ee4e228"
+          }
+        ],
+        "reportedWholeNativeTokens": {
+          "input_tokens": 235558,
+          "cached_input_tokens": 211328,
+          "output_tokens": 2261,
+          "reasoning_output_tokens": 0,
+          "total_tokens": 237819
+        },
+        "wholeTokens": {
+          "input_tokens": 235558,
+          "cached_input_tokens": 211328,
+          "output_tokens": 2261,
+          "reasoning_output_tokens": 0,
+          "total_tokens": 237819
+        },
+        "fullNativePeak": 21098,
+        "scripted": false,
+        "limitations": [
+          "Whole session totals are counted once, not added across phase snapshots.",
+          "Recorded input is not full-wire tool-schema accounting or subscription debit proof.",
+          "Original grades retained; no answer execution or regrading."
+        ]
+      }
+    },
+    {
+      "task": "revision-merge",
+      "repeat": 1,
+      "arm": "plain",
+      "originalLedgerSha256": "e0c5587c95b6cb54d317b9e7831b4b72c0d4c2e38bf40cd5f442536b4e589e2e",
+      "audit": {
+        "complete": true,
+        "held": false,
+        "originalAttempts": 3,
+        "results": [
+          {
+            "phase": "phase-1",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "e55eed95-3ad1-4ebc-83c2-270c3e20f037",
+              "stdoutSha256": "4272cdd2afaa295cbbe475c93fdfdd5d05029c4667e583c3863aed105c55bc73"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 91821,
+              "cached_input_tokens": 72064,
+              "output_tokens": 2314,
+              "reasoning_output_tokens": 79,
+              "total_tokens": 94135
+            },
+            "recordedFullPeak": 17455,
+            "recordedCompactions": 0,
+            "contextOnlyUpdates": 0,
+            "usageObservations": 6,
+            "snapshotSha256": "0e8725019d6ad01f681a116388d33651e6e6cdc422ce98077329387b7798d28c"
+          },
+          {
+            "phase": "phase-2",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "a96f1129-09a3-4671-bbc2-9f1278e97521",
+              "stdoutSha256": "68f8588803189de271304620645972a004fe7d029a2c18d8ca064ba73a9ef5f5"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 171195,
+              "cached_input_tokens": 139520,
+              "output_tokens": 3530,
+              "reasoning_output_tokens": 118,
+              "total_tokens": 174725
+            },
+            "recordedFullPeak": 21540,
+            "recordedCompactions": 0,
+            "contextOnlyUpdates": 0,
+            "usageObservations": 10,
+            "snapshotSha256": "765c402e5f0c7f0c8036736fcf33fa8a69825456ecf72ff6ad5cf8b9e137d661"
+          },
+          {
+            "phase": "phase-3",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "54069403-182f-459e-9715-f4e8f6d3bb6e",
+              "stdoutSha256": "d2176b166ea075d7e27ba9c2e17db3089abcf0630c7c66bd0824fee6832a1c0c"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 262190,
+              "cached_input_tokens": 219776,
+              "output_tokens": 4650,
+              "reasoning_output_tokens": 118,
+              "total_tokens": 266840
+            },
+            "recordedFullPeak": 24444,
+            "recordedCompactions": 0,
+            "contextOnlyUpdates": 0,
+            "usageObservations": 14,
+            "snapshotSha256": "a09fccab653847514c0e6a2477a5faca77b5bef4ac58ae2d6b46666adbaaad75"
+          }
+        ],
+        "reportedWholeNativeTokens": {
+          "input_tokens": 262190,
+          "cached_input_tokens": 219776,
+          "output_tokens": 4650,
+          "reasoning_output_tokens": 118,
+          "total_tokens": 266840
+        },
+        "wholeTokens": {
+          "input_tokens": 262190,
+          "cached_input_tokens": 219776,
+          "output_tokens": 4650,
+          "reasoning_output_tokens": 118,
+          "total_tokens": 266840
+        },
+        "fullNativePeak": 24444,
+        "scripted": false,
+        "limitations": [
+          "Whole session totals are counted once, not added across phase snapshots.",
+          "Recorded input is not full-wire tool-schema accounting or subscription debit proof.",
+          "Original grades retained; no answer execution or regrading."
+        ]
+      }
+    },
+    {
+      "task": "revision-merge",
+      "repeat": 1,
+      "arm": "atlias",
+      "originalLedgerSha256": "ef977a3214aab51e2347d7f408038007c294e9e5fc164ae8e16fd5be49b61860",
+      "audit": {
+        "complete": true,
+        "held": false,
+        "originalAttempts": 3,
+        "results": [
+          {
+            "phase": "phase-1",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "735b60e2-b4ef-44a0-84d9-697198946af4",
+              "stdoutSha256": "7d31bf033572a96336b168e65208db99b7efee86c4a2ac112220f6fea52e8aa1"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 83314,
+              "cached_input_tokens": 70016,
+              "output_tokens": 2028,
+              "reasoning_output_tokens": 74,
+              "total_tokens": 85342
+            },
+            "recordedFullPeak": 19522,
+            "recordedCompactions": 0,
+            "contextOnlyUpdates": 0,
+            "usageObservations": 5,
+            "snapshotSha256": "ee4ff0b02b996765f7029dae49cffc82d57f459059a2a4fd6eaacf68be1fd4fe"
+          },
+          {
+            "phase": "phase-2",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "81afa821-0530-42d5-8b48-e98f115a6480",
+              "stdoutSha256": "725e8ec536c71dd8f2e6395f900680020855111d7d4784111a970f359c588bbe"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 162066,
+              "cached_input_tokens": 134144,
+              "output_tokens": 3226,
+              "reasoning_output_tokens": 100,
+              "total_tokens": 165292
+            },
+            "recordedFullPeak": 22237,
+            "recordedCompactions": 1,
+            "contextOnlyUpdates": 1,
+            "usageObservations": 9,
+            "snapshotSha256": "33a7a8276e5582b696902b68cd03277dc5d326a4c08661f9345e7cb1f6818d93"
+          },
+          {
+            "phase": "phase-3",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "c3157098-4085-432d-8be7-c94936c1d2a6",
+              "stdoutSha256": "8933ee4dd9bf578b36db66c83b247b6a40c7f09b7bb9fe6b30f1def255bca203"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 241368,
+              "cached_input_tokens": 201856,
+              "output_tokens": 4489,
+              "reasoning_output_tokens": 100,
+              "total_tokens": 245857
+            },
+            "recordedFullPeak": 23028,
+            "recordedCompactions": 2,
+            "contextOnlyUpdates": 2,
+            "usageObservations": 13,
+            "snapshotSha256": "efdfa5a273e6139225aad0412fcc1f94cf5c2d3f713bdb6b4141a9ed165f4ea3"
+          }
+        ],
+        "reportedWholeNativeTokens": {
+          "input_tokens": 241368,
+          "cached_input_tokens": 201856,
+          "output_tokens": 4489,
+          "reasoning_output_tokens": 100,
+          "total_tokens": 245857
+        },
+        "wholeTokens": {
+          "input_tokens": 241368,
+          "cached_input_tokens": 201856,
+          "output_tokens": 4489,
+          "reasoning_output_tokens": 100,
+          "total_tokens": 245857
+        },
+        "fullNativePeak": 23028,
+        "scripted": false,
+        "limitations": [
+          "Whole session totals are counted once, not added across phase snapshots.",
+          "Recorded input is not full-wire tool-schema accounting or subscription debit proof.",
+          "Original grades retained; no answer execution or regrading."
+        ]
+      }
+    },
+    {
+      "task": "revision-merge",
+      "repeat": 2,
+      "arm": "plain",
+      "originalLedgerSha256": "5c73168e629ed53c90df4dcd4af56fac9e1479725504bfc1ddbbb38c6e854c4e",
+      "audit": {
+        "complete": false,
+        "held": true,
+        "originalAttempts": 3,
+        "results": [
+          {
+            "phase": "phase-1",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "7441b256-3ca7-4dcb-9f48-fcd36d3163c5",
+              "stdoutSha256": "e38a65580e0977faef70b421399ef7a327dc15c0b05099beb428b22e2ae7cbc2"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 74728,
+              "cached_input_tokens": 55296,
+              "output_tokens": 2191,
+              "reasoning_output_tokens": 73,
+              "total_tokens": 76919
+            },
+            "recordedFullPeak": 17115,
+            "recordedCompactions": 0,
+            "contextOnlyUpdates": 0,
+            "usageObservations": 5,
+            "snapshotSha256": "94594b6f12b68cc3c98edbc73987d2827b46fdc002e57f0353b2186633a2f5a1"
+          },
+          {
+            "phase": "phase-2",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "addb690f-4b3f-49c9-a7f2-5698d8322b41",
+              "stdoutSha256": "300fc888c33e7b640a0ec6ae103b10ad9937c8079fc81c744232135da0534b8f"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 131945,
+              "cached_input_tokens": 108288,
+              "output_tokens": 3368,
+              "reasoning_output_tokens": 103,
+              "total_tokens": 135313
+            },
+            "recordedFullPeak": 20825,
+            "recordedCompactions": 0,
+            "contextOnlyUpdates": 0,
+            "usageObservations": 8,
+            "snapshotSha256": "067f2502788c1834798d8aec8ffd8ef2ada288385e8984afddecb427e9e4895b"
+          },
+          {
+            "phase": "phase-3",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "387e6934-c65e-4bd2-a792-3c74fb193dcd",
+              "stdoutSha256": "a558b89188dda2cdbf19ee386f6ab449604c707287eb824dc7dfc14180840094"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 174488,
+              "cached_input_tokens": 141440,
+              "output_tokens": 4544,
+              "reasoning_output_tokens": 103,
+              "total_tokens": 179032
+            },
+            "recordedFullPeak": 21536,
+            "recordedCompactions": 0,
+            "contextOnlyUpdates": 0,
+            "usageObservations": 11,
+            "snapshotSha256": "0030ca35f75ad16616696f7328271dee73c38d138bea9bb777c61717514e9868"
+          }
+        ],
+        "reportedWholeNativeTokens": {
+          "input_tokens": 174488,
+          "cached_input_tokens": 141440,
+          "output_tokens": 4544,
+          "reasoning_output_tokens": 103,
+          "total_tokens": 179032
+        },
+        "wholeTokens": null,
+        "fullNativePeak": 21536,
+        "scripted": false,
+        "limitations": [
+          "Whole session totals are counted once, not added across phase snapshots.",
+          "Recorded input is not full-wire tool-schema accounting or subscription debit proof.",
+          "Original grades retained; no answer execution or regrading."
+        ]
+      }
+    },
+    {
+      "task": "revision-merge",
+      "repeat": 2,
+      "arm": "atlias",
+      "originalLedgerSha256": "cde98dd6aff8239c3ec220ee8fe6db7388a383d5ca5ff3baef2baed2678d4109",
+      "audit": {
+        "complete": true,
+        "held": false,
+        "originalAttempts": 3,
+        "results": [
+          {
+            "phase": "phase-1",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "2869cca8-ab64-4dff-9908-bb68301555af",
+              "stdoutSha256": "821ac023d704d39c519e16387cd7db034bd540b2c6a8e867c9bdc77b4ad50c48"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 83365,
+              "cached_input_tokens": 69248,
+              "output_tokens": 2051,
+              "reasoning_output_tokens": 68,
+              "total_tokens": 85416
+            },
+            "recordedFullPeak": 19419,
+            "recordedCompactions": 0,
+            "contextOnlyUpdates": 0,
+            "usageObservations": 5,
+            "snapshotSha256": "332eea5ad0b0e317837225df84994009c292deee1cfeb35ce689c703801793cf"
+          },
+          {
+            "phase": "phase-2",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "76e4d5b7-2561-4585-a413-f3086b223af9",
+              "stdoutSha256": "defc0a4b3076543996c4e0498ea653ff4271d327dcdc972ac58b66bf049a1f60"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 166395,
+              "cached_input_tokens": 137984,
+              "output_tokens": 3262,
+              "reasoning_output_tokens": 121,
+              "total_tokens": 169657
+            },
+            "recordedFullPeak": 23577,
+            "recordedCompactions": 1,
+            "contextOnlyUpdates": 1,
+            "usageObservations": 9,
+            "snapshotSha256": "da8c3865f76ef6150bd22120b0e4ca5b5ff9d240dd37209d543895083d8345ae"
+          },
+          {
+            "phase": "phase-3",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "45926fdd-42c4-442e-9762-5f648ecd4f4b",
+              "stdoutSha256": "21ba188edbe42d1aee89e2ef1775867ac379deeb53e54e386c2b99d2a4048830"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 244903,
+              "cached_input_tokens": 200192,
+              "output_tokens": 4344,
+              "reasoning_output_tokens": 121,
+              "total_tokens": 249247
+            },
+            "recordedFullPeak": 23577,
+            "recordedCompactions": 2,
+            "contextOnlyUpdates": 2,
+            "usageObservations": 13,
+            "snapshotSha256": "2c0194cee612f5d4a2604ed2a181da2f5e0ffa6bc065c6c0c5bf15632a1fcf16"
+          }
+        ],
+        "reportedWholeNativeTokens": {
+          "input_tokens": 244903,
+          "cached_input_tokens": 200192,
+          "output_tokens": 4344,
+          "reasoning_output_tokens": 121,
+          "total_tokens": 249247
+        },
+        "wholeTokens": {
+          "input_tokens": 244903,
+          "cached_input_tokens": 200192,
+          "output_tokens": 4344,
+          "reasoning_output_tokens": 121,
+          "total_tokens": 249247
+        },
+        "fullNativePeak": 23577,
+        "scripted": false,
+        "limitations": [
+          "Whole session totals are counted once, not added across phase snapshots.",
+          "Recorded input is not full-wire tool-schema accounting or subscription debit proof.",
+          "Original grades retained; no answer execution or regrading."
+        ]
+      }
+    },
+    {
+      "task": "async-observations",
+      "repeat": 1,
+      "arm": "plain",
+      "originalLedgerSha256": "023e3680abb779e5dff74e74adaa9cf71b75d39f2300ebbdd3761d3c9a134229",
+      "audit": {
+        "complete": true,
+        "held": false,
+        "originalAttempts": 3,
+        "results": [
+          {
+            "phase": "phase-1",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "4618572f-66a4-49c9-8d1c-3b074f28aa1c",
+              "stdoutSha256": "bd9b6b6fed3c86ec96e041dd89046b415cd22d4e3ca8c3b2b1709e505063fcfb"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 74378,
+              "cached_input_tokens": 55936,
+              "output_tokens": 1710,
+              "reasoning_output_tokens": 74,
+              "total_tokens": 76088
+            },
+            "recordedFullPeak": 16605,
+            "recordedCompactions": 0,
+            "contextOnlyUpdates": 0,
+            "usageObservations": 5,
+            "snapshotSha256": "c458e9f2bde264551b5bc734fab7e24e15c52e190cb762218ed6a3cc85ac6acb"
+          },
+          {
+            "phase": "phase-2",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "24056a19-981c-48d8-9b62-4fd5aa8bd99f",
+              "stdoutSha256": "311a60574b0c904d5f39cef1f95ced539135759b36756453d17c849ef5d719d7"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 148987,
+              "cached_input_tokens": 120448,
+              "output_tokens": 3295,
+              "reasoning_output_tokens": 122,
+              "total_tokens": 152282
+            },
+            "recordedFullPeak": 20370,
+            "recordedCompactions": 0,
+            "contextOnlyUpdates": 0,
+            "usageObservations": 9,
+            "snapshotSha256": "4f35d9e238a65e824aa2ef1360e65063103b9946d957de2e5b2f28b8f87da9f5"
+          },
+          {
+            "phase": "phase-3",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "ab689d95-79d3-4705-a732-c61436aded49",
+              "stdoutSha256": "3a30340af27825ea48ae4a6963466a8061a2abc7206896a2f6594edb272e4a95"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 241942,
+              "cached_input_tokens": 201600,
+              "output_tokens": 4826,
+              "reasoning_output_tokens": 193,
+              "total_tokens": 246768
+            },
+            "recordedFullPeak": 25360,
+            "recordedCompactions": 0,
+            "contextOnlyUpdates": 0,
+            "usageObservations": 13,
+            "snapshotSha256": "ea98334eb6767bfc785a3a60d1291b8def6742ad2d08bfd7cd1948ed0b1aa6b5"
+          }
+        ],
+        "reportedWholeNativeTokens": {
+          "input_tokens": 241942,
+          "cached_input_tokens": 201600,
+          "output_tokens": 4826,
+          "reasoning_output_tokens": 193,
+          "total_tokens": 246768
+        },
+        "wholeTokens": {
+          "input_tokens": 241942,
+          "cached_input_tokens": 201600,
+          "output_tokens": 4826,
+          "reasoning_output_tokens": 193,
+          "total_tokens": 246768
+        },
+        "fullNativePeak": 25360,
+        "scripted": false,
+        "limitations": [
+          "Whole session totals are counted once, not added across phase snapshots.",
+          "Recorded input is not full-wire tool-schema accounting or subscription debit proof.",
+          "Original grades retained; no answer execution or regrading."
+        ]
+      }
+    },
+    {
+      "task": "async-observations",
+      "repeat": 1,
+      "arm": "atlias",
+      "originalLedgerSha256": "7200290e8f717cf2a0f7a186900ef6eff2593da322c96ddd5c3ba4d9180fca45",
+      "audit": {
+        "complete": true,
+        "held": false,
+        "originalAttempts": 3,
+        "results": [
+          {
+            "phase": "phase-1",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "7a239609-9f75-4609-a88d-73c514c7463c",
+              "stdoutSha256": "e60db583e58453298f1b8f3aa481d34959f40efe07b508253e9bb3823d4589b5"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 81913,
+              "cached_input_tokens": 64384,
+              "output_tokens": 1536,
+              "reasoning_output_tokens": 127,
+              "total_tokens": 83449
+            },
+            "recordedFullPeak": 18501,
+            "recordedCompactions": 0,
+            "contextOnlyUpdates": 0,
+            "usageObservations": 5,
+            "snapshotSha256": "fabb623edd7f0b3e652b583a4e3b586fc99a1a063ec5f9c7ecacecbcbe346364"
+          },
+          {
+            "phase": "phase-2",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "57251301-e818-4e60-9a8f-859b027789dd",
+              "stdoutSha256": "52634a2ed135490546c6fd0fdef84b2f668d69f3e6e3fdf998329d25789fee7f"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 219394,
+              "cached_input_tokens": 175488,
+              "output_tokens": 4092,
+              "reasoning_output_tokens": 357,
+              "total_tokens": 223486
+            },
+            "recordedFullPeak": 23089,
+            "recordedCompactions": 1,
+            "contextOnlyUpdates": 1,
+            "usageObservations": 12,
+            "snapshotSha256": "1ef18bfd5f6fb23401f6932ef843a7e55945e554a6438298da092e20d1858140"
+          },
+          {
+            "phase": "phase-3",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "6c9012c3-ebd9-4fe5-8366-e55272c1eb59",
+              "stdoutSha256": "0cd96e3c85c610034646a3d7fefe5ff371de246df9f6b70bc3b05ff166367a50"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 318361,
+              "cached_input_tokens": 255872,
+              "output_tokens": 6024,
+              "reasoning_output_tokens": 382,
+              "total_tokens": 324385
+            },
+            "recordedFullPeak": 23416,
+            "recordedCompactions": 3,
+            "contextOnlyUpdates": 3,
+            "usageObservations": 17,
+            "snapshotSha256": "6319bd278313a38617be7e51dc16d75bd7a7d55436e7beef2f307dc807c5c333"
+          }
+        ],
+        "reportedWholeNativeTokens": {
+          "input_tokens": 318361,
+          "cached_input_tokens": 255872,
+          "output_tokens": 6024,
+          "reasoning_output_tokens": 382,
+          "total_tokens": 324385
+        },
+        "wholeTokens": {
+          "input_tokens": 318361,
+          "cached_input_tokens": 255872,
+          "output_tokens": 6024,
+          "reasoning_output_tokens": 382,
+          "total_tokens": 324385
+        },
+        "fullNativePeak": 23416,
+        "scripted": false,
+        "limitations": [
+          "Whole session totals are counted once, not added across phase snapshots.",
+          "Recorded input is not full-wire tool-schema accounting or subscription debit proof.",
+          "Original grades retained; no answer execution or regrading."
+        ]
+      }
+    },
+    {
+      "task": "receipt-verification",
+      "repeat": 1,
+      "arm": "plain",
+      "originalLedgerSha256": "b1aa4ba60154bb31c1b15fbe41fdb91d5080a4b37e6ec7b9ccdf517bafca4c5d",
+      "audit": {
+        "complete": true,
+        "held": false,
+        "originalAttempts": 3,
+        "results": [
+          {
+            "phase": "phase-1",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "43e927ba-9539-40c3-a8d0-3720eb47abcc",
+              "stdoutSha256": "ef1314cadcef501487d49388dc1c68024f8a6552d3d3f1f39bb9cd641a2742b7"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 92926,
+              "cached_input_tokens": 78720,
+              "output_tokens": 2121,
+              "reasoning_output_tokens": 141,
+              "total_tokens": 95047
+            },
+            "recordedFullPeak": 18231,
+            "recordedCompactions": 0,
+            "contextOnlyUpdates": 0,
+            "usageObservations": 6,
+            "snapshotSha256": "41f1bff7f3daee0cd05199a8474faa213ca0084edc9607eedae59e19304d6a69"
+          },
+          {
+            "phase": "phase-2",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "52edaef3-87da-4991-bf50-aaaf2c41cbf1",
+              "stdoutSha256": "a7f712153414cbe79e46554c104579d24193a75d19200c8786430915948bd1e8"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 175663,
+              "cached_input_tokens": 151808,
+              "output_tokens": 3431,
+              "reasoning_output_tokens": 141,
+              "total_tokens": 179094
+            },
+            "recordedFullPeak": 22983,
+            "recordedCompactions": 0,
+            "contextOnlyUpdates": 0,
+            "usageObservations": 10,
+            "snapshotSha256": "4b3a39fe013416de85dd09ec4993358d049f4c66b6202ce1578ccf2233330a18"
+          },
+          {
+            "phase": "phase-3",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "6dc09ea3-97bf-4b5b-a01b-e0456e82f446",
+              "stdoutSha256": "1ccdbf2f50e369a3de4c4f8520ba5355eb32da11efd0438e8e116e9646f7814c"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 276721,
+              "cached_input_tokens": 240000,
+              "output_tokens": 4979,
+              "reasoning_output_tokens": 239,
+              "total_tokens": 281700
+            },
+            "recordedFullPeak": 26947,
+            "recordedCompactions": 0,
+            "contextOnlyUpdates": 0,
+            "usageObservations": 14,
+            "snapshotSha256": "315fd90cb879206c177c992890a733b7b55374df8e53355059ca8609ba2e09cd"
+          }
+        ],
+        "reportedWholeNativeTokens": {
+          "input_tokens": 276721,
+          "cached_input_tokens": 240000,
+          "output_tokens": 4979,
+          "reasoning_output_tokens": 239,
+          "total_tokens": 281700
+        },
+        "wholeTokens": {
+          "input_tokens": 276721,
+          "cached_input_tokens": 240000,
+          "output_tokens": 4979,
+          "reasoning_output_tokens": 239,
+          "total_tokens": 281700
+        },
+        "fullNativePeak": 26947,
+        "scripted": false,
+        "limitations": [
+          "Whole session totals are counted once, not added across phase snapshots.",
+          "Recorded input is not full-wire tool-schema accounting or subscription debit proof.",
+          "Original grades retained; no answer execution or regrading."
+        ]
+      }
+    },
+    {
+      "task": "receipt-verification",
+      "repeat": 1,
+      "arm": "atlias",
+      "originalLedgerSha256": "ba65410a99feb7a112fce3b00c0c2d9f842c943a5ee09a564f2a36598cf26cef",
+      "audit": {
+        "complete": true,
+        "held": false,
+        "originalAttempts": 3,
+        "results": [
+          {
+            "phase": "phase-1",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "1c405fc1-93f3-41c9-9588-557720598f06",
+              "stdoutSha256": "652ffa70eb55b9dc08c9eeb431ea9ba24c54910c466a8d72d8567d43b30435d5"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 81905,
+              "cached_input_tokens": 68736,
+              "output_tokens": 1653,
+              "reasoning_output_tokens": 74,
+              "total_tokens": 83558
+            },
+            "recordedFullPeak": 18474,
+            "recordedCompactions": 0,
+            "contextOnlyUpdates": 0,
+            "usageObservations": 5,
+            "snapshotSha256": "06425322072ba61bae2d4bb3c0e84388a301a3a62feb3d32adfcbd946188dc26"
+          },
+          {
+            "phase": "phase-2",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "78f82dcb-2d8b-45fb-8041-2df4680f67d5",
+              "stdoutSha256": "8fc83aad71a02c9848a924d0c74d714ac71eb6a31c23879b817be2ab951c8647"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 166780,
+              "cached_input_tokens": 138112,
+              "output_tokens": 2785,
+              "reasoning_output_tokens": 74,
+              "total_tokens": 169565
+            },
+            "recordedFullPeak": 23547,
+            "recordedCompactions": 0,
+            "contextOnlyUpdates": 0,
+            "usageObservations": 9,
+            "snapshotSha256": "c38c0c87681f32ec9815a21157c631b73feb2f8c3ea60eab0778956260c73dcb"
+          },
+          {
+            "phase": "phase-3",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "eb8dde60-3ccd-42b1-9977-be057f980e5b",
+              "stdoutSha256": "dacb89e0fef90a70ec84bdbacf5c4f09973bc6c68146cad5ccff8a9077784dbd"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 268539,
+              "cached_input_tokens": 223232,
+              "output_tokens": 3946,
+              "reasoning_output_tokens": 84,
+              "total_tokens": 272485
+            },
+            "recordedFullPeak": 24379,
+            "recordedCompactions": 1,
+            "contextOnlyUpdates": 1,
+            "usageObservations": 14,
+            "snapshotSha256": "0e46ad082a97439de35bb4a952bd367bfc75c0d05c1a8296308d96fd3cbf0bb7"
+          }
+        ],
+        "reportedWholeNativeTokens": {
+          "input_tokens": 268539,
+          "cached_input_tokens": 223232,
+          "output_tokens": 3946,
+          "reasoning_output_tokens": 84,
+          "total_tokens": 272485
+        },
+        "wholeTokens": {
+          "input_tokens": 268539,
+          "cached_input_tokens": 223232,
+          "output_tokens": 3946,
+          "reasoning_output_tokens": 84,
+          "total_tokens": 272485
+        },
+        "fullNativePeak": 24379,
+        "scripted": false,
+        "limitations": [
+          "Whole session totals are counted once, not added across phase snapshots.",
+          "Recorded input is not full-wire tool-schema accounting or subscription debit proof.",
+          "Original grades retained; no answer execution or regrading."
+        ]
+      }
+    },
+    {
+      "task": "unicode-boundaries",
+      "repeat": 1,
+      "arm": "plain",
+      "originalLedgerSha256": "4de1c8b1fd2679b5287de64fa4262ea7fcbf3003e6ea28871f482b905c413400",
+      "audit": {
+        "complete": true,
+        "held": false,
+        "originalAttempts": 3,
+        "results": [
+          {
+            "phase": "phase-1",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "df1e5f65-c5b0-4546-87d1-e1bf281c46ce",
+              "stdoutSha256": "66e8e820d1d302fc40487e4e0d31a81fdb01f68835ce35b047b431a17d5628f1"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 56658,
+              "cached_input_tokens": 25472,
+              "output_tokens": 1273,
+              "reasoning_output_tokens": 71,
+              "total_tokens": 57931
+            },
+            "recordedFullPeak": 15949,
+            "recordedCompactions": 0,
+            "contextOnlyUpdates": 0,
+            "usageObservations": 4,
+            "snapshotSha256": "8116eacefe0ee0a554915cffd67bad18c9ce2b45bff10e6fab591103f99b295c"
+          },
+          {
+            "phase": "phase-2",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "ea3dec26-df9d-4f67-9619-23ef5cc69ded",
+              "stdoutSha256": "f312328133c650fac0032c439aca8879e1e9187c44ce22e15a44ce995c914306"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 128459,
+              "cached_input_tokens": 86272,
+              "output_tokens": 2663,
+              "reasoning_output_tokens": 89,
+              "total_tokens": 131122
+            },
+            "recordedFullPeak": 19807,
+            "recordedCompactions": 0,
+            "contextOnlyUpdates": 0,
+            "usageObservations": 8,
+            "snapshotSha256": "c2f93a1f48df20804aa05edcab549c7ca9b3139c50da364de7464702fada9fdf"
+          },
+          {
+            "phase": "phase-3",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "1041f045-b627-403f-befe-cd01dc073c93",
+              "stdoutSha256": "5f0e6781c81206779e174a7ce71161ab31291e30528587d4fddcad256e8bde83"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 194181,
+              "cached_input_tokens": 146048,
+              "output_tokens": 4187,
+              "reasoning_output_tokens": 111,
+              "total_tokens": 198368
+            },
+            "recordedFullPeak": 24022,
+            "recordedCompactions": 0,
+            "contextOnlyUpdates": 0,
+            "usageObservations": 11,
+            "snapshotSha256": "77a794bd029d67424908e4b52df553384694b87a5a810b49c28322adadcec4d6"
+          }
+        ],
+        "reportedWholeNativeTokens": {
+          "input_tokens": 194181,
+          "cached_input_tokens": 146048,
+          "output_tokens": 4187,
+          "reasoning_output_tokens": 111,
+          "total_tokens": 198368
+        },
+        "wholeTokens": {
+          "input_tokens": 194181,
+          "cached_input_tokens": 146048,
+          "output_tokens": 4187,
+          "reasoning_output_tokens": 111,
+          "total_tokens": 198368
+        },
+        "fullNativePeak": 24022,
+        "scripted": false,
+        "limitations": [
+          "Whole session totals are counted once, not added across phase snapshots.",
+          "Recorded input is not full-wire tool-schema accounting or subscription debit proof.",
+          "Original grades retained; no answer execution or regrading."
+        ]
+      }
+    },
+    {
+      "task": "unicode-boundaries",
+      "repeat": 1,
+      "arm": "atlias",
+      "originalLedgerSha256": "72d7084bc5d2cc52bd5918c011b07219d8f472641d2af1458d4fe5fcfd7b10dd",
+      "audit": {
+        "complete": true,
+        "held": false,
+        "originalAttempts": 3,
+        "results": [
+          {
+            "phase": "phase-1",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "8c29a5c6-11c4-4cdd-bcb5-66767fd45045",
+              "stdoutSha256": "c9fd83668133df46d042db14933e2114632542ce9506bc0c4803d57ea5f5fbf7"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 80648,
+              "cached_input_tokens": 71296,
+              "output_tokens": 1306,
+              "reasoning_output_tokens": 59,
+              "total_tokens": 81954
+            },
+            "recordedFullPeak": 17760,
+            "recordedCompactions": 0,
+            "contextOnlyUpdates": 0,
+            "usageObservations": 5,
+            "snapshotSha256": "c4ab6262b1e16e93b1aaa9a08a63bad9a136be25604ad0c0bfb3b93a74991f87"
+          },
+          {
+            "phase": "phase-2",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "b943ff63-467f-42c8-9688-c12277c7eadd",
+              "stdoutSha256": "d98ac902c36a0d90a680b3512f48860c6c15353fba05c8d62c937a43eb2ec679"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 161484,
+              "cached_input_tokens": 147328,
+              "output_tokens": 2361,
+              "reasoning_output_tokens": 59,
+              "total_tokens": 163845
+            },
+            "recordedFullPeak": 21800,
+            "recordedCompactions": 0,
+            "contextOnlyUpdates": 0,
+            "usageObservations": 9,
+            "snapshotSha256": "2201953b382bd80a2a9f3fd3809ed61e27f75565b1f0e0bb7154c5a0fae39c20"
+          },
+          {
+            "phase": "phase-3",
+            "valid": true,
+            "originalGrade": {
+              "pass": true,
+              "status": 0,
+              "error": null,
+              "nonce": "3bc972c3-6b5e-47cb-af4c-b0ee5c449144",
+              "stdoutSha256": "f34d15781742d0c169fca6e07cb0960a06358bbe3efafa316dcdcf0459918f54"
+            },
+            "lifetimeTokens": {
+              "input_tokens": 242947,
+              "cached_input_tokens": 212096,
+              "output_tokens": 3862,
+              "reasoning_output_tokens": 59,
+              "total_tokens": 246809
+            },
+            "recordedFullPeak": 22827,
+            "recordedCompactions": 1,
+            "contextOnlyUpdates": 1,
+            "usageObservations": 13,
+            "snapshotSha256": "9273d25fb2a8d69bf665685cd3ca4f3b0e33e13c7c779e242047f7917b9500ff"
+          }
+        ],
+        "reportedWholeNativeTokens": {
+          "input_tokens": 242947,
+          "cached_input_tokens": 212096,
+          "output_tokens": 3862,
+          "reasoning_output_tokens": 59,
+          "total_tokens": 246809
+        },
+        "wholeTokens": {
+          "input_tokens": 242947,
+          "cached_input_tokens": 212096,
+          "output_tokens": 3862,
+          "reasoning_output_tokens": 59,
+          "total_tokens": 246809
+        },
+        "fullNativePeak": 22827,
+        "scripted": false,
+        "limitations": [
+          "Whole session totals are counted once, not added across phase snapshots.",
+          "Recorded input is not full-wire tool-schema accounting or subscription debit proof.",
+          "Original grades retained; no answer execution or regrading."
+        ]
+      }
+    }
+  ],
+  "metrics": {
+    "plain": {
+      "wholeWorkflows": 9,
+      "originalPhases": 27,
+      "valid": 27,
+      "originalGradePass": 27,
+      "rawInput": 1759630,
+      "uncachedInputPlusOutput": 337332,
+      "total": 1792308,
+      "maxFullRecordedPeak": 26947,
+      "compactions": 0
+    },
+    "atlias": {
+      "wholeWorkflows": 9,
+      "originalPhases": 27,
+      "valid": 27,
+      "originalGradePass": 27,
+      "rawInput": 2202361,
+      "uncachedInputPlusOutput": 349591,
+      "total": 2234519,
+      "maxFullRecordedPeak": 25586,
+      "compactions": 10
+    }
+  },
+  "ratios": {
+    "rawInput": 1.2516045986940436,
+    "uncachedInputPlusOutput": 1.0363410527314336,
+    "total": 1.2467271250253862,
+    "maxFullRecordedPeak": 0.9494934501057631
+  },
+  "modelCalls": 0,
+  "graderExecutions": 0,
+  "limitations": [
+    "Terminal original plan:54 of72 calls, nine of twelve pairs. One plain native quota failure,18unattempted held. Passing original grades do not make that invocation complete. Recorded counters exclude compactions and unknown unrecorded failure costs; corrected response audit required.",
+    "Original grades retained without executing answers or graders.",
+    "Recorded native input and counters are not complete wire schema, subscription debit or BOTH-host evidence.",
+    "Observed protected access string check is not a hostile-filesystem sandbox.",
+    "Maximum full recorded peak is not divided by phases. No universal or 20x claim."
+  ]
+}

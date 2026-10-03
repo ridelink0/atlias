@@ -1,0 +1,2186 @@
+{
+  "source": "7b4a6dd54bad4daec037bbe622db3aad7a94b754",
+  "ledgerSha256": "d9636ec0a554bb71ad77cddabaef6d335dc745eb5068643f9b484ab5509472e3",
+  "complete": true,
+  "planned": 26,
+  "attempts": 26,
+  "members": 48,
+  "counters": {
+    "recorded": 26,
+    "planned": 26,
+    "closed": true,
+    "arms": {
+      "plain": {
+        "attempts": 24,
+        "unknownCostAttempts": 0,
+        "unknownCounters": {
+          "promptRaw": 0,
+          "cachedInput": 0,
+          "output": 0
+        },
+        "raw": 2074700,
+        "cached": 1561472,
+        "output": 39119,
+        "total": 2113819,
+        "uncachedPlusOutput": 552347,
+        "invalidAttempts": 0,
+        "solvedMembers": 24
+      },
+      "atlias-batch": {
+        "attempts": 2,
+        "unknownCostAttempts": 0,
+        "unknownCounters": {
+          "promptRaw": 0,
+          "cachedInput": 0,
+          "output": 0
+        },
+        "raw": 24306,
+        "cached": 0,
+        "output": 7835,
+        "total": 32141,
+        "uncachedPlusOutput": 32141,
+        "invalidAttempts": 0,
+        "solvedMembers": 24
+      }
+    },
+    "qualityPassed": true,
+    "costsKnown": true,
+    "ratioEligible": true,
+    "limitations": [
+      "All known counter components, including invalid and failed attempts, are retained once.",
+      "Unknown counter components have explicit per-field and per-attempt counts; known subtotals cannot establish savings.",
+      "Two batch observations are coupled across their twelve jobs; member counts are not independent cost samples.",
+      "Closed finite quality checks do not establish general host capability or subscription usage parity."
+    ]
+  },
+  "audits": [
+    {
+      "key": "r1-plain-context-money-64",
+      "arm": "plain",
+      "wholeAttemptCountedOnce": true,
+      "fullInputDelivered": true,
+      "inputSha256": "a1ffbe57572c753f020e86e88a38de53d111630804c1deb61b779dfce42e0c65",
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "packetSha256": null,
+      "responseSha256": null,
+      "nativeUsageReconciled": true,
+      "authRemoved": true,
+      "valid": true,
+      "members": [
+        {
+          "task": "context-money-64",
+          "originalGrade": true,
+          "solved": true,
+          "adversarialPassed": 114,
+          "adversarialCases": 114,
+          "protectedFiles": [
+            {
+              "file": "src/api.mjs",
+              "sha256": "fea38f26a0cd4102799dba49d668e9c65189c5e8058bdd91ceccd8c4e66e8d6e"
+            },
+            {
+              "file": "docs/contract.md",
+              "sha256": "fad74bbd8e31bd36474e089fd02d610858c3a04eaac7142f128c83147f73e42c"
+            },
+            {
+              "file": "package.json",
+              "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+            },
+            {
+              "file": "smoke.mjs",
+              "sha256": "cb698dcb9db17d7a061c0491243c5355c87a78b5cb4602f8d5e43b52b98106a4"
+            },
+            {
+              "file": "grade.mjs",
+              "sha256": "9a9e837b79a2611244a2d884c0e6c869b832e1429e2bcd7741205d1d2b180ecb"
+            }
+          ]
+        }
+      ],
+      "costs": {
+        "raw": 72743,
+        "cached": 52480,
+        "output": 1585,
+        "uncachedPlusOutput": 21848,
+        "peak": 16285
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-independent-batch-1001\\runs\\r1-plain-context-money-64\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T12-06-36-01a0f86e-a694-7602-b0d1-3a94b0aed4f5.jsonl",
+          "sha256": "7b915ca6e9d965615fdea7bb6407a7698679f9f3c56d164864662586795ec52a"
+        }
+      ]
+    },
+    {
+      "key": "r1-plain-context-versions-64",
+      "arm": "plain",
+      "wholeAttemptCountedOnce": true,
+      "fullInputDelivered": true,
+      "inputSha256": "a1ffbe57572c753f020e86e88a38de53d111630804c1deb61b779dfce42e0c65",
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "packetSha256": null,
+      "responseSha256": null,
+      "nativeUsageReconciled": true,
+      "authRemoved": true,
+      "valid": true,
+      "members": [
+        {
+          "task": "context-versions-64",
+          "originalGrade": true,
+          "solved": true,
+          "adversarialPassed": 100,
+          "adversarialCases": 100,
+          "protectedFiles": [
+            {
+              "file": "src/api.mjs",
+              "sha256": "fea38f26a0cd4102799dba49d668e9c65189c5e8058bdd91ceccd8c4e66e8d6e"
+            },
+            {
+              "file": "docs/contract.md",
+              "sha256": "d8874da00c74cd28442313effd1c95d99659a2ac38331685c8815432b2e6233d"
+            },
+            {
+              "file": "package.json",
+              "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+            },
+            {
+              "file": "smoke.mjs",
+              "sha256": "cb698dcb9db17d7a061c0491243c5355c87a78b5cb4602f8d5e43b52b98106a4"
+            },
+            {
+              "file": "grade.mjs",
+              "sha256": "f036cdd0381b3ed51e4c19504d52420f8a463bc892ebd371feea12f77d467ece"
+            }
+          ]
+        }
+      ],
+      "costs": {
+        "raw": 73203,
+        "cached": 37376,
+        "output": 1569,
+        "uncachedPlusOutput": 37396,
+        "peak": 16633
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-independent-batch-1001\\runs\\r1-plain-context-versions-64\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T12-09-14-01a0f871-0b90-7c50-b946-18c114e15518.jsonl",
+          "sha256": "d85bb5ed1997fff66fa90dbc156ef0c0730cdd5336b82f89944734087f2340b9"
+        }
+      ]
+    },
+    {
+      "key": "r1-plain-context-intervals-64",
+      "arm": "plain",
+      "wholeAttemptCountedOnce": true,
+      "fullInputDelivered": true,
+      "inputSha256": "a1ffbe57572c753f020e86e88a38de53d111630804c1deb61b779dfce42e0c65",
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "packetSha256": null,
+      "responseSha256": null,
+      "nativeUsageReconciled": true,
+      "authRemoved": true,
+      "valid": true,
+      "members": [
+        {
+          "task": "context-intervals-64",
+          "originalGrade": true,
+          "solved": true,
+          "adversarialPassed": 102,
+          "adversarialCases": 102,
+          "protectedFiles": [
+            {
+              "file": "src/api.mjs",
+              "sha256": "fea38f26a0cd4102799dba49d668e9c65189c5e8058bdd91ceccd8c4e66e8d6e"
+            },
+            {
+              "file": "docs/contract.md",
+              "sha256": "d00b8be1fd971957fa556a2a6dc48e065496b040656f48872ad37ad30775d4a7"
+            },
+            {
+              "file": "package.json",
+              "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+            },
+            {
+              "file": "smoke.mjs",
+              "sha256": "cb698dcb9db17d7a061c0491243c5355c87a78b5cb4602f8d5e43b52b98106a4"
+            },
+            {
+              "file": "grade.mjs",
+              "sha256": "cd894b72ab04d6da2da15269899b9c46501bca38d572fd86e854ca16603d82b6"
+            }
+          ]
+        }
+      ],
+      "costs": {
+        "raw": 73605,
+        "cached": 49280,
+        "output": 1551,
+        "uncachedPlusOutput": 25876,
+        "peak": 16612
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-independent-batch-1001\\runs\\r1-plain-context-intervals-64\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T12-11-42-01a0f873-4e1e-7580-ae54-190b0ebc89c8.jsonl",
+          "sha256": "846f8218bf3c16153576549df88e3882b9b048e8f652c854220c563ac3bc3dd6"
+        }
+      ]
+    },
+    {
+      "key": "r1-plain-context-unicode-64",
+      "arm": "plain",
+      "wholeAttemptCountedOnce": true,
+      "fullInputDelivered": true,
+      "inputSha256": "a1ffbe57572c753f020e86e88a38de53d111630804c1deb61b779dfce42e0c65",
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "packetSha256": null,
+      "responseSha256": null,
+      "nativeUsageReconciled": true,
+      "authRemoved": true,
+      "valid": true,
+      "members": [
+        {
+          "task": "context-unicode-64",
+          "originalGrade": true,
+          "solved": true,
+          "adversarialPassed": 100,
+          "adversarialCases": 100,
+          "protectedFiles": [
+            {
+              "file": "src/api.mjs",
+              "sha256": "fea38f26a0cd4102799dba49d668e9c65189c5e8058bdd91ceccd8c4e66e8d6e"
+            },
+            {
+              "file": "docs/contract.md",
+              "sha256": "c2e59487b175314daf27c8f741cda3d31cdda8f81d068ed0b97d778d03d921d2"
+            },
+            {
+              "file": "package.json",
+              "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+            },
+            {
+              "file": "smoke.mjs",
+              "sha256": "cb698dcb9db17d7a061c0491243c5355c87a78b5cb4602f8d5e43b52b98106a4"
+            },
+            {
+              "file": "grade.mjs",
+              "sha256": "41b6b73f137d85edb95864ac0f87b62567e46672a0418e45ab4873b41f2eee04"
+            }
+          ]
+        }
+      ],
+      "costs": {
+        "raw": 118886,
+        "cached": 94848,
+        "output": 1096,
+        "uncachedPlusOutput": 25134,
+        "peak": 16317
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-independent-batch-1001\\runs\\r1-plain-context-unicode-64\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T12-13-54-01a0f875-52ed-7d51-acdb-02b9eccaff8f.jsonl",
+          "sha256": "e6f387449222f7f087182e5a966f0e3c72301ae70ed69036a488441e2cb07ac8"
+        }
+      ]
+    },
+    {
+      "key": "r1-plain-context-paths-64",
+      "arm": "plain",
+      "wholeAttemptCountedOnce": true,
+      "fullInputDelivered": true,
+      "inputSha256": "a1ffbe57572c753f020e86e88a38de53d111630804c1deb61b779dfce42e0c65",
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "packetSha256": null,
+      "responseSha256": null,
+      "nativeUsageReconciled": true,
+      "authRemoved": true,
+      "valid": true,
+      "members": [
+        {
+          "task": "context-paths-64",
+          "originalGrade": true,
+          "solved": true,
+          "adversarialPassed": 115,
+          "adversarialCases": 115,
+          "protectedFiles": [
+            {
+              "file": "src/api.mjs",
+              "sha256": "fea38f26a0cd4102799dba49d668e9c65189c5e8058bdd91ceccd8c4e66e8d6e"
+            },
+            {
+              "file": "docs/contract.md",
+              "sha256": "999362df92d38800055b22bb0a393d96e8e62261c732a17877c57b7f49ca0abd"
+            },
+            {
+              "file": "package.json",
+              "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+            },
+            {
+              "file": "smoke.mjs",
+              "sha256": "cb698dcb9db17d7a061c0491243c5355c87a78b5cb4602f8d5e43b52b98106a4"
+            },
+            {
+              "file": "grade.mjs",
+              "sha256": "5d0ff6f3b1e10c7ea6567bb74979b5f5293bb236478214d52b67cbe4b7339a22"
+            }
+          ]
+        }
+      ],
+      "costs": {
+        "raw": 89164,
+        "cached": 69248,
+        "output": 1412,
+        "uncachedPlusOutput": 21328,
+        "peak": 16566
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-independent-batch-1001\\runs\\r1-plain-context-paths-64\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T12-16-39-01a0f877-d874-7600-ac47-4430b3101c2a.jsonl",
+          "sha256": "2400cd29f9587f785fb41bbefe2d90e23e98556bea434b67e78e2f26001ce8a4"
+        }
+      ]
+    },
+    {
+      "key": "r1-plain-context-merge-64",
+      "arm": "plain",
+      "wholeAttemptCountedOnce": true,
+      "fullInputDelivered": true,
+      "inputSha256": "a1ffbe57572c753f020e86e88a38de53d111630804c1deb61b779dfce42e0c65",
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "packetSha256": null,
+      "responseSha256": null,
+      "nativeUsageReconciled": true,
+      "authRemoved": true,
+      "valid": true,
+      "members": [
+        {
+          "task": "context-merge-64",
+          "originalGrade": true,
+          "solved": true,
+          "adversarialPassed": 110,
+          "adversarialCases": 110,
+          "protectedFiles": [
+            {
+              "file": "src/api.mjs",
+              "sha256": "fea38f26a0cd4102799dba49d668e9c65189c5e8058bdd91ceccd8c4e66e8d6e"
+            },
+            {
+              "file": "docs/contract.md",
+              "sha256": "f1a84a54f2079c63c190ec2349b9754e4f2010cfba5ac7a136ff1d32e411dcc9"
+            },
+            {
+              "file": "package.json",
+              "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+            },
+            {
+              "file": "smoke.mjs",
+              "sha256": "cb698dcb9db17d7a061c0491243c5355c87a78b5cb4602f8d5e43b52b98106a4"
+            },
+            {
+              "file": "grade.mjs",
+              "sha256": "363237af422762e51b9535a2e5df21bab57229b2c0ab34acebb4cd5d90e86c84"
+            }
+          ]
+        }
+      ],
+      "costs": {
+        "raw": 74130,
+        "cached": 37760,
+        "output": 1940,
+        "uncachedPlusOutput": 38310,
+        "peak": 16971
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-independent-batch-1001\\runs\\r1-plain-context-merge-64\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T12-19-13-01a0f87a-3130-72f0-bcd7-45535cfc0c60.jsonl",
+          "sha256": "47f983b57e94c9f34a4e2d82b12a6b9294a0de44668d30f16f4c4ea7fb758f5a"
+        }
+      ]
+    },
+    {
+      "key": "r1-plain-context-ttl-64",
+      "arm": "plain",
+      "wholeAttemptCountedOnce": true,
+      "fullInputDelivered": true,
+      "inputSha256": "a1ffbe57572c753f020e86e88a38de53d111630804c1deb61b779dfce42e0c65",
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "packetSha256": null,
+      "responseSha256": null,
+      "nativeUsageReconciled": true,
+      "authRemoved": true,
+      "valid": true,
+      "members": [
+        {
+          "task": "context-ttl-64",
+          "originalGrade": true,
+          "solved": true,
+          "adversarialPassed": 102,
+          "adversarialCases": 102,
+          "protectedFiles": [
+            {
+              "file": "src/api.mjs",
+              "sha256": "fea38f26a0cd4102799dba49d668e9c65189c5e8058bdd91ceccd8c4e66e8d6e"
+            },
+            {
+              "file": "docs/contract.md",
+              "sha256": "aa55dbb8988251fccde6d5e0113f8fe0f1e9227f695e2112504914d6036f9084"
+            },
+            {
+              "file": "package.json",
+              "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+            },
+            {
+              "file": "smoke.mjs",
+              "sha256": "cb698dcb9db17d7a061c0491243c5355c87a78b5cb4602f8d5e43b52b98106a4"
+            },
+            {
+              "file": "grade.mjs",
+              "sha256": "6604e187e8117c0c3f745af77c5e03e85d8eb5eac1815c43cb590653f1019377"
+            }
+          ]
+        }
+      ],
+      "costs": {
+        "raw": 74448,
+        "cached": 55040,
+        "output": 1783,
+        "uncachedPlusOutput": 21191,
+        "peak": 16857
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-independent-batch-1001\\runs\\r1-plain-context-ttl-64\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T12-21-49-01a0f87c-9485-7f12-a172-0f04fec09d97.jsonl",
+          "sha256": "847426539a4ad74b1fd975d3bcff425ddf660fb6e1bc8f41337184bbab5c3d59"
+        }
+      ]
+    },
+    {
+      "key": "r1-plain-context-csv-64",
+      "arm": "plain",
+      "wholeAttemptCountedOnce": true,
+      "fullInputDelivered": true,
+      "inputSha256": "a1ffbe57572c753f020e86e88a38de53d111630804c1deb61b779dfce42e0c65",
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "packetSha256": null,
+      "responseSha256": null,
+      "nativeUsageReconciled": true,
+      "authRemoved": true,
+      "valid": true,
+      "members": [
+        {
+          "task": "context-csv-64",
+          "originalGrade": true,
+          "solved": true,
+          "adversarialPassed": 107,
+          "adversarialCases": 107,
+          "protectedFiles": [
+            {
+              "file": "src/api.mjs",
+              "sha256": "fea38f26a0cd4102799dba49d668e9c65189c5e8058bdd91ceccd8c4e66e8d6e"
+            },
+            {
+              "file": "docs/contract.md",
+              "sha256": "3194062aba29203f7d537a0050cd8cfcd15cdf3542479bfc8dfdc3e9c4de3c74"
+            },
+            {
+              "file": "package.json",
+              "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+            },
+            {
+              "file": "smoke.mjs",
+              "sha256": "cb698dcb9db17d7a061c0491243c5355c87a78b5cb4602f8d5e43b52b98106a4"
+            },
+            {
+              "file": "grade.mjs",
+              "sha256": "dd974050725c460d197c42de884803ed65167c48d9aba8f83167120742930d61"
+            }
+          ]
+        }
+      ],
+      "costs": {
+        "raw": 138659,
+        "cached": 114048,
+        "output": 1941,
+        "uncachedPlusOutput": 26552,
+        "peak": 17642
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-independent-batch-1001\\runs\\r1-plain-context-csv-64\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T12-24-01-01a0f87e-9523-7b81-b253-cbce39bc0c1e.jsonl",
+          "sha256": "76c19456eff910a3406c7d2da44f6f4f0d4b3681cd9008bb8ab57733e198d6ba"
+        }
+      ]
+    },
+    {
+      "key": "r1-plain-context-pagination-64",
+      "arm": "plain",
+      "wholeAttemptCountedOnce": true,
+      "fullInputDelivered": true,
+      "inputSha256": "a1ffbe57572c753f020e86e88a38de53d111630804c1deb61b779dfce42e0c65",
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "packetSha256": null,
+      "responseSha256": null,
+      "nativeUsageReconciled": true,
+      "authRemoved": true,
+      "valid": true,
+      "members": [
+        {
+          "task": "context-pagination-64",
+          "originalGrade": true,
+          "solved": true,
+          "adversarialPassed": 102,
+          "adversarialCases": 102,
+          "protectedFiles": [
+            {
+              "file": "src/api.mjs",
+              "sha256": "fea38f26a0cd4102799dba49d668e9c65189c5e8058bdd91ceccd8c4e66e8d6e"
+            },
+            {
+              "file": "docs/contract.md",
+              "sha256": "18428f67e6d8cc3c36d7cc81851ed105945ef6231b0f95b32cf7e0a62489c359"
+            },
+            {
+              "file": "package.json",
+              "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+            },
+            {
+              "file": "smoke.mjs",
+              "sha256": "cb698dcb9db17d7a061c0491243c5355c87a78b5cb4602f8d5e43b52b98106a4"
+            },
+            {
+              "file": "grade.mjs",
+              "sha256": "a8084b9eab2244526838310c2047954464f3d5c1f6f0a962a02690e51eb58544"
+            }
+          ]
+        }
+      ],
+      "costs": {
+        "raw": 71579,
+        "cached": 64000,
+        "output": 1545,
+        "uncachedPlusOutput": 9124,
+        "peak": 16314
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-independent-batch-1001\\runs\\r1-plain-context-pagination-64\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T12-28-05-01a0f882-4dea-7003-b886-f03a80101216.jsonl",
+          "sha256": "f9df19946751b2bd138d6bb576f752d38f8be662d8e75d268e5bff56e22bddd4"
+        }
+      ]
+    },
+    {
+      "key": "r1-plain-context-topology-64",
+      "arm": "plain",
+      "wholeAttemptCountedOnce": true,
+      "fullInputDelivered": true,
+      "inputSha256": "a1ffbe57572c753f020e86e88a38de53d111630804c1deb61b779dfce42e0c65",
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "packetSha256": null,
+      "responseSha256": null,
+      "nativeUsageReconciled": true,
+      "authRemoved": true,
+      "valid": true,
+      "members": [
+        {
+          "task": "context-topology-64",
+          "originalGrade": true,
+          "solved": true,
+          "adversarialPassed": 104,
+          "adversarialCases": 104,
+          "protectedFiles": [
+            {
+              "file": "src/api.mjs",
+              "sha256": "fea38f26a0cd4102799dba49d668e9c65189c5e8058bdd91ceccd8c4e66e8d6e"
+            },
+            {
+              "file": "docs/contract.md",
+              "sha256": "204cd606db0a070b31102ac9067f61c9fa5020afef4e2badd48f9707c4c1e719"
+            },
+            {
+              "file": "package.json",
+              "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+            },
+            {
+              "file": "smoke.mjs",
+              "sha256": "cb698dcb9db17d7a061c0491243c5355c87a78b5cb4602f8d5e43b52b98106a4"
+            },
+            {
+              "file": "grade.mjs",
+              "sha256": "9936b740d4531ccd935837b2d0342f24a56bcbe0f39ccff411839fa37030b364"
+            }
+          ]
+        }
+      ],
+      "costs": {
+        "raw": 73629,
+        "cached": 53120,
+        "output": 2116,
+        "uncachedPlusOutput": 22625,
+        "peak": 17164
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-independent-batch-1001\\runs\\r1-plain-context-topology-64\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T12-29-55-01a0f883-fe69-71c1-9424-3a3b3c7ffa38.jsonl",
+          "sha256": "2fdbbd9976d81c214e0bd9415c2dafaed47ce7bca94c415e2b3b4d11eb61ff8e"
+        }
+      ]
+    },
+    {
+      "key": "r1-plain-context-dedupe-64",
+      "arm": "plain",
+      "wholeAttemptCountedOnce": true,
+      "fullInputDelivered": true,
+      "inputSha256": "a1ffbe57572c753f020e86e88a38de53d111630804c1deb61b779dfce42e0c65",
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "packetSha256": null,
+      "responseSha256": null,
+      "nativeUsageReconciled": true,
+      "authRemoved": true,
+      "valid": true,
+      "members": [
+        {
+          "task": "context-dedupe-64",
+          "originalGrade": true,
+          "solved": true,
+          "adversarialPassed": 100,
+          "adversarialCases": 100,
+          "protectedFiles": [
+            {
+              "file": "src/api.mjs",
+              "sha256": "fea38f26a0cd4102799dba49d668e9c65189c5e8058bdd91ceccd8c4e66e8d6e"
+            },
+            {
+              "file": "docs/contract.md",
+              "sha256": "fd0d2e3dac9fca893d904b62226f5f05686e5eb994ca819b7302e8c9d0662df9"
+            },
+            {
+              "file": "package.json",
+              "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+            },
+            {
+              "file": "smoke.mjs",
+              "sha256": "cb698dcb9db17d7a061c0491243c5355c87a78b5cb4602f8d5e43b52b98106a4"
+            },
+            {
+              "file": "grade.mjs",
+              "sha256": "adcbb2a1a4c937ab5d74a6be74cb19fafffca9a105675ce4395f809d22d748fa"
+            }
+          ]
+        }
+      ],
+      "costs": {
+        "raw": 72571,
+        "cached": 52992,
+        "output": 1257,
+        "uncachedPlusOutput": 20836,
+        "peak": 16378
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-independent-batch-1001\\runs\\r1-plain-context-dedupe-64\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T12-32-33-01a0f886-686e-75b3-93a3-d2008dabc297.jsonl",
+          "sha256": "cd26e2151745459ffdc8ed1f3c33628c4b774749bb5f593a505affa3b0c8162b"
+        }
+      ]
+    },
+    {
+      "key": "r1-plain-context-query-64",
+      "arm": "plain",
+      "wholeAttemptCountedOnce": true,
+      "fullInputDelivered": true,
+      "inputSha256": "a1ffbe57572c753f020e86e88a38de53d111630804c1deb61b779dfce42e0c65",
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "packetSha256": null,
+      "responseSha256": null,
+      "nativeUsageReconciled": true,
+      "authRemoved": true,
+      "valid": true,
+      "members": [
+        {
+          "task": "context-query-64",
+          "originalGrade": true,
+          "solved": true,
+          "adversarialPassed": 104,
+          "adversarialCases": 104,
+          "protectedFiles": [
+            {
+              "file": "src/api.mjs",
+              "sha256": "fea38f26a0cd4102799dba49d668e9c65189c5e8058bdd91ceccd8c4e66e8d6e"
+            },
+            {
+              "file": "docs/contract.md",
+              "sha256": "4068daa2df96262b343338b42ccae2c0548d0ccdbf94a80c81c22a333c49363e"
+            },
+            {
+              "file": "package.json",
+              "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+            },
+            {
+              "file": "smoke.mjs",
+              "sha256": "cb698dcb9db17d7a061c0491243c5355c87a78b5cb4602f8d5e43b52b98106a4"
+            },
+            {
+              "file": "grade.mjs",
+              "sha256": "288e645a02c4228972980f095a723da533262ec310a3dbcc5f1cf6e05763a369"
+            }
+          ]
+        }
+      ],
+      "costs": {
+        "raw": 101882,
+        "cached": 87424,
+        "output": 1352,
+        "uncachedPlusOutput": 15810,
+        "peak": 16661
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-independent-batch-1001\\runs\\r1-plain-context-query-64\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T12-34-35-01a0f888-42d4-7171-a481-e61c0bcd1ef4.jsonl",
+          "sha256": "581e3267d3bfd0521f5d18b262880638407193f51a8607f48c81ec592bf57db2"
+        }
+      ]
+    },
+    {
+      "key": "r1-batch",
+      "arm": "atlias-batch",
+      "wholeAttemptCountedOnce": true,
+      "fullInputDelivered": true,
+      "inputSha256": "476985cd8ae5234e6d26c40bc99f44329acc4dc9e6e9ca877994492675210032",
+      "instructionSha256": "324b2bb2944b0886768c52c2af0ed9b74afceac47a1b8c642a7bf585a6d11200",
+      "packetSha256": "dc791cd1604fdc48825dedf649e084c10d37bdf6d8c0950bee4903042b20aba2",
+      "responseSha256": "8ddd31e739225477a1571d13ad9fba335a4f700d51dc19dd1bd3c5c15a33feb7",
+      "nativeUsageReconciled": true,
+      "authRemoved": true,
+      "valid": true,
+      "members": [
+        {
+          "task": "context-money-64",
+          "originalGrade": true,
+          "solved": true,
+          "adversarialPassed": 114,
+          "adversarialCases": 114,
+          "protectedFiles": [
+            {
+              "file": "src/api.mjs",
+              "sha256": "fea38f26a0cd4102799dba49d668e9c65189c5e8058bdd91ceccd8c4e66e8d6e"
+            },
+            {
+              "file": "docs/contract.md",
+              "sha256": "fad74bbd8e31bd36474e089fd02d610858c3a04eaac7142f128c83147f73e42c"
+            },
+            {
+              "file": "package.json",
+              "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+            },
+            {
+              "file": "smoke.mjs",
+              "sha256": "cb698dcb9db17d7a061c0491243c5355c87a78b5cb4602f8d5e43b52b98106a4"
+            },
+            {
+              "file": "grade.mjs",
+              "sha256": "9a9e837b79a2611244a2d884c0e6c869b832e1429e2bcd7741205d1d2b180ecb"
+            }
+          ]
+        },
+        {
+          "task": "context-versions-64",
+          "originalGrade": true,
+          "solved": true,
+          "adversarialPassed": 100,
+          "adversarialCases": 100,
+          "protectedFiles": [
+            {
+              "file": "src/api.mjs",
+              "sha256": "fea38f26a0cd4102799dba49d668e9c65189c5e8058bdd91ceccd8c4e66e8d6e"
+            },
+            {
+              "file": "docs/contract.md",
+              "sha256": "d8874da00c74cd28442313effd1c95d99659a2ac38331685c8815432b2e6233d"
+            },
+            {
+              "file": "package.json",
+              "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+            },
+            {
+              "file": "smoke.mjs",
+              "sha256": "cb698dcb9db17d7a061c0491243c5355c87a78b5cb4602f8d5e43b52b98106a4"
+            },
+            {
+              "file": "grade.mjs",
+              "sha256": "f036cdd0381b3ed51e4c19504d52420f8a463bc892ebd371feea12f77d467ece"
+            }
+          ]
+        },
+        {
+          "task": "context-intervals-64",
+          "originalGrade": true,
+          "solved": true,
+          "adversarialPassed": 102,
+          "adversarialCases": 102,
+          "protectedFiles": [
+            {
+              "file": "src/api.mjs",
+              "sha256": "fea38f26a0cd4102799dba49d668e9c65189c5e8058bdd91ceccd8c4e66e8d6e"
+            },
+            {
+              "file": "docs/contract.md",
+              "sha256": "d00b8be1fd971957fa556a2a6dc48e065496b040656f48872ad37ad30775d4a7"
+            },
+            {
+              "file": "package.json",
+              "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+            },
+            {
+              "file": "smoke.mjs",
+              "sha256": "cb698dcb9db17d7a061c0491243c5355c87a78b5cb4602f8d5e43b52b98106a4"
+            },
+            {
+              "file": "grade.mjs",
+              "sha256": "cd894b72ab04d6da2da15269899b9c46501bca38d572fd86e854ca16603d82b6"
+            }
+          ]
+        },
+        {
+          "task": "context-unicode-64",
+          "originalGrade": true,
+          "solved": true,
+          "adversarialPassed": 100,
+          "adversarialCases": 100,
+          "protectedFiles": [
+            {
+              "file": "src/api.mjs",
+              "sha256": "fea38f26a0cd4102799dba49d668e9c65189c5e8058bdd91ceccd8c4e66e8d6e"
+            },
+            {
+              "file": "docs/contract.md",
+              "sha256": "c2e59487b175314daf27c8f741cda3d31cdda8f81d068ed0b97d778d03d921d2"
+            },
+            {
+              "file": "package.json",
+              "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+            },
+            {
+              "file": "smoke.mjs",
+              "sha256": "cb698dcb9db17d7a061c0491243c5355c87a78b5cb4602f8d5e43b52b98106a4"
+            },
+            {
+              "file": "grade.mjs",
+              "sha256": "41b6b73f137d85edb95864ac0f87b62567e46672a0418e45ab4873b41f2eee04"
+            }
+          ]
+        },
+        {
+          "task": "context-paths-64",
+          "originalGrade": true,
+          "solved": true,
+          "adversarialPassed": 115,
+          "adversarialCases": 115,
+          "protectedFiles": [
+            {
+              "file": "src/api.mjs",
+              "sha256": "fea38f26a0cd4102799dba49d668e9c65189c5e8058bdd91ceccd8c4e66e8d6e"
+            },
+            {
+              "file": "docs/contract.md",
+              "sha256": "999362df92d38800055b22bb0a393d96e8e62261c732a17877c57b7f49ca0abd"
+            },
+            {
+              "file": "package.json",
+              "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+            },
+            {
+              "file": "smoke.mjs",
+              "sha256": "cb698dcb9db17d7a061c0491243c5355c87a78b5cb4602f8d5e43b52b98106a4"
+            },
+            {
+              "file": "grade.mjs",
+              "sha256": "5d0ff6f3b1e10c7ea6567bb74979b5f5293bb236478214d52b67cbe4b7339a22"
+            }
+          ]
+        },
+        {
+          "task": "context-merge-64",
+          "originalGrade": true,
+          "solved": true,
+          "adversarialPassed": 110,
+          "adversarialCases": 110,
+          "protectedFiles": [
+            {
+              "file": "src/api.mjs",
+              "sha256": "fea38f26a0cd4102799dba49d668e9c65189c5e8058bdd91ceccd8c4e66e8d6e"
+            },
+            {
+              "file": "docs/contract.md",
+              "sha256": "f1a84a54f2079c63c190ec2349b9754e4f2010cfba5ac7a136ff1d32e411dcc9"
+            },
+            {
+              "file": "package.json",
+              "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+            },
+            {
+              "file": "smoke.mjs",
+              "sha256": "cb698dcb9db17d7a061c0491243c5355c87a78b5cb4602f8d5e43b52b98106a4"
+            },
+            {
+              "file": "grade.mjs",
+              "sha256": "363237af422762e51b9535a2e5df21bab57229b2c0ab34acebb4cd5d90e86c84"
+            }
+          ]
+        },
+        {
+          "task": "context-ttl-64",
+          "originalGrade": true,
+          "solved": true,
+          "adversarialPassed": 102,
+          "adversarialCases": 102,
+          "protectedFiles": [
+            {
+              "file": "src/api.mjs",
+              "sha256": "fea38f26a0cd4102799dba49d668e9c65189c5e8058bdd91ceccd8c4e66e8d6e"
+            },
+            {
+              "file": "docs/contract.md",
+              "sha256": "aa55dbb8988251fccde6d5e0113f8fe0f1e9227f695e2112504914d6036f9084"
+            },
+            {
+              "file": "package.json",
+              "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+            },
+            {
+              "file": "smoke.mjs",
+              "sha256": "cb698dcb9db17d7a061c0491243c5355c87a78b5cb4602f8d5e43b52b98106a4"
+            },
+            {
+              "file": "grade.mjs",
+              "sha256": "6604e187e8117c0c3f745af77c5e03e85d8eb5eac1815c43cb590653f1019377"
+            }
+          ]
+        },
+        {
+          "task": "context-csv-64",
+          "originalGrade": true,
+          "solved": true,
+          "adversarialPassed": 107,
+          "adversarialCases": 107,
+          "protectedFiles": [
+            {
+              "file": "src/api.mjs",
+              "sha256": "fea38f26a0cd4102799dba49d668e9c65189c5e8058bdd91ceccd8c4e66e8d6e"
+            },
+            {
+              "file": "docs/contract.md",
+              "sha256": "3194062aba29203f7d537a0050cd8cfcd15cdf3542479bfc8dfdc3e9c4de3c74"
+            },
+            {
+              "file": "package.json",
+              "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+            },
+            {
+              "file": "smoke.mjs",
+              "sha256": "cb698dcb9db17d7a061c0491243c5355c87a78b5cb4602f8d5e43b52b98106a4"
+            },
+            {
+              "file": "grade.mjs",
+              "sha256": "dd974050725c460d197c42de884803ed65167c48d9aba8f83167120742930d61"
+            }
+          ]
+        },
+        {
+          "task": "context-pagination-64",
+          "originalGrade": true,
+          "solved": true,
+          "adversarialPassed": 102,
+          "adversarialCases": 102,
+          "protectedFiles": [
+            {
+              "file": "src/api.mjs",
+              "sha256": "fea38f26a0cd4102799dba49d668e9c65189c5e8058bdd91ceccd8c4e66e8d6e"
+            },
+            {
+              "file": "docs/contract.md",
+              "sha256": "18428f67e6d8cc3c36d7cc81851ed105945ef6231b0f95b32cf7e0a62489c359"
+            },
+            {
+              "file": "package.json",
+              "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+            },
+            {
+              "file": "smoke.mjs",
+              "sha256": "cb698dcb9db17d7a061c0491243c5355c87a78b5cb4602f8d5e43b52b98106a4"
+            },
+            {
+              "file": "grade.mjs",
+              "sha256": "a8084b9eab2244526838310c2047954464f3d5c1f6f0a962a02690e51eb58544"
+            }
+          ]
+        },
+        {
+          "task": "context-topology-64",
+          "originalGrade": true,
+          "solved": true,
+          "adversarialPassed": 104,
+          "adversarialCases": 104,
+          "protectedFiles": [
+            {
+              "file": "src/api.mjs",
+              "sha256": "fea38f26a0cd4102799dba49d668e9c65189c5e8058bdd91ceccd8c4e66e8d6e"
+            },
+            {
+              "file": "docs/contract.md",
+              "sha256": "204cd606db0a070b31102ac9067f61c9fa5020afef4e2badd48f9707c4c1e719"
+            },
+            {
+              "file": "package.json",
+              "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+            },
+            {
+              "file": "smoke.mjs",
+              "sha256": "cb698dcb9db17d7a061c0491243c5355c87a78b5cb4602f8d5e43b52b98106a4"
+            },
+            {
+              "file": "grade.mjs",
+              "sha256": "9936b740d4531ccd935837b2d0342f24a56bcbe0f39ccff411839fa37030b364"
+            }
+          ]
+        },
+        {
+          "task": "context-dedupe-64",
+          "originalGrade": true,
+          "solved": true,
+          "adversarialPassed": 100,
+          "adversarialCases": 100,
+          "protectedFiles": [
+            {
+              "file": "src/api.mjs",
+              "sha256": "fea38f26a0cd4102799dba49d668e9c65189c5e8058bdd91ceccd8c4e66e8d6e"
+            },
+            {
+              "file": "docs/contract.md",
+              "sha256": "fd0d2e3dac9fca893d904b62226f5f05686e5eb994ca819b7302e8c9d0662df9"
+            },
+            {
+              "file": "package.json",
+              "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+            },
+            {
+              "file": "smoke.mjs",
+              "sha256": "cb698dcb9db17d7a061c0491243c5355c87a78b5cb4602f8d5e43b52b98106a4"
+            },
+            {
+              "file": "grade.mjs",
+              "sha256": "adcbb2a1a4c937ab5d74a6be74cb19fafffca9a105675ce4395f809d22d748fa"
+            }
+          ]
+        },
+        {
+          "task": "context-query-64",
+          "originalGrade": true,
+          "solved": true,
+          "adversarialPassed": 104,
+          "adversarialCases": 104,
+          "protectedFiles": [
+            {
+              "file": "src/api.mjs",
+              "sha256": "fea38f26a0cd4102799dba49d668e9c65189c5e8058bdd91ceccd8c4e66e8d6e"
+            },
+            {
+              "file": "docs/contract.md",
+              "sha256": "4068daa2df96262b343338b42ccae2c0548d0ccdbf94a80c81c22a333c49363e"
+            },
+            {
+              "file": "package.json",
+              "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+            },
+            {
+              "file": "smoke.mjs",
+              "sha256": "cb698dcb9db17d7a061c0491243c5355c87a78b5cb4602f8d5e43b52b98106a4"
+            },
+            {
+              "file": "grade.mjs",
+              "sha256": "288e645a02c4228972980f095a723da533262ec310a3dbcc5f1cf6e05763a369"
+            }
+          ]
+        }
+      ],
+      "costs": {
+        "raw": 12153,
+        "cached": 0,
+        "output": 3900,
+        "uncachedPlusOutput": 16053,
+        "peak": 12153
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-independent-batch-1001\\runs\\r1-batch\\attempt\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T12-37-16-01a0f88a-b80a-7c53-ad59-c6c19963c5e0.jsonl",
+          "sha256": "5afda3b8107c678f030f87a50b97b036ed85ebac41286a2a55c9ae8fe11e06fd"
+        }
+      ]
+    },
+    {
+      "key": "r2-batch",
+      "arm": "atlias-batch",
+      "wholeAttemptCountedOnce": true,
+      "fullInputDelivered": true,
+      "inputSha256": "476985cd8ae5234e6d26c40bc99f44329acc4dc9e6e9ca877994492675210032",
+      "instructionSha256": "324b2bb2944b0886768c52c2af0ed9b74afceac47a1b8c642a7bf585a6d11200",
+      "packetSha256": "dc791cd1604fdc48825dedf649e084c10d37bdf6d8c0950bee4903042b20aba2",
+      "responseSha256": "f784adc7306970ae28b5527652e13de0c007f4c636ec7a4cc9748cc3427eb29c",
+      "nativeUsageReconciled": true,
+      "authRemoved": true,
+      "valid": true,
+      "members": [
+        {
+          "task": "context-money-64",
+          "originalGrade": true,
+          "solved": true,
+          "adversarialPassed": 114,
+          "adversarialCases": 114,
+          "protectedFiles": [
+            {
+              "file": "src/api.mjs",
+              "sha256": "fea38f26a0cd4102799dba49d668e9c65189c5e8058bdd91ceccd8c4e66e8d6e"
+            },
+            {
+              "file": "docs/contract.md",
+              "sha256": "fad74bbd8e31bd36474e089fd02d610858c3a04eaac7142f128c83147f73e42c"
+            },
+            {
+              "file": "package.json",
+              "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+            },
+            {
+              "file": "smoke.mjs",
+              "sha256": "cb698dcb9db17d7a061c0491243c5355c87a78b5cb4602f8d5e43b52b98106a4"
+            },
+            {
+              "file": "grade.mjs",
+              "sha256": "9a9e837b79a2611244a2d884c0e6c869b832e1429e2bcd7741205d1d2b180ecb"
+            }
+          ]
+        },
+        {
+          "task": "context-versions-64",
+          "originalGrade": true,
+          "solved": true,
+          "adversarialPassed": 100,
+          "adversarialCases": 100,
+          "protectedFiles": [
+            {
+              "file": "src/api.mjs",
+              "sha256": "fea38f26a0cd4102799dba49d668e9c65189c5e8058bdd91ceccd8c4e66e8d6e"
+            },
+            {
+              "file": "docs/contract.md",
+              "sha256": "d8874da00c74cd28442313effd1c95d99659a2ac38331685c8815432b2e6233d"
+            },
+            {
+              "file": "package.json",
+              "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+            },
+            {
+              "file": "smoke.mjs",
+              "sha256": "cb698dcb9db17d7a061c0491243c5355c87a78b5cb4602f8d5e43b52b98106a4"
+            },
+            {
+              "file": "grade.mjs",
+              "sha256": "f036cdd0381b3ed51e4c19504d52420f8a463bc892ebd371feea12f77d467ece"
+            }
+          ]
+        },
+        {
+          "task": "context-intervals-64",
+          "originalGrade": true,
+          "solved": true,
+          "adversarialPassed": 102,
+          "adversarialCases": 102,
+          "protectedFiles": [
+            {
+              "file": "src/api.mjs",
+              "sha256": "fea38f26a0cd4102799dba49d668e9c65189c5e8058bdd91ceccd8c4e66e8d6e"
+            },
+            {
+              "file": "docs/contract.md",
+              "sha256": "d00b8be1fd971957fa556a2a6dc48e065496b040656f48872ad37ad30775d4a7"
+            },
+            {
+              "file": "package.json",
+              "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+            },
+            {
+              "file": "smoke.mjs",
+              "sha256": "cb698dcb9db17d7a061c0491243c5355c87a78b5cb4602f8d5e43b52b98106a4"
+            },
+            {
+              "file": "grade.mjs",
+              "sha256": "cd894b72ab04d6da2da15269899b9c46501bca38d572fd86e854ca16603d82b6"
+            }
+          ]
+        },
+        {
+          "task": "context-unicode-64",
+          "originalGrade": true,
+          "solved": true,
+          "adversarialPassed": 100,
+          "adversarialCases": 100,
+          "protectedFiles": [
+            {
+              "file": "src/api.mjs",
+              "sha256": "fea38f26a0cd4102799dba49d668e9c65189c5e8058bdd91ceccd8c4e66e8d6e"
+            },
+            {
+              "file": "docs/contract.md",
+              "sha256": "c2e59487b175314daf27c8f741cda3d31cdda8f81d068ed0b97d778d03d921d2"
+            },
+            {
+              "file": "package.json",
+              "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+            },
+            {
+              "file": "smoke.mjs",
+              "sha256": "cb698dcb9db17d7a061c0491243c5355c87a78b5cb4602f8d5e43b52b98106a4"
+            },
+            {
+              "file": "grade.mjs",
+              "sha256": "41b6b73f137d85edb95864ac0f87b62567e46672a0418e45ab4873b41f2eee04"
+            }
+          ]
+        },
+        {
+          "task": "context-paths-64",
+          "originalGrade": true,
+          "solved": true,
+          "adversarialPassed": 115,
+          "adversarialCases": 115,
+          "protectedFiles": [
+            {
+              "file": "src/api.mjs",
+              "sha256": "fea38f26a0cd4102799dba49d668e9c65189c5e8058bdd91ceccd8c4e66e8d6e"
+            },
+            {
+              "file": "docs/contract.md",
+              "sha256": "999362df92d38800055b22bb0a393d96e8e62261c732a17877c57b7f49ca0abd"
+            },
+            {
+              "file": "package.json",
+              "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+            },
+            {
+              "file": "smoke.mjs",
+              "sha256": "cb698dcb9db17d7a061c0491243c5355c87a78b5cb4602f8d5e43b52b98106a4"
+            },
+            {
+              "file": "grade.mjs",
+              "sha256": "5d0ff6f3b1e10c7ea6567bb74979b5f5293bb236478214d52b67cbe4b7339a22"
+            }
+          ]
+        },
+        {
+          "task": "context-merge-64",
+          "originalGrade": true,
+          "solved": true,
+          "adversarialPassed": 110,
+          "adversarialCases": 110,
+          "protectedFiles": [
+            {
+              "file": "src/api.mjs",
+              "sha256": "fea38f26a0cd4102799dba49d668e9c65189c5e8058bdd91ceccd8c4e66e8d6e"
+            },
+            {
+              "file": "docs/contract.md",
+              "sha256": "f1a84a54f2079c63c190ec2349b9754e4f2010cfba5ac7a136ff1d32e411dcc9"
+            },
+            {
+              "file": "package.json",
+              "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+            },
+            {
+              "file": "smoke.mjs",
+              "sha256": "cb698dcb9db17d7a061c0491243c5355c87a78b5cb4602f8d5e43b52b98106a4"
+            },
+            {
+              "file": "grade.mjs",
+              "sha256": "363237af422762e51b9535a2e5df21bab57229b2c0ab34acebb4cd5d90e86c84"
+            }
+          ]
+        },
+        {
+          "task": "context-ttl-64",
+          "originalGrade": true,
+          "solved": true,
+          "adversarialPassed": 102,
+          "adversarialCases": 102,
+          "protectedFiles": [
+            {
+              "file": "src/api.mjs",
+              "sha256": "fea38f26a0cd4102799dba49d668e9c65189c5e8058bdd91ceccd8c4e66e8d6e"
+            },
+            {
+              "file": "docs/contract.md",
+              "sha256": "aa55dbb8988251fccde6d5e0113f8fe0f1e9227f695e2112504914d6036f9084"
+            },
+            {
+              "file": "package.json",
+              "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+            },
+            {
+              "file": "smoke.mjs",
+              "sha256": "cb698dcb9db17d7a061c0491243c5355c87a78b5cb4602f8d5e43b52b98106a4"
+            },
+            {
+              "file": "grade.mjs",
+              "sha256": "6604e187e8117c0c3f745af77c5e03e85d8eb5eac1815c43cb590653f1019377"
+            }
+          ]
+        },
+        {
+          "task": "context-csv-64",
+          "originalGrade": true,
+          "solved": true,
+          "adversarialPassed": 107,
+          "adversarialCases": 107,
+          "protectedFiles": [
+            {
+              "file": "src/api.mjs",
+              "sha256": "fea38f26a0cd4102799dba49d668e9c65189c5e8058bdd91ceccd8c4e66e8d6e"
+            },
+            {
+              "file": "docs/contract.md",
+              "sha256": "3194062aba29203f7d537a0050cd8cfcd15cdf3542479bfc8dfdc3e9c4de3c74"
+            },
+            {
+              "file": "package.json",
+              "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+            },
+            {
+              "file": "smoke.mjs",
+              "sha256": "cb698dcb9db17d7a061c0491243c5355c87a78b5cb4602f8d5e43b52b98106a4"
+            },
+            {
+              "file": "grade.mjs",
+              "sha256": "dd974050725c460d197c42de884803ed65167c48d9aba8f83167120742930d61"
+            }
+          ]
+        },
+        {
+          "task": "context-pagination-64",
+          "originalGrade": true,
+          "solved": true,
+          "adversarialPassed": 102,
+          "adversarialCases": 102,
+          "protectedFiles": [
+            {
+              "file": "src/api.mjs",
+              "sha256": "fea38f26a0cd4102799dba49d668e9c65189c5e8058bdd91ceccd8c4e66e8d6e"
+            },
+            {
+              "file": "docs/contract.md",
+              "sha256": "18428f67e6d8cc3c36d7cc81851ed105945ef6231b0f95b32cf7e0a62489c359"
+            },
+            {
+              "file": "package.json",
+              "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+            },
+            {
+              "file": "smoke.mjs",
+              "sha256": "cb698dcb9db17d7a061c0491243c5355c87a78b5cb4602f8d5e43b52b98106a4"
+            },
+            {
+              "file": "grade.mjs",
+              "sha256": "a8084b9eab2244526838310c2047954464f3d5c1f6f0a962a02690e51eb58544"
+            }
+          ]
+        },
+        {
+          "task": "context-topology-64",
+          "originalGrade": true,
+          "solved": true,
+          "adversarialPassed": 104,
+          "adversarialCases": 104,
+          "protectedFiles": [
+            {
+              "file": "src/api.mjs",
+              "sha256": "fea38f26a0cd4102799dba49d668e9c65189c5e8058bdd91ceccd8c4e66e8d6e"
+            },
+            {
+              "file": "docs/contract.md",
+              "sha256": "204cd606db0a070b31102ac9067f61c9fa5020afef4e2badd48f9707c4c1e719"
+            },
+            {
+              "file": "package.json",
+              "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+            },
+            {
+              "file": "smoke.mjs",
+              "sha256": "cb698dcb9db17d7a061c0491243c5355c87a78b5cb4602f8d5e43b52b98106a4"
+            },
+            {
+              "file": "grade.mjs",
+              "sha256": "9936b740d4531ccd935837b2d0342f24a56bcbe0f39ccff411839fa37030b364"
+            }
+          ]
+        },
+        {
+          "task": "context-dedupe-64",
+          "originalGrade": true,
+          "solved": true,
+          "adversarialPassed": 100,
+          "adversarialCases": 100,
+          "protectedFiles": [
+            {
+              "file": "src/api.mjs",
+              "sha256": "fea38f26a0cd4102799dba49d668e9c65189c5e8058bdd91ceccd8c4e66e8d6e"
+            },
+            {
+              "file": "docs/contract.md",
+              "sha256": "fd0d2e3dac9fca893d904b62226f5f05686e5eb994ca819b7302e8c9d0662df9"
+            },
+            {
+              "file": "package.json",
+              "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+            },
+            {
+              "file": "smoke.mjs",
+              "sha256": "cb698dcb9db17d7a061c0491243c5355c87a78b5cb4602f8d5e43b52b98106a4"
+            },
+            {
+              "file": "grade.mjs",
+              "sha256": "adcbb2a1a4c937ab5d74a6be74cb19fafffca9a105675ce4395f809d22d748fa"
+            }
+          ]
+        },
+        {
+          "task": "context-query-64",
+          "originalGrade": true,
+          "solved": true,
+          "adversarialPassed": 104,
+          "adversarialCases": 104,
+          "protectedFiles": [
+            {
+              "file": "src/api.mjs",
+              "sha256": "fea38f26a0cd4102799dba49d668e9c65189c5e8058bdd91ceccd8c4e66e8d6e"
+            },
+            {
+              "file": "docs/contract.md",
+              "sha256": "4068daa2df96262b343338b42ccae2c0548d0ccdbf94a80c81c22a333c49363e"
+            },
+            {
+              "file": "package.json",
+              "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+            },
+            {
+              "file": "smoke.mjs",
+              "sha256": "cb698dcb9db17d7a061c0491243c5355c87a78b5cb4602f8d5e43b52b98106a4"
+            },
+            {
+              "file": "grade.mjs",
+              "sha256": "288e645a02c4228972980f095a723da533262ec310a3dbcc5f1cf6e05763a369"
+            }
+          ]
+        }
+      ],
+      "costs": {
+        "raw": 12153,
+        "cached": 0,
+        "output": 3935,
+        "uncachedPlusOutput": 16088,
+        "peak": 12153
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-independent-batch-1001\\runs\\r2-batch\\attempt\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T12-39-56-01a0f88d-2764-7d51-8e48-1f244f764527.jsonl",
+          "sha256": "0ccd63cc1c2e6ca62b1fb156edf5a400f2e1edc1a09bb8ddca17dcdc8ffa0feb"
+        }
+      ]
+    },
+    {
+      "key": "r2-plain-context-money-64",
+      "arm": "plain",
+      "wholeAttemptCountedOnce": true,
+      "fullInputDelivered": true,
+      "inputSha256": "a1ffbe57572c753f020e86e88a38de53d111630804c1deb61b779dfce42e0c65",
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "packetSha256": null,
+      "responseSha256": null,
+      "nativeUsageReconciled": true,
+      "authRemoved": true,
+      "valid": true,
+      "members": [
+        {
+          "task": "context-money-64",
+          "originalGrade": true,
+          "solved": true,
+          "adversarialPassed": 114,
+          "adversarialCases": 114,
+          "protectedFiles": [
+            {
+              "file": "src/api.mjs",
+              "sha256": "fea38f26a0cd4102799dba49d668e9c65189c5e8058bdd91ceccd8c4e66e8d6e"
+            },
+            {
+              "file": "docs/contract.md",
+              "sha256": "fad74bbd8e31bd36474e089fd02d610858c3a04eaac7142f128c83147f73e42c"
+            },
+            {
+              "file": "package.json",
+              "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+            },
+            {
+              "file": "smoke.mjs",
+              "sha256": "cb698dcb9db17d7a061c0491243c5355c87a78b5cb4602f8d5e43b52b98106a4"
+            },
+            {
+              "file": "grade.mjs",
+              "sha256": "9a9e837b79a2611244a2d884c0e6c869b832e1429e2bcd7741205d1d2b180ecb"
+            }
+          ]
+        }
+      ],
+      "costs": {
+        "raw": 124771,
+        "cached": 111744,
+        "output": 1800,
+        "uncachedPlusOutput": 14827,
+        "peak": 17047
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-independent-batch-1001\\runs\\r2-plain-context-money-64\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T12-42-17-01a0f88f-4ff6-7b20-a7e2-241f101e9748.jsonl",
+          "sha256": "d3c93a2cf583a682b7f67beb9105a37be79e01f5cc746fc44f6d815e8aa94b65"
+        }
+      ]
+    },
+    {
+      "key": "r2-plain-context-versions-64",
+      "arm": "plain",
+      "wholeAttemptCountedOnce": true,
+      "fullInputDelivered": true,
+      "inputSha256": "a1ffbe57572c753f020e86e88a38de53d111630804c1deb61b779dfce42e0c65",
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "packetSha256": null,
+      "responseSha256": null,
+      "nativeUsageReconciled": true,
+      "authRemoved": true,
+      "valid": true,
+      "members": [
+        {
+          "task": "context-versions-64",
+          "originalGrade": true,
+          "solved": true,
+          "adversarialPassed": 100,
+          "adversarialCases": 100,
+          "protectedFiles": [
+            {
+              "file": "src/api.mjs",
+              "sha256": "fea38f26a0cd4102799dba49d668e9c65189c5e8058bdd91ceccd8c4e66e8d6e"
+            },
+            {
+              "file": "docs/contract.md",
+              "sha256": "d8874da00c74cd28442313effd1c95d99659a2ac38331685c8815432b2e6233d"
+            },
+            {
+              "file": "package.json",
+              "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+            },
+            {
+              "file": "smoke.mjs",
+              "sha256": "cb698dcb9db17d7a061c0491243c5355c87a78b5cb4602f8d5e43b52b98106a4"
+            },
+            {
+              "file": "grade.mjs",
+              "sha256": "f036cdd0381b3ed51e4c19504d52420f8a463bc892ebd371feea12f77d467ece"
+            }
+          ]
+        }
+      ],
+      "costs": {
+        "raw": 73901,
+        "cached": 66304,
+        "output": 1519,
+        "uncachedPlusOutput": 9116,
+        "peak": 16608
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-independent-batch-1001\\runs\\r2-plain-context-versions-64\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T12-44-49-01a0f891-a04c-7a70-8889-6cc7fd6c07ea.jsonl",
+          "sha256": "c3ffff3ae66139d52f5924950dd2e8e54d40b2c18062e2ae186bedee1ddc75a6"
+        }
+      ]
+    },
+    {
+      "key": "r2-plain-context-intervals-64",
+      "arm": "plain",
+      "wholeAttemptCountedOnce": true,
+      "fullInputDelivered": true,
+      "inputSha256": "a1ffbe57572c753f020e86e88a38de53d111630804c1deb61b779dfce42e0c65",
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "packetSha256": null,
+      "responseSha256": null,
+      "nativeUsageReconciled": true,
+      "authRemoved": true,
+      "valid": true,
+      "members": [
+        {
+          "task": "context-intervals-64",
+          "originalGrade": true,
+          "solved": true,
+          "adversarialPassed": 102,
+          "adversarialCases": 102,
+          "protectedFiles": [
+            {
+              "file": "src/api.mjs",
+              "sha256": "fea38f26a0cd4102799dba49d668e9c65189c5e8058bdd91ceccd8c4e66e8d6e"
+            },
+            {
+              "file": "docs/contract.md",
+              "sha256": "d00b8be1fd971957fa556a2a6dc48e065496b040656f48872ad37ad30775d4a7"
+            },
+            {
+              "file": "package.json",
+              "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+            },
+            {
+              "file": "smoke.mjs",
+              "sha256": "cb698dcb9db17d7a061c0491243c5355c87a78b5cb4602f8d5e43b52b98106a4"
+            },
+            {
+              "file": "grade.mjs",
+              "sha256": "cd894b72ab04d6da2da15269899b9c46501bca38d572fd86e854ca16603d82b6"
+            }
+          ]
+        }
+      ],
+      "costs": {
+        "raw": 87518,
+        "cached": 64768,
+        "output": 1568,
+        "uncachedPlusOutput": 24318,
+        "peak": 16222
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-independent-batch-1001\\runs\\r2-plain-context-intervals-64\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T12-46-38-01a0f893-4bd6-7de3-932d-188cf35cad51.jsonl",
+          "sha256": "162a20310d729852bbb4cde2e32734b94498cd7b43ac6fb60ee05da05ec1c19e"
+        }
+      ]
+    },
+    {
+      "key": "r2-plain-context-unicode-64",
+      "arm": "plain",
+      "wholeAttemptCountedOnce": true,
+      "fullInputDelivered": true,
+      "inputSha256": "a1ffbe57572c753f020e86e88a38de53d111630804c1deb61b779dfce42e0c65",
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "packetSha256": null,
+      "responseSha256": null,
+      "nativeUsageReconciled": true,
+      "authRemoved": true,
+      "valid": true,
+      "members": [
+        {
+          "task": "context-unicode-64",
+          "originalGrade": true,
+          "solved": true,
+          "adversarialPassed": 100,
+          "adversarialCases": 100,
+          "protectedFiles": [
+            {
+              "file": "src/api.mjs",
+              "sha256": "fea38f26a0cd4102799dba49d668e9c65189c5e8058bdd91ceccd8c4e66e8d6e"
+            },
+            {
+              "file": "docs/contract.md",
+              "sha256": "c2e59487b175314daf27c8f741cda3d31cdda8f81d068ed0b97d778d03d921d2"
+            },
+            {
+              "file": "package.json",
+              "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+            },
+            {
+              "file": "smoke.mjs",
+              "sha256": "cb698dcb9db17d7a061c0491243c5355c87a78b5cb4602f8d5e43b52b98106a4"
+            },
+            {
+              "file": "grade.mjs",
+              "sha256": "41b6b73f137d85edb95864ac0f87b62567e46672a0418e45ab4873b41f2eee04"
+            }
+          ]
+        }
+      ],
+      "costs": {
+        "raw": 131998,
+        "cached": 96640,
+        "output": 1239,
+        "uncachedPlusOutput": 36597,
+        "peak": 17002
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-independent-batch-1001\\runs\\r2-plain-context-unicode-64\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T12-49-02-01a0f895-7d29-7d20-a736-94dc2fa746e5.jsonl",
+          "sha256": "f1f75cd50fa04a02cc9058fa8adc6c9a1a5ef4e5e5b4e763d7a03aa20bd41573"
+        }
+      ]
+    },
+    {
+      "key": "r2-plain-context-paths-64",
+      "arm": "plain",
+      "wholeAttemptCountedOnce": true,
+      "fullInputDelivered": true,
+      "inputSha256": "a1ffbe57572c753f020e86e88a38de53d111630804c1deb61b779dfce42e0c65",
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "packetSha256": null,
+      "responseSha256": null,
+      "nativeUsageReconciled": true,
+      "authRemoved": true,
+      "valid": true,
+      "members": [
+        {
+          "task": "context-paths-64",
+          "originalGrade": true,
+          "solved": true,
+          "adversarialPassed": 115,
+          "adversarialCases": 115,
+          "protectedFiles": [
+            {
+              "file": "src/api.mjs",
+              "sha256": "fea38f26a0cd4102799dba49d668e9c65189c5e8058bdd91ceccd8c4e66e8d6e"
+            },
+            {
+              "file": "docs/contract.md",
+              "sha256": "999362df92d38800055b22bb0a393d96e8e62261c732a17877c57b7f49ca0abd"
+            },
+            {
+              "file": "package.json",
+              "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+            },
+            {
+              "file": "smoke.mjs",
+              "sha256": "cb698dcb9db17d7a061c0491243c5355c87a78b5cb4602f8d5e43b52b98106a4"
+            },
+            {
+              "file": "grade.mjs",
+              "sha256": "5d0ff6f3b1e10c7ea6567bb74979b5f5293bb236478214d52b67cbe4b7339a22"
+            }
+          ]
+        }
+      ],
+      "costs": {
+        "raw": 74122,
+        "cached": 45056,
+        "output": 1649,
+        "uncachedPlusOutput": 30715,
+        "peak": 16761
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-independent-batch-1001\\runs\\r2-plain-context-paths-64\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T12-52-24-01a0f898-92ca-78b3-9591-0bf80309823c.jsonl",
+          "sha256": "74b318b7a6bca0cbf94caab5392106b93850ee7215e0e8c70e87855dd2169921"
+        }
+      ]
+    },
+    {
+      "key": "r2-plain-context-merge-64",
+      "arm": "plain",
+      "wholeAttemptCountedOnce": true,
+      "fullInputDelivered": true,
+      "inputSha256": "a1ffbe57572c753f020e86e88a38de53d111630804c1deb61b779dfce42e0c65",
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "packetSha256": null,
+      "responseSha256": null,
+      "nativeUsageReconciled": true,
+      "authRemoved": true,
+      "valid": true,
+      "members": [
+        {
+          "task": "context-merge-64",
+          "originalGrade": true,
+          "solved": true,
+          "adversarialPassed": 110,
+          "adversarialCases": 110,
+          "protectedFiles": [
+            {
+              "file": "src/api.mjs",
+              "sha256": "fea38f26a0cd4102799dba49d668e9c65189c5e8058bdd91ceccd8c4e66e8d6e"
+            },
+            {
+              "file": "docs/contract.md",
+              "sha256": "f1a84a54f2079c63c190ec2349b9754e4f2010cfba5ac7a136ff1d32e411dcc9"
+            },
+            {
+              "file": "package.json",
+              "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+            },
+            {
+              "file": "smoke.mjs",
+              "sha256": "cb698dcb9db17d7a061c0491243c5355c87a78b5cb4602f8d5e43b52b98106a4"
+            },
+            {
+              "file": "grade.mjs",
+              "sha256": "363237af422762e51b9535a2e5df21bab57229b2c0ab34acebb4cd5d90e86c84"
+            }
+          ]
+        }
+      ],
+      "costs": {
+        "raw": 92633,
+        "cached": 83584,
+        "output": 2519,
+        "uncachedPlusOutput": 11568,
+        "peak": 17679
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-independent-batch-1001\\runs\\r2-plain-context-merge-64\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T12-54-31-01a0f89a-8172-7f11-ae2a-789bb715ada4.jsonl",
+          "sha256": "4463e6f7dcf0ab18e34422c67e4fb269ef85dc626bf7289c0b01cfc41de4eaba"
+        }
+      ]
+    },
+    {
+      "key": "r2-plain-context-ttl-64",
+      "arm": "plain",
+      "wholeAttemptCountedOnce": true,
+      "fullInputDelivered": true,
+      "inputSha256": "a1ffbe57572c753f020e86e88a38de53d111630804c1deb61b779dfce42e0c65",
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "packetSha256": null,
+      "responseSha256": null,
+      "nativeUsageReconciled": true,
+      "authRemoved": true,
+      "valid": true,
+      "members": [
+        {
+          "task": "context-ttl-64",
+          "originalGrade": true,
+          "solved": true,
+          "adversarialPassed": 102,
+          "adversarialCases": 102,
+          "protectedFiles": [
+            {
+              "file": "src/api.mjs",
+              "sha256": "fea38f26a0cd4102799dba49d668e9c65189c5e8058bdd91ceccd8c4e66e8d6e"
+            },
+            {
+              "file": "docs/contract.md",
+              "sha256": "aa55dbb8988251fccde6d5e0113f8fe0f1e9227f695e2112504914d6036f9084"
+            },
+            {
+              "file": "package.json",
+              "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+            },
+            {
+              "file": "smoke.mjs",
+              "sha256": "cb698dcb9db17d7a061c0491243c5355c87a78b5cb4602f8d5e43b52b98106a4"
+            },
+            {
+              "file": "grade.mjs",
+              "sha256": "6604e187e8117c0c3f745af77c5e03e85d8eb5eac1815c43cb590653f1019377"
+            }
+          ]
+        }
+      ],
+      "costs": {
+        "raw": 72512,
+        "cached": 51200,
+        "output": 1707,
+        "uncachedPlusOutput": 23019,
+        "peak": 16290
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-independent-batch-1001\\runs\\r2-plain-context-ttl-64\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T12-57-17-01a0f89d-0b64-7183-9e58-f8c21a6ec915.jsonl",
+          "sha256": "8df151282941536d8618a0ceb7dd0820f9b1a5381410f9f5eeddf37cc82c08ab"
+        }
+      ]
+    },
+    {
+      "key": "r2-plain-context-csv-64",
+      "arm": "plain",
+      "wholeAttemptCountedOnce": true,
+      "fullInputDelivered": true,
+      "inputSha256": "a1ffbe57572c753f020e86e88a38de53d111630804c1deb61b779dfce42e0c65",
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "packetSha256": null,
+      "responseSha256": null,
+      "nativeUsageReconciled": true,
+      "authRemoved": true,
+      "valid": true,
+      "members": [
+        {
+          "task": "context-csv-64",
+          "originalGrade": true,
+          "solved": true,
+          "adversarialPassed": 107,
+          "adversarialCases": 107,
+          "protectedFiles": [
+            {
+              "file": "src/api.mjs",
+              "sha256": "fea38f26a0cd4102799dba49d668e9c65189c5e8058bdd91ceccd8c4e66e8d6e"
+            },
+            {
+              "file": "docs/contract.md",
+              "sha256": "3194062aba29203f7d537a0050cd8cfcd15cdf3542479bfc8dfdc3e9c4de3c74"
+            },
+            {
+              "file": "package.json",
+              "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+            },
+            {
+              "file": "smoke.mjs",
+              "sha256": "cb698dcb9db17d7a061c0491243c5355c87a78b5cb4602f8d5e43b52b98106a4"
+            },
+            {
+              "file": "grade.mjs",
+              "sha256": "dd974050725c460d197c42de884803ed65167c48d9aba8f83167120742930d61"
+            }
+          ]
+        }
+      ],
+      "costs": {
+        "raw": 75124,
+        "cached": 62592,
+        "output": 1487,
+        "uncachedPlusOutput": 14019,
+        "peak": 18184
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-independent-batch-1001\\runs\\r2-plain-context-csv-64\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T12-59-17-01a0f89e-e0ec-7b83-abec-a3c19fe5f568.jsonl",
+          "sha256": "3a9f804fcb9dfb8e981313c7b9d719ba6bcb5711f9359a0ec8f9b3a33e5f01bd"
+        }
+      ]
+    },
+    {
+      "key": "r2-plain-context-pagination-64",
+      "arm": "plain",
+      "wholeAttemptCountedOnce": true,
+      "fullInputDelivered": true,
+      "inputSha256": "a1ffbe57572c753f020e86e88a38de53d111630804c1deb61b779dfce42e0c65",
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "packetSha256": null,
+      "responseSha256": null,
+      "nativeUsageReconciled": true,
+      "authRemoved": true,
+      "valid": true,
+      "members": [
+        {
+          "task": "context-pagination-64",
+          "originalGrade": true,
+          "solved": true,
+          "adversarialPassed": 102,
+          "adversarialCases": 102,
+          "protectedFiles": [
+            {
+              "file": "src/api.mjs",
+              "sha256": "fea38f26a0cd4102799dba49d668e9c65189c5e8058bdd91ceccd8c4e66e8d6e"
+            },
+            {
+              "file": "docs/contract.md",
+              "sha256": "18428f67e6d8cc3c36d7cc81851ed105945ef6231b0f95b32cf7e0a62489c359"
+            },
+            {
+              "file": "package.json",
+              "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+            },
+            {
+              "file": "smoke.mjs",
+              "sha256": "cb698dcb9db17d7a061c0491243c5355c87a78b5cb4602f8d5e43b52b98106a4"
+            },
+            {
+              "file": "grade.mjs",
+              "sha256": "a8084b9eab2244526838310c2047954464f3d5c1f6f0a962a02690e51eb58544"
+            }
+          ]
+        }
+      ],
+      "costs": {
+        "raw": 73750,
+        "cached": 54400,
+        "output": 1462,
+        "uncachedPlusOutput": 20812,
+        "peak": 16621
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-independent-batch-1001\\runs\\r2-plain-context-pagination-64\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T13-01-02-01a0f8a0-7b68-77d3-a8a8-c37a8555e5c4.jsonl",
+          "sha256": "32694fd394e940f2e1490e8f45d6f4c073dc08196b80eafb2db0eab28e576d38"
+        }
+      ]
+    },
+    {
+      "key": "r2-plain-context-topology-64",
+      "arm": "plain",
+      "wholeAttemptCountedOnce": true,
+      "fullInputDelivered": true,
+      "inputSha256": "a1ffbe57572c753f020e86e88a38de53d111630804c1deb61b779dfce42e0c65",
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "packetSha256": null,
+      "responseSha256": null,
+      "nativeUsageReconciled": true,
+      "authRemoved": true,
+      "valid": true,
+      "members": [
+        {
+          "task": "context-topology-64",
+          "originalGrade": true,
+          "solved": true,
+          "adversarialPassed": 104,
+          "adversarialCases": 104,
+          "protectedFiles": [
+            {
+              "file": "src/api.mjs",
+              "sha256": "fea38f26a0cd4102799dba49d668e9c65189c5e8058bdd91ceccd8c4e66e8d6e"
+            },
+            {
+              "file": "docs/contract.md",
+              "sha256": "204cd606db0a070b31102ac9067f61c9fa5020afef4e2badd48f9707c4c1e719"
+            },
+            {
+              "file": "package.json",
+              "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+            },
+            {
+              "file": "smoke.mjs",
+              "sha256": "cb698dcb9db17d7a061c0491243c5355c87a78b5cb4602f8d5e43b52b98106a4"
+            },
+            {
+              "file": "grade.mjs",
+              "sha256": "9936b740d4531ccd935837b2d0342f24a56bcbe0f39ccff411839fa37030b364"
+            }
+          ]
+        }
+      ],
+      "costs": {
+        "raw": 73695,
+        "cached": 37760,
+        "output": 1622,
+        "uncachedPlusOutput": 37557,
+        "peak": 16625
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-independent-batch-1001\\runs\\r2-plain-context-topology-64\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T13-03-00-01a0f8a2-44e6-7042-8fbe-8bf2e1ee60f3.jsonl",
+          "sha256": "b21a03b56e67e8d09457e57e7970cf25ecf269b5cf1cb9c320c3cdec343585a5"
+        }
+      ]
+    },
+    {
+      "key": "r2-plain-context-dedupe-64",
+      "arm": "plain",
+      "wholeAttemptCountedOnce": true,
+      "fullInputDelivered": true,
+      "inputSha256": "a1ffbe57572c753f020e86e88a38de53d111630804c1deb61b779dfce42e0c65",
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "packetSha256": null,
+      "responseSha256": null,
+      "nativeUsageReconciled": true,
+      "authRemoved": true,
+      "valid": true,
+      "members": [
+        {
+          "task": "context-dedupe-64",
+          "originalGrade": true,
+          "solved": true,
+          "adversarialPassed": 100,
+          "adversarialCases": 100,
+          "protectedFiles": [
+            {
+              "file": "src/api.mjs",
+              "sha256": "fea38f26a0cd4102799dba49d668e9c65189c5e8058bdd91ceccd8c4e66e8d6e"
+            },
+            {
+              "file": "docs/contract.md",
+              "sha256": "fd0d2e3dac9fca893d904b62226f5f05686e5eb994ca819b7302e8c9d0662df9"
+            },
+            {
+              "file": "package.json",
+              "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+            },
+            {
+              "file": "smoke.mjs",
+              "sha256": "cb698dcb9db17d7a061c0491243c5355c87a78b5cb4602f8d5e43b52b98106a4"
+            },
+            {
+              "file": "grade.mjs",
+              "sha256": "adcbb2a1a4c937ab5d74a6be74cb19fafffca9a105675ce4395f809d22d748fa"
+            }
+          ]
+        }
+      ],
+      "costs": {
+        "raw": 71426,
+        "cached": 52736,
+        "output": 1484,
+        "uncachedPlusOutput": 20174,
+        "peak": 16119
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-independent-batch-1001\\runs\\r2-plain-context-dedupe-64\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T13-04-57-01a0f8a4-10fc-7da3-8e6d-cde4d469a965.jsonl",
+          "sha256": "f23e81a7afed876faf9f20f8a1ff2faa30f188db6483bd08b118c1ec5e4b94fc"
+        }
+      ]
+    },
+    {
+      "key": "r2-plain-context-query-64",
+      "arm": "plain",
+      "wholeAttemptCountedOnce": true,
+      "fullInputDelivered": true,
+      "inputSha256": "a1ffbe57572c753f020e86e88a38de53d111630804c1deb61b779dfce42e0c65",
+      "instructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "packetSha256": null,
+      "responseSha256": null,
+      "nativeUsageReconciled": true,
+      "authRemoved": true,
+      "valid": true,
+      "members": [
+        {
+          "task": "context-query-64",
+          "originalGrade": true,
+          "solved": true,
+          "adversarialPassed": 104,
+          "adversarialCases": 104,
+          "protectedFiles": [
+            {
+              "file": "src/api.mjs",
+              "sha256": "fea38f26a0cd4102799dba49d668e9c65189c5e8058bdd91ceccd8c4e66e8d6e"
+            },
+            {
+              "file": "docs/contract.md",
+              "sha256": "4068daa2df96262b343338b42ccae2c0548d0ccdbf94a80c81c22a333c49363e"
+            },
+            {
+              "file": "package.json",
+              "sha256": "92e42e4f5a564b383165f841a6760229a8c4844c94350a3c81781c4350594e5d"
+            },
+            {
+              "file": "smoke.mjs",
+              "sha256": "cb698dcb9db17d7a061c0491243c5355c87a78b5cb4602f8d5e43b52b98106a4"
+            },
+            {
+              "file": "grade.mjs",
+              "sha256": "288e645a02c4228972980f095a723da533262ec310a3dbcc5f1cf6e05763a369"
+            }
+          ]
+        }
+      ],
+      "costs": {
+        "raw": 88751,
+        "cached": 67072,
+        "output": 1916,
+        "uncachedPlusOutput": 23595,
+        "peak": 16818
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-independent-batch-1001\\runs\\r2-plain-context-query-64\\home\\.codex\\sessions\\2026\\10\\01\\rollout-2026-10-01T13-07-23-01a0f8a6-49b3-7732-91b8-058249753abc.jsonl",
+          "sha256": "ed05eb608dc6673f26ddfa2474fc91a22811bd64358ee240f1ef67cbc6a5ef9d"
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Original protected grades retained without execution, repairs or regrading.",
+    "An audited prefix is not a completed comparison or savings result.",
+    "Two whole batches are coupled observations, not twenty-four independent token samples.",
+    "Reduced bounded-worker tools differ from native controls; finite contract scores do not prove generic capability or BOTH-host parity.",
+    "Native input/instructions/counters are audited; actual HTTP tool schemas and subscription allowance pricing are not established.",
+    "Claude real-model quality/OAuth activation/savings remain unmeasured."
+  ]
+}

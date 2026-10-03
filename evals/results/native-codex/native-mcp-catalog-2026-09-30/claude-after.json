@@ -1,0 +1,190 @@
+[
+  {
+    "nativeCLI": "2.1.285",
+    "source": "39a535aea1ae97161cff226220414ec276026a80",
+    "lean": false,
+    "modelCalls": 0,
+    "userMessagesSent": 0,
+    "status": {
+      "mcpServers": [
+        {
+          "name": "atlias",
+          "status": "connected",
+          "serverInfo": {
+            "name": "atlias",
+            "version": "3.8.1"
+          },
+          "config": {
+            "type": "stdio",
+            "command": "C:\\Program Files\\nodejs\\node.exe",
+            "args": [
+              "D:\\harness-work\\native-claude-catalog-wire-0930\\control\\bridge.mjs"
+            ]
+          },
+          "scope": "dynamic",
+          "source": "dynamic",
+          "tools": [
+            {
+              "name": "harness_recall",
+              "annotations": {}
+            },
+            {
+              "name": "harness_remember",
+              "annotations": {}
+            },
+            {
+              "name": "harness_progress",
+              "annotations": {}
+            },
+            {
+              "name": "harness_verify",
+              "annotations": {}
+            },
+            {
+              "name": "harness_digest",
+              "annotations": {}
+            },
+            {
+              "name": "graph_query",
+              "annotations": {}
+            },
+            {
+              "name": "graph_affected",
+              "annotations": {}
+            },
+            {
+              "name": "graph_explain",
+              "annotations": {}
+            },
+            {
+              "name": "harness_bench",
+              "annotations": {}
+            },
+            {
+              "name": "harness_status",
+              "annotations": {}
+            }
+          ]
+        }
+      ]
+    },
+    "initializationKeys": [
+      "commands",
+      "agents",
+      "output_style",
+      "available_output_styles",
+      "user_output_styles_dir",
+      "models",
+      "account",
+      "pid",
+      "current_permission_mode",
+      "feedback_mode",
+      "analytics_disabled",
+      "remote_control_auto_enable",
+      "remote_control_auto_connect_default",
+      "remote_control_available",
+      "remote_control_auto_on_by_default",
+      "ide_rc_auto_enable_gate",
+      "fast_mode_state",
+      "fast_mode_disabled_reason",
+      "session_state"
+    ],
+    "modelFrames": 0,
+    "catalogChars": 3565,
+    "catalogMatches": true
+  },
+  {
+    "nativeCLI": "2.1.285",
+    "source": "39a535aea1ae97161cff226220414ec276026a80",
+    "lean": true,
+    "modelCalls": 0,
+    "userMessagesSent": 0,
+    "status": {
+      "mcpServers": [
+        {
+          "name": "atlias",
+          "status": "connected",
+          "serverInfo": {
+            "name": "atlias",
+            "version": "3.8.1"
+          },
+          "config": {
+            "type": "stdio",
+            "command": "C:\\Program Files\\nodejs\\node.exe",
+            "args": [
+              "D:\\harness-work\\native-claude-catalog-wire-0930\\lean\\bridge.mjs"
+            ]
+          },
+          "scope": "dynamic",
+          "source": "dynamic",
+          "tools": [
+            {
+              "name": "harness_recall",
+              "annotations": {}
+            },
+            {
+              "name": "harness_remember",
+              "annotations": {}
+            },
+            {
+              "name": "harness_progress",
+              "annotations": {}
+            },
+            {
+              "name": "harness_verify",
+              "annotations": {}
+            },
+            {
+              "name": "harness_digest",
+              "annotations": {}
+            },
+            {
+              "name": "graph_query",
+              "annotations": {}
+            },
+            {
+              "name": "graph_affected",
+              "annotations": {}
+            },
+            {
+              "name": "graph_explain",
+              "annotations": {}
+            },
+            {
+              "name": "harness_bench",
+              "annotations": {}
+            },
+            {
+              "name": "harness_status",
+              "annotations": {}
+            }
+          ]
+        }
+      ]
+    },
+    "initializationKeys": [
+      "commands",
+      "agents",
+      "output_style",
+      "available_output_styles",
+      "user_output_styles_dir",
+      "models",
+      "account",
+      "pid",
+      "current_permission_mode",
+      "feedback_mode",
+      "analytics_disabled",
+      "remote_control_auto_enable",
+      "remote_control_auto_connect_default",
+      "remote_control_available",
+      "remote_control_auto_on_by_default",
+      "ide_rc_auto_enable_gate",
+      "fast_mode_state",
+      "fast_mode_disabled_reason",
+      "session_state"
+    ],
+    "modelFrames": 0,
+    "catalogChars": 2837,
+    "catalogMatches": true
+  }
+]

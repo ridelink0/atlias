@@ -1,0 +1,28 @@
+{
+  "source": "6ac9b6b7a1f5fa0950c7572d5236dfa4d2e2ad8e",
+  "nativeCLI": "0.159.0",
+  "model": "gpt-6.1-sol",
+  "effort": "medium",
+  "modelCalls": 1,
+  "hookTrustBypass": false,
+  "briefLabels": [
+    "[atlias 3.8.1] sub-harness linked to Codex"
+  ],
+  "generated": true,
+  "delivered": true,
+  "packChars": 770,
+  "packSha": "2181224f0253dbef",
+  "grade": true,
+  "tampered": [],
+  "exitCode": 0,
+  "timedOut": false,
+  "authRemoved": true,
+  "limitation": "One isolated functional delivery smoke, not a matched cost study or Claude model result.",
+  "pass": true,
+  "actualModels": [
+    "gpt-6.1-sol"
+  ],
+  "runtimeByteMatchedFiles": 40,
+  "taskSha256": "34bde3af8eb2fc486dd50617b883a35b9f4ff41e9f953478f4727635ead2b1d9",
+  "adversarialAudit": "passed; absent optional directories checked symmetrically"
+}
