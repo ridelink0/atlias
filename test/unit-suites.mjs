@@ -172,6 +172,9 @@ export default async function unitSuites({ suite, asyncSuite, check, PROJECT, TM
 
   suite('handoff helper expert', 'the handoff note helpers', () => {
     const cwd = path.join(U, 'progress-project');
+    const critical = '# Gev handoff\n\n## Files changed this session\n' + '- bulk.mjs\n'.repeat(500) + '\n## Checks run\n- node check.mjs (recorded outcome: fail)\n\n## Next\nPreserve count=0 and region=null.\n';
+    const recovered = progress.recoveryText(cwd, critical, 500);
+    check('long recovery preserves the next action and recorded failure with the original path', recovered.includes('Preserve count=0 and region=null.') && recovered.includes('recorded outcome: fail') && recovered.includes(progress.notePath(cwd)), { happened: recovered, why: 'Clipping the beginning loses the active action at the end of a handoff.', fix: 'Keep complete critical sections and the authoritative original path.' });
     fs.mkdirSync(cwd, { recursive: true });
     check('the next step lives beside the note', progress.nextPath(cwd).endsWith('next.md'), { happened: progress.nextPath(cwd), why: 'Both are read at session start.', fix: 'Check nextPath.' });
     const bare = progress.applyNext(cwd, 'first step');
@@ -403,7 +406,7 @@ export default async function unitSuites({ suite, asyncSuite, check, PROJECT, TM
     const b = brief.build({ cwd: C, session_id: sid, source: 'compact', transcript_path: transcript }, 'claude');
     const plain = brief.build({ cwd: C, session_id: sid + '-2', source: 'startup', transcript_path: transcript }, 'claude');
     const ev = core.eventsTail(sid).find((e) => e.kind === 'compact-audit');
-    check('the brief after a compaction carries a section naming what was left out, and the loss is counted', /## What the compaction summary left out/.test(b) && /kept 2 of 4/.test(b) && /src\/lexer\.mjs/.test(b) && ev && ev.missing === 2 && !/left out/.test(plain),
+    check('the brief after a compaction carries a section naming what was left out, and the loss is counted', /## What the compaction summary left out/.test(b) && /mentions 2 of 4/.test(b) && /not a semantic check/.test(b) && /src\/lexer\.mjs/.test(b) && ev && ev.missing === 2 && !/left out/.test(plain),
       { happened: `${(b.match(/## What the compaction summary left out[\s\S]{0,300}/) || ['(no section)'])[0]} | event ${JSON.stringify(ev)} | plain has it: ${/left out/.test(plain)}`, why: 'PreCompact "keep in the summary" text goes through a channel Claude Code does not document as delivered; this is the part that can be proved.', fix: 'brief.build audits at source compact.' });
     fs.rmSync(notePath, { force: true });
   });
