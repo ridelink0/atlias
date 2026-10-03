@@ -17,7 +17,7 @@ write([meta,start('a',now),start('b',now+100),usage(),usage(),done('a',now+1000)
 const r=await nativeSessionReport(file);check(r.completedTurns,2);check(r.unclosedTurns,1);check(r.completedTurnWallMs,1200);check(r.summedCompletedTurnWallMs,2100);check(r.conversationSpanMs,1500);check(r.reportedLifetimeTokens.total_tokens,110);check(r.nativePeakRecordedInputTokens,100);check(r.nativeUsageObservations,2);
 const req=(id,u=tokens(),thread=u)=>({session_id:meta.payload.id,response_id:id,usage:u,thread_token_usage:thread});
 const record=p=>({type:'token_usage_record',timestamp:iso(now+1000),payload:p});
-const compact=p=>({type:'compacted',timestamp:iso(now+2000),payload:{latest_token_usage_record:p}});
+const compact=p=>({type:'compacted',timestamp:iso(now+2000),payload:{latest_token_usage_record:p,compaction_response_id:p?.response_id}});
 const sum=(a,b)=>Object.fromEntries(Object.keys(a).map(k=>[k,a[k]+b[k]]));
 const normal=req('normal'),large=req('compact',tokens(300,100,20),sum(tokens(),tokens(300,100,20)));
 write([meta,usage(),record(normal),record(large),compact(large)]);const reconciled=await nativeSessionReport(file);
@@ -27,6 +27,9 @@ write([meta,record(large)]);check((await nativeSessionReport(file)).requestLifet
 write([meta,record(normal),compact(null)]);check((await nativeSessionReport(file)).requestLifetimeTokens,null);
 write([meta,usage()]);check((await nativeSessionReport(file)).requestAccounting.status,'request-records-unavailable');
 await reject([meta,record(normal),record(req('normal',tokens(200)))]);
+await reject([meta,record(normal),record(req('normal',tokens(),tokens(200)))]);
+const wrongCompact=compact(large);wrongCompact.payload.compaction_response_id='other-response';await reject([meta,record(normal),record(large),wrongCompact]);
+const unboundCompact=compact(normal);delete unboundCompact.payload.compaction_response_id;write([meta,record(normal),unboundCompact]);check((await nativeSessionReport(file)).requestLifetimeTokens,null);
 await reject([meta,record({...normal,session_id:'other Gev session'})]);
 await reject([meta,record({...normal,response_id:''})]);
 await reject([meta,record(large),record(req('later',tokens(),tokens()))]);
