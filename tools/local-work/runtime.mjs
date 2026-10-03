@@ -86,13 +86,22 @@ export function allowedShell(command) {
   return !args.includes('-e')&&!args.includes('--eval')&&!args.includes('-c')&&!args.some(x=>/^--require|^--import/.test(x));
 }
 export function placeholderOnly(value){return typeof value==='string'&&/^\[atlias elided \d+ characters here; the tool result says what came of them\]$/.test(value.trim());}
+export function withinWorkspace(cwd,input){
+  const base=fs.realpathSync(cwd),target=path.resolve(cwd,input||'.');
+  const contains=p=>{const rel=path.relative(base,p);return rel===''||(!rel.startsWith('..'+path.sep)&&rel!=='..'&&!path.isAbsolute(rel));};
+  if(!contains(target))return false;
+  let existing=target;while(true){try{fs.lstatSync(existing);break;}catch(e){if(e.code!=='ENOENT')return false;const parent=path.dirname(existing);if(parent===existing)return false;existing=parent;}}
+  try{return contains(fs.realpathSync(existing));}catch{return false;}
+}
 export function executor(knowledge,plugins=null) {
   return async(state,call,ask)=>{
     try {
-      const {runTool}=await import('../../lib/loop.mjs');
+      const {runTool,parsePatch}=await import('../../lib/loop.mjs');
       if(call.tool==='knowledge_search')return JSON.stringify(search(knowledge,String(call.query||'')));
       if(call.tool==='knowledge_read')return JSON.stringify(read(knowledge,call.fileId,call.offset,call.limit));
       if(plugins&&['plugin_catalog','mcp_plugin'].includes(call.tool))return await plugins.call(call);
+      const paths=call.tool==='apply_patch'?(parsePatch(String(call.input||'')).hunks||[]).flatMap(h=>[h.path,...(h.moveTo?[h.moveTo]:[])]):['read_file','outline','edit_file','write_file','list_dir','grep'].includes(call.tool)?[call.path||'.']:[];
+      if(paths.some(p=>!withinWorkspace(state.cwd,p)))return `Local file tools are scoped to ${state.cwd}. Use relative paths inside that workspace. Read outside research/session sources through knowledge_search/read; controller checks are outside the solver workspace.`;
       if((call.tool==='write_file'&&placeholderOnly(call.content))||(call.tool==='edit_file'&&placeholderOnly(call.new_string))||(call.tool==='apply_patch'&&String(call.input||'').split(/\r?\n/).some(s=>s.startsWith('+')&&placeholderOnly(s.slice(1)))))return 'Local write refused: an elided argument marker is not file content. Read the actual file or reconstruct the complete supported text; never save a placeholder as a handoff or source.';
       if(call.tool==='shell'&&!allowedShell(call.command))return 'Local worker shell requires an argv array for node script/test, npm test/run test/lint/build, rg or read-only git. Write a scoped script in this checkout; no shell chaining, cloud clients, publishing or destructive commands.';
       return await runTool(state,call,ask);

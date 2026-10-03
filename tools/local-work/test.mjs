@@ -5,7 +5,7 @@ import assert from 'node:assert/strict';
 import {fileURLToPath} from 'node:url';
 import {migrate,hash,excluded} from './migrate.mjs';
 import {search,read,manifest,inactive,priority} from './knowledge.mjs';
-import {localModel,localUrl,allowedShell,claim,localChat,atomic,child,placeholderOnly,executor} from './runtime.mjs';
+import {localModel,localUrl,allowedShell,claim,localChat,atomic,child,placeholderOnly,executor,withinWorkspace} from './runtime.mjs';
 import {checkProtected,protectedFiles,workerEnv,phaseFailed,protectionBaseline,controllerEnv} from './worker.mjs';
 import {CASES,grade} from './select.mjs';
 import {StdioClient,pluginExecutor} from './plugins.mjs';
@@ -128,5 +128,9 @@ try {
  check('documentation explaining a marker is valid content',()=>assert(!placeholderOnly('Gev observed: '+marker+'; inspect saved evidence.')));
  const blockedWrite=await executor(dest)({cwd:temp},{tool:'write_file',path:'HANDOFF.md',content:marker});
  check('real dispatcher refuses marker before any file write',()=>assert(blockedWrite.includes('refused')&&!fs.existsSync(path.join(temp,'HANDOFF.md'))));
+ check('relative workspace paths admitted',()=>assert(withinWorkspace(temp,'new-file.mjs')));
+ check('parent paths and sibling-prefix paths refused',()=>assert(!withinWorkspace(temp,'../outside')&&!withinWorkspace(temp,temp+'-sibling/file')));
+ const scoped=await executor(dest)({cwd:temp},{tool:'read_file',path:path.join(path.dirname(temp),'outside.txt')});
+ check('outside read returns actual workspace instead of exposing controller',()=>assert(scoped.includes('scoped to '+temp)));
  console.log(`${checks} local migration/runtime functional and adversarial controls passed`);
 } finally {fs.rmSync(temp,{recursive:true,force:true});}
