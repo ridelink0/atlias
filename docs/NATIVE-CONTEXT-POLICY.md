@@ -14,6 +14,8 @@ The [Claude environment reference](https://code.claude.com/docs/en/env-vars) doc
 
 ## New studies only
 
+Actual source81 subscription compaction exposed a different counter path from the scripted provider: legacy event_msg totals and peaks omit compaction requests. Complete recorded request accounting requires token_usage_record and compacted.latest_token_usage_record, deduplicated by response identity and reconciled to original thread totals. The [progressive findings](PROGRESSIVE-COMPACTION-FINDINGS.md) retain the adverse corrected prefix. Synthetic cumulative accounting does not establish the genuine subscription counter behavior; never use event-only peaks as complete request metrics after this evidence.
+
 `tools/native-job/context-policy.mjs` returns explicit argv/environment overrides without launching a process or editing settings. Null preserves defaults. Both threshold scopes must still be measured as **full native input**, including the carried prefix, tool schemas, compaction, escalation and failed/unmatched calls. A threshold is not a hard peak cap.
 
 The Codex study driver accepts `--compact-limit 32000 --compact-scope total` for a NEW Atlias plan. Only its Atlias arm receives the native overrides. The plan pins the policy and driver hash; resume rejects additions, removals, threshold/scope changes or driver replacement. Original plans and flags remain unchanged. Missing/duplicate/invalid options fail before inference. `native-argv.json` records the complete applied arguments for independent auditing. A default dry preflight remains unchanged; the explicit dry preflight starts zero models and is not a quality benchmark.
