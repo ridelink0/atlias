@@ -63,3 +63,5 @@ win. The retained round-five README results remain the source for existing claim
 UFS uses the same driver with `--plugin-repo <ufs-checkout>`,
 `--task-root <ufs-checkout>`, and `--tasks <ufs-checkout>/benchmarks/manifest.json`.
 Its behavior and visual grading protocol is in that repository's `benchmarks/README.md`.
+
+The separate [progressive workflow driver](../../docs/WORKFLOW-CONTEXT-GATE.md) retains three phases in one native session. Its declaration counts planned CLI invocations separately from matched whole-workflow pairs. It records cumulative counters once per session and retains earlier full peaks and compaction costs. Exact UUID resume and a durable journal prevent automatic retries of pending or failed attempts. Its controls and owned scripted native fixtures use zero real models; actual model quality and savings remain unmeasured. It does not change historical single-task plans or installed settings.

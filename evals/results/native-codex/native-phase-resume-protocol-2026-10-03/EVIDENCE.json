@@ -1,0 +1,123 @@
+{
+  "modelCalls": 0,
+  "scripted": true,
+  "probes": [
+    {
+      "folder": "D:/harness-work/native-phase-resume-v1-1003",
+      "result": {
+        "results": [
+          {
+            "name": "control",
+            "policy": null,
+            "phases": 3,
+            "requests": 4,
+            "compactions": 0,
+            "cumulative": {
+              "input_tokens": 33000,
+              "cached_input_tokens": 0,
+              "output_tokens": 40,
+              "reasoning_output_tokens": 0,
+              "total_tokens": 33040
+            },
+            "fullNativePeak": 30000,
+            "checksPassed": true,
+            "modelCalls": 0,
+            "syntheticUsage": true,
+            "nativeSha256": "1722907aa64401bcc9b34467ef5c2af43f6aef9a5045ef04d11d19dfae4589fb"
+          },
+          {
+            "name": "early",
+            "policy": {
+              "limitTokens": 20000,
+              "scope": "total"
+            },
+            "phases": 3,
+            "requests": 5,
+            "compactions": 1,
+            "cumulative": {
+              "input_tokens": 34000,
+              "cached_input_tokens": 0,
+              "output_tokens": 50,
+              "reasoning_output_tokens": 0,
+              "total_tokens": 34050
+            },
+            "fullNativePeak": 30000,
+            "checksPassed": true,
+            "modelCalls": 0,
+            "syntheticUsage": true,
+            "nativeSha256": "1722907aa64401bcc9b34467ef5c2af43f6aef9a5045ef04d11d19dfae4589fb"
+          }
+        ],
+        "modelCalls": 0,
+        "syntheticUsage": true,
+        "limitations": [
+          "Scripted answers and counters do not establish model quality, real token/context/account savings or genuine OAuth.",
+          "Native custom-provider metadata differs from genuine subscription metadata; this only checks the owned tested surface.",
+          "Requirements in scripted summaries are protocol fixtures, not evidence that a real model preserves them."
+        ]
+      }
+    },
+    {
+      "folder": "D:/harness-work/native-phase-resume-fenced-v2-1003",
+      "result": {
+        "results": [
+          {
+            "name": "control",
+            "policy": null,
+            "phases": 3,
+            "requests": 4,
+            "compactions": 0,
+            "cumulative": {
+              "input_tokens": 33000,
+              "cached_input_tokens": 0,
+              "output_tokens": 40,
+              "reasoning_output_tokens": 0,
+              "total_tokens": 33040
+            },
+            "fullNativePeak": 30000,
+            "checksPassed": true,
+            "modelCalls": 0,
+            "syntheticUsage": true,
+            "nativeSha256": "1722907aa64401bcc9b34467ef5c2af43f6aef9a5045ef04d11d19dfae4589fb"
+          },
+          {
+            "name": "early",
+            "policy": {
+              "limitTokens": 20000,
+              "scope": "total"
+            },
+            "phases": 3,
+            "requests": 5,
+            "compactions": 1,
+            "cumulative": {
+              "input_tokens": 34000,
+              "cached_input_tokens": 0,
+              "output_tokens": 50,
+              "reasoning_output_tokens": 0,
+              "total_tokens": 34050
+            },
+            "fullNativePeak": 30000,
+            "checksPassed": true,
+            "modelCalls": 0,
+            "syntheticUsage": true,
+            "nativeSha256": "1722907aa64401bcc9b34467ef5c2af43f6aef9a5045ef04d11d19dfae4589fb"
+          }
+        ],
+        "modelCalls": 0,
+        "syntheticUsage": true,
+        "limitations": [
+          "Scripted answers and counters do not establish model quality, real token/context/account savings or genuine OAuth.",
+          "Native custom-provider metadata differs from genuine subscription metadata; this only checks the owned tested surface.",
+          "Requirements in scripted summaries are protocol fixtures, not evidence that a real model preserves them."
+        ]
+      }
+    }
+  ],
+  "sourceCI": {
+    "head": "e15ea1f7b9c27fdc0a1e5caa96dc490ed96e1c3d",
+    "run": 37116694194,
+    "jobs": 9,
+    "conclusion": "success"
+  },
+  "limitation": "CI belongs to the earlier context-policy implementation, not the new phase driver."
+}

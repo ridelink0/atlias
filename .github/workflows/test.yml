@@ -36,6 +36,10 @@ jobs:
         run: |
           node tools/ccstudy/test.mjs
           node tools/codexstudy/test.mjs
+          node tools/codexstudy/phase-test.mjs
+          node tools/codexstudy/phase-audit-test.mjs
+          node tools/codexstudy/workflow-corpus-test.mjs
+          node tools/codexstudy/workflow-run-test.mjs
           node tools/codexstudy/corpus-test.mjs
           node tools/codexstudy/behavior-test.mjs
           node tools/codexstudy/capability-test.mjs
