@@ -131,6 +131,8 @@ The Windows integration check passed 1,530 checks across 219 suites, each writte
 
 ## Measured
 
+New [native discovery and foundation protocol evidence](evals/results/native-codex/native-discovery-foundation-protocol-2026-10-03/REPORT.md) verifies the one-entry facade in actual Codex and Claude clients with zero models. All ten operations remain accessible;2827→608 catalog bytes do not establish model savings. A separately captured Codex foundation replacement preserves normal tools but changes instructions and is unmeasured for quality. It increases the Claude bare fixture startup surface, so that replacement is not proposed as a Claude efficiency profile. See the [isolated foundation quality gates](docs/FOUNDATION-PROFILE-PLAN.md). Installed bbf6 remains unchanged.
+
 Latest [source81 terminal report](evals/results/native-codex/progressive-terminal-2026-10-03/REPORT.md):54/72original calls,18held after a plain native quota failure. Both27/27original phase grades pass; complete recorded request input39.59%more, uncached input plus output15.21%more, peak2.63%less. Unknown unrecorded failure costs retained; full72 and20x claims withheld.
 
 [Native context-policy protocol checks](evals/results/native-codex/native-context-policy-protocol-2026-10-03/REPORT.md) activate compaction in both native clients using owned localhost scripted replies and synthetic counters, with51 configuration controls and85 driver checks. This default-off experiment preserves tested control tools and pins its policy for new studies. It is not real model, full-context, subscription or quality evidence; installed settings remain unchanged.
