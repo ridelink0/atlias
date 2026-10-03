@@ -131,6 +131,8 @@ The Windows integration check passed 1,530 checks across 219 suites, each writte
 
 ## Measured
 
+Latest [source81 terminal report](evals/results/native-codex/progressive-terminal-2026-10-03/REPORT.md):54/72original calls,18held after a plain native quota failure. Both27/27original phase grades pass; complete recorded request input39.59%more, uncached input plus output15.21%more, peak2.63%less. Unknown unrecorded failure costs retained; full72 and20x claims withheld.
+
 [Native context-policy protocol checks](evals/results/native-codex/native-context-policy-protocol-2026-10-03/REPORT.md) activate compaction in both native clients using owned localhost scripted replies and synthetic counters, with51 configuration controls and85 driver checks. This default-off experiment preserves tested control tools and pins its policy for new studies. It is not real model, full-context, subscription or quality evidence; installed settings remain unchanged.
 
 The new [progressive-workflow gate](docs/WORKFLOW-CONTEXT-GATE.md) tests complete requirements across three phases, with protected source/implementation grades, exact native UUID resume and whole-session accounting. [Owned native resume fixtures](evals/results/native-codex/native-phase-resume-protocol-2026-10-03/REPORT.md) verify recorded input, retained tested tools/instructions and summary-cost accounting with zero real model calls. New real-model quality, capability and savings results remain unmeasured.
