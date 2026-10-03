@@ -97,6 +97,8 @@ try {
  check('bounded unfinished phase can continue',()=>assert(!phaseFailed({reason:'rounds-exhausted'},0)));
  check('real model failure stays failed',()=>assert(phaseFailed({reason:'model-error'},0)));
  check('passing answer cannot override failed controller check',()=>assert(phaseFailed({reason:'answered'},1)));
+ check('unchanged handoff is not successful work',()=>assert(phaseFailed({reason:'answered'},0,false)));
+ check('exhausted repeated search without handoff is not success',()=>assert(phaseFailed({reason:'rounds-exhausted'},0,false)));
  const knowledgeChat=localChat({model:'qwen3.5:9b',ledger,post:async()=>({status:200,json:{message:{tool_calls:[{function:{name:'knowledge_read',arguments:{id:0,limit:2}}}]},prompt_eval_count:1,eval_count:1,done_reason:'stop'}})});
  const kr=await knowledgeChat([{role:'user',content:'read'}],[]);
  check('archive ID is distinct from native call ID',()=>assert.equal(kr.calls[0].fileId,0));

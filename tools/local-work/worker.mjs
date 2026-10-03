@@ -31,8 +31,8 @@ export function protectedFiles(workspace) {
 export function checkProtected(workspace,rows) {
   return rows.filter(([f,d])=>!fs.existsSync(path.join(workspace,f))||hash(fs.readFileSync(path.join(workspace,f)))!==d).map(([f])=>f);
 }
-export function phaseFailed(stop,checkCode) {
-  return Boolean(stop&&!['answered','rounds-exhausted'].includes(stop.reason))||checkCode!==0;
+export function phaseFailed(stop,checkCode,handoffChanged=true) {
+  return Boolean(stop&&!['answered','rounds-exhausted'].includes(stop.reason))||checkCode!==0||!handoffChanged;
 }
 export function protectionBaseline(root,workspace){
   const file=path.join(root,'PROTECTION.json');
@@ -82,20 +82,23 @@ export async function work(root,{once=false}={}) {
       atomic(statusFile,{round,status:'running',at:new Date().toISOString(),model:cfg.model});
       append(journal,{event:'phase-start',round,at:new Date().toISOString(),model:cfg.model});
       const progress=path.join(cfg.workspace,'LOCAL-PROGRESS.md');
+      const handoffHash=fs.existsSync(progress)?hash(fs.readFileSync(progress)):null;
       const handoff=fs.existsSync(progress)?fs.readFileSync(progress,'utf8'):'First local phase: inspect the research and pinned references, then diagnose and fix one demonstrated Atlias correctness/context cause. Declare new tests before model evaluation.';
+      const previous=fs.existsSync(path.join(root,'CONTROLLER-PROGRESS.json'))?JSON.parse(fs.readFileSync(path.join(root,'CONTROLLER-PROGRESS.json'),'utf8')):null;
       // New conversation at a work boundary, with complete durable handoff.
       const state={sid:crypto.randomUUID(),cwd:cfg.workspace,engine:'ollama',history:[],messages:[{role:'system',content:systemPrompt(cfg.workspace,{native:true,instructions:RULES})}]};
-      const prompt=`Gev's local continuation, phase ${round}. Knowledge archive: ${cfg.knowledge}. Use knowledge_search/read for research, skills, prompts and prior sessions.\n\n${handoff}\n\n${failures?'The previous phase or controller verification failed; inspect its retained evidence and fix the cause before further new work.':''}\nComplete one concrete useful step, test twice and update LOCAL-PROGRESS.md before answering.`;
+      const prompt=`Gev's local continuation, phase ${round}. Knowledge archive: ${cfg.knowledge}. Use knowledge_search/read for research, skills, prompts and prior sessions.\n\n${handoff}\n\n${previous?`Prior observed outcome: ${JSON.stringify({round:previous.round,stop:previous.stop,handoffChanged:previous.handoffChanged,receipts:previous.receipts})}. Read LOCAL-REFERENCE-MAP.md if present to use exact source IDs rather than repeating unsuccessful searches.`:''}\n${failures?'The previous phase or controller verification failed; inspect its retained evidence and change the approach before further work.':''}\nComplete one concrete useful step, test twice and update LOCAL-PROGRESS.md before answering.`;
       atomic(path.join(dir,'PROMPT.json'),{rules:RULES,prompt,model:cfg.model,context:cfg.context});
       const result=await runLoop(state,prompt,{native:true,chat:localChat({...cfg,ledger:calls,recordDir:path.join(dir,'requests'),extraTools:[...KNOWLEDGE_TOOLS,...PLUGIN_TOOLS]}),executeTool:executor(cfg.knowledge,plugins),limits:{maxToolRounds:cfg.rounds||32,outputBudget:6000,keepObservations:4,evictBlock:4,shellTimeoutMs:180000}});
       atomic(path.join(dir,'RESULT.json'),{result,stop:state.stop,messages:state.messages,promptLog:state.promptLog,outLog:state.outLog});
       // Preserve observed results even when the model omitted its requested handoff.
-      atomic(path.join(root,'CONTROLLER-PROGRESS.json'),{round,at:new Date().toISOString(),stop:state.stop,result,receipts:dir,modelHandoffExists:fs.existsSync(progress),next:'Inspect retained results and actual checks; no model claim implies success.'});
+      const handoffChanged=fs.existsSync(progress)&&hash(fs.readFileSync(progress))!==handoffHash;
+      atomic(path.join(root,'CONTROLLER-PROGRESS.json'),{round,at:new Date().toISOString(),stop:state.stop,result,receipts:dir,handoffChanged,next:'Inspect retained results and actual checks; no model claim implies success.'});
       const changedProtected=checkProtected(cfg.workspace,protections);
       const check=changedProtected.length?{code:null,error:'protected existing tests/reports changed',files:changedProtected}:await child('node',['test/run.mjs'],cfg.workspace,controllerEnv(env));
       atomic(path.join(dir,'CONTROLLER-CHECK.json'),check);
       const diff=await child('git',['diff','--stat'],cfg.workspace,env);atomic(path.join(dir,'DIFF.json'),diff);
-      const failed=phaseFailed(state.stop,check.code);failures=failed?failures+1:0;
+      const failed=phaseFailed(state.stop,check.code,handoffChanged);failures=failed?failures+1:0;
       const next={round,status:changedProtected.length?'blocked-protected-change':failed?'needs-repair':'phase-complete',at:new Date().toISOString(),model:cfg.model,failures,next:'Continue from LOCAL-PROGRESS.md and retained phase receipts; goal is not proven.'};
       atomic(statusFile,next);append(journal,{event:'phase-end',...next,checkCode:check.code,stop:state.stop});prior=next;
       if(changedProtected.length||failures>=3){atomic(path.join(root,'ATTENTION.json'),{...next,reason:changedProtected.length?'Protected changes require review.':'Three failed phases; change plan before resume. All evidence retained.'});break;}
