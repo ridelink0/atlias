@@ -1,0 +1,102 @@
+{
+  "source": "b101c74622d690bca211d1c76813d0ec27908735",
+  "finished": 20,
+  "pending": [
+    {
+      "task": "async-observations",
+      "repeat": 1,
+      "arm": "atlias",
+      "phase": "phase-3",
+      "cost": "unknown ongoing/pending attempt; never zero"
+    }
+  ],
+  "pairedWholeWorkflows": 3,
+  "metrics": {
+    "plain": {
+      "matchedWholeWorkflows": 3,
+      "allOriginalPhaseGradesPass": 3,
+      "allNativeInvocationsValid": 3,
+      "rawInput": 747797,
+      "total": 757383,
+      "uncachedInputPlusOutput": 125831,
+      "fullNativePeak": 30115,
+      "compactRequests": 0
+    },
+    "atlias": {
+      "matchedWholeWorkflows": 3,
+      "allOriginalPhaseGradesPass": 3,
+      "allNativeInvocationsValid": 3,
+      "rawInput": 963186,
+      "total": 974279,
+      "uncachedInputPlusOutput": 160199,
+      "fullNativePeak": 37543,
+      "compactRequests": 0
+    }
+  },
+  "ratios": {
+    "rawInput": 1.2880313774995085,
+    "total": 1.2863755854039503,
+    "uncachedInputPlusOutput": 1.2731282434376268,
+    "fullNativePeak": 1.2466544911173834
+  },
+  "frozenAuditSha256": "4c5bf7ceab9c8b21caeddd7bdb559d5fdba6ef084cc3129ea6ec74f887310567",
+  "originalLedgerHashes": [
+    {
+      "task": "regional-provenance",
+      "repeat": 1,
+      "arm": "plain",
+      "sha256": "e071a6c747fd79c462e97694a08c5619b3d4f3b503f2c4a19c0c0e2774038a8a"
+    },
+    {
+      "task": "regional-provenance",
+      "repeat": 1,
+      "arm": "atlias",
+      "sha256": "1ddd278319a966d3508ee4706348f733ebd5759c2aabbcb2728f7363eb52d74a"
+    },
+    {
+      "task": "release-negation",
+      "repeat": 1,
+      "arm": "plain",
+      "sha256": "3ffd93a52e9a204e70b4584e5096dd0b7131313e032cf30081871bb154bfcb71"
+    },
+    {
+      "task": "release-negation",
+      "repeat": 1,
+      "arm": "atlias",
+      "sha256": "370fd2a7cf54092354fee32110dfc400effca5b4801de17f4ef6eeb07b804ece"
+    },
+    {
+      "task": "revision-merge",
+      "repeat": 1,
+      "arm": "plain",
+      "sha256": "1c99656b4a8a13f3f84064b3b0d52e0503069923cc7163bae11fb209c0f14bc5"
+    },
+    {
+      "task": "revision-merge",
+      "repeat": 1,
+      "arm": "atlias",
+      "sha256": "e702f630ad326e709e9bd5e67bdedcf7f13f0f558848d6271bc6a360fee90dcc"
+    },
+    {
+      "task": "async-observations",
+      "repeat": 1,
+      "arm": "atlias",
+      "sha256": "e42e6723f1f984728a619b7a3c4bbc2fb1df0c7c366c23e948bd18122bb1ed82"
+    }
+  ],
+  "policyProvenance": {
+    "ownerPreparationSha256": "3f710392efcdb1d13e87dcd7ff120ff72aa1a6329ad21b6f115bb0a4ef0e5103",
+    "deliveredArchiveSha256": "bb78af4b253ec0995cd777de5dffd322003291c4661de605039071845d24c174",
+    "canonicalLFEqual": true,
+    "sourceArchiveHashPinnedBeforeInference": true,
+    "interpretation": "Git archive materializes CRLF while the owner preparation is LF. Original declaration/SOURCE bytes retained; both independent raw hashes preserved. Exact native delivery must match archived CRLF text, never claim raw-byte identity."
+  },
+  "modelCalls": 0,
+  "graderExecutions": 0,
+  "limitations": [
+    "Frozen prefix only; all original grades, failures and costs retained without regrading.",
+    "Paired metrics use complete whole workflows; unfinished/unmatched attempts remain in audits and pending, never treated as free.",
+    "Native provider records include exact compaction response reconciliation, not full wire or subscription debit proof.",
+    "New attempts on authored regression contracts, not held-out generalization, public, universal or BOTH-host evidence."
+  ]
+}
