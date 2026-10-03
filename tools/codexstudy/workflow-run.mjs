@@ -24,7 +24,7 @@ function noLinks(root){return fs.readdirSync(root,{withFileTypes:true}).every(e=
 export async function main(a) {
   validateWorkflowOptions(a);
   const out=path.resolve(opt(a,'--out')),source=sync('git',['-C',ROOT,'rev-parse',opt(a,'--ref','HEAD')+'^{commit}']);
-  if(!a.includes('--out')||source!==sync('git',['-C',ROOT,'rev-parse','HEAD']))throw Error('explicit unused study root and current exact source required');
+  if(!a.includes('--out'))throw Error('explicit study root and exact source required');
   sync('git',['-C',ROOT,'diff','--exit-code',source,'--',...pipeline]);
   const repeats=Number(opt(a,'--repeat','2')),limit=Number(opt(a,'--compact-limit','24000')),stop=Number(opt(a,'--stop-percent','100')),timeout=Number(opt(a,'--timeout-min','12'));
   if(!Number.isSafeInteger(repeats)||repeats<1||repeats>3||!Number.isFinite(stop)||stop<=0||stop>100||!Number.isFinite(timeout)||timeout<=0)throw Error('invalid declared repeat/quota/timeout');
