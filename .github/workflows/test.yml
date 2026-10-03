@@ -55,6 +55,7 @@ jobs:
           node tools/native-job/context-policy-test.mjs
           node tools/native-job/recovery-test.mjs
           node tools/native-job/discovery-test.mjs
+          node tools/native-job/inline-assert-test.mjs
           node tools/source-evidence/test.mjs
           node tools/native-job/batch-test.mjs
           node tools/native-job/dictionary-test.mjs
