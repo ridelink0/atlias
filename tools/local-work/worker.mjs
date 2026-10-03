@@ -27,6 +27,8 @@ export function protectedFiles(workspace) {
     walk(path.join(workspace,folder));
   }
   for(const f of ['lib/logo.mjs','tools/omniscience/protocol.mjs'])if(fs.existsSync(path.join(workspace,f)))rows.push([f,hash(fs.readFileSync(path.join(workspace,f)))]);
+  function toolTests(d){if(!fs.existsSync(d))return;for(const e of fs.readdirSync(d,{withFileTypes:true})){const p=path.join(d,e.name);if(e.isDirectory())toolTests(p);else if(e.isFile()&&/(?:test|suites)\.mjs$/.test(e.name))rows.push([path.relative(workspace,p),hash(fs.readFileSync(p))]);}}
+  toolTests(path.join(workspace,'tools'));
   return rows;
 }
 export function checkProtected(workspace,rows) {
@@ -105,6 +107,7 @@ export async function work(root,{once=false}={}) {
       }
       check.extra=extra;
       atomic(path.join(dir,'CONTROLLER-CHECK.json'),check);
+      atomic(path.join(cfg.workspace,'LOCAL-CONTROLLER-OBSERVATION.json'),{round,controllerCode:check.code,summary:check.stdout?.split('\n').filter(s=>s.startsWith('FAIL ')||s.includes('checks passed')),extra:extra.map(({file,code,stdout,stderr})=>({file,code,stdout,stderr})),authoritativeReceipt:path.join(dir,'CONTROLLER-CHECK.json')});
       const diff=await child('git',['diff','--stat'],cfg.workspace,env);atomic(path.join(dir,'DIFF.json'),diff);
       const failed=phaseFailed(state.stop,check.code,handoffChanged);failures=failed?failures+1:0;
       const next={round,status:changedProtected.length?'blocked-protected-change':failed?'needs-repair':'phase-complete',at:new Date().toISOString(),model:cfg.model,failures,next:'Continue from LOCAL-PROGRESS.md and retained phase receipts; goal is not proven.'};

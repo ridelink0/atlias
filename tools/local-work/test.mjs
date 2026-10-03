@@ -40,6 +40,8 @@ try {
  check('released worker lock removed',()=>assert(!fs.existsSync(lock)));
  const workspace=path.join(temp,'workspace');fs.mkdirSync(path.join(workspace,'test'),{recursive:true});fs.writeFileSync(path.join(workspace,'test/a.mjs'),'assert(true)');
  const protectedRows=protectedFiles(workspace);
+ fs.mkdirSync(path.join(workspace,'tools'),{recursive:true});fs.writeFileSync(path.join(workspace,'tools','original-test.mjs'),'Gev protected check');
+ check('existing tool tests are protected too',()=>assert(protectedFiles(workspace).some(([f])=>f===path.join('tools','original-test.mjs'))));
  const baseline=protectionBaseline(temp,workspace);
  check('original protected checks unchanged',()=>assert.deepEqual(checkProtected(workspace,protectedRows),[]));
  fs.writeFileSync(path.join(workspace,'test/a.mjs'),'assert(false)');
