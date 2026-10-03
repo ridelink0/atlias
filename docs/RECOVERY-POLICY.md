@@ -10,4 +10,6 @@ The original full local run retained one failure: recoveryText was missing from 
 
 This candidate is isolated from the source81 progressive native comparison and the installed bbf6 snapshot. It has no inherited model results, genuine Claude activation proof, measured quality improvement, token savings or subscription savings. It requires its own pinned evaluation before any such claim.
 
+An independent read of actual source81 compactions also found that event_msg token totals and peaks omit compaction requests in the pinned native runtime. The read-only session report now exposes separate response-record accounting, deduplicating response identifiers and reconciling their sums to original thread totals. Conflicting duplicates, foreign sessions, malformed counts, missing compaction usage, gaps, overflow and incomplete final lines fail or withhold complete totals. Legacy fields remain available and explicitly labeled; full recorded request peaks include recorded compaction input. These records do not prove billing, complete wire context or unseen requests.
+
 Research basis: the pinned Gray transactional compaction review and Claude Harness checkpoint/prerequisite review in HARNESS-REFERENCES.md. Preserve authoritative state and verify recovery before depending on reduced context.
