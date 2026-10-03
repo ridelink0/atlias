@@ -1,3 +1,13 @@
+# Gev source-search checks complete; native comparison still live, 2026-10-03T06:31:25.272Z
+
+Sourcef216e1340b104bd56e5d3e90480e233a236172fe literal-source-search runtime OWNCI37101164985GREEN9/9 savedsourcef216-exact-ci-1003.json; fulltest91306TERMINAL0/FULL1697/1697 across228, evidence144controls and6skill/coveragechecksPASS. Functionalpass verifiedlookup/defaultcompatibility; adversarialpassfixed dash-leadingquerysyntax with inline--find=--flag, checked no-match/stalehash/requiredcoverage/path/UTF8/race/budgets. NOTin source9bstudy/NOTinstalledoverbbf6/no model result.
+
+Existingexec92229 source9b48comparison live, logcodex-atlias-one-read-contract-v3-1003.log; inspectactualprocesses/terminal beforeonlymissingresume, no duplicate/retry/regrade/plan changes. First6frozen43d43c0cf24431752c770c3b6758681aab6d777341030c3cadf3a6c2bdac7708/full6auditboth3/3/raw7.48%less/peak5.66%MORE, not20x/proof; whole48pending. SAMEledgerfullaudit/publicationneeded, retainallunknown/unfavorable/costs/grades. SourceECE48closed/Gitblobproof/23strictboth/unknownquota+residualcorrectcitationgraderdefect preserved, no regrade.
+
+Readonlydiagnosis sourceece-first-request-diagnostics-1003.json andsourceece-initial-message-overhead-1003.json: firstplain13562–13602 vsAtlias15077–15117; foundationtext21769charsidentical, recorded startup/skills/AGENTS additions; no causalmetadata token attribution/fullwireproof. Need actualnative-supported context-growth controls/newlegitimate-longworkflowgate, notsmallcap orbatchpeakdivision. Currentconfigs unchanged. BrowserClaudeusage lookup reachedseparatebrowserlogin, noauthenticatedbrowserquota; temporarytabclosed/0models/no credentialsentered. Officialafterbackoff429/retry754s remainsunknown, noClaudeinference.
+
+Latestfresh5h70%/~71turns/weekly25%, paidOFF/GevauthorizedALL100; refreshbeforelongsteps. Reset09:34:24Z/SAME04:36Chicagoheartbeatno duplicates. BOTH20xtokensAND20xFULLpeak/usefulnormalcapabilities/practical25xaccountUNFINISHED. Researchgatecomplete/pinnedGrayClaudeHarnessplans; bbf6ON/singlehooks/pointerOFF/cachedoldMCP. NoDR/subagents/UsageLimitsfixes/newGPU/council/logoedits; conditionalfreeResetUNUSED.
+
 # Gev literal source search candidate and live study, 2026-10-03T05:50:57.646Z
 
 Existingsource9b48-call workerexec92229 STILLlive/logcodex-atlias-one-read-contract-v3-1003.log, no duplicates/retries/regrades/source changes. Frozenfirst6SHA43d43c0cf24431752c770c3b6758681aab6d777341030c3cadf3a6c2bdac7708/full6independent audit: both3/3, raw7.48%less/recordedpeak5.66%MORE/uncached+out1.21xlower; earlydiagnosticnot20x/parity/account/BOTHproof, reader0both. Complete48thenSAMEledgeraudit/publishallcosts.
