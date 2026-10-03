@@ -52,6 +52,7 @@ export function workerEnv(root) {
   const out={};for(const k of ['PATH','Path','SystemRoot','WINDIR','TEMP','TMP','COMSPEC','PATHEXT','APPDATA','LOCALAPPDATA','USERPROFILE','NUMBER_OF_PROCESSORS','OLLAMA_MODELS'])if(process.env[k])out[k]=process.env[k];
   return {...out,ATLIAS_HOME:path.join(root,'state'),CODEX_HOME:path.join(root,'profiles/codex'),CLAUDE_CONFIG_DIR:path.join(root,'profiles/claude'),ATLIAS_FLAG_LEAN_BRIEF:'true'};
 }
+export function controllerEnv(env){return Object.fromEntries(Object.entries(env).filter(([k])=>!k.startsWith('ATLIAS_FLAG_')));}
 export async function work(root,{once=false}={}) {
   root=path.resolve(root);const cfg=JSON.parse(fs.readFileSync(path.join(root,'CONFIG.json'),'utf8'));
   localModel(cfg.model);localUrl(cfg.url);manifest(cfg.knowledge);
@@ -66,7 +67,7 @@ export async function work(root,{once=false}={}) {
   const protections=protectionBaseline(root,cfg.workspace);
   let prior=fs.existsSync(statusFile)?JSON.parse(fs.readFileSync(statusFile,'utf8')):{round:0};
   if(prior.status==='running')append(journal,{event:'interrupted-phase-retained',round:prior.round,at:new Date().toISOString(),costKnown:false});
-  let failures=0;
+  let failures=Number(prior.failures)||0;
   try {
     while(!fs.existsSync(path.join(root,'STOP'))) {
       if(checkProtected(cfg.workspace,protections).length)throw Error('original protected files changed before phase');
@@ -91,7 +92,7 @@ export async function work(root,{once=false}={}) {
       // Preserve observed results even when the model omitted its requested handoff.
       atomic(path.join(root,'CONTROLLER-PROGRESS.json'),{round,at:new Date().toISOString(),stop:state.stop,result,receipts:dir,modelHandoffExists:fs.existsSync(progress),next:'Inspect retained results and actual checks; no model claim implies success.'});
       const changedProtected=checkProtected(cfg.workspace,protections);
-      const check=changedProtected.length?{code:null,error:'protected existing tests/reports changed',files:changedProtected}:await child('node',['test/run.mjs'],cfg.workspace,env);
+      const check=changedProtected.length?{code:null,error:'protected existing tests/reports changed',files:changedProtected}:await child('node',['test/run.mjs'],cfg.workspace,controllerEnv(env));
       atomic(path.join(dir,'CONTROLLER-CHECK.json'),check);
       const diff=await child('git',['diff','--stat'],cfg.workspace,env);atomic(path.join(dir,'DIFF.json'),diff);
       const failed=phaseFailed(state.stop,check.code);failures=failed?failures+1:0;

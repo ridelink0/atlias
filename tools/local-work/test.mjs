@@ -5,7 +5,7 @@ import assert from 'node:assert/strict';
 import {migrate,hash,excluded} from './migrate.mjs';
 import {search,read,manifest,inactive,priority} from './knowledge.mjs';
 import {localModel,localUrl,allowedShell,claim,localChat,atomic} from './runtime.mjs';
-import {checkProtected,protectedFiles,workerEnv,phaseFailed,protectionBaseline} from './worker.mjs';
+import {checkProtected,protectedFiles,workerEnv,phaseFailed,protectionBaseline,controllerEnv} from './worker.mjs';
 import {CASES,grade} from './select.mjs';
 import {StdioClient,pluginExecutor} from './plugins.mjs';
 import {userText} from './index.mjs';
@@ -101,5 +101,6 @@ try {
  check('archive ID is distinct from native call ID',()=>assert.equal(kr.calls[0].fileId,0));
  check('native archive arguments preserve original ID',()=>assert.equal(JSON.parse(kr.message.tool_calls[0].function.arguments).id,0));
  check('native call ID remains a response identifier',()=>assert.equal(typeof kr.calls[0].id,'string'));
+ check('controller tests use their own default flags',()=>assert.deepEqual(controllerEnv({PATH:'node',ATLIAS_FLAG_LEAN_BRIEF:'true',ATLIAS_HOME:'isolated'}),{PATH:'node',ATLIAS_HOME:'isolated'}));
  console.log(`${checks} local migration/runtime functional and adversarial controls passed`);
 } finally {fs.rmSync(temp,{recursive:true,force:true});}
