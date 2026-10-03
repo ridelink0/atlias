@@ -2,7 +2,7 @@
 
 The sourceb10172-phase plan is still running. This frozen audit retains20 finished invocations and one pending attempt; three whole-workflow pairs have nine passing original phases per arm, all valid. No model output or grader was re-executed. Full72 publication remains withheld, with unmatched and ongoing costs retained separately.
 
-Across the three complete pairs, raw input is28.80% MORE, total28.64% MORE, uncached input plus output27.31% MORE, and maximum full recorded request input24.66% MORE with Atlias. Counts use unique recorded responses, including compaction when present, and whole session totals once. Neither arm has recorded compaction in these three pairs. This is adverse authored regression evidence, not a quality gain, public score, Claude result, subscription measurement or20x gate.
+Across the three complete pairs, raw input is28.80% MORE, total28.64% MORE, uncached input plus output27.31% MORE, and maximum full recorded request input24.67% MORE with Atlias. Counts use unique recorded responses, including compaction when present, and whole session totals once. Neither arm has recorded compaction in these three pairs. This is adverse authored regression evidence, not a quality gain, public score, Claude result, subscription measurement or20x gate.
 
 The initial independent audit wrongly required a foundation's owner LF hash to equal its CRLF Git archive hash. The original failed audit is preserved. The corrected separate audit verifies both raw hashes, canonical pinned source and exact native delivery of the archived text; no original plan or receipt was changed. The actual archive hash was frozen in SOURCE.json before inference. Never claim the two raw byte hashes are equal.
 
