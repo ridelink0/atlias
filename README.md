@@ -131,6 +131,8 @@ The Windows integration check passed 1,530 checks across 219 suites, each writte
 
 ## Measured
 
+Latest [one-read V3 native comparison](evals/results/native-codex/one-read-contract-v3-2026-10-03/REPORT.md): 48/48 calls independently audited; both arms24/24 solved. Atlias uncached input plus output27.07% lower, full native peak4.87% lower, raw input9.49% higher and wall time38.53% higher. These finite repaired contracts do not establish the20x targets, subscription savings, public factuality scores or BOTH-host capability parity.
+
 Gev's actual target is **20x less usage with exactly the same required outputs or better**. **5x is the minimum milestone**, not completion. Neither target has been achieved. [Measurement and quality requirements](docs/EFFICIENCY-TARGET.md).
 
 The target also requires preserving normal host capabilities. [Six new workflow families and capability gates](docs/CAPABILITY-AND-EFFICIENCY-GATES.md) cover new-file/multi-file changes, CLI encoding and paths, async cancellation, malicious repository notes, a40-module dependency chain and persistence across process restarts.44 model-free grader/manifest controls pass. The first native workflow pair solved both outputs, but Atlias context delivery failed; its two original rows and costs are retained and22 remaining calls are held. The compact bounded worker cannot cover every native workflow, and its results do not prove general capability parity.
