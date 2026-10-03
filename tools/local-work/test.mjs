@@ -24,6 +24,23 @@ try {
  check('numbered retrieval preserves source',()=>assert.match(read(dest,0,2,1).text,/2: line two/));
  check('empty query rejected',()=>assert.throws(()=>search(dest,'')));
  check('bad ID rejected',()=>assert.throws(()=>read(dest,100)));
+ for(const value of [-1,0.5,NaN,Infinity,'0'])check('invalid archive ID rejected',()=>assert.throws(()=>read(dest,value),/safe integer/));
+ for(const value of [-1,0,0.5,NaN,Infinity,'1']) {
+  check('invalid row offset rejected',()=>assert.throws(()=>read(dest,0,value),/safe integer/));
+  check('invalid row limit rejected',()=>assert.throws(()=>read(dest,0,1,value),/safe integer/));
+ }
+ check('partial suffix is not whole-file proof',()=>{const r=read(dest,0,2,100);assert.equal(r.returnedLineCount,2);assert.equal(r.endLine,3);assert.equal(r.complete,false);});
+ check('whole-file end is actual last delivered row',()=>{const r=read(dest,0);assert.equal(r.endLine,3);assert.equal(r.complete,true);});
+ check('beyond EOF delivers no rows',()=>{const r=read(dest,0,100);assert.equal(r.returnedLineCount,0);assert.equal(r.endLine,null);assert.equal(r.text,'');assert.equal(r.complete,false);});
+ const windowSource=path.join(temp,'window-source'),windowDest=path.join(temp,'window-snapshot');fs.mkdirSync(windowSource);
+ fs.writeFileSync(path.join(windowSource,'empty.md'),'');fs.writeFileSync(path.join(windowSource,'unicode.md'),'Gev\r\n\u4e2d\u6587');
+ fs.writeFileSync(path.join(windowSource,'wide.md'),Array.from({length:250},(_,i)=>`row${i+1}`).join('\n'));
+ migrate(windowDest,[['fixture',windowSource]]);
+ const windowId=name=>manifest(windowDest).files.findIndex(r=>path.basename(r.source)===name);
+ check('empty file has zero rows and true complete only at start',()=>{const r=read(windowDest,windowId('empty.md'));assert.deepEqual([r.lines,r.returnedLineCount,r.endLine,r.complete,r.text],[0,0,null,true,'']);assert.equal(read(windowDest,windowId('empty.md'),2).complete,false);});
+ check('CRLF Unicode retrieval preserves the actual numbered row',()=>assert.equal(read(windowDest,windowId('unicode.md'),2,1).text,'2: \u4e2d\u6587'));
+ check('row cap retains accurate partial metadata',()=>{const r=read(windowDest,windowId('wide.md'),1,1000);assert.equal(r.returnedLineCount,200);assert.equal(r.endLine,200);assert.equal(r.complete,false);});
+ check('last partial window has its actual end row',()=>{const r=read(windowDest,windowId('wide.md'),249,100);assert.equal(r.returnedLineCount,2);assert.equal(r.endLine,250);assert.equal(r.complete,false);});
  check('immutable migration rejected',()=>assert.throws(()=>migrate(dest,[['skills',source]])));
  fs.appendFileSync(manifest(dest).files[0].copy,'changed');
  check('changed evidence rejected',()=>assert.throws(()=>read(dest,0),/changed/));

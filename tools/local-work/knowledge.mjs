@@ -25,6 +25,9 @@ export function search(root,query,limit=12) {
 export function inactive(source,query){return /[\\/]\.trash[\\/]/i.test(source)&&!query.toLowerCase().includes('trash');}
 export function priority(row,terms){return terms.reduce((n,t)=>n+(row.source.toLowerCase().includes(t)?10:0),0)+(/research|atlias-docs|reference-gray|reference-claude/i.test(row.category||'')?5:0);}
 export function read(root,id,offset=1,limit=100) {
+  if(!Number.isSafeInteger(id)||id<0)throw Error('id must be a nonnegative safe integer');
+  if(!Number.isSafeInteger(offset)||offset<1)throw Error('offset must be a positive safe integer');
+  if(!Number.isSafeInteger(limit)||limit<1)throw Error('limit must be a positive safe integer');
   const m=manifest(root),r=m.files[id];
   if(!r)throw Error('unknown knowledge file id');
   const p=path.resolve(r.copy),base=path.resolve(root)+path.sep;
@@ -32,10 +35,14 @@ export function read(root,id,offset=1,limit=100) {
   if(!p.startsWith(base)||!real.startsWith(realBase))throw Error('knowledge path escapes snapshot');
   const bytes=fs.readFileSync(p);if(hash(bytes)!==r.sha256)throw Error('knowledge file changed');
   if(bytes.includes(0))throw Error('binary file; use its original native tool');
-  const lines=bytes.toString('utf8').split(/\r?\n/),start=Math.max(1,Number(offset)||1),count=Math.max(1,Math.min(200,Number(limit)||100));
-  return {source:r.source,sha256:r.sha256,lines:lines.length,offset:start,text:lines.slice(start-1,start-1+count).map((s,i)=>`${start+i}: ${s}`).join('\n')};
+  const lines=bytes.length?bytes.toString('utf8').split(/\r?\n/):[];
+  const selected=lines.slice(offset-1,offset-1+Math.min(200,limit));
+  return {source:r.source,sha256:r.sha256,lines:lines.length,offset,
+    returnedLineCount:selected.length,endLine:selected.length?offset+selected.length-1:null,
+    complete:offset===1&&selected.length===lines.length,
+    text:selected.map((s,i)=>`${offset+i}: ${s}`).join('\n')};
 }
 if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url)) {
   const [root,action,...a]=process.argv.slice(2);
-  console.log(JSON.stringify(action==='read'?read(root,Number(a[0]),Number(a[1])||1,Number(a[2])||100):search(root,a.join(' ')),null,2));
+  console.log(JSON.stringify(action==='read'?read(root,Number(a[0]),a[1]===undefined?1:Number(a[1]),a[2]===undefined?100:Number(a[2])):search(root,a.join(' ')),null,2));
 }
