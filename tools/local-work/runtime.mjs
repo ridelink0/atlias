@@ -64,10 +64,11 @@ export function localChat({model,url='http://127.0.0.1:11434',context=16384,pred
     append(ledger,{event:'response',id,at:new Date().toISOString(),model,usage,wallMs:Date.now()-begin,evalDuration:j.eval_duration,loadDuration:j.load_duration,doneReason:j.done_reason});
     const calls=(msg.tool_calls||[]).map(t=>{
       const args=t.function?.arguments;
-      if(!t.function?.name||!args||typeof args!=='object'||Array.isArray(args)||Object.keys(args).some(k=>['tool','id','nativeName'].includes(k)))throw Error('invalid local native tool arguments');
-      return {...normalizeCall(t),id:`local-${++seq}`,nativeName:t.function.name};
+      const knowledgeId=t.function?.name==='knowledge_read'&&Number.isInteger(args?.id)&&args.id>=0;
+      if(!t.function?.name||!args||typeof args!=='object'||Array.isArray(args)||Object.keys(args).some(k=>['tool','nativeName','fileId'].includes(k)||(k==='id'&&!knowledgeId)))throw Error('invalid local native tool arguments');
+      return {...normalizeCall(t),...(knowledgeId?{fileId:args.id}:{}),id:`local-${++seq}`,nativeName:t.function.name};
     });
-    const tool_calls=calls.map(c=>({id:c.id,type:'function',function:{name:c.nativeName||c.tool,arguments:JSON.stringify(Object.fromEntries(Object.entries(c).filter(([k])=>!['tool','id','nativeName'].includes(k))))}}));
+    const tool_calls=calls.map((c,i)=>({id:c.id,type:'function',function:{name:c.nativeName||c.tool,arguments:JSON.stringify(msg.tool_calls[i].function.arguments)}}));
     return {content:msg.content||'',calls,message:{role:'assistant',content:msg.content||'',...(calls.length?{tool_calls}:{})},usage,finish:j.done_reason,truncated:j.done_reason==='length'};
   };
   chat.engine='ollama';return chat;
@@ -89,8 +90,8 @@ export function executor(knowledge,plugins=null) {
     try {
       const {runTool}=await import('../../lib/loop.mjs');
       if(call.tool==='knowledge_search')return JSON.stringify(search(knowledge,String(call.query||'')));
-      if(call.tool==='knowledge_read')return JSON.stringify(read(knowledge,call.id,call.offset,call.limit));
-      if(plugins&&['plugin_catalog','mcp_plugin'].includes(call.tool))return await plugins.call({...call,name:call.name||call.plugin_tool});
+      if(call.tool==='knowledge_read')return JSON.stringify(read(knowledge,call.fileId,call.offset,call.limit));
+      if(plugins&&['plugin_catalog','mcp_plugin'].includes(call.tool))return await plugins.call(call);
       if(call.tool==='shell'&&!allowedShell(call.command))return 'Local worker shell requires an argv array for node script/test, npm test/run test/lint/build, rg or read-only git. Write a scoped script in this checkout; no shell chaining, cloud clients, publishing or destructive commands.';
       return await runTool(state,call,ask);
     }catch(e){return `Local tool failed: ${e.message}. Change the input or approach; do not claim success.`;}

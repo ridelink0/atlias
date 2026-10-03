@@ -15,13 +15,15 @@ export function search(root,query,limit=12) {
   if(fs.existsSync(file)&&fs.existsSync(path.join(root,'SEARCH-RECEIPT.json'))){
     const bytes=fs.readFileSync(file),receipt=JSON.parse(fs.readFileSync(path.join(root,'SEARCH-RECEIPT.json')));
     if(hash(bytes)!==receipt.indexHash||hash(fs.readFileSync(path.join(root,'MANIFEST.json')))!==receipt.manifestHash)throw Error('search index changed');
-    const hits=bytes.toString('utf8').trim().split('\n').filter(Boolean).map(JSON.parse).map(r=>({...r,score:terms.reduce((n,t)=>n+((r.source+' '+r.text).toLowerCase().includes(t)?1:0),0)})).filter(r=>r.score===terms.length).sort((a,b)=>a.source.localeCompare(b.source)||a.offset-b.offset).slice(0,Math.max(1,Math.min(50,limit)));
+    const hits=bytes.toString('utf8').trim().split('\n').filter(Boolean).map(JSON.parse).map(r=>({...r,score:terms.reduce((n,t)=>n+((r.source+' '+r.text).toLowerCase().includes(t)?1:0),0)})).filter(r=>r.score===terms.length&&!inactive(r.source,query)).sort((a,b)=>priority(b,terms)-priority(a,terms)||a.source.localeCompare(b.source)||a.offset-b.offset).slice(0,Math.max(1,Math.min(50,limit)));
     if(hits.length)return hits.map(({text,...r})=>({...r,excerpt:text.slice(0,700)}));
   }
   return m.files.map((r,id)=>({id,category:r.category,source:r.source,copy:r.copy,
     score:terms.reduce((n,t)=>n+(r.source.toLowerCase().includes(t)?1:0),0)}))
-    .filter(r=>r.score).sort((a,b)=>b.score-a.score||a.source.localeCompare(b.source)).slice(0,Math.max(1,Math.min(50,limit)));
+    .filter(r=>r.score&&!inactive(r.source,query)).sort((a,b)=>b.score-a.score||priority(b,terms)-priority(a,terms)||a.source.localeCompare(b.source)).slice(0,Math.max(1,Math.min(50,limit)));
 }
+export function inactive(source,query){return /[\\/]\.trash[\\/]/i.test(source)&&!query.toLowerCase().includes('trash');}
+export function priority(row,terms){return terms.reduce((n,t)=>n+(row.source.toLowerCase().includes(t)?10:0),0)+(/research|atlias-docs|reference-gray|reference-claude/i.test(row.category||'')?5:0);}
 export function read(root,id,offset=1,limit=100) {
   const m=manifest(root),r=m.files[id];
   if(!r)throw Error('unknown knowledge file id');

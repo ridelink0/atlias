@@ -31,6 +31,23 @@ export function protectedFiles(workspace) {
 export function checkProtected(workspace,rows) {
   return rows.filter(([f,d])=>!fs.existsSync(path.join(workspace,f))||hash(fs.readFileSync(path.join(workspace,f)))!==d).map(([f])=>f);
 }
+export function phaseFailed(stop,checkCode) {
+  return Boolean(stop&&!['answered','rounds-exhausted'].includes(stop.reason))||checkCode!==0;
+}
+export function protectionBaseline(root,workspace){
+  const file=path.join(root,'PROTECTION.json');
+  if(!fs.existsSync(file))fs.writeFileSync(file,JSON.stringify({workspace:path.resolve(workspace),rows:protectedFiles(workspace)}),{flag:'wx'});
+  const saved=JSON.parse(fs.readFileSync(file,'utf8'));
+  if(saved.workspace!==path.resolve(workspace))throw Error('protected baseline workspace changed');
+  return saved.rows;
+}
+export async function modelPin(cfg){
+  localModel(cfg.model);localUrl(cfg.url);
+  const tags=await fetch(new URL('/api/tags',cfg.url)).then(r=>{if(!r.ok)throw Error('local model catalog unavailable');return r.json();});
+  if(!cfg.modelDigest||tags.models?.find(m=>m.name===cfg.model)?.digest!==cfg.modelDigest)throw Error('local model digest changed or missing');
+  const info=await fetch(new URL('/api/show',cfg.url),{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({model:cfg.model})}).then(r=>{if(!r.ok)throw Error('local model metadata unavailable');return r.json();});
+  if(info.remote_host||info.remote_model)throw Error('remote model is not permitted');
+}
 export function workerEnv(root) {
   const out={};for(const k of ['PATH','Path','SystemRoot','WINDIR','TEMP','TMP','COMSPEC','PATHEXT','APPDATA','LOCALAPPDATA','USERPROFILE','NUMBER_OF_PROCESSORS','OLLAMA_MODELS'])if(process.env[k])out[k]=process.env[k];
   return {...out,ATLIAS_HOME:path.join(root,'state'),CODEX_HOME:path.join(root,'profiles/codex'),CLAUDE_CONFIG_DIR:path.join(root,'profiles/claude'),ATLIAS_FLAG_LEAN_BRIEF:'true'};
@@ -46,12 +63,14 @@ export async function work(root,{once=false}={}) {
   // Core reads ATLIAS_HOME on first import; never mutate the live global state.
   const {runLoop,systemPrompt}=await import('../../lib/loop.mjs');
   const statusFile=path.join(root,'STATUS.json'),journal=path.join(root,'JOURNAL.jsonl'),calls=path.join(root,'MODEL-CALLS.jsonl');
-  const protections=protectedFiles(cfg.workspace);
+  const protections=protectionBaseline(root,cfg.workspace);
   let prior=fs.existsSync(statusFile)?JSON.parse(fs.readFileSync(statusFile,'utf8')):{round:0};
   if(prior.status==='running')append(journal,{event:'interrupted-phase-retained',round:prior.round,at:new Date().toISOString(),costKnown:false});
   let failures=0;
   try {
     while(!fs.existsSync(path.join(root,'STOP'))) {
+      if(checkProtected(cfg.workspace,protections).length)throw Error('original protected files changed before phase');
+      await modelPin(cfg);
       const ps=await fetch(new URL('/api/ps',cfg.url)).then(r=>r.json());
       // Yield rather than unload an unrelated model using this shared server.
       if(ps.models?.some(m=>!m.name.startsWith(cfg.model)&&!m.model?.startsWith(cfg.model))) {
@@ -69,11 +88,13 @@ export async function work(root,{once=false}={}) {
       atomic(path.join(dir,'PROMPT.json'),{rules:RULES,prompt,model:cfg.model,context:cfg.context});
       const result=await runLoop(state,prompt,{native:true,chat:localChat({...cfg,ledger:calls,recordDir:path.join(dir,'requests'),extraTools:[...KNOWLEDGE_TOOLS,...PLUGIN_TOOLS]}),executeTool:executor(cfg.knowledge,plugins),limits:{maxToolRounds:cfg.rounds||32,outputBudget:6000,keepObservations:4,evictBlock:4,shellTimeoutMs:180000}});
       atomic(path.join(dir,'RESULT.json'),{result,stop:state.stop,messages:state.messages,promptLog:state.promptLog,outLog:state.outLog});
+      // Preserve observed results even when the model omitted its requested handoff.
+      atomic(path.join(root,'CONTROLLER-PROGRESS.json'),{round,at:new Date().toISOString(),stop:state.stop,result,receipts:dir,modelHandoffExists:fs.existsSync(progress),next:'Inspect retained results and actual checks; no model claim implies success.'});
       const changedProtected=checkProtected(cfg.workspace,protections);
       const check=changedProtected.length?{code:null,error:'protected existing tests/reports changed',files:changedProtected}:await child('node',['test/run.mjs'],cfg.workspace,env);
       atomic(path.join(dir,'CONTROLLER-CHECK.json'),check);
       const diff=await child('git',['diff','--stat'],cfg.workspace,env);atomic(path.join(dir,'DIFF.json'),diff);
-      const failed=Boolean(state.stop&&state.stop.reason!=='rounds-exhausted')||check.code!==0;failures=failed?failures+1:0;
+      const failed=phaseFailed(state.stop,check.code);failures=failed?failures+1:0;
       const next={round,status:changedProtected.length?'blocked-protected-change':failed?'needs-repair':'phase-complete',at:new Date().toISOString(),model:cfg.model,failures,next:'Continue from LOCAL-PROGRESS.md and retained phase receipts; goal is not proven.'};
       atomic(statusFile,next);append(journal,{event:'phase-end',...next,checkCode:check.code,stop:state.stop});prior=next;
       if(changedProtected.length||failures>=3){atomic(path.join(root,'ATTENTION.json'),{...next,reason:changedProtected.length?'Protected changes require review.':'Three failed phases; change plan before resume. All evidence retained.'});break;}

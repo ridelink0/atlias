@@ -46,7 +46,7 @@ export function pluginExecutor(knowledge,servers,env,cwd) {
   if(!clients.has(call.server)){const c=new StdioClient(process.execPath,config.args,{cwd,env:{...env,...config.env}});clients.set(call.server,c);try{c.catalog=await c.init();}catch(e){await c.close();clients.delete(call.server);throw e;}}
   const c=clients.get(call.server);
   if(call.action==='list')return JSON.stringify(c.catalog);
-  if(call.action!=='call'||!c.catalog.tools?.some(t=>t.name===call.name))throw Error('use an exact declared MCP tool name from action=list');
-  return JSON.stringify(await c.request('tools/call',{name:call.name,arguments:call.arguments||{}}));
+  if(call.action!=='call'||!c.catalog.tools?.some(t=>t.name===call.plugin_tool))throw Error('use an exact declared MCP tool name from action=list');
+  return JSON.stringify(await c.request('tools/call',{name:call.plugin_tool,arguments:call.arguments||{}}));
  }};
 }
