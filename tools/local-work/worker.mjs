@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import {fileURLToPath} from 'node:url';
-import {atomic,append,claim,localChat,executor,localModel,localUrl,child,KNOWLEDGE_TOOLS} from './runtime.mjs';
+import {atomic,append,claim,localChat,executor,localModel,localUrl,child,KNOWLEDGE_TOOLS,placeholderOnly} from './runtime.mjs';
 import {pluginExecutor,PLUGIN_TOOLS} from './plugins.mjs';
 import {manifest} from './knowledge.mjs';
 import {hash} from './migrate.mjs';
@@ -16,6 +16,7 @@ Use measured failure patterns; fix causes before declaring NEW separately pinned
 Make scoped changes in this local checkout; never touch global settings, credentials, original logo, historical reports, Usage Limits features or other projects. No paid/cloud inference, deployments, pushes or merges. Do not kill other processes.
 Load skills/plugins on demand from the knowledge archive. A copied plugin is not necessarily operational: identify its MCP/CLI/native dependencies and verify activation before claiming it works. Browser/computer-use automation stays off Gev's active desktop. Do not send external messages.
 Always check twice: run a real functional check and read every changed file adversarially. Report actual command results; unknown is not passed. Do not weaken existing tests.
+Elided argument markers are missing evidence, never file content. Read actual sources or reconstruct complete supported text. Knowledge total line counts do not prove those lines were delivered. Do not invent a defect's cause; separate observations from hypotheses.
 Before ending each bounded work phase, write LOCAL-PROGRESS.md with completed changes, exact tests, failures, next concrete step and measured/unproved targets. Preserve complete requirements and critical next steps; retrieve long evidence by file pointer.
 Keep advancing over as many rounds/days as needed. A completed phase is not the whole goal. If an approach fails repeatedly, record why and change approach; if a prerequisite is unavailable, work on independent tasks. Stop cleanly for an operator STOP file or a persistent unsafe/system failure, with a recoverable checkpoint. Never fabricate completion.`;
 
@@ -92,10 +93,17 @@ export async function work(root,{once=false}={}) {
       const result=await runLoop(state,prompt,{native:true,chat:localChat({...cfg,ledger:calls,recordDir:path.join(dir,'requests'),extraTools:[...KNOWLEDGE_TOOLS,...PLUGIN_TOOLS]}),executeTool:executor(cfg.knowledge,plugins),limits:{maxToolRounds:cfg.rounds||32,outputBudget:6000,keepObservations:4,evictBlock:4,shellTimeoutMs:180000}});
       atomic(path.join(dir,'RESULT.json'),{result,stop:state.stop,messages:state.messages,promptLog:state.promptLog,outLog:state.outLog});
       // Preserve observed results even when the model omitted its requested handoff.
-      const handoffChanged=fs.existsSync(progress)&&hash(fs.readFileSync(progress))!==handoffHash;
+      const handoffChanged=fs.existsSync(progress)&&Boolean(fs.readFileSync(progress,'utf8').trim())&&!placeholderOnly(fs.readFileSync(progress,'utf8'))&&hash(fs.readFileSync(progress))!==handoffHash;
       atomic(path.join(root,'CONTROLLER-PROGRESS.json'),{round,at:new Date().toISOString(),stop:state.stop,result,receipts:dir,handoffChanged,next:'Inspect retained results and actual checks; no model claim implies success.'});
       const changedProtected=checkProtected(cfg.workspace,protections);
       const check=changedProtected.length?{code:null,error:'protected existing tests/reports changed',files:changedProtected}:await child('node',['test/run.mjs'],cfg.workspace,controllerEnv(env));
+      const extra=[];
+      if(check.code===0)for(const spec of cfg.extraChecks||[]){
+        if(!spec.sha256||hash(fs.readFileSync(spec.file))!==spec.sha256||!Array.isArray(spec.args)||spec.args.some(x=>typeof x!=='string'))throw Error('independent check definition changed');
+        const result=await child('node',[spec.file,...spec.args],cfg.workspace,controllerEnv(env));extra.push({file:spec.file,...result});
+        if(result.code!==0)check.code=result.code;
+      }
+      check.extra=extra;
       atomic(path.join(dir,'CONTROLLER-CHECK.json'),check);
       const diff=await child('git',['diff','--stat'],cfg.workspace,env);atomic(path.join(dir,'DIFF.json'),diff);
       const failed=phaseFailed(state.stop,check.code,handoffChanged);failures=failed?failures+1:0;

@@ -5,7 +5,7 @@ import assert from 'node:assert/strict';
 import {fileURLToPath} from 'node:url';
 import {migrate,hash,excluded} from './migrate.mjs';
 import {search,read,manifest,inactive,priority} from './knowledge.mjs';
-import {localModel,localUrl,allowedShell,claim,localChat,atomic,child} from './runtime.mjs';
+import {localModel,localUrl,allowedShell,claim,localChat,atomic,child,placeholderOnly,executor} from './runtime.mjs';
 import {checkProtected,protectedFiles,workerEnv,phaseFailed,protectionBaseline,controllerEnv} from './worker.mjs';
 import {CASES,grade} from './select.mjs';
 import {StdioClient,pluginExecutor} from './plugins.mjs';
@@ -55,6 +55,7 @@ try {
  const response=await chat([{role:'user',content:'Gev\r\n'}],[]);
  check('local native function call normalized',()=>assert.equal(response.calls[0].tool,'read_file'));
  check('native request has hard context and no truncation',()=>assert.equal(request.truncate,false));
+ check('historical local thinking default preserved',()=>assert.equal(request.think,false));
  check('full original question retained',()=>assert.equal(request.messages[0].content,'Gev\r\n'));
  await chat([response.message,{role:'tool',tool_call_id:response.calls[0].id,content:'file'}],[]);
  check('native tool result retains correct name',()=>assert.equal(request.messages[1].tool_name,'read_file'));
@@ -104,6 +105,9 @@ try {
  check('archive ID is distinct from native call ID',()=>assert.equal(kr.calls[0].fileId,0));
  check('native archive arguments preserve original ID',()=>assert.equal(JSON.parse(kr.message.tool_calls[0].function.arguments).id,0));
  check('native call ID remains a response identifier',()=>assert.equal(typeof kr.calls[0].id,'string'));
+ const thoughtful=localChat({model:'qwen3.5:9b',ledger,think:true,post:async(u,b)=>{request=b;return {status:200,json:{message:{content:'ready',thinking:'verified source'},prompt_eval_count:2,eval_count:3,done_reason:'stop'}};}});
+ await thoughtful([{role:'user',content:'Gev scoped task'}],[]);
+ check('complex local phases can explicitly enable thinking',()=>assert.equal(request.think,true));
  check('controller tests use their own default flags',()=>assert.deepEqual(controllerEnv({PATH:'node',ATLIAS_FLAG_LEAN_BRIEF:'true',ATLIAS_HOME:'isolated'}),{PATH:'node',ATLIAS_HOME:'isolated'}));
  const supervisor=path.join(temp,'supervisor');fs.mkdirSync(supervisor);fs.writeFileSync(path.join(supervisor,'STOP'),'Gev stop check');
  const supervisorScript=fileURLToPath(new URL('./supervisor.mjs',import.meta.url));
@@ -117,5 +121,10 @@ try {
  atomic(path.join(supervisor,'CONFIG.json'),{...sc,ollamaSHA256:'wrong'});
  const changed=await child(process.execPath,[supervisorScript,supervisor],temp,workerEnv(temp),10000);
  check('supervisor rejects changed executable before acquiring lease',()=>assert(changed.code!==0&&!fs.existsSync(path.join(supervisor,'SUPERVISOR.lock'))));
+ const marker='[atlias elided 2652 characters here; the tool result says what came of them]';
+ check('placeholder-only handoff detected',()=>assert(placeholderOnly(marker)));
+ check('documentation explaining a marker is valid content',()=>assert(!placeholderOnly('Gev observed: '+marker+'; inspect saved evidence.')));
+ const blockedWrite=await executor(dest)({cwd:temp},{tool:'write_file',path:'HANDOFF.md',content:marker});
+ check('real dispatcher refuses marker before any file write',()=>assert(blockedWrite.includes('refused')&&!fs.existsSync(path.join(temp,'HANDOFF.md'))));
  console.log(`${checks} local migration/runtime functional and adversarial controls passed`);
 } finally {fs.rmSync(temp,{recursive:true,force:true});}
