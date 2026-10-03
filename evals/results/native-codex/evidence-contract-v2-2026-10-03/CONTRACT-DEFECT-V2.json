@@ -1,0 +1,17 @@
+{
+  "status": "original strict grade retained; comparison is not a quality win",
+  "task": "evidence-workflow-v2-repair-1",
+  "repeat": 2,
+  "arm": "plain",
+  "reason": "Visible contract permits additional existing-record citations with ORIGINAL hashes. Answer cites actual original src/value.mjs line1/hash correctly, but protected source whitelist contains only docs/contract.txt and rejects it. This is a residual grader-contract defect, not established hallucination or Atlias quality superiority.",
+  "citation": {
+    "path": "src/value.mjs",
+    "firstLine": 1,
+    "lastLine": 1,
+    "sha256": "9954f3e09514cf17ad2a7c33bb3edf41ce926ce65ed0388aefbfbc21ac1bf657"
+  },
+  "sourceOriginalHashVerified": true,
+  "models": 0,
+  "outputsExecuted": false,
+  "gradesRecomputed": false
+}

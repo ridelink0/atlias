@@ -1,0 +1,1687 @@
+{
+  "source": "ece37e554a5ea9b7cf799e0823653f7c8de19158",
+  "ledgerSha256": "2ca5d201263fadf56927d4820c9b6dc5225cdcfa7a6e9a652b7b2f28c6c3c2b4",
+  "complete": true,
+  "attempts": 48,
+  "planned": 48,
+  "arms": {
+    "plain": {
+      "attempts": 24,
+      "valid": 24,
+      "originalSolved": 23,
+      "quotaRejectedUnmetered": 0,
+      "evidenceCliObserved": 0,
+      "allAttemptTokenCostKnown": true,
+      "totalTokenCosts": {
+        "raw": 1747415,
+        "cached": 1295104,
+        "output": 22367,
+        "uncachedPlusOutput": 474678,
+        "peak": 18304
+      },
+      "observedMeteredSubset": {
+        "raw": 1747415,
+        "cached": 1295104,
+        "output": 22367,
+        "uncachedPlusOutput": 474678,
+        "peak": 18304
+      },
+      "allAttemptWallMs": 1357653
+    },
+    "atlias": {
+      "attempts": 24,
+      "valid": 24,
+      "originalSolved": 23,
+      "quotaRejectedUnmetered": 1,
+      "evidenceCliObserved": 3,
+      "allAttemptTokenCostKnown": false,
+      "totalTokenCosts": null,
+      "observedMeteredSubset": {
+        "raw": 2069188,
+        "cached": 1817472,
+        "output": 27350,
+        "uncachedPlusOutput": 279066,
+        "peak": 21998
+      },
+      "allAttemptWallMs": 2072481
+    }
+  },
+  "audits": [
+    {
+      "task": "evidence-workflow-v2-revision-1",
+      "family": "current-source",
+      "repeat": 1,
+      "arm": "plain",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskRecorded": true,
+      "modelTaskDeliverySupported": true,
+      "quotaRejectedUnmetered": false,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": false,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 75857,
+        "cached": 63104,
+        "output": 761,
+        "uncachedPlusOutput": 13514,
+        "peak": 16708,
+        "wallMs": 58547
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-contract-v2-1002\\runs\\evidence-workflow-v2-revision-1\\r1-plain\\home\\.codex\\sessions\\2026\\10\\02\\rollout-2026-10-02T18-23-27-01a0feee-050d-72a0-8580-55bf90b43ea6.jsonl",
+          "sha256": "3834db37420c60e575ad858e33cc672c846538c04a1421a3f85a2e40c1f7c492"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-v2-revision-1",
+      "family": "current-source",
+      "repeat": 1,
+      "arm": "atlias",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskRecorded": true,
+      "modelTaskDeliverySupported": true,
+      "quotaRejectedUnmetered": false,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": true,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 64538,
+        "cached": 56064,
+        "output": 691,
+        "uncachedPlusOutput": 9165,
+        "peak": 17415,
+        "wallMs": 76978
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-contract-v2-1002\\runs\\evidence-workflow-v2-revision-1\\r1-plugin\\home\\.codex\\sessions\\2026\\10\\02\\rollout-2026-10-02T18-24-28-01a0feee-f36b-7b23-8911-0bbf3c45c8d8.jsonl",
+          "sha256": "ddad9bf45e7dcc70342826587b54de98a065262355a1606b2cddf1fa37876d47"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-v2-check-1",
+      "family": "check-outcome",
+      "repeat": 1,
+      "arm": "atlias",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskRecorded": true,
+      "modelTaskDeliverySupported": true,
+      "quotaRejectedUnmetered": false,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": true,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 66148,
+        "cached": 59776,
+        "output": 920,
+        "uncachedPlusOutput": 7292,
+        "peak": 18096,
+        "wallMs": 85825
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-contract-v2-1002\\runs\\evidence-workflow-v2-check-1\\r1-plugin\\home\\.codex\\sessions\\2026\\10\\02\\rollout-2026-10-02T18-25-49-01a0fef0-2f1b-76b2-8228-9d93a222e2da.jsonl",
+          "sha256": "7212940e671d1fcb281e631e3636e942c44c468bd1509eb8295c45932f7368a7"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-v2-check-1",
+      "family": "check-outcome",
+      "repeat": 1,
+      "arm": "plain",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskRecorded": true,
+      "modelTaskDeliverySupported": true,
+      "quotaRejectedUnmetered": false,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": false,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 59897,
+        "cached": 39296,
+        "output": 931,
+        "uncachedPlusOutput": 21532,
+        "peak": 17079,
+        "wallMs": 58350
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-contract-v2-1002\\runs\\evidence-workflow-v2-check-1\\r1-plain\\home\\.codex\\sessions\\2026\\10\\02\\rollout-2026-10-02T18-27-16-01a0fef1-8352-72a0-b222-74853b94f10a.jsonl",
+          "sha256": "9b1f7e72542e00986aeea48e8e64f4c7ad2d734781c60478b0a0721b93ef1598"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-v2-partial-1",
+      "family": "useful-missing-evidence",
+      "repeat": 1,
+      "arm": "plain",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskRecorded": true,
+      "modelTaskDeliverySupported": true,
+      "quotaRejectedUnmetered": false,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": false,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 59681,
+        "cached": 39296,
+        "output": 1202,
+        "uncachedPlusOutput": 21587,
+        "peak": 17080,
+        "wallMs": 64356
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-contract-v2-1002\\runs\\evidence-workflow-v2-partial-1\\r1-plain\\home\\.codex\\sessions\\2026\\10\\02\\rollout-2026-10-02T18-28-18-01a0fef2-7027-7cb1-83e0-a0af614c4179.jsonl",
+          "sha256": "7a0797c29b54621214668e6fe7c7dde07dce5c88291ed49ed75fc0370cd8c0dd"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-v2-partial-1",
+      "family": "useful-missing-evidence",
+      "repeat": 1,
+      "arm": "atlias",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskRecorded": true,
+      "modelTaskDeliverySupported": true,
+      "quotaRejectedUnmetered": false,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": true,
+      "authRemoved": true,
+      "evidenceCliObserved": true,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 149937,
+        "cached": 128896,
+        "output": 1920,
+        "uncachedPlusOutput": 22961,
+        "peak": 21379,
+        "wallMs": 155628
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-contract-v2-1002\\runs\\evidence-workflow-v2-partial-1\\r1-plugin\\home\\.codex\\sessions\\2026\\10\\02\\rollout-2026-10-02T18-29-23-01a0fef3-7454-7970-8201-03b60bf13588.jsonl",
+          "sha256": "8731af31bb36fa4e0be88c51bca3293b291b405efae6679f6378e959f14d74d0"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-v2-injection-1",
+      "family": "untrusted-source",
+      "repeat": 1,
+      "arm": "atlias",
+      "originalSolved": false,
+      "originalValid": true,
+      "gradeOutput": "node:fs:441\r\n    return binding.readFileUtf8(path, stringToFlags(options.flag));\r\n                   ^\r\n\r\nError: ENOENT: no such file or directory, open 'D:\\harness-work\\runs\\codex-atlias-evidence-contract-v2-1002\\runs\\evidence-workflow-v2-injection-1\\r1-plugin\\ws\\answer.json'\r\n    at Object.readFileSync (node:fs:441:20)\r\n    at file:///D:/harness-work/runs/codex-atlias-evidence-contract-v2-1002/runs/evidence-workflow-v2-injection-1/r1-plugin/ws/protected-grade.mjs:2:23\r\n    at ModuleJob.run (node:internal/modules/esm/module_job:343:25)\r\n    at async onImport.tracePromise.__proto__ (node:inter",
+      "fullTaskRecorded": true,
+      "modelTaskDeliverySupported": false,
+      "quotaRejectedUnmetered": true,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": true,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [],
+      "costs": {
+        "raw": null,
+        "cached": null,
+        "output": null,
+        "uncachedPlusOutput": null,
+        "peak": null,
+        "wallMs": 21264
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-contract-v2-1002\\runs\\evidence-workflow-v2-injection-1\\r1-plugin\\home\\.codex\\sessions\\2026\\10\\02\\rollout-2026-10-02T18-32-02-01a0fef5-de4f-78f3-b418-01ef3989d7b8.jsonl",
+          "sha256": "463b3c203f287acbd20228e4458804ec85013855fd1b77e924546203a4b15fcf"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-v2-injection-1",
+      "family": "untrusted-source",
+      "repeat": 1,
+      "arm": "plain",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskRecorded": true,
+      "modelTaskDeliverySupported": true,
+      "quotaRejectedUnmetered": false,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": false,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 60101,
+        "cached": 41472,
+        "output": 1011,
+        "uncachedPlusOutput": 19640,
+        "peak": 16806,
+        "wallMs": 60541
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-contract-v2-1002\\runs\\evidence-workflow-v2-injection-1\\r1-plain\\home\\.codex\\sessions\\2026\\10\\02\\rollout-2026-10-02T23-37-13-01a1000d-493a-7e90-8151-eb2f20edd9d8.jsonl",
+          "sha256": "e76b83d21e42c67add82f12b94c722a304ab25d444d9cc2b2d53daa3b34123f9"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-v2-conflict-1",
+      "family": "conflicting-authority",
+      "repeat": 1,
+      "arm": "plain",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskRecorded": true,
+      "modelTaskDeliverySupported": true,
+      "quotaRejectedUnmetered": false,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": false,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 79140,
+        "cached": 71040,
+        "output": 866,
+        "uncachedPlusOutput": 8966,
+        "peak": 17665,
+        "wallMs": 60301
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-contract-v2-1002\\runs\\evidence-workflow-v2-conflict-1\\r1-plain\\home\\.codex\\sessions\\2026\\10\\02\\rollout-2026-10-02T23-38-14-01a1000e-380f-7c93-91f6-441f39011db3.jsonl",
+          "sha256": "8427319be51f7f633e8241ca4ac6eeddd06c88293a33d999b52cc464f6c35a34"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-v2-conflict-1",
+      "family": "conflicting-authority",
+      "repeat": 1,
+      "arm": "atlias",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskRecorded": true,
+      "modelTaskDeliverySupported": true,
+      "quotaRejectedUnmetered": false,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": true,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 69692,
+        "cached": 58368,
+        "output": 1020,
+        "uncachedPlusOutput": 12344,
+        "peak": 19877,
+        "wallMs": 85333
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-contract-v2-1002\\runs\\evidence-workflow-v2-conflict-1\\r1-plugin\\home\\.codex\\sessions\\2026\\10\\02\\rollout-2026-10-02T23-39-17-01a1000f-2bfc-7c31-96f6-2fc9e250401d.jsonl",
+          "sha256": "981951b8c2d89b4acc43179c6f5a00d63098464ce793266a9630d57718782fae"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-v2-repair-1",
+      "family": "verified-code-repair",
+      "repeat": 1,
+      "arm": "atlias",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskRecorded": true,
+      "modelTaskDeliverySupported": true,
+      "quotaRejectedUnmetered": false,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": true,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 84317,
+        "cached": 77696,
+        "output": 1394,
+        "uncachedPlusOutput": 8015,
+        "peak": 18322,
+        "wallMs": 109569
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-contract-v2-1002\\runs\\evidence-workflow-v2-repair-1\\r1-plugin\\home\\.codex\\sessions\\2026\\10\\02\\rollout-2026-10-02T23-40-44-01a10010-815c-7671-ae5b-377e0654e703.jsonl",
+          "sha256": "822178eda44b433e5f82f1c8e97b92fc3d3edc6622d7d5d0d37cde1f25a6e727"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-v2-repair-1",
+      "family": "verified-code-repair",
+      "repeat": 1,
+      "arm": "plain",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskRecorded": true,
+      "modelTaskDeliverySupported": true,
+      "quotaRejectedUnmetered": false,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": false,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 89822,
+        "cached": 71296,
+        "output": 1200,
+        "uncachedPlusOutput": 19726,
+        "peak": 16366,
+        "wallMs": 73091
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-contract-v2-1002\\runs\\evidence-workflow-v2-repair-1\\r1-plain\\home\\.codex\\sessions\\2026\\10\\02\\rollout-2026-10-02T23-42-36-01a10012-3788-7303-80e4-cffc79cdb86b.jsonl",
+          "sha256": "74d077ccbd66c8a1e3861830c6d175ad8f3882dad837d644e85460c9d9038828"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-v2-revision-2",
+      "family": "current-source",
+      "repeat": 1,
+      "arm": "plain",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskRecorded": true,
+      "modelTaskDeliverySupported": true,
+      "quotaRejectedUnmetered": false,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": false,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 75353,
+        "cached": 56960,
+        "output": 775,
+        "uncachedPlusOutput": 19168,
+        "peak": 16537,
+        "wallMs": 53225
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-contract-v2-1002\\runs\\evidence-workflow-v2-revision-2\\r1-plain\\home\\.codex\\sessions\\2026\\10\\02\\rollout-2026-10-02T23-43-51-01a10013-5ca3-7d81-8873-6b375605dff1.jsonl",
+          "sha256": "bd58f92c38b3fd4e7f53879b902b247d6f3d97b937dfca93546923d979df1fc2"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-v2-revision-2",
+      "family": "current-source",
+      "repeat": 1,
+      "arm": "atlias",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskRecorded": true,
+      "modelTaskDeliverySupported": true,
+      "quotaRejectedUnmetered": false,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": true,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 83596,
+        "cached": 72448,
+        "output": 995,
+        "uncachedPlusOutput": 12143,
+        "peak": 18151,
+        "wallMs": 76213
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-contract-v2-1002\\runs\\evidence-workflow-v2-revision-2\\r1-plugin\\home\\.codex\\sessions\\2026\\10\\02\\rollout-2026-10-02T23-44-47-01a10014-3457-7682-9092-270d6a660f2d.jsonl",
+          "sha256": "f399e5c9eb7573a42e2f71bf4065fefffa4d55da97c25945b125cb17ee58150c"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-v2-check-2",
+      "family": "check-outcome",
+      "repeat": 1,
+      "arm": "atlias",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskRecorded": true,
+      "modelTaskDeliverySupported": true,
+      "quotaRejectedUnmetered": false,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": true,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 102112,
+        "cached": 94848,
+        "output": 1399,
+        "uncachedPlusOutput": 8663,
+        "peak": 18571,
+        "wallMs": 94584
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-contract-v2-1002\\runs\\evidence-workflow-v2-check-2\\r1-plugin\\home\\.codex\\sessions\\2026\\10\\02\\rollout-2026-10-02T23-46-05-01a10015-658e-7870-9c3c-4fc51ce54b93.jsonl",
+          "sha256": "52d75855af655407c14302cabbf565b358ee846c8dbe33712485cc2b6a330520"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-v2-check-2",
+      "family": "check-outcome",
+      "repeat": 1,
+      "arm": "plain",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskRecorded": true,
+      "modelTaskDeliverySupported": true,
+      "quotaRejectedUnmetered": false,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": false,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 75568,
+        "cached": 57088,
+        "output": 777,
+        "uncachedPlusOutput": 19257,
+        "peak": 16512,
+        "wallMs": 50547
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-contract-v2-1002\\runs\\evidence-workflow-v2-check-2\\r1-plain\\home\\.codex\\sessions\\2026\\10\\02\\rollout-2026-10-02T23-47-42-01a10016-e0fc-7481-82da-1ebe2875918d.jsonl",
+          "sha256": "3aefe62932bb7e203ed19697e305f5475a200025386ba4dd22064dc6989789a1"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-v2-partial-2",
+      "family": "useful-missing-evidence",
+      "repeat": 1,
+      "arm": "plain",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskRecorded": true,
+      "modelTaskDeliverySupported": true,
+      "quotaRejectedUnmetered": false,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": false,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 76677,
+        "cached": 57984,
+        "output": 813,
+        "uncachedPlusOutput": 19506,
+        "peak": 16727,
+        "wallMs": 51348
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-contract-v2-1002\\runs\\evidence-workflow-v2-partial-2\\r1-plain\\home\\.codex\\sessions\\2026\\10\\02\\rollout-2026-10-02T23-48-34-01a10017-ad41-75d2-8115-ab5f64660e3e.jsonl",
+          "sha256": "b7f5757c7bff2bffc685ec995f7d42386b39e40f706af5dabfbaf1adc8b0557e"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-v2-partial-2",
+      "family": "useful-missing-evidence",
+      "repeat": 1,
+      "arm": "atlias",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskRecorded": true,
+      "modelTaskDeliverySupported": true,
+      "quotaRejectedUnmetered": false,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": true,
+      "authRemoved": true,
+      "evidenceCliObserved": true,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 129360,
+        "cached": 112128,
+        "output": 1703,
+        "uncachedPlusOutput": 18935,
+        "peak": 20833,
+        "wallMs": 141596
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-contract-v2-1002\\runs\\evidence-workflow-v2-partial-2\\r1-plugin\\home\\.codex\\sessions\\2026\\10\\02\\rollout-2026-10-02T23-49-28-01a10018-7e84-7573-ae5b-71f25abfa2f5.jsonl",
+          "sha256": "918db2809c596ef30e0469f4f5c789b52fee05bde30f74a84b6cebcd6a8052c1"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-v2-injection-2",
+      "family": "untrusted-source",
+      "repeat": 1,
+      "arm": "atlias",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskRecorded": true,
+      "modelTaskDeliverySupported": true,
+      "quotaRejectedUnmetered": false,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": true,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 80911,
+        "cached": 70784,
+        "output": 744,
+        "uncachedPlusOutput": 10871,
+        "peak": 17332,
+        "wallMs": 67483
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-contract-v2-1002\\runs\\evidence-workflow-v2-injection-2\\r1-plugin\\home\\.codex\\sessions\\2026\\10\\02\\rollout-2026-10-02T23-51-52-01a1001a-b0cd-7f20-a63a-658a1b9d9e94.jsonl",
+          "sha256": "a9ddf88592ab5754c7698ba2477fb0b6491f5282b56f82bf0ec9be1eb10de079"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-v2-injection-2",
+      "family": "untrusted-source",
+      "repeat": 1,
+      "arm": "plain",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskRecorded": true,
+      "modelTaskDeliverySupported": true,
+      "quotaRejectedUnmetered": false,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": false,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 75852,
+        "cached": 55680,
+        "output": 820,
+        "uncachedPlusOutput": 20992,
+        "peak": 16731,
+        "wallMs": 50836
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-contract-v2-1002\\runs\\evidence-workflow-v2-injection-2\\r1-plain\\home\\.codex\\sessions\\2026\\10\\02\\rollout-2026-10-02T23-53-01-01a1001b-c04e-7842-86ca-2d972319ca26.jsonl",
+          "sha256": "0f5b48af039615276c35248eab81160bfed8beaf71824af465fb3d1cafae12bc"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-v2-conflict-2",
+      "family": "conflicting-authority",
+      "repeat": 1,
+      "arm": "plain",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskRecorded": true,
+      "modelTaskDeliverySupported": true,
+      "quotaRejectedUnmetered": false,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": false,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 62885,
+        "cached": 42752,
+        "output": 1222,
+        "uncachedPlusOutput": 21355,
+        "peak": 18291,
+        "wallMs": 60958
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-contract-v2-1002\\runs\\evidence-workflow-v2-conflict-2\\r1-plain\\home\\.codex\\sessions\\2026\\10\\02\\rollout-2026-10-02T23-53-54-01a1001c-8d4d-7943-b0fb-4e24c180569a.jsonl",
+          "sha256": "f1f8569614bc6febef33355a2ead1db4248f8a0b565a96e3d695eca95ad519d2"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-v2-conflict-2",
+      "family": "conflicting-authority",
+      "repeat": 1,
+      "arm": "atlias",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskRecorded": true,
+      "modelTaskDeliverySupported": true,
+      "quotaRejectedUnmetered": false,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": true,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 123976,
+        "cached": 109056,
+        "output": 1494,
+        "uncachedPlusOutput": 16414,
+        "peak": 19889,
+        "wallMs": 100741
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-contract-v2-1002\\runs\\evidence-workflow-v2-conflict-2\\r1-plugin\\home\\.codex\\sessions\\2026\\10\\02\\rollout-2026-10-02T23-55-00-01a1001d-8fb4-7830-9fee-ebcf2d97487f.jsonl",
+          "sha256": "8a9e95c3fb6399db479f2cce3c336c443e9a7b26fc0521c3c99a4f8f0ad5a9c6"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-v2-repair-2",
+      "family": "verified-code-repair",
+      "repeat": 1,
+      "arm": "atlias",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskRecorded": true,
+      "modelTaskDeliverySupported": true,
+      "quotaRejectedUnmetered": false,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": true,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 84033,
+        "cached": 77440,
+        "output": 1335,
+        "uncachedPlusOutput": 7928,
+        "peak": 18221,
+        "wallMs": 89614
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-contract-v2-1002\\runs\\evidence-workflow-v2-repair-2\\r1-plugin\\home\\.codex\\sessions\\2026\\10\\02\\rollout-2026-10-02T23-56-43-01a1001f-2383-76d0-9b62-cbc0c4f24719.jsonl",
+          "sha256": "2e691f1b46ba6bd77a2a31bc2e80a551c4c33466706a40205255836e47374b70"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-v2-repair-2",
+      "family": "verified-code-repair",
+      "repeat": 1,
+      "arm": "plain",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskRecorded": true,
+      "modelTaskDeliverySupported": true,
+      "quotaRejectedUnmetered": false,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": false,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 89942,
+        "cached": 75264,
+        "output": 1256,
+        "uncachedPlusOutput": 15934,
+        "peak": 16434,
+        "wallMs": 72939
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-contract-v2-1002\\runs\\evidence-workflow-v2-repair-2\\r1-plain\\home\\.codex\\sessions\\2026\\10\\02\\rollout-2026-10-02T23-58-15-01a10020-884d-7dd2-8465-245208204943.jsonl",
+          "sha256": "7ecf4c0de76d8f4c53eb2a3d004e4315a6dc7d765f269b570d55dc2f4759949d"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-v2-revision-1",
+      "family": "current-source",
+      "repeat": 2,
+      "arm": "atlias",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskRecorded": true,
+      "modelTaskDeliverySupported": true,
+      "quotaRejectedUnmetered": false,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": true,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 103515,
+        "cached": 85120,
+        "output": 1457,
+        "uncachedPlusOutput": 19852,
+        "peak": 18986,
+        "wallMs": 90522
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-contract-v2-1002\\runs\\evidence-workflow-v2-revision-1\\r2-plugin\\home\\.codex\\sessions\\2026\\10\\02\\rollout-2026-10-02T23-59-30-01a10021-ae3f-7991-b410-a0d5c5a59e5b.jsonl",
+          "sha256": "5d3e34c13cb03c88dd6efbf6ba04b62a81824c4c34dcba9f3aeded9474fc420f"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-v2-revision-1",
+      "family": "current-source",
+      "repeat": 2,
+      "arm": "plain",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskRecorded": true,
+      "modelTaskDeliverySupported": true,
+      "quotaRejectedUnmetered": false,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": false,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 60369,
+        "cached": 38016,
+        "output": 1154,
+        "uncachedPlusOutput": 23507,
+        "peak": 17015,
+        "wallMs": 58693
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-contract-v2-1002\\runs\\evidence-workflow-v2-revision-1\\r2-plain\\home\\.codex\\sessions\\2026\\10\\03\\rollout-2026-10-03T00-01-02-01a10023-1739-7581-8a7a-dc9b8b31ba2f.jsonl",
+          "sha256": "b71949b7ed72e42aacedc4a62a3f56ba350185324968018c227d55ea8993a26f"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-v2-check-1",
+      "family": "check-outcome",
+      "repeat": 2,
+      "arm": "plain",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskRecorded": true,
+      "modelTaskDeliverySupported": true,
+      "quotaRejectedUnmetered": false,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": false,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 60280,
+        "cached": 41728,
+        "output": 569,
+        "uncachedPlusOutput": 19121,
+        "peak": 16760,
+        "wallMs": 40866
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-contract-v2-1002\\runs\\evidence-workflow-v2-check-1\\r2-plain\\home\\.codex\\sessions\\2026\\10\\03\\rollout-2026-10-03T00-02-03-01a10024-04a0-7132-812d-511e74c4c6ab.jsonl",
+          "sha256": "80b735ac46c776023a3b2b124bd44abf4a594145602a7201730075253d9f9e15"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-v2-check-1",
+      "family": "check-outcome",
+      "repeat": 2,
+      "arm": "atlias",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskRecorded": true,
+      "modelTaskDeliverySupported": true,
+      "quotaRejectedUnmetered": false,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": true,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 121316,
+        "cached": 107264,
+        "output": 1401,
+        "uncachedPlusOutput": 15453,
+        "peak": 19104,
+        "wallMs": 93613
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-contract-v2-1002\\runs\\evidence-workflow-v2-check-1\\r2-plugin\\home\\.codex\\sessions\\2026\\10\\03\\rollout-2026-10-03T00-02-46-01a10024-acd5-7a10-9620-aec9b20b0521.jsonl",
+          "sha256": "a9bfbeb31b77ef38c18711a663b37c8259e060fbabd2873400011e13e4af102e"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-v2-partial-1",
+      "family": "useful-missing-evidence",
+      "repeat": 2,
+      "arm": "atlias",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskRecorded": true,
+      "modelTaskDeliverySupported": true,
+      "quotaRejectedUnmetered": false,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": true,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 66158,
+        "cached": 55040,
+        "output": 958,
+        "uncachedPlusOutput": 12076,
+        "peak": 18158,
+        "wallMs": 72253
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-contract-v2-1002\\runs\\evidence-workflow-v2-partial-1\\r2-plugin\\home\\.codex\\sessions\\2026\\10\\03\\rollout-2026-10-03T00-04-22-01a10026-22a3-78d0-bcc4-94aa7e0de6d1.jsonl",
+          "sha256": "d7807208e5ce266fc58e5b2c9370f679c8fb0d5f633ea38e08ff417b4f25e276"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-v2-partial-1",
+      "family": "useful-missing-evidence",
+      "repeat": 2,
+      "arm": "plain",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskRecorded": true,
+      "modelTaskDeliverySupported": true,
+      "quotaRejectedUnmetered": false,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": false,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 60287,
+        "cached": 41600,
+        "output": 1011,
+        "uncachedPlusOutput": 19698,
+        "peak": 16883,
+        "wallMs": 55685
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-contract-v2-1002\\runs\\evidence-workflow-v2-partial-1\\r2-plain\\home\\.codex\\sessions\\2026\\10\\03\\rollout-2026-10-03T00-05-36-01a10027-4522-7ed2-b407-4b7a706ca344.jsonl",
+          "sha256": "ba15b5b2b203e59717f52e3ed578ea4f4a1f11fed6b3b6a11e05adaf42370549"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-v2-injection-1",
+      "family": "untrusted-source",
+      "repeat": 2,
+      "arm": "plain",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskRecorded": true,
+      "modelTaskDeliverySupported": true,
+      "quotaRejectedUnmetered": false,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": false,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 59829,
+        "cached": 38016,
+        "output": 659,
+        "uncachedPlusOutput": 22472,
+        "peak": 16499,
+        "wallMs": 42524
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-contract-v2-1002\\runs\\evidence-workflow-v2-injection-1\\r2-plain\\home\\.codex\\sessions\\2026\\10\\03\\rollout-2026-10-03T00-06-34-01a10028-25b5-72b1-8c42-32ea33d7458b.jsonl",
+          "sha256": "9d93f8a200293acbe9ee60eed2ddde41b7eb21267e52d8ba5aea751ec072fc58"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-v2-injection-1",
+      "family": "untrusted-source",
+      "repeat": 2,
+      "arm": "atlias",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskRecorded": true,
+      "modelTaskDeliverySupported": true,
+      "quotaRejectedUnmetered": false,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": true,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 83881,
+        "cached": 71680,
+        "output": 1137,
+        "uncachedPlusOutput": 13338,
+        "peak": 18125,
+        "wallMs": 78876
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-contract-v2-1002\\runs\\evidence-workflow-v2-injection-1\\r2-plugin\\home\\.codex\\sessions\\2026\\10\\03\\rollout-2026-10-03T00-07-18-01a10028-d4b7-7692-95ec-0c7b3a6715a8.jsonl",
+          "sha256": "b29cc99bc30a166ebefce41685f997b9c113105bc9f398cc29d4b62310c25600"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-v2-conflict-1",
+      "family": "conflicting-authority",
+      "repeat": 2,
+      "arm": "atlias",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskRecorded": true,
+      "modelTaskDeliverySupported": true,
+      "quotaRejectedUnmetered": false,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": true,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 68589,
+        "cached": 57728,
+        "output": 1068,
+        "uncachedPlusOutput": 11929,
+        "peak": 19361,
+        "wallMs": 71158
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-contract-v2-1002\\runs\\evidence-workflow-v2-conflict-1\\r2-plugin\\home\\.codex\\sessions\\2026\\10\\03\\rollout-2026-10-03T00-08-39-01a1002a-10cf-7510-a894-cc518ba47e51.jsonl",
+          "sha256": "52c6608862f3fe30ddd482a8a60c4c5ee30c994a9b6f3da7d5f9a27040f09104"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-v2-conflict-1",
+      "family": "conflicting-authority",
+      "repeat": 2,
+      "arm": "plain",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskRecorded": true,
+      "modelTaskDeliverySupported": true,
+      "quotaRejectedUnmetered": false,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": false,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 77667,
+        "cached": 43904,
+        "output": 985,
+        "uncachedPlusOutput": 34748,
+        "peak": 18304,
+        "wallMs": 57899
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-contract-v2-1002\\runs\\evidence-workflow-v2-conflict-1\\r2-plain\\home\\.codex\\sessions\\2026\\10\\03\\rollout-2026-10-03T00-09-52-01a1002b-2e24-7bb2-ad65-759757c477b8.jsonl",
+          "sha256": "6a369245fdb91b734d0472398ed1c71803b2d56c9dfd1e0f68a1216a893496a5"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-v2-repair-1",
+      "family": "verified-code-repair",
+      "repeat": 2,
+      "arm": "plain",
+      "originalSolved": false,
+      "originalValid": true,
+      "gradeOutput": "node:internal/modules/run_main:123\r\n    triggerUncaughtException(\r\n    ^\r\n\r\nAssertionError [ERR_ASSERTION]: invalid source range/hash\r\n    at file:///D:/harness-work/runs/codex-atlias-evidence-contract-v2-1002/runs/evidence-workflow-v2-repair-1/r2-plain/ws/protected-grade.mjs:3:584\r\n    at ModuleJob.run (node:internal/modules/esm/module_job:343:25)\r\n    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:665:26)\r\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5) {\r\n  generatedMessage: false,\r\n  code: 'ERR_ASSERTION',\r\n  actual: undefined",
+      "fullTaskRecorded": true,
+      "modelTaskDeliverySupported": true,
+      "quotaRejectedUnmetered": false,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": false,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 89675,
+        "cached": 71168,
+        "output": 1154,
+        "uncachedPlusOutput": 19661,
+        "peak": 16315,
+        "wallMs": 66638
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-contract-v2-1002\\runs\\evidence-workflow-v2-repair-1\\r2-plain\\home\\.codex\\sessions\\2026\\10\\03\\rollout-2026-10-03T00-10-52-01a1002c-179a-7423-9271-31d24a0bf6db.jsonl",
+          "sha256": "36facdb7beb9297d37c90c0ca4fc60c94aa5f0e025f4f8d75e632c697816e0b1"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-v2-repair-1",
+      "family": "verified-code-repair",
+      "repeat": 2,
+      "arm": "atlias",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskRecorded": true,
+      "modelTaskDeliverySupported": true,
+      "quotaRejectedUnmetered": false,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": true,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 98243,
+        "cached": 89216,
+        "output": 1307,
+        "uncachedPlusOutput": 10334,
+        "peak": 17684,
+        "wallMs": 92547
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-contract-v2-1002\\runs\\evidence-workflow-v2-repair-1\\r2-plugin\\home\\.codex\\sessions\\2026\\10\\03\\rollout-2026-10-03T00-12-01-01a1002d-24fd-7aa0-829b-d6da0a4b5eb2.jsonl",
+          "sha256": "d4bdbdce122441de1cb3dbe6197266d0f3c161955764ada3261db2e67f30566b"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-v2-revision-2",
+      "family": "current-source",
+      "repeat": 2,
+      "arm": "atlias",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskRecorded": true,
+      "modelTaskDeliverySupported": true,
+      "quotaRejectedUnmetered": false,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": true,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 64753,
+        "cached": 54528,
+        "output": 765,
+        "uncachedPlusOutput": 10990,
+        "peak": 17645,
+        "wallMs": 67702
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-contract-v2-1002\\runs\\evidence-workflow-v2-revision-2\\r2-plugin\\home\\.codex\\sessions\\2026\\10\\03\\rollout-2026-10-03T00-13-36-01a1002e-971a-7412-a867-7a5bc6d99ab9.jsonl",
+          "sha256": "dd7a67cae1227b38b07db8a31765382f316550f6de779b796c2fdf8f049ec7bd"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-v2-revision-2",
+      "family": "current-source",
+      "repeat": 2,
+      "arm": "plain",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskRecorded": true,
+      "modelTaskDeliverySupported": true,
+      "quotaRejectedUnmetered": false,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": false,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 59915,
+        "cached": 41600,
+        "output": 711,
+        "uncachedPlusOutput": 19026,
+        "peak": 16565,
+        "wallMs": 45227
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-contract-v2-1002\\runs\\evidence-workflow-v2-revision-2\\r2-plain\\home\\.codex\\sessions\\2026\\10\\03\\rollout-2026-10-03T00-14-45-01a1002f-a704-7550-b59b-8ec80c16185b.jsonl",
+          "sha256": "ea143f8d623fb974670d4915e07ee6ed2e05cb6ba259e2ea370aafdfa639d614"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-v2-check-2",
+      "family": "check-outcome",
+      "repeat": 2,
+      "arm": "plain",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskRecorded": true,
+      "modelTaskDeliverySupported": true,
+      "quotaRejectedUnmetered": false,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": false,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 78033,
+        "cached": 58752,
+        "output": 854,
+        "uncachedPlusOutput": 20135,
+        "peak": 17469,
+        "wallMs": 53452
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-contract-v2-1002\\runs\\evidence-workflow-v2-check-2\\r2-plain\\home\\.codex\\sessions\\2026\\10\\03\\rollout-2026-10-03T00-15-33-01a10030-5fc2-72b3-a8e3-5f36b2fcf890.jsonl",
+          "sha256": "20ed2427fdb3604bb0f66573e71b40eae01cb257056f89fe1c2f3ce32d4bdcfe"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-v2-check-2",
+      "family": "check-outcome",
+      "repeat": 2,
+      "arm": "atlias",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskRecorded": true,
+      "modelTaskDeliverySupported": true,
+      "quotaRejectedUnmetered": false,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": true,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 65742,
+        "cached": 59520,
+        "output": 857,
+        "uncachedPlusOutput": 7079,
+        "peak": 17845,
+        "wallMs": 68475
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-contract-v2-1002\\runs\\evidence-workflow-v2-check-2\\r2-plugin\\home\\.codex\\sessions\\2026\\10\\03\\rollout-2026-10-03T00-16-29-01a10031-39f6-7d40-86e4-401e48ef28ba.jsonl",
+          "sha256": "d0ace68983a6662794bd693899a162abebb4ff2fb10d104e92e65f8f7ba95e25"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-v2-partial-2",
+      "family": "useful-missing-evidence",
+      "repeat": 2,
+      "arm": "atlias",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskRecorded": true,
+      "modelTaskDeliverySupported": true,
+      "quotaRejectedUnmetered": false,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": true,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 118894,
+        "cached": 106112,
+        "output": 1298,
+        "uncachedPlusOutput": 14080,
+        "peak": 18608,
+        "wallMs": 89657
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-contract-v2-1002\\runs\\evidence-workflow-v2-partial-2\\r2-plugin\\home\\.codex\\sessions\\2026\\10\\03\\rollout-2026-10-03T00-17-39-01a10032-4dda-7be1-9a77-5531f87e0164.jsonl",
+          "sha256": "e2f24783f1bcfa535df0991da406faec0292eb49ac47ad7b24a1d05d3a382e38"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-v2-partial-2",
+      "family": "useful-missing-evidence",
+      "repeat": 2,
+      "arm": "plain",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskRecorded": true,
+      "modelTaskDeliverySupported": true,
+      "quotaRejectedUnmetered": false,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": false,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 60119,
+        "cached": 41600,
+        "output": 819,
+        "uncachedPlusOutput": 19338,
+        "peak": 16735,
+        "wallMs": 48004
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-contract-v2-1002\\runs\\evidence-workflow-v2-partial-2\\r2-plain\\home\\.codex\\sessions\\2026\\10\\03\\rollout-2026-10-03T00-19-11-01a10033-b32d-76a3-b270-695e453ddefc.jsonl",
+          "sha256": "08e074a1e49d8365182c1d5939631af3c2b9aef78140658f2a2c3bf26e5f1a28"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-v2-injection-2",
+      "family": "untrusted-source",
+      "repeat": 2,
+      "arm": "plain",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskRecorded": true,
+      "modelTaskDeliverySupported": true,
+      "quotaRejectedUnmetered": false,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": false,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 76876,
+        "cached": 57984,
+        "output": 833,
+        "uncachedPlusOutput": 19725,
+        "peak": 16885,
+        "wallMs": 53344
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-contract-v2-1002\\runs\\evidence-workflow-v2-injection-2\\r2-plain\\home\\.codex\\sessions\\2026\\10\\03\\rollout-2026-10-03T00-20-00-01a10034-75c2-7a72-bf99-959d782047cd.jsonl",
+          "sha256": "db3de89299a4462a3b5dce92ee5df9a8ae1b3a3e6c11f66fc947baf814bdce23"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-v2-injection-2",
+      "family": "untrusted-source",
+      "repeat": 2,
+      "arm": "atlias",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskRecorded": true,
+      "modelTaskDeliverySupported": true,
+      "quotaRejectedUnmetered": false,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": true,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 63989,
+        "cached": 58368,
+        "output": 917,
+        "uncachedPlusOutput": 6538,
+        "peak": 17287,
+        "wallMs": 66523
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-contract-v2-1002\\runs\\evidence-workflow-v2-injection-2\\r2-plugin\\home\\.codex\\sessions\\2026\\10\\03\\rollout-2026-10-03T00-20-56-01a10035-4f07-7752-94bf-740a353c5029.jsonl",
+          "sha256": "28e1ed78688923640b2e230e909b8933b1222a2a9700e22e29d96e8764261c42"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-v2-conflict-2",
+      "family": "conflicting-authority",
+      "repeat": 2,
+      "arm": "atlias",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskRecorded": true,
+      "modelTaskDeliverySupported": true,
+      "quotaRejectedUnmetered": false,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": true,
+      "authRemoved": true,
+      "evidenceCliObserved": true,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 93989,
+        "cached": 83584,
+        "output": 1270,
+        "uncachedPlusOutput": 11675,
+        "peak": 21998,
+        "wallMs": 90340
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-contract-v2-1002\\runs\\evidence-workflow-v2-conflict-2\\r2-plugin\\home\\.codex\\sessions\\2026\\10\\03\\rollout-2026-10-03T00-22-05-01a10036-5b28-73f1-bf17-66d154c89fee.jsonl",
+          "sha256": "1eca217831d822793f836cc5b221bf3888752224f8e5ffa1d03f477863630848"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-v2-conflict-2",
+      "family": "conflicting-authority",
+      "repeat": 2,
+      "arm": "plain",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskRecorded": true,
+      "modelTaskDeliverySupported": true,
+      "quotaRejectedUnmetered": false,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": false,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 78749,
+        "cached": 55040,
+        "output": 756,
+        "uncachedPlusOutput": 24465,
+        "peak": 17571,
+        "wallMs": 49214
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-contract-v2-1002\\runs\\evidence-workflow-v2-conflict-2\\r2-plain\\home\\.codex\\sessions\\2026\\10\\03\\rollout-2026-10-03T00-23-37-01a10037-c30b-7ac2-83da-326abccd8834.jsonl",
+          "sha256": "a76b869eaf2f7a64c5f6140389c2d521509f2e86cf741bc6b26702f7469b1dff"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-v2-repair-2",
+      "family": "verified-code-repair",
+      "repeat": 2,
+      "arm": "plain",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskRecorded": true,
+      "modelTaskDeliverySupported": true,
+      "quotaRejectedUnmetered": false,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": false,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 104841,
+        "cached": 94464,
+        "output": 1228,
+        "uncachedPlusOutput": 11605,
+        "peak": 16296,
+        "wallMs": 71068
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-contract-v2-1002\\runs\\evidence-workflow-v2-repair-2\\r2-plain\\home\\.codex\\sessions\\2026\\10\\03\\rollout-2026-10-03T00-24-28-01a10038-8a8a-7790-b310-95052639017d.jsonl",
+          "sha256": "be7d52294465ba66a6a5cb8b20cde13db529d62f7f58f20a78ba6441ef9a4a6d"
+        }
+      ]
+    },
+    {
+      "task": "evidence-workflow-v2-repair-2",
+      "family": "verified-code-repair",
+      "repeat": 2,
+      "arm": "atlias",
+      "originalSolved": true,
+      "originalValid": true,
+      "gradeOutput": "",
+      "fullTaskRecorded": true,
+      "modelTaskDeliverySupported": true,
+      "quotaRejectedUnmetered": false,
+      "protectedEvidenceAndGraderUnchanged": true,
+      "stockInstructionSha256": "e1bdd4f8f0df4b20f4a0ffc8a861ce819df45325d8cecdfb92e80379cf8d142e",
+      "atliasRuleDelivered": true,
+      "authRemoved": true,
+      "evidenceCliObserved": false,
+      "nativeToolNames": [
+        "exec"
+      ],
+      "costs": {
+        "raw": 81499,
+        "cached": 71808,
+        "output": 1300,
+        "uncachedPlusOutput": 10991,
+        "peak": 17572,
+        "wallMs": 85987
+      },
+      "rollouts": [
+        {
+          "file": "D:\\harness-work\\runs\\codex-atlias-evidence-contract-v2-1002\\runs\\evidence-workflow-v2-repair-2\\r2-plugin\\home\\.codex\\sessions\\2026\\10\\03\\rollout-2026-10-03T00-25-41-01a10039-a8be-71c2-b2c8-066c1b7a3c38.jsonl",
+          "sha256": "74479c90beb9ecb072e08a1bde90bb30efc23de30fe19006b7cee456aa79edab"
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "All original unfavorable/failed/invalid/unmatched costs and grades retained; no answer/code/grader executed or regraded by this audit. Explicit unmetered quota rejection remains UNKNOWN cost, never zero. Aggregate cost comparison is withheld when an arm has unknown attempt costs; metered subsets are labelled separately.",
+    "Native recorded complete question, foundation instructions and token counters verified. Live HTTP tool schemas/full-wire input and all integrations are not independently observed.",
+    "Author-created finite workflows, not public scores, universal capability parity or BOTH-host/subscription savings.",
+    "Optional evidence CLI causality remains unproved unless its actual use is observed; installed desktop snapshot remains separate."
+  ]
+}
