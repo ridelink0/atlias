@@ -1,0 +1,1324 @@
+{
+  "source": "81d06a0b25733b0708f78c0032a46e091b5a28bd",
+  "originalPhases": 24,
+  "matchedWholeWorkflows": 4,
+  "oldEvidenceSha256": "eb1bf810f83651adf7335f3355a81cae6358e5e81e9dfffe358d06c924a00e24",
+  "readerSha256": "c7a1268aeab24ffad7da3315bb3cfc314e4dcbb414cd6f6aa6ae6f74164cdfcb",
+  "audits": [
+    {
+      "task": "regional-provenance",
+      "arm": "plain",
+      "originalLedgerSha256": "cb569a96631da872d981542f143418b995ac92aadec4ed3070efe44311632f5d",
+      "checks": [
+        {
+          "phase": "revision-1",
+          "snapshotSha256": "9c123eff5c2a7e6bd0c3299f08f0a4948083ca479b18d6f60b6fe6d9abc0b49d",
+          "report": {
+            "schema": "atlias-native-session-report-v1",
+            "host": "codex",
+            "sessionId": "01a10187-3fce-7a10-b412-34ea3d30ec12",
+            "records": 32,
+            "firstRecord": "2026-10-03T11:30:04.780Z",
+            "lastRecord": "2026-10-03T11:31:03.017Z",
+            "conversationSpanMs": 58237,
+            "completedTurns": 1,
+            "unclosedTurns": 0,
+            "completedTurnWallMs": 59000,
+            "summedCompletedTurnWallMs": 59000,
+            "nativeUsageObservations": 4,
+            "requestUsageObservations": 4,
+            "contextOnlyUpdates": 0,
+            "reportedLifetimeTokens": {
+              "input_tokens": 56223,
+              "cached_input_tokens": 38912,
+              "output_tokens": 971,
+              "reasoning_output_tokens": 0,
+              "total_tokens": 57194
+            },
+            "nativePeakRecordedInputTokens": 15487,
+            "requestAccounting": {
+              "status": "reconciled-request-records",
+              "uniqueRequests": 4,
+              "compactionRequests": 0,
+              "missingCompactionUsage": 0
+            },
+            "requestLifetimeTokens": {
+              "input_tokens": 56223,
+              "cached_input_tokens": 38912,
+              "output_tokens": 971,
+              "reasoning_output_tokens": 0,
+              "total_tokens": 57194
+            },
+            "nativePeakAllRecordedRequestInputTokens": 15487,
+            "limitations": [
+              "Completed-turn wall time includes tool waits; it is not model compute time or continuously active work.",
+              "Reported input includes cached tokens; reasoning is already included in output. These counters are not subscription debits.",
+              "Native task lifecycle times use second-resolution UNIX timestamps where supplied.",
+              "Context-count-only updates are excluded from request peaks; repeated cumulative totals are never summed.",
+              "Legacy event_msg token totals and peaks may exclude compaction. Unique response records include recorded compaction requests when reconciliation succeeds; neither field proves provider billing or unrecorded wire work.",
+              "Recorded request input is not proof of full wire tool-schema/context accounting.",
+              "No on/off source attribution or account-isolation proof is inferred from this transcript."
+            ]
+          }
+        },
+        {
+          "phase": "revision-2",
+          "snapshotSha256": "8d77fc3dee94ed71473bb2290222eeb709e2a37ae6dbb59b325d0b10726f0e70",
+          "report": {
+            "schema": "atlias-native-session-report-v1",
+            "host": "codex",
+            "sessionId": "01a10187-3fce-7a10-b412-34ea3d30ec12",
+            "records": 55,
+            "firstRecord": "2026-10-03T11:30:04.780Z",
+            "lastRecord": "2026-10-03T11:31:53.531Z",
+            "conversationSpanMs": 108751,
+            "completedTurns": 2,
+            "unclosedTurns": 0,
+            "completedTurnWallMs": 101000,
+            "summedCompletedTurnWallMs": 101000,
+            "nativeUsageObservations": 7,
+            "requestUsageObservations": 7,
+            "contextOnlyUpdates": 0,
+            "reportedLifetimeTokens": {
+              "input_tokens": 104632,
+              "cached_input_tokens": 82304,
+              "output_tokens": 1690,
+              "reasoning_output_tokens": 0,
+              "total_tokens": 106322
+            },
+            "nativePeakRecordedInputTokens": 16717,
+            "requestAccounting": {
+              "status": "reconciled-request-records",
+              "uniqueRequests": 7,
+              "compactionRequests": 0,
+              "missingCompactionUsage": 0
+            },
+            "requestLifetimeTokens": {
+              "input_tokens": 104632,
+              "cached_input_tokens": 82304,
+              "output_tokens": 1690,
+              "reasoning_output_tokens": 0,
+              "total_tokens": 106322
+            },
+            "nativePeakAllRecordedRequestInputTokens": 16717,
+            "limitations": [
+              "Completed-turn wall time includes tool waits; it is not model compute time or continuously active work.",
+              "Reported input includes cached tokens; reasoning is already included in output. These counters are not subscription debits.",
+              "Native task lifecycle times use second-resolution UNIX timestamps where supplied.",
+              "Context-count-only updates are excluded from request peaks; repeated cumulative totals are never summed.",
+              "Legacy event_msg token totals and peaks may exclude compaction. Unique response records include recorded compaction requests when reconciliation succeeds; neither field proves provider billing or unrecorded wire work.",
+              "Recorded request input is not proof of full wire tool-schema/context accounting.",
+              "No on/off source attribution or account-isolation proof is inferred from this transcript."
+            ]
+          }
+        },
+        {
+          "phase": "revision-3",
+          "snapshotSha256": "1b2796dd40b80d7cb6037f25b5577eeecfbf77723736da27e668bb5999af068e",
+          "report": {
+            "schema": "atlias-native-session-report-v1",
+            "host": "codex",
+            "sessionId": "01a10187-3fce-7a10-b412-34ea3d30ec12",
+            "records": 78,
+            "firstRecord": "2026-10-03T11:30:04.780Z",
+            "lastRecord": "2026-10-03T11:32:40.940Z",
+            "conversationSpanMs": 156160,
+            "completedTurns": 3,
+            "unclosedTurns": 0,
+            "completedTurnWallMs": 140000,
+            "summedCompletedTurnWallMs": 140000,
+            "nativeUsageObservations": 10,
+            "requestUsageObservations": 10,
+            "contextOnlyUpdates": 0,
+            "reportedLifetimeTokens": {
+              "input_tokens": 156967,
+              "cached_input_tokens": 131712,
+              "output_tokens": 2483,
+              "reasoning_output_tokens": 0,
+              "total_tokens": 159450
+            },
+            "nativePeakRecordedInputTokens": 18107,
+            "requestAccounting": {
+              "status": "reconciled-request-records",
+              "uniqueRequests": 10,
+              "compactionRequests": 0,
+              "missingCompactionUsage": 0
+            },
+            "requestLifetimeTokens": {
+              "input_tokens": 156967,
+              "cached_input_tokens": 131712,
+              "output_tokens": 2483,
+              "reasoning_output_tokens": 0,
+              "total_tokens": 159450
+            },
+            "nativePeakAllRecordedRequestInputTokens": 18107,
+            "limitations": [
+              "Completed-turn wall time includes tool waits; it is not model compute time or continuously active work.",
+              "Reported input includes cached tokens; reasoning is already included in output. These counters are not subscription debits.",
+              "Native task lifecycle times use second-resolution UNIX timestamps where supplied.",
+              "Context-count-only updates are excluded from request peaks; repeated cumulative totals are never summed.",
+              "Legacy event_msg token totals and peaks may exclude compaction. Unique response records include recorded compaction requests when reconciliation succeeds; neither field proves provider billing or unrecorded wire work.",
+              "Recorded request input is not proof of full wire tool-schema/context accounting.",
+              "No on/off source attribution or account-isolation proof is inferred from this transcript."
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "task": "regional-provenance",
+      "arm": "atlias",
+      "originalLedgerSha256": "a2975f445e83a34c7673dc769593939d25cd1e10abc41e295e9e7cbd41ec65ae",
+      "checks": [
+        {
+          "phase": "revision-1",
+          "snapshotSha256": "b223b177a539a630ac72aff2e767080dcf2f0fb65b067f9beefb9f86550bfe63",
+          "report": {
+            "schema": "atlias-native-session-report-v1",
+            "host": "codex",
+            "sessionId": "01a10189-c91c-7401-bf60-8dcc710f26b2",
+            "records": 34,
+            "firstRecord": "2026-10-03T11:32:50.568Z",
+            "lastRecord": "2026-10-03T11:34:07.161Z",
+            "conversationSpanMs": 76593,
+            "completedTurns": 1,
+            "unclosedTurns": 0,
+            "completedTurnWallMs": 77000,
+            "summedCompletedTurnWallMs": 77000,
+            "nativeUsageObservations": 3,
+            "requestUsageObservations": 3,
+            "contextOnlyUpdates": 0,
+            "reportedLifetimeTokens": {
+              "input_tokens": 46728,
+              "cached_input_tokens": 42368,
+              "output_tokens": 643,
+              "reasoning_output_tokens": 13,
+              "total_tokens": 47371
+            },
+            "nativePeakRecordedInputTokens": 16257,
+            "requestAccounting": {
+              "status": "reconciled-request-records",
+              "uniqueRequests": 3,
+              "compactionRequests": 0,
+              "missingCompactionUsage": 0
+            },
+            "requestLifetimeTokens": {
+              "input_tokens": 46728,
+              "cached_input_tokens": 42368,
+              "output_tokens": 643,
+              "reasoning_output_tokens": 13,
+              "total_tokens": 47371
+            },
+            "nativePeakAllRecordedRequestInputTokens": 16257,
+            "limitations": [
+              "Completed-turn wall time includes tool waits; it is not model compute time or continuously active work.",
+              "Reported input includes cached tokens; reasoning is already included in output. These counters are not subscription debits.",
+              "Native task lifecycle times use second-resolution UNIX timestamps where supplied.",
+              "Context-count-only updates are excluded from request peaks; repeated cumulative totals are never summed.",
+              "Legacy event_msg token totals and peaks may exclude compaction. Unique response records include recorded compaction requests when reconciliation succeeds; neither field proves provider billing or unrecorded wire work.",
+              "Recorded request input is not proof of full wire tool-schema/context accounting.",
+              "No on/off source attribution or account-isolation proof is inferred from this transcript."
+            ]
+          }
+        },
+        {
+          "phase": "revision-2",
+          "snapshotSha256": "2dd8a4984daabd2627ce270403d36b214db8994ce52288b2f4328297497f8c8e",
+          "report": {
+            "schema": "atlias-native-session-report-v1",
+            "host": "codex",
+            "sessionId": "01a10189-c91c-7401-bf60-8dcc710f26b2",
+            "records": 75,
+            "firstRecord": "2026-10-03T11:32:50.568Z",
+            "lastRecord": "2026-10-03T11:35:52.757Z",
+            "conversationSpanMs": 182189,
+            "completedTurns": 2,
+            "unclosedTurns": 0,
+            "completedTurnWallMs": 171000,
+            "summedCompletedTurnWallMs": 171000,
+            "nativeUsageObservations": 8,
+            "requestUsageObservations": 8,
+            "contextOnlyUpdates": 0,
+            "reportedLifetimeTokens": {
+              "input_tokens": 137008,
+              "cached_input_tokens": 123392,
+              "output_tokens": 1736,
+              "reasoning_output_tokens": 56,
+              "total_tokens": 138744
+            },
+            "nativePeakRecordedInputTokens": 18986,
+            "requestAccounting": {
+              "status": "reconciled-request-records",
+              "uniqueRequests": 8,
+              "compactionRequests": 0,
+              "missingCompactionUsage": 0
+            },
+            "requestLifetimeTokens": {
+              "input_tokens": 137008,
+              "cached_input_tokens": 123392,
+              "output_tokens": 1736,
+              "reasoning_output_tokens": 56,
+              "total_tokens": 138744
+            },
+            "nativePeakAllRecordedRequestInputTokens": 18986,
+            "limitations": [
+              "Completed-turn wall time includes tool waits; it is not model compute time or continuously active work.",
+              "Reported input includes cached tokens; reasoning is already included in output. These counters are not subscription debits.",
+              "Native task lifecycle times use second-resolution UNIX timestamps where supplied.",
+              "Context-count-only updates are excluded from request peaks; repeated cumulative totals are never summed.",
+              "Legacy event_msg token totals and peaks may exclude compaction. Unique response records include recorded compaction requests when reconciliation succeeds; neither field proves provider billing or unrecorded wire work.",
+              "Recorded request input is not proof of full wire tool-schema/context accounting.",
+              "No on/off source attribution or account-isolation proof is inferred from this transcript."
+            ]
+          }
+        },
+        {
+          "phase": "revision-3",
+          "snapshotSha256": "ce1a934e5ace12dc0987f33e3e70647e64e0e8d18d5769a675b910fe9ada840a",
+          "report": {
+            "schema": "atlias-native-session-report-v1",
+            "host": "codex",
+            "sessionId": "01a10189-c91c-7401-bf60-8dcc710f26b2",
+            "records": 109,
+            "firstRecord": "2026-10-03T11:32:50.568Z",
+            "lastRecord": "2026-10-03T11:37:21.108Z",
+            "conversationSpanMs": 270540,
+            "completedTurns": 3,
+            "unclosedTurns": 0,
+            "completedTurnWallMs": 247000,
+            "summedCompletedTurnWallMs": 247000,
+            "nativeUsageObservations": 12,
+            "requestUsageObservations": 12,
+            "contextOnlyUpdates": 0,
+            "reportedLifetimeTokens": {
+              "input_tokens": 219964,
+              "cached_input_tokens": 200320,
+              "output_tokens": 2536,
+              "reasoning_output_tokens": 82,
+              "total_tokens": 222500
+            },
+            "nativePeakRecordedInputTokens": 21389,
+            "requestAccounting": {
+              "status": "reconciled-request-records",
+              "uniqueRequests": 12,
+              "compactionRequests": 0,
+              "missingCompactionUsage": 0
+            },
+            "requestLifetimeTokens": {
+              "input_tokens": 219964,
+              "cached_input_tokens": 200320,
+              "output_tokens": 2536,
+              "reasoning_output_tokens": 82,
+              "total_tokens": 222500
+            },
+            "nativePeakAllRecordedRequestInputTokens": 21389,
+            "limitations": [
+              "Completed-turn wall time includes tool waits; it is not model compute time or continuously active work.",
+              "Reported input includes cached tokens; reasoning is already included in output. These counters are not subscription debits.",
+              "Native task lifecycle times use second-resolution UNIX timestamps where supplied.",
+              "Context-count-only updates are excluded from request peaks; repeated cumulative totals are never summed.",
+              "Legacy event_msg token totals and peaks may exclude compaction. Unique response records include recorded compaction requests when reconciliation succeeds; neither field proves provider billing or unrecorded wire work.",
+              "Recorded request input is not proof of full wire tool-schema/context accounting.",
+              "No on/off source attribution or account-isolation proof is inferred from this transcript."
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "task": "release-negation",
+      "arm": "plain",
+      "originalLedgerSha256": "fa1bbbdcbb2d336df1f83ba2137c9cda249a43891a34c99a1d819dcc74e47ab9",
+      "checks": [
+        {
+          "phase": "revision-1",
+          "snapshotSha256": "2d56e803bda13cb3cfa7cde2c39ffef1bafc1433a437521724515083f8f7430f",
+          "report": {
+            "schema": "atlias-native-session-report-v1",
+            "host": "codex",
+            "sessionId": "01a10192-65d0-71d1-850e-4c0e6d3492a9",
+            "records": 32,
+            "firstRecord": "2026-10-03T11:42:15.081Z",
+            "lastRecord": "2026-10-03T11:43:05.415Z",
+            "conversationSpanMs": 50334,
+            "completedTurns": 1,
+            "unclosedTurns": 0,
+            "completedTurnWallMs": 50000,
+            "summedCompletedTurnWallMs": 50000,
+            "nativeUsageObservations": 4,
+            "requestUsageObservations": 4,
+            "contextOnlyUpdates": 0,
+            "reportedLifetimeTokens": {
+              "input_tokens": 55923,
+              "cached_input_tokens": 38912,
+              "output_tokens": 690,
+              "reasoning_output_tokens": 0,
+              "total_tokens": 56613
+            },
+            "nativePeakRecordedInputTokens": 15202,
+            "requestAccounting": {
+              "status": "reconciled-request-records",
+              "uniqueRequests": 4,
+              "compactionRequests": 0,
+              "missingCompactionUsage": 0
+            },
+            "requestLifetimeTokens": {
+              "input_tokens": 55923,
+              "cached_input_tokens": 38912,
+              "output_tokens": 690,
+              "reasoning_output_tokens": 0,
+              "total_tokens": 56613
+            },
+            "nativePeakAllRecordedRequestInputTokens": 15202,
+            "limitations": [
+              "Completed-turn wall time includes tool waits; it is not model compute time or continuously active work.",
+              "Reported input includes cached tokens; reasoning is already included in output. These counters are not subscription debits.",
+              "Native task lifecycle times use second-resolution UNIX timestamps where supplied.",
+              "Context-count-only updates are excluded from request peaks; repeated cumulative totals are never summed.",
+              "Legacy event_msg token totals and peaks may exclude compaction. Unique response records include recorded compaction requests when reconciliation succeeds; neither field proves provider billing or unrecorded wire work.",
+              "Recorded request input is not proof of full wire tool-schema/context accounting.",
+              "No on/off source attribution or account-isolation proof is inferred from this transcript."
+            ]
+          }
+        },
+        {
+          "phase": "revision-2",
+          "snapshotSha256": "7cf33c3e5995cbe53c3152e91c308ffcae177c0632efac8805f5594c42016dc5",
+          "report": {
+            "schema": "atlias-native-session-report-v1",
+            "host": "codex",
+            "sessionId": "01a10192-65d0-71d1-850e-4c0e6d3492a9",
+            "records": 55,
+            "firstRecord": "2026-10-03T11:42:15.081Z",
+            "lastRecord": "2026-10-03T11:43:54.399Z",
+            "conversationSpanMs": 99318,
+            "completedTurns": 2,
+            "unclosedTurns": 0,
+            "completedTurnWallMs": 91000,
+            "summedCompletedTurnWallMs": 91000,
+            "nativeUsageObservations": 7,
+            "requestUsageObservations": 7,
+            "contextOnlyUpdates": 0,
+            "reportedLifetimeTokens": {
+              "input_tokens": 103474,
+              "cached_input_tokens": 84608,
+              "output_tokens": 1428,
+              "reasoning_output_tokens": 0,
+              "total_tokens": 104902
+            },
+            "nativePeakRecordedInputTokens": 16448,
+            "requestAccounting": {
+              "status": "reconciled-request-records",
+              "uniqueRequests": 7,
+              "compactionRequests": 0,
+              "missingCompactionUsage": 0
+            },
+            "requestLifetimeTokens": {
+              "input_tokens": 103474,
+              "cached_input_tokens": 84608,
+              "output_tokens": 1428,
+              "reasoning_output_tokens": 0,
+              "total_tokens": 104902
+            },
+            "nativePeakAllRecordedRequestInputTokens": 16448,
+            "limitations": [
+              "Completed-turn wall time includes tool waits; it is not model compute time or continuously active work.",
+              "Reported input includes cached tokens; reasoning is already included in output. These counters are not subscription debits.",
+              "Native task lifecycle times use second-resolution UNIX timestamps where supplied.",
+              "Context-count-only updates are excluded from request peaks; repeated cumulative totals are never summed.",
+              "Legacy event_msg token totals and peaks may exclude compaction. Unique response records include recorded compaction requests when reconciliation succeeds; neither field proves provider billing or unrecorded wire work.",
+              "Recorded request input is not proof of full wire tool-schema/context accounting.",
+              "No on/off source attribution or account-isolation proof is inferred from this transcript."
+            ]
+          }
+        },
+        {
+          "phase": "revision-3",
+          "snapshotSha256": "6c4def53ee8cfdfa8673043d61d777e65c04375b3d078be5752ae048a0dd7121",
+          "report": {
+            "schema": "atlias-native-session-report-v1",
+            "host": "codex",
+            "sessionId": "01a10192-65d0-71d1-850e-4c0e6d3492a9",
+            "records": 78,
+            "firstRecord": "2026-10-03T11:42:15.081Z",
+            "lastRecord": "2026-10-03T11:44:42.791Z",
+            "conversationSpanMs": 147710,
+            "completedTurns": 3,
+            "unclosedTurns": 0,
+            "completedTurnWallMs": 131000,
+            "summedCompletedTurnWallMs": 131000,
+            "nativeUsageObservations": 10,
+            "requestUsageObservations": 10,
+            "contextOnlyUpdates": 0,
+            "reportedLifetimeTokens": {
+              "input_tokens": 154997,
+              "cached_input_tokens": 126080,
+              "output_tokens": 2236,
+              "reasoning_output_tokens": 0,
+              "total_tokens": 157233
+            },
+            "nativePeakRecordedInputTokens": 17840,
+            "requestAccounting": {
+              "status": "reconciled-request-records",
+              "uniqueRequests": 10,
+              "compactionRequests": 0,
+              "missingCompactionUsage": 0
+            },
+            "requestLifetimeTokens": {
+              "input_tokens": 154997,
+              "cached_input_tokens": 126080,
+              "output_tokens": 2236,
+              "reasoning_output_tokens": 0,
+              "total_tokens": 157233
+            },
+            "nativePeakAllRecordedRequestInputTokens": 17840,
+            "limitations": [
+              "Completed-turn wall time includes tool waits; it is not model compute time or continuously active work.",
+              "Reported input includes cached tokens; reasoning is already included in output. These counters are not subscription debits.",
+              "Native task lifecycle times use second-resolution UNIX timestamps where supplied.",
+              "Context-count-only updates are excluded from request peaks; repeated cumulative totals are never summed.",
+              "Legacy event_msg token totals and peaks may exclude compaction. Unique response records include recorded compaction requests when reconciliation succeeds; neither field proves provider billing or unrecorded wire work.",
+              "Recorded request input is not proof of full wire tool-schema/context accounting.",
+              "No on/off source attribution or account-isolation proof is inferred from this transcript."
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "task": "release-negation",
+      "arm": "atlias",
+      "originalLedgerSha256": "31a20081dcd58cf0b85b2060e9addc3991b7f50fe6a01fdffee0bcba3dc30cdd",
+      "checks": [
+        {
+          "phase": "revision-1",
+          "snapshotSha256": "4ef65359b70b3a5c3b20873fcd07f7fcff314aaaaaad2fc659cc8620c5c4321a",
+          "report": {
+            "schema": "atlias-native-session-report-v1",
+            "host": "codex",
+            "sessionId": "01a1018e-1fb1-71b3-ad6e-e84bd69dcbbf",
+            "records": 32,
+            "firstRecord": "2026-10-03T11:37:35.231Z",
+            "lastRecord": "2026-10-03T11:38:49.231Z",
+            "conversationSpanMs": 74000,
+            "completedTurns": 1,
+            "unclosedTurns": 0,
+            "completedTurnWallMs": 74000,
+            "summedCompletedTurnWallMs": 74000,
+            "nativeUsageObservations": 3,
+            "requestUsageObservations": 3,
+            "contextOnlyUpdates": 0,
+            "reportedLifetimeTokens": {
+              "input_tokens": 46538,
+              "cached_input_tokens": 42368,
+              "output_tokens": 663,
+              "reasoning_output_tokens": 22,
+              "total_tokens": 47201
+            },
+            "nativePeakRecordedInputTokens": 16131,
+            "requestAccounting": {
+              "status": "reconciled-request-records",
+              "uniqueRequests": 3,
+              "compactionRequests": 0,
+              "missingCompactionUsage": 0
+            },
+            "requestLifetimeTokens": {
+              "input_tokens": 46538,
+              "cached_input_tokens": 42368,
+              "output_tokens": 663,
+              "reasoning_output_tokens": 22,
+              "total_tokens": 47201
+            },
+            "nativePeakAllRecordedRequestInputTokens": 16131,
+            "limitations": [
+              "Completed-turn wall time includes tool waits; it is not model compute time or continuously active work.",
+              "Reported input includes cached tokens; reasoning is already included in output. These counters are not subscription debits.",
+              "Native task lifecycle times use second-resolution UNIX timestamps where supplied.",
+              "Context-count-only updates are excluded from request peaks; repeated cumulative totals are never summed.",
+              "Legacy event_msg token totals and peaks may exclude compaction. Unique response records include recorded compaction requests when reconciliation succeeds; neither field proves provider billing or unrecorded wire work.",
+              "Recorded request input is not proof of full wire tool-schema/context accounting.",
+              "No on/off source attribution or account-isolation proof is inferred from this transcript."
+            ]
+          }
+        },
+        {
+          "phase": "revision-2",
+          "snapshotSha256": "946edf988f574e97c75b7c0814d949558c8e0df32e35010db468d44ee3f82207",
+          "report": {
+            "schema": "atlias-native-session-report-v1",
+            "host": "codex",
+            "sessionId": "01a1018e-1fb1-71b3-ad6e-e84bd69dcbbf",
+            "records": 71,
+            "firstRecord": "2026-10-03T11:37:35.231Z",
+            "lastRecord": "2026-10-03T11:40:26.888Z",
+            "conversationSpanMs": 171657,
+            "completedTurns": 2,
+            "unclosedTurns": 0,
+            "completedTurnWallMs": 159000,
+            "summedCompletedTurnWallMs": 159000,
+            "nativeUsageObservations": 8,
+            "requestUsageObservations": 8,
+            "contextOnlyUpdates": 0,
+            "reportedLifetimeTokens": {
+              "input_tokens": 136322,
+              "cached_input_tokens": 123648,
+              "output_tokens": 1679,
+              "reasoning_output_tokens": 38,
+              "total_tokens": 138001
+            },
+            "nativePeakRecordedInputTokens": 18832,
+            "requestAccounting": {
+              "status": "reconciled-request-records",
+              "uniqueRequests": 8,
+              "compactionRequests": 0,
+              "missingCompactionUsage": 0
+            },
+            "requestLifetimeTokens": {
+              "input_tokens": 136322,
+              "cached_input_tokens": 123648,
+              "output_tokens": 1679,
+              "reasoning_output_tokens": 38,
+              "total_tokens": 138001
+            },
+            "nativePeakAllRecordedRequestInputTokens": 18832,
+            "limitations": [
+              "Completed-turn wall time includes tool waits; it is not model compute time or continuously active work.",
+              "Reported input includes cached tokens; reasoning is already included in output. These counters are not subscription debits.",
+              "Native task lifecycle times use second-resolution UNIX timestamps where supplied.",
+              "Context-count-only updates are excluded from request peaks; repeated cumulative totals are never summed.",
+              "Legacy event_msg token totals and peaks may exclude compaction. Unique response records include recorded compaction requests when reconciliation succeeds; neither field proves provider billing or unrecorded wire work.",
+              "Recorded request input is not proof of full wire tool-schema/context accounting.",
+              "No on/off source attribution or account-isolation proof is inferred from this transcript."
+            ]
+          }
+        },
+        {
+          "phase": "revision-3",
+          "snapshotSha256": "d0ab59ac0584c66c98755cb008bc52d2d3f0df70b01d0397be4f7e232a865993",
+          "report": {
+            "schema": "atlias-native-session-report-v1",
+            "host": "codex",
+            "sessionId": "01a1018e-1fb1-71b3-ad6e-e84bd69dcbbf",
+            "records": 108,
+            "firstRecord": "2026-10-03T11:37:35.231Z",
+            "lastRecord": "2026-10-03T11:42:01.057Z",
+            "conversationSpanMs": 265826,
+            "completedTurns": 3,
+            "unclosedTurns": 0,
+            "completedTurnWallMs": 241000,
+            "summedCompletedTurnWallMs": 241000,
+            "nativeUsageObservations": 13,
+            "requestUsageObservations": 13,
+            "contextOnlyUpdates": 0,
+            "reportedLifetimeTokens": {
+              "input_tokens": 240139,
+              "cached_input_tokens": 221056,
+              "output_tokens": 2727,
+              "reasoning_output_tokens": 38,
+              "total_tokens": 242866
+            },
+            "nativePeakRecordedInputTokens": 21650,
+            "requestAccounting": {
+              "status": "reconciled-request-records",
+              "uniqueRequests": 13,
+              "compactionRequests": 0,
+              "missingCompactionUsage": 0
+            },
+            "requestLifetimeTokens": {
+              "input_tokens": 240139,
+              "cached_input_tokens": 221056,
+              "output_tokens": 2727,
+              "reasoning_output_tokens": 38,
+              "total_tokens": 242866
+            },
+            "nativePeakAllRecordedRequestInputTokens": 21650,
+            "limitations": [
+              "Completed-turn wall time includes tool waits; it is not model compute time or continuously active work.",
+              "Reported input includes cached tokens; reasoning is already included in output. These counters are not subscription debits.",
+              "Native task lifecycle times use second-resolution UNIX timestamps where supplied.",
+              "Context-count-only updates are excluded from request peaks; repeated cumulative totals are never summed.",
+              "Legacy event_msg token totals and peaks may exclude compaction. Unique response records include recorded compaction requests when reconciliation succeeds; neither field proves provider billing or unrecorded wire work.",
+              "Recorded request input is not proof of full wire tool-schema/context accounting.",
+              "No on/off source attribution or account-isolation proof is inferred from this transcript."
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "task": "revision-merge",
+      "arm": "plain",
+      "originalLedgerSha256": "e0c5587c95b6cb54d317b9e7831b4b72c0d4c2e38bf40cd5f442536b4e589e2e",
+      "checks": [
+        {
+          "phase": "phase-1",
+          "snapshotSha256": "0e8725019d6ad01f681a116388d33651e6e6cdc422ce98077329387b7798d28c",
+          "report": {
+            "schema": "atlias-native-session-report-v1",
+            "host": "codex",
+            "sessionId": "01a10194-ce9f-7da1-9219-22c4ac5d3807",
+            "records": 47,
+            "firstRecord": "2026-10-03T11:44:53.436Z",
+            "lastRecord": "2026-10-03T11:46:42.558Z",
+            "conversationSpanMs": 109122,
+            "completedTurns": 1,
+            "unclosedTurns": 0,
+            "completedTurnWallMs": 109000,
+            "summedCompletedTurnWallMs": 109000,
+            "nativeUsageObservations": 6,
+            "requestUsageObservations": 6,
+            "contextOnlyUpdates": 0,
+            "reportedLifetimeTokens": {
+              "input_tokens": 91821,
+              "cached_input_tokens": 72064,
+              "output_tokens": 2314,
+              "reasoning_output_tokens": 79,
+              "total_tokens": 94135
+            },
+            "nativePeakRecordedInputTokens": 17455,
+            "requestAccounting": {
+              "status": "reconciled-request-records",
+              "uniqueRequests": 6,
+              "compactionRequests": 0,
+              "missingCompactionUsage": 0
+            },
+            "requestLifetimeTokens": {
+              "input_tokens": 91821,
+              "cached_input_tokens": 72064,
+              "output_tokens": 2314,
+              "reasoning_output_tokens": 79,
+              "total_tokens": 94135
+            },
+            "nativePeakAllRecordedRequestInputTokens": 17455,
+            "limitations": [
+              "Completed-turn wall time includes tool waits; it is not model compute time or continuously active work.",
+              "Reported input includes cached tokens; reasoning is already included in output. These counters are not subscription debits.",
+              "Native task lifecycle times use second-resolution UNIX timestamps where supplied.",
+              "Context-count-only updates are excluded from request peaks; repeated cumulative totals are never summed.",
+              "Legacy event_msg token totals and peaks may exclude compaction. Unique response records include recorded compaction requests when reconciliation succeeds; neither field proves provider billing or unrecorded wire work.",
+              "Recorded request input is not proof of full wire tool-schema/context accounting.",
+              "No on/off source attribution or account-isolation proof is inferred from this transcript."
+            ]
+          }
+        },
+        {
+          "phase": "phase-2",
+          "snapshotSha256": "765c402e5f0c7f0c8036736fcf33fa8a69825456ecf72ff6ad5cf8b9e137d661",
+          "report": {
+            "schema": "atlias-native-session-report-v1",
+            "host": "codex",
+            "sessionId": "01a10194-ce9f-7da1-9219-22c4ac5d3807",
+            "records": 78,
+            "firstRecord": "2026-10-03T11:44:53.436Z",
+            "lastRecord": "2026-10-03T11:47:50.794Z",
+            "conversationSpanMs": 177358,
+            "completedTurns": 2,
+            "unclosedTurns": 0,
+            "completedTurnWallMs": 169000,
+            "summedCompletedTurnWallMs": 169000,
+            "nativeUsageObservations": 10,
+            "requestUsageObservations": 10,
+            "contextOnlyUpdates": 0,
+            "reportedLifetimeTokens": {
+              "input_tokens": 171195,
+              "cached_input_tokens": 139520,
+              "output_tokens": 3530,
+              "reasoning_output_tokens": 118,
+              "total_tokens": 174725
+            },
+            "nativePeakRecordedInputTokens": 21540,
+            "requestAccounting": {
+              "status": "reconciled-request-records",
+              "uniqueRequests": 10,
+              "compactionRequests": 0,
+              "missingCompactionUsage": 0
+            },
+            "requestLifetimeTokens": {
+              "input_tokens": 171195,
+              "cached_input_tokens": 139520,
+              "output_tokens": 3530,
+              "reasoning_output_tokens": 118,
+              "total_tokens": 174725
+            },
+            "nativePeakAllRecordedRequestInputTokens": 21540,
+            "limitations": [
+              "Completed-turn wall time includes tool waits; it is not model compute time or continuously active work.",
+              "Reported input includes cached tokens; reasoning is already included in output. These counters are not subscription debits.",
+              "Native task lifecycle times use second-resolution UNIX timestamps where supplied.",
+              "Context-count-only updates are excluded from request peaks; repeated cumulative totals are never summed.",
+              "Legacy event_msg token totals and peaks may exclude compaction. Unique response records include recorded compaction requests when reconciliation succeeds; neither field proves provider billing or unrecorded wire work.",
+              "Recorded request input is not proof of full wire tool-schema/context accounting.",
+              "No on/off source attribution or account-isolation proof is inferred from this transcript."
+            ]
+          }
+        },
+        {
+          "phase": "phase-3",
+          "snapshotSha256": "a09fccab653847514c0e6a2477a5faca77b5bef4ac58ae2d6b46666adbaaad75",
+          "report": {
+            "schema": "atlias-native-session-report-v1",
+            "host": "codex",
+            "sessionId": "01a10194-ce9f-7da1-9219-22c4ac5d3807",
+            "records": 107,
+            "firstRecord": "2026-10-03T11:44:53.436Z",
+            "lastRecord": "2026-10-03T11:48:56.136Z",
+            "conversationSpanMs": 242700,
+            "completedTurns": 3,
+            "unclosedTurns": 0,
+            "completedTurnWallMs": 226000,
+            "summedCompletedTurnWallMs": 226000,
+            "nativeUsageObservations": 14,
+            "requestUsageObservations": 14,
+            "contextOnlyUpdates": 0,
+            "reportedLifetimeTokens": {
+              "input_tokens": 262190,
+              "cached_input_tokens": 219776,
+              "output_tokens": 4650,
+              "reasoning_output_tokens": 118,
+              "total_tokens": 266840
+            },
+            "nativePeakRecordedInputTokens": 24444,
+            "requestAccounting": {
+              "status": "reconciled-request-records",
+              "uniqueRequests": 14,
+              "compactionRequests": 0,
+              "missingCompactionUsage": 0
+            },
+            "requestLifetimeTokens": {
+              "input_tokens": 262190,
+              "cached_input_tokens": 219776,
+              "output_tokens": 4650,
+              "reasoning_output_tokens": 118,
+              "total_tokens": 266840
+            },
+            "nativePeakAllRecordedRequestInputTokens": 24444,
+            "limitations": [
+              "Completed-turn wall time includes tool waits; it is not model compute time or continuously active work.",
+              "Reported input includes cached tokens; reasoning is already included in output. These counters are not subscription debits.",
+              "Native task lifecycle times use second-resolution UNIX timestamps where supplied.",
+              "Context-count-only updates are excluded from request peaks; repeated cumulative totals are never summed.",
+              "Legacy event_msg token totals and peaks may exclude compaction. Unique response records include recorded compaction requests when reconciliation succeeds; neither field proves provider billing or unrecorded wire work.",
+              "Recorded request input is not proof of full wire tool-schema/context accounting.",
+              "No on/off source attribution or account-isolation proof is inferred from this transcript."
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "task": "revision-merge",
+      "arm": "atlias",
+      "originalLedgerSha256": "ef977a3214aab51e2347d7f408038007c294e9e5fc164ae8e16fd5be49b61860",
+      "checks": [
+        {
+          "phase": "phase-1",
+          "snapshotSha256": "ee4ff0b02b996765f7029dae49cffc82d57f459059a2a4fd6eaacf68be1fd4fe",
+          "report": {
+            "schema": "atlias-native-session-report-v1",
+            "host": "codex",
+            "sessionId": "01a10198-acb3-74a1-b238-a70831d4cae5",
+            "records": 42,
+            "firstRecord": "2026-10-03T11:49:06.500Z",
+            "lastRecord": "2026-10-03T11:51:11.091Z",
+            "conversationSpanMs": 124591,
+            "completedTurns": 1,
+            "unclosedTurns": 0,
+            "completedTurnWallMs": 125000,
+            "summedCompletedTurnWallMs": 125000,
+            "nativeUsageObservations": 5,
+            "requestUsageObservations": 5,
+            "contextOnlyUpdates": 0,
+            "reportedLifetimeTokens": {
+              "input_tokens": 83314,
+              "cached_input_tokens": 70016,
+              "output_tokens": 2028,
+              "reasoning_output_tokens": 74,
+              "total_tokens": 85342
+            },
+            "nativePeakRecordedInputTokens": 19522,
+            "requestAccounting": {
+              "status": "reconciled-request-records",
+              "uniqueRequests": 5,
+              "compactionRequests": 0,
+              "missingCompactionUsage": 0
+            },
+            "requestLifetimeTokens": {
+              "input_tokens": 83314,
+              "cached_input_tokens": 70016,
+              "output_tokens": 2028,
+              "reasoning_output_tokens": 74,
+              "total_tokens": 85342
+            },
+            "nativePeakAllRecordedRequestInputTokens": 19522,
+            "limitations": [
+              "Completed-turn wall time includes tool waits; it is not model compute time or continuously active work.",
+              "Reported input includes cached tokens; reasoning is already included in output. These counters are not subscription debits.",
+              "Native task lifecycle times use second-resolution UNIX timestamps where supplied.",
+              "Context-count-only updates are excluded from request peaks; repeated cumulative totals are never summed.",
+              "Legacy event_msg token totals and peaks may exclude compaction. Unique response records include recorded compaction requests when reconciliation succeeds; neither field proves provider billing or unrecorded wire work.",
+              "Recorded request input is not proof of full wire tool-schema/context accounting.",
+              "No on/off source attribution or account-isolation proof is inferred from this transcript."
+            ]
+          }
+        },
+        {
+          "phase": "phase-2",
+          "snapshotSha256": "33a7a8276e5582b696902b68cd03277dc5d326a4c08661f9345e7cb1f6818d93",
+          "report": {
+            "schema": "atlias-native-session-report-v1",
+            "host": "codex",
+            "sessionId": "01a10198-acb3-74a1-b238-a70831d4cae5",
+            "records": 81,
+            "firstRecord": "2026-10-03T11:49:06.500Z",
+            "lastRecord": "2026-10-03T11:53:54.178Z",
+            "conversationSpanMs": 287678,
+            "completedTurns": 2,
+            "unclosedTurns": 0,
+            "completedTurnWallMs": 276000,
+            "summedCompletedTurnWallMs": 276000,
+            "nativeUsageObservations": 10,
+            "requestUsageObservations": 9,
+            "contextOnlyUpdates": 1,
+            "reportedLifetimeTokens": {
+              "input_tokens": 162066,
+              "cached_input_tokens": 134144,
+              "output_tokens": 3226,
+              "reasoning_output_tokens": 100,
+              "total_tokens": 165292
+            },
+            "nativePeakRecordedInputTokens": 22237,
+            "requestAccounting": {
+              "status": "reconciled-request-records",
+              "uniqueRequests": 10,
+              "compactionRequests": 1,
+              "missingCompactionUsage": 0
+            },
+            "requestLifetimeTokens": {
+              "input_tokens": 186044,
+              "cached_input_tokens": 156160,
+              "output_tokens": 5093,
+              "reasoning_output_tokens": 100,
+              "total_tokens": 191137
+            },
+            "nativePeakAllRecordedRequestInputTokens": 23978,
+            "limitations": [
+              "Completed-turn wall time includes tool waits; it is not model compute time or continuously active work.",
+              "Reported input includes cached tokens; reasoning is already included in output. These counters are not subscription debits.",
+              "Native task lifecycle times use second-resolution UNIX timestamps where supplied.",
+              "Context-count-only updates are excluded from request peaks; repeated cumulative totals are never summed.",
+              "Legacy event_msg token totals and peaks may exclude compaction. Unique response records include recorded compaction requests when reconciliation succeeds; neither field proves provider billing or unrecorded wire work.",
+              "Recorded request input is not proof of full wire tool-schema/context accounting.",
+              "No on/off source attribution or account-isolation proof is inferred from this transcript."
+            ]
+          }
+        },
+        {
+          "phase": "phase-3",
+          "snapshotSha256": "efdfa5a273e6139225aad0412fcc1f94cf5c2d3f713bdb6b4141a9ed165f4ea3",
+          "report": {
+            "schema": "atlias-native-session-report-v1",
+            "host": "codex",
+            "sessionId": "01a10198-acb3-74a1-b238-a70831d4cae5",
+            "records": 120,
+            "firstRecord": "2026-10-03T11:49:06.500Z",
+            "lastRecord": "2026-10-03T11:56:50.462Z",
+            "conversationSpanMs": 463962,
+            "completedTurns": 3,
+            "unclosedTurns": 0,
+            "completedTurnWallMs": 439000,
+            "summedCompletedTurnWallMs": 439000,
+            "nativeUsageObservations": 15,
+            "requestUsageObservations": 13,
+            "contextOnlyUpdates": 2,
+            "reportedLifetimeTokens": {
+              "input_tokens": 241368,
+              "cached_input_tokens": 201856,
+              "output_tokens": 4489,
+              "reasoning_output_tokens": 100,
+              "total_tokens": 245857
+            },
+            "nativePeakRecordedInputTokens": 23028,
+            "requestAccounting": {
+              "status": "reconciled-request-records",
+              "uniqueRequests": 15,
+              "compactionRequests": 2,
+              "missingCompactionUsage": 0
+            },
+            "requestLifetimeTokens": {
+              "input_tokens": 290227,
+              "cached_input_tokens": 246784,
+              "output_tokens": 8088,
+              "reasoning_output_tokens": 100,
+              "total_tokens": 298315
+            },
+            "nativePeakAllRecordedRequestInputTokens": 24881,
+            "limitations": [
+              "Completed-turn wall time includes tool waits; it is not model compute time or continuously active work.",
+              "Reported input includes cached tokens; reasoning is already included in output. These counters are not subscription debits.",
+              "Native task lifecycle times use second-resolution UNIX timestamps where supplied.",
+              "Context-count-only updates are excluded from request peaks; repeated cumulative totals are never summed.",
+              "Legacy event_msg token totals and peaks may exclude compaction. Unique response records include recorded compaction requests when reconciliation succeeds; neither field proves provider billing or unrecorded wire work.",
+              "Recorded request input is not proof of full wire tool-schema/context accounting.",
+              "No on/off source attribution or account-isolation proof is inferred from this transcript."
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "task": "async-observations",
+      "arm": "plain",
+      "originalLedgerSha256": "023e3680abb779e5dff74e74adaa9cf71b75d39f2300ebbdd3761d3c9a134229",
+      "checks": [
+        {
+          "phase": "phase-1",
+          "snapshotSha256": "c458e9f2bde264551b5bc734fab7e24e15c52e190cb762218ed6a3cc85ac6acb",
+          "report": {
+            "schema": "atlias-native-session-report-v1",
+            "host": "codex",
+            "sessionId": "01a101a9-1c61-79e3-b438-79759ecaa94f",
+            "records": 44,
+            "firstRecord": "2026-10-03T12:07:05.194Z",
+            "lastRecord": "2026-10-03T12:08:37.202Z",
+            "conversationSpanMs": 92008,
+            "completedTurns": 1,
+            "unclosedTurns": 0,
+            "completedTurnWallMs": 92000,
+            "summedCompletedTurnWallMs": 92000,
+            "nativeUsageObservations": 5,
+            "requestUsageObservations": 5,
+            "contextOnlyUpdates": 0,
+            "reportedLifetimeTokens": {
+              "input_tokens": 74378,
+              "cached_input_tokens": 55936,
+              "output_tokens": 1710,
+              "reasoning_output_tokens": 74,
+              "total_tokens": 76088
+            },
+            "nativePeakRecordedInputTokens": 16605,
+            "requestAccounting": {
+              "status": "reconciled-request-records",
+              "uniqueRequests": 5,
+              "compactionRequests": 0,
+              "missingCompactionUsage": 0
+            },
+            "requestLifetimeTokens": {
+              "input_tokens": 74378,
+              "cached_input_tokens": 55936,
+              "output_tokens": 1710,
+              "reasoning_output_tokens": 74,
+              "total_tokens": 76088
+            },
+            "nativePeakAllRecordedRequestInputTokens": 16605,
+            "limitations": [
+              "Completed-turn wall time includes tool waits; it is not model compute time or continuously active work.",
+              "Reported input includes cached tokens; reasoning is already included in output. These counters are not subscription debits.",
+              "Native task lifecycle times use second-resolution UNIX timestamps where supplied.",
+              "Context-count-only updates are excluded from request peaks; repeated cumulative totals are never summed.",
+              "Legacy event_msg token totals and peaks may exclude compaction. Unique response records include recorded compaction requests when reconciliation succeeds; neither field proves provider billing or unrecorded wire work.",
+              "Recorded request input is not proof of full wire tool-schema/context accounting.",
+              "No on/off source attribution or account-isolation proof is inferred from this transcript."
+            ]
+          }
+        },
+        {
+          "phase": "phase-2",
+          "snapshotSha256": "4f35d9e238a65e824aa2ef1360e65063103b9946d957de2e5b2f28b8f87da9f5",
+          "report": {
+            "schema": "atlias-native-session-report-v1",
+            "host": "codex",
+            "sessionId": "01a101a9-1c61-79e3-b438-79759ecaa94f",
+            "records": 75,
+            "firstRecord": "2026-10-03T12:07:05.194Z",
+            "lastRecord": "2026-10-03T12:10:04.278Z",
+            "conversationSpanMs": 179084,
+            "completedTurns": 2,
+            "unclosedTurns": 0,
+            "completedTurnWallMs": 168000,
+            "summedCompletedTurnWallMs": 168000,
+            "nativeUsageObservations": 9,
+            "requestUsageObservations": 9,
+            "contextOnlyUpdates": 0,
+            "reportedLifetimeTokens": {
+              "input_tokens": 148987,
+              "cached_input_tokens": 120448,
+              "output_tokens": 3295,
+              "reasoning_output_tokens": 122,
+              "total_tokens": 152282
+            },
+            "nativePeakRecordedInputTokens": 20370,
+            "requestAccounting": {
+              "status": "reconciled-request-records",
+              "uniqueRequests": 9,
+              "compactionRequests": 0,
+              "missingCompactionUsage": 0
+            },
+            "requestLifetimeTokens": {
+              "input_tokens": 148987,
+              "cached_input_tokens": 120448,
+              "output_tokens": 3295,
+              "reasoning_output_tokens": 122,
+              "total_tokens": 152282
+            },
+            "nativePeakAllRecordedRequestInputTokens": 20370,
+            "limitations": [
+              "Completed-turn wall time includes tool waits; it is not model compute time or continuously active work.",
+              "Reported input includes cached tokens; reasoning is already included in output. These counters are not subscription debits.",
+              "Native task lifecycle times use second-resolution UNIX timestamps where supplied.",
+              "Context-count-only updates are excluded from request peaks; repeated cumulative totals are never summed.",
+              "Legacy event_msg token totals and peaks may exclude compaction. Unique response records include recorded compaction requests when reconciliation succeeds; neither field proves provider billing or unrecorded wire work.",
+              "Recorded request input is not proof of full wire tool-schema/context accounting.",
+              "No on/off source attribution or account-isolation proof is inferred from this transcript."
+            ]
+          }
+        },
+        {
+          "phase": "phase-3",
+          "snapshotSha256": "ea98334eb6767bfc785a3a60d1291b8def6742ad2d08bfd7cd1948ed0b1aa6b5",
+          "report": {
+            "schema": "atlias-native-session-report-v1",
+            "host": "codex",
+            "sessionId": "01a101a9-1c61-79e3-b438-79759ecaa94f",
+            "records": 106,
+            "firstRecord": "2026-10-03T12:07:05.194Z",
+            "lastRecord": "2026-10-03T12:11:26.358Z",
+            "conversationSpanMs": 261164,
+            "completedTurns": 3,
+            "unclosedTurns": 0,
+            "completedTurnWallMs": 239000,
+            "summedCompletedTurnWallMs": 239000,
+            "nativeUsageObservations": 13,
+            "requestUsageObservations": 13,
+            "contextOnlyUpdates": 0,
+            "reportedLifetimeTokens": {
+              "input_tokens": 241942,
+              "cached_input_tokens": 201600,
+              "output_tokens": 4826,
+              "reasoning_output_tokens": 193,
+              "total_tokens": 246768
+            },
+            "nativePeakRecordedInputTokens": 25360,
+            "requestAccounting": {
+              "status": "reconciled-request-records",
+              "uniqueRequests": 13,
+              "compactionRequests": 0,
+              "missingCompactionUsage": 0
+            },
+            "requestLifetimeTokens": {
+              "input_tokens": 241942,
+              "cached_input_tokens": 201600,
+              "output_tokens": 4826,
+              "reasoning_output_tokens": 193,
+              "total_tokens": 246768
+            },
+            "nativePeakAllRecordedRequestInputTokens": 25360,
+            "limitations": [
+              "Completed-turn wall time includes tool waits; it is not model compute time or continuously active work.",
+              "Reported input includes cached tokens; reasoning is already included in output. These counters are not subscription debits.",
+              "Native task lifecycle times use second-resolution UNIX timestamps where supplied.",
+              "Context-count-only updates are excluded from request peaks; repeated cumulative totals are never summed.",
+              "Legacy event_msg token totals and peaks may exclude compaction. Unique response records include recorded compaction requests when reconciliation succeeds; neither field proves provider billing or unrecorded wire work.",
+              "Recorded request input is not proof of full wire tool-schema/context accounting.",
+              "No on/off source attribution or account-isolation proof is inferred from this transcript."
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "task": "async-observations",
+      "arm": "atlias",
+      "originalLedgerSha256": "7200290e8f717cf2a0f7a186900ef6eff2593da322c96ddd5c3ba4d9180fca45",
+      "checks": [
+        {
+          "phase": "phase-1",
+          "snapshotSha256": "fabb623edd7f0b3e652b583a4e3b586fc99a1a063ec5f9c7ecacecbcbe346364",
+          "report": {
+            "schema": "atlias-native-session-report-v1",
+            "host": "codex",
+            "sessionId": "01a1019f-f903-7a70-86d3-3f275e8eddd9",
+            "records": 43,
+            "firstRecord": "2026-10-03T11:57:09.006Z",
+            "lastRecord": "2026-10-03T11:58:59.551Z",
+            "conversationSpanMs": 110545,
+            "completedTurns": 1,
+            "unclosedTurns": 0,
+            "completedTurnWallMs": 111000,
+            "summedCompletedTurnWallMs": 111000,
+            "nativeUsageObservations": 5,
+            "requestUsageObservations": 5,
+            "contextOnlyUpdates": 0,
+            "reportedLifetimeTokens": {
+              "input_tokens": 81913,
+              "cached_input_tokens": 64384,
+              "output_tokens": 1536,
+              "reasoning_output_tokens": 127,
+              "total_tokens": 83449
+            },
+            "nativePeakRecordedInputTokens": 18501,
+            "requestAccounting": {
+              "status": "reconciled-request-records",
+              "uniqueRequests": 5,
+              "compactionRequests": 0,
+              "missingCompactionUsage": 0
+            },
+            "requestLifetimeTokens": {
+              "input_tokens": 81913,
+              "cached_input_tokens": 64384,
+              "output_tokens": 1536,
+              "reasoning_output_tokens": 127,
+              "total_tokens": 83449
+            },
+            "nativePeakAllRecordedRequestInputTokens": 18501,
+            "limitations": [
+              "Completed-turn wall time includes tool waits; it is not model compute time or continuously active work.",
+              "Reported input includes cached tokens; reasoning is already included in output. These counters are not subscription debits.",
+              "Native task lifecycle times use second-resolution UNIX timestamps where supplied.",
+              "Context-count-only updates are excluded from request peaks; repeated cumulative totals are never summed.",
+              "Legacy event_msg token totals and peaks may exclude compaction. Unique response records include recorded compaction requests when reconciliation succeeds; neither field proves provider billing or unrecorded wire work.",
+              "Recorded request input is not proof of full wire tool-schema/context accounting.",
+              "No on/off source attribution or account-isolation proof is inferred from this transcript."
+            ]
+          }
+        },
+        {
+          "phase": "phase-2",
+          "snapshotSha256": "1ef18bfd5f6fb23401f6932ef843a7e55945e554a6438298da092e20d1858140",
+          "report": {
+            "schema": "atlias-native-session-report-v1",
+            "host": "codex",
+            "sessionId": "01a1019f-f903-7a70-86d3-3f275e8eddd9",
+            "records": 108,
+            "firstRecord": "2026-10-03T11:57:09.006Z",
+            "lastRecord": "2026-10-03T12:02:43.079Z",
+            "conversationSpanMs": 334073,
+            "completedTurns": 2,
+            "unclosedTurns": 0,
+            "completedTurnWallMs": 323000,
+            "summedCompletedTurnWallMs": 323000,
+            "nativeUsageObservations": 13,
+            "requestUsageObservations": 12,
+            "contextOnlyUpdates": 1,
+            "reportedLifetimeTokens": {
+              "input_tokens": 219394,
+              "cached_input_tokens": 175488,
+              "output_tokens": 4092,
+              "reasoning_output_tokens": 357,
+              "total_tokens": 223486
+            },
+            "nativePeakRecordedInputTokens": 23089,
+            "requestAccounting": {
+              "status": "reconciled-request-records",
+              "uniqueRequests": 13,
+              "compactionRequests": 1,
+              "missingCompactionUsage": 0
+            },
+            "requestLifetimeTokens": {
+              "input_tokens": 244637,
+              "cached_input_tokens": 198400,
+              "output_tokens": 5538,
+              "reasoning_output_tokens": 357,
+              "total_tokens": 250175
+            },
+            "nativePeakAllRecordedRequestInputTokens": 25243,
+            "limitations": [
+              "Completed-turn wall time includes tool waits; it is not model compute time or continuously active work.",
+              "Reported input includes cached tokens; reasoning is already included in output. These counters are not subscription debits.",
+              "Native task lifecycle times use second-resolution UNIX timestamps where supplied.",
+              "Context-count-only updates are excluded from request peaks; repeated cumulative totals are never summed.",
+              "Legacy event_msg token totals and peaks may exclude compaction. Unique response records include recorded compaction requests when reconciliation succeeds; neither field proves provider billing or unrecorded wire work.",
+              "Recorded request input is not proof of full wire tool-schema/context accounting.",
+              "No on/off source attribution or account-isolation proof is inferred from this transcript."
+            ]
+          }
+        },
+        {
+          "phase": "phase-3",
+          "snapshotSha256": "6319bd278313a38617be7e51dc16d75bd7a7d55436e7beef2f307dc807c5c333",
+          "report": {
+            "schema": "atlias-native-session-report-v1",
+            "host": "codex",
+            "sessionId": "01a1019f-f903-7a70-86d3-3f275e8eddd9",
+            "records": 166,
+            "firstRecord": "2026-10-03T11:57:09.006Z",
+            "lastRecord": "2026-10-03T12:06:47.601Z",
+            "conversationSpanMs": 578595,
+            "completedTurns": 3,
+            "unclosedTurns": 0,
+            "completedTurnWallMs": 553000,
+            "summedCompletedTurnWallMs": 553000,
+            "nativeUsageObservations": 20,
+            "requestUsageObservations": 17,
+            "contextOnlyUpdates": 3,
+            "reportedLifetimeTokens": {
+              "input_tokens": 318361,
+              "cached_input_tokens": 255872,
+              "output_tokens": 6024,
+              "reasoning_output_tokens": 382,
+              "total_tokens": 324385
+            },
+            "nativePeakRecordedInputTokens": 23416,
+            "requestAccounting": {
+              "status": "reconciled-request-records",
+              "uniqueRequests": 20,
+              "compactionRequests": 3,
+              "missingCompactionUsage": 0
+            },
+            "requestLifetimeTokens": {
+              "input_tokens": 395759,
+              "cached_input_tokens": 324480,
+              "output_tokens": 10052,
+              "reasoning_output_tokens": 382,
+              "total_tokens": 405811
+            },
+            "nativePeakAllRecordedRequestInputTokens": 26181,
+            "limitations": [
+              "Completed-turn wall time includes tool waits; it is not model compute time or continuously active work.",
+              "Reported input includes cached tokens; reasoning is already included in output. These counters are not subscription debits.",
+              "Native task lifecycle times use second-resolution UNIX timestamps where supplied.",
+              "Context-count-only updates are excluded from request peaks; repeated cumulative totals are never summed.",
+              "Legacy event_msg token totals and peaks may exclude compaction. Unique response records include recorded compaction requests when reconciliation succeeds; neither field proves provider billing or unrecorded wire work.",
+              "Recorded request input is not proof of full wire tool-schema/context accounting.",
+              "No on/off source attribution or account-isolation proof is inferred from this transcript."
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "metrics": {
+    "plain": {
+      "originalGradePass": 12,
+      "originalPhases": 12,
+      "rawInput": 816096,
+      "total": 830291,
+      "uncachedInputPlusOutput": 151123,
+      "maxAllRecordedRequestPeak": 25360,
+      "compactionRequests": 0
+    },
+    "atlias": {
+      "originalGradePass": 12,
+      "originalPhases": 12,
+      "rawInput": 1146089,
+      "total": 1169492,
+      "uncachedInputPlusOutput": 176852,
+      "maxAllRecordedRequestPeak": 26181,
+      "compactionRequests": 5
+    }
+  },
+  "ratios": {
+    "rawInput": 1.4043556150256833,
+    "total": 1.4085326710755626,
+    "uncachedInputPlusOutput": 1.1702520463463537,
+    "maxAllRecordedRequestPeak": 1.0323738170347003
+  },
+  "modelCalls": 0,
+  "graderExecutions": 0,
+  "correction": "Original event_msg counters and peaks omit native compaction requests. This separate reconciliation supersedes any full-request cost or peak interpretation of that partial report; original bytes, grades and attempts remain unchanged.",
+  "limitations": [
+    "Partial 24/72 phase calls; four of twelve matched whole workflows.",
+    "Unique response usage records, deduplicating token_usage_record and compacted latest record, reconcile exactly to their original thread totals at every audited phase.",
+    "Recorded provider counters are not proof of complete wire/context or subscription debits, universal capability or BOTH-host targets.",
+    "No answer execution, regrading, model retry or historical control reuse."
+  ]
+}
