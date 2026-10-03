@@ -132,5 +132,10 @@ try {
  check('parent paths and sibling-prefix paths refused',()=>assert(!withinWorkspace(temp,'../outside')&&!withinWorkspace(temp,temp+'-sibling/file')));
  const scoped=await executor(dest)({cwd:temp},{tool:'read_file',path:path.join(path.dirname(temp),'outside.txt')});
  check('outside read returns actual workspace instead of exposing controller',()=>assert(scoped.includes('scoped to '+temp)));
+ const alias=path.join(temp,'alias'),targetDir=path.join(temp,'real-root');fs.mkdirSync(targetDir);fs.symlinkSync(targetDir,alias,'junction');
+ check('workspace directory aliases retain scoped relative access',()=>assert(withinWorkspace(alias,'new-file.mjs')));
+ check('workspace aliases still refuse parent paths',()=>assert(!withinWorkspace(alias,'../outside.mjs')));
+ fs.symlinkSync(path.dirname(temp),path.join(targetDir,'outside'),'junction');
+ check('workspace aliases refuse nested junction escapes',()=>assert(!withinWorkspace(alias,'outside/other.mjs')));
  console.log(`${checks} local migration/runtime functional and adversarial controls passed`);
 } finally {fs.rmSync(temp,{recursive:true,force:true});}

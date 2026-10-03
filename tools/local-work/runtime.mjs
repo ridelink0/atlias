@@ -87,11 +87,11 @@ export function allowedShell(command) {
 }
 export function placeholderOnly(value){return typeof value==='string'&&/^\[atlias elided \d+ characters here; the tool result says what came of them\]$/.test(value.trim());}
 export function withinWorkspace(cwd,input){
-  const base=fs.realpathSync(cwd),target=path.resolve(cwd,input||'.');
-  const contains=p=>{const rel=path.relative(base,p);return rel===''||(!rel.startsWith('..'+path.sep)&&rel!=='..'&&!path.isAbsolute(rel));};
-  if(!contains(target))return false;
+  const lexical=path.resolve(cwd),base=fs.realpathSync(cwd),target=path.resolve(cwd,input||'.');
+  const contains=(root,p)=>{const rel=path.relative(root,p);return rel===''||(!rel.startsWith('..'+path.sep)&&rel!=='..'&&!path.isAbsolute(rel));};
+  if(!contains(lexical,target))return false;
   let existing=target;while(true){try{fs.lstatSync(existing);break;}catch(e){if(e.code!=='ENOENT')return false;const parent=path.dirname(existing);if(parent===existing)return false;existing=parent;}}
-  try{return contains(fs.realpathSync(existing));}catch{return false;}
+  try{return contains(base,fs.realpathSync(existing));}catch{return false;}
 }
 export function executor(knowledge,plugins=null) {
   return async(state,call,ask)=>{
