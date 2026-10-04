@@ -1,0 +1,125 @@
+{
+  "source": "cd5c8e1254f70520f0dde9299b8c7d9d86d04c2e",
+  "task": "context-pagination-64",
+  "repeat": 1,
+  "method": "Saved rollout inspection only; no new model calls or altered grading",
+  "arms": {
+    "plain": {
+      "requestInputTokens": [
+        17289,
+        17510,
+        17930,
+        19270,
+        19863
+      ],
+      "rawInputTokens": 91862,
+      "peakInputTokens": 19863,
+      "solved": true,
+      "taskHash": "a1f20374b91d306c8cad5914bd8f1bc476c55e522ebabdf5ee4392dbd4f6d42e",
+      "rolloutHashes": [
+        "03f244f4d4c09aab8cb569d9e6adb9cd12d4d2f74aee0480c99b1f3454d7c909"
+      ],
+      "commands": [
+        {
+          "sourceListing": true,
+          "excludesGeneratedGraph": false,
+          "gitStatus": false,
+          "gitDiff": false,
+          "inputChars": 146
+        },
+        {
+          "sourceListing": true,
+          "excludesGeneratedGraph": false,
+          "gitStatus": true,
+          "gitDiff": false,
+          "inputChars": 371
+        },
+        {
+          "sourceListing": false,
+          "excludesGeneratedGraph": false,
+          "gitStatus": false,
+          "gitDiff": false,
+          "inputChars": 978
+        },
+        {
+          "sourceListing": false,
+          "excludesGeneratedGraph": false,
+          "gitStatus": false,
+          "gitDiff": false,
+          "inputChars": 1638
+        }
+      ],
+      "outputs": [
+        {
+          "chars": 223,
+          "generatedGraphLines": 0,
+          "gitNotRepository": false,
+          "gitHelp": false
+        },
+        {
+          "chars": 1123,
+          "generatedGraphLines": 0,
+          "gitNotRepository": true,
+          "gitHelp": false
+        },
+        {
+          "chars": 88,
+          "generatedGraphLines": 0,
+          "gitNotRepository": false,
+          "gitHelp": false
+        },
+        {
+          "chars": 96,
+          "generatedGraphLines": 0,
+          "gitNotRepository": false,
+          "gitHelp": false
+        }
+      ]
+    },
+    "plugin": {
+      "requestInputTokens": [
+        19066,
+        23580,
+        26664
+      ],
+      "rawInputTokens": 69310,
+      "peakInputTokens": 26664,
+      "solved": true,
+      "taskHash": "a1f20374b91d306c8cad5914bd8f1bc476c55e522ebabdf5ee4392dbd4f6d42e",
+      "rolloutHashes": [
+        "bb5f2466e4dd42267365e20225576acc8184d285932672184cf57ead5bc0ebb4"
+      ],
+      "commands": [
+        {
+          "sourceListing": true,
+          "excludesGeneratedGraph": false,
+          "gitStatus": false,
+          "gitDiff": false,
+          "inputChars": 409
+        },
+        {
+          "sourceListing": false,
+          "excludesGeneratedGraph": false,
+          "gitStatus": true,
+          "gitDiff": true,
+          "inputChars": 2808
+        }
+      ],
+      "outputs": [
+        {
+          "chars": 8724,
+          "generatedGraphLines": 71,
+          "gitNotRepository": false,
+          "gitHelp": false
+        },
+        {
+          "chars": 8396,
+          "generatedGraphLines": 0,
+          "gitNotRepository": true,
+          "gitHelp": true
+        }
+      ]
+    }
+  },
+  "interpretation": "Treatment used fewer requests but larger requests. Generated graph cache listings and Git help are observed output waste; these observations do not isolate a causal token effect. Source440 addresses Git retries and wait polling, outside this pinned study. A generated-source listing instruction remains a candidate for a new matched study after this plan completes."
+}

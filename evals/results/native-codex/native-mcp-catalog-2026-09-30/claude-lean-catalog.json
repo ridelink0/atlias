@@ -1,0 +1,215 @@
+{
+  "tools": [
+    {
+      "name": "harness_recall",
+      "description": "Search shared memory, recent digests and the graph before reading files or asking Gev to repeat facts.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string"
+          },
+          "cwd": {
+            "type": "string",
+            "description": "project directory (defaults to the server cwd)"
+          }
+        },
+        "required": [
+          "query"
+        ]
+      }
+    },
+    {
+      "name": "harness_remember",
+      "description": "Save and index a durable preference, correction, decision or reference shared by all hosts; never restate code.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "user",
+              "feedback",
+              "project",
+              "reference"
+            ]
+          },
+          "description": {
+            "type": "string"
+          },
+          "body": {
+            "type": "string"
+          },
+          "cwd": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "type",
+          "description"
+        ]
+      }
+    },
+    {
+      "name": "harness_progress",
+      "description": "get: read the handoff. set: save the next step for compaction or recovery.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": [
+              "get",
+              "set"
+            ]
+          },
+          "text": {
+            "type": "string"
+          },
+          "cwd": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "action"
+        ]
+      }
+    },
+    {
+      "name": "harness_verify",
+      "description": "Check JavaScript, JSON and Python syntax. Behaviour tests and an adversarial read are still required.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "paths": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "cwd": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "paths"
+        ]
+      }
+    },
+    {
+      "name": "harness_digest",
+      "description": "show: pending session digests. ack: mark consolidated only after saving durable facts with harness_remember.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": [
+              "show",
+              "ack"
+            ]
+          },
+          "cwd": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "action"
+        ]
+      }
+    },
+    {
+      "name": "graph_query",
+      "description": "Query project code/docs relationships cheaply. Requires graphify-out/graph.json.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "question": {
+            "type": "string"
+          },
+          "budget": {
+            "type": "integer",
+            "description": "token cap, default 600"
+          },
+          "cwd": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "question"
+        ]
+      }
+    },
+    {
+      "name": "graph_affected",
+      "description": "Find reverse dependencies of a graph node before a risky edit.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "node": {
+            "type": "string"
+          },
+          "cwd": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "node"
+        ]
+      }
+    },
+    {
+      "name": "graph_explain",
+      "description": "Explain one graph node and its neighbours.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "node": {
+            "type": "string"
+          },
+          "cwd": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "node"
+        ]
+      }
+    },
+    {
+      "name": "harness_bench",
+      "description": "Read-only local brief/graph token and guard/gate measurements; calls no model.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "questions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "codebase questions to measure the graph against"
+          },
+          "cwd": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "name": "harness_status",
+      "description": "Check harness and host health, with fixes for failures.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "cwd": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  ]
+}

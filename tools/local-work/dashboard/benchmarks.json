@@ -1,0 +1,164 @@
+{
+  "schema": 1,
+  "rows": [
+    {
+      "id": "progressive-first-repeat-2026-10-03",
+      "title": "Progressive workflows",
+      "status": "Partial: first repeat, 36 of 72 phases",
+      "quality": "18/18 vs 18/18 phase grades",
+      "limitations": "Six authored whole-workflow pairs; includes all seven recorded Atlias compactions. Second repeat is not included. Full provider wire context and universal capabilities are unproved.",
+      "host": "Codex",
+      "report": "evals/results/native-codex/progressive-first-repeat-2026-10-03/REPORT.md",
+      "reportSHA256": "ed5a567c7ff2bba8fcf8dc772e1902ff77e930335df54f17df695c6028af22ec",
+      "url": "https://github.com/ridelink0/atlias/blob/48917ddaaeaf3e550bc2e59ced4d65c3e28c56d2/evals/results/native-codex/progressive-first-repeat-2026-10-03/REPORT.md",
+      "counts": {
+        "raw": [
+          1286998,
+          1708133
+        ],
+        "total": [
+          1310359,
+          1743715
+        ],
+        "uncached": [
+          245143,
+          268899
+        ],
+        "peak": [
+          26947,
+          26239
+        ]
+      }
+    },
+    {
+      "id": "one-read-contract-v3-2026-10-03",
+      "title": "One-read evidence workflows",
+      "status": "Complete: 48 calls",
+      "quality": "24/24 vs 24/24",
+      "limitations": "Authored contracts with stock CLI tools; repaired fixtures, not new held-out generalization. No observed optional evidence-reader use.",
+      "host": "Codex",
+      "report": "evals/results/native-codex/one-read-contract-v3-2026-10-03/REPORT.md",
+      "reportSHA256": "33df55978c13001acfef061b57ff6ca2e8c091ebb11d547dec7c42400f3eb4ad",
+      "url": "https://github.com/ridelink0/atlias/blob/48917ddaaeaf3e550bc2e59ced4d65c3e28c56d2/evals/results/native-codex/one-read-contract-v3-2026-10-03/REPORT.md",
+      "counts": {
+        "raw": [
+          1748167,
+          1914144
+        ],
+        "total": [
+          1769694,
+          1938893
+        ],
+        "uncached": [
+          391134,
+          285261
+        ],
+        "peak": [
+          20806,
+          19792
+        ]
+      }
+    },
+    {
+      "id": "codex-atlias-capability-caller-2026-10-01",
+      "title": "Capability caller workflows",
+      "status": "Complete: 24 calls",
+      "quality": "12/12 vs 12/12",
+      "limitations": "Six authored coding workflows with stock instructions/tools. Broader normal-host parity remains unproved; peak context increased.",
+      "host": "Codex",
+      "report": "evals/results/native-codex/codex-atlias-capability-caller-2026-10-01/REPORT.md",
+      "reportSHA256": "22b84cc544f765c70efe00c9a41acb7ea5117c99f3bde2c4503cab10ec1c7347",
+      "url": "https://github.com/ridelink0/atlias/blob/48917ddaaeaf3e550bc2e59ced4d65c3e28c56d2/evals/results/native-codex/codex-atlias-capability-caller-2026-10-01/REPORT.md",
+      "counts": {
+        "raw": [
+          948438,
+          957670
+        ],
+        "total": [
+          980857,
+          985859
+        ],
+        "uncached": [
+          313721,
+          202371
+        ],
+        "peak": [
+          21638,
+          28158
+        ]
+      }
+    },
+    {
+      "id": "codex-atlias-factuality-2026-10-01",
+      "title": "Source-grounding diagnostic",
+      "status": "Complete: 64 calls",
+      "quality": "30/32 vs 29/32",
+      "limitations": "Original strict grades: one gain, two losses. Citation/contract errors do not establish arbitrary hallucination rates or public factuality scores.",
+      "host": "Codex",
+      "report": "evals/results/native-codex/codex-atlias-factuality-2026-10-01/REPORT.md",
+      "reportSHA256": "bbee8ac529abc3363080c0a54a4ede352f120b3b0104e408835778f2263ba30b",
+      "url": "https://github.com/ridelink0/atlias/blob/48917ddaaeaf3e550bc2e59ced4d65c3e28c56d2/evals/results/native-codex/codex-atlias-factuality-2026-10-01/REPORT.md",
+      "counts": {
+        "raw": [
+          1967574,
+          2486982
+        ],
+        "total": [
+          1986983,
+          2508629
+        ],
+        "uncached": [
+          441895,
+          261589
+        ],
+        "peak": [
+          15457,
+          17088
+        ]
+      }
+    },
+    {
+      "id": "codex-atlias-dictionary-batch-2026-10-01",
+      "title": "Dictionary batches",
+      "status": "Complete: 26 attempts",
+      "quality": "24/24 vs 24/24 members",
+      "limitations": "Reduced tools and replacement instructions. Only two coupled batch observations; not normal capabilities. Context peak is counted whole, never divided by jobs.",
+      "host": "Codex",
+      "report": "evals/results/native-codex/codex-atlias-dictionary-batch-2026-10-01/REPORT.md",
+      "reportSHA256": "ede42c5523bf7d92463dfb1dcf360c0fc98c531b93a4d66bfab65347b547ccf8",
+      "url": "https://github.com/ridelink0/atlias/blob/48917ddaaeaf3e550bc2e59ced4d65c3e28c56d2/evals/results/native-codex/codex-atlias-dictionary-batch-2026-10-01/REPORT.md",
+      "counts": {
+        "raw": [
+          1799867,
+          14918
+        ],
+        "total": [
+          1836551,
+          21101
+        ],
+        "uncached": [
+          451463,
+          21101
+        ],
+        "peak": [
+          18071,
+          7459
+        ]
+      }
+    }
+  ],
+  "unmeasured": [
+    {
+      "title": "Claude Code",
+      "detail": "Genuine matched model quality, token savings and full delivered context remain unmeasured."
+    },
+    {
+      "title": "25x useful allowance work",
+      "detail": "No causal matched subscription experiment has established longer working time. Token counters are not account debits."
+    },
+    {
+      "title": "Public factuality benchmarks",
+      "detail": "AA-Omniscience, TruthfulQA, SimpleQA and ALCE model scores remain unmeasured."
+    }
+  ]
+}

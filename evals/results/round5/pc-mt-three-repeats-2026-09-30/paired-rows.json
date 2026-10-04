@@ -1,0 +1,5294 @@
+[
+  {
+    "id": "canitedit-lazy-101_house_prices",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-102_nfa",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-103_postfix",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-104_filesystem",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-106_conways_game",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        true
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    }
+  },
+  {
+    "id": "canitedit-lazy-107_multiindex_sort",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-10_csv_parser",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-111_coprime_euler",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-112_elliptic_curves",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-113_schnorr_zk",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-114_grid_world_dp",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-115_arrangement_selections",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-116_cfg",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-117_matrix",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-119_pollards_rho_factorization",
+    "mini": {
+      "passes": [
+        false,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 0.6666666666666666
+    },
+    "atlias": {
+      "passes": [
+        true,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 1
+    }
+  },
+  {
+    "id": "canitedit-lazy-11_fibonacci",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-120_summary_statistics",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-12_linkedlist_sort",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-13_maze_solver",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-14_matrix_operations",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-16_interpreter",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-17_quiz",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-18_deck_of_cards",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-19_traffic_analysis",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-1_cipher",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-20_html_parser",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-21_dijkstra_bellman",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-22_diff_format",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-23_bpe_tokenizer",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-24_tree_abstractions",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-28_password_strength_checker",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        true,
+        true,
+        false
+      ],
+      "majority": true,
+      "fraction": 0.6666666666666666
+    }
+  },
+  {
+    "id": "canitedit-lazy-29_genetic_algorithm",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        true,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    }
+  },
+  {
+    "id": "canitedit-lazy-2_cov_corr",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-31_bookkeeping",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-32_markov_transition",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-33_genetic_algorithm_2",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-34_oop_refactor",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-35_topological_sort",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-36_strongly_connected",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-37_dijkstras",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-38_high_order",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-39_vowel_count",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-3_hello_world",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-40_adjacency",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-44_html_to_markdown",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-45_double_consonant",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        true,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    }
+  },
+  {
+    "id": "canitedit-lazy-46_consonants_within",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-47_merge_sort",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-48_max_sum_subarray",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-49_binary_search",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-4_tensor_operations",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        true
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    }
+  },
+  {
+    "id": "canitedit-lazy-50_syllable_count",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-51_managers_manager",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-53_minimax_to_alphabeta",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-54_strategy",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-55_bm25",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-56_interference_vars",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-57_string_formatter",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-58_dependency_solver",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-63_knary_trees",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-65_tournament_tree",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-67_test_invariants",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-68_prime_numbers_problem",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-6_locked_box",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-70_sieve_of_eratosthenes",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        true
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    }
+  },
+  {
+    "id": "canitedit-lazy-71_euclidean_algorithm",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        true,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    }
+  },
+  {
+    "id": "canitedit-lazy-72_disjoint_cycles",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        true,
+        false
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    }
+  },
+  {
+    "id": "canitedit-lazy-73_permutation_equality",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-76_memory_alloc",
+    "mini": {
+      "passes": [
+        false,
+        true,
+        false
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-77_step_counter",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-79_int_to_key",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-7_temperature_converter",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        true,
+        false
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    }
+  },
+  {
+    "id": "canitedit-lazy-80_circular_queue",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        true,
+        false,
+        true
+      ],
+      "majority": true,
+      "fraction": 0.6666666666666666
+    }
+  },
+  {
+    "id": "canitedit-lazy-81_linked_list_debug",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-85_dpll",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-86_pyast",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-87_documentation",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-89_palindrome_detector",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 0.6666666666666666
+    }
+  },
+  {
+    "id": "canitedit-lazy-8_vector_lib",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-90_dna_transcriber",
+    "mini": {
+      "passes": [
+        true,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 1
+    },
+    "atlias": {
+      "passes": [
+        true,
+        false,
+        true
+      ],
+      "majority": true,
+      "fraction": 0.6666666666666666
+    }
+  },
+  {
+    "id": "canitedit-lazy-91_interest_calculator",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        true
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    },
+    "atlias": {
+      "passes": [
+        true,
+        false,
+        true
+      ],
+      "majority": true,
+      "fraction": 0.6666666666666666
+    }
+  },
+  {
+    "id": "canitedit-lazy-92_heron_area",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        true,
+        false
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    }
+  },
+  {
+    "id": "canitedit-lazy-94_knn",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-95_dbscan",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-96_distribution_clustering",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-97_nash_equilibrium",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-99_secondary_keys",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "canitedit-lazy-9_sorting",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-0",
+    "mini": {
+      "passes": [
+        true,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-1",
+    "mini": {
+      "passes": [
+        true,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 1
+    },
+    "atlias": {
+      "passes": [
+        false,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 0.6666666666666666
+    }
+  },
+  {
+    "id": "humanevalfix-python-10",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-100",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        true
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    }
+  },
+  {
+    "id": "humanevalfix-python-101",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-102",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-103",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-104",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        true,
+        false
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    }
+  },
+  {
+    "id": "humanevalfix-python-105",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-106",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        true,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 1
+    }
+  },
+  {
+    "id": "humanevalfix-python-107",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-108",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        true,
+        false
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    }
+  },
+  {
+    "id": "humanevalfix-python-109",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-11",
+    "mini": {
+      "passes": [
+        true,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    },
+    "atlias": {
+      "passes": [
+        true,
+        true,
+        false
+      ],
+      "majority": true,
+      "fraction": 0.6666666666666666
+    }
+  },
+  {
+    "id": "humanevalfix-python-110",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 0.6666666666666666
+    }
+  },
+  {
+    "id": "humanevalfix-python-111",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        true,
+        true,
+        false
+      ],
+      "majority": true,
+      "fraction": 0.6666666666666666
+    }
+  },
+  {
+    "id": "humanevalfix-python-112",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-113",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-114",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        true,
+        false
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    }
+  },
+  {
+    "id": "humanevalfix-python-115",
+    "mini": {
+      "passes": [
+        false,
+        true,
+        false
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-116",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-117",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-118",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        true
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    }
+  },
+  {
+    "id": "humanevalfix-python-119",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        true,
+        false
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    }
+  },
+  {
+    "id": "humanevalfix-python-12",
+    "mini": {
+      "passes": [
+        true,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        true
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    }
+  },
+  {
+    "id": "humanevalfix-python-120",
+    "mini": {
+      "passes": [
+        false,
+        true,
+        false
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    },
+    "atlias": {
+      "passes": [
+        false,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 0.6666666666666666
+    }
+  },
+  {
+    "id": "humanevalfix-python-121",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        true,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    }
+  },
+  {
+    "id": "humanevalfix-python-122",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-123",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        true,
+        true,
+        false
+      ],
+      "majority": true,
+      "fraction": 0.6666666666666666
+    }
+  },
+  {
+    "id": "humanevalfix-python-124",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-125",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-126",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-127",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-128",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        true,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    }
+  },
+  {
+    "id": "humanevalfix-python-129",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-13",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-130",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-131",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        true,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    }
+  },
+  {
+    "id": "humanevalfix-python-132",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-133",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        true
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    }
+  },
+  {
+    "id": "humanevalfix-python-134",
+    "mini": {
+      "passes": [
+        true,
+        false,
+        true
+      ],
+      "majority": true,
+      "fraction": 0.6666666666666666
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-135",
+    "mini": {
+      "passes": [
+        true,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    },
+    "atlias": {
+      "passes": [
+        true,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    }
+  },
+  {
+    "id": "humanevalfix-python-136",
+    "mini": {
+      "passes": [
+        false,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 0.6666666666666666
+    },
+    "atlias": {
+      "passes": [
+        true,
+        false,
+        true
+      ],
+      "majority": true,
+      "fraction": 0.6666666666666666
+    }
+  },
+  {
+    "id": "humanevalfix-python-137",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-138",
+    "mini": {
+      "passes": [
+        true,
+        false,
+        true
+      ],
+      "majority": true,
+      "fraction": 0.6666666666666666
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-139",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-14",
+    "mini": {
+      "passes": [
+        false,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 0.6666666666666666
+    },
+    "atlias": {
+      "passes": [
+        false,
+        true,
+        false
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    }
+  },
+  {
+    "id": "humanevalfix-python-140",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-141",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-142",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-143",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        true,
+        false
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    }
+  },
+  {
+    "id": "humanevalfix-python-144",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-145",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        true,
+        false,
+        true
+      ],
+      "majority": true,
+      "fraction": 0.6666666666666666
+    }
+  },
+  {
+    "id": "humanevalfix-python-146",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-147",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-148",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-149",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-15",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        true,
+        false,
+        true
+      ],
+      "majority": true,
+      "fraction": 0.6666666666666666
+    }
+  },
+  {
+    "id": "humanevalfix-python-150",
+    "mini": {
+      "passes": [
+        true,
+        true,
+        false
+      ],
+      "majority": true,
+      "fraction": 0.6666666666666666
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-151",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-152",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        true
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    }
+  },
+  {
+    "id": "humanevalfix-python-153",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-154",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-155",
+    "mini": {
+      "passes": [
+        false,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 0.6666666666666666
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-156",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        true
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-157",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        true
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    }
+  },
+  {
+    "id": "humanevalfix-python-158",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-159",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-16",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        true
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    },
+    "atlias": {
+      "passes": [
+        false,
+        true,
+        false
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    }
+  },
+  {
+    "id": "humanevalfix-python-160",
+    "mini": {
+      "passes": [
+        true,
+        false,
+        true
+      ],
+      "majority": true,
+      "fraction": 0.6666666666666666
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        true
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    }
+  },
+  {
+    "id": "humanevalfix-python-161",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-162",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        true,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 1
+    }
+  },
+  {
+    "id": "humanevalfix-python-163",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        true
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    },
+    "atlias": {
+      "passes": [
+        false,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 0.6666666666666666
+    }
+  },
+  {
+    "id": "humanevalfix-python-17",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-18",
+    "mini": {
+      "passes": [
+        false,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 0.6666666666666666
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-19",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-2",
+    "mini": {
+      "passes": [
+        true,
+        false,
+        true
+      ],
+      "majority": true,
+      "fraction": 0.6666666666666666
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-20",
+    "mini": {
+      "passes": [
+        false,
+        true,
+        false
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        true
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    }
+  },
+  {
+    "id": "humanevalfix-python-21",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        true,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 1
+    }
+  },
+  {
+    "id": "humanevalfix-python-22",
+    "mini": {
+      "passes": [
+        true,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 1
+    },
+    "atlias": {
+      "passes": [
+        true,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 1
+    }
+  },
+  {
+    "id": "humanevalfix-python-23",
+    "mini": {
+      "passes": [
+        true,
+        true,
+        false
+      ],
+      "majority": true,
+      "fraction": 0.6666666666666666
+    },
+    "atlias": {
+      "passes": [
+        true,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 1
+    }
+  },
+  {
+    "id": "humanevalfix-python-24",
+    "mini": {
+      "passes": [
+        true,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 1
+    },
+    "atlias": {
+      "passes": [
+        false,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 0.6666666666666666
+    }
+  },
+  {
+    "id": "humanevalfix-python-25",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        true
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-26",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        true
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    }
+  },
+  {
+    "id": "humanevalfix-python-27",
+    "mini": {
+      "passes": [
+        false,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 0.6666666666666666
+    },
+    "atlias": {
+      "passes": [
+        true,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 1
+    }
+  },
+  {
+    "id": "humanevalfix-python-28",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        true,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 1
+    }
+  },
+  {
+    "id": "humanevalfix-python-29",
+    "mini": {
+      "passes": [
+        true,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 1
+    },
+    "atlias": {
+      "passes": [
+        true,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 1
+    }
+  },
+  {
+    "id": "humanevalfix-python-3",
+    "mini": {
+      "passes": [
+        true,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 1
+    },
+    "atlias": {
+      "passes": [
+        true,
+        false,
+        true
+      ],
+      "majority": true,
+      "fraction": 0.6666666666666666
+    }
+  },
+  {
+    "id": "humanevalfix-python-30",
+    "mini": {
+      "passes": [
+        true,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 1
+    },
+    "atlias": {
+      "passes": [
+        false,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 0.6666666666666666
+    }
+  },
+  {
+    "id": "humanevalfix-python-31",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        true,
+        false
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    }
+  },
+  {
+    "id": "humanevalfix-python-32",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-33",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-34",
+    "mini": {
+      "passes": [
+        false,
+        true,
+        false
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    },
+    "atlias": {
+      "passes": [
+        false,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 0.6666666666666666
+    }
+  },
+  {
+    "id": "humanevalfix-python-35",
+    "mini": {
+      "passes": [
+        true,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 1
+    },
+    "atlias": {
+      "passes": [
+        true,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 1
+    }
+  },
+  {
+    "id": "humanevalfix-python-36",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-37",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-38",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-39",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        true
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-4",
+    "mini": {
+      "passes": [
+        false,
+        true,
+        false
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    },
+    "atlias": {
+      "passes": [
+        true,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 1
+    }
+  },
+  {
+    "id": "humanevalfix-python-40",
+    "mini": {
+      "passes": [
+        false,
+        true,
+        false
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    },
+    "atlias": {
+      "passes": [
+        false,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 0.6666666666666666
+    }
+  },
+  {
+    "id": "humanevalfix-python-41",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        true,
+        false,
+        true
+      ],
+      "majority": true,
+      "fraction": 0.6666666666666666
+    }
+  },
+  {
+    "id": "humanevalfix-python-42",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-43",
+    "mini": {
+      "passes": [
+        true,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 1
+    },
+    "atlias": {
+      "passes": [
+        true,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    }
+  },
+  {
+    "id": "humanevalfix-python-44",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        true
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        true
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    }
+  },
+  {
+    "id": "humanevalfix-python-45",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-46",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        true
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-47",
+    "mini": {
+      "passes": [
+        true,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    },
+    "atlias": {
+      "passes": [
+        true,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 1
+    }
+  },
+  {
+    "id": "humanevalfix-python-48",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        true,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 1
+    }
+  },
+  {
+    "id": "humanevalfix-python-49",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        true
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-5",
+    "mini": {
+      "passes": [
+        false,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 0.6666666666666666
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        true
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    }
+  },
+  {
+    "id": "humanevalfix-python-50",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        true
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-51",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        true
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    },
+    "atlias": {
+      "passes": [
+        true,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    }
+  },
+  {
+    "id": "humanevalfix-python-52",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-53",
+    "mini": {
+      "passes": [
+        false,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 0.6666666666666666
+    },
+    "atlias": {
+      "passes": [
+        true,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 1
+    }
+  },
+  {
+    "id": "humanevalfix-python-54",
+    "mini": {
+      "passes": [
+        true,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 1
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-55",
+    "mini": {
+      "passes": [
+        false,
+        true,
+        false
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        true
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    }
+  },
+  {
+    "id": "humanevalfix-python-56",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-57",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        true,
+        false
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    }
+  },
+  {
+    "id": "humanevalfix-python-58",
+    "mini": {
+      "passes": [
+        false,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 0.6666666666666666
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        true
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    }
+  },
+  {
+    "id": "humanevalfix-python-59",
+    "mini": {
+      "passes": [
+        true,
+        true,
+        false
+      ],
+      "majority": true,
+      "fraction": 0.6666666666666666
+    },
+    "atlias": {
+      "passes": [
+        false,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 0.6666666666666666
+    }
+  },
+  {
+    "id": "humanevalfix-python-6",
+    "mini": {
+      "passes": [
+        true,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        true
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    }
+  },
+  {
+    "id": "humanevalfix-python-60",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        true,
+        false
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    }
+  },
+  {
+    "id": "humanevalfix-python-61",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        true
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    },
+    "atlias": {
+      "passes": [
+        true,
+        false,
+        true
+      ],
+      "majority": true,
+      "fraction": 0.6666666666666666
+    }
+  },
+  {
+    "id": "humanevalfix-python-62",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-63",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-64",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-65",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-66",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-67",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        true
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    },
+    "atlias": {
+      "passes": [
+        true,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 1
+    }
+  },
+  {
+    "id": "humanevalfix-python-68",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-69",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        true,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    }
+  },
+  {
+    "id": "humanevalfix-python-7",
+    "mini": {
+      "passes": [
+        true,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 1
+    },
+    "atlias": {
+      "passes": [
+        true,
+        true,
+        false
+      ],
+      "majority": true,
+      "fraction": 0.6666666666666666
+    }
+  },
+  {
+    "id": "humanevalfix-python-70",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-71",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        true
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-72",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        true
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    }
+  },
+  {
+    "id": "humanevalfix-python-73",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-74",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        true,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    }
+  },
+  {
+    "id": "humanevalfix-python-75",
+    "mini": {
+      "passes": [
+        false,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 0.6666666666666666
+    },
+    "atlias": {
+      "passes": [
+        true,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 1
+    }
+  },
+  {
+    "id": "humanevalfix-python-76",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        true
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-77",
+    "mini": {
+      "passes": [
+        true,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    },
+    "atlias": {
+      "passes": [
+        true,
+        false,
+        true
+      ],
+      "majority": true,
+      "fraction": 0.6666666666666666
+    }
+  },
+  {
+    "id": "humanevalfix-python-78",
+    "mini": {
+      "passes": [
+        true,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-79",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-8",
+    "mini": {
+      "passes": [
+        false,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 0.6666666666666666
+    },
+    "atlias": {
+      "passes": [
+        true,
+        true,
+        false
+      ],
+      "majority": true,
+      "fraction": 0.6666666666666666
+    }
+  },
+  {
+    "id": "humanevalfix-python-80",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-81",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-82",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        true,
+        false,
+        true
+      ],
+      "majority": true,
+      "fraction": 0.6666666666666666
+    }
+  },
+  {
+    "id": "humanevalfix-python-83",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-84",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-85",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-86",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-87",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-88",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        true,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    }
+  },
+  {
+    "id": "humanevalfix-python-89",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-9",
+    "mini": {
+      "passes": [
+        true,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 1
+    },
+    "atlias": {
+      "passes": [
+        false,
+        true,
+        false
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    }
+  },
+  {
+    "id": "humanevalfix-python-90",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        true
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    }
+  },
+  {
+    "id": "humanevalfix-python-91",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-92",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        true,
+        false
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    }
+  },
+  {
+    "id": "humanevalfix-python-93",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-94",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        true,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 1
+    }
+  },
+  {
+    "id": "humanevalfix-python-95",
+    "mini": {
+      "passes": [
+        true,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0.3333333333333333
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-96",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-97",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  },
+  {
+    "id": "humanevalfix-python-98",
+    "mini": {
+      "passes": [
+        false,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 0.6666666666666666
+    },
+    "atlias": {
+      "passes": [
+        true,
+        true,
+        true
+      ],
+      "majority": true,
+      "fraction": 1
+    }
+  },
+  {
+    "id": "humanevalfix-python-99",
+    "mini": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    },
+    "atlias": {
+      "passes": [
+        false,
+        false,
+        false
+      ],
+      "majority": false,
+      "fraction": 0
+    }
+  }
+]

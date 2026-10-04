@@ -1,0 +1,1783 @@
+{
+  "engine": "ollama",
+  "model": "qwen2.5-coder:7b",
+  "stamp": {
+    "version": "3.7.1",
+    "sha": "ca1e948",
+    "dirty": false,
+    "dirtyFiles": [],
+    "text": "atlias 3.7.1 @ ca1e948"
+  },
+  "tries": 1,
+  "numCtx": 16384,
+  "budget": 25,
+  "budgetSet": false,
+  "corpus": {
+    "tier": "main",
+    "tasks": 252,
+    "of": 252,
+    "sample": 0,
+    "seed": ""
+  },
+  "total": 250,
+  "passed": 59,
+  "results": [
+    {
+      "id": "humanevalfix-python-0",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 32060,
+      "outputTotal": 1587
+    },
+    {
+      "id": "humanevalfix-python-1",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 28565,
+      "outputTotal": 1185
+    },
+    {
+      "id": "humanevalfix-python-10",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 29889,
+      "outputTotal": 1177
+    },
+    {
+      "id": "humanevalfix-python-100",
+      "pass": true,
+      "rounds": 9,
+      "promptTotal": 14736,
+      "outputTotal": 445
+    },
+    {
+      "id": "humanevalfix-python-101",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 33141,
+      "outputTotal": 2023
+    },
+    {
+      "id": "humanevalfix-python-102",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 26408,
+      "outputTotal": 773
+    },
+    {
+      "id": "humanevalfix-python-103",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 32730,
+      "outputTotal": 1983
+    },
+    {
+      "id": "humanevalfix-python-104",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 28046,
+      "outputTotal": 907
+    },
+    {
+      "id": "humanevalfix-python-105",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 29593,
+      "outputTotal": 1187
+    },
+    {
+      "id": "humanevalfix-python-106",
+      "pass": true,
+      "rounds": 14,
+      "promptTotal": 26033,
+      "outputTotal": 792
+    },
+    {
+      "id": "humanevalfix-python-107",
+      "pass": false,
+      "rounds": 5,
+      "promptTotal": 7085,
+      "outputTotal": 598
+    },
+    {
+      "id": "humanevalfix-python-108",
+      "pass": true,
+      "rounds": 7,
+      "promptTotal": 10182,
+      "outputTotal": 387
+    },
+    {
+      "id": "humanevalfix-python-109",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 29920,
+      "outputTotal": 1191
+    },
+    {
+      "id": "humanevalfix-python-11",
+      "pass": true,
+      "rounds": 7,
+      "promptTotal": 10397,
+      "outputTotal": 429
+    },
+    {
+      "id": "humanevalfix-python-110",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 37724,
+      "outputTotal": 2723
+    },
+    {
+      "id": "humanevalfix-python-111",
+      "pass": true,
+      "rounds": 7,
+      "promptTotal": 10021,
+      "outputTotal": 425
+    },
+    {
+      "id": "humanevalfix-python-112",
+      "pass": true,
+      "rounds": 10,
+      "promptTotal": 17878,
+      "outputTotal": 1062
+    },
+    {
+      "id": "humanevalfix-python-113",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 30659,
+      "outputTotal": 1181
+    },
+    {
+      "id": "humanevalfix-python-114",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 37070,
+      "outputTotal": 2757
+    },
+    {
+      "id": "humanevalfix-python-115",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 26975,
+      "outputTotal": 998
+    },
+    {
+      "id": "humanevalfix-python-116",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 30809,
+      "outputTotal": 1250
+    },
+    {
+      "id": "humanevalfix-python-117",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 35562,
+      "outputTotal": 2413
+    },
+    {
+      "id": "humanevalfix-python-118",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 29559,
+      "outputTotal": 1638
+    },
+    {
+      "id": "humanevalfix-python-119",
+      "pass": false,
+      "rounds": 10,
+      "promptTotal": 17777,
+      "outputTotal": 799
+    },
+    {
+      "id": "humanevalfix-python-12",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 44884,
+      "outputTotal": 3363
+    },
+    {
+      "id": "humanevalfix-python-120",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 27697,
+      "outputTotal": 1016
+    },
+    {
+      "id": "humanevalfix-python-121",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 31736,
+      "outputTotal": 1585
+    },
+    {
+      "id": "humanevalfix-python-122",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 29288,
+      "outputTotal": 930
+    },
+    {
+      "id": "humanevalfix-python-123",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 27360,
+      "outputTotal": 660
+    },
+    {
+      "id": "humanevalfix-python-124",
+      "pass": false,
+      "rounds": 5,
+      "promptTotal": 6992,
+      "outputTotal": 377
+    },
+    {
+      "id": "humanevalfix-python-125",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 26970,
+      "outputTotal": 1185
+    },
+    {
+      "id": "humanevalfix-python-126",
+      "pass": false,
+      "rounds": 13,
+      "promptTotal": 26666,
+      "outputTotal": 1132
+    },
+    {
+      "id": "humanevalfix-python-127",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 39810,
+      "outputTotal": 2032
+    },
+    {
+      "id": "humanevalfix-python-128",
+      "pass": true,
+      "rounds": 14,
+      "promptTotal": 26405,
+      "outputTotal": 878
+    },
+    {
+      "id": "humanevalfix-python-129",
+      "pass": false,
+      "rounds": 10,
+      "promptTotal": 20525,
+      "outputTotal": 1250
+    },
+    {
+      "id": "humanevalfix-python-13",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 27033,
+      "outputTotal": 848
+    },
+    {
+      "id": "humanevalfix-python-130",
+      "pass": false,
+      "rounds": 7,
+      "promptTotal": 10937,
+      "outputTotal": 657
+    },
+    {
+      "id": "humanevalfix-python-131",
+      "pass": true,
+      "rounds": 7,
+      "promptTotal": 10053,
+      "outputTotal": 419
+    },
+    {
+      "id": "humanevalfix-python-132",
+      "pass": false,
+      "rounds": 13,
+      "promptTotal": 31292,
+      "outputTotal": 2133
+    },
+    {
+      "id": "humanevalfix-python-133",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 28273,
+      "outputTotal": 1120
+    },
+    {
+      "id": "humanevalfix-python-134",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 32744,
+      "outputTotal": 1894
+    },
+    {
+      "id": "humanevalfix-python-135",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 25857,
+      "outputTotal": 548
+    },
+    {
+      "id": "humanevalfix-python-136",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 37791,
+      "outputTotal": 2931
+    },
+    {
+      "id": "humanevalfix-python-137",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 52040,
+      "outputTotal": 7472
+    },
+    {
+      "id": "humanevalfix-python-138",
+      "pass": true,
+      "rounds": 13,
+      "promptTotal": 23253,
+      "outputTotal": 576
+    },
+    {
+      "id": "humanevalfix-python-139",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 35896,
+      "outputTotal": 2604
+    },
+    {
+      "id": "humanevalfix-python-14",
+      "pass": true,
+      "rounds": 7,
+      "promptTotal": 9474,
+      "outputTotal": 319
+    },
+    {
+      "id": "humanevalfix-python-140",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 29666,
+      "outputTotal": 1030
+    },
+    {
+      "id": "humanevalfix-python-141",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 33990,
+      "outputTotal": 1394
+    },
+    {
+      "id": "humanevalfix-python-142",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 40847,
+      "outputTotal": 3944
+    },
+    {
+      "id": "humanevalfix-python-143",
+      "pass": false,
+      "rounds": 8,
+      "promptTotal": 17275,
+      "outputTotal": 1619
+    },
+    {
+      "id": "humanevalfix-python-144",
+      "pass": false,
+      "rounds": 13,
+      "promptTotal": 29504,
+      "outputTotal": 1582
+    },
+    {
+      "id": "humanevalfix-python-145",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 32201,
+      "outputTotal": 1350
+    },
+    {
+      "id": "humanevalfix-python-146",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 27350,
+      "outputTotal": 717
+    },
+    {
+      "id": "humanevalfix-python-147",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 27241,
+      "outputTotal": 891
+    },
+    {
+      "id": "humanevalfix-python-148",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 32419,
+      "outputTotal": 1405
+    },
+    {
+      "id": "humanevalfix-python-149",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 36743,
+      "outputTotal": 1872
+    },
+    {
+      "id": "humanevalfix-python-15",
+      "pass": true,
+      "rounds": 14,
+      "promptTotal": 25602,
+      "outputTotal": 677
+    },
+    {
+      "id": "humanevalfix-python-150",
+      "pass": true,
+      "rounds": 14,
+      "promptTotal": 27908,
+      "outputTotal": 707
+    },
+    {
+      "id": "humanevalfix-python-151",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 29256,
+      "outputTotal": 1113
+    },
+    {
+      "id": "humanevalfix-python-152",
+      "pass": true,
+      "rounds": 8,
+      "promptTotal": 11223,
+      "outputTotal": 426
+    },
+    {
+      "id": "humanevalfix-python-153",
+      "pass": false,
+      "rounds": 10,
+      "promptTotal": 24566,
+      "outputTotal": 2403
+    },
+    {
+      "id": "humanevalfix-python-154",
+      "pass": true,
+      "rounds": 7,
+      "promptTotal": 10022,
+      "outputTotal": 410
+    },
+    {
+      "id": "humanevalfix-python-155",
+      "pass": true,
+      "rounds": 8,
+      "promptTotal": 14303,
+      "outputTotal": 981
+    },
+    {
+      "id": "humanevalfix-python-156",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 30932,
+      "outputTotal": 2096
+    },
+    {
+      "id": "humanevalfix-python-157",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 32579,
+      "outputTotal": 1477
+    },
+    {
+      "id": "humanevalfix-python-158",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 28650,
+      "outputTotal": 1148
+    },
+    {
+      "id": "humanevalfix-python-159",
+      "pass": false,
+      "rounds": 7,
+      "promptTotal": 12341,
+      "outputTotal": 1362
+    },
+    {
+      "id": "humanevalfix-python-16",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 30013,
+      "outputTotal": 1435
+    },
+    {
+      "id": "humanevalfix-python-160",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 43145,
+      "outputTotal": 2728
+    },
+    {
+      "id": "humanevalfix-python-161",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 36371,
+      "outputTotal": 3030
+    },
+    {
+      "id": "humanevalfix-python-162",
+      "pass": true,
+      "rounds": 8,
+      "promptTotal": 11919,
+      "outputTotal": 414
+    },
+    {
+      "id": "humanevalfix-python-163",
+      "pass": true,
+      "rounds": 11,
+      "promptTotal": 19511,
+      "outputTotal": 604
+    },
+    {
+      "id": "humanevalfix-python-17",
+      "pass": true,
+      "rounds": 9,
+      "promptTotal": 14963,
+      "outputTotal": 441
+    },
+    {
+      "id": "humanevalfix-python-18",
+      "pass": true,
+      "rounds": 7,
+      "promptTotal": 10307,
+      "outputTotal": 438
+    },
+    {
+      "id": "humanevalfix-python-19",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 35892,
+      "outputTotal": 2637
+    },
+    {
+      "id": "humanevalfix-python-2",
+      "pass": true,
+      "rounds": 10,
+      "promptTotal": 15379,
+      "outputTotal": 410
+    },
+    {
+      "id": "humanevalfix-python-20",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 26521,
+      "outputTotal": 1039
+    },
+    {
+      "id": "humanevalfix-python-21",
+      "pass": true,
+      "rounds": 7,
+      "promptTotal": 9731,
+      "outputTotal": 369
+    },
+    {
+      "id": "humanevalfix-python-22",
+      "pass": true,
+      "rounds": 7,
+      "promptTotal": 9164,
+      "outputTotal": 253
+    },
+    {
+      "id": "humanevalfix-python-23",
+      "pass": true,
+      "rounds": 7,
+      "promptTotal": 9196,
+      "outputTotal": 297
+    },
+    {
+      "id": "humanevalfix-python-24",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 24144,
+      "outputTotal": 563
+    },
+    {
+      "id": "humanevalfix-python-25",
+      "pass": true,
+      "rounds": 7,
+      "promptTotal": 10065,
+      "outputTotal": 386
+    },
+    {
+      "id": "humanevalfix-python-26",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 31486,
+      "outputTotal": 1777
+    },
+    {
+      "id": "humanevalfix-python-27",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 29567,
+      "outputTotal": 1474
+    },
+    {
+      "id": "humanevalfix-python-28",
+      "pass": true,
+      "rounds": 8,
+      "promptTotal": 11487,
+      "outputTotal": 392
+    },
+    {
+      "id": "humanevalfix-python-29",
+      "pass": true,
+      "rounds": 7,
+      "promptTotal": 10132,
+      "outputTotal": 489
+    },
+    {
+      "id": "humanevalfix-python-3",
+      "pass": false,
+      "rounds": 5,
+      "promptTotal": 6435,
+      "outputTotal": 385
+    },
+    {
+      "id": "humanevalfix-python-30",
+      "pass": true,
+      "rounds": 11,
+      "promptTotal": 17513,
+      "outputTotal": 439
+    },
+    {
+      "id": "humanevalfix-python-31",
+      "pass": true,
+      "rounds": 8,
+      "promptTotal": 14837,
+      "outputTotal": 922
+    },
+    {
+      "id": "humanevalfix-python-32",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 33248,
+      "outputTotal": 1780
+    },
+    {
+      "id": "humanevalfix-python-33",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 31923,
+      "outputTotal": 1174
+    },
+    {
+      "id": "humanevalfix-python-34",
+      "pass": false,
+      "rounds": 8,
+      "promptTotal": 13103,
+      "outputTotal": 958
+    },
+    {
+      "id": "humanevalfix-python-35",
+      "pass": true,
+      "rounds": 7,
+      "promptTotal": 9618,
+      "outputTotal": 351
+    },
+    {
+      "id": "humanevalfix-python-36",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 36320,
+      "outputTotal": 2513
+    },
+    {
+      "id": "humanevalfix-python-37",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 29506,
+      "outputTotal": 1502
+    },
+    {
+      "id": "humanevalfix-python-38",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 28361,
+      "outputTotal": 1154
+    },
+    {
+      "id": "humanevalfix-python-39",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 34888,
+      "outputTotal": 1930
+    },
+    {
+      "id": "humanevalfix-python-4",
+      "pass": true,
+      "rounds": 6,
+      "promptTotal": 8725,
+      "outputTotal": 476
+    },
+    {
+      "id": "humanevalfix-python-40",
+      "pass": true,
+      "rounds": 7,
+      "promptTotal": 9911,
+      "outputTotal": 346
+    },
+    {
+      "id": "humanevalfix-python-41",
+      "pass": true,
+      "rounds": 10,
+      "promptTotal": 16697,
+      "outputTotal": 717
+    },
+    {
+      "id": "humanevalfix-python-42",
+      "pass": false,
+      "rounds": 13,
+      "promptTotal": 24536,
+      "outputTotal": 1203
+    },
+    {
+      "id": "humanevalfix-python-43",
+      "pass": true,
+      "rounds": 7,
+      "promptTotal": 9894,
+      "outputTotal": 466
+    },
+    {
+      "id": "humanevalfix-python-44",
+      "pass": false,
+      "rounds": 10,
+      "promptTotal": 15975,
+      "outputTotal": 481
+    },
+    {
+      "id": "humanevalfix-python-45",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 22497,
+      "outputTotal": 765
+    },
+    {
+      "id": "humanevalfix-python-46",
+      "pass": true,
+      "rounds": 14,
+      "promptTotal": 29068,
+      "outputTotal": 1636
+    },
+    {
+      "id": "humanevalfix-python-47",
+      "pass": true,
+      "rounds": 7,
+      "promptTotal": 10321,
+      "outputTotal": 496
+    },
+    {
+      "id": "humanevalfix-python-48",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 29779,
+      "outputTotal": 1174
+    },
+    {
+      "id": "humanevalfix-python-49",
+      "pass": false,
+      "rounds": 10,
+      "promptTotal": 19127,
+      "outputTotal": 1143
+    },
+    {
+      "id": "humanevalfix-python-5",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 27960,
+      "outputTotal": 1022
+    },
+    {
+      "id": "humanevalfix-python-50",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 26692,
+      "outputTotal": 1023
+    },
+    {
+      "id": "humanevalfix-python-51",
+      "pass": true,
+      "rounds": 7,
+      "promptTotal": 9515,
+      "outputTotal": 305
+    },
+    {
+      "id": "humanevalfix-python-52",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 29169,
+      "outputTotal": 1113
+    },
+    {
+      "id": "humanevalfix-python-53",
+      "pass": true,
+      "rounds": 8,
+      "promptTotal": 10764,
+      "outputTotal": 315
+    },
+    {
+      "id": "humanevalfix-python-54",
+      "pass": true,
+      "rounds": 7,
+      "promptTotal": 9394,
+      "outputTotal": 321
+    },
+    {
+      "id": "humanevalfix-python-55",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 33381,
+      "outputTotal": 2173
+    },
+    {
+      "id": "humanevalfix-python-56",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 35314,
+      "outputTotal": 2630
+    },
+    {
+      "id": "humanevalfix-python-57",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 25699,
+      "outputTotal": 925
+    },
+    {
+      "id": "humanevalfix-python-58",
+      "pass": true,
+      "rounds": 7,
+      "promptTotal": 10460,
+      "outputTotal": 517
+    },
+    {
+      "id": "humanevalfix-python-59",
+      "pass": true,
+      "rounds": 7,
+      "promptTotal": 9797,
+      "outputTotal": 270
+    },
+    {
+      "id": "humanevalfix-python-6",
+      "pass": false,
+      "rounds": 6,
+      "promptTotal": 10790,
+      "outputTotal": 1127
+    },
+    {
+      "id": "humanevalfix-python-60",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 30196,
+      "outputTotal": 1323
+    },
+    {
+      "id": "humanevalfix-python-61",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 36299,
+      "outputTotal": 2650
+    },
+    {
+      "id": "humanevalfix-python-62",
+      "pass": false,
+      "rounds": 11,
+      "promptTotal": 21443,
+      "outputTotal": 1834
+    },
+    {
+      "id": "humanevalfix-python-63",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 39520,
+      "outputTotal": 3368
+    },
+    {
+      "id": "humanevalfix-python-64",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 27764,
+      "outputTotal": 616
+    },
+    {
+      "id": "humanevalfix-python-65",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 26786,
+      "outputTotal": 575
+    },
+    {
+      "id": "humanevalfix-python-66",
+      "pass": false,
+      "rounds": 11,
+      "promptTotal": 20619,
+      "outputTotal": 900
+    },
+    {
+      "id": "humanevalfix-python-67",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 28291,
+      "outputTotal": 1172
+    },
+    {
+      "id": "humanevalfix-python-68",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 32611,
+      "outputTotal": 2002
+    },
+    {
+      "id": "humanevalfix-python-69",
+      "pass": false,
+      "rounds": 9,
+      "promptTotal": 20778,
+      "outputTotal": 489
+    },
+    {
+      "id": "humanevalfix-python-7",
+      "pass": true,
+      "rounds": 5,
+      "promptTotal": 8349,
+      "outputTotal": 563
+    },
+    {
+      "id": "humanevalfix-python-70",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 33684,
+      "outputTotal": 2126
+    },
+    {
+      "id": "humanevalfix-python-71",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 26405,
+      "outputTotal": 1347
+    },
+    {
+      "id": "humanevalfix-python-72",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 35229,
+      "outputTotal": 2496
+    },
+    {
+      "id": "humanevalfix-python-73",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 61866,
+      "outputTotal": 8950
+    },
+    {
+      "id": "humanevalfix-python-74",
+      "pass": true,
+      "rounds": 10,
+      "promptTotal": 18683,
+      "outputTotal": 564
+    },
+    {
+      "id": "humanevalfix-python-75",
+      "pass": true,
+      "rounds": 10,
+      "promptTotal": 17415,
+      "outputTotal": 624
+    },
+    {
+      "id": "humanevalfix-python-76",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 26714,
+      "outputTotal": 482
+    },
+    {
+      "id": "humanevalfix-python-77",
+      "pass": true,
+      "rounds": 9,
+      "promptTotal": 15490,
+      "outputTotal": 485
+    },
+    {
+      "id": "humanevalfix-python-78",
+      "pass": false,
+      "rounds": 11,
+      "promptTotal": 31562,
+      "outputTotal": 2218
+    },
+    {
+      "id": "humanevalfix-python-79",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 25874,
+      "outputTotal": 769
+    },
+    {
+      "id": "humanevalfix-python-8",
+      "pass": true,
+      "rounds": 7,
+      "promptTotal": 9892,
+      "outputTotal": 367
+    },
+    {
+      "id": "humanevalfix-python-80",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 30189,
+      "outputTotal": 1222
+    },
+    {
+      "id": "humanevalfix-python-81",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 33019,
+      "outputTotal": 1163
+    },
+    {
+      "id": "humanevalfix-python-82",
+      "pass": true,
+      "rounds": 7,
+      "promptTotal": 10411,
+      "outputTotal": 477
+    },
+    {
+      "id": "humanevalfix-python-83",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 25994,
+      "outputTotal": 551
+    },
+    {
+      "id": "humanevalfix-python-84",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 29450,
+      "outputTotal": 1105
+    },
+    {
+      "id": "humanevalfix-python-85",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 31018,
+      "outputTotal": 1473
+    },
+    {
+      "id": "humanevalfix-python-86",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 31269,
+      "outputTotal": 1752
+    },
+    {
+      "id": "humanevalfix-python-87",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 28336,
+      "outputTotal": 632
+    },
+    {
+      "id": "humanevalfix-python-88",
+      "pass": true,
+      "rounds": 11,
+      "promptTotal": 21045,
+      "outputTotal": 871
+    },
+    {
+      "id": "humanevalfix-python-89",
+      "pass": true,
+      "rounds": 7,
+      "promptTotal": 10538,
+      "outputTotal": 428
+    },
+    {
+      "id": "humanevalfix-python-9",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 35942,
+      "outputTotal": 2553
+    },
+    {
+      "id": "humanevalfix-python-90",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 29556,
+      "outputTotal": 1446
+    },
+    {
+      "id": "humanevalfix-python-91",
+      "pass": true,
+      "rounds": 14,
+      "promptTotal": 26619,
+      "outputTotal": 812
+    },
+    {
+      "id": "humanevalfix-python-92",
+      "pass": false,
+      "rounds": 14,
+      "promptTotal": 29697,
+      "outputTotal": 934
+    },
+    {
+      "id": "humanevalfix-python-93",
+      "pass": true,
+      "rounds": 9,
+      "promptTotal": 15295,
+      "outputTotal": 619
+    },
+    {
+      "id": "humanevalfix-python-94",
+      "pass": true,
+      "rounds": 13,
+      "promptTotal": 30550,
+      "outputTotal": 1148
+    },
+    {
+      "id": "humanevalfix-python-95",
+      "pass": false,
+      "rounds": 9,
+      "promptTotal": 14698,
+      "outputTotal": 562
+    },
+    {
+      "id": "humanevalfix-python-96",
+      "pass": false,
+      "rounds": 7,
+      "promptTotal": 11772,
+      "outputTotal": 1314
+    },
+    {
+      "id": "humanevalfix-python-97",
+      "pass": false,
+      "rounds": 13,
+      "promptTotal": 23391,
+      "outputTotal": 982
+    },
+    {
+      "id": "canitedit-lazy-101_house_prices",
+      "pass": false,
+      "rounds": 10,
+      "promptTotal": 20459,
+      "outputTotal": 995
+    },
+    {
+      "id": "canitedit-lazy-102_nfa",
+      "pass": false,
+      "rounds": 10,
+      "promptTotal": 20813,
+      "outputTotal": 1647
+    },
+    {
+      "id": "canitedit-lazy-103_postfix",
+      "pass": false,
+      "rounds": 9,
+      "promptTotal": 18741,
+      "outputTotal": 1082
+    },
+    {
+      "id": "canitedit-lazy-104_filesystem",
+      "pass": false,
+      "rounds": 10,
+      "promptTotal": 25968,
+      "outputTotal": 1097
+    },
+    {
+      "id": "canitedit-lazy-106_conways_game",
+      "pass": true,
+      "rounds": 5,
+      "promptTotal": 12354,
+      "outputTotal": 1001
+    },
+    {
+      "id": "canitedit-lazy-107_multiindex_sort",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 24564,
+      "outputTotal": 1111
+    },
+    {
+      "id": "canitedit-lazy-10_csv_parser",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 19759,
+      "outputTotal": 496
+    },
+    {
+      "id": "canitedit-lazy-111_coprime_euler",
+      "pass": false,
+      "rounds": 7,
+      "promptTotal": 10889,
+      "outputTotal": 606
+    },
+    {
+      "id": "canitedit-lazy-112_elliptic_curves",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 30893,
+      "outputTotal": 928
+    },
+    {
+      "id": "canitedit-lazy-113_schnorr_zk",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 27854,
+      "outputTotal": 1030
+    },
+    {
+      "id": "canitedit-lazy-114_grid_world_dp",
+      "pass": false,
+      "rounds": 7,
+      "promptTotal": 18824,
+      "outputTotal": 2244
+    },
+    {
+      "id": "canitedit-lazy-115_arrangement_selections",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 24119,
+      "outputTotal": 734
+    },
+    {
+      "id": "canitedit-lazy-116_cfg",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 24701,
+      "outputTotal": 823
+    },
+    {
+      "id": "canitedit-lazy-117_matrix",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 32762,
+      "outputTotal": 1828
+    },
+    {
+      "id": "canitedit-lazy-119_pollards_rho_factorization",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 23344,
+      "outputTotal": 854
+    },
+    {
+      "id": "canitedit-lazy-11_fibonacci",
+      "pass": false,
+      "rounds": 8,
+      "promptTotal": 12001,
+      "outputTotal": 403
+    },
+    {
+      "id": "canitedit-lazy-120_summary_statistics",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 21838,
+      "outputTotal": 855
+    },
+    {
+      "id": "canitedit-lazy-12_linkedlist_sort",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 22736,
+      "outputTotal": 749
+    },
+    {
+      "id": "canitedit-lazy-13_maze_solver",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 25086,
+      "outputTotal": 812
+    },
+    {
+      "id": "canitedit-lazy-14_matrix_operations",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 22838,
+      "outputTotal": 602
+    },
+    {
+      "id": "canitedit-lazy-16_interpreter",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 24698,
+      "outputTotal": 855
+    },
+    {
+      "id": "canitedit-lazy-17_quiz",
+      "pass": false,
+      "rounds": 4,
+      "promptTotal": 4899,
+      "outputTotal": 206
+    },
+    {
+      "id": "canitedit-lazy-18_deck_of_cards",
+      "pass": false,
+      "rounds": 10,
+      "promptTotal": 18659,
+      "outputTotal": 609
+    },
+    {
+      "id": "canitedit-lazy-19_traffic_analysis",
+      "pass": false,
+      "rounds": 10,
+      "promptTotal": 22811,
+      "outputTotal": 507
+    },
+    {
+      "id": "canitedit-lazy-1_cipher",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 23760,
+      "outputTotal": 679
+    },
+    {
+      "id": "canitedit-lazy-20_html_parser",
+      "pass": false,
+      "rounds": 10,
+      "promptTotal": 24451,
+      "outputTotal": 1540
+    },
+    {
+      "id": "canitedit-lazy-21_dijkstra_bellman",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 24443,
+      "outputTotal": 1045
+    },
+    {
+      "id": "canitedit-lazy-22_diff_format",
+      "pass": false,
+      "rounds": 10,
+      "promptTotal": 26220,
+      "outputTotal": 440
+    },
+    {
+      "id": "canitedit-lazy-23_bpe_tokenizer",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 23239,
+      "outputTotal": 827
+    },
+    {
+      "id": "canitedit-lazy-24_tree_abstractions",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 25451,
+      "outputTotal": 660
+    },
+    {
+      "id": "canitedit-lazy-28_password_strength_checker",
+      "pass": true,
+      "rounds": 12,
+      "promptTotal": 20788,
+      "outputTotal": 690
+    },
+    {
+      "id": "canitedit-lazy-29_genetic_algorithm",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 33302,
+      "outputTotal": 2271
+    },
+    {
+      "id": "canitedit-lazy-2_cov_corr",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 23073,
+      "outputTotal": 751
+    },
+    {
+      "id": "canitedit-lazy-31_bookkeeping",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 23091,
+      "outputTotal": 742
+    },
+    {
+      "id": "canitedit-lazy-32_markov_transition",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 20337,
+      "outputTotal": 618
+    },
+    {
+      "id": "canitedit-lazy-33_genetic_algorithm_2",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 39965,
+      "outputTotal": 2015
+    },
+    {
+      "id": "canitedit-lazy-34_oop_refactor",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 31044,
+      "outputTotal": 1761
+    },
+    {
+      "id": "canitedit-lazy-35_topological_sort",
+      "pass": false,
+      "rounds": 6,
+      "promptTotal": 9391,
+      "outputTotal": 991
+    },
+    {
+      "id": "canitedit-lazy-36_strongly_connected",
+      "pass": false,
+      "rounds": 10,
+      "promptTotal": 19104,
+      "outputTotal": 442
+    },
+    {
+      "id": "canitedit-lazy-37_dijkstras",
+      "pass": false,
+      "rounds": 7,
+      "promptTotal": 11843,
+      "outputTotal": 612
+    },
+    {
+      "id": "canitedit-lazy-38_high_order",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 22227,
+      "outputTotal": 596
+    },
+    {
+      "id": "canitedit-lazy-39_vowel_count",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 20494,
+      "outputTotal": 804
+    },
+    {
+      "id": "canitedit-lazy-3_hello_world",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 17961,
+      "outputTotal": 382
+    },
+    {
+      "id": "canitedit-lazy-40_adjacency",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 23472,
+      "outputTotal": 896
+    },
+    {
+      "id": "canitedit-lazy-44_html_to_markdown",
+      "pass": false,
+      "rounds": 6,
+      "promptTotal": 12940,
+      "outputTotal": 316
+    },
+    {
+      "id": "canitedit-lazy-45_double_consonant",
+      "pass": false,
+      "rounds": 10,
+      "promptTotal": 18675,
+      "outputTotal": 641
+    },
+    {
+      "id": "canitedit-lazy-46_consonants_within",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 24840,
+      "outputTotal": 475
+    },
+    {
+      "id": "canitedit-lazy-47_merge_sort",
+      "pass": true,
+      "rounds": 4,
+      "promptTotal": 6168,
+      "outputTotal": 722
+    },
+    {
+      "id": "canitedit-lazy-48_max_sum_subarray",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 21503,
+      "outputTotal": 666
+    },
+    {
+      "id": "canitedit-lazy-49_binary_search",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 21120,
+      "outputTotal": 869
+    },
+    {
+      "id": "canitedit-lazy-4_tensor_operations",
+      "pass": false,
+      "rounds": 2,
+      "promptTotal": 2637,
+      "outputTotal": 230
+    },
+    {
+      "id": "canitedit-lazy-50_syllable_count",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 23044,
+      "outputTotal": 705
+    },
+    {
+      "id": "canitedit-lazy-51_managers_manager",
+      "pass": false,
+      "rounds": 10,
+      "promptTotal": 18791,
+      "outputTotal": 699
+    },
+    {
+      "id": "canitedit-lazy-53_minimax_to_alphabeta",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 50079,
+      "outputTotal": 2765
+    },
+    {
+      "id": "canitedit-lazy-54_strategy",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 45162,
+      "outputTotal": 3430
+    },
+    {
+      "id": "canitedit-lazy-55_bm25",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 23777,
+      "outputTotal": 680
+    },
+    {
+      "id": "canitedit-lazy-56_interference_vars",
+      "pass": true,
+      "rounds": 4,
+      "promptTotal": 12628,
+      "outputTotal": 581
+    },
+    {
+      "id": "canitedit-lazy-57_string_formatter",
+      "pass": false,
+      "rounds": 5,
+      "promptTotal": 6910,
+      "outputTotal": 451
+    },
+    {
+      "id": "canitedit-lazy-58_dependency_solver",
+      "pass": false,
+      "rounds": 5,
+      "promptTotal": 11865,
+      "outputTotal": 6208
+    },
+    {
+      "id": "canitedit-lazy-63_knary_trees",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 21831,
+      "outputTotal": 503
+    },
+    {
+      "id": "canitedit-lazy-65_tournament_tree",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 23559,
+      "outputTotal": 598
+    },
+    {
+      "id": "canitedit-lazy-67_test_invariants",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 25855,
+      "outputTotal": 1104
+    },
+    {
+      "id": "canitedit-lazy-68_prime_numbers_problem",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 22222,
+      "outputTotal": 618
+    },
+    {
+      "id": "canitedit-lazy-6_locked_box",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 28739,
+      "outputTotal": 859
+    },
+    {
+      "id": "canitedit-lazy-70_sieve_of_eratosthenes",
+      "pass": false,
+      "rounds": 6,
+      "promptTotal": 12418,
+      "outputTotal": 1334
+    },
+    {
+      "id": "canitedit-lazy-71_euclidean_algorithm",
+      "pass": false,
+      "rounds": 4,
+      "promptTotal": 4762,
+      "outputTotal": 297
+    },
+    {
+      "id": "canitedit-lazy-72_disjoint_cycles",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 21750,
+      "outputTotal": 725
+    },
+    {
+      "id": "canitedit-lazy-73_permutation_equality",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 24271,
+      "outputTotal": 1163
+    },
+    {
+      "id": "canitedit-lazy-76_memory_alloc",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 30503,
+      "outputTotal": 1965
+    },
+    {
+      "id": "canitedit-lazy-77_step_counter",
+      "pass": true,
+      "rounds": 11,
+      "promptTotal": 19741,
+      "outputTotal": 725
+    },
+    {
+      "id": "canitedit-lazy-79_int_to_key",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 22876,
+      "outputTotal": 506
+    },
+    {
+      "id": "canitedit-lazy-7_temperature_converter",
+      "pass": false,
+      "rounds": 10,
+      "promptTotal": 15159,
+      "outputTotal": 472
+    },
+    {
+      "id": "canitedit-lazy-80_circular_queue",
+      "pass": true,
+      "rounds": 12,
+      "promptTotal": 24123,
+      "outputTotal": 882
+    },
+    {
+      "id": "canitedit-lazy-81_linked_list_debug",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 21640,
+      "outputTotal": 865
+    },
+    {
+      "id": "canitedit-lazy-85_dpll",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 28086,
+      "outputTotal": 443
+    },
+    {
+      "id": "canitedit-lazy-86_pyast",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 31907,
+      "outputTotal": 5662
+    },
+    {
+      "id": "canitedit-lazy-87_documentation",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 26349,
+      "outputTotal": 1019
+    },
+    {
+      "id": "canitedit-lazy-89_palindrome_detector",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 22692,
+      "outputTotal": 1340
+    },
+    {
+      "id": "canitedit-lazy-8_vector_lib",
+      "pass": false,
+      "rounds": 11,
+      "promptTotal": 18900,
+      "outputTotal": 711
+    },
+    {
+      "id": "canitedit-lazy-90_dna_transcriber",
+      "pass": true,
+      "rounds": 12,
+      "promptTotal": 20859,
+      "outputTotal": 748
+    },
+    {
+      "id": "canitedit-lazy-91_interest_calculator",
+      "pass": true,
+      "rounds": 7,
+      "promptTotal": 10458,
+      "outputTotal": 802
+    },
+    {
+      "id": "canitedit-lazy-92_heron_area",
+      "pass": false,
+      "rounds": 3,
+      "promptTotal": 3509,
+      "outputTotal": 195
+    },
+    {
+      "id": "canitedit-lazy-94_knn",
+      "pass": false,
+      "rounds": 3,
+      "promptTotal": 3694,
+      "outputTotal": 180
+    },
+    {
+      "id": "canitedit-lazy-95_dbscan",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 22940,
+      "outputTotal": 756
+    },
+    {
+      "id": "canitedit-lazy-96_distribution_clustering",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 40712,
+      "outputTotal": 2810
+    },
+    {
+      "id": "canitedit-lazy-97_nash_equilibrium",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 29180,
+      "outputTotal": 785
+    },
+    {
+      "id": "canitedit-lazy-99_secondary_keys",
+      "pass": false,
+      "rounds": 12,
+      "promptTotal": 24986,
+      "outputTotal": 804
+    },
+    {
+      "id": "canitedit-lazy-9_sorting",
+      "pass": false,
+      "rounds": 8,
+      "promptTotal": 14459,
+      "outputTotal": 1293
+    }
+  ],
+  "recoveredFrom": {
+    "sourceFile": "atlias-main-B.json",
+    "sha256": "91bcdca9aa2b9fa054a9a9d1f53abc816858cfa8e81b3401c31466dd4e66e8f1",
+    "originalTasks": 252,
+    "sharedTasks": 250,
+    "extraction": "Per-task scoring and token fields only; missing promptTotal is the exact sum of recorded promptTokens, or null when any count is unknown. No protected source or model conversation."
+  }
+}

@@ -75,7 +75,7 @@ export default async function controlSuites({ suite, asyncSuite, check, TMP, ROO
       check('atlias settings lists a flag with the variable that sets it for one run', row && row.env === 'ATLIAS_FLAG_PROBE_FLAG' && /for one run: ATLIAS_FLAG_PROBE_FLAG=1/.test(settings.format([{ ...row, about: 'probe' }])),
         { happened: JSON.stringify(row), why: 'A flag nobody can find is switched by editing config.json, which is exactly what an arm must not depend on.', fix: 'rows() carries env for the flags section and format() prints it.' });
     });
-    check('no flag is registered without saying what it does', Object.keys(core.DEFAULTS.flags).every((k) => settings.DESCRIPTIONS[`flags.${k}`]) && Object.values(core.DEFAULTS.flags).every((v) => v === false || v === 0 || v === ''),
+    check('no flag is registered without saying what it does', Object.keys(core.DEFAULTS.flags).every((k) => settings.DESCRIPTIONS[`flags.${k}`]) && Object.values(core.DEFAULTS.flags).every((v) => v === false || v === 0 || v === '' || v === 'off'),
       { happened: JSON.stringify(core.DEFAULTS.flags), why: 'The merge rule: every behaviour change lands off by default, and every option says what it does.', fix: 'Register the flag off, and describe it in DESCRIPTIONS.' });
   });
 

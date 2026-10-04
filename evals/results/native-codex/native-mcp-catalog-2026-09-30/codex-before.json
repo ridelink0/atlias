@@ -1,0 +1,49 @@
+{
+  "source": "a5654285b46a05c9251fef2f636e830d31551917",
+  "nativeClient": true,
+  "modelCalls": 0,
+  "evidence": [
+    {
+      "mode": "control",
+      "source": "a5654285b46a05c9251fef2f636e830d31551917",
+      "nativeCLI": "0.159.0",
+      "modelCalls": 0,
+      "tools": 10,
+      "fullMatch": true,
+      "leanMatch": false,
+      "expectedLean": false,
+      "catalogChars": 3565,
+      "status": null,
+      "toolsError": null,
+      "authFilePresent": false
+    },
+    {
+      "mode": "env-lean",
+      "source": "a5654285b46a05c9251fef2f636e830d31551917",
+      "nativeCLI": "0.159.0",
+      "modelCalls": 0,
+      "tools": 10,
+      "fullMatch": true,
+      "leanMatch": false,
+      "expectedLean": true,
+      "catalogChars": 3565,
+      "status": null,
+      "toolsError": null,
+      "authFilePresent": false
+    },
+    {
+      "mode": "saved-lean",
+      "source": "a5654285b46a05c9251fef2f636e830d31551917",
+      "nativeCLI": "0.159.0",
+      "modelCalls": 0,
+      "tools": 10,
+      "fullMatch": false,
+      "leanMatch": true,
+      "expectedLean": true,
+      "catalogChars": 2837,
+      "status": null,
+      "toolsError": null,
+      "authFilePresent": false
+    }
+  ]
+}

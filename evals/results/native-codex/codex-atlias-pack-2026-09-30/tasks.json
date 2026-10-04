@@ -1,0 +1,41 @@
+{
+  "seed": "gev-context-2026-09-29",
+  "tasks": [
+    {
+      "id": "context-money-8",
+      "file": "evals/context-heldout/context-money-8.json",
+      "source": "authored-context",
+      "sha256": "34bde3af8eb2fc486dd50617b883a35b9f4ff41e9f953478f4727635ead2b1d9"
+    },
+    {
+      "id": "context-versions-8",
+      "file": "evals/context-heldout/context-versions-8.json",
+      "source": "authored-context",
+      "sha256": "cab2e2c22c02a80e25f10129abc049adb388b3028cd001265c24f79cfcc69316"
+    },
+    {
+      "id": "context-intervals-8",
+      "file": "evals/context-heldout/context-intervals-8.json",
+      "source": "authored-context",
+      "sha256": "16653bfe79d8b32890bc90d72aed99df649231c1432da531c0ff4b26a594b362"
+    },
+    {
+      "id": "context-unicode-8",
+      "file": "evals/context-heldout/context-unicode-8.json",
+      "source": "authored-context",
+      "sha256": "62ad449330ef664982855ec4ea252e525f6ea2b4b3cd53589592d210a502dd58"
+    },
+    {
+      "id": "context-paths-8",
+      "file": "evals/context-heldout/context-paths-8.json",
+      "source": "authored-context",
+      "sha256": "d78efef87973fdab4e79d6e18d9ecb92195e13731ec7f9158c96758d5518f7bc"
+    },
+    {
+      "id": "context-merge-8",
+      "file": "evals/context-heldout/context-merge-8.json",
+      "source": "authored-context",
+      "sha256": "26e272689830ec70a36df0d3340b11cd9470333d50fe4ae0e142679ae6dd7c09"
+    }
+  ]
+}

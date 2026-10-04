@@ -32,9 +32,20 @@ export default async function procSuites({ asyncSuite, check, skip, TMP, ROOT, f
   const pidFile = () => path.join(W, `pid-${++n}.txt`);
   // A node program that writes its pid and then idles for a minute, started
   // from JavaScript source so no shell quoting differs between platforms.
-  const idler = (file) => `${node} -e "require('fs').writeFileSync(${JSON.stringify(file).replace(/"/g, "'")}, String(process.pid)); setInterval(() => {}, 1000); setTimeout(() => process.exit(0), 60000)"`;
+  const idler = (file, lifetimeMs = 60000) => `${node} -e "require('fs').writeFileSync(${JSON.stringify(file).replace(/"/g, "'")}, String(process.pid)); setInterval(() => {}, 1000); setTimeout(() => process.exit(0), ${lifetimeMs})"`;
 
   await asyncSuite('process tree expert', 'code that never stops is stopped with everything it started', async () => {
+    const key='GEV_PROC_PARENT_ONLY_CANARY',prior=process.env[key];process.env[key]='parent-only';
+    try {
+      const env={...process.env,GEV_PROC_EXPLICIT_CANARY:'explicit'};delete env[key];
+      const code="process.stdout.write(JSON.stringify({parent:process.env.GEV_PROC_PARENT_ONLY_CANARY??null,explicit:process.env.GEV_PROC_EXPLICIT_CANARY??null}))";
+      const isolated=await proc.runAsync(process.execPath,['-e',code],{env,replaceEnv:true,timeoutMs:30000});
+      const merged=await proc.runAsync(process.execPath,['-e',code],{env,timeoutMs:30000});
+      check('explicit replacement survives the watchdog without restoring parent keys',isolated.status===0&&JSON.parse(isolated.stdout).parent===null&&JSON.parse(isolated.stdout).explicit==='explicit',{happened:isolated.stdout,why:'Native benchmark isolation must not restore coordinating-session settings or credentials.',fix:'Pass the exact supplied environment through the watchdog.'});
+      check('ordinary callers retain environment overlay behavior',merged.status===0&&JSON.parse(merged.stdout).parent==='parent-only',{happened:merged.stdout,why:'An opt-in study fix must preserve existing shell callers.',fix:'Keep overlay semantics as the default.'});
+      let refused=false;try{proc.runAsync(process.execPath,[],{replaceEnv:true});}catch{refused=true;}
+      check('replacement without an explicit environment fails before spawning',refused,{happened:refused,why:'An absent environment must not silently restore the parent.',fix:'Require the caller to supply replacement keys.'});
+    } finally {if(prior===undefined)delete process.env[key];else process.env[key]=prior;}
     // 1. The eval check itself, on a candidate that loops for ever and has
     // started a helper process of its own, as python's multiprocessing would.
     const helperPid = pidFile();
@@ -112,9 +123,12 @@ export default async function procSuites({ asyncSuite, check, skip, TMP, ROOT, f
 
     // 4. A command that returns but leaves something running behind it.
     const leftPid = pidFile();
+    // Windows process enumeration can retry two 60-second calls under load.
+    // Keep this fixture alive through that bound so its own expiry cannot
+    // masquerade as cleanup or make the orphan disappear before inspection.
     const bg = win
-      ? `start "" /b ${idler(leftPid)}`
-      : `${idler(leftPid)} &`;
+      ? `start "" /b ${idler(leftPid, 180000)}`
+      : `${idler(leftPid, 180000)} &`;
     const since = Date.now();
     const b0 = Date.now();
     const bgRun = await proc.runAsync(bg, [], { shell: true, timeoutMs: 30000 });
@@ -124,7 +138,7 @@ export default async function procSuites({ asyncSuite, check, skip, TMP, ROOT, f
       { happened: `${bgTook} ms, ${JSON.stringify({ ...bgRun, error: bgRun.error && bgRun.error.message })}`, why: 'The background program holds the output pipe; waiting for the pipe to close would wait the whole limit.', fix: 'The watchdog lets the pipes go a second after the command exits.' });
     const found = proc.leftovers([bgRun.pid], { since, kill: true });
     const leftGone = await goneWithin(left, 10000);
-    check('leftovers finds what it left running and ends it', left > 0 && Array.isArray(found) && found.length >= 1 && leftGone,
+    check('leftovers finds what it left running and ends it', left > 0 && Array.isArray(found) && (win ? found.includes(left) : found.length >= 1) && leftGone,
       { happened: JSON.stringify({ left, found, alive: left ? alive(left) : null }), why: 'Inside an eval nothing a task started may outlive it, and a backgrounded loop is outside the tree the timeout ends.', fix: 'Check proc.leftovers.' });
     check('and asks nothing of a command that left nothing', (() => { const again = proc.leftovers([bgRun.pid], { since }); return Array.isArray(again) && again.length === 0; })() && proc.leftovers([], {}).length === 0,
       { happened: JSON.stringify(proc.leftovers([bgRun.pid], { since })), why: 'A leftover report that is never empty is noise.', fix: 'Check proc.leftovers.' });

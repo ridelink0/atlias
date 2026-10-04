@@ -1,0 +1,304 @@
+{
+  "modelCalls": 0,
+  "syntheticCounters": true,
+  "profiles": [
+    {
+      "host": "codex",
+      "name": "control",
+      "modelCalls": 0,
+      "status": {
+        "code": 0,
+        "signal": null
+      },
+      "requests": 2,
+      "nativeCompactionBoundaries": 0,
+      "nativeCompactionFailures": [],
+      "stockTools": [
+        "exec_command",
+        "write_stdin",
+        "request_user_input",
+        "view_image",
+        "multi_agent_v1",
+        "get_goal",
+        "create_goal",
+        "update_goal",
+        "web_search"
+      ],
+      "foundationSha256": "b6c55b8b775f7d9bc4dec4c69d7fe3df66c401b19a1d6b3dc10b30dabe21e5ff",
+      "syntheticCounters": true,
+      "artifacts": [
+        {
+          "path": "D:/harness-work/native-context-policy-both-v2-1003/codex-control/RESULT.json",
+          "sha256": "3270b6fb90da1b07da4e679a38dcc8158d05c364f34b03b8a7e52562c0d05037",
+          "bytes": 550
+        },
+        {
+          "path": "D:/harness-work/native-context-policy-both-v2-1003/codex-control/requests.json",
+          "sha256": "a6e381a9abbd9d8d2015a4c61a14ede7d3baab5c3747d1f7f95c5ca3844d375e",
+          "bytes": 135153
+        },
+        {
+          "path": "D:/harness-work/native-context-policy-both-v2-1003/codex-control/stdout.jsonl",
+          "sha256": "cf86630bdc367a37266fc203b627897ae5e744a90f98ba91112aa6db4e2699cf",
+          "bytes": 1290
+        }
+      ],
+      "nativeSha256": "1722907aa64401bcc9b34467ef5c2af43f6aef9a5045ef04d11d19dfae4589fb"
+    },
+    {
+      "host": "codex",
+      "name": "total",
+      "modelCalls": 0,
+      "status": {
+        "code": 0,
+        "signal": null
+      },
+      "requests": 3,
+      "nativeCompactionBoundaries": 1,
+      "nativeCompactionFailures": [],
+      "stockTools": [
+        "exec_command",
+        "write_stdin",
+        "request_user_input",
+        "view_image",
+        "multi_agent_v1",
+        "get_goal",
+        "create_goal",
+        "update_goal",
+        "web_search"
+      ],
+      "foundationSha256": "b6c55b8b775f7d9bc4dec4c69d7fe3df66c401b19a1d6b3dc10b30dabe21e5ff",
+      "syntheticCounters": true,
+      "artifacts": [
+        {
+          "path": "D:/harness-work/native-context-policy-both-v2-1003/codex-total/RESULT.json",
+          "sha256": "c20a00902674e3ff88ed7f181b0663e54feb857c92735c387badd321b5fdd6c2",
+          "bytes": 803
+        },
+        {
+          "path": "D:/harness-work/native-context-policy-both-v2-1003/codex-total/requests.json",
+          "sha256": "56e4599d489f284633729e8bdf05c80f80f9b3d36c965983f7305e16df17fc9a",
+          "bytes": 177790
+        },
+        {
+          "path": "D:/harness-work/native-context-policy-both-v2-1003/codex-total/stdout.jsonl",
+          "sha256": "5e799a7b8a67acf2a1eb22682a485087f285b7cfcc25edcefdd6d0419a92ae28",
+          "bytes": 1524
+        }
+      ],
+      "nativeSha256": "1722907aa64401bcc9b34467ef5c2af43f6aef9a5045ef04d11d19dfae4589fb"
+    },
+    {
+      "host": "codex",
+      "name": "body",
+      "modelCalls": 0,
+      "status": {
+        "code": 0,
+        "signal": null
+      },
+      "requests": 2,
+      "nativeCompactionBoundaries": 0,
+      "nativeCompactionFailures": [],
+      "stockTools": [
+        "exec_command",
+        "write_stdin",
+        "request_user_input",
+        "view_image",
+        "multi_agent_v1",
+        "get_goal",
+        "create_goal",
+        "update_goal",
+        "web_search"
+      ],
+      "foundationSha256": "b6c55b8b775f7d9bc4dec4c69d7fe3df66c401b19a1d6b3dc10b30dabe21e5ff",
+      "syntheticCounters": true,
+      "artifacts": [
+        {
+          "path": "D:/harness-work/native-context-policy-both-v2-1003/codex-body/RESULT.json",
+          "sha256": "7c8213b04571920b137506d9f22d4caae526b574fd51cc5d386726abbc9aa541",
+          "bytes": 749
+        },
+        {
+          "path": "D:/harness-work/native-context-policy-both-v2-1003/codex-body/requests.json",
+          "sha256": "2c03cb5152965cf3e139ec36dd2e04cede39db9e9780d21f29fa02e9fbc7500d",
+          "bytes": 135135
+        },
+        {
+          "path": "D:/harness-work/native-context-policy-both-v2-1003/codex-body/stdout.jsonl",
+          "sha256": "0c1f608c56f179a88bcaa1e4aecd206d27d3927cbb610dc9a9637b5a2d28a9af",
+          "bytes": 1290
+        }
+      ],
+      "nativeSha256": "1722907aa64401bcc9b34467ef5c2af43f6aef9a5045ef04d11d19dfae4589fb"
+    },
+    {
+      "host": "claude",
+      "name": "control",
+      "modelCalls": 0,
+      "status": {
+        "code": 0,
+        "signal": null
+      },
+      "requests": 3,
+      "nativeCompactionBoundaries": 0,
+      "nativeCompactionFailures": [],
+      "stockTools": [
+        "Bash",
+        "Edit",
+        "PowerShell",
+        "Read"
+      ],
+      "foundationSha256": "084f443ae471dca3da6021c98e653ec8ad5d475185a01757bc402f1613065cbe",
+      "syntheticCounters": true,
+      "artifacts": [
+        {
+          "path": "D:/harness-work/native-context-policy-claude-summary-v6-1003/claude-control/RESULT.json",
+          "sha256": "c459e775fcf52d0d96e87a1d08d2a33c60fae978bda0c6016602ae720e534499",
+          "bytes": 698
+        },
+        {
+          "path": "D:/harness-work/native-context-policy-claude-summary-v6-1003/claude-control/requests.json",
+          "sha256": "6600e61a9f890ea9b892f32a196cd65ed62ca964057137bd7bc49d6d66a13f41",
+          "bytes": 28335
+        },
+        {
+          "path": "D:/harness-work/native-context-policy-claude-summary-v6-1003/claude-control/stdout.jsonl",
+          "sha256": "574a4b0d2db015d51fac4b4170486d06826e9aa6b36a8f75d16a1a32b55178e2",
+          "bytes": 23832
+        }
+      ],
+      "nativeSha256": "121fc8151ed40bd9c144d68aa1cea23427803628ffab65e23da1cceda155697e"
+    },
+    {
+      "host": "claude",
+      "name": "early",
+      "modelCalls": 0,
+      "status": {
+        "code": 0,
+        "signal": null
+      },
+      "requests": 4,
+      "nativeCompactionBoundaries": 1,
+      "nativeCompactionFailures": [
+        "too_few_groups"
+      ],
+      "stockTools": [
+        "Bash",
+        "Edit",
+        "PowerShell",
+        "Read"
+      ],
+      "foundationSha256": "084f443ae471dca3da6021c98e653ec8ad5d475185a01757bc402f1613065cbe",
+      "syntheticCounters": true,
+      "artifacts": [
+        {
+          "path": "D:/harness-work/native-context-policy-claude-summary-v6-1003/claude-early/RESULT.json",
+          "sha256": "c0eec4ebaab148d067daeca46cb5eaca78eec0ddfec3935f4933ec0f93348101",
+          "bytes": 946
+        },
+        {
+          "path": "D:/harness-work/native-context-policy-claude-summary-v6-1003/claude-early/requests.json",
+          "sha256": "83b7c763cbe29915f22b79b4314ace8291edd4ba27d1ebd9dced7031cdfa69fb",
+          "bytes": 44487
+        },
+        {
+          "path": "D:/harness-work/native-context-policy-claude-summary-v6-1003/claude-early/stdout.jsonl",
+          "sha256": "6911b4274447267d5dee6b23c6815a017c2aeef0d70014b74e271a8a64c56ffe",
+          "bytes": 26508
+        }
+      ],
+      "nativeSha256": "121fc8151ed40bd9c144d68aa1cea23427803628ffab65e23da1cceda155697e"
+    }
+  ],
+  "config": {
+    "modelCalls": 0,
+    "results": [
+      {
+        "name": "total",
+        "status": {
+          "code": 0,
+          "signal": null
+        },
+        "modelCalls": 0,
+        "credentialFilePresent": false,
+        "response": null,
+        "threshold": 20000,
+        "scope": "total",
+        "configSha256": "f2bd7573221300c84064a99911feb8c1471551b8d2be697d006516f3e3340cfe"
+      },
+      {
+        "name": "body",
+        "status": {
+          "code": 0,
+          "signal": null
+        },
+        "modelCalls": 0,
+        "credentialFilePresent": false,
+        "response": null,
+        "threshold": 20000,
+        "scope": "body_after_prefix",
+        "configSha256": "e9f8308e8aab1173b02195604acb4fe0b39d669665ddf4dc6c7d76fdff14d522"
+      },
+      {
+        "name": "bad-scope",
+        "status": {
+          "code": 1,
+          "signal": null
+        },
+        "modelCalls": 0,
+        "credentialFilePresent": false,
+        "response": null,
+        "configSha256": "5e79b401c06ec47206c22a1a1d4331430e4254c5b205c451827be844bfdd0893"
+      },
+      {
+        "name": "unknown-field",
+        "status": {
+          "code": 1,
+          "signal": null
+        },
+        "modelCalls": 0,
+        "credentialFilePresent": false,
+        "response": null,
+        "configSha256": "5e46ed529113236544aeff7a79d821703b4a040833b561250c8af589f4a3d2c2"
+      }
+    ],
+    "limitations": "Config acceptance is not compaction execution, quality, native context or subscription savings."
+  },
+  "failures": [
+    {
+      "path": "D:/harness-work/native-context-support-1003/total/stdout.jsonl",
+      "sha256": "e7f760fcb4a7268210aacce8c2361c665aa85191deb460bee7dc9061528c2fe2",
+      "bytes": 468
+    },
+    {
+      "path": "D:/harness-work/native-context-config-v2-1003/total/stdout.jsonl",
+      "sha256": "4497b4f368269aea3aac3a11420a67eb2fd0cacccb36dbbfbf4e7b07c1d25611",
+      "bytes": 470
+    },
+    {
+      "path": "D:/harness-work/native-context-policy-both-1003/codex-control/RESULT.json",
+      "sha256": "91994fd7c5437835af687cda3c0db96a8a52082f20479d654896abf2a1442308",
+      "bytes": 550
+    },
+    {
+      "path": "D:/harness-work/native-context-policy-both-v2-1003/claude-control/RESULT.json",
+      "sha256": "92fe78259078fb0af75c6128887ea24ccda46f7eab8ee02671b2e57b86cc48b7",
+      "bytes": 630
+    },
+    {
+      "path": "D:/harness-work/native-context-policy-claude-v3-1003/claude-early/RESULT.json",
+      "sha256": "314f18d2624ebf127197025cd1840cf6e932c8ed892ed49b4050cc99df949856",
+      "bytes": 699
+    },
+    {
+      "path": "D:/harness-work/native-context-policy-claude-v4-1003/claude-early/RESULT.json",
+      "sha256": "8fb1b85fc56b2327aed967938b6279cf17e82d80ccaad65747c6d61d1627b859",
+      "bytes": 698
+    }
+  ],
+  "limitations": [
+    "Scripted localhost/native protocol evidence, not real model tokens, quality, quota savings or release gates.",
+    "Bare/fake-key Claude and custom-provider Codex fallback metadata do not establish normal OAuth/integration parity.",
+    "Earlier native one-group compaction too_few_groups and fixture classification/SSE/CWD failures retained."
+  ]
+}

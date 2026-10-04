@@ -1,0 +1,19 @@
+{
+  "engine": "native Codex CLI",
+  "plugin": "atlias",
+  "sha": "28c987476821f92a124eb7baf89cd07f7bf6ceca",
+  "model": "gpt-6.1-sol",
+  "effort": "medium",
+  "lean": true,
+  "repeats": 1,
+  "tasks": [
+    {
+      "id": "context-versions-8",
+      "sha256": "cab2e2c22c02a80e25f10129abc049adb388b3028cd001265c24f79cfcc69316",
+      "family": "versions"
+    }
+  ],
+  "jobs": 2,
+  "order": "alternate plain/plugin order by task and repeat",
+  "paidCredits": "account setting must remain off"
+}

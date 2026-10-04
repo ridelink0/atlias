@@ -1,0 +1,32 @@
+{
+  "id": "capability-durable-state-restart",
+  "family": "durable-state-restart",
+  "kind": "native-workflow-capability",
+  "capabilities": [
+    "read",
+    "edit",
+    "create",
+    "shell",
+    "persistence"
+  ],
+  "prompt": "Implement docs/contract.md completely. Inspect the project and use the native tools needed to edit, create files, and verify the result. Preserve existing public behavior and user instructions. Do not edit package.json, smoke.mjs, contract or immutable evidence. The smoke is not a correctness test. Add and run your own relevant tests. Do not claim checks you did not run.",
+  "files": {
+    "package.json": "{\"type\":\"module\",\"scripts\":{\"test\":\"node smoke.mjs\"}}",
+    "docs/contract.md": "Create src/store.mjs exporting save(file,entries) and load(file), synchronous. Persist an ordered array of [string key,JSON value] pairs and return it unchanged across process restart, preserving duplicate keys and dangerous-looking key strings as data. JSON values are null, strings, booleans, finite numbers, dense arrays or plain objects recursively containing JSON values. Reject malformed entries, non-JSON values, cycles or loaded structures with TypeError, without damaging a previously saved file. Missing file returns []; malformed JSON must throw. Do not use module-global state as persistence.\n",
+    "smoke.mjs": "console.log('Use the contract to add meaningful checks; this smoke only checks startup.');\n",
+    "docs/state-notes.txt": "The persisted representation must be independently readable JSON.\n"
+  },
+  "hidden": {
+    "protected-grade.mjs": "import assert from 'node:assert/strict';\nimport fs from 'node:fs';import {spawnSync} from 'node:child_process';import {save,load} from './src/store.mjs';const file='state file.json',entries=[['__proto__',{x:1}],['a',0],['a',false],['constructor',null],['',[1,2]]];assert.deepEqual(load(file),[]);save(file,entries);assert.deepEqual(JSON.parse(fs.readFileSync(file,'utf8')),entries);const child=spawnSync(process.execPath,['--input-type=module','-e',\"import {load} from './src/store.mjs';console.log(JSON.stringify(load('state file.json')))\"],{encoding:'utf8',timeout:5000});assert.equal(child.status,0);assert.deepEqual(JSON.parse(child.stdout),entries);const cyclic={};cyclic.self=cyclic;const before=fs.readFileSync(file,'utf8');for(const bad of [null,{},[['a']],[['a',1,2]],[[3,1]],[['x',undefined]],[['x',Infinity]],[['x',{a:undefined}]],[['x',new Array(1)]],[['x',cyclic]]]){assert.throws(()=>save(file,bad),TypeError);assert.equal(fs.readFileSync(file,'utf8'),before)}fs.writeFileSync(file,'{}');assert.throws(()=>load(file),TypeError);fs.writeFileSync(file,'invalid');assert.throws(()=>load(file));"
+  },
+  "protect": [
+    "package.json",
+    "docs/contract.md",
+    "smoke.mjs"
+  ],
+  "check": [
+    "node",
+    "protected-grade.mjs"
+  ],
+  "timeoutMs": 20000
+}

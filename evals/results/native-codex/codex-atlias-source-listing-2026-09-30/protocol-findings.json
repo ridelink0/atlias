@@ -1,0 +1,127 @@
+{
+  "source": "0e29833460e466ec80c503129b90808a0c206bf9",
+  "task": "context-pagination-64",
+  "taskSha256": "a1f20374b91d306c8cad5914bd8f1bc476c55e522ebabdf5ee4392dbd4f6d42e",
+  "repeat": 1,
+  "arm": "atlias",
+  "original": {
+    "solved": true,
+    "valid": false,
+    "proof": {
+      "hooksConfigured": true,
+      "mcpConfigured": true,
+      "hookEvents": 10,
+      "skills": true,
+      "pluginEnabled": false,
+      "taskContextDelivered": false,
+      "taskContextGenerated": true
+    },
+    "promptRaw": 78958,
+    "peak": 21082,
+    "exitCode": 0,
+    "reason": "task-context flag requested but generated and delivered prompt context were not both recorded",
+    "ledgerPrefixSha256": "e7fb9ce46e8a66372eade5dca02ad5d826f79b2fdf06be991c499faedf955000",
+    "rollouts": [
+      {
+        "file": "rollout-2026-09-30T13-48-21-01a0f3a5-6ddc-7df3-8a8e-5dae8dbae174.jsonl",
+        "sha256": "9b3201f7f851bb99a86170f8c70295460bfbf2f30ff8d96293a059370da5ad6c"
+      }
+    ],
+    "stderrSha256": "d3c374b92a1430c6e06558bbefcfb44d8d1cc4eb46fc0b8de6010dc01689ef71"
+  },
+  "observation": "The generated893-character pack is logged; no complete pack or marker appears in the saved user/developer messages. The recorded user prompt follows the hook prompt event by about15.2seconds; the declared prompt-hook timeout is15seconds. A timeout/host delivery loss is possible, but the cause is not proven. Original invalidity and grader outcome remain unchanged.",
+  "directHookProbe": {
+    "source": "0e29833460e466ec80c503129b90808a0c206bf9",
+    "modelCalls": 0,
+    "results": [
+      {
+        "host": "codex",
+        "repeat": 1,
+        "ms": 269,
+        "status": 0,
+        "error": null,
+        "stderrChars": 0,
+        "expectedChars": 893,
+        "stdoutChars": 993,
+        "exact": true
+      },
+      {
+        "host": "codex",
+        "repeat": 2,
+        "ms": 156,
+        "status": 0,
+        "error": null,
+        "stderrChars": 0,
+        "expectedChars": 893,
+        "stdoutChars": 993,
+        "exact": true
+      },
+      {
+        "host": "codex",
+        "repeat": 3,
+        "ms": 164,
+        "status": 0,
+        "error": null,
+        "stderrChars": 0,
+        "expectedChars": 893,
+        "stdoutChars": 993,
+        "exact": true
+      },
+      {
+        "host": "claude",
+        "repeat": 1,
+        "ms": 173,
+        "status": 0,
+        "error": null,
+        "stderrChars": 0,
+        "expectedChars": 893,
+        "stdoutChars": 993,
+        "exact": true
+      },
+      {
+        "host": "claude",
+        "repeat": 2,
+        "ms": 171,
+        "status": 0,
+        "error": null,
+        "stderrChars": 0,
+        "expectedChars": 893,
+        "stdoutChars": 993,
+        "exact": true
+      },
+      {
+        "host": "claude",
+        "repeat": 3,
+        "ms": 197,
+        "status": 0,
+        "error": null,
+        "stderrChars": 0,
+        "expectedChars": 893,
+        "stdoutChars": 993,
+        "exact": true
+      }
+    ]
+  },
+  "nativeLocalProviderProbe": {
+    "source": "0e29833460e466ec80c503129b90808a0c206bf9",
+    "modelCalls": 0,
+    "backend": "owned local HTTP/SSE fixture only, no model",
+    "status": {
+      "code": 0,
+      "signal": null
+    },
+    "ms": 26584,
+    "requests": [
+      {
+        "url": "/v1/responses",
+        "fullPack": true,
+        "sha256": "7288abd243482e868223b115019abc8b81ea841800b236e217ffc6193924971f"
+      }
+    ],
+    "expectedChars": 893,
+    "expectedSha256": "97bc36dbdbd228012d3c3ed848f3663e0e2a68622d208ceba079e2236fafb022",
+    "stderrChars": 1069
+  },
+  "limitation": "The actual native Codex client delivered its complete pack to an owned local HTTP/SSE fixture without model inference. Six direct hook samples emitted the exact pack for both adapter labels. These controls do not recover or retroactively verify the original missing delivery, establish a root cause, or prove model savings. Private full request bodies remain local.",
+  "continuation": "After inspecting the retained failure and running the model-free checks, only missing planned rows may resume under the same source, prompts, model, flags and protected grading. Completed rows, including this invalid call, are never rerun. A new failure again stops the driver."
+}

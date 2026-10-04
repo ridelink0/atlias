@@ -1,0 +1,282 @@
+{
+  "source": "0e29833460e466ec80c503129b90808a0c206bf9",
+  "ledgerSha256": "04bf89e9729730cbabf5f195bc28297e21d68cd768553d7b80f280b3f9fa5724",
+  "caseSetSha256": "805621a2077b2a3c25b30d646b30dd0e30474190d7ca01c5d4d5506d67221e64",
+  "modelCalls": 0,
+  "callsAudited": 48,
+  "completedAudits": 48,
+  "pairs": [
+    {
+      "task": "context-money-64",
+      "repeat": 1,
+      "originalProtocolEligible": true,
+      "cases": 114,
+      "plainPassed": 114,
+      "atliasPassed": 114,
+      "regressions": [],
+      "improvements": [],
+      "differingObservedSerialization": 0
+    },
+    {
+      "task": "context-versions-64",
+      "repeat": 1,
+      "originalProtocolEligible": true,
+      "cases": 100,
+      "plainPassed": 100,
+      "atliasPassed": 100,
+      "regressions": [],
+      "improvements": [],
+      "differingObservedSerialization": 0
+    },
+    {
+      "task": "context-intervals-64",
+      "repeat": 1,
+      "originalProtocolEligible": true,
+      "cases": 102,
+      "plainPassed": 102,
+      "atliasPassed": 102,
+      "regressions": [],
+      "improvements": [],
+      "differingObservedSerialization": 0
+    },
+    {
+      "task": "context-unicode-64",
+      "repeat": 1,
+      "originalProtocolEligible": true,
+      "cases": 100,
+      "plainPassed": 100,
+      "atliasPassed": 100,
+      "regressions": [],
+      "improvements": [],
+      "differingObservedSerialization": 0
+    },
+    {
+      "task": "context-paths-64",
+      "repeat": 1,
+      "originalProtocolEligible": true,
+      "cases": 115,
+      "plainPassed": 115,
+      "atliasPassed": 115,
+      "regressions": [],
+      "improvements": [],
+      "differingObservedSerialization": 0
+    },
+    {
+      "task": "context-merge-64",
+      "repeat": 1,
+      "originalProtocolEligible": true,
+      "cases": 110,
+      "plainPassed": 110,
+      "atliasPassed": 110,
+      "regressions": [],
+      "improvements": [],
+      "differingObservedSerialization": 9
+    },
+    {
+      "task": "context-ttl-64",
+      "repeat": 1,
+      "originalProtocolEligible": true,
+      "cases": 102,
+      "plainPassed": 102,
+      "atliasPassed": 102,
+      "regressions": [],
+      "improvements": [],
+      "differingObservedSerialization": 0
+    },
+    {
+      "task": "context-csv-64",
+      "repeat": 1,
+      "originalProtocolEligible": true,
+      "cases": 107,
+      "plainPassed": 107,
+      "atliasPassed": 107,
+      "regressions": [],
+      "improvements": [],
+      "differingObservedSerialization": 0
+    },
+    {
+      "task": "context-pagination-64",
+      "repeat": 1,
+      "originalProtocolEligible": false,
+      "cases": 102,
+      "plainPassed": 102,
+      "atliasPassed": 102,
+      "regressions": [],
+      "improvements": [],
+      "differingObservedSerialization": 0
+    },
+    {
+      "task": "context-topology-64",
+      "repeat": 1,
+      "originalProtocolEligible": true,
+      "cases": 104,
+      "plainPassed": 104,
+      "atliasPassed": 104,
+      "regressions": [],
+      "improvements": [],
+      "differingObservedSerialization": 0
+    },
+    {
+      "task": "context-dedupe-64",
+      "repeat": 1,
+      "originalProtocolEligible": true,
+      "cases": 100,
+      "plainPassed": 100,
+      "atliasPassed": 100,
+      "regressions": [],
+      "improvements": [],
+      "differingObservedSerialization": 0
+    },
+    {
+      "task": "context-query-64",
+      "repeat": 1,
+      "originalProtocolEligible": true,
+      "cases": 104,
+      "plainPassed": 104,
+      "atliasPassed": 104,
+      "regressions": [],
+      "improvements": [],
+      "differingObservedSerialization": 0
+    },
+    {
+      "task": "context-money-64",
+      "repeat": 2,
+      "originalProtocolEligible": true,
+      "cases": 114,
+      "plainPassed": 114,
+      "atliasPassed": 114,
+      "regressions": [],
+      "improvements": [],
+      "differingObservedSerialization": 0
+    },
+    {
+      "task": "context-versions-64",
+      "repeat": 2,
+      "originalProtocolEligible": true,
+      "cases": 100,
+      "plainPassed": 100,
+      "atliasPassed": 100,
+      "regressions": [],
+      "improvements": [],
+      "differingObservedSerialization": 0
+    },
+    {
+      "task": "context-intervals-64",
+      "repeat": 2,
+      "originalProtocolEligible": true,
+      "cases": 102,
+      "plainPassed": 102,
+      "atliasPassed": 102,
+      "regressions": [],
+      "improvements": [],
+      "differingObservedSerialization": 0
+    },
+    {
+      "task": "context-unicode-64",
+      "repeat": 2,
+      "originalProtocolEligible": true,
+      "cases": 100,
+      "plainPassed": 100,
+      "atliasPassed": 100,
+      "regressions": [],
+      "improvements": [],
+      "differingObservedSerialization": 0
+    },
+    {
+      "task": "context-paths-64",
+      "repeat": 2,
+      "originalProtocolEligible": true,
+      "cases": 115,
+      "plainPassed": 115,
+      "atliasPassed": 115,
+      "regressions": [],
+      "improvements": [],
+      "differingObservedSerialization": 0
+    },
+    {
+      "task": "context-merge-64",
+      "repeat": 2,
+      "originalProtocolEligible": true,
+      "cases": 110,
+      "plainPassed": 110,
+      "atliasPassed": 110,
+      "regressions": [],
+      "improvements": [],
+      "differingObservedSerialization": 9
+    },
+    {
+      "task": "context-ttl-64",
+      "repeat": 2,
+      "originalProtocolEligible": true,
+      "cases": 102,
+      "plainPassed": 102,
+      "atliasPassed": 102,
+      "regressions": [],
+      "improvements": [],
+      "differingObservedSerialization": 0
+    },
+    {
+      "task": "context-csv-64",
+      "repeat": 2,
+      "originalProtocolEligible": true,
+      "cases": 107,
+      "plainPassed": 107,
+      "atliasPassed": 107,
+      "regressions": [],
+      "improvements": [],
+      "differingObservedSerialization": 4
+    },
+    {
+      "task": "context-pagination-64",
+      "repeat": 2,
+      "originalProtocolEligible": true,
+      "cases": 102,
+      "plainPassed": 102,
+      "atliasPassed": 102,
+      "regressions": [],
+      "improvements": [],
+      "differingObservedSerialization": 0
+    },
+    {
+      "task": "context-topology-64",
+      "repeat": 2,
+      "originalProtocolEligible": true,
+      "cases": 104,
+      "plainPassed": 104,
+      "atliasPassed": 104,
+      "regressions": [],
+      "improvements": [],
+      "differingObservedSerialization": 0
+    },
+    {
+      "task": "context-dedupe-64",
+      "repeat": 2,
+      "originalProtocolEligible": true,
+      "cases": 100,
+      "plainPassed": 100,
+      "atliasPassed": 100,
+      "regressions": [],
+      "improvements": [],
+      "differingObservedSerialization": 0
+    },
+    {
+      "task": "context-query-64",
+      "repeat": 2,
+      "originalProtocolEligible": true,
+      "cases": 104,
+      "plainPassed": 104,
+      "atliasPassed": 104,
+      "regressions": [],
+      "improvements": [],
+      "differingObservedSerialization": 0
+    }
+  ],
+  "limitations": [
+    "Post-hoc finite behavioral probes; original protected graders and recorded grades unchanged.",
+    "Copied src modules only; missing external imports invalidate the audit rather than count as failure.",
+    "Version probes use arbitrary-length numeric components, as no component bound appears in the contract.",
+    "Object outputs compare JSON values; observed serialization differences alone are not contract regressions.",
+    "Invalid original model calls remain invalid, regardless of this diagnostic.",
+    "No universal output equivalence, inference token saving or benchmark release gate is established."
+  ]
+}

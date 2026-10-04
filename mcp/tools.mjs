@@ -9,6 +9,7 @@ import { syntaxReport } from '../lib/gate.mjs';
 import { doctor, formatDoctor } from '../lib/hosts.mjs';
 import * as bench from '../lib/bench.mjs';
 import { doctorRows } from '../lib/hosts-extra.mjs';
+import { discoveryCatalog, discoveryCall } from './discovery.mjs';
 
 const TYPES = new Set(['user', 'feedback', 'project', 'reference']);
 // Names that would collide with the index itself. The filesystem is
@@ -114,7 +115,28 @@ export const TOOLS = [
   { name: 'harness_status', description: 'Health of the harness and its host integrations, with a fix for every failing check.', inputSchema: { type: 'object', properties: { cwd: { type: 'string' } } } },
 ];
 
+const LEAN_DESCRIPTIONS = {
+  harness_recall: 'Search shared memory, recent digests and the graph before reading files or asking Gev to repeat facts.',
+  harness_remember: 'Save and index a durable preference, correction, decision or reference shared by all hosts; never restate code.',
+  harness_progress: 'get: read the handoff. set: save the next step for compaction or recovery.',
+  harness_verify: 'Check JavaScript, JSON and Python syntax. Behaviour tests and an adversarial read are still required.',
+  harness_digest: 'show: pending session digests. ack: mark consolidated only after saving durable facts with harness_remember.',
+  graph_query: 'Query project code/docs relationships cheaply. Requires graphify-out/graph.json.',
+  graph_affected: 'Find reverse dependencies of a graph node before a risky edit.',
+  graph_explain: 'Explain one graph node and its neighbours.',
+  harness_bench: 'Read-only local brief/graph token and guard/gate measurements; calls no model.',
+  harness_status: 'Check harness and host health, with fixes for failures.',
+};
+
+// Keep every tool and argument schema. Lean mode changes descriptive text only;
+// the full catalog remains the default and the implementation dispatch is shared.
+export function toolCatalog(lean = Boolean(config().flags?.leanBrief), discovery = Boolean(config().flags?.mcpDiscovery)) {
+  const catalog = lean ? TOOLS.map(t => ({ ...t, description: LEAN_DESCRIPTIONS[t.name] || t.description })) : TOOLS;
+  return discovery ? discoveryCatalog(catalog) : catalog;
+}
+
 export function callTool(name, args = {}) {
+  if (name === 'harness') return discoveryCall(toolCatalog(Boolean(config().flags?.leanBrief),false),callTool,args);
   const cwd = args.cwd || process.cwd();
   const cfg = config();
   switch (name) {
@@ -123,7 +145,7 @@ export function callTool(name, args = {}) {
     case 'harness_progress':
       if (args.action === 'set') {
         const merged = progress.applyNext(cwd, args.text || '');
-        return merged ? `next step recorded, the rest of the note kept:\n${merged}` : `next step recorded. There is no handoff note yet; the next reply that changes a file will write one.`;
+        return merged ? `next step recorded at ${progress.notePath(cwd)} (${Buffer.byteLength(merged,'utf8')} bytes). Other sections preserved. Read the full handoff with harness_progress get.` : `next step recorded. There is no handoff note yet; the next reply that changes a file will write one.`;
       }
       return progress.read(cwd) || 'no handoff note yet for this project.';
     case 'harness_verify': return verifyText(cwd, args.paths);
@@ -134,7 +156,7 @@ export function callTool(name, args = {}) {
     case 'graph_affected': return graph.sub(cwd, 'affected', args.node) || 'no graph here, or no such node.';
     case 'graph_explain': return graph.sub(cwd, 'explain', args.node) || 'no graph here, or no such node.';
     case 'harness_bench': return bench.report(cwd, Array.isArray(args.questions) ? args.questions : []);
-    case 'harness_status': return formatDoctor(doctor(cwd).concat(doctorRows()));
+    case 'harness_status': return formatDoctor(doctor(cwd, { idrRows: false }).concat(doctorRows()));
     default: throw new Error(`unknown tool ${name}`);
   }
 }

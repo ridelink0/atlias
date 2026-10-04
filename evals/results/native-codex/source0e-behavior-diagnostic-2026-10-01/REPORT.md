@@ -1,0 +1,5 @@
+# Independent behavioral diagnostic for Gev
+
+All48 copied source0e model outputs completed their family-specific subset of1260 deterministic behavioral cases. All passed; zero additional contract regressions across23 originally protocol-eligible pairs. This is post-hoc finite evidence, not universal exact-output equivalence, a public benchmark or new model savings. No inference calls. Original protected graders and grades were not changed, and the invalid pagination treatment remains invalid. Some object serialization differs while its required values match.
+
+[Summary with original eligibility, case and ledger hashes](summary.json); [all diagnostic outcomes and source hashes](results.json). Original executable outputs remain outside this publication. Tests isolate source copies from grading material and check originals unchanged, but Node execution is not a hostile-code security sandbox. Reproduce using tools/codexstudy/behavior-audit.mjs against the original frozen ledger and model outputs, with a new unused destination.

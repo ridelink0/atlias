@@ -1,0 +1,45 @@
+{
+  "engine": "native Codex CLI",
+  "plugin": "atlias",
+  "sha": "46c12afded25f389753630ef6a3e034bc22e2688",
+  "model": "gpt-6.1-sol",
+  "effort": "medium",
+  "lean": true,
+  "taskContext": true,
+  "repeats": 2,
+  "tasks": [
+    {
+      "id": "context-money-8",
+      "sha256": "34bde3af8eb2fc486dd50617b883a35b9f4ff41e9f953478f4727635ead2b1d9",
+      "family": "money"
+    },
+    {
+      "id": "context-versions-8",
+      "sha256": "cab2e2c22c02a80e25f10129abc049adb388b3028cd001265c24f79cfcc69316",
+      "family": "versions"
+    },
+    {
+      "id": "context-intervals-8",
+      "sha256": "16653bfe79d8b32890bc90d72aed99df649231c1432da531c0ff4b26a594b362",
+      "family": "intervals"
+    },
+    {
+      "id": "context-unicode-8",
+      "sha256": "62ad449330ef664982855ec4ea252e525f6ea2b4b3cd53589592d210a502dd58",
+      "family": "unicode"
+    },
+    {
+      "id": "context-paths-8",
+      "sha256": "d78efef87973fdab4e79d6e18d9ecb92195e13731ec7f9158c96758d5518f7bc",
+      "family": "paths"
+    },
+    {
+      "id": "context-merge-8",
+      "sha256": "26e272689830ec70a36df0d3340b11cd9470333d50fe4ae0e142679ae6dd7c09",
+      "family": "merge"
+    }
+  ],
+  "jobs": 24,
+  "order": "alternate plain/plugin order by task and repeat",
+  "paidCredits": "account setting must remain off"
+}

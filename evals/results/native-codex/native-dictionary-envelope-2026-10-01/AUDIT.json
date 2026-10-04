@@ -1,0 +1,65 @@
+{
+  "modelCalls": 0,
+  "localRequests": 2,
+  "jobs": 12,
+  "inputBytes": 8183,
+  "originalBatchBytes": 20949,
+  "audits": [
+    {
+      "host": "codex",
+      "modelCalls": 0,
+      "localRequests": 1,
+      "completePacketDelivered": true,
+      "replacementInstructionsDelivered": true,
+      "parsedAndValidated": true,
+      "nativeNotices": [
+        "Model metadata for `gpt-6.1-sol` not found. Defaulting to fallback metadata; this can degrade performance and cause issues."
+      ],
+      "metadataParity": "not established; owned custom provider uses fallback metadata",
+      "packetSha256": "dc791cd1604fdc48825dedf649e084c10d37bdf6d8c0950bee4903042b20aba2",
+      "jobs": 12,
+      "batchSha256": "dc791cd1604fdc48825dedf649e084c10d37bdf6d8c0950bee4903042b20aba2",
+      "instructionSha256": "ec47704969fc968c33838d46a65360c39fa80a7448171eaed6c6a3612f4512fa",
+      "instructionsChars": 657,
+      "inputChars": 12242,
+      "toolsChars": 1729,
+      "toolNames": [
+        "request_user_input",
+        "view_image"
+      ],
+      "status": {
+        "code": 0,
+        "signal": null
+      },
+      "fullEnvelopeSha256": "afb2e13d14b6cadb1c1389591717fd45941d89d257b068e244955467c4b24000",
+      "transportSha256": "afb2e13d14b6cadb1c1389591717fd45941d89d257b068e244955467c4b24000",
+      "requestFileSha256": "9188abd9b74b61c2c98e279425e6f930186351fd013efe993bc1214acf86a3f8"
+    },
+    {
+      "host": "claude",
+      "modelCalls": 0,
+      "localRequests": 1,
+      "completePacketDelivered": true,
+      "replacementInstructionsDelivered": true,
+      "parsedAndValidated": true,
+      "nativeNotices": [],
+      "metadataParity": "unmeasured",
+      "packetSha256": "dc791cd1604fdc48825dedf649e084c10d37bdf6d8c0950bee4903042b20aba2",
+      "jobs": 12,
+      "batchSha256": "dc791cd1604fdc48825dedf649e084c10d37bdf6d8c0950bee4903042b20aba2",
+      "instructionSha256": "ec47704969fc968c33838d46a65360c39fa80a7448171eaed6c6a3612f4512fa",
+      "instructionsChars": 946,
+      "inputChars": 9094,
+      "toolsChars": 2,
+      "toolNames": [],
+      "status": {
+        "code": 0,
+        "signal": null
+      },
+      "fullEnvelopeSha256": "afb2e13d14b6cadb1c1389591717fd45941d89d257b068e244955467c4b24000",
+      "transportSha256": "afb2e13d14b6cadb1c1389591717fd45941d89d257b068e244955467c4b24000",
+      "requestFileSha256": "7ee19518f09f7a80f5a6e86b7cc1a1e495fa4a6e261f5b316fd9d9c2d4112ae5"
+    }
+  ],
+  "limitation": "Owned local fixture, no inference. Metadata is not model-token saving or general feature parity; no live user configuration or auth was copied. Native profile remains experimental."
+}

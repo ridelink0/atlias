@@ -1,0 +1,32 @@
+{
+  "id": "capability-cli-encoding-paths",
+  "family": "cli-encoding-paths",
+  "kind": "native-workflow-capability",
+  "capabilities": [
+    "read",
+    "edit",
+    "create",
+    "shell",
+    "filesystem"
+  ],
+  "prompt": "Implement docs/contract.md completely. Inspect the project and use the native tools needed to edit, create files, and verify the result. Preserve existing public behavior and user instructions. Do not edit package.json, smoke.mjs, contract or immutable evidence. The smoke is not a correctness test. Add and run your own relevant tests. Do not claim checks you did not run.",
+  "files": {
+    "package.json": "{\"type\":\"module\",\"scripts\":{\"test\":\"node smoke.mjs\"}}",
+    "docs/contract.md": "Create bin/sum.mjs. It receives exactly one file path argument. Read UTF-8 JSON Lines, accepting an initial BOM, CRLF, blank lines and a final newline. Each nonblank line must be {value: a safe integer}. Print only {sum,count} as JSON plus newline. On any invalid line or arguments exit nonzero with no partial stdout. Reject an unsafe sum. Paths with spaces and non-ASCII characters must work.\n",
+    "smoke.mjs": "console.log('Use the contract to add meaningful checks; this smoke only checks startup.');\n",
+    "notes/input-format.txt": "The output must not include diagnostics or per-record output.\n"
+  },
+  "hidden": {
+    "protected-grade.mjs": "import assert from 'node:assert/strict';\nimport fs from 'node:fs';import {spawnSync} from 'node:child_process';const file='input with spaces '+String.fromCharCode(233)+'.jsonl';const call=(text,args=[file])=>{fs.writeFileSync(file,text);return spawnSync(process.execPath,['bin/sum.mjs',...args],{encoding:'utf8',timeout:5000})};let p=call('﻿{\"value\":3}\\r\\n\\r\\n{\"value\":-1}\\r\\n');assert.equal(p.status,0);assert.equal(p.stdout,'{\"sum\":2,\"count\":2}\\n');p=call('');assert.equal(p.stdout,'{\"sum\":0,\"count\":0}\\n');for(const text of ['{\"value\":1}\\ninvalid','{\"value\":\"2\"}','null','{\"value\":9007199254740991}\\n{\"value\":1}']){p=call(text);assert.notEqual(p.status,0);assert.equal(p.stdout,'')}for(const args of [[],[file,file]])assert.notEqual(call('',args).status,0);"
+  },
+  "protect": [
+    "package.json",
+    "docs/contract.md",
+    "smoke.mjs"
+  ],
+  "check": [
+    "node",
+    "protected-grade.mjs"
+  ],
+  "timeoutMs": 20000
+}

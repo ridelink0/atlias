@@ -1,0 +1,65 @@
+{
+  "stats": {
+    "atlias": {
+      "n": 3,
+      "solved": 3,
+      "promptRaw": 363363,
+      "perSolved": 121121,
+      "peak": 23143
+    },
+    "plain": {
+      "n": 2,
+      "solved": 2,
+      "promptRaw": 182316,
+      "perSolved": 91158,
+      "peak": 20253
+    }
+  },
+  "comparisons": [
+    {
+      "arm": "atlias",
+      "pairedRuns": 2,
+      "semanticFamilies": 2,
+      "pairedStats": {
+        "plain": {
+          "n": 2,
+          "solved": 2,
+          "promptRaw": 182316,
+          "perSolved": 91158,
+          "contextPeak": 20253
+        },
+        "atlias": {
+          "n": 2,
+          "solved": 2,
+          "promptRaw": 233632,
+          "perSolved": 116816,
+          "contextPeak": 23143
+        }
+      },
+      "rawRatio": {
+        "n": 2,
+        "ratioOfSums": 1.2814673424164638,
+        "bootLo": null,
+        "bootHi": null,
+        "geoMean": 1.2750788562969628,
+        "tLo": null,
+        "tHi": null,
+        "warning": "pilot only: fewer than six semantic families; no credible confidence interval"
+      },
+      "plainOnly": [],
+      "pluginOnly": []
+    }
+  ],
+  "excluded": [
+    {
+      "task": "context-money-8",
+      "arm": "plain",
+      "reason": "task contract ambiguous: hidden grader accepted integer strings but brief specified one or two decimal places; both arms excluded"
+    },
+    {
+      "task": "context-money-8",
+      "arm": "atlias",
+      "reason": "task contract ambiguous: hidden grader accepted integer strings but brief specified one or two decimal places; both arms excluded"
+    }
+  ]
+}

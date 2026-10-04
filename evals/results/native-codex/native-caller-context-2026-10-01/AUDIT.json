@@ -1,0 +1,118 @@
+{
+  "modelCalls": 0,
+  "evidence": [
+    {
+      "host": "codex",
+      "arm": "control",
+      "modelCalls": 0,
+      "localRequests": 1,
+      "fullInputDelivered": true,
+      "identicalControlSurface": false,
+      "inputSha256": "af64df7d94149d33c2e58d0a1ca36df67ecbf0cd36bbfc0f80e5891a948f7b61",
+      "toolNames": [
+        "exec_command",
+        "write_stdin",
+        "request_user_input",
+        "view_image",
+        "multi_agent_v1",
+        "get_goal",
+        "create_goal",
+        "update_goal",
+        "web_search"
+      ],
+      "instructionsSha256": "b6c55b8b775f7d9bc4dec4c69d7fe3df66c401b19a1d6b3dc10b30dabe21e5ff",
+      "status": {
+        "code": 0,
+        "signal": null
+      },
+      "requestsSha256": "fabde8bc42e8d61b37ca87e35df7fabcdff2dcb34c6965bf1b909e00f56d8820",
+      "toolsSha256": "116fd1d4092324adb528962648099ff4bb5114db749d67b0b0aa390e05a9a307",
+      "stdoutSha256": "921bf4ff66fa99fedcf0b5d1266bba430ca1721348364309a91195b11aa35cc5"
+    },
+    {
+      "host": "codex",
+      "arm": "prepared",
+      "modelCalls": 0,
+      "localRequests": 1,
+      "fullInputDelivered": true,
+      "identicalControlSurface": true,
+      "inputSha256": "7f5402adc938955ded9f9ae2b0cad7634f893e44af389aba00992ef4bd41289c",
+      "toolNames": [
+        "exec_command",
+        "write_stdin",
+        "request_user_input",
+        "view_image",
+        "multi_agent_v1",
+        "get_goal",
+        "create_goal",
+        "update_goal",
+        "web_search"
+      ],
+      "instructionsSha256": "b6c55b8b775f7d9bc4dec4c69d7fe3df66c401b19a1d6b3dc10b30dabe21e5ff",
+      "status": {
+        "code": 0,
+        "signal": null
+      },
+      "requestsSha256": "348de2e6d44d3368c4013f1408efb717e6ca022faea964006cfdfa2119043313",
+      "toolsSha256": "116fd1d4092324adb528962648099ff4bb5114db749d67b0b0aa390e05a9a307",
+      "stdoutSha256": "7f6d36a7e6ed44c88f4d865d7d9f05338316a3b068b605704b652435b8b64d1e"
+    },
+    {
+      "host": "claude",
+      "arm": "control",
+      "modelCalls": 0,
+      "localRequests": 1,
+      "fullInputDelivered": true,
+      "identicalControlSurface": false,
+      "inputSha256": "af64df7d94149d33c2e58d0a1ca36df67ecbf0cd36bbfc0f80e5891a948f7b61",
+      "toolNames": [
+        "Bash",
+        "Edit",
+        "PowerShell",
+        "Read"
+      ],
+      "instructionsSha256": "c89458d1ea576dc0910a46496181792d7216ed84d66fb990917df8bbc3142983",
+      "status": {
+        "code": 0,
+        "signal": null
+      },
+      "requestsSha256": "2cfefab62cefc3c9beb2123df62aae1448af30221c1059c933e781f5b086b524",
+      "toolsSha256": "bca647aa5b7458475d25d9eb55fc9342b6845ba24a0a09b8c5017cb0780c7e48",
+      "stdoutSha256": "c57b89231c1c7103326a57c25d14466c3f11cb29c3ff481e592ef1ec9f5df226"
+    },
+    {
+      "host": "claude",
+      "arm": "prepared",
+      "modelCalls": 0,
+      "localRequests": 1,
+      "fullInputDelivered": true,
+      "identicalControlSurface": true,
+      "inputSha256": "7f5402adc938955ded9f9ae2b0cad7634f893e44af389aba00992ef4bd41289c",
+      "toolNames": [
+        "Bash",
+        "Edit",
+        "PowerShell",
+        "Read"
+      ],
+      "instructionsSha256": "c89458d1ea576dc0910a46496181792d7216ed84d66fb990917df8bbc3142983",
+      "status": {
+        "code": 0,
+        "signal": null
+      },
+      "requestsSha256": "41f961abafec608fb005148b4ec7dc56da3351d2c182c9241282c6d7096883a5",
+      "toolsSha256": "bca647aa5b7458475d25d9eb55fc9342b6845ba24a0a09b8c5017cb0780c7e48",
+      "stdoutSha256": "ab7b3359a0d6f7f330dcdaa2d5b51e37196c8edfd9287510961a3b5dd43d473a"
+    }
+  ],
+  "limitations": [
+    "Owned local protocol fixture only; no model quality, token savings or subscription usage measurement.",
+    "Claude uses --bare with a fake localhost key; OAuth installation and integration parity are unverified.",
+    "This proves caller transport preserves the tested native tool/instruction surface, not universal capability parity."
+  ],
+  "sourceFileSha256": {
+    "lib/task-context.mjs": "509bba834857dd29730e0e774b8fda504928fd2e73951842e0952669ac57ff38",
+    "bin/atlias.mjs": "28f3dcd920242729d543bfa31c8e644007c116548cdd006fc8ac227ed77c65ac",
+    "tools/native-job/context-probe.mjs": "2f5b64c96654b593b5f16642a45c459c5a2195750656ff8223a64d4b7649cf3e"
+  },
+  "sourceNote": "Local working-file byte hashes at the probe; CRLF checkout bytes may differ from Git archive bytes. This is protocol evidence, not native inference."
+}

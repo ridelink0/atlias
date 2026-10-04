@@ -1,0 +1,56 @@
+{
+  "modelCalls": 0,
+  "results": [
+    {
+      "host": "codex",
+      "modelCalls": 0,
+      "localRequests": 1,
+      "completePacketDelivered": true,
+      "replacementInstructionsDelivered": true,
+      "parsedAndValidated": true,
+      "nativeNotices": [
+        "Model metadata for `gpt-6.1-sol` not found. Defaulting to fallback metadata; this can degrade performance and cause issues."
+      ],
+      "metadataParity": "not established; owned custom provider uses fallback metadata",
+      "packetSha256": "17f15e8c1788301e50cd06a3f7e312465610386f742adeb56706b6aecedf06f7",
+      "instructionSha256": "f95333c9e7a4168eb5f95046b6b3d1d06e8d16461b5be236caf62f0c7726f924",
+      "instructionsChars": 571,
+      "inputChars": 3771,
+      "toolsChars": 1729,
+      "toolNames": [
+        "request_user_input",
+        "view_image"
+      ],
+      "status": {
+        "code": 0,
+        "signal": null
+      }
+    },
+    {
+      "host": "claude",
+      "modelCalls": 0,
+      "localRequests": 1,
+      "completePacketDelivered": true,
+      "replacementInstructionsDelivered": true,
+      "parsedAndValidated": true,
+      "nativeNotices": [],
+      "metadataParity": "unmeasured",
+      "packetSha256": "17f15e8c1788301e50cd06a3f7e312465610386f742adeb56706b6aecedf06f7",
+      "instructionSha256": "f95333c9e7a4168eb5f95046b6b3d1d06e8d16461b5be236caf62f0c7726f924",
+      "instructionsChars": 860,
+      "inputChars": 662,
+      "toolsChars": 2,
+      "toolNames": [],
+      "status": {
+        "code": 0,
+        "signal": null
+      }
+    }
+  ],
+  "originalFailure": {
+    "log": "D:/harness-work/native-job-hash-envelope-1001.log",
+    "sha256": "894ebe0c14a05d1067e156afc271f4e985a56683720947f73c2e545c724d9d63",
+    "reason": "Codex fixture passed; guessed Claude executable did not exist. Corrected actual executable in separately retained Claude-only fixture."
+  },
+  "limitation": "Owned localhost fixtures, not inference, subscription activation, model metadata parity or efficiency proof. Claude bare mode uses fake local key only. Source64 failed native-model trial is separately preserved."
+}

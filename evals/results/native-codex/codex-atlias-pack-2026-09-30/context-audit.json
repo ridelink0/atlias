@@ -1,0 +1,103 @@
+{
+  "source": "46c12afded25f389753630ef6a3e034bc22e2688",
+  "method": "reconstructed initial task files with the archived source packer; matched generated hash/length and complete user/developer text, not only a marker",
+  "checked": 12,
+  "evidence": [
+    {
+      "task": "context-money-8",
+      "repeat": 1,
+      "chars": 770,
+      "sha": "2181224f0253dbef",
+      "generated": true,
+      "delivered": true
+    },
+    {
+      "task": "context-versions-8",
+      "repeat": 1,
+      "chars": 679,
+      "sha": "d1421f4774665193",
+      "generated": true,
+      "delivered": true
+    },
+    {
+      "task": "context-intervals-8",
+      "repeat": 1,
+      "chars": 640,
+      "sha": "740ee1706bb443be",
+      "generated": true,
+      "delivered": true
+    },
+    {
+      "task": "context-unicode-8",
+      "repeat": 1,
+      "chars": 641,
+      "sha": "19cbfdd2a66d6b66",
+      "generated": true,
+      "delivered": true
+    },
+    {
+      "task": "context-paths-8",
+      "repeat": 1,
+      "chars": 767,
+      "sha": "1da44b5dd289941e",
+      "generated": true,
+      "delivered": true
+    },
+    {
+      "task": "context-merge-8",
+      "repeat": 1,
+      "chars": 762,
+      "sha": "532f2bec241d89c4",
+      "generated": true,
+      "delivered": true
+    },
+    {
+      "task": "context-money-8",
+      "repeat": 2,
+      "chars": 770,
+      "sha": "2181224f0253dbef",
+      "generated": true,
+      "delivered": true
+    },
+    {
+      "task": "context-versions-8",
+      "repeat": 2,
+      "chars": 679,
+      "sha": "d1421f4774665193",
+      "generated": true,
+      "delivered": true
+    },
+    {
+      "task": "context-intervals-8",
+      "repeat": 2,
+      "chars": 640,
+      "sha": "740ee1706bb443be",
+      "generated": true,
+      "delivered": true
+    },
+    {
+      "task": "context-unicode-8",
+      "repeat": 2,
+      "chars": 641,
+      "sha": "19cbfdd2a66d6b66",
+      "generated": true,
+      "delivered": true
+    },
+    {
+      "task": "context-paths-8",
+      "repeat": 2,
+      "chars": 767,
+      "sha": "1da44b5dd289941e",
+      "generated": true,
+      "delivered": true
+    },
+    {
+      "task": "context-merge-8",
+      "repeat": 2,
+      "chars": 762,
+      "sha": "532f2bec241d89c4",
+      "generated": true,
+      "delivered": true
+    }
+  ]
+}

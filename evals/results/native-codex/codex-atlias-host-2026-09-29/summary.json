@@ -1,0 +1,54 @@
+{
+  "stats": {
+    "plain": {
+      "n": 1,
+      "solved": 1,
+      "promptRaw": 111270,
+      "perSolved": 111270,
+      "peak": 20323
+    },
+    "atlias": {
+      "n": 1,
+      "solved": 1,
+      "promptRaw": 370750,
+      "perSolved": 370750,
+      "peak": 24379
+    }
+  },
+  "comparisons": [
+    {
+      "arm": "atlias",
+      "pairedRuns": 1,
+      "semanticFamilies": 1,
+      "pairedStats": {
+        "plain": {
+          "n": 1,
+          "solved": 1,
+          "promptRaw": 111270,
+          "perSolved": 111270,
+          "contextPeak": 20323
+        },
+        "atlias": {
+          "n": 1,
+          "solved": 1,
+          "promptRaw": 370750,
+          "perSolved": 370750,
+          "contextPeak": 24379
+        }
+      },
+      "rawRatio": {
+        "n": 1,
+        "ratioOfSums": 3.3319852610766603,
+        "bootLo": null,
+        "bootHi": null,
+        "geoMean": 3.3319852610766603,
+        "tLo": null,
+        "tHi": null,
+        "warning": "pilot only: fewer than six semantic families; no credible confidence interval"
+      },
+      "plainOnly": [],
+      "pluginOnly": []
+    }
+  ],
+  "excluded": []
+}

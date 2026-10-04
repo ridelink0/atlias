@@ -4,6 +4,7 @@
 //   atlias uninstall [--all|--codex|--antigravity|--gemini]
 //   atlias doctor | status | brief [--host codex] | test | version
 //   atlias tiers | eval [--tier smoke|main|big] [--sample N] | compare <a.json> <b.json>
+//   atlias score pack <report.json...> --out <dir> | verify <dir>   the public score package
 //   atlias polyglot | editbench | refactorbench <path>   convert somebody else's benchmark
 //   atlias shortcut [install|uninstall|status]   the atlias command in any terminal
 //   atlias mode [both|sub|standalone] | settings [list]
@@ -28,6 +29,7 @@ import * as shortcut from '../lib/shortcut.mjs';
 import * as settings from '../lib/settings.mjs';
 import * as tui from '../lib/tui.mjs';
 import * as skills from '../lib/skills.mjs';
+import { nativeInput } from '../lib/task-context.mjs';
 import { recall, remember } from '../mcp/tools.mjs';
 
 const argv = process.argv.slice(2);
@@ -54,6 +56,22 @@ const shortcutUninstall = () => { const r = shortcut.uninstallShortcut(); return
 // used to be read as one more flag: `atlias eval --help` started a real eval on
 // the default model and left five workspaces behind.
 const HELP = {
+  evidence: [
+    'usage: atlias evidence --root <project> --file <relative-file> [--find LITERAL] [--first-line N] [--max-lines N] [--max-bytes N] [--expected-sha256 HEX] [--json]',
+    '  Read-only bounded JSON source lines with a raw-file SHA256 and explicit continuation.',
+    '  Continuations require the prior source hash. No model or default MCP catalog change.',
+  ],
+  'session-report': [
+    'usage: atlias session-report --host codex --transcript <rollout.jsonl> [--meter-reports <live-reports.jsonl>] [--json]',
+    '  Read-only recorded native turn time and token counters; starts no model.',
+    '  Optional fresh account observations estimate recent pace, not on/off savings or guaranteed time.',
+  ],
+  context: [
+    'usage: atlias context --prompt-file <UTF-8-file> [--cwd <project>] [--json]',
+    '  Read-only, explicit caller-v1 transport for Claude Code or Codex.',
+    '  Prints the entire original task followed by bounded task data; starts no model.',
+    '  Disable the taskContext prompt-hook flag when submitting this prepared input to avoid duplication.',
+  ],
   eval: [
     'usage: atlias eval [task ids] [options]   score tasks: the model works in a scratch copy and the check command decides',
     '  --tier smoke|main|big     a named tier (atlias tiers lists them); default: the shipped smoke tasks',
@@ -64,15 +82,18 @@ const HELP = {
     '  --model <name>            score a named model without changing the settings',
     '  --repeat k                k attempts per task; a task passes only when all k do (pass^k)',
     '  --rounds N                override every task\'s own round budget',
+    '  --direct                  the direct arm: one prompt with the files, whole files back, the visible check, at most one repair; no tools',
     '  --save <file.json>        keep the report for atlias compare',
     '  --outlive-parent          keep running if the process that started the eval goes away (by default it stops)',
     'Code the model wrote runs under a watchdog: at its limit (shell 2 min, check 60 s) it is ended with everything it',
     'started, and whatever a task left running in the background is ended when the task is scored (ATLIAS_EVAL_REAP=0 turns that off).',
   ],
   compare: ['usage: atlias compare <a.json> <b.json>   two runs saved with atlias eval --save, paired task by task'],
+  council: ['usage: atlias council replay <report.json...> [--json]   simulate the check-selected retry over reports saved with atlias eval --save: one --repeat 3 report, or three reports from three runs'],
+  score: ['usage: atlias score pack <report.json...> --out <dir> [--corpus <dir> | --tier <name>] [--names a,b]   one report (a score) or two (an A/B) saved with atlias eval --save, into a folder with lock.json, rows.jsonl, stats.json, SCORE.md and the re-run commands', '       atlias score verify <dir> [--corpus <dir> | --tier <name>]   recompute the stats from the rows and check the lock against the corpus files; exit 1 on a mismatch'],
   tiers: ['usage: atlias tiers   the benchmark tiers, which are on this machine, and how to get the rest'],
   polyglot: ['usage: atlias polyglot <path to a polyglot-benchmark clone> [--lang python] [--out <dir>] [--limit N] [--only name,name]'],
-  editbench: ['usage: atlias editbench <rows.jsonl> --bench canitedit|humanevalfix [--variant lazy|descriptive] [--lang python|js] [--out <dir>] [--limit N] [--only id,id] [--rounds N]'],
+  editbench: ['usage: atlias editbench <rows.jsonl> --bench canitedit|humanevalfix [--variant lazy|descriptive] [--lang python|js] [--v2 | --explain] [--out <dir>] [--limit N] [--only id,id] [--rounds N]'],
   refactorbench: ['usage: atlias refactorbench <path to refactor-benchmark/refactor-benchmark> [--out <dir>] [--limit N] [--only name,name] [--max-bytes 40960] [--rounds 16]'],
   agent: ['usage: atlias agent [--engine claude|codex|openai|ollama|echo] [--once "<prompt>"] [--resume [id]] [--sandbox]'],
   exec: ['usage: atlias exec "<prompt>" [--engine claude|codex|openai|ollama|echo] [--resume [id]] [--sandbox] [--json]   (or pipe the prompt in)'],
@@ -165,6 +186,7 @@ else switch (cmd) {
       : engine === 'openai' ? loopMod.openaiChat(cfgFor) : loopMod.ollamaChat(cfgFor);
     // One run of a sampling process is not a result: --repeat 3 runs each task
     // three times and reports pass^3 beside pass@3.
+    const direct = argv.includes('--direct');
     const repeat = Math.max(1, parseInt(optVal('--repeat') || '1', 10) || 1);
     const model = picked || (engine === 'openai' ? cfg.openaiModel : engine === 'ollama' ? cfg.ollamaModel : '');
     say(`${tasks.length} task(s) against ${engine}${repeat > 1 ? `, ${repeat} attempts each` : ''}. The check command decides, not the model.`);
@@ -203,6 +225,7 @@ else switch (cmd) {
       const same = old && old.engine === engine && (old.model || '') === (model || '') && (old.tries || 1) === repeat;
       if (old && !same) { say(`--resume: ${out} was a ${old.engine} ${old.model || ''} run with ${old.tries || 1} attempt(s) each; this one is ${engine} ${model || ''} with ${repeat}. Refusing to mix them.`); process.exitCode = 2; break; }
       // Nor two arms: rows run with other flags are another arm's rows.
+      if (old && Boolean(old.direct) !== direct) { say(`--resume: ${out} ran ${old.direct ? 'the direct arm' : 'the agent loop'}; this run is ${direct ? 'the direct arm' : 'the agent loop'}. Refusing to mix them.`); process.exitCode = 2; break; }
       if (old && old.flags && !sameFlags(old.flags, flagsNow)) { say(`--resume: ${out} ran with flags ${flagLine(old.flags)}; this run has ${flagLine(flagsNow)}. Refusing to mix them.`); process.exitCode = 2; break; }
       const want = new Set(tasks.map((t) => t.id));
       prior = old ? (old.results || []).filter((r) => want.has(r.id)) : [];
@@ -211,8 +234,8 @@ else switch (cmd) {
     const save = (rep) => { fs.mkdirSync(path.dirname(out), { recursive: true }); fs.writeFileSync(out, `${JSON.stringify(rep, null, 2)}\n`); };
     // The stamp is taken once, at the start: it names the code that is running.
     const stampNow = out ? evals.harnessStamp() : null;
-    const partial = (rows) => { if (out) save({ partial: true, results: rows, engine, model, tries: repeat, corpus: corpusInfo, stamp: stampNow, flags: flagsNow }); };
-    const report = await evals.runSuite(tasks, { chat, state: agent.newState(cwd, engine), repeat, engineName: engine, model, corpus: corpusInfo, budget: roundsArg, beforeAttempt: stopIfOrphaned, work, prior, onResult: partial, flags: flagsNow });
+    const partial = (rows) => { if (out) save({ partial: true, results: rows, engine, model, tries: repeat, corpus: corpusInfo, stamp: stampNow, flags: flagsNow, ...(direct ? { direct: true } : {}) }); };
+    const report = await evals.runSuite(tasks, { chat, state: agent.newState(cwd, engine), repeat, engineName: engine, model, corpus: corpusInfo, budget: roundsArg, beforeAttempt: stopIfOrphaned, work, prior, onResult: partial, flags: flagsNow, direct });
     say(evals.format(report));
     if (out) { save(report); say(`saved to ${out}`); }
     process.exitCode = report.passed === report.total ? 0 : 1;
@@ -221,6 +244,8 @@ else switch (cmd) {
   case 'bench': say(bench.report(cwd, argv.slice(1).filter((a) => !a.startsWith('--')))); break;
   // Two saved runs, asked the paired question rather than eyeballed. Two scores
   // on a corpus this size are not a result; the disagreements are.
+  // Council Stage A: a check-selected retry on red, simulated over saved runs
+  // (lib/council.mjs). Nothing here runs a model.
   case 'compare': {
     const evals2 = await import('../lib/eval.mjs');
     const files = argv.slice(1).filter((a) => !a.startsWith('--'));
@@ -234,6 +259,38 @@ else switch (cmd) {
     // otherwise print as "X 3/9 against X 4/9"; the file names tell them apart.
     if (aName === bName) { aName = `${aName} (${path.basename(files[0])})`; bName = `${bName} (${path.basename(files[1])})`; }
     say(evals2.formatCompare(evals2.compare(A, B), aName, bName));
+    break;
+  }
+  case 'score': {
+    const score = await import('../lib/score.mjs');
+    const taken = new Set();
+    for (const f of ['--out', '--corpus', '--tier', '--names']) { const i = argv.indexOf(f); if (i >= 0) taken.add(i + 1); }
+    const rest = argv.slice(1).filter((a, i) => !a.startsWith('--') && !taken.has(i + 1));
+    const sub = rest[0];
+    if (sub === 'pack' && rest.length >= 2 && optVal('--out')) {
+      try {
+        const out = score.pack(rest.slice(1).map((f) => path.resolve(f)), path.resolve(optVal('--out')), { corpus: optVal('--corpus') || '', tier: optVal('--tier') || '', names: (optVal('--names') || '').split(',').filter(Boolean) });
+        say([`wrote ${path.resolve(optVal('--out'))}: lock.json, rows.jsonl, stats.json, SCORE.md, reports/`, ...out.stats.arms.map((s) => `${s.arm}: ${s.passed} of ${s.tasks}`), 'check it with: atlias score verify ' + optVal('--out')]);
+      } catch (e) { say(`atlias score pack: ${e.message}`); process.exitCode = 1; }
+    } else if (sub === 'verify' && rest.length === 2) {
+      const v = score.verify(path.resolve(rest[1]), { corpus: optVal('--corpus') || '', tier: optVal('--tier') || '' });
+      say([v.ok ? 'score package verified: the stats match the rows and every task file matches the lock.' : `score package does NOT verify (${v.problems.length}):`, ...v.problems.map((x) => `  - ${x}`), ...v.notes.map((x) => `  note: ${x}`)]);
+      if (!v.ok) process.exitCode = 1;
+    } else { say(HELP.score); process.exitCode = 1; }
+    break;
+  }
+  case 'council': {
+    const council = await import('../lib/council.mjs');
+    const rest = argv.slice(1).filter((a) => !a.startsWith('--'));
+    if (rest[0] !== 'replay' || rest.length < 2) { say(HELP.council); process.exitCode = 1; break; }
+    const reps = [];
+    for (const f of rest.slice(1)) {
+      try { reps.push(JSON.parse(fs.readFileSync(path.resolve(f), 'utf8'))); } catch (e) { say(`could not read ${f}: ${e.message}`); process.exitCode = 1; }
+    }
+    if (process.exitCode) break;
+    const out = council.replay(reps);
+    say(argv.includes('--json') ? [JSON.stringify(out, null, 2)] : council.formatReplay(out));
+    if (!out.ok) process.exitCode = 1;
     break;
   }
   // Somebody else's benchmark, converted into tasks this machine can run, with
@@ -296,16 +353,19 @@ else switch (cmd) {
     for (const f of valued) { const i = argv.indexOf(f); if (i >= 0) skip.add(i + 1); }
     const file = argv.slice(1).find((a, i) => !a.startsWith('--') && !skip.has(i + 1));
     const kind = optVal('--bench');
-    if (!file || !['canitedit', 'humanevalfix'].includes(kind)) { say('usage: atlias editbench <rows.jsonl> --bench canitedit|humanevalfix [--variant lazy|descriptive] [--lang python|js] [--out <dir>] [--limit N] [--only id,id] [--rounds N]'); process.exitCode = 1; break; }
+    if (!file || !['canitedit', 'humanevalfix'].includes(kind)) { say('usage: atlias editbench <rows.jsonl> --bench canitedit|humanevalfix [--variant lazy|descriptive] [--lang python|js] [--v2] [--out <dir>] [--limit N] [--only id,id] [--rounds N]'); process.exitCode = 1; break; }
+    const v2 = flag('--v2');
+    const explain = flag('--explain');
+    if ((v2 || explain) && (kind !== 'humanevalfix' || (optVal('--lang') || 'python') !== 'python')) { say('--v2 is a Python HumanEvalFix mode: atlias editbench <rows.jsonl> --bench humanevalfix --lang python --v2'); process.exitCode = 1; break; }
     const variant = optVal('--variant') || 'lazy';
     const lang = optVal('--lang') || 'python';
-    const out = optVal('--out') || path.join(ROOT, 'evals', kind, kind === 'canitedit' ? variant : lang);
+    const out = optVal('--out') || path.join(ROOT, 'evals', kind, kind === 'canitedit' ? variant : `${lang}${v2 || explain ? '-v2' : ''}`);
     const rows = eb.readJsonl(path.resolve(file));
     if (!rows.length) { say(`no rows in ${file}`); process.exitCode = 1; break; }
     const limit = parseInt(optVal('--limit') || '0', 10) || 0;
     const only = String(optVal('--only') || '').split(',').map((s) => s.trim()).filter(Boolean);
     say(`converting ${rows.length} ${kind} row(s) from ${file}. Each one has to fail as shipped and pass with the benchmark's own reference here before it is kept.`);
-    const result = eb.convertRows(rows, kind, out, { variant, lang, limit, only, rounds: Math.max(0, parseInt(optVal('--rounds') || '0', 10) || 0) });
+    const result = eb.convertRows(rows, kind, out, { variant, lang, v2, explain, limit, only, rounds: Math.max(0, parseInt(optVal('--rounds') || '0', 10) || 0) });
     say(eb.report(result));
     process.exitCode = result.wrote.length ? 0 : 1;
     break;
@@ -384,11 +444,59 @@ else switch (cmd) {
     } else { say('usage: atlias shortcut [install|uninstall|status]'); process.exitCode = 2; }
     break;
   }
-  case 'doctor': { const c = hosts.doctor(cwd).concat(extra.doctorRows()); say(hosts.formatDoctor(c)); process.exitCode = c.every((x) => x.ok) ? 0 : 1; break; }
+  case 'doctor': { const c = hosts.doctor(cwd).concat(extra.doctorRows(), await hosts.ollamaDoctorRows(config().agent)); say(hosts.formatDoctor(c)); process.exitCode = c.every((x) => x.ok) ? 0 : 1; break; }
   case 'status': {
     const g = graph.status(cwd);
     const p = dream.pending(cwd);
     say([`atlias ${VERSION}`, `mode: ${settings.mode()} (atlias mode to change it)`, `state: ${STATE_DIR}`, `project: ${cwd}`, `graph: ${g.exists ? `present, updated ${g.age}` : 'none'}`, `dream pending: ${p.count}`, `handoff note: ${progress.read(cwd) ? progress.notePath(cwd) : 'none yet'}`]);
+    break;
+  }
+  case 'evidence': {
+    try {
+      const options=new Map();
+      for(let i=1;i<argv.length;i++) {
+        let key=argv[i];const inlineFind=key.startsWith('--find=')?key.slice(7):undefined;if(inlineFind!==undefined)key='--find';if(options.has(key))throw Error('duplicate evidence option');
+        if(inlineFind!==undefined){options.set(key,inlineFind);continue;}
+        if(key==='--json'){options.set(key,true);continue;}
+        if(!['--root','--file','--find','--first-line','--max-lines','--max-bytes','--expected-sha256'].includes(key)||!argv[i+1]||argv[i+1].startsWith('--'))throw Error('unknown or missing evidence option');
+        options.set(key,argv[++i]);
+      }
+      const values={root:options.get('--root'),file:options.get('--file')};
+      for(const [key,name]of [['--first-line','firstLine'],['--max-lines','maxLines'],['--max-bytes','maxBytes']])if(options.has(key)){if(!/^[1-9][0-9]*$/.test(options.get(key)))throw Error('positive decimal limits required');values[name]=Number(options.get(key));}
+      if(options.has('--find'))values.findText=options.get('--find');
+      if(options.has('--expected-sha256'))values.expectedSha256=options.get('--expected-sha256');
+      const {sourceEvidence}=await import('../lib/source-evidence.mjs');say(JSON.stringify(sourceEvidence(values)));
+    }catch(e){process.stderr.write(`atlias evidence: ${e.message}\n`);process.exitCode=1;}
+    break;
+  }
+  case 'session-report': {
+    try {
+      const values=new Map(),booleans=new Set();
+      for(let i=1;i<argv.length;i++) {
+        const key=argv[i];
+        if(key==='--json'){if(booleans.has(key))throw Error('duplicate option');booleans.add(key);continue;}
+        if(!['--host','--transcript','--meter-reports'].includes(key)||values.has(key)||!argv[i+1]||argv[i+1].startsWith('--'))throw Error('unknown, duplicate or missing option');
+        values.set(key,argv[++i]);
+      }
+      if(values.get('--host')!=='codex'||!values.get('--transcript'))throw Error('--host codex and --transcript are required');
+      const {nativeSessionReport,accountPace}=await import('../lib/session-report.mjs');
+      const result={session:await nativeSessionReport(values.get('--transcript')),account:null};
+      if(values.has('--meter-reports')) {
+        const raw=fs.readFileSync(values.get('--meter-reports'),'utf8').replace(/^\uFEFF/,'');
+        if(raw&&!raw.endsWith('\n'))throw Error('complete meter ledger required');
+        result.account=accountPace(raw.split(/\r?\n/).filter(l=>l.trim()).map(JSON.parse));
+      }
+      say(JSON.stringify(result,null,flag('--json')?0:2));
+    } catch(e) {process.stderr.write(`atlias session-report: ${e.message}\n`);process.exitCode=1;}
+    break;
+  }
+  case 'context': {
+    try {
+      const file=optVal('--prompt-file');if(!file)throw Error('--prompt-file is required');
+      const prompt=new TextDecoder('utf-8',{fatal:true,ignoreBOM:true}).decode(fs.readFileSync(file));
+      const prepared=nativeInput(path.resolve(optVal('--cwd')||cwd),prompt);
+      process.stdout.write(flag('--json')?JSON.stringify({transport:'caller-v1',...prepared})+'\n':prepared.input);
+    } catch(e) { process.stderr.write(`atlias context: ${e.message}\n`);process.exitCode=1; }
     break;
   }
   case 'brief': say(brief.build({ cwd, session_id: 'cli', source: 'startup' }, after('--host') || 'claude')); break;

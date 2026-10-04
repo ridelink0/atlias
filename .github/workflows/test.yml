@@ -31,6 +31,41 @@ jobs:
         run: for f in lib/*.mjs mcp/*.mjs bin/*.mjs test/run.mjs; do node --check "$f"; done
       - name: suite
         run: node test/run.mjs
+      - name: model-free benchmark protocol and corpus
+        shell: bash
+        run: |
+          node tools/ccstudy/test.mjs
+          node tools/codexstudy/test.mjs
+          node tools/codexstudy/phase-test.mjs
+          node tools/codexstudy/phase-audit-test.mjs
+          node tools/codexstudy/workflow-corpus-test.mjs
+          node tools/codexstudy/workflow-run-test.mjs
+          node tools/codexstudy/foundation-run-test.mjs
+          node tools/codexstudy/corpus-test.mjs
+          node tools/codexstudy/behavior-test.mjs
+          node tools/codexstudy/capability-test.mjs
+          node tools/codexstudy/factuality-test.mjs
+          node tools/codexstudy/factuality-variants-test.mjs
+          node tools/omniscience/test.mjs
+          node tools/omniscience/native-test.mjs
+          node tools/native-job/test.mjs
+          node tools/native-job/runner-test.mjs
+          node tools/native-job/allowance-schedule-test.mjs
+          node tools/native-job/allowance-record-test.mjs
+          node tools/native-job/session-report-test.mjs
+          node tools/native-job/context-policy-test.mjs
+          node tools/native-job/recovery-test.mjs
+          node tools/native-job/discovery-test.mjs
+          node tools/local-work/test.mjs
+          node tools/local-work/workflow-test.mjs
+          node tools/local-work/jobs-test.mjs
+          node tools/local-work/progress-test.mjs
+          node tools/source-evidence/test.mjs
+          node tools/native-job/batch-test.mjs
+          node tools/native-job/dictionary-test.mjs
+          node tools/codexstudy/broker-test.mjs
+          node tools/codexstudy/batch-protocol-test.mjs
+          node tools/codexstudy/batch-run-test.mjs
       - name: the command line answers
         shell: bash
         run: |

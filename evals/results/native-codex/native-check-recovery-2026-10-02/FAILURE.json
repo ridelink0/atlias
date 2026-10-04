@@ -1,0 +1,4 @@
+{
+  "modelsStarted": 0,
+  "reason": "Evidence publisher matched a parent directory name containing payload- and attempted to parse capture-hook.mjs as JSON. No evidence report was produced. Corrected publisher restricts basename and .json extension."
+}

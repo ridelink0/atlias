@@ -1,0 +1,40 @@
+export default async function({suite,check,ROOT,TMP,fs,path}) {
+  const hosts=await import('../lib/hosts.mjs');
+  suite('native hook ownership expert','lean native Codex registration preserves single complete hook coverage',()=>{
+    const dir=path.join(TMP,'native-hook-owner'),root=path.join(dir,'plugins/cache/atlias/atlias/3.8.1');
+    fs.mkdirSync(path.join(root,'.codex-plugin'),{recursive:true});fs.mkdirSync(path.join(root,'hooks'),{recursive:true});
+    fs.cpSync(path.join(ROOT,'lib'),path.join(root,'lib'),{recursive:true});
+    for(const rel of ['mcp','skills','scripts','py'])if(fs.existsSync(path.join(ROOT,rel)))fs.cpSync(path.join(ROOT,rel),path.join(root,rel),{recursive:true});
+    fs.copyFileSync(path.join(ROOT,'package.json'),path.join(root,'package.json'));
+    fs.writeFileSync(path.join(root,'.codex-plugin/plugin.json'),JSON.stringify({name:'atlias'}));
+    const definitions=()=>Object.fromEntries(hosts.CODEX_EVENTS.map(([event,name,,matcher])=>[event,[{...(matcher?{matcher}:{}),hooks:[{type:'command',command:`node "\u0024{CLAUDE_PLUGIN_ROOT}/lib/hooks.mjs" ${name}`}]}]]));
+    const save=hooks=>fs.writeFileSync(path.join(root,'hooks/hooks.json'),JSON.stringify({hooks}));save(definitions());
+    const metadata={installed:[{pluginId:'atlias@atlias',installed:true,enabled:true,version:'3.8.1'}]};
+    const probe=()=>({status:0,stdout:JSON.stringify(metadata)}),get=()=>hosts.nativeCodexHookEvents({probe,dir});
+    const trust=hosts.CODEX_EVENTS.map(([event])=>`[hooks.state."atlias@atlias:hooks/hooks.json:${event.replace(/[A-Z]/g,(c,i)=>(i?'_':'')+c.toLowerCase())}:0:0"]\ntrusted_hash = "sha256:${'a'.repeat(64)}"\n`).join('\n');
+    fs.writeFileSync(path.join(dir,'config.toml'),trust);
+    check('a matching installed enabled trusted native copy supplies all nine events',get().size===hosts.CODEX_EVENTS.length,{happened:[...get()].join(','),why:'A second global SessionStart resends the same brief and duplicates tracking.',fix:'Reuse native registration only after proving source and coverage.'});
+    const other={type:'command',command:'node other-plugin.mjs'},existing={description:'preserve',hooks:{SessionStart:[{hooks:[other,{type:'command',command:'node atlias.mjs session-start'}]}]}};
+    const merged=hosts.mergeHooksJson(existing,'codex',hosts.CODEX_EVENTS,get());
+    check('native-owned events lose only duplicate Atlias hooks and preserve other registrations',merged.description==='preserve'&&merged.hooks.SessionStart.length===1&&merged.hooks.SessionStart[0].hooks.length===1&&merged.hooks.SessionStart[0].hooks[0]===other&&Object.entries(merged.hooks).every(([,groups])=>!groups.some(g=>g.hooks.some(h=>/atlias/.test(h.command)))),{happened:JSON.stringify(merged),why:'Optimization must not remove unrelated hooks.',fix:'Remove only managed Atlias entries for native-owned events.'});
+    const partial=definitions();delete partial.Stop;partial.PreToolUse[0].matcher='Read';save(partial);const subset=get();
+    const fallback=hosts.mergeHooksJson(existing,'codex',hosts.CODEX_EVENTS,subset);
+    check('missing or narrowed native events keep exactly one complete global handler',!subset.has('Stop')&&!subset.has('PreToolUse')&&fallback.hooks.Stop.length===1&&fallback.hooks.PreToolUse[0].matcher==='.*'&&subset.has('SessionStart'),{happened:[...subset].join(','),why:'A Read-only guard cannot protect shell actions.',fix:'Require unconditional native matcher coverage event by event.'});
+    save(definitions());metadata.installed[0].enabled=false;
+    check('disabled plugins retain global hooks',get().size===0,{happened:'disabled plugin',why:'Installed does not mean enabled.',fix:'Require enabled true.'});metadata.installed[0].enabled=true;
+    metadata.installed[0].version='../outside';check('unsafe native versions are never traversed',get().size===0,{happened:'traversal version',why:'Native metadata must not select arbitrary paths.',fix:'Accept only a semantic version cache component.'});metadata.installed[0].version='3.8.1';
+    fs.appendFileSync(path.join(root,'lib/core.mjs'),'\n// incompatible source\n');
+    check('a stale or modified native source cannot displace current host and guard fixes',get().size===0,{happened:'source differs',why:'An old native copy may still misidentify Codex as Claude.',fix:'Require runtime source equality.'});fs.copyFileSync(path.join(ROOT,'lib/core.mjs'),path.join(root,'lib/core.mjs'));
+    fs.writeFileSync(path.join(root,'lib/core.mjs'),'x'.repeat(5*1024*1024));
+    check('oversized cached source is rejected before comparing its bytes',get().size===0,{happened:'oversized native file',why:'A cache file must not force an unbounded buffer allocation during installation.',fix:'Compare sizes before reading native source.'});fs.copyFileSync(path.join(ROOT,'lib/core.mjs'),path.join(root,'lib/core.mjs'));
+    fs.writeFileSync(path.join(dir,'config.toml'),'');
+    check('unapproved native hooks do not replace trusted global coverage',get().size===0,{happened:'no trust records',why:'Plugin metadata alone does not prove a hook may run.',fix:'Require a configured native trust record.'});
+    fs.writeFileSync(path.join(dir,'config.toml'),trust.replace(/(session_start:0:0"\]\n)/,'$1enabled = false\n'));
+    check('an individually disabled native hook keeps its global handler',!get().has('SessionStart')&&get().has('Stop'),{happened:[...get()].join(','),why:'Per-hook state must override plugin-wide availability.',fix:'Reject disabled trust records.'});
+    fs.writeFileSync(path.join(dir,'config.toml'),trust);const disabled=definitions();disabled.PostToolUse[0].disabled=true;disabled.SessionEnd[0].hooks[0].command+=' --host claude';save(disabled);
+    check('disabled groups and wrong-host native commands retain global handlers',!get().has('PostToolUse')&&!get().has('SessionEnd')&&get().has('Stop'),{happened:[...get()].join(','),why:'Wrong host semantics can turn a Codex denial into an unsupported ask.',fix:'Require an enabled canonical native command.'});
+    check('failed and malformed CLI metadata change no coverage',[{status:1,stdout:'{}'},{status:0,stdout:'bad'},{status:0,stdout:'{"installed":{}}'}].every(result=>hosts.nativeCodexHookEvents({probe:()=>result,dir}).size===0),{happened:'bad API',why:'An unavailable API must leave working global events intact.',fix:'Treat unverified metadata as no native coverage.'});
+    const base=hosts.mergeHooksJson(existing,'codex');
+    check('flag-off callers preserve nine global handlers and idempotent installation',hosts.CODEX_EVENTS.every(([event])=>base.hooks[event].flatMap(g=>g.hooks).filter(h=>/atlias/.test(h.command)).length===1)&&JSON.stringify(hosts.mergeHooksJson(base,'codex'))===JSON.stringify(base),{happened:'control coverage',why:'The default install and disabled benchmark arm must retain existing behavior.',fix:'Only pass verified native events from the opt-in lean install.'});
+  });
+}

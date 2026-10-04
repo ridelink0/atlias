@@ -1,0 +1,183 @@
+{
+  "catalogSource": "36ba54d9791a07a13d3fb4af1c0e70f8017083a7",
+  "codex": [
+    {
+      "mode": "control",
+      "source": "36ba54d9791a07a13d3fb4af1c0e70f8017083a7",
+      "nativeCLI": "codex-cli 0.159.0-alpha.12.1",
+      "modelCalls": 0,
+      "tools": 10,
+      "facadeMatch": false,
+      "fullMatch": false,
+      "leanMatch": true,
+      "expectedLean": false,
+      "catalogChars": 2837,
+      "status": null,
+      "toolsError": null,
+      "authFilePresent": false
+    },
+    {
+      "mode": "env-discovery",
+      "source": "36ba54d9791a07a13d3fb4af1c0e70f8017083a7",
+      "nativeCLI": "codex-cli 0.159.0-alpha.12.1",
+      "modelCalls": 0,
+      "tools": 1,
+      "facadeMatch": true,
+      "fullMatch": false,
+      "leanMatch": false,
+      "expectedLean": true,
+      "catalogChars": 618,
+      "status": null,
+      "toolsError": null,
+      "authFilePresent": false
+    }
+  ],
+  "claude": [
+    {
+      "source": "36ba54d9791a07a13d3fb4af1c0e70f8017083a7",
+      "nativeCLI": "2.1.285",
+      "discovery": false,
+      "lean": true,
+      "status": "connected",
+      "modelCalls": 0,
+      "userMessagesSent": 0
+    },
+    {
+      "source": "36ba54d9791a07a13d3fb4af1c0e70f8017083a7",
+      "nativeCLI": "2.1.285",
+      "discovery": true,
+      "lean": true,
+      "status": "connected",
+      "modelCalls": 0,
+      "userMessagesSent": 0
+    }
+  ],
+  "foundation": [
+    {
+      "host": "codex",
+      "arm": "control",
+      "modelCalls": 0,
+      "localRequests": 1,
+      "fullInputDelivered": true,
+      "identicalControlTools": false,
+      "instructionReplacementObserved": false,
+      "instructionsChars": 17593,
+      "inputSha256": "af64df7d94149d33c2e58d0a1ca36df67ecbf0cd36bbfc0f80e5891a948f7b61",
+      "toolNames": [
+        "exec_command",
+        "write_stdin",
+        "request_user_input",
+        "view_image",
+        "multi_agent_v1",
+        "get_goal",
+        "create_goal",
+        "update_goal",
+        "web_search"
+      ],
+      "instructionsSha256": "b6c55b8b775f7d9bc4dec4c69d7fe3df66c401b19a1d6b3dc10b30dabe21e5ff",
+      "status": {
+        "code": 0,
+        "signal": null
+      }
+    },
+    {
+      "host": "codex",
+      "arm": "replacement",
+      "modelCalls": 0,
+      "localRequests": 1,
+      "fullInputDelivered": true,
+      "identicalControlTools": true,
+      "instructionReplacementObserved": true,
+      "instructionsChars": 7150,
+      "inputSha256": "af64df7d94149d33c2e58d0a1ca36df67ecbf0cd36bbfc0f80e5891a948f7b61",
+      "toolNames": [
+        "exec_command",
+        "write_stdin",
+        "request_user_input",
+        "view_image",
+        "multi_agent_v1",
+        "get_goal",
+        "create_goal",
+        "update_goal",
+        "web_search"
+      ],
+      "instructionsSha256": "0b9f9930a787c1a6ae019f5e21e098e8a594845bf223371cfbba28972dabe827",
+      "status": {
+        "code": 0,
+        "signal": null
+      }
+    },
+    {
+      "host": "claude",
+      "arm": "control",
+      "modelCalls": 0,
+      "localRequests": 1,
+      "fullInputDelivered": true,
+      "identicalControlTools": false,
+      "instructionReplacementObserved": false,
+      "instructionsChars": 387,
+      "inputSha256": "af64df7d94149d33c2e58d0a1ca36df67ecbf0cd36bbfc0f80e5891a948f7b61",
+      "toolNames": [
+        "Bash",
+        "Edit",
+        "PowerShell",
+        "Read"
+      ],
+      "instructionsSha256": "0e1648500e00aba34dc8583c1401e3640d2376d5469f776d82e3ab04c793f827",
+      "status": {
+        "code": 0,
+        "signal": null
+      }
+    },
+    {
+      "host": "claude",
+      "arm": "replacement",
+      "modelCalls": 0,
+      "localRequests": 1,
+      "fullInputDelivered": true,
+      "identicalControlTools": true,
+      "instructionReplacementObserved": true,
+      "instructionsChars": 7439,
+      "inputSha256": "af64df7d94149d33c2e58d0a1ca36df67ecbf0cd36bbfc0f80e5891a948f7b61",
+      "toolNames": [
+        "Bash",
+        "Edit",
+        "PowerShell",
+        "Read"
+      ],
+      "instructionsSha256": "44ef40d11deca9aedd8468d4c24b0b0abe2324bc602ad93061ada91c06d73160",
+      "status": {
+        "code": 0,
+        "signal": null
+      }
+    }
+  ],
+  "originalFiles": [
+    {
+      "file": "D:/harness-work/runs/native-discovery-client-codex-1003/RESULT.json",
+      "sha256": "77af51e6154bd05c6f4bd559141e70ef9774b259a8303399750014870abd0b6f"
+    },
+    {
+      "file": "D:/harness-work/runs/native-discovery-client-claude-1003/RESULT.json",
+      "sha256": "e50cbd2bc0f2d6c1ef4dc2842e32ffa18d37f0f3e65c78b35e2ea502c01d32cd"
+    },
+    {
+      "file": "D:/harness-work/runs/native-foundation-local-1003/FAILURE.json",
+      "sha256": "b264f0debcfd2e2c46a7dfeedc9bf1b6e7543f77d539de7b1779e0f03715b605"
+    },
+    {
+      "file": "D:/harness-work/runs/native-foundation-normalized-local-1003/RESULT.json",
+      "sha256": "566a006f8bfdd1678fc745837eb46540775cc3ec64f5a9cc417e8a2dcf3258f3"
+    },
+    {
+      "file": "D:/harness-work/runs/discovery-source36-exact-ci-1003.json",
+      "sha256": "8e45e4dad7f3d4760d9d6a9ed7153db63d90202987a7c6d66c71046dad8f6850"
+    }
+  ],
+  "modelCalls": 0,
+  "limitations": [
+    "Owned local protocol fixture only; no model quality, token savings or subscription usage measurement.",
+    "Claude uses --bare with a fake localhost key; OAuth installation and integration parity are unverified.",
+    "The replacement changes the instruction surface. Identical tools do not establish quality, permission or capability parity."
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "ledgerSha256": "d9636ec0a554bb71ad77cddabaef6d335dc745eb5068643f9b484ab5509472e3",
+  "prefixes": [
+    {
+      "file": "D:/harness-work/source7B-batch-prefix7-1001.jsonl",
+      "sha256": "b669a7f70ce70232dfc0d618ea1664a0a7d9c31136997441e583c3a7f417f1c7",
+      "preserved": true
+    },
+    {
+      "file": "D:/harness-work/source7B-batch-prefix13-1001.jsonl",
+      "sha256": "47e60b3a22dabc1ce76dfd63253e6dbe6307c0527fba615d8b3f6bf0075cdda2",
+      "preserved": true
+    }
+  ]
+}

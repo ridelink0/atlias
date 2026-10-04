@@ -1,0 +1,36 @@
+{
+  "completeCoverage": true,
+  "originalGradesUnchanged": true,
+  "graderReexecuted": false,
+  "modelsStarted": 0,
+  "savedReports": [
+    {
+      "name": "atlias-r5-14b-1",
+      "sha256": "d427a9113c016a1805fa5b312c5989d457af434c7c6a1e6dfc70a66e63a00a0e",
+      "passed": 119,
+      "total": 252,
+      "raw": 4384763,
+      "output": 269457,
+      "peak": 11003,
+      "model": "qwen2.5-coder:14b"
+    },
+    {
+      "name": "mini-r5-14b-1",
+      "sha256": "825b1271c0d4ebb36731c016d2962f437299321db3c4c614dedfa6dff31d9267",
+      "passed": 77,
+      "total": 252,
+      "raw": 5154755,
+      "output": 260174,
+      "peak": 16356,
+      "model": "ollama_chat/qwen2.5-coder:14b"
+    }
+  ],
+  "gains": 59,
+  "losses": 17,
+  "actualBudgetsEqual": true,
+  "limitations": [
+    "Single repeat, not repeated majority or universal capability evidence.",
+    "Saved reports do not pin hidden grader bodies at execution time; current corpus IDs cannot establish historical grader integrity.",
+    "No exact Claude/Codex native or subscription savings claim."
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "stats": {
+    "plain": {
+      "n": 24,
+      "solved": 24,
+      "promptRaw": 2273151,
+      "perSolved": 94714.625,
+      "peak": 18831
+    },
+    "atlias": {
+      "n": 22,
+      "solved": 22,
+      "promptRaw": 1462132,
+      "perSolved": 66460.54545454546,
+      "peak": 18292
+    }
+  },
+  "comparisons": [
+    {
+      "arm": "atlias",
+      "pairedRuns": 22,
+      "semanticFamilies": 12,
+      "pairedStats": {
+        "plain": {
+          "n": 22,
+          "solved": 22,
+          "promptRaw": 2027158,
+          "perSolved": 92143.54545454546,
+          "contextPeak": 18831
+        },
+        "atlias": {
+          "n": 22,
+          "solved": 22,
+          "promptRaw": 1462132,
+          "perSolved": 66460.54545454546,
+          "contextPeak": 18292
+        }
+      },
+      "rawRatio": {
+        "n": 12,
+        "ratioOfSums": 0.7212718495548941,
+        "bootLo": 0.6555454455233464,
+        "bootHi": 0.7875636529940852,
+        "geoMean": 0.7221051470170463,
+        "tLo": 0.6359515283485255,
+        "tHi": 0.8199301677953409
+      },
+      "plainOnly": [],
+      "pluginOnly": []
+    }
+  ],
+  "excluded": [
+    {
+      "task": "context-unicode-64",
+      "arm": "atlias",
+      "reason": "invalid protocol, missing usage, timeout, or nonzero CLI exit"
+    },
+    {
+      "task": "context-merge-64",
+      "arm": "atlias",
+      "reason": "task-context flag requested but generated and delivered prompt context were not both recorded"
+    }
+  ],
+  "plannedCallsComplete": true,
+  "protocolComplete": false,
+  "ledgerSha256": "091227ddbd8bddd6ef26cd352966b06a4a822acdf2520591ebca27ac70607713",
+  "allRecorded": {
+    "plain": {
+      "calls": 24,
+      "solved": 24,
+      "raw": 2273151,
+      "cached": 1734016,
+      "output": 39697,
+      "peak": 18831
+    },
+    "atlias": {
+      "calls": 24,
+      "solved": 23,
+      "raw": 1610179,
+      "cached": 1428352,
+      "output": 31759,
+      "peak": 19878
+    }
+  },
+  "pairedTokens": {
+    "plain": {
+      "calls": 22,
+      "solved": 22,
+      "raw": 2027158,
+      "cached": 1524992,
+      "output": 36362,
+      "peak": 18831
+    },
+    "atlias": {
+      "calls": 22,
+      "solved": 22,
+      "raw": 1462132,
+      "cached": 1291904,
+      "output": 28627,
+      "peak": 18292
+    }
+  }
+}

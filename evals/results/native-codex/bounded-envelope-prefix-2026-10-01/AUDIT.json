@@ -1,0 +1,176 @@
+{
+  "source": "07d969cd3e85f939dd623254e71db829167ea3fd",
+  "plannedCalls": 48,
+  "recordedCalls": 8,
+  "complete": false,
+  "ledgerSha256": "1b25cc252969081f8e5394d9ddbc1689f9aeac6446a49d105db034db300ca14e",
+  "audits": [
+    {
+      "identity": "context-money-64|1|atlias",
+      "packetSha256": "7f3c02d6b315fe52c9dc20724fb7011533f4b5186a2c997d79b7bec814277f0c",
+      "envelopeSha256": "a435320fdc60d4d00539462a59ec0275e18ae0372c2d1743079c6f35cd842468",
+      "instructionSha256": "f95333c9e7a4168eb5f95046b6b3d1d06e8d16461b5be236caf62f0c7726f924",
+      "fullEnvelopeDelivered": true,
+      "exactInstructionsDelivered": true,
+      "costsReconciled": true,
+      "authRemoved": true,
+      "roleCharacters": [
+        {
+          "role": "developer",
+          "characters": 3307
+        },
+        {
+          "role": "developer",
+          "characters": 2429
+        },
+        {
+          "role": "developer",
+          "characters": 271
+        },
+        {
+          "role": "user",
+          "characters": 607
+        },
+        {
+          "role": "user",
+          "characters": 1722
+        },
+        {
+          "role": "assistant",
+          "characters": 880
+        }
+      ]
+    },
+    {
+      "identity": "context-versions-64|1|atlias",
+      "packetSha256": "6a0df823058d32a57d5be05ada882ca321cf09c7b997966567e31c2a731655f0",
+      "envelopeSha256": "dbee44c8306f7046f13f2ccd11928f7c7aeadceec8fc851a5b773d5f94ba6b95",
+      "instructionSha256": "f95333c9e7a4168eb5f95046b6b3d1d06e8d16461b5be236caf62f0c7726f924",
+      "fullEnvelopeDelivered": true,
+      "exactInstructionsDelivered": true,
+      "costsReconciled": true,
+      "authRemoved": true,
+      "roleCharacters": [
+        {
+          "role": "developer",
+          "characters": 3310
+        },
+        {
+          "role": "developer",
+          "characters": 2429
+        },
+        {
+          "role": "developer",
+          "characters": 271
+        },
+        {
+          "role": "user",
+          "characters": 613
+        },
+        {
+          "role": "user",
+          "characters": 1631
+        },
+        {
+          "role": "assistant",
+          "characters": 758
+        }
+      ]
+    },
+    {
+      "identity": "context-intervals-64|1|atlias",
+      "packetSha256": "6546e9cc691ff14629688e815b132c8ff290eca33dc07d4d3a5a339859c00328",
+      "envelopeSha256": "af2ca2111811c06b942066d2743c44d94a28b6a8de3a4e18d81461dee4961a4e",
+      "instructionSha256": "f95333c9e7a4168eb5f95046b6b3d1d06e8d16461b5be236caf62f0c7726f924",
+      "fullEnvelopeDelivered": true,
+      "exactInstructionsDelivered": true,
+      "costsReconciled": true,
+      "authRemoved": true,
+      "roleCharacters": [
+        {
+          "role": "developer",
+          "characters": 3311
+        },
+        {
+          "role": "developer",
+          "characters": 2429
+        },
+        {
+          "role": "developer",
+          "characters": 271
+        },
+        {
+          "role": "user",
+          "characters": 615
+        },
+        {
+          "role": "user",
+          "characters": 1592
+        },
+        {
+          "role": "assistant",
+          "characters": 1213
+        }
+      ]
+    },
+    {
+      "identity": "context-unicode-64|1|atlias",
+      "packetSha256": "f9819a0b1965394dc4a734c7756bd21effd415e6484a8d3e1efe012efc532bf8",
+      "envelopeSha256": "33100af54729677fd5f06b5c89a3e46a4775a96c7ba8b03341b0d274be8e952e",
+      "instructionSha256": "f95333c9e7a4168eb5f95046b6b3d1d06e8d16461b5be236caf62f0c7726f924",
+      "fullEnvelopeDelivered": true,
+      "exactInstructionsDelivered": true,
+      "costsReconciled": true,
+      "authRemoved": true,
+      "roleCharacters": [
+        {
+          "role": "developer",
+          "characters": 3309
+        },
+        {
+          "role": "developer",
+          "characters": 2429
+        },
+        {
+          "role": "developer",
+          "characters": 271
+        },
+        {
+          "role": "user",
+          "characters": 611
+        },
+        {
+          "role": "user",
+          "characters": 1593
+        },
+        {
+          "role": "assistant",
+          "characters": 300
+        }
+      ]
+    }
+  ],
+  "plain": {
+    "pairs": 4,
+    "solved": 4,
+    "input": 320375,
+    "cached": 277248,
+    "uncached": 43127,
+    "output": 5414,
+    "total": 325789,
+    "uncachedPlusOutput": 48541,
+    "peak": 16548
+  },
+  "atlias": {
+    "pairs": 4,
+    "solved": 4,
+    "input": 23227,
+    "cached": 0,
+    "uncached": 23227,
+    "output": 1901,
+    "total": 25128,
+    "uncachedPlusOutput": 25128,
+    "peak": 5825
+  },
+  "limitation": "Frozen partial prefix, no completed study or target claim. Raw includes cached tokens; uncached+output is also not subscription allowance pricing. Finite predeclared quality assertions, not universal equivalence. All original failed/unmatched rows remain in frozen ledger."
+}

@@ -1,0 +1,20 @@
+{
+  "nativeCLI": "0.159.0",
+  "nativeReusedEvents": [
+    "SessionStart",
+    "UserPromptSubmit",
+    "PreToolUse",
+    "PreCompact",
+    "PostCompact",
+    "Stop",
+    "SubagentStop",
+    "SessionEnd"
+  ],
+  "globalAtliasEvents": [
+    "PostToolUse"
+  ],
+  "otherHooksPreserved": true,
+  "modelCalls": 0,
+  "delivery": "not yet measured",
+  "correctedSmokeExpectation": "PostToolUse is intentionally retained because the native matcher is narrower; the initial nine-event expectation was incorrect."
+}

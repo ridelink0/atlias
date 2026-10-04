@@ -1,0 +1,16 @@
+{
+  "at": "2026-10-02T23:12:15.061Z",
+  "reason": "The check-outcome prompt did not require Boolean false in value, but the original protected grader does. Both r1 outputs correctly described the completed exit3 failure using prose and received original strict failures. This is an underspecified visible value contract, not demonstrated hallucination or Atlias-specific loss.",
+  "originalGradesPreserved": true,
+  "originalPlanUnchanged": true,
+  "noRetries": true,
+  "noRegrading": true,
+  "next": "Let the existing 90-percent quota boundary stop cleanly; hold missing rows. New separately pinned corpus must explicitly declare answer value types, conflict/unknown null and citation coverage before any inference.",
+  "secondDefect": "The original partial-value grader allowed only the deployment citation, while the prompt allowed relevant gap sources. Plain correctly retained zero/null and also cited staging to explain the environment mismatch; the original strict failure remains. Future v2 permits extra real/hash-valid citations and requires the actual supporting ranges.",
+  "correctedCorpus": "D:/harness-work/runs/evidence-workflows-corpus-v2-1002",
+  "correctedControls": {
+    "positive": 16,
+    "negative": 14,
+    "models": 0
+  }
+}

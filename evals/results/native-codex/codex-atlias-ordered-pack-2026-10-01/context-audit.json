@@ -1,0 +1,193 @@
+{
+  "source": "7d4838aab53c69555e84fa30c4ee14866337a80f",
+  "ledgerFile": "D:/harness-work/source7d-complete48-1001.jsonl",
+  "ledgerSha256": "091227ddbd8bddd6ef26cd352966b06a4a822acdf2520591ebca27ac70607713",
+  "method": "reconstructed initial task files with the archived source packer; matched generated hash/length and complete user/developer text, not only a marker",
+  "checked": 23,
+  "evidence": [
+    {
+      "task": "context-money-64",
+      "repeat": 1,
+      "chars": 809,
+      "sha": "310e2d800b23f5ad",
+      "generated": true,
+      "delivered": true
+    },
+    {
+      "task": "context-versions-64",
+      "repeat": 1,
+      "chars": 718,
+      "sha": "8b3d5c192c937922",
+      "generated": true,
+      "delivered": true
+    },
+    {
+      "task": "context-intervals-64",
+      "repeat": 1,
+      "chars": 679,
+      "sha": "9980dabff277aee9",
+      "generated": true,
+      "delivered": true
+    },
+    {
+      "task": "context-unicode-64",
+      "repeat": 1,
+      "chars": 680,
+      "sha": "dca37fa7998b210f",
+      "generated": true,
+      "delivered": true
+    },
+    {
+      "task": "context-paths-64",
+      "repeat": 1,
+      "chars": 806,
+      "sha": "be9e70413e4ea74c",
+      "generated": true,
+      "delivered": true
+    },
+    {
+      "task": "context-merge-64",
+      "repeat": 1,
+      "chars": 801,
+      "sha": "4f2bf1093c6f1971",
+      "generated": true,
+      "delivered": true
+    },
+    {
+      "task": "context-ttl-64",
+      "repeat": 1,
+      "chars": 872,
+      "sha": "897d5e448c9a6778",
+      "generated": true,
+      "delivered": true
+    },
+    {
+      "task": "context-csv-64",
+      "repeat": 1,
+      "chars": 769,
+      "sha": "e5ee259375393ae0",
+      "generated": true,
+      "delivered": true
+    },
+    {
+      "task": "context-pagination-64",
+      "repeat": 1,
+      "chars": 932,
+      "sha": "c51eec942b4bafa2",
+      "generated": true,
+      "delivered": true
+    },
+    {
+      "task": "context-topology-64",
+      "repeat": 1,
+      "chars": 776,
+      "sha": "9fcd1fe99f919833",
+      "generated": true,
+      "delivered": true
+    },
+    {
+      "task": "context-dedupe-64",
+      "repeat": 1,
+      "chars": 793,
+      "sha": "46bba8baff731ab0",
+      "generated": true,
+      "delivered": true
+    },
+    {
+      "task": "context-query-64",
+      "repeat": 1,
+      "chars": 930,
+      "sha": "d545b848a4ed5092",
+      "generated": true,
+      "delivered": true
+    },
+    {
+      "task": "context-money-64",
+      "repeat": 2,
+      "chars": 809,
+      "sha": "310e2d800b23f5ad",
+      "generated": true,
+      "delivered": true
+    },
+    {
+      "task": "context-versions-64",
+      "repeat": 2,
+      "chars": 718,
+      "sha": "8b3d5c192c937922",
+      "generated": true,
+      "delivered": true
+    },
+    {
+      "task": "context-intervals-64",
+      "repeat": 2,
+      "chars": 679,
+      "sha": "9980dabff277aee9",
+      "generated": true,
+      "delivered": true
+    },
+    {
+      "task": "context-unicode-64",
+      "repeat": 2,
+      "chars": 680,
+      "sha": "dca37fa7998b210f",
+      "generated": true,
+      "delivered": true
+    },
+    {
+      "task": "context-paths-64",
+      "repeat": 2,
+      "chars": 806,
+      "sha": "be9e70413e4ea74c",
+      "generated": true,
+      "delivered": true
+    },
+    {
+      "task": "context-ttl-64",
+      "repeat": 2,
+      "chars": 872,
+      "sha": "897d5e448c9a6778",
+      "generated": true,
+      "delivered": true
+    },
+    {
+      "task": "context-csv-64",
+      "repeat": 2,
+      "chars": 769,
+      "sha": "e5ee259375393ae0",
+      "generated": true,
+      "delivered": true
+    },
+    {
+      "task": "context-pagination-64",
+      "repeat": 2,
+      "chars": 932,
+      "sha": "c51eec942b4bafa2",
+      "generated": true,
+      "delivered": true
+    },
+    {
+      "task": "context-topology-64",
+      "repeat": 2,
+      "chars": 776,
+      "sha": "9fcd1fe99f919833",
+      "generated": true,
+      "delivered": true
+    },
+    {
+      "task": "context-dedupe-64",
+      "repeat": 2,
+      "chars": 793,
+      "sha": "46bba8baff731ab0",
+      "generated": true,
+      "delivered": true
+    },
+    {
+      "task": "context-query-64",
+      "repeat": 2,
+      "chars": 930,
+      "sha": "d545b848a4ed5092",
+      "generated": true,
+      "delivered": true
+    }
+  ]
+}

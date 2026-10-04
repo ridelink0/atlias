@@ -1,0 +1,21 @@
+{
+  "ok": true,
+  "tasks": 252,
+  "attempts": 3,
+  "councilSize": 3,
+  "rotations": 3,
+  "extra": 2,
+  "dropped": 0,
+  "unstamped": false,
+  "baseSolved": 51.333333333333336,
+  "councilSolved": 91,
+  "gained": 39.666666666666664,
+  "baseTokens": 5930193,
+  "extraTokens": 9291114,
+  "perSolveBefore": 115523,
+  "perSolveAfter": 167267,
+  "multiplier": 1.45,
+  "unrecorded": 0,
+  "floor": 6,
+  "clearsFloor": true
+}

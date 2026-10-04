@@ -1,0 +1,41 @@
+{
+  "arms": [
+    {
+      "arm": "atlias-3.7.1",
+      "tasks": 250,
+      "passed": 59,
+      "rate": 0.236,
+      "wilson95": [
+        0.1876058720228644,
+        0.2923847993249367
+      ],
+      "promptTokens": 5838467,
+      "tokensRecorded": 250,
+      "tokensPerSolved": 98957.06779661016
+    },
+    {
+      "arm": "mini-2.4.6",
+      "tasks": 250,
+      "passed": 41,
+      "rate": 0.164,
+      "wilson95": [
+        0.12325083757520047,
+        0.21491910777654646
+      ],
+      "promptTokens": 5221375,
+      "tokensRecorded": 250,
+      "tokensPerSolved": 127350.60975609756
+    }
+  ],
+  "paired": {
+    "a": "atlias-3.7.1",
+    "b": "mini-2.4.6",
+    "tasks": 250,
+    "bothPass": 23,
+    "bothFail": 173,
+    "gained": 18,
+    "lost": 36,
+    "discordant": 54,
+    "p": 0.01983432672806829
+  }
+}

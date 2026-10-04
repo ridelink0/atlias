@@ -1,0 +1,399 @@
+{
+  "source": "e65562bc872debc4278ccf5bdda34cce9ec8e869",
+  "ledgerSha256": "61273a3f0f43a0a135e567e580c5eb2ef0cc9af94135b9b5da1d80ede3b0e581",
+  "modelsStarted": 0,
+  "gradesChanged": false,
+  "plainFirstInputMin": 13408,
+  "plainFirstInputMax": 13422,
+  "atliasFirstInputMin": 14919,
+  "atliasFirstInputMax": 14937,
+  "plainMaximumPeak": 15277,
+  "maximumCandidatePeakForTwentyX": 763.85,
+  "observation": "Observed first-request input in this already closed normal-foundation profile greatly exceeds its target maximum peak/20. Removing redundant later rounds alone cannot achieve20x full peak here. This is an observed profile constraint, not a universal model/tool lower bound; no source/prompt/model changes or model reruns.",
+  "rows": [
+    {
+      "task": "factuality-v2-wrong-environment",
+      "repeat": 1,
+      "arm": "plain",
+      "firstNativeInput": 13409,
+      "peak": 14093,
+      "raw": 54897
+    },
+    {
+      "task": "factuality-v2-wrong-environment",
+      "repeat": 1,
+      "arm": "atlias",
+      "firstNativeInput": 14922,
+      "peak": 16479,
+      "raw": 78993
+    },
+    {
+      "task": "factuality-v2-missing-identifier",
+      "repeat": 1,
+      "arm": "atlias",
+      "firstNativeInput": 14921,
+      "peak": 15937,
+      "raw": 46348
+    },
+    {
+      "task": "factuality-v2-missing-identifier",
+      "repeat": 1,
+      "arm": "plain",
+      "firstNativeInput": 13408,
+      "peak": 14807,
+      "raw": 41782
+    },
+    {
+      "task": "factuality-v2-empty-evidence",
+      "repeat": 1,
+      "arm": "plain",
+      "firstNativeInput": 13408,
+      "peak": 13729,
+      "raw": 40667
+    },
+    {
+      "task": "factuality-v2-empty-evidence",
+      "repeat": 1,
+      "arm": "atlias",
+      "firstNativeInput": 14919,
+      "peak": 15762,
+      "raw": 46136
+    },
+    {
+      "task": "factuality-v2-failed-exit",
+      "repeat": 1,
+      "arm": "atlias",
+      "firstNativeInput": 14930,
+      "peak": 15453,
+      "raw": 45482
+    },
+    {
+      "task": "factuality-v2-failed-exit",
+      "repeat": 1,
+      "arm": "plain",
+      "firstNativeInput": 13417,
+      "peak": 15096,
+      "raw": 56109
+    },
+    {
+      "task": "factuality-v2-uncompleted-zero",
+      "repeat": 1,
+      "arm": "plain",
+      "firstNativeInput": 13419,
+      "peak": 14051,
+      "raw": 54897
+    },
+    {
+      "task": "factuality-v2-uncompleted-zero",
+      "repeat": 1,
+      "arm": "atlias",
+      "firstNativeInput": 14930,
+      "peak": 15940,
+      "raw": 46387
+    },
+    {
+      "task": "factuality-v2-current-pass",
+      "repeat": 1,
+      "arm": "atlias",
+      "firstNativeInput": 14921,
+      "peak": 15493,
+      "raw": 45551
+    },
+    {
+      "task": "factuality-v2-current-pass",
+      "repeat": 1,
+      "arm": "plain",
+      "firstNativeInput": 13412,
+      "peak": 14924,
+      "raw": 55847
+    },
+    {
+      "task": "factuality-v2-old-pass-only",
+      "repeat": 1,
+      "arm": "plain",
+      "firstNativeInput": 13421,
+      "peak": 15277,
+      "raw": 56458
+    },
+    {
+      "task": "factuality-v2-old-pass-only",
+      "repeat": 1,
+      "arm": "atlias",
+      "firstNativeInput": 14932,
+      "peak": 16035,
+      "raw": 46489
+    },
+    {
+      "task": "factuality-v2-zero-and-unknown",
+      "repeat": 1,
+      "arm": "atlias",
+      "firstNativeInput": 14931,
+      "peak": 16028,
+      "raw": 46451
+    },
+    {
+      "task": "factuality-v2-zero-and-unknown",
+      "repeat": 1,
+      "arm": "plain",
+      "firstNativeInput": 13418,
+      "peak": 14494,
+      "raw": 41476
+    },
+    {
+      "task": "factuality-v2-false-and-unknown",
+      "repeat": 1,
+      "arm": "plain",
+      "firstNativeInput": 13422,
+      "peak": 14739,
+      "raw": 55422
+    },
+    {
+      "task": "factuality-v2-false-and-unknown",
+      "repeat": 1,
+      "arm": "atlias",
+      "firstNativeInput": 14937,
+      "peak": 16060,
+      "raw": 46507
+    },
+    {
+      "task": "factuality-v2-empty-and-unknown",
+      "repeat": 1,
+      "arm": "atlias",
+      "firstNativeInput": 14932,
+      "peak": 15975,
+      "raw": 46360
+    },
+    {
+      "task": "factuality-v2-empty-and-unknown",
+      "repeat": 1,
+      "arm": "plain",
+      "firstNativeInput": 13419,
+      "peak": 14912,
+      "raw": 55763
+    },
+    {
+      "task": "factuality-v2-forged-citation",
+      "repeat": 1,
+      "arm": "plain",
+      "firstNativeInput": 13419,
+      "peak": 14965,
+      "raw": 55898
+    },
+    {
+      "task": "factuality-v2-forged-citation",
+      "repeat": 1,
+      "arm": "atlias",
+      "firstNativeInput": 14932,
+      "peak": 16073,
+      "raw": 62409
+    },
+    {
+      "task": "factuality-v2-conflicting-current",
+      "repeat": 1,
+      "arm": "atlias",
+      "firstNativeInput": 14930,
+      "peak": 16498,
+      "raw": 63270
+    },
+    {
+      "task": "factuality-v2-conflicting-current",
+      "repeat": 1,
+      "arm": "plain",
+      "firstNativeInput": 13419,
+      "peak": 13831,
+      "raw": 40886
+    },
+    {
+      "task": "factuality-v2-wrong-environment",
+      "repeat": 2,
+      "arm": "atlias",
+      "firstNativeInput": 14922,
+      "peak": 16470,
+      "raw": 78972
+    },
+    {
+      "task": "factuality-v2-wrong-environment",
+      "repeat": 2,
+      "arm": "plain",
+      "firstNativeInput": 13409,
+      "peak": 13930,
+      "raw": 40914
+    },
+    {
+      "task": "factuality-v2-missing-identifier",
+      "repeat": 2,
+      "arm": "plain",
+      "firstNativeInput": 13408,
+      "peak": 13805,
+      "raw": 40775
+    },
+    {
+      "task": "factuality-v2-missing-identifier",
+      "repeat": 2,
+      "arm": "atlias",
+      "firstNativeInput": 14921,
+      "peak": 15389,
+      "raw": 45387
+    },
+    {
+      "task": "factuality-v2-empty-evidence",
+      "repeat": 2,
+      "arm": "atlias",
+      "firstNativeInput": 14919,
+      "peak": 16326,
+      "raw": 93300
+    },
+    {
+      "task": "factuality-v2-empty-evidence",
+      "repeat": 2,
+      "arm": "plain",
+      "firstNativeInput": 13408,
+      "peak": 14843,
+      "raw": 55617
+    },
+    {
+      "task": "factuality-v2-failed-exit",
+      "repeat": 2,
+      "arm": "plain",
+      "firstNativeInput": 13417,
+      "peak": 14895,
+      "raw": 55714
+    },
+    {
+      "task": "factuality-v2-failed-exit",
+      "repeat": 2,
+      "arm": "atlias",
+      "firstNativeInput": 14930,
+      "peak": 15534,
+      "raw": 45554
+    },
+    {
+      "task": "factuality-v2-uncompleted-zero",
+      "repeat": 2,
+      "arm": "atlias",
+      "firstNativeInput": 14930,
+      "peak": 15536,
+      "raw": 45569
+    },
+    {
+      "task": "factuality-v2-uncompleted-zero",
+      "repeat": 2,
+      "arm": "plain",
+      "firstNativeInput": 13419,
+      "peak": 14875,
+      "raw": 55781
+    },
+    {
+      "task": "factuality-v2-current-pass",
+      "repeat": 2,
+      "arm": "plain",
+      "firstNativeInput": 13412,
+      "peak": 15052,
+      "raw": 56197
+    },
+    {
+      "task": "factuality-v2-current-pass",
+      "repeat": 2,
+      "arm": "atlias",
+      "firstNativeInput": 14921,
+      "peak": 16547,
+      "raw": 79225
+    },
+    {
+      "task": "factuality-v2-old-pass-only",
+      "repeat": 2,
+      "arm": "atlias",
+      "firstNativeInput": 14932,
+      "peak": 16215,
+      "raw": 77832
+    },
+    {
+      "task": "factuality-v2-old-pass-only",
+      "repeat": 2,
+      "arm": "plain",
+      "firstNativeInput": 13421,
+      "peak": 13914,
+      "raw": 40920
+    },
+    {
+      "task": "factuality-v2-zero-and-unknown",
+      "repeat": 2,
+      "arm": "plain",
+      "firstNativeInput": 13418,
+      "peak": 14835,
+      "raw": 55677
+    },
+    {
+      "task": "factuality-v2-zero-and-unknown",
+      "repeat": 2,
+      "arm": "atlias",
+      "firstNativeInput": 14931,
+      "peak": 16284,
+      "raw": 62783
+    },
+    {
+      "task": "factuality-v2-false-and-unknown",
+      "repeat": 2,
+      "arm": "atlias",
+      "firstNativeInput": 14937,
+      "peak": 16688,
+      "raw": 63471
+    },
+    {
+      "task": "factuality-v2-false-and-unknown",
+      "repeat": 2,
+      "arm": "plain",
+      "firstNativeInput": 13422,
+      "peak": 14997,
+      "raw": 70551
+    },
+    {
+      "task": "factuality-v2-empty-and-unknown",
+      "repeat": 2,
+      "arm": "plain",
+      "firstNativeInput": 13419,
+      "peak": 15163,
+      "raw": 56139
+    },
+    {
+      "task": "factuality-v2-empty-and-unknown",
+      "repeat": 2,
+      "arm": "atlias",
+      "firstNativeInput": 14932,
+      "peak": 15969,
+      "raw": 46396
+    },
+    {
+      "task": "factuality-v2-forged-citation",
+      "repeat": 2,
+      "arm": "atlias",
+      "firstNativeInput": 14932,
+      "peak": 16270,
+      "raw": 78066
+    },
+    {
+      "task": "factuality-v2-forged-citation",
+      "repeat": 2,
+      "arm": "plain",
+      "firstNativeInput": 13419,
+      "peak": 13928,
+      "raw": 40952
+    },
+    {
+      "task": "factuality-v2-conflicting-current",
+      "repeat": 2,
+      "arm": "plain",
+      "firstNativeInput": 13419,
+      "peak": 14216,
+      "raw": 55149
+    },
+    {
+      "task": "factuality-v2-conflicting-current",
+      "repeat": 2,
+      "arm": "atlias",
+      "firstNativeInput": 14930,
+      "peak": 16080,
+      "raw": 46576
+    }
+  ]
+}

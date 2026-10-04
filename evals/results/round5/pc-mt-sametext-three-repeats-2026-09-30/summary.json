@@ -1,0 +1,117 @@
+{
+  "source": "00670962930adec83c0e2c84da37ae46bf9eab34",
+  "stamp": {
+    "version": "3.8.1",
+    "sha": "232222c",
+    "dirty": false,
+    "dirtyFiles": [],
+    "text": "atlias 3.8.1 @ 232222c"
+  },
+  "tasks": 252,
+  "repeats": 3,
+  "model": "qwen2.5-coder:7b",
+  "totals": {
+    "original": {
+      "passes": [
+        47,
+        49,
+        58
+      ],
+      "majority": 45,
+      "attemptsPassed": 154,
+      "input": 17790579,
+      "output": 873642,
+      "cached": 14877731,
+      "peak": 10056,
+      "total": 18664221,
+      "inputPerOriginalSolve": 115523.24025974025,
+      "wilson": {
+        "lo": 0.13621915955545427,
+        "hi": 0.23057654528691696,
+        "rate": 0.17857142857142858,
+        "n": 252
+      }
+    },
+    "sameText": {
+      "passes": [
+        55,
+        56,
+        57
+      ],
+      "majority": 47,
+      "attemptsPassed": 168,
+      "input": 19346385,
+      "output": 941358,
+      "cached": 16122173,
+      "peak": 12542,
+      "total": 20287743,
+      "inputPerOriginalSolve": 115157.05357142857,
+      "wilson": {
+        "lo": 0.1432531520748461,
+        "hi": 0.23917722672203448,
+        "rate": 0.1865079365079365,
+        "n": 252
+      }
+    }
+  },
+  "gained": [
+    "canitedit-lazy-106_conways_game",
+    "humanevalfix-python-112",
+    "humanevalfix-python-114",
+    "humanevalfix-python-118",
+    "humanevalfix-python-128",
+    "humanevalfix-python-135",
+    "humanevalfix-python-14",
+    "humanevalfix-python-150",
+    "humanevalfix-python-155",
+    "humanevalfix-python-18",
+    "humanevalfix-python-25",
+    "humanevalfix-python-45",
+    "humanevalfix-python-49",
+    "humanevalfix-python-51",
+    "humanevalfix-python-55",
+    "humanevalfix-python-58",
+    "humanevalfix-python-89",
+    "humanevalfix-python-9",
+    "humanevalfix-python-90",
+    "humanevalfix-python-92"
+  ],
+  "lost": [
+    "canitedit-lazy-119_pollards_rho_factorization",
+    "canitedit-lazy-89_palindrome_detector",
+    "humanevalfix-python-1",
+    "humanevalfix-python-106",
+    "humanevalfix-python-11",
+    "humanevalfix-python-110",
+    "humanevalfix-python-111",
+    "humanevalfix-python-120",
+    "humanevalfix-python-123",
+    "humanevalfix-python-145",
+    "humanevalfix-python-15",
+    "humanevalfix-python-163",
+    "humanevalfix-python-40",
+    "humanevalfix-python-41",
+    "humanevalfix-python-67",
+    "humanevalfix-python-77",
+    "humanevalfix-python-82",
+    "humanevalfix-python-94"
+  ],
+  "test": {
+    "n": 38,
+    "p": 0.871414679364537
+  },
+  "ratios": {
+    "input": 1.0874511166837235,
+    "output": 1.0775100098209565,
+    "total": 1.0869857895488915,
+    "peak": 1.2472155926809865,
+    "inputPerOriginalSolve": 0.9968301902934131
+  },
+  "limitations": [
+    "Local Ollama study, not native Codex or Claude Code model usage.",
+    "Historical reports pin task IDs but lack hashes of hidden grader bodies at execution time.",
+    "Equal aggregate grades do not establish same output quality; all losses retained.",
+    "Cached tokens remain input, not avoided calls.",
+    "No model calls used for this replay."
+  ]
+}

@@ -1,0 +1,3 @@
+# Native hash-envelope delivery for Gev
+
+Actual native Codex and Claude Code clients each delivered the complete hash envelope and replacement instructions to an owned localhost fixture, and their scripted responses passed strict source-bound parsing. Zero inference calls. The original combined fixture retained a wrong Claude executable error after Codex passed; the corrected Claude-only fixture is separate. Claude used bare mode with a fake local key, so subscription-mode activation remains unverified. Codex custom-provider fallback metadata and residual tools remain explicit limitations. No model-token savings, quality or feature-parity claim.
