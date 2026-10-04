@@ -8,7 +8,7 @@ import {pluginExecutor,PLUGIN_TOOLS} from './plugins.mjs';
 import {manifest} from './knowledge.mjs';
 import {hash} from './migrate.mjs';
 import {workflow,DELEGATE_TOOL,ROLES,roleConfig} from './workflows.mjs';
-import {nextJob,targetHashes,implementationHashes,acceptJob,saveJob,actionCue,jobIdentity} from './jobs.mjs';
+import {nextJob,targetHashes,implementationHashes,acceptJob,saveJob,actionCue,jobIdentity,jobExecutor} from './jobs.mjs';
 import {snapshot} from './progress.mjs';
 
 export const RULES=`You work for Gev. Every user-facing reply starts Okay Gev; no emojis.
@@ -119,7 +119,7 @@ export async function work(root,{once=false}={}) {
         flow.update('code');
       }
       if(job&&!flow)guidance=`\n${job.title}\n${job.contract}\nTargets: ${job.targets.join(', ')}\nAcceptance: node ${job.check.file} ${job.check.args.join(' ')}`;
-      const baseExecute=executor(cfg.knowledge,plugins);
+      const ordinaryExecute=executor(cfg.knowledge,plugins),baseExecute=job?jobExecutor(job,ordinaryExecute):ordinaryExecute;
       let delegated=0,readStreak=0;
       const execute=async(s,call,ask)=>{
         if(fs.existsSync(path.join(root,'STOP')))throw Error('Operator STOP requested; phase receipts retained');

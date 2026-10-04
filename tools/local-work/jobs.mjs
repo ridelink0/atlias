@@ -32,3 +32,19 @@ export function saveJob(root,selected,job,{accepted=false,round,receipt,initialT
  atomic(path.join(root,'JOB-PROGRESS.json'),{completed,active:accepted?null:{...(selected.active?.id===job.id?selected.active:{}),id:job.id,title:job.title,round,...(initialTargets?{initialTargets}:{})},at:new Date().toISOString()});
 }
 export function actionCue(reads,job){return reads>0&&reads%5===0?`\nController direction: ${reads} read-only calls without an edit. Finish the declared task ${job.title}. Target: ${job.targets.join(', ')}. Use the existing evidence to implement, run the visible acceptance check, adversarially inspect, and write LOCAL-PROGRESS.md. Further reads must resolve a specific missing fact; do not restart archive research.`:'';}
+export function jobExecutor(job,base){
+ return async(state,call,ask)=>{
+  if(call.tool==='read_file'&&path.resolve(state.cwd,call.path||'.')===path.resolve(job.check.file)){
+   const bytes=fs.readFileSync(job.check.file);if(hash(bytes)!==job.check.sha256)throw Error('public engineering check changed');
+   const offset=call.offset??1,limit=call.limit??200;if(!Number.isSafeInteger(offset)||offset<1||!Number.isSafeInteger(limit)||limit<1)return 'Public acceptance read needs positive safe integer offset/limit.';
+   const lines=bytes.toString('utf8').split(/\r?\n/),selected=lines.slice(offset-1,offset-1+Math.min(limit,200));
+   return JSON.stringify({path:job.check.file,sourceHash:job.check.sha256,totalLines:lines.length,returnedLineCount:selected.length,endLine:selected.length?offset+selected.length-1:null,text:selected.map((s,i)=>`${offset+i}: ${s}`).join('\n'),publicEngineeringAcceptance:true});
+  }
+  if(['write_file','edit_file','apply_patch'].includes(call.tool)){
+   const paths=call.tool==='apply_patch'?(await import('../../lib/loop.mjs')).parsePatch(String(call.input||'')).hunks?.flatMap(h=>[h.path,...(h.moveTo?[h.moveTo]:[])])||[]:[call.path];
+   const allowed=new Set([...job.targets,'LOCAL-PROGRESS.md']);
+   if(!paths.length||paths.some(p=>typeof p!=='string'||!allowed.has(path.relative(state.cwd,path.resolve(state.cwd,p)).replaceAll('\\','/'))))return `This engineering task permits source edits only to ${job.targets.join(', ')} and LOCAL-PROGRESS.md. Run the declared public acceptance instead of creating unrelated debug files. Original files remain protected.`;
+  }
+  return base(state,call,ask);
+ };
+}
