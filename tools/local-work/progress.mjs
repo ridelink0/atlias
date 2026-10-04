@@ -13,7 +13,7 @@ export const GOALS=Object.freeze([
 ]);
 export const STAGES=['research','plan','code','review','independent-check'];
 export function goalQualified(id,audit){
- if(audit?.independent!==true||audit?.status!=='verified'||audit?.normalCapabilities!==true||!['codex','claude'].every(h=>audit.hosts?.includes(h)))return false;
+ if(audit?.independent!==true||audit?.status!=='verified'||audit?.normalCapabilities!==true||!Array.isArray(audit.hosts)||!['codex','claude'].every(h=>audit.hosts.includes(h)))return false;
  if(id==='tokens'||id==='context')return audit.fullCostKnown===true&&Number.isFinite(audit.ratio)&&audit.ratio>0&&audit.ratio<=0.05&&audit.sameOrBetter===true&&audit.metric===(id==='tokens'?'total-tokens':'full-native-peak-context');
  if(id==='allowance')return audit.causalMatched===true&&audit.sameOrBetter===true&&Number.isFinite(audit.usefulWorkRatio)&&audit.usefulWorkRatio>=25;
  if(id==='codex'||id==='claude')return audit.genuineActivation===true&&audit.fullDeliveryVerified===true&&audit.sameOrBetter===true;
@@ -27,7 +27,7 @@ export function snapshot(root,{now=new Date(),live=false}={}){
  // Goal promotion requires a separate independent audit; none is qualified yet.
  const pin=read(root,'CONTROLLER-PIN.json',warnings);
  const goals=GOALS.map(([id,title,requirement])=>{
-  let verified=false;const record=pin?.goalAudits?.find?.(r=>r.id===id);
+  let verified=false;const record=Array.isArray(pin?.goalAudits)?pin.goalAudits.find(r=>r?.id===id):null;
   if(record){try{const bytes=fs.readFileSync(record.file);if(crypto.createHash('sha256').update(bytes).digest('hex')!==record.sha256)throw Error('changed audit');verified=goalQualified(id,JSON.parse(bytes));if(!verified)warnings.push(`${title}: audit does not meet the requirement`);}catch{warnings.push(`${title}: pinned audit unavailable or changed`);}}
   return {id,title,requirement,verified};
  });

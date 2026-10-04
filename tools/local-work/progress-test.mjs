@@ -19,10 +19,11 @@ try{
  write('GOAL-PROGRESS.json',{goalPercent:100,verifiedGoals:7});check('model self-claims do not advance goal',()=>assert.equal(snapshot(root).goalPercent,0));
  const audit={independent:true,status:'verified',normalCapabilities:true,hosts:['codex','claude'],fullCostKnown:true,ratio:0.05,sameOrBetter:true,metric:'total-tokens'};
  check('exact 20x token boundary permitted',()=>assert(goalQualified('tokens',audit)));
- for(const patch of [{ratio:0.051},{ratio:0},{ratio:NaN},{ratio:'0.01'},{normalCapabilities:false},{hosts:['codex']},{fullCostKnown:false},{sameOrBetter:false},{metric:'input-characters'},{independent:false}])check('unqualified goal evidence rejected',()=>assert(!goalQualified('tokens',{...audit,...patch})));
+ for(const patch of [{ratio:0.051},{ratio:0},{ratio:NaN},{ratio:'0.01'},{normalCapabilities:false},{hosts:['codex']},{hosts:{}},{hosts:'codex claude'},{fullCostKnown:false},{sameOrBetter:false},{metric:'input-characters'},{independent:false}])check('unqualified goal evidence rejected',()=>assert(!goalQualified('tokens',{...audit,...patch})));
  const auditFile=path.join(root,'audit.json');write('audit.json',audit);write('CONTROLLER-PIN.json',{goalAudits:[{id:'tokens',file:auditFile,sha256:crypto.createHash('sha256').update(fs.readFileSync(auditFile)).digest('hex')}]});
  check('pinned independent audit advances one requirement',()=>assert.deepEqual([snapshot(root).goalPercent,snapshot(root).verifiedGoals],[14,1]));
  fs.appendFileSync(auditFile,' ');check('changed audit fails closed',()=>assert.equal(snapshot(root).goalPercent,0));
+ write('CONTROLLER-PIN.json',{goalAudits:{find:'malformed'}});check('malformed audit registry cannot crash progress',()=>assert.equal(snapshot(root).goalPercent,0));
  for(const [n,d,expected] of [[-1,5,0],[10,5,100],[3,5,60],[1,0,0],[NaN,5,0],[1,Infinity,0],['3',5,0]])check('bounded finite percentage',()=>assert.equal(percent(n,d),expected));
  write('JOB-PROGRESS.json',{active:{title:'Evidence delivery'},completed:[{}]});check('actual task progress reported separately',()=>assert.equal(snapshot(root).completedJobs,1));
  fs.writeFileSync(path.join(root,'STATUS.json'),'invalid');check('malformed status surfaced',()=>assert(snapshot(root).warnings.includes('STATUS.json: unreadable')));
