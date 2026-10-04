@@ -1,5 +1,5 @@
 import fs from 'node:fs';import os from 'node:os';import path from 'node:path';import assert from 'node:assert/strict';
-import {nextJob,saveJob,validateJobs,targetHashes,acceptJob,actionCue,jobIdentity} from './jobs.mjs';import {hash} from './migrate.mjs';
+import {nextJob,saveJob,validateJobs,targetHashes,implementationHashes,acceptJob,actionCue,jobIdentity} from './jobs.mjs';import {hash} from './migrate.mjs';
 const root=fs.mkdtempSync(path.join(os.tmpdir(),'gev-jobs-'));let n=0;const c=(name,fn)=>{fn();n++;console.log('PASS '+name);};
 try{
  const check=path.join(root,'independent.mjs');fs.writeFileSync(check,'assertion');const job={id:'evidence',title:'Evidence windows',contract:'Full source hash; accurate complete lines',targets:['evidence.mjs'],check:{file:check,sha256:hash(fs.readFileSync(check)),args:[]}};
@@ -16,5 +16,7 @@ try{
  const result=await acceptJob(job,root,{}, {run:async(program,args)=>({code:0,program,args})});c('exact pinned check invoked',()=>assert.deepEqual(result.args,[check]));
  fs.appendFileSync(check,'changed');await assert.rejects(acceptJob(job,root,{}),/changed/);n++;
  c('definition binds full contract',()=>assert.notEqual(jobIdentity(job),jobIdentity({...job,title:'Other'})));
+ fs.mkdirSync(path.join(root,'tools'));const before=implementationHashes(root);fs.writeFileSync(path.join(root,'LOCAL-PROGRESS.md'),'Handoff only');c('handoff alone is not implementation',()=>assert.deepEqual(implementationHashes(root),before));
+ fs.writeFileSync(path.join(root,'tools','real.mjs'),'export const value=0');c('new untracked source counts as actual implementation',()=>assert.notDeepEqual(implementationHashes(root),before));
 }finally{fs.rmSync(root,{recursive:true,force:true});}
 console.log(`PASS ${n} durable engineering task controls`);

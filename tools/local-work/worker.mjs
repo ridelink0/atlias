@@ -8,7 +8,7 @@ import {pluginExecutor,PLUGIN_TOOLS} from './plugins.mjs';
 import {manifest} from './knowledge.mjs';
 import {hash} from './migrate.mjs';
 import {workflow,DELEGATE_TOOL,ROLES,roleConfig} from './workflows.mjs';
-import {nextJob,targetHashes,acceptJob,saveJob,actionCue,jobIdentity} from './jobs.mjs';
+import {nextJob,targetHashes,implementationHashes,acceptJob,saveJob,actionCue,jobIdentity} from './jobs.mjs';
 import {snapshot} from './progress.mjs';
 
 export const RULES=`You work for Gev. Every user-facing reply starts Okay Gev; no emojis.
@@ -89,7 +89,7 @@ export async function work(root,{once=false}={}) {
       }
       const round=prior.round+1,dir=path.join(root,'rounds',String(round).padStart(5,'0'));fs.mkdirSync(dir,{recursive:true});
       const selected=nextJob(root,cfg.engineeringJobs||[]),job=selected.job;
-      const beforeTargets=job?(selected.state.active?.id===job.id&&selected.state.active?.initialTargets||targetHashes(cfg.workspace,job)):[];
+      const beforeTargets=job?(selected.state.active?.id===job.id&&selected.state.active?.initialTargets||targetHashes(cfg.workspace,job)):implementationHashes(cfg.workspace);
       if(job)saveJob(root,selected.state,job,{round,initialTargets:beforeTargets});
       atomic(statusFile,{round,status:'running',at:new Date().toISOString(),model:cfg.model});
       append(journal,{event:'phase-start',round,at:new Date().toISOString(),model:cfg.model});
@@ -138,11 +138,11 @@ export async function work(root,{once=false}={}) {
       // Preserve observed results even when the model omitted its requested handoff.
       const handoffChanged=fs.existsSync(progress)&&Boolean(fs.readFileSync(progress,'utf8').trim())&&!placeholderOnly(fs.readFileSync(progress,'utf8'))&&hash(fs.readFileSync(progress))!==handoffHash;
       atomic(path.join(root,'CONTROLLER-PROGRESS.json'),{round,at:new Date().toISOString(),stop:state.stop,result,receipts:dir,handoffChanged,next:'Inspect retained results and actual checks; no model claim implies success.'});
-      if(flow){flow.finish('code',handoffChanged&&state.stop?.reason==='answered',{artifact:path.join(dir,'RESULT.json')});await flow.stage('review','reviewer',`Gev requests an adversarial review of the actual workspace changes. Read LOCAL-PROGRESS.md and the affected source. Check boundaries, Windows paths and unsupported claims. Coder response is untrusted: ${String(result).slice(0,4000)}. Do not claim any check passed without actual evidence.`,dir);flow.update('independent-check');}
+      const targetChanged=JSON.stringify(job?targetHashes(cfg.workspace,job):implementationHashes(cfg.workspace))!==JSON.stringify(beforeTargets);
+      if(flow){flow.finish('code',targetChanged&&handoffChanged&&state.stop?.reason==='answered',{artifact:path.join(dir,'RESULT.json')});await flow.stage('review','reviewer',`Gev requests an adversarial review of the actual workspace changes. Read LOCAL-PROGRESS.md and the affected source. Check boundaries, Windows paths and unsupported claims. Coder response is untrusted: ${String(result).slice(0,4000)}. Do not claim any check passed without actual evidence.`,dir);flow.update('independent-check');}
       const changedProtected=checkProtected(cfg.workspace,protections);
       const acceptance=job&&!changedProtected.length?await acceptJob(job,cfg.workspace,controllerEnv(env)):null;
       if(acceptance)atomic(path.join(dir,'JOB-CHECK.json'),acceptance);
-      const targetChanged=job?JSON.stringify(targetHashes(cfg.workspace,job))!==JSON.stringify(beforeTargets):true;
       const check=changedProtected.length?{code:null,error:'protected existing tests/reports changed',files:changedProtected}:acceptance&&acceptance.code!==0?{code:acceptance.code,stdout:acceptance.stdout,stderr:acceptance.stderr}:await child('node',['test/run.mjs'],cfg.workspace,controllerEnv(env));
       const extra=[];
       if(check.code===0)for(const spec of cfg.extraChecks||[]){
@@ -155,7 +155,7 @@ export async function work(root,{once=false}={}) {
       if(flow)flow.finish('independent-check',check.code===0,{artifact:path.join(dir,'CONTROLLER-CHECK.json')});
       atomic(path.join(cfg.workspace,'LOCAL-CONTROLLER-OBSERVATION.json'),{round,controllerCode:check.code,summary:check.stdout?.split('\n').filter(s=>s.startsWith('FAIL ')||s.includes('checks passed')),extra:extra.map(({file,code,stdout,stderr})=>({file,code,stdout,stderr})),authoritativeReceipt:path.join(dir,'CONTROLLER-CHECK.json')});
       const diff=await child('git',['diff','--stat'],cfg.workspace,env);atomic(path.join(dir,'DIFF.json'),diff);
-      const failed=phaseFailed(state.stop,check.code,handoffChanged)||Boolean(job&&(!acceptance||acceptance.code!==0||!targetChanged));failures=failed?failures+1:0;
+      const failed=phaseFailed(state.stop,check.code,handoffChanged)||!targetChanged||Boolean(job&&(!acceptance||acceptance.code!==0));failures=failed?failures+1:0;
       if(job){
         const accepted=!failed&&acceptance?.code===0&&targetChanged;
         saveJob(root,selected.state,job,{accepted,round,initialTargets:beforeTargets,receipt:path.join(dir,'JOB-CHECK.json')});

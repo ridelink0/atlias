@@ -19,6 +19,10 @@ export function nextJob(root,jobs){
  return {state,job};
 }
 export function targetHashes(workspace,job){return job.targets.map(p=>[p,fs.existsSync(path.join(workspace,p))?hash(fs.readFileSync(path.join(workspace,p))):null]);}
+export function implementationHashes(workspace){
+ const rows=[];function walk(folder){if(!fs.existsSync(folder))return;for(const e of fs.readdirSync(folder,{withFileTypes:true}).sort((a,b)=>a.name.localeCompare(b.name))){const p=path.join(folder,e.name);if(e.isSymbolicLink())continue;if(e.isDirectory()&&!['node_modules','.git'].includes(e.name))walk(p);else if(e.isFile()&&/\.(?:mjs|js|py|ps1|html|css)$/.test(e.name))rows.push([path.relative(workspace,p),hash(fs.readFileSync(p))]);}}
+ for(const folder of ['lib','tools','bin'])walk(path.join(workspace,folder));return rows;
+}
 export async function acceptJob(job,workspace,env,{run=child}={}){
  if(hash(fs.readFileSync(job.check.file))!==job.check.sha256)throw Error('independent job check changed');
  return run('node',[job.check.file,...job.check.args],workspace,env);
