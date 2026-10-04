@@ -1,0 +1,20 @@
+import fs from 'node:fs';import os from 'node:os';import path from 'node:path';import assert from 'node:assert/strict';
+import {nextJob,saveJob,validateJobs,targetHashes,acceptJob,actionCue,jobIdentity} from './jobs.mjs';import {hash} from './migrate.mjs';
+const root=fs.mkdtempSync(path.join(os.tmpdir(),'gev-jobs-'));let n=0;const c=(name,fn)=>{fn();n++;console.log('PASS '+name);};
+try{
+ const check=path.join(root,'independent.mjs');fs.writeFileSync(check,'assertion');const job={id:'evidence',title:'Evidence windows',contract:'Full source hash; accurate complete lines',targets:['evidence.mjs'],check:{file:check,sha256:hash(fs.readFileSync(check)),args:[]}};
+ c('new queue selects first task',()=>assert.equal(nextJob(root,[job]).job.id,'evidence'));
+ saveJob(root,{completed:[]},job,{round:1});c('unsuccessful phase retains SAME task',()=>assert.equal(nextJob(root,[job]).job.id,'evidence'));
+ saveJob(root,{completed:[],active:{id:job.id,initialTargets:[['evidence.mjs',null]]}},job,{round:2});c('interruption preserves original implementation baseline',()=>assert.deepEqual(nextJob(root,[job]).state.active.initialTargets,[['evidence.mjs',null]]));
+ saveJob(root,{completed:[]},job,{accepted:true,round:2,receipt:'retained'});c('accepted task advances',()=>assert.equal(nextJob(root,[job]).job,undefined));
+ c('changed contract cannot inherit old acceptance',()=>assert(nextJob(root,[{...job,contract:'New contract'}]).job));
+ c('missing target cannot count as changed implementation',()=>assert.deepEqual(targetHashes(root,job),[['evidence.mjs',null]]));
+ fs.writeFileSync(path.join(root,'evidence.mjs'),'Gev');c('actual implementation hash captured',()=>assert.equal(targetHashes(root,job)[0][1],hash(Buffer.from('Gev'))));
+ c('advice at fifth read',()=>assert.match(actionCue(5,job),/IMPLEMENT|implement/));c('no repeated advice between boundaries',()=>assert.equal(actionCue(6,job),''));
+ for(const targets of [['../evil.mjs'],['C:/evil.mjs'],['a\\b.mjs'],[],['test.txt']])c('unsafe target refused',()=>assert.throws(()=>validateJobs([{...job,targets}])));
+ c('duplicate queue IDs refused',()=>assert.throws(()=>validateJobs([job,job])));c('missing contract refused',()=>assert.throws(()=>validateJobs([{...job,contract:''}])));
+ const result=await acceptJob(job,root,{}, {run:async(program,args)=>({code:0,program,args})});c('exact pinned check invoked',()=>assert.deepEqual(result.args,[check]));
+ fs.appendFileSync(check,'changed');await assert.rejects(acceptJob(job,root,{}),/changed/);n++;
+ c('definition binds full contract',()=>assert.notEqual(jobIdentity(job),jobIdentity({...job,title:'Other'})));
+}finally{fs.rmSync(root,{recursive:true,force:true});}
+console.log(`PASS ${n} durable engineering task controls`);
