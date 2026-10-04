@@ -8,6 +8,9 @@ function Get-GevNotice($data) {
   if ($data.status -match 'FAILED|HELD|attention|complete|qualified|goal-achieved') { return "Local Atlias: $($data.status)" }
   return $null
 }
+function Test-GevNoticeFresh([hashtable]$seen,[string]$file,[string]$hash,[string]$text) {
+  return ($seen[$file] -ne $hash -and -not $seen.ContainsKey('notice:'+$text))
+}
 Add-Type -TypeDefinition @'
 using System.Runtime.InteropServices;
 public static class GevLocalPower {
@@ -22,12 +25,14 @@ if ($SelfTest) {
   if (-not (Get-GevNotice @{status='HELD'})) { throw 'Held notification missing' }
   if (-not (Get-GevNotice @{status='needs-repair';failures=3})) { throw 'Persistent recovery notification missing' }
   if ($null -ne (Get-GevNotice @{status='needs-repair';failures=1})) { throw 'First repair phase should not generate repeated alerts' }
+  if (Test-GevNoticeFresh @{'notice:same recovery'=$true} 'RECOVERY.json' 'different-file-hash' 'same recovery') { throw 'Duplicate cross-file recovery notice' }
+  if (-not (Test-GevNoticeFresh @{} 'RECOVERY.json' 'fresh-hash' 'new recovery')) { throw 'New notice suppressed' }
   if ([GevLocalPower]::SetThreadExecutionState([uint32]2147483648) -eq 0) { throw 'Native keep-awake API failed' }
   Add-Type -AssemblyName System.Windows.Forms
   Add-Type -AssemblyName System.Drawing
   $gevProbe=New-Object System.Windows.Forms.NotifyIcon
   $gevProbe.Dispose()
-  Write-Output 'PASS: seven state controls, native notification object and keep-awake API'
+  Write-Output 'PASS: nine state/dedup controls, native notification object and keep-awake API'
   exit 0
 }
 $gevCreated=$false
@@ -63,7 +68,7 @@ try {
         $gevHasher=[System.Security.Cryptography.SHA256]::Create()
         try { $gevHash=[BitConverter]::ToString($gevHasher.ComputeHash($gevBytes)).Replace('-','') } finally { $gevHasher.Dispose() }
         $gevNoticeKey='notice:'+$gevText
-        if ($gevSeen[$gevFile] -eq $gevHash -or $gevSeen.ContainsKey($gevNoticeKey)) { continue }
+        if (-not (Test-GevNoticeFresh $gevSeen $gevFile $gevHash $gevText)) { continue }
         $gevIcon.ShowBalloonTip(10000,'Gev local Atlias',"Okay Gev. $gevText",[System.Windows.Forms.ToolTipIcon]::Info)
         $gevReceipt=@{at=[DateTime]::UtcNow.ToString('o');file=$gevFile;sha256=$gevHash;message=$gevText;nativeApiAccepted=$true;visualDeliveryVerified=$false}
         Add-Content -LiteralPath "$gevRoot/NOTIFICATIONS.jsonl" -Value ($gevReceipt | ConvertTo-Json -Compress)
