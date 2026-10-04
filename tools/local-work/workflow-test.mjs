@@ -1,0 +1,34 @@
+import fs from 'node:fs';import os from 'node:os';import path from 'node:path';import assert from 'node:assert/strict';
+import {workflow,roleConfig,readOnlyExecutor,completedSteps,ROLES,READ_TOOLS} from './workflows.mjs';
+import {localChat} from './runtime.mjs';
+const root=fs.mkdtempSync(path.join(os.tmpdir(),'gev-local-workflow-'));let checks=0;
+const test=async(name,fn)=>{await fn();checks++;console.log(`PASS ${name}`);};
+const cfg={model:'local-coder:latest',modelDigest:'a'.repeat(64),url:'http://127.0.0.1:11435',context:8192,workspace:root,knowledge:root};
+try {
+ for(const role of Object.keys(ROLES))await test(`${role} pinned local role`,()=>assert.equal(roleConfig(cfg,role).model,cfg.model));
+ for(const role of ['coder','__proto__','toString','',null])await test('unknown child role denied',()=>assert.throws(()=>roleConfig(cfg,role)));
+ await test('remote role endpoint denied',()=>assert.throws(()=>roleConfig({...cfg,roles:{reviewer:{url:'https://example.com'}}},'reviewer')));
+ await test('remote main endpoint denied',()=>assert.throws(()=>roleConfig({...cfg,url:'https://example.com'},'researcher')));
+ await test('cloud model denied',()=>assert.throws(()=>roleConfig({...cfg,model:'coder-cloud'},'researcher')));
+ await test('unhashed role denied',()=>assert.throws(()=>roleConfig({...cfg,modelDigest:null},'planner')));
+ await test('invalid context denied',()=>assert.throws(()=>roleConfig({...cfg,context:0},'planner')));
+ let executed=0;const guarded=readOnlyExecutor(async()=>{executed++;return 'actual read';});
+ for(const tool of ['write_file','edit_file','apply_patch','shell','delegate_local','mcp_plugin','unknown'])await test(`${tool} denied to child`,async()=>{const n=executed;assert.equal(JSON.parse(await guarded({}, {tool})).status,'error');assert.equal(executed,n);});
+ for(const tool of READ_TOOLS)await test(`${tool} permitted to child`,async()=>assert.equal(await guarded({}, {tool}),'actual read'));
+ await test('steps count only completed receipts',()=>assert.equal(completedSteps({steps:{research:{completed:true},plan:{completed:false},madeUp:{completed:true}}}),1));
+ let active=0,peak=0;const seen=[];
+ const fakeRun=async(state,task)=>{active++;peak=Math.max(peak,active);seen.push({sid:state.sid,messages:state.messages.length,task});await new Promise(r=>setTimeout(r,5));state.stop={reason:'answered'};active--;return 'Okay Gev: advisory fixture';};
+ const flow=workflow(root,cfg,{run:fakeRun,chatFactory:()=>null,verify:async()=>{}});flow.begin(1);
+ const dir=path.join(root,'phase');
+ const results=await Promise.all(['researcher','planner','reviewer'].map(r=>flow.delegate(r,'Read actual source',dir)));
+ await test('parallel submissions serialize model work',()=>assert.equal(peak,1));
+ await test('each role has a fresh conversation',()=>{assert.equal(new Set(seen.map(x=>x.sid)).size,3);assert(seen.every(x=>x.messages===1));});
+ await test('roles persist separate complete artifacts',()=>{assert.equal(new Set(results.map(x=>x.artifacts[0])).size,3);for(const r of results){const saved=JSON.parse(fs.readFileSync(r.artifacts[0]));assert(saved.advisory&&saved.answered);assert.equal(saved.messages.length,1);}});
+ await test('lease released after roles finish',()=>assert(!fs.existsSync(path.join(root,'LOCAL-ROLE.lock'))));
+ for(const task of ['',null,'x'.repeat(24001)])await test('missing or oversize task rejected',async()=>await assert.rejects(flow.delegate('researcher',task,dir)));
+ const errorFlow=workflow(root,cfg,{run:async()=>{throw Error('fixture model failed');},chatFactory:()=>null,verify:async()=>{}});
+ await test('role failure cannot establish completed stage',async()=>{errorFlow.begin(2);const r=await errorFlow.stage('research','researcher','New bounded task',dir);assert.equal(r.status,'error');assert.equal(JSON.parse(fs.readFileSync(path.join(root,'WORKFLOW-STATUS.json'))).completedSteps,0);assert(!fs.existsSync(path.join(root,'LOCAL-ROLE.lock')));});
+ await test('native child schemas omit editing and shell tools',async()=>{let body;const chat=localChat({...cfg,ledger:path.join(root,'ledger.jsonl'),extraTools:[],toolFilter:t=>READ_TOOLS.has(t.function.name),post:async(_u,b)=>{body=b;return {status:200,json:{message:{content:'read-only'},done_reason:'stop',prompt_eval_count:1,eval_count:1}};}});await chat([{role:'user',content:'Gev fixture'}],['read_file','write_file','shell'].map(name=>({type:'function',function:{name,parameters:{type:'object',properties:{}}}})));assert.deepEqual(body.tools.map(t=>t.function.name),['read_file']);});
+ flow.finish('code',true);await test('progress has real bounded steps, not goal percentage',()=>{const s=JSON.parse(fs.readFileSync(path.join(root,'WORKFLOW-STATUS.json')));assert.equal(s.completedSteps,1);assert.equal(s.totalSteps,5);assert.equal(s.cloudInference,false);});
+ console.log(`${checks} local workflow controls passed; 0 model calls`);
+}finally{fs.rmSync(root,{recursive:true,force:true});}

@@ -1,5 +1,11 @@
 # Local Atlias continuation for Gev
 
+## Local workflows and subagents
+
+An explicit `workflows: true` profile runs research, planning, coding, advisory review and independent checks in that order. Researcher, planner and reviewer use separate local Ollama conversations with read-only tools, pinned model digests and serialized GPU requests. The coder can call `delegate_local` up to three times per phase. Complete requests, responses and advisory results remain in each phase's `subagents` folder. No cloud subagent is involved. A role answering is not evidence that its advice is correct.
+
+`WORKFLOW-STATUS.json` records five actual steps for the local progress panel. This is phase progress, not a percentage of the unproved20x goal. With `continueAfterFailures: true`, unsuccessful development phases retain all receipts, rotate through the configured task focus and cool down up to30 minutes; protected-file changes or system failures still require attention. Failed benchmark attempts are never retried or regraded. The PC must remain powered on; login startup restores the checkpointed worker and the notification watcher.
+
 This runner uses a local Ollama model with Atlias's real read/edit/search/check loop, native function calls, typed archive retrieval and an on-demand stdio MCP adapter. It makes no OpenAI or Anthropic inference calls. A loopback URL and a declared local model are required. It does not train model weights or turn a Plus subscription into Pro.
 
 Research and planning precede changes: Claude's completed research, the pinned Gray `9e4d924` checkout and Claude Harness/Agnostic AI `d32f5d3` checkout are preserved in the migration. Gray informs bounded observations, stable tool semantics and explicit tool-result completion. Claude Harness informs prerequisite-aware, deduplicated retrieval instead of loading every plugin and old session into every request. The local policy preserves useful factuality, normal capabilities, independent grading and separate total-token/full-peak goals.

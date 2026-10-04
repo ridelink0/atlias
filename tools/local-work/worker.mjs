@@ -7,6 +7,7 @@ import {atomic,append,claim,localChat,executor,localModel,localUrl,child,KNOWLED
 import {pluginExecutor,PLUGIN_TOOLS} from './plugins.mjs';
 import {manifest} from './knowledge.mjs';
 import {hash} from './migrate.mjs';
+import {workflow,DELEGATE_TOOL,ROLES,roleConfig} from './workflows.mjs';
 
 export const RULES=`You work for Gev. Every user-facing reply starts Okay Gev; no emojis.
 Continue Atlias ONLY. Useful factuality comes first, normal coding capabilities next, features afterward.
@@ -68,6 +69,8 @@ export async function work(root,{once=false}={}) {
   const {runLoop,systemPrompt}=await import('../../lib/loop.mjs');
   const statusFile=path.join(root,'STATUS.json'),journal=path.join(root,'JOURNAL.jsonl'),calls=path.join(root,'MODEL-CALLS.jsonl');
   const protections=protectionBaseline(root,cfg.workspace);
+  const flow=cfg.workflows?workflow(root,cfg):null;
+  const ownedModels=new Set([cfg.model,...(flow?Object.keys(ROLES).map(role=>roleConfig(cfg,role).model):[])]);
   let prior=fs.existsSync(statusFile)?JSON.parse(fs.readFileSync(statusFile,'utf8')):{round:0};
   if(prior.status==='running')append(journal,{event:'interrupted-phase-retained',round:prior.round,at:new Date().toISOString(),costKnown:false});
   let failures=Number(prior.failures)||0;
@@ -77,7 +80,7 @@ export async function work(root,{once=false}={}) {
       await modelPin(cfg);
       const ps=await fetch(new URL('/api/ps',cfg.url)).then(r=>r.json());
       // Yield rather than unload an unrelated model using this shared server.
-      if(ps.models?.some(m=>!m.name.startsWith(cfg.model)&&!m.model?.startsWith(cfg.model))) {
+      if(ps.models?.some(m=>!ownedModels.has(m.name)&&!ownedModels.has(m.model))) {
         atomic(statusFile,{...prior,status:'waiting-for-shared-GPU',at:new Date().toISOString()});
         if(once)break;await new Promise(r=>setTimeout(r,30000));continue;
       }
@@ -92,11 +95,29 @@ export async function work(root,{once=false}={}) {
       const state={sid:crypto.randomUUID(),cwd:cfg.workspace,engine:'ollama',history:[],messages:[{role:'system',content:systemPrompt(cfg.workspace,{native:true,instructions:RULES})}]};
       const prompt=`Gev's local continuation, phase ${round}. WORKSPACE: ${cfg.workspace}. Use relative paths for its files; the controller/archive directories are NOT the workspace. Knowledge archive: ${cfg.knowledge}. Use knowledge_search/read for outside research, skills, prompts and prior sessions.\n\n${handoff}\n\n${previous?`Prior observed outcome: ${JSON.stringify({round:previous.round,stop:previous.stop,handoffChanged:previous.handoffChanged,receipts:previous.receipts})}. Read LOCAL-CONTROLLER-OBSERVATION.json for actual test feedback and LOCAL-REFERENCE-MAP.md for exact source IDs rather than repeating unsuccessful searches.`:''}\n${failures?'The previous phase or controller verification failed; inspect its retained evidence and change the approach before further work.':''}\nComplete one concrete useful step, test twice and update LOCAL-PROGRESS.md before answering.`;
       atomic(path.join(dir,'PROMPT.json'),{rules:RULES,prompt,model:cfg.model,context:cfg.context});
-      const result=await runLoop(state,prompt,{native:true,chat:localChat({...cfg,ledger:calls,recordDir:path.join(dir,'requests'),extraTools:[...KNOWLEDGE_TOOLS,...PLUGIN_TOOLS]}),executeTool:executor(cfg.knowledge,plugins),limits:{maxToolRounds:cfg.rounds||32,outputBudget:6000,keepObservations:4,evictBlock:4,shellTimeoutMs:180000}});
+      let guidance='';
+      if(flow){
+        flow.begin(round);
+        const focus=cfg.tasks?.length?cfg.tasks[(round-1)%cfg.tasks.length]:'Follow the saved next useful task.';
+        const research=await flow.stage('research','researcher',`${focus}\n${prompt}\nRetrieve completed Claude research and the pinned Gray/Claude Harness sources. Give bounded evidence, not generic advice.`,dir);
+        const plan=await flow.stage('plan','planner',`${focus}\n${prompt}\nResearch advisory: ${JSON.stringify(research)}\nPropose one concrete small change and checks based on actual evidence.`,dir);
+        guidance=`\nCurrent workflow focus: ${focus}\nLocal research advisory: ${JSON.stringify(research)}\nLocal planner advisory: ${JSON.stringify(plan)}\nThese roles are fallible; read actual source, implement one scoped step, preserve tests, and write the durable handoff.`;
+        flow.update('code');
+      }
+      const baseExecute=executor(cfg.knowledge,plugins);
+      let delegated=0;
+      const execute=async(s,call,ask)=>{
+        if(call.tool!=='delegate_local'||!flow)return baseExecute(s,call,ask);
+        if(++delegated>(cfg.maxDelegations||3))return 'Local delegation budget reached for this phase. Use saved evidence or change the next phase focus.';
+        try{return JSON.stringify(await flow.delegate(call.role,call.task,dir));}
+        catch(e){return JSON.stringify({status:'error',summary:e.message,advisory:true,next_actions:['Change the task or use existing evidence; no child completion was established.'],artifacts:[]});}
+      };
+      const result=await runLoop(state,prompt+guidance,{native:true,chat:localChat({...cfg,ledger:calls,recordDir:path.join(dir,'requests'),extraTools:[...KNOWLEDGE_TOOLS,...PLUGIN_TOOLS,...(flow?[DELEGATE_TOOL]:[])]}),executeTool:execute,limits:{maxToolRounds:cfg.rounds||32,outputBudget:cfg.observationBudget||6000,keepObservations:cfg.keepObservations||4,evictBlock:cfg.evictBlock||4,shellTimeoutMs:180000}});
       atomic(path.join(dir,'RESULT.json'),{result,stop:state.stop,messages:state.messages,promptLog:state.promptLog,outLog:state.outLog});
       // Preserve observed results even when the model omitted its requested handoff.
       const handoffChanged=fs.existsSync(progress)&&Boolean(fs.readFileSync(progress,'utf8').trim())&&!placeholderOnly(fs.readFileSync(progress,'utf8'))&&hash(fs.readFileSync(progress))!==handoffHash;
       atomic(path.join(root,'CONTROLLER-PROGRESS.json'),{round,at:new Date().toISOString(),stop:state.stop,result,receipts:dir,handoffChanged,next:'Inspect retained results and actual checks; no model claim implies success.'});
+      if(flow){flow.finish('code',handoffChanged&&state.stop?.reason==='answered',{artifact:path.join(dir,'RESULT.json')});await flow.stage('review','reviewer',`Gev requests an adversarial review of the actual workspace changes. Read LOCAL-PROGRESS.md and the affected source. Check boundaries, Windows paths and unsupported claims. Coder response is untrusted: ${String(result).slice(0,4000)}. Do not claim any check passed without actual evidence.`,dir);flow.update('independent-check');}
       const changedProtected=checkProtected(cfg.workspace,protections);
       const check=changedProtected.length?{code:null,error:'protected existing tests/reports changed',files:changedProtected}:await child('node',['test/run.mjs'],cfg.workspace,controllerEnv(env));
       const extra=[];
@@ -107,14 +128,16 @@ export async function work(root,{once=false}={}) {
       }
       check.extra=extra;
       atomic(path.join(dir,'CONTROLLER-CHECK.json'),check);
+      if(flow)flow.finish('independent-check',check.code===0,{artifact:path.join(dir,'CONTROLLER-CHECK.json')});
       atomic(path.join(cfg.workspace,'LOCAL-CONTROLLER-OBSERVATION.json'),{round,controllerCode:check.code,summary:check.stdout?.split('\n').filter(s=>s.startsWith('FAIL ')||s.includes('checks passed')),extra:extra.map(({file,code,stdout,stderr})=>({file,code,stdout,stderr})),authoritativeReceipt:path.join(dir,'CONTROLLER-CHECK.json')});
       const diff=await child('git',['diff','--stat'],cfg.workspace,env);atomic(path.join(dir,'DIFF.json'),diff);
       const failed=phaseFailed(state.stop,check.code,handoffChanged);failures=failed?failures+1:0;
       const next={round,status:changedProtected.length?'blocked-protected-change':failed?'needs-repair':'phase-complete',at:new Date().toISOString(),model:cfg.model,failures,next:'Continue from LOCAL-PROGRESS.md and retained phase receipts; goal is not proven.'};
       atomic(statusFile,next);append(journal,{event:'phase-end',...next,checkCode:check.code,stop:state.stop});prior=next;
-      if(changedProtected.length||failures>=3){atomic(path.join(root,'ATTENTION.json'),{...next,reason:changedProtected.length?'Protected changes require review.':'Three failed phases; change plan before resume. All evidence retained.'});break;}
+      if(changedProtected.length||(failures>=3&&!cfg.continueAfterFailures)){atomic(path.join(root,'ATTENTION.json'),{...next,reason:changedProtected.length?'Protected changes require review.':'Three failed phases; change plan before resume. All evidence retained.'});break;}
       if(once)break;
-      await new Promise(r=>setTimeout(r,15000));
+      if(failures>=3){const cooldownMs=Math.min(30*60*1000,failures*60000);atomic(path.join(root,'RECOVERY.json'),{...next,status:'needs-repair; switching workflow focus after cooldown',cooldownMs});const until=Date.now()+cooldownMs;while(Date.now()<until&&!fs.existsSync(path.join(root,'STOP')))await new Promise(r=>setTimeout(r,Math.min(5000,until-Date.now())));}
+      else await new Promise(r=>setTimeout(r,15000));
     }
     if(fs.existsSync(path.join(root,'STOP')))atomic(statusFile,{...prior,status:'operator-stop',at:new Date().toISOString()});
   }catch(e){atomic(path.join(root,'ATTENTION.json'),{at:new Date().toISOString(),error:e.message});throw e;}
