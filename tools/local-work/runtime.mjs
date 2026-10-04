@@ -62,6 +62,8 @@ export function localChat({model,url='http://127.0.0.1:11434',context=16384,pred
     const j=r.json,msg=j.message;
     const usage={prompt_eval_count:j.prompt_eval_count,eval_count:j.eval_count,num_ctx:context};
     append(ledger,{event:'response',id,at:new Date().toISOString(),model,usage,wallMs:Date.now()-begin,evalDuration:j.eval_duration,loadDuration:j.load_duration,doneReason:j.done_reason});
+    // This runtime also reports length when it fills the entire context slot.
+    if(j.done_reason==='length'&&Number.isSafeInteger(j.prompt_eval_count)&&Number.isSafeInteger(j.eval_count)&&j.prompt_eval_count>=0&&j.eval_count>=0&&j.prompt_eval_count+j.eval_count>=context)return {error:'Local request filled its declared context window; full response retained, no partial calls executed.',contextFull:{prompt:j.prompt_eval_count,ctx:context,model},usage};
     const calls=(msg.tool_calls||[]).map(t=>{
       const args=t.function?.arguments;
       const knowledgeId=t.function?.name==='knowledge_read'&&Number.isInteger(args?.id)&&args.id>=0;

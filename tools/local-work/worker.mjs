@@ -8,7 +8,7 @@ import {pluginExecutor,PLUGIN_TOOLS} from './plugins.mjs';
 import {manifest} from './knowledge.mjs';
 import {hash} from './migrate.mjs';
 import {workflow,DELEGATE_TOOL,ROLES,roleConfig} from './workflows.mjs';
-import {nextJob,targetHashes,implementationHashes,acceptJob,saveJob,actionCue,jobIdentity,jobExecutor,repairJob} from './jobs.mjs';
+import {nextJob,targetHashes,implementationHashes,acceptJob,saveJob,actionCue,jobIdentity,jobExecutor,repairJob,currentJobQueue} from './jobs.mjs';
 import {snapshot} from './progress.mjs';
 
 export const RULES=`You work for Gev. Every user-facing reply starts Okay Gev; no emojis.
@@ -88,7 +88,7 @@ export async function work(root,{once=false}={}) {
         if(once)break;await new Promise(r=>setTimeout(r,30000));continue;
       }
       const round=prior.round+1,dir=path.join(root,'rounds',String(round).padStart(5,'0'));fs.mkdirSync(dir,{recursive:true});
-      const selected=nextJob(root,cfg.engineeringJobs||[]),job=selected.job;
+      const selected=nextJob(root,currentJobQueue(root,cfg)),job=selected.job;
       const beforeTargets=job?(selected.state.active?.id===job.id&&selected.state.active?.initialTargets||targetHashes(cfg.workspace,job)):implementationHashes(cfg.workspace);
       if(job)saveJob(root,selected.state,job,{round,initialTargets:beforeTargets});
       atomic(statusFile,{round,status:'running',at:new Date().toISOString(),model:cfg.model,failures});

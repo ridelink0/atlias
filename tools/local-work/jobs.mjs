@@ -63,3 +63,11 @@ export async function repairJob({run,inspect,record,halt=()=>false,maxRepairs=2}
  }
  return result;
 }
+
+export function currentJobQueue(root,cfg){
+ const file=path.join(root,'CONFIG.json');
+ if(!fs.existsSync(file))return validateJobs(cfg.engineeringJobs||[]);
+ const fresh=JSON.parse(fs.readFileSync(file,'utf8'));
+ if(fresh.controllerSource!==cfg.controllerSource||fresh.controllerDirectory!==cfg.controllerDirectory)throw Error('Controller changed; restart at a clean boundary before loading a new task queue');
+ return validateJobs(fresh.engineeringJobs||[]);
+}

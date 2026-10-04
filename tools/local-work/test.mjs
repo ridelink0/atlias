@@ -83,6 +83,13 @@ try {
  const failure=localChat({model:'qwen3.5:9b',ledger,post:async()=>({status:500,text:'failure'})});
  await failure([{role:'user',content:'x'}],null);
  check('failed cost remains unknown',()=>assert.equal(JSON.parse(fs.readFileSync(ledger,'utf8').trim().split('\n').at(-1)).costKnown,false));
+
+ for(const [prompt,out,expected] of [[8000,192,true],[8000,193,true],[8000,191,false],[8000,'192',false],[-1,8193,false],[8193,-1,false],[null,8192,false]]){
+  const edge=localChat({model:'qwen3.5:9b',ledger,context:8192,post:async()=>({status:200,json:{message:{content:'cut',tool_calls:[{function:{name:'write_file',arguments:{path:'source.mjs',content:'never execute a partial call'}}}]},prompt_eval_count:prompt,eval_count:out,done_reason:'length'}})});
+  const observed=await edge([{role:'user',content:'task'}],null);
+  check('native context boundary with '+String(prompt)+'/'+String(out),()=>assert.equal(Boolean(observed.contextFull),expected));
+  if(expected){check('full context discards partial actions',()=>assert.equal(observed.calls,undefined));check('full context retains reported cost',()=>assert.deepEqual(observed.usage,{prompt_eval_count:prompt,eval_count:out,num_ctx:8192}));}
+ }
  const status=path.join(temp,'status.json');atomic(status,{round:1});atomic(status,{round:2});
  check('checkpoint replacement succeeds',()=>assert.equal(JSON.parse(fs.readFileSync(status)).round,2));
  for(const t of CASES.filter(t=>t.kind==='json')) {
