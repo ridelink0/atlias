@@ -1,10 +1,12 @@
 param([switch]$Background,[switch]$SelfTest)
 $ErrorActionPreference='Stop'
 $gevRoot='D:/harness-work/atlias-local-1003'
-$gevPin=Get-Content -LiteralPath "$gevRoot/CONTROLLER-PIN.json" -Raw | ConvertFrom-Json
+$gevPinFile=if (Test-Path -LiteralPath "$gevRoot/DASHBOARD-PIN.json") { "$gevRoot/DASHBOARD-PIN.json" } else { "$gevRoot/CONTROLLER-PIN.json" }
+$gevPin=Get-Content -LiteralPath $gevPinFile -Raw | ConvertFrom-Json
 $gevServer="$($gevPin.directory)/tools/local-work/dashboard.mjs"
+if (-not $gevPin.directory -or -not $gevPin.files -or -not ($gevPin.files.file -contains 'tools/local-work/dashboard.mjs')) { throw 'Dashboard source pin is incomplete' }
 foreach ($gevFile in $gevPin.files) {
-  if ((Get-FileHash -LiteralPath "$($gevPin.directory)/$($gevFile.file)" -Algorithm SHA256).Hash.ToLowerInvariant() -ne $gevFile.sha256) { throw "Pinned controller changed: $($gevFile.file)" }
+  if ((Get-FileHash -LiteralPath "$($gevPin.directory)/$($gevFile.file)" -Algorithm SHA256).Hash.ToLowerInvariant() -ne $gevFile.sha256) { throw "Pinned dashboard source changed: $($gevFile.file)" }
 }
 if ($SelfTest) { Write-Output 'PASS pinned dashboard source integrity'; exit 0 }
 $gevLive=$false

@@ -20,6 +20,10 @@ export function dashboard(root,{port=11436,live=verifiedWorker}={}){
   res.setHeader('Content-Security-Policy',"default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self'; img-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'");
   if(req.headers.host!==`127.0.0.1:${server.address()?.port}`||req.method!=='GET'){res.writeHead(403);res.end('Local read-only dashboard');return;}
   const allowed={'/':'index.html','/app.js':'app.js','/core.css':'core.css','/site.css':'site.css','/icon.svg':'icon.svg'};
+  if(req.url==='/api/benchmarks'){
+   try{const data=JSON.parse(fs.readFileSync(path.join(assets,'benchmarks.json'),'utf8'));res.setHeader('Content-Type','application/json');res.end(JSON.stringify(data));}
+   catch{res.writeHead(503);res.end('Published benchmarks unavailable');}return;
+  }
   if(req.url==='/api/progress'){
    if(Date.now()-lastProbe>5000){cachedLive=live(root);lastProbe=Date.now();}
    res.setHeader('Content-Type','application/json');res.end(JSON.stringify(snapshot(root,{live:cachedLive})));return;
