@@ -1,5 +1,5 @@
 import fs from 'node:fs';import os from 'node:os';import path from 'node:path';import assert from 'node:assert/strict';
-import {nextJob,saveJob,validateJobs,targetHashes,implementationHashes,acceptJob,actionCue,jobIdentity,jobExecutor} from './jobs.mjs';import {hash} from './migrate.mjs';
+import {nextJob,saveJob,validateJobs,targetHashes,implementationHashes,acceptJob,actionCue,jobIdentity,jobExecutor,repairJob} from './jobs.mjs';import {hash} from './migrate.mjs';
 const root=fs.mkdtempSync(path.join(os.tmpdir(),'gev-jobs-'));let n=0;const c=(name,fn)=>{fn();n++;console.log('PASS '+name);};
 try{
  const check=path.join(root,'independent.mjs');fs.writeFileSync(check,'assertion');const job={id:'evidence',title:'Evidence windows',contract:'Full source hash; accurate complete lines',targets:['evidence.mjs'],check:{file:check,sha256:hash(fs.readFileSync(check)),args:[]}};
@@ -25,5 +25,20 @@ try{
  assert.equal(await execute(state,{tool:'write_file',path:'LOCAL-PROGRESS.md',content:'Gev'}),'executed');n++;
  for(const p of ['test_debug.mjs','test/original.mjs','../outside.mjs',check]){assert.match(await execute(state,{tool:'write_file',path:p}),/only/);n++;}
  fs.appendFileSync(check,'changed');await assert.rejects(execute(state,{tool:'read_file',path:check}),/changed/);n++;
+
+ let attempts=[],feedbacks=[],inspections=0;
+ const repair=await repairJob({run:async(feedback,i)=>{feedbacks.push(feedback);return 'model answer '+i;},inspect:async()=>({stopReason:'answered',accepted:++inspections===2,check:{code:inspections===2?0:1,stderr:'empty source rejected'},handoffChanged:inspections===2,targetChanged:true}),record:r=>attempts.push(r)});
+ c('unverified model final receives actual failure feedback',()=>assert.match(feedbacks[1],/empty source rejected/));
+ c('same engineering repair keeps initial failed receipt',()=>assert.deepEqual(attempts.map(r=>r.accepted),[false,true]));
+ c('independent acceptance stops further repairs',()=>assert.equal(repair,'model answer 1'));
+ let runs=0;await repairJob({run:async()=>{runs++;return 'unproved';},inspect:async()=>({stopReason:'answered',accepted:false,check:{code:1}}),record:()=>{},maxRepairs:2});c('persistent failures bounded to declared slices',()=>assert.equal(runs,3));
+ for(const stopReason of ['model-error','context-full','operator-stop']){runs=0;await repairJob({run:async()=>runs++,inspect:async()=>({stopReason,accepted:false}),record:()=>{}});c('terminal '+stopReason+' never repeated',()=>assert.equal(runs,1));}
+ runs=0;await repairJob({run:async()=>runs++,inspect:async()=>({stopReason:'answered',unsafe:true,accepted:false}),record:()=>{}});c('protected-change observation prevents repairs',()=>assert.equal(runs,1));
+ runs=0;await repairJob({run:async()=>runs++,inspect:async()=>({}),record:()=>{},halt:()=>true});c('operator stop starts no attempt',()=>assert.equal(runs,0));
+ let halted=false;runs=0;await repairJob({run:async()=>runs++,inspect:async()=>({stopReason:'answered',accepted:false}),record:()=>{halted=true;},halt:()=>halted});c('operator stop after failure prevents next attempt',()=>assert.equal(runs,1));
+ for(const maxRepairs of [-1,5,1.5,'2',NaN]){await assert.rejects(repairJob({maxRepairs}));n++;}
+ await assert.rejects(repairJob({run:async()=>{throw Error('provider error');},inspect:async()=>({}),record:()=>{}}),/provider error/);n++;
+ await assert.rejects(repairJob({run:async()=>'',inspect:async()=>{throw Error('check changed');},record:()=>{}}),/check changed/);n++;
+ await assert.rejects(repairJob({run:async()=>'',inspect:async()=>({}),record:()=>{throw Error('disk failed');}}),/disk failed/);n++;
 }finally{fs.rmSync(root,{recursive:true,force:true});}
 console.log(`PASS ${n} durable engineering task controls`);

@@ -8,7 +8,7 @@ import {pluginExecutor,PLUGIN_TOOLS} from './plugins.mjs';
 import {manifest} from './knowledge.mjs';
 import {hash} from './migrate.mjs';
 import {workflow,DELEGATE_TOOL,ROLES,roleConfig} from './workflows.mjs';
-import {nextJob,targetHashes,implementationHashes,acceptJob,saveJob,actionCue,jobIdentity,jobExecutor} from './jobs.mjs';
+import {nextJob,targetHashes,implementationHashes,acceptJob,saveJob,actionCue,jobIdentity,jobExecutor,repairJob} from './jobs.mjs';
 import {snapshot} from './progress.mjs';
 
 export const RULES=`You work for Gev. Every user-facing reply starts Okay Gev; no emojis.
@@ -91,7 +91,7 @@ export async function work(root,{once=false}={}) {
       const selected=nextJob(root,cfg.engineeringJobs||[]),job=selected.job;
       const beforeTargets=job?(selected.state.active?.id===job.id&&selected.state.active?.initialTargets||targetHashes(cfg.workspace,job)):implementationHashes(cfg.workspace);
       if(job)saveJob(root,selected.state,job,{round,initialTargets:beforeTargets});
-      atomic(statusFile,{round,status:'running',at:new Date().toISOString(),model:cfg.model});
+      atomic(statusFile,{round,status:'running',at:new Date().toISOString(),model:cfg.model,failures});
       append(journal,{event:'phase-start',round,at:new Date().toISOString(),model:cfg.model});
       const progress=path.join(cfg.workspace,'LOCAL-PROGRESS.md');
       const handoffHash=fs.existsSync(progress)?hash(fs.readFileSync(progress)):null;
@@ -133,8 +133,18 @@ export async function work(root,{once=false}={}) {
         try{return JSON.stringify(await flow.delegate(call.role,call.task,dir));}
         catch(e){return JSON.stringify({status:'error',summary:e.message,advisory:true,next_actions:['Change the task or use existing evidence; no child completion was established.'],artifacts:[]});}
       };
-      const result=await runLoop(state,prompt+guidance,{native:true,chat:localChat({...cfg,ledger:calls,recordDir:path.join(dir,'requests'),extraTools:[...KNOWLEDGE_TOOLS,...PLUGIN_TOOLS,...(flow?[DELEGATE_TOOL]:[])]}),executeTool:execute,limits:{maxToolRounds:cfg.rounds||32,outputBudget:cfg.observationBudget||6000,keepObservations:cfg.keepObservations||4,evictBlock:cfg.evictBlock||4,shellTimeoutMs:180000}});
+      // Reuse the adapter so native tool IDs stay unique across repair slices.
+      const chat=localChat({...cfg,ledger:calls,recordDir:path.join(dir,'requests'),extraTools:[...KNOWLEDGE_TOOLS,...PLUGIN_TOOLS,...(flow?[DELEGATE_TOOL]:[])]});
+      const run=(feedback,attempt)=>runLoop(state,attempt?feedback:prompt+guidance,{native:true,chat,executeTool:execute,limits:{maxToolRounds:cfg.rounds||32,outputBudget:cfg.observationBudget||6000,keepObservations:cfg.keepObservations||4,evictBlock:cfg.evictBlock||4,shellTimeoutMs:180000}});
+      const result=job?await repairJob({run,maxRepairs:cfg.engineeringRepairs??2,halt:()=>fs.existsSync(path.join(root,'STOP')),inspect:async()=>{
+        const unsafe=checkProtected(cfg.workspace,protections).length>0;
+        const handoffChanged=fs.existsSync(progress)&&Boolean(fs.readFileSync(progress,'utf8').trim())&&!placeholderOnly(fs.readFileSync(progress,'utf8'))&&hash(fs.readFileSync(progress))!==handoffHash;
+        const targetChanged=JSON.stringify(targetHashes(cfg.workspace,job))!==JSON.stringify(beforeTargets);
+        const check=unsafe?{code:null,error:'protected files changed'}:await acceptJob(job,cfg.workspace,controllerEnv(env));
+        return {accepted:!unsafe&&check.code===0&&handoffChanged&&targetChanged&&state.stop?.reason==='answered',unsafe,check,handoffChanged,targetChanged,stopReason:state.stop?.reason};
+      },record:observation=>atomic(path.join(dir,'ENGINEERING-ATTEMPT-'+observation.attempt+'.json'),{...observation,stop:state.stop,messages:state.messages,at:new Date().toISOString()})}):await run('',0);
       atomic(path.join(dir,'RESULT.json'),{result,stop:state.stop,messages:state.messages,promptLog:state.promptLog,outLog:state.outLog});
+      if(fs.existsSync(path.join(root,'STOP'))){prior={round,failures,model:cfg.model};append(journal,{event:'operator-stop-after-engineering-attempt',round,at:new Date().toISOString(),receipts:dir});break;}
       // Preserve observed results even when the model omitted its requested handoff.
       const handoffChanged=fs.existsSync(progress)&&Boolean(fs.readFileSync(progress,'utf8').trim())&&!placeholderOnly(fs.readFileSync(progress,'utf8'))&&hash(fs.readFileSync(progress))!==handoffHash;
       atomic(path.join(root,'CONTROLLER-PROGRESS.json'),{round,at:new Date().toISOString(),stop:state.stop,result,receipts:dir,handoffChanged,next:'Inspect retained results and actual checks; no model claim implies success.'});

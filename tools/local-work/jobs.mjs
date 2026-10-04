@@ -48,3 +48,18 @@ export function jobExecutor(job,base){
   return base(state,call,ask);
  };
 }
+
+// Ordinary engineering repairs, never historical benchmark retries.
+export async function repairJob({run,inspect,record,halt=()=>false,maxRepairs=2}) {
+ if(!Number.isSafeInteger(maxRepairs)||maxRepairs<0||maxRepairs>4)throw Error('declare zero to four engineering repairs');
+ let feedback='',result;
+ for(let attempt=0;attempt<=maxRepairs;attempt++){
+  if(halt())break;
+  result=await run(feedback,attempt);
+  const observation=await inspect(result,attempt);
+  await record({attempt,result,...observation});
+  if(observation.accepted===true||observation.unsafe===true||halt()||!['answered','rounds-exhausted','malformed-output'].includes(observation.stopReason)||attempt===maxRepairs)break;
+  feedback='Gev: this engineering task is unfinished. Continue from this SAME conversation. Reread the actual target and use a small exact edit; never copy an elided argument marker. The independent observation below is authoritative, not a model claim. Repair the declared contract, run its exact check, inspect edge cases, and write LOCAL-PROGRESS.md before answering. All failed engineering attempts stay retained; no historical benchmark is retried.\n'+JSON.stringify({handoffChanged:observation.handoffChanged,targetChanged:observation.targetChanged,check:observation.check}).slice(0,6000);
+ }
+ return result;
+}
