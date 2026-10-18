@@ -17,6 +17,15 @@ assert.equal(packageJson.bin['atlias'], 'bin/atlias.mjs');
 for (const privatePath of ['lib/agent.mjs', 'lib/loop.mjs', 'lib/eval.mjs', 'lib/bench.mjs', 'evals']) {
   assert.equal(fs.existsSync(path.join(root, privatePath)), false, `${privatePath} must not be present in the public subharness tree`);
 }
+assert.equal(fs.existsSync(path.join(root, 'lib/usage.mjs')), false, 'the Usage Limits plugin reader must not ship');
+for (const sourcePath of ['lib/brief.mjs', 'lib/settings.mjs', 'lib/core.mjs']) {
+  const source = fs.readFileSync(path.join(root, sourcePath), 'utf8');
+  assert.doesNotMatch(source, /usage-limits|usageLimits|usage\.show|usage-limits-live\.json/i, `${sourcePath} must not wire the Usage Limits plugin into Atlias`);
+}
+const briefSource = fs.readFileSync(path.join(root, 'lib/brief.mjs'), 'utf8');
+assert.match(briefSource, /import \* as graph from '\.\/graph\.mjs'/, 'normal brief integrations must remain intact');
+const settingsSource = fs.readFileSync(path.join(root, 'lib/settings.mjs'), 'utf8');
+assert.match(settingsSource, /agent\.engine/, 'normal settings must remain available');
 
 const profile = validate({ protocol: 'responses', baseUrl: 'http://127.0.0.1:11435/v1', model: 'local-test', keyEnv: 'TEST_TOKEN' });
 assert.equal(profile.baseUrl, 'http://127.0.0.1:11435/v1');
