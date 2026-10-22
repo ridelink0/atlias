@@ -18,6 +18,9 @@ for (const privatePath of ['lib/agent.mjs', 'lib/loop.mjs', 'lib/eval.mjs', 'lib
   assert.equal(fs.existsSync(path.join(root, privatePath)), false, `${privatePath} must not be present in the public subharness tree`);
 }
 assert.equal(fs.existsSync(path.join(root, 'lib/usage.mjs')), false, 'the Usage Limits plugin reader must not ship');
+// The Claude plan route (Claude Agent SDK on a person's own Claude login) is founder-only until Anthropic approves offering it in a product (Gev, 2026-10-22).
+assert.equal(fs.existsSync(path.join(root, 'lib/claude-plan.mjs')), false, 'the founder-only Claude plan engine must not ship in the public package');
+for (const rel of ['bin/atlias.mjs', 'package.json', ...fs.readdirSync(path.join(root, 'lib')).map((f) => 'lib/' + f)]) assert.doesNotMatch(fs.readFileSync(path.join(root, rel), 'utf8'), /claude-agent-sdk|claude-plan/i, rel + ' must not reference the founder-only Claude plan route');
 for (const sourcePath of ['lib/brief.mjs', 'lib/settings.mjs', 'lib/core.mjs']) {
   const source = fs.readFileSync(path.join(root, sourcePath), 'utf8');
   assert.doesNotMatch(source, /usage-limits|usageLimits|usage\.show|usage-limits-live\.json/i, `${sourcePath} must not wire the Usage Limits plugin into Atlias`);
