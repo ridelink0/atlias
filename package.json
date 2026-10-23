@@ -1,6 +1,6 @@
 {
   "name": "atlias",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "A public sub-harness for shared project memory, knowledge graphs, host hooks, MCP tools, and verification.",
   "type": "module",
   "bin": {

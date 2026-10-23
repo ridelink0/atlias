@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import os from 'node:os';
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
@@ -72,3 +73,19 @@ assert.equal(noHost.status, 2);
 assert.match(noHost.stderr, /Choose a host/);
 
 console.log('public package checks passed');
+
+// Compaction hooks (Gev, 2026-10-22: Claude Code rejected both as "Hook JSON output validation
+// failed"). PreCompact's plain stdout is Claude Code's extra summary instructions; PostCompact's
+// output only reaches the user, and the handoff note goes back through SessionStart.
+{
+  const tmpCwd = fs.mkdtempSync(path.join(os.tmpdir(), 'atlias-compact-'));
+  const env = { ...process.env, ATLIAS_HOME: path.join(tmpCwd, 'home'), CLAUDE_PLUGIN_ROOT: root };
+  const hook = (ev) => spawnSync(process.execPath, [path.join(root, 'lib/hooks.mjs'), ev], { input: JSON.stringify({ session_id: 's1', cwd: tmpCwd, trigger: 'manual', hook_event_name: ev }), encoding: 'utf8', env, cwd: tmpCwd });
+  const pre = hook('pre-compact');
+  assert.equal(pre.status, 0);
+  assert.match(pre.stdout, /^atlias: keep in the summary/, 'PreCompact prints plain instructions');
+  assert.doesNotMatch(pre.stdout, /hookSpecificOutput/, 'PreCompact must not print hookSpecificOutput, which Claude Code rejects');
+  const post = hook('post-compact');
+  assert.equal(post.status, 0);
+  assert.equal(post.stdout.trim(), '', 'PostCompact prints nothing; the note returns through SessionStart');
+}
