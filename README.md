@@ -24,6 +24,12 @@ For Claude Code's plugin browser, add `ridelink0/atlias` as a marketplace and in
 
 The launcher accepts Claude's Anthropic Messages API or Codex's Responses API. It does not provide subscription OAuth or promise that provider subscriptions cover API use. See [docs/API-SUBHARNESS.md](docs/API-SUBHARNESS.md) for profiles and receipts.
 
+## Free to use, open to contributors
+
+This sub-harness is free to use, including commercially, under the MIT license. Contributions are welcome: open an issue to report a bug or suggest a change, or send a pull request (run `npm test` first and say what you checked).
+
+The exception is the Atlias harness itself: its standalone agent and private harness loop are not in this repository and are not free to use.
+
 ## Local development
 
 ```sh
