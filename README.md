@@ -26,7 +26,7 @@ The launcher accepts Claude's Anthropic Messages API or Codex's Responses API. I
 
 ## Free to use, open to contributors
 
-This sub-harness is free to use, including commercially, under the MIT license. Contributions are welcome: open an issue to report a bug or suggest a change, or send a pull request (run `npm test` first and say what you checked).
+This sub-harness is free to use, including commercially, under the MIT license. Contributions are welcome; see [Contributing](#contributing).
 
 The exception is the Atlias harness itself: its standalone agent and private harness loop are not in this repository and are not free to use.
 
@@ -38,3 +38,7 @@ npm run test:install
 ```
 
 The package has no third-party runtime dependencies. It is distributed under the MIT license; see [LICENSE](LICENSE).
+
+## Contributing
+
+If you're interested in contributing to atlias, please read our [contributing guide](CONTRIBUTING.md) before submitting a pull request.
