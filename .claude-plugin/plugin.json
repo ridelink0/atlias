@@ -2,7 +2,7 @@
   "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
   "name": "atlias",
   "version": "4.0.1",
-  "description": "A sub-harness for shared project memory, a knowledge graph, host hooks, MCP tools, and verification.",
+  "description": "sub-atlias, the free sub version of Atlias (not the full app): shared project memory, a knowledge graph, host hooks, MCP tools, and verification.",
   "author": {
     "name": "Gev",
     "url": "https://github.com/ridelink0"
