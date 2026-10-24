@@ -1,7 +1,7 @@
 {
   "name": "atlias",
   "version": "4.0.1",
-  "description": "A public sub-harness for shared project memory, knowledge graphs, host hooks, MCP tools, and verification.",
+  "description": "sub-atlias: the free sub-harness version of Atlias (not the full Atlias app). Shared project memory, knowledge graphs, host hooks, MCP tools, and verification inside Claude Code, Codex and other hosts.",
   "type": "module",
   "bin": {
     "atlias": "bin/atlias.mjs"

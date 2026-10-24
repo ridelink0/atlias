@@ -1,6 +1,8 @@
-# atlias
+# sub-atlias
 
-atlias adds shared project memory, a knowledge graph, and verification hooks to coding hosts you already use. It runs inside the host and leaves model choice and provider billing with you. It does not include Atlias's standalone agent or private harness loop.
+> **This is sub-atlias, the free sub version of Atlias, not Atlias itself.** It runs inside a coding host you already use (Claude Code, Codex, Antigravity or Gemini CLI) and adds to it. The full Atlias app, with its own agent loop (the one measured at 19.52x fewer tokens than plain Claude Code), is a separate paid product and is not in this repository. The command and plugin are still named `atlias`.
+
+sub-atlias adds shared project memory, a knowledge graph, and verification hooks to the host. It leaves model choice and provider billing with you.
 
 ## Install
 
@@ -53,4 +55,4 @@ The package has no third-party runtime dependencies. It is distributed under the
 
 ## Contributing
 
-If you're interested in contributing to atlias, please read our [contributing guide](CONTRIBUTING.md) before submitting a pull request.
+If you're interested in contributing to sub-atlias, please read our [contributing guide](CONTRIBUTING.md) before submitting a pull request.

@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "atlias",
-  "description": "atlias: a public sub-harness for shared memory, knowledge graphs, hooks, MCP tools, and verification.",
+  "description": "sub-atlias: the free sub version of Atlias (not the full Atlias app) for shared memory, knowledge graphs, hooks, MCP tools, and verification.",
   "owner": {
     "name": "Gev",
     "email": "app.ridelink@gmail.com"
@@ -9,7 +9,7 @@
   "plugins": [
     {
       "name": "atlias",
-      "description": "A sub-harness for shared project memory, a knowledge graph, host hooks, MCP tools, and verification.",
+      "description": "sub-atlias, the free sub version of Atlias (not the full app): shared project memory, a knowledge graph, host hooks, MCP tools, and verification.",
       "author": {
         "name": "Gev"
       },
